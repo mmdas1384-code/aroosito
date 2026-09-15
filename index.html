@@ -234,6 +234,126 @@
         </div>
       </section>
 
+      <!-- CHRONOLOGICAL WEDDING CHECKLIST SECTION -->
+      <section class="bg-white border border-accent rounded-3xl p-6 sm:p-8 shadow-xs space-y-6">
+        <div class="border-b border-accent pb-6 space-y-6">
+          <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
+            <div>
+              <h2 class="text-xl font-bold text-graphite flex items-center gap-2">
+                <i data-lucide="check-square" class="w-6 h-6 text-primary"></i>
+                <span>زمان‌بندی و چک‌لیست حرفه‌ای عروسی</span>
+              </h2>
+              <p class="text-xs text-secondary mt-1">مدیریت کرونولوژیک (زمان‌بندی‌شده) تمامی اقدامات از ۱۲ ماه قبل تا شب عروسی</p>
+            </div>
+
+            <button onclick="toggleNewTaskModal(true)" class="bg-primary hover:bg-emerald-900 text-white px-4 py-2.5 rounded-xl text-xs font-bold transition-all flex items-center gap-2 shadow-xs">
+              <i data-lucide="plus" class="w-4 h-4"></i>
+              <span>افزودن مهم جدید</span>
+            </button>
+          </div>
+
+          <!-- Real-time Progress Card -->
+          <div class="bg-bgCustom border border-accent/80 rounded-2xl p-5 space-y-4">
+            <div class="flex justify-between items-center text-xs font-bold text-graphite">
+              <span class="flex items-center gap-2">
+                <i data-lucide="clock" class="w-4 h-4 text-primary"></i>
+                <span>پیشرفت کل اقدامات</span>
+              </span>
+              <div class="flex items-center gap-4">
+                <span id="checklist-urgent-badge" class="hidden bg-rose-100 text-rose-700 px-2.5 py-1 rounded-lg text-[11px] font-bold flex items-center gap-1 border border-rose-200">
+                  <i data-lucide="flame" class="w-3.5 h-3.5"></i>
+                  <span id="checklist-urgent-count">۰ کار فوری remaining</span>
+                </span>
+                <span id="checklist-progress-text" class="text-primary text-sm font-black">۰٪ انجام شده</span>
+              </div>
+            </div>
+
+            <div class="w-full bg-slate-200 rounded-full h-3 overflow-hidden">
+              <div id="checklist-progress-bar" class="bg-primary h-full transition-all duration-500 rounded-full" style="width: 0%"></div>
+            </div>
+          </div>
+
+          <!-- Chronological Filter Tabs -->
+          <div class="space-y-3">
+            <div class="flex items-center gap-2 text-xs font-bold text-secondary">
+              <i data-lucide="calendar-range" class="w-4 h-4 text-primary"></i>
+              <span>فیلتر زمان‌بندی مراسم:</span>
+            </div>
+            <div id="checklist-timeframe-buttons" class="flex flex-wrap gap-2">
+              <!-- Populated via JS -->
+            </div>
+          </div>
+
+          <!-- Status Sub-filter -->
+          <div class="flex flex-wrap items-center gap-2 pt-2 border-t border-accent/50 text-xs">
+            <span class="font-bold text-secondary flex items-center gap-1 ml-2">
+              <i data-lucide="filter" class="w-3.5 h-3.5"></i> وضعیت نمایش:
+            </span>
+            <button onclick="setChecklistStatusFilter('all')" id="st-filter-all" class="px-3 py-1.5 rounded-lg font-semibold transition-all bg-secondary text-white">همه کارهای این بخش</button>
+            <button onclick="setChecklistStatusFilter('pending')" id="st-filter-pending" class="px-3 py-1.5 rounded-lg font-semibold transition-all bg-slate-100 text-graphite hover:bg-slate-200">در حال انجام (انجام نشده)</button>
+            <button onclick="setChecklistStatusFilter('completed')" id="st-filter-completed" class="px-3 py-1.5 rounded-lg font-semibold transition-all bg-slate-100 text-graphite hover:bg-slate-200">تکمیل شده</button>
+            <button onclick="setChecklistStatusFilter('urgent')" id="st-filter-urgent" class="px-3 py-1.5 rounded-lg font-semibold transition-all bg-slate-100 text-graphite hover:bg-slate-200">فقط کارهای فوری ⚠️</button>
+          </div>
+        </div>
+
+        <!-- Task Timeline Render -->
+        <div id="checklist-timeline-container" class="space-y-8">
+          <!-- Rendered via JS -->
+        </div>
+
+        <!-- Add Custom Task Modal -->
+        <div id="new-task-modal" class="hidden fixed inset-0 z-50 bg-black/50 backdrop-blur-xs flex items-center justify-center p-4">
+          <div class="bg-white border border-accent rounded-3xl p-6 w-full max-w-lg shadow-2xl space-y-6">
+            <div class="flex items-center justify-between border-b border-accent pb-4">
+              <h3 class="text-base font-bold text-graphite flex items-center gap-2">
+                <i data-lucide="plus" class="w-5 h-5 text-primary"></i>
+                <span>افزودن اقدام شخصی جدید</span>
+              </h3>
+              <button onclick="toggleNewTaskModal(false)" class="text-secondary hover:text-graphite p-1 rounded-lg">
+                <i data-lucide="x" class="w-5 h-5"></i>
+              </button>
+            </div>
+
+            <form onsubmit="handleAddChecklistTask(event)" class="space-y-4 text-xs font-bold text-graphite">
+              <div class="space-y-1.5">
+                <label>عنوان اقدام یا وظیفه:</label>
+                <input type="text" id="new-task-title" required placeholder="مثلاً: هماهنگی خیاط لباس مادرزن..." class="w-full p-3 rounded-xl border border-accent text-xs font-semibold focus:outline-none focus:border-primary">
+              </div>
+
+              <div class="space-y-1.5">
+                <label>بازه زمانی (مرحله):</label>
+                <select id="new-task-tf" class="w-full p-3 rounded-xl border border-accent text-xs font-semibold focus:outline-none focus:border-primary bg-white">
+                  <option value="۱۲ تا ۹ ماه قبل">۱۲ تا ۹ ماه قبل</option>
+                  <option value="۹ تا ۶ ماه قبل">۹ تا ۶ ماه قبل</option>
+                  <option value="۶ تا ۳ ماه قبل">۶ تا ۳ ماه قبل</option>
+                  <option value="۳ تا ۱ ماه قبل">۳ تا ۱ ماه قبل</option>
+                  <option value="۱ هفته قبل">۱ هفته قبل</option>
+                  <option value="روز عروسی">روز عروسی</option>
+                </select>
+              </div>
+
+              <div class="space-y-1.5">
+                <label>مهلت انجام (اختیاری):</label>
+                <input type="text" id="new-task-date" placeholder="مثلاً: تا آخر ماه یا ۲ هفته قبل..." class="w-full p-3 rounded-xl border border-accent text-xs font-semibold focus:outline-none focus:border-primary">
+              </div>
+
+              <div class="flex items-center gap-2 pt-2">
+                <input type="checkbox" id="new-task-urgent" class="rounded text-rose-600 focus:ring-rose-500 w-4 h-4 cursor-pointer">
+                <label for="new-task-urgent" class="cursor-pointer text-xs text-rose-700 flex items-center gap-1">
+                  <i data-lucide="alert-circle" class="w-4 h-4"></i>
+                  این کار فوری و حیاتی است (نیاز به هشدار ویژه)
+                </label>
+              </div>
+
+              <div class="flex justify-end gap-3 pt-4 border-t border-accent">
+                <button type="button" onclick="toggleNewTaskModal(false)" class="px-4 py-2.5 rounded-xl border border-accent text-secondary hover:bg-slate-100 font-bold">انصراف</button>
+                <button type="submit" class="px-5 py-2.5 rounded-xl bg-primary hover:bg-emerald-900 text-white font-bold shadow-xs">ثبت در چک‌لیست</button>
+              </div>
+            </form>
+          </div>
+        </div>
+      </section>
+
     </div>
 
     <!-- ========================================== -->
@@ -1064,6 +1184,246 @@
       { category: "گل‌آرایی و متفرقه", allocated: 30000000, actual: 32000000, deposit: 10000000 }
     ];
 
+    let checklistTimeframes = [
+      "۱۲ تا ۹ ماه قبل",
+      "۹ تا ۶ ماه قبل",
+      "۶ تا ۳ ماه قبل",
+      "۳ تا ۱ ماه قبل",
+      "۱ هفته قبل",
+      "روز عروسی"
+    ];
+
+    let staticChecklist = [
+      { id: "chk-1", title: "تعیین بودجه اولیه و سقف هزینه‌ها", category: "۱۲ تا ۹ ماه قبل", completed: true, dueDate: "۱۲ ماه قبل", isUrgent: false },
+      { id: "chk-2", title: "تعیین تاریخ تقریبی برگزاری مراسم", category: "۱۲ تا ۹ ماه قبل", completed: true, dueDate: "۱۲ ماه قبل", isUrgent: false },
+      { id: "chk-3", title: "برآورد اولیه تعداد مهمانان", category: "۱۲ تا ۹ ماه قبل", completed: true, dueDate: "۱۱ ماه قبل", isUrgent: false },
+      { id: "chk-4", title: "رزرو و عقد قرارداد با تالار یا باغ عروسی", category: "۱۲ تا ۹ ماه قبل", completed: true, dueDate: "۱۰ ماه قبل", isUrgent: true },
+      { id: "chk-5", title: "انتخاب و رزرو آتلیه فیلم و عکس", category: "۱۲ تا ۹ ماه قبل", completed: false, dueDate: "۹ ماه قبل", isUrgent: true },
+      { id: "chk-6", title: "انتخاب و رزرو سالن زیبایی عروس (آرایشگاه)", category: "۹ تا ۶ ماه قبل", completed: false, dueDate: "۸ ماه قبل", isUrgent: true },
+      { id: "chk-7", title: "انتخاب و رزرو گروه موسیقی، دی‌جی و نورپردازی", category: "۹ تا ۶ ماه قبل", completed: false, dueDate: "۷ ماه قبل", isUrgent: false },
+      { id: "chk-8", title: "انتخاب و سفارش یا اجاره لباس عروس و اکسسوری‌ها", category: "۹ تا ۶ ماه قبل", completed: false, dueDate: "۶ ماه قبل", isUrgent: false },
+      { id: "chk-9", title: "بررسی و انتخاب تشریفات و گروه گل‌آرایی", category: "۹ تا ۶ ماه قبل", completed: false, dueDate: "۶ ماه قبل", isUrgent: false },
+      { id: "chk-10", title: "رزرو و انتخاب کت‌وشلوار داماد", category: "۶ تا ۳ ماه قبل", completed: false, dueDate: "۵ ماه قبل", isUrgent: false },
+      { id: "chk-11", title: "انتخاب و سفارش کارت دعوت (فیزیکی و دیجیتال)", category: "۶ تا ۳ ماه قبل", completed: false, dueDate: "۴ ماه قبل", isUrgent: false },
+      { id: "chk-12", title: "نهایی‌سازی لیست مهمانان و دسته‌بندی خانواده‌ها", category: "۶ تا ۳ ماه قبل", completed: false, dueDate: "۴ ماه قبل", isUrgent: false },
+      { id: "chk-13", title: "رزرو ماشین عروس و گل‌آرایی آن", category: "۶ تا ۳ ماه قبل", completed: false, dueDate: "۳ ماه قبل", isUrgent: false },
+      { id: "chk-14", title: "رزرو گروه فیلم‌برداری ساخت فرمالیته و سفر فرمالیته (در صورت نیاز)", category: "۶ تا ۳ ماه قبل", completed: false, dueDate: "۳ ماه قبل", isUrgent: false },
+      { id: "chk-15", title: "خرید حلقه و سرویس طلا", category: "۳ تا ۱ ماه قبل", completed: false, dueDate: "۲ ماه قبل", isUrgent: false },
+      { id: "chk-16", title: "ارسال کارت‌های دعوت و دریافت تاییدیه حضور (RSVP)", category: "۳ تا ۱ ماه قبل", completed: false, dueDate: "۶ هفته قبل", isUrgent: true },
+      { id: "chk-17", title: "هماهنگی منوی غذایی و پذیرایی با تالار/تشریفات", category: "۳ تا ۱ ماه قبل", completed: false, dueDate: "۱ ماه قبل", isUrgent: false },
+      { id: "chk-18", title: "پرو نهایی لباس عروس و کت‌وشلوار داماد", category: "۳ تا ۱ ماه قبل", completed: false, dueDate: "۱ ماه قبل", isUrgent: false },
+      { id: "chk-19", title: "تست آرایش و میکاپ عروس (میکاپ تست)", category: "۳ تا ۱ ماه قبل", completed: false, dueDate: "۱ ماه قبل", isUrgent: false },
+      { id: "chk-20", title: "پیگیری نهایی تعداد مهمانان قطعی و اعلام به تالار", category: "۱ هفته قبل", completed: false, dueDate: "۵ روز قبل", isUrgent: true },
+      { id: "chk-21", title: "چینش آنلاین جایگاه مهمانان سر میزها (Seating Chart)", category: "۱ هفته قبل", completed: false, dueDate: "۴ روز قبل", isUrgent: false },
+      { id: "chk-22", title: "آماده‌سازی ساک/کیف لوازم ضروری روز عروسی", category: "۱ هفته قبل", completed: false, dueDate: "۲ روز قبل", isUrgent: false },
+      { id: "chk-23", title: "هماهنگی ساعت دقیق با آرایشگاه، آتلیه و تالار", category: "۱ هفته قبل", completed: false, dueDate: "۱ روز قبل", isUrgent: true },
+      { id: "chk-24", title: "تحویل گرفتن گل ماشین و دسته گل عروس", category: "روز عروسی", completed: false, dueDate: "صبح عروسی", isUrgent: true },
+      { id: "chk-25", title: "چک کردن مدارک و حلقه‌ها", category: "روز عروسی", completed: false, dueDate: "صبح عروسی", isUrgent: true },
+      { id: "chk-26", title: "همراه داشتن کیف لوازم ضروری (کمک‌های اولیه، نخ و سوزن، شارژر)", category: "روز عروسی", completed: false, dueDate: "صبح عروسی", isUrgent: false }
+    ];
+
+    let activeChecklistTf = 'all';
+    let activeChecklistStatus = 'all';
+
+    function setChecklistStatusFilter(status) {
+      activeChecklistStatus = status;
+      ['all', 'pending', 'completed', 'urgent'].forEach(st => {
+        const btn = document.getElementById('st-filter-' + st);
+        if (btn) {
+          if (st === status) {
+            btn.className = "px-3 py-1.5 rounded-lg font-semibold transition-all bg-secondary text-white";
+          } else {
+            btn.className = "px-3 py-1.5 rounded-lg font-semibold transition-all bg-slate-100 text-graphite hover:bg-slate-200";
+          }
+        }
+      });
+      renderChecklistTimeline();
+    }
+
+    function selectChecklistTimeframe(tf) {
+      activeChecklistTf = tf;
+      renderChecklistTimeline();
+    }
+
+    function toggleChecklistTask(id) {
+      const task = staticChecklist.find(t => t.id === id);
+      if (task) {
+        task.completed = !task.completed;
+        renderChecklistTimeline();
+      }
+    }
+
+    function toggleNewTaskModal(show) {
+      const modal = document.getElementById('new-task-modal');
+      if (modal) {
+        if (show) modal.classList.remove('hidden');
+        else modal.classList.add('hidden');
+      }
+    }
+
+    function handleAddChecklistTask(e) {
+      e.preventDefault();
+      const title = document.getElementById('new-task-title').value.trim();
+      const category = document.getElementById('new-task-tf').value;
+      const dueDate = document.getElementById('new-task-date').value.trim() || 'در حال برنامه‌ریزی';
+      const isUrgent = document.getElementById('new-task-urgent').checked;
+
+      if (!title) return;
+
+      staticChecklist.push({
+        id: 'chk-' + Date.now(),
+        title,
+        category,
+        completed: false,
+        dueDate,
+        isUrgent
+      });
+
+      document.getElementById('new-task-title').value = '';
+      document.getElementById('new-task-date').value = '';
+      document.getElementById('new-task-urgent').checked = false;
+      toggleNewTaskModal(false);
+
+      renderChecklistTimeline();
+    }
+
+    function renderChecklistTimeline() {
+      const total = staticChecklist.length;
+      const completed = staticChecklist.filter(t => t.completed).length;
+      const urgentRemaining = staticChecklist.filter(t => t.isUrgent && !t.completed).length;
+      const percent = total > 0 ? Math.round((completed / total) * 100) : 0;
+
+      const pBar = document.getElementById('checklist-progress-bar');
+      const pText = document.getElementById('checklist-progress-text');
+      const uBadge = document.getElementById('checklist-urgent-badge');
+      const uCount = document.getElementById('checklist-urgent-count');
+
+      if (pBar) pBar.style.width = percent + '%';
+      if (pText) pText.innerText = percent + '٪ انجام شده (' + completed + ' از ' + total + ')';
+      if (uBadge && uCount) {
+        if (urgentRemaining > 0) {
+          uBadge.classList.remove('hidden');
+          uCount.innerText = urgentRemaining + ' کار فوری باقی‌مانده';
+        } else {
+          uBadge.classList.add('hidden');
+        }
+      }
+
+      // Timeframe buttons
+      const tfContainer = document.getElementById('checklist-timeframe-buttons');
+      if (tfContainer) {
+        tfContainer.innerHTML = '';
+
+        const allBtn = document.createElement('button');
+        allBtn.onclick = () => selectChecklistTimeframe('all');
+        allBtn.className = `px-3.5 py-2 rounded-xl text-xs font-bold transition-all border ${
+          activeChecklistTf === 'all'
+            ? 'bg-primary text-white border-primary shadow-xs'
+            : 'bg-white text-graphite border-accent hover:border-primary'
+        }`;
+        allBtn.innerText = `همه مراحل (${total})`;
+        tfContainer.appendChild(allBtn);
+
+        checklistTimeframes.forEach(tf => {
+          const count = staticChecklist.filter(t => t.category === tf).length;
+          const btn = document.createElement('button');
+          btn.onclick = () => selectChecklistTimeframe(tf);
+          btn.className = `px-3.5 py-2 rounded-xl text-xs font-bold transition-all border ${
+            activeChecklistTf === tf
+              ? 'bg-primary text-white border-primary shadow-xs'
+              : 'bg-white text-graphite border-accent hover:border-primary'
+          }`;
+          btn.innerText = `${tf} (${count})`;
+          tfContainer.appendChild(btn);
+        });
+      }
+
+      // Filter tasks
+      const filtered = staticChecklist.filter(task => {
+        const matchesTf = activeChecklistTf === 'all' || task.category === activeChecklistTf;
+        if (!matchesTf) return false;
+        if (activeChecklistStatus === 'completed') return task.completed;
+        if (activeChecklistStatus === 'pending') return !task.completed;
+        if (activeChecklistStatus === 'urgent') return task.isUrgent && !task.completed;
+        return true;
+      });
+
+      const container = document.getElementById('checklist-timeline-container');
+      if (!container) return;
+      container.innerHTML = '';
+
+      if (filtered.length === 0) {
+        container.innerHTML = `
+          <div class="text-center py-12 bg-bgCustom rounded-2xl border border-dashed border-accent space-y-2">
+            <i data-lucide="check-circle-2" class="w-10 h-10 text-secondary mx-auto opacity-50"></i>
+            <p class="text-sm font-bold text-graphite">هیچ موردی در این فیلتر یافت نشد</p>
+            <p class="text-xs text-secondary">فیلترهای زمان‌بندی یا وضعیت را تغییر دهید.</p>
+          </div>
+        `;
+        lucide.createIcons();
+        return;
+      }
+
+      const visibleTimeframes = activeChecklistTf === 'all' ? checklistTimeframes : [activeChecklistTf];
+
+      visibleTimeframes.forEach(tf => {
+        const tfTasks = filtered.filter(t => t.category === tf);
+        if (tfTasks.length === 0) return;
+
+        const tfCompleted = tfTasks.filter(t => t.completed).length;
+
+        const sectionDiv = document.createElement('div');
+        sectionDiv.className = "space-y-4";
+        sectionDiv.innerHTML = `
+          <div class="flex items-center justify-between border-b border-accent/70 pb-2">
+            <h3 class="text-sm font-bold text-primary flex items-center gap-2">
+              <span class="w-2.5 h-2.5 rounded-full bg-primary inline-block"></span>
+              <span>بازه زمانی: ${tf}</span>
+            </h3>
+            <span class="text-xs font-semibold text-secondary bg-slate-100 px-2.5 py-0.5 rounded-full border border-accent">
+              ${tfCompleted} از ${tfTasks.length} انجام شده
+            </span>
+          </div>
+
+          <div class="grid grid-cols-1 gap-3">
+            ${tfTasks.map(t => `
+              <div onclick="toggleChecklistTask('${t.id}')" class="p-4 rounded-2xl border transition-all cursor-pointer flex items-center justify-between gap-4 ${
+                t.completed
+                  ? 'bg-emerald-50/40 border-emerald-200'
+                  : t.isUrgent
+                  ? 'bg-rose-50/50 border-rose-200 hover:border-rose-400 shadow-xs'
+                  : 'bg-white border-accent hover:border-primary shadow-xs'
+              }">
+                <div class="flex items-center gap-3.5 flex-1 min-w-0">
+                  <div class="w-6 h-6 rounded-lg border-2 flex items-center justify-center transition-all ${
+                    t.completed ? 'bg-primary border-primary text-white' : 'border-secondary bg-white'
+                  }">
+                    ${t.completed ? '<i data-lucide="check" class="w-4 h-4 stroke-[3]"></i>' : ''}
+                  </div>
+                  <div class="space-y-1 min-w-0 flex-1">
+                    <div class="flex items-center gap-2 flex-wrap">
+                      <span class="text-sm font-bold truncate ${t.completed ? 'line-through text-secondary' : 'text-graphite'}">${t.title}</span>
+                      ${t.isUrgent && !t.completed ? '<span class="bg-rose-500 text-white text-[10px] font-bold px-2 py-0.5 rounded-md flex items-center gap-1"><i data-lucide="alert-circle" class="w-3 h-3"></i> فوری / حیاتی</span>' : ''}
+                    </div>
+                  </div>
+                </div>
+
+                <div class="flex items-center gap-2 shrink-0">
+                  <span class="text-[11px] font-semibold text-secondary bg-bgCustom px-3 py-1 rounded-lg border border-accent flex items-center gap-1">
+                    <i data-lucide="calendar" class="w-3 h-3 text-primary"></i>
+                    <span>${t.dueDate}</span>
+                  </span>
+                </div>
+              </div>
+            `).join('')}
+          </div>
+        `;
+        container.appendChild(sectionDiv);
+      });
+
+      lucide.createIcons();
+    }
+
     let isMusicPlaying = false;
     let rsvpCurrentStatus = 'attending';
 
@@ -1470,6 +1830,7 @@
       renderVendors(vendors);
       renderRsvpModule();
       runAiAllocation();
+      renderChecklistTimeline();
       renderCalendar();
       renderInquiries();
       renderAdminTable();

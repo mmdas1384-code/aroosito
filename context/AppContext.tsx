@@ -110,6 +110,7 @@ export interface ChecklistItem {
   category: string;
   completed: boolean;
   dueDate: string;
+  isUrgent?: boolean;
 }
 
 export interface GuestItem {
@@ -222,7 +223,7 @@ interface AppContextType {
   addVendorPortfolioMedia: (vendorId: string, media: Omit<PortfolioMedia, "id">) => void;
   deleteVendorPortfolioMedia: (vendorId: string, mediaId: string) => void;
   toggleChecklist: (id: string) => void;
-  addChecklistItem: (title: string, category: string, dueDate: string) => void;
+  addChecklistItem: (title: string, category: string, dueDate: string, isUrgent?: boolean) => void;
   addGuestItem: (name: string, side: "bride" | "groom", plusOne: boolean) => void;
   toggleGuestStatus: (id: string, status: "confirmed" | "pending" | "declined") => void;
   updateBudgetItem: (id: string, actual: number) => void;
@@ -407,6 +408,46 @@ const INITIAL_NOTIFICATIONS: NotificationItem[] = [
   }
 ];
 
+const INITIAL_CHECKLIST: ChecklistItem[] = [
+  // ۱۲ تا ۹ ماه قبل
+  { id: "chk-1", title: "تعیین بودجه اولیه و سقف هزینه‌ها", category: "۱۲ تا ۹ ماه قبل", completed: true, dueDate: "۱۲ ماه قبل", isUrgent: false },
+  { id: "chk-2", title: "تعیین تاریخ تقریبی برگزاری مراسم", category: "۱۲ تا ۹ ماه قبل", completed: true, dueDate: "۱۲ ماه قبل", isUrgent: false },
+  { id: "chk-3", title: "برآورد اولیه تعداد مهمانان", category: "۱۲ تا ۹ ماه قبل", completed: true, dueDate: "۱۱ ماه قبل", isUrgent: false },
+  { id: "chk-4", title: "رزرو و عقد قرارداد با تالار یا باغ عروسی", category: "۱۲ تا ۹ ماه قبل", completed: true, dueDate: "۱۰ ماه قبل", isUrgent: true },
+  { id: "chk-5", title: "انتخاب و رزرو آتلیه فیلم و عکس", category: "۱۲ تا ۹ ماه قبل", completed: false, dueDate: "۹ ماه قبل", isUrgent: true },
+
+  // ۹ تا ۶ ماه قبل
+  { id: "chk-6", title: "انتخاب و رزرو سالن زیبایی عروس (آرایشگاه)", category: "۹ تا ۶ ماه قبل", completed: false, dueDate: "۸ ماه قبل", isUrgent: true },
+  { id: "chk-7", title: "انتخاب و رزرو گروه موسیقی، دی‌جی و نورپردازی", category: "۹ تا ۶ ماه قبل", completed: false, dueDate: "۷ ماه قبل", isUrgent: false },
+  { id: "chk-8", title: "انتخاب و سفارش یا اجاره لباس عروس و اکسسوری‌ها", category: "۹ تا ۶ ماه قبل", completed: false, dueDate: "۶ ماه قبل", isUrgent: false },
+  { id: "chk-9", title: "بررسی و انتخاب تشریفات و گروه گل‌آرایی", category: "۹ تا ۶ ماه قبل", completed: false, dueDate: "۶ ماه قبل", isUrgent: false },
+
+  // ۶ تا ۳ ماه قبل
+  { id: "chk-10", title: "رزرو و انتخاب کت‌وشلوار داماد", category: "۶ تا ۳ ماه قبل", completed: false, dueDate: "۵ ماه قبل", isUrgent: false },
+  { id: "chk-11", title: "انتخاب و سفارش کارت دعوت (فیزیکی و دیجیتال)", category: "۶ تا ۳ ماه قبل", completed: false, dueDate: "۴ ماه قبل", isUrgent: false },
+  { id: "chk-12", title: "نهایی‌سازی لیست مهمانان و دسته‌بندی خانواده‌ها", category: "۶ تا ۳ ماه قبل", completed: false, dueDate: "۴ ماه قبل", isUrgent: false },
+  { id: "chk-13", title: "رزرو ماشین عروس و گل‌آرایی آن", category: "۶ تا ۳ ماه قبل", completed: false, dueDate: "۳ ماه قبل", isUrgent: false },
+  { id: "chk-14", title: "رزرو گروه فیلم‌برداری ساخت فرمالیته و سفر فرمالیته (در صورت نیاز)", category: "۶ تا ۳ ماه قبل", completed: false, dueDate: "۳ ماه قبل", isUrgent: false },
+
+  // ۳ تا ۱ ماه قبل
+  { id: "chk-15", title: "خرید حلقه و سرویس طلا", category: "۳ تا ۱ ماه قبل", completed: false, dueDate: "۲ ماه قبل", isUrgent: false },
+  { id: "chk-16", title: "ارسال کارت‌های دعوت و دریافت تاییدیه حضور (RSVP)", category: "۳ تا ۱ ماه قبل", completed: false, dueDate: "۶ هفته قبل", isUrgent: true },
+  { id: "chk-17", title: "هماهنگی منوی غذایی و پذیرایی با تالار/تشریفات", category: "۳ تا ۱ ماه قبل", completed: false, dueDate: "۱ ماه قبل", isUrgent: false },
+  { id: "chk-18", title: "پرو نهایی لباس عروس و کت‌وشلوار داماد", category: "۳ تا ۱ ماه قبل", completed: false, dueDate: "۱ ماه قبل", isUrgent: false },
+  { id: "chk-19", title: "تست آرایش و میکاپ عروس (میکاپ تست)", category: "۳ تا ۱ ماه قبل", completed: false, dueDate: "۱ ماه قبل", isUrgent: false },
+
+  // ۱ هفته قبل
+  { id: "chk-20", title: "پیگیری نهایی تعداد مهمانان قطعی و اعلام به تالار", category: "۱ هفته قبل", completed: false, dueDate: "۵ روز قبل", isUrgent: true },
+  { id: "chk-21", title: "چینش آنلاین جایگاه مهمانان سر میزها (Seating Chart)", category: "۱ هفته قبل", completed: false, dueDate: "۴ روز قبل", isUrgent: false },
+  { id: "chk-22", title: "آماده‌سازی ساک/کیف لوازم ضروری روز عروسی", category: "۱ هفته قبل", completed: false, dueDate: "۲ روز قبل", isUrgent: false },
+  { id: "chk-23", title: "هماهنگی ساعت دقیق با آرایشگاه، آتلیه و تالار", category: "۱ هفته قبل", completed: false, dueDate: "۱ روز قبل", isUrgent: true },
+
+  // روز عروسی
+  { id: "chk-24", title: "تحویل گرفتن گل ماشین و دسته گل عروس", category: "روز عروسی", completed: false, dueDate: "صبح عروسی", isUrgent: true },
+  { id: "chk-25", title: "چک کردن مدارک و حلقه‌ها", category: "روز عروسی", completed: false, dueDate: "صبح عروسی", isUrgent: true },
+  { id: "chk-26", title: "همراه داشتن کیف لوازم ضروری (کمک‌های اولیه، نخ و سوزن، شارژر)", category: "روز عروسی", completed: false, dueDate: "صبح عروسی", isUrgent: false }
+];
+
 const INITIAL_REVIEWS: VendorReview[] = [
   {
     id: "rev-1",
@@ -473,7 +514,7 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
   const [vendors, setVendors] = useState<Vendor[]>(INITIAL_VENDORS);
   const [categories, setCategories] = useState<Category[]>(INITIAL_CATEGORIES);
   const [inquiries, setInquiries] = useState<Inquiry[]>(INITIAL_INQUIRIES);
-  const [checklist, setChecklist] = useState<ChecklistItem[]>([]);
+  const [checklist, setChecklist] = useState<ChecklistItem[]>(INITIAL_CHECKLIST);
   const [guests, setGuests] = useState<GuestItem[]>([]);
   const [budget, setBudget] = useState<BudgetItem[]>([]);
   const [seatingElements, setSeatingElements] = useState<SeatingElement[]>([]);
@@ -651,8 +692,8 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
     setChecklist((prev) => prev.map((c) => (c.id === id ? { ...c, completed: !c.completed } : c)));
   };
 
-  const addChecklistItem = (title: string, category: string, dueDate: string) => {
-    setChecklist((prev) => [...prev, { id: `chk-${Date.now()}`, title, category, completed: false, dueDate }]);
+  const addChecklistItem = (title: string, category: string, dueDate: string, isUrgent: boolean = false) => {
+    setChecklist((prev) => [...prev, { id: `chk-${Date.now()}`, title, category, completed: false, dueDate, isUrgent }]);
   };
 
   const addGuestItem = (name: string, side: "bride" | "groom", plusOne: boolean) => {

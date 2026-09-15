@@ -335,17 +335,24 @@ export default function HomePage() {
                 <div
                   key={item.id}
                   onClick={() => toggleChecklist(item.id)}
-                  className="p-3 rounded-xl border border-accent/60 flex items-center justify-between cursor-pointer hover:bg-bg-custom transition-colors"
+                  className={`p-3 rounded-xl border flex items-center justify-between cursor-pointer transition-colors ${
+                    item.isUrgent && !item.completed ? "bg-rose-50/60 border-rose-200" : "border-accent/60 hover:bg-bg-custom"
+                  }`}
                 >
-                  <div className="flex items-center gap-2">
-                    <CheckCircle2 className={`w-5 h-5 ${item.completed ? "text-primary" : "text-secondary"}`} />
-                    <span className={`text-xs font-semibold ${item.completed ? "line-through text-secondary" : "text-graphite"}`}>
+                  <div className="flex items-center gap-2 min-w-0">
+                    <CheckCircle2 className={`w-5 h-5 shrink-0 ${item.completed ? "text-primary" : item.isUrgent ? "text-rose-500" : "text-secondary"}`} />
+                    <span className={`text-xs font-semibold truncate ${item.completed ? "line-through text-secondary" : "text-graphite"}`}>
                       {item.title}
                     </span>
                   </div>
-                  <span className="text-[10px] text-secondary bg-bg-custom px-2 py-0.5 rounded-md border border-accent">
-                    {item.dueDate}
-                  </span>
+                  <div className="flex items-center gap-1 shrink-0">
+                    {item.isUrgent && !item.completed && (
+                      <span className="bg-rose-500 text-white text-[9px] font-bold px-1.5 py-0.5 rounded">فوری</span>
+                    )}
+                    <span className="text-[10px] text-secondary bg-bg-custom px-2 py-0.5 rounded-md border border-accent">
+                      {item.dueDate}
+                    </span>
+                  </div>
                 </div>
               ))}
             </div>
