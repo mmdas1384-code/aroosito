@@ -1,36 +1,66 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# عروسی تو (Aroosi To) - پلتفرم هوشمند برنامه‌ریزی خدمات مجالس و عروسی
 
-## Getting Started
+پلتفرم مدرن و جامع برنامه‌ریزی جشن عروسی و مدیریت خدمات مجالس، توسعه داده شده با Next.js 16 (App Router) و Tailwind CSS.
 
-First, run the development server:
+---
+
+## 💎 ویژگی‌های اصلی (Key Features)
+
+1. **دسته بندی و راهنمای کسب و کارها (Vendor Directory)**
+   - جستجو و فیلتر پیشرفته بر اساس دسته‌بندی (تالار، آتلیه، سالن زیبایی، مزون و...)، شهر و محدوده قیمت.
+   - کارت‌های تعاملی با گالری تصاویر، گواهی تاییدیه رسمی ("تاییدیه رسمی عروسی تو") و امکان درخواست مستقیم استعلام قیمت.
+
+2. **پروفایل اختصاصی تامین‌کنندگان (Vendor Profiles)**
+   - نشان اعتبار و وضعیت تاییدیه هویت، گالری نمونه کارها، جدول پکیج‌ها و قیمت‌ها.
+   - تقویم هوشمند روزهای آزاد و پر به همراه فرم آنلاین استعلام قیمت مستقیم.
+
+3. **پنل مدیریت اختصاصی تامین‌کنندگان (Vendor Dashboard)**
+   - تحلیل بازدید و لیدهای دریافتی، تقویم تعاملی جالی/شمسی جهت تغییر وضعیت روزها (سبز/قرمز).
+   - مدیریت استعلام‌ها و صدور پیشنهاد قیمت سفارشی، تنظیمات دریافت پیامک مشتری جدید.
+
+4. **پنل مدیریت ارشد پلتفرم (Super Admin Dashboard)**
+   - بررسی و اعطای یک‌کلیکی "تاییدیه رسمی اعتبار"، مدیریت دسته‌بندی‌های شغلی.
+   - خروجی اکسل/CSV از فهرست کاربران و تامین‌کنندگان، گزارش‌گیری و پنل ارسال پیامک انبوه.
+
+5. **ابزارهای هوشمند برنامه‌ریزی زوج‌ها (Planning Tools)**
+   - چک‌لیست هوشمند کارهای عروسی، محاسبه‌گر هوشمند بودجه، و مدیریت لیست مهمانان و پاسخ RSVP.
+   - تست‌های روانشناسی و استایل‌شناسی اختصاصی عروسی.
+
+---
+
+## 🎨 پالت رنگی رسمی (Color Palette)
+
+- **Primary (اصلی):** `#2E533F` (Dark Emerald Green) - دکمه‌های اصلی، هدرها، نشانگرهای فعال.
+- **Secondary (ثانویه):** `#8D99AE` (Soft Steel/Silver) - زیرعنوان‌ها، آیکون‌ها و تگ‌ها.
+- **Background (پس‌زمینه):** `#FDFBFC` (Ice White) - پس‌زمینه کلی پلتفرم.
+- **Accent/Borders (حاشیه و آکسان):** `#BDCFE0` (Light Platinum) - کادر کارت‌ها، خطوط جداکننده.
+- **Text (متن اصلی):** `#212529` (Dark Graphite) - متون اصلی جهت حداکثر خوانایی.
+
+---
+
+## 🛠 تکنولوژی‌های استفاده شده (Tech Stack)
+
+- **فریم‌ورک:** [Next.js 16 (App Router)](https://nextjs.org/)
+- **زبان:** TypeScript
+- **استایل‌دهی:** Tailwind CSS v4 & Lucide React Icons
+- **فونت:** Vazirmatn (پشتیبانی کامل RTL و راست‌چین)
+
+---
+
+## 🚀 راه اندازی پروژه (Getting Started)
+
+ابتدا وابستگی‌های پروژه را نصب کرده و سرور توسعه را اجرا کنید:
 
 ```bash
+npm install
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+سپس مرورگر خود را باز کرده و به آدرس [http://localhost:3000](http://localhost:3000) بروید.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+### ساخت نسخه پروداکشن (Production Build):
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
-
-## Learn More
-
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+```bash
+npm run build
+npm run start
+```
