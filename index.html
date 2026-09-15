@@ -90,8 +90,8 @@
               <span>کارت دعوت دیجیتال & RSVP</span>
             </button>
             <button onclick="switchTab('tools')" id="nav-tools" class="nav-btn flex items-center gap-2 px-3.5 py-2 rounded-lg text-sm font-semibold transition-colors text-graphite hover:text-primary hover:bg-slate-50">
-              <i data-lucide="calculator" class="w-4 h-4 text-secondary"></i>
-              <span>محاسبه‌گر و ابزارها</span>
+              <i data-lucide="bot" class="w-4 h-4 text-secondary"></i>
+              <span>دستیار AI & مدیریت بودجه</span>
             </button>
             <button onclick="switchTab('vendor')" id="nav-vendor" class="nav-btn flex items-center gap-2 px-3.5 py-2 rounded-lg text-sm font-semibold transition-colors text-graphite hover:text-primary hover:bg-slate-50">
               <i data-lucide="store" class="w-4 h-4 text-secondary"></i>
@@ -389,150 +389,142 @@
     </div>
 
     <!-- ========================================== -->
-    <!-- TAB 3: PLANNING TOOLS & SMART ESTIMATOR -->
+    <!-- TAB 3: AI ASSISTANT & ADVANCED BUDGET MODULE -->
     <!-- ========================================== -->
-    <div id="tab-tools" class="tab-content hidden space-y-12">
+    <div id="tab-tools" class="tab-content hidden space-y-8">
 
-      <!-- SMART BUDGET ESTIMATOR -->
+      <!-- AI ASSISTANT QUIZ SECTION -->
       <section class="bg-white border border-accent rounded-3xl p-8 shadow-xs space-y-6">
         <div class="flex items-center gap-3 border-b border-accent pb-4">
           <div class="w-12 h-12 rounded-2xl bg-primary/10 flex items-center justify-center text-primary">
-            <i data-lucide="calculator" class="w-6 h-6"></i>
+            <i data-lucide="bot" class="w-6 h-6"></i>
           </div>
           <div>
-            <h2 class="text-xl font-bold text-graphite">محاسبه‌گر و برآورد هوشمند بودجه عروسی</h2>
-            <p class="text-xs text-secondary">تخمین انفعالی هزینه‌های جشن بر اساس تعداد مهمانان و سطح کیفیت خدمات</p>
+            <h2 class="text-xl font-bold text-graphite">موتور هوش مصنوعی تخصیص بهینه بودجه عروسی</h2>
+            <p class="text-xs text-secondary">پیشنهاد دقیق درصد هزینه‌کرد تالار، آتلیه، میکاپ و تشریفات بر اساس بودجه کل شما</p>
           </div>
         </div>
 
         <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
 
-          <div class="lg:col-span-7 space-y-6">
-            <!-- Guests Slider -->
-            <div class="space-y-2">
-              <div class="flex justify-between text-sm font-bold text-graphite">
-                <span>تعداد مهمانان:</span>
-                <span id="guest-count-label" class="text-primary font-black text-base">۲۰۰ نفر</span>
-              </div>
-              <input type="range" id="guest-slider" min="50" max="1000" step="25" value="200" oninput="calculateBudget()" class="w-full accent-primary h-2 bg-slate-100 rounded-lg cursor-pointer">
+          <div class="lg:col-span-6 space-y-4 bg-bgCustom p-6 rounded-2xl border border-accent">
+            <div>
+              <label class="block text-xs font-bold text-graphite mb-1">۱. کل بودجه در نظر گرفته شده (تومان):</label>
+              <input type="number" id="ai-budget-input" value="300000000" step="10000000" oninput="runAiAllocation()" class="w-full bg-white border border-accent rounded-xl p-3 text-sm font-bold text-primary focus:outline-none focus:border-primary">
             </div>
 
-            <!-- Quality Tier Selector -->
-            <div class="space-y-2">
-              <label class="block text-sm font-bold text-graphite">سطح کیفیت و تشریفات:</label>
-              <div class="grid grid-cols-3 gap-3">
-                <button type="button" onclick="setTier('standard')" id="tier-standard" class="tier-btn py-3 px-4 rounded-xl border-2 text-xs font-bold transition-all border-primary bg-primary/10 text-primary">
-                  اقتصادی / استاندارد
-                </button>
-                <button type="button" onclick="setTier('premium')" id="tier-premium" class="tier-btn py-3 px-4 rounded-xl border-2 border-accent text-xs font-bold transition-all text-graphite hover:border-primary">
-                  ویژه / نیمه‌لوکس
-                </button>
-                <button type="button" onclick="setTier('vip')" id="tier-vip" class="tier-btn py-3 px-4 rounded-xl border-2 border-accent text-xs font-bold transition-all text-graphite hover:border-primary">
-                  VIP / تشریفاتی کامل
-                </button>
+            <div class="grid grid-cols-2 gap-3">
+              <div>
+                <label class="block text-xs font-bold text-graphite mb-1">۲. تعداد مهمانان:</label>
+                <input type="number" id="ai-guests-input" value="250" oninput="runAiAllocation()" class="w-full bg-white border border-accent rounded-xl p-3 text-xs font-semibold focus:outline-none focus:border-primary">
+              </div>
+
+              <div>
+                <label class="block text-xs font-bold text-graphite mb-1">۳. شهر برگزاری:</label>
+
+                <select id="ai-city-input" class="w-full bg-white border border-accent rounded-xl p-3 text-xs font-semibold focus:outline-none focus:border-primary">
+                  <option value="تهران">تهران</option>
+                  <option value="شیراز">شیراز</option>
+                  <option value="اصفهان">اصفهان</option>
+                </select>
               </div>
             </div>
 
-            <!-- Breakdown list -->
-            <div class="space-y-3 pt-4 border-t border-accent/60">
-              <h3 class="text-sm font-bold text-graphite">تفکیک تخمینی هزینه‌ها:</h3>
-              <div class="space-y-2 text-xs font-medium">
-                <div class="flex justify-between p-2.5 bg-bgCustom rounded-lg border border-accent/60">
-                  <span class="text-graphite">تالار و منوی پذیرایی (۵۰٪):</span>
-                  <span id="cost-venue" class="font-bold text-primary">۰ تومان</span>
-                </div>
-                <div class="flex justify-between p-2.5 bg-bgCustom rounded-lg border border-accent/60">
-                  <span class="text-graphite">آتلیه، فیلمبرداری و عکاسی (۲۰٪):</span>
-                  <span id="cost-photo" class="font-bold text-primary">۰ تومان</span>
-                </div>
-                <div class="flex justify-between p-2.5 bg-bgCustom rounded-lg border border-accent/60">
-                  <span class="text-graphite">لباس عروس، داماد و آرایشگاه (۱۵٪):</span>
-                  <span id="cost-attire" class="font-bold text-primary">۰ تومان</span>
-                </div>
-                <div class="flex justify-between p-2.5 bg-bgCustom rounded-lg border border-accent/60">
-                  <span class="text-graphite">گل‌آرایی، تشریفات و متفرقه (۱۵٪):</span>
-                  <span id="cost-decor" class="font-bold text-primary">۰ تومان</span>
-                </div>
-              </div>
+            <div>
+              <label class="block text-xs font-bold text-graphite mb-1">۴. سبک مراسم:</label>
+              <select id="ai-style-input" onchange="runAiAllocation()" class="w-full bg-white border border-accent rounded-xl p-3 text-xs font-semibold focus:outline-none focus:border-primary">
+                <option value="classic">کلاسیک و مجلل</option>
+                <option value="rustic">روستیک و فضای باز</option>
+                <option value="modern">مدرن و مینی‌مال</option>
+              </select>
             </div>
+
+            <button onclick="runAiAllocation()" class="w-full bg-primary hover:bg-primary-hover text-white py-3 rounded-xl text-xs font-bold shadow-md transition-colors flex items-center justify-center gap-2">
+              <i data-lucide="sparkles" class="w-4 h-4"></i>
+              <span>محاسبه مجدد تخصیص هوشمند</span>
+            </button>
           </div>
 
-          <!-- Total Result Card -->
-          <div class="lg:col-span-5 bg-primary text-white p-6 rounded-2xl shadow-lg space-y-6">
-            <div class="flex items-center gap-2 border-b border-white/20 pb-4">
-              <i data-lucide="sparkles" class="w-5 h-5 text-accent"></i>
-              <span class="text-sm font-bold">برآورد کل بودجه پیشنهادی</span>
+          <!-- RESULT ALLOCATION -->
+          <div class="lg:col-span-6 bg-primary text-white p-6 rounded-2xl shadow-md space-y-4">
+            <div class="flex justify-between items-center border-b border-white/20 pb-3">
+              <span class="text-xs font-bold text-accent">تفکیک پیشنهادی هوش مصنوعی</span>
+              <span class="text-xs bg-white/20 px-2.5 py-1 rounded-full font-bold">پیشنهاد هوشمند</span>
             </div>
 
-            <div class="text-center py-4 space-y-1">
-              <span class="text-xs text-accent font-medium">مبلغ کل تخمینی:</span>
-              <div id="total-budget" class="text-3xl font-black text-white">۰</div>
-              <span class="text-xs text-white/80">تومان</span>
+            <div class="space-y-3 text-xs font-medium">
+              <div class="flex justify-between items-center p-2.5 bg-white/10 rounded-xl">
+                <span>🏰 تالار و تشریفات پذیرایی (۴۰٪):</span>
+                <span id="ai-res-venue" class="font-bold text-sm">۱۲۰,۰۰۰,۰۰۰ تومان</span>
+              </div>
+              <div class="flex justify-between items-center p-2.5 bg-white/10 rounded-xl">
+                <span>📸 آتلیه و فیلمبرداری سینمایی (۲۰٪):</span>
+                <span id="ai-res-photo" class="font-bold text-sm">۶۰,۰۰۰,۰۰۰ تومان</span>
+              </div>
+              <div class="flex justify-between items-center p-2.5 bg-white/10 rounded-xl">
+                <span>👗 لباس عروس، داماد و میکاپ (۱۵٪):</span>
+                <span id="ai-res-attire" class="font-bold text-sm">۴۵,۰۰۰,۰۰۰ تومان</span>
+              </div>
+              <div class="flex justify-between items-center p-2.5 bg-white/10 rounded-xl">
+                <span>🎵 موزیک زنده و نورپردازی (۱۵٪):</span>
+                <span id="ai-res-music" class="font-bold text-sm">۴۵,۰۰۰,۰۰۰ تومان</span>
+              </div>
+              <div class="flex justify-between items-center p-2.5 bg-white/10 rounded-xl">
+                <span>💐 گل‌آرایی و متفرقه (۱۰٪):</span>
+                <span id="ai-res-decor" class="font-bold text-sm">۳۰,۰۰۰,۰۰۰ تومان</span>
+              </div>
             </div>
-
-            <button onclick="openInquiryModal('کلی', 'برآورد هزینه اختصاصی با بودجه تخمینی')" class="w-full bg-white text-primary hover:bg-slate-100 py-3 rounded-xl font-bold text-sm shadow-md transition-colors flex items-center justify-center gap-2">
-              <i data-lucide="send" class="w-4 h-4"></i>
-              <span>دریافت پیش‌فاکتور از تامین‌کنندگان</span>
-            </button>
           </div>
 
         </div>
       </section>
 
-      <!-- CHECKLIST & QUIZ MODULE -->
-      <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
-
-        <!-- Checklist Module -->
-        <div class="bg-white border border-accent rounded-3xl p-6 shadow-xs space-y-4">
-          <div class="flex items-center justify-between border-b border-accent pb-3">
-            <h3 class="text-lg font-bold text-graphite flex items-center gap-2">
-              <i data-lucide="check-square" class="w-5 h-5 text-primary"></i>
-              <span>چک‌لیست کارهای ضروری عروسی</span>
+      <!-- ADVANCED DYNAMIC BUDGET TRACKER TABLE -->
+      <section class="bg-white border border-accent rounded-3xl p-8 shadow-xs space-y-6">
+        <div class="flex flex-col sm:flex-row justify-between sm:items-center gap-4 border-b border-accent pb-4">
+          <div>
+            <h3 class="text-xl font-bold text-graphite flex items-center gap-2">
+              <i data-lucide="file-spreadsheet" class="w-6 h-6 text-primary"></i>
+              <span>جدول پیشرفته مدیریت و ردیابی بودجه عروسی</span>
             </h3>
-            <span id="checklist-progress" class="text-xs font-bold text-primary bg-primary/10 px-2.5 py-1 rounded-full">۰٪ تکمیل</span>
+            <p class="text-xs text-secondary mt-0.5">ثبت بیعانه‌ها، هزینه واقعی و محاسبه لحظه‌ای باقیمانده</p>
           </div>
 
-          <div id="checklist-container" class="space-y-2 max-h-80 overflow-y-auto custom-scrollbar pr-1">
-            <!-- Populated via JS -->
+          <button onclick="alert('فایل اکسل/PDF گزارش بودجه با موفقیت دانلود شد.')" class="bg-primary/10 hover:bg-primary/20 text-primary border border-primary/20 px-4 py-2.5 rounded-xl text-xs font-bold transition-all flex items-center gap-1.5">
+            <i data-lucide="download" class="w-4 h-4"></i>
+            <span>دانلود خروجی (Excel / PDF)</span>
+          </button>
+        </div>
+
+        <!-- PROGRESS BAR -->
+        <div class="space-y-2">
+          <div class="flex justify-between text-xs font-bold">
+            <span class="text-graphite">میزان مصرف بودجه کل:</span>
+            <span id="budget-progress-percent" class="text-primary font-black">۹۸٪ مصرف شده</span>
+          </div>
+          <div class="w-full h-3 bg-slate-100 rounded-full overflow-hidden border border-accent">
+            <div id="budget-progress-bar" class="h-full bg-primary transition-all duration-300" style="width: 98%"></div>
           </div>
         </div>
 
-        <!-- Quiz Module -->
-        <div class="bg-white border border-accent rounded-3xl p-6 shadow-xs space-y-4">
-          <div class="border-b border-accent pb-3">
-            <h3 class="text-lg font-bold text-graphite flex items-center gap-2">
-              <i data-lucide="help-circle" class="w-5 h-5 text-primary"></i>
-              <span>تست هوشمند استایل‌شناسی عروسی</span>
-            </h3>
-            <p class="text-xs text-secondary mt-0.5">تم و سبک برگزاری مراسم مناسب خود را پیدا کنید</p>
-          </div>
-
-          <div id="quiz-container" class="space-y-4">
-            <div class="p-4 bg-bgCustom rounded-2xl border border-accent space-y-3">
-              <span class="text-xs font-bold text-secondary">سوال ۱ از ۲</span>
-              <p class="text-sm font-bold text-graphite">فضای رویایی شما برای برگزاری مراسم عروسی کدام است؟</p>
-
-              <div class="space-y-2">
-                <button onclick="answerQuiz('classic')" class="w-full text-right p-3 rounded-xl border border-accent bg-white text-xs font-semibold hover:border-primary hover:bg-primary/5 transition-all flex items-center justify-between">
-                  <span>باغ تالار باشکوه با معماری کلاسیک و لوکس</span>
-                  <i data-lucide="chevron-left" class="w-4 h-4 text-secondary"></i>
-                </button>
-                <button onclick="answerQuiz('modern')" class="w-full text-right p-3 rounded-xl border border-accent bg-white text-xs font-semibold hover:border-primary hover:bg-primary/5 transition-all flex items-center justify-between">
-                  <span>فضای باز و طبیعت سبز (بوهو و مدرن)</span>
-                  <i data-lucide="chevron-left" class="w-4 h-4 text-secondary"></i>
-                </button>
-              </div>
-            </div>
-
-            <div id="quiz-result" class="hidden p-4 bg-primary/10 border border-primary/20 rounded-2xl space-y-2">
-              <span class="text-xs font-bold text-primary block">نتیجه پیشنهاد استایل شما:</span>
-              <h4 id="quiz-result-title" class="text-sm font-bold text-graphite">سبک کلاسیک مجلل</h4>
-              <p id="quiz-result-desc" class="text-xs text-graphite/80 leading-relaxed">با توجه به انتخابتان، تالار تشریفاتی زمرد و آتلیه نور بهترین گزینه‌ها برای شما هستند.</p>
-            </div>
-          </div>
+        <!-- BUDGET TABLE -->
+        <div class="overflow-x-auto">
+          <table class="w-full text-right text-xs">
+            <thead class="bg-bgCustom text-secondary border-b border-accent font-bold">
+              <tr>
+                <th class="p-3">دسته‌بندی / عنوان</th>
+                <th class="p-3">بودجه اولیه (تومان)</th>
+                <th class="p-3">هزینه واقعی (تومان)</th>
+                <th class="p-3">بیعانه پرداختی (تومان)</th>
+                <th class="p-3">باقیمانده</th>
+              </tr>
+            </thead>
+            <tbody id="budget-table-body" class="divide-y divide-accent/60 font-medium">
+              <!-- Populated via JS -->
+            </tbody>
+          </table>
         </div>
-
-      </div>
+      </section>
 
     </div>
 
@@ -863,7 +855,14 @@
       }
     ];
 
-    let currentTier = 'standard';
+    let budgetItemsStatic = [
+      { category: "تالار و پذیرایی منو", allocated: 120000000, actual: 115000000, deposit: 50000000 },
+      { category: "آتلیه و فیلمبرداری", allocated: 60000000, actual: 65000000, deposit: 25000000 },
+      { category: "لباس عروس و میکاپ", allocated: 45000000, actual: 40000000, deposit: 20000000 },
+      { category: "موزیک زنده و نور", allocated: 45000000, actual: 45000000, deposit: 15000000 },
+      { category: "گل‌آرایی و متفرقه", allocated: 30000000, allocated: 30000000, actual: 32000000, deposit: 10000000 }
+    ];
+
     let isMusicPlaying = false;
     let rsvpCurrentStatus = 'attending';
 
@@ -871,14 +870,6 @@
       { id: 1, name: "محمدحسین و همسر", status: "attending", plusOnes: 2, dietary: "بدون لکتوز", note: "با آرزوی خوشبختی برای علی و سارا عزیز ❤️" },
       { id: 2, name: "زهرا حسینی", status: "attending", plusOnes: 1, dietary: "گیاه‌خوار", note: "بسیار خوشحالیم برای این جشن زیبا!" },
       { id: 3, name: "رضا کریمی", status: "declined", plusOnes: 0, dietary: "", note: "متأسفانه مسافرت هستم ولی بهترین‌ها رو براتون آرزو دارم." }
-    ];
-
-    let checklistItems = [
-      { id: 1, text: "تعیین تاریخ تقریبی جشن و تعداد مهمانان", done: true },
-      { id: 2, text: "محاسبه و برآورد بودجه در عروسی تو", done: true },
-      { id: 3, text: "رزرو باغ تالار و بررسی منوی پذیرایی", done: false },
-      { id: 4, text: "قرارداد با آتلیه و عکاس مجهز به هلی‌شات", done: false },
-      { id: 5, text: "انتخاب و پرو لباس عروس در مزون", done: false },
     ];
 
     let inquiries = [
@@ -903,6 +894,54 @@
       }
 
       lucide.createIcons();
+    }
+
+    function runAiAllocation() {
+      const budget = parseInt(document.getElementById('ai-budget-input').value) || 300000000;
+      document.getElementById('ai-res-venue').innerText = Math.round(budget * 0.40).toLocaleString('fa-IR') + ' تومان';
+      document.getElementById('ai-res-photo').innerText = Math.round(budget * 0.20).toLocaleString('fa-IR') + ' تومان';
+      document.getElementById('ai-res-attire').innerText = Math.round(budget * 0.15).toLocaleString('fa-IR') + ' تومان';
+      document.getElementById('ai-res-music').innerText = Math.round(budget * 0.15).toLocaleString('fa-IR') + ' تومان';
+      document.getElementById('ai-res-decor').innerText = Math.round(budget * 0.10).toLocaleString('fa-IR') + ' تومان';
+
+      budgetItemsStatic = [
+        { category: "تالار و پذیرایی (۴۰٪)", allocated: Math.round(budget * 0.40), actual: Math.round(budget * 0.38), deposit: Math.round(budget * 0.20) },
+        { category: "آتلیه و عکاسی (۲۰٪)", allocated: Math.round(budget * 0.20), actual: Math.round(budget * 0.21), deposit: Math.round(budget * 0.10) },
+        { category: "لباس و میکاپ (۱۵٪)", allocated: Math.round(budget * 0.15), actual: Math.round(budget * 0.14), deposit: Math.round(budget * 0.08) },
+        { category: "موزیک و نور (۱۵٪)", allocated: Math.round(budget * 0.15), actual: Math.round(budget * 0.15), deposit: Math.round(budget * 0.05) },
+        { category: "گل‌آرایی و متفرقه (۱۰٪)", allocated: Math.round(budget * 0.10), actual: Math.round(budget * 0.09), deposit: Math.round(budget * 0.04) }
+      ];
+
+      renderBudgetTable();
+    }
+
+    function renderBudgetTable() {
+      const tbody = document.getElementById('budget-table-body');
+      tbody.innerHTML = '';
+
+      let totAllocated = 0;
+      let totActual = 0;
+
+      budgetItemsStatic.forEach(b => {
+        totAllocated += b.allocated;
+        totActual += b.actual;
+        const rem = b.allocated - b.actual;
+
+        const tr = document.createElement('tr');
+        tr.className = "hover:bg-slate-50";
+        tr.innerHTML = `
+          <td class="p-3 font-bold text-graphite">${b.category}</td>
+          <td class="p-3">${b.allocated.toLocaleString('fa-IR')}</td>
+          <td class="p-3">${b.actual.toLocaleString('fa-IR')}</td>
+          <td class="p-3">${b.deposit.toLocaleString('fa-IR')}</td>
+          <td class="p-3 font-bold ${rem < 0 ? 'text-rose-600' : 'text-emerald-700'}">${rem.toLocaleString('fa-IR')}</td>
+        `;
+        tbody.appendChild(tr);
+      });
+
+      const pct = Math.round((totActual / (totAllocated || 1)) * 100);
+      document.getElementById('budget-progress-percent').innerText = pct + '٪ مصرف شده';
+      document.getElementById('budget-progress-bar').style.width = Math.min(100, pct) + '%';
     }
 
     function toggleMusic() {
@@ -1077,82 +1116,6 @@
       renderVendors(filtered);
     }
 
-    function setTier(tier) {
-      currentTier = tier;
-      document.querySelectorAll('.tier-btn').forEach(btn => {
-        btn.classList.remove('border-primary', 'bg-primary/10', 'text-primary');
-        btn.classList.add('border-accent', 'text-graphite');
-      });
-      const active = document.getElementById('tier-' + tier);
-      active.classList.add('border-primary', 'bg-primary/10', 'text-primary');
-      active.classList.remove('border-accent', 'text-graphite');
-
-      calculateBudget();
-    }
-
-    function calculateBudget() {
-      const guests = parseInt(document.getElementById('guest-slider').value);
-      document.getElementById('guest-count-label').innerText = guests + ' نفر';
-
-      let multiplier = 800000;
-      if (currentTier === 'premium') multiplier = 1400000;
-      if (currentTier === 'vip') multiplier = 2200000;
-
-      const venueCost = guests * multiplier;
-      const photoCost = Math.round(venueCost * 0.35);
-      const attireCost = Math.round(venueCost * 0.25);
-      const decorCost = Math.round(venueCost * 0.20);
-      const total = venueCost + photoCost + attireCost + decorCost;
-
-      document.getElementById('cost-venue').innerText = venueCost.toLocaleString('fa-IR') + ' تومان';
-      document.getElementById('cost-photo').innerText = photoCost.toLocaleString('fa-IR') + ' تومان';
-      document.getElementById('cost-attire').innerText = attireCost.toLocaleString('fa-IR') + ' تومان';
-      document.getElementById('cost-decor').innerText = decorCost.toLocaleString('fa-IR') + ' تومان';
-      document.getElementById('total-budget').innerText = total.toLocaleString('fa-IR');
-    }
-
-    function renderChecklist() {
-      const container = document.getElementById('checklist-container');
-      container.innerHTML = '';
-
-      let doneCount = 0;
-      checklistItems.forEach(item => {
-        if (item.done) doneCount++;
-        const row = document.createElement('div');
-        row.className = "flex items-center gap-3 p-3 bg-bgCustom rounded-xl border border-accent/60 cursor-pointer hover:bg-slate-50 transition-colors";
-        row.onclick = () => toggleChecklist(item.id);
-        row.innerHTML = `
-          <input type="checkbox" ${item.done ? 'checked' : ''} class="rounded text-primary focus:ring-primary w-4 h-4 cursor-pointer">
-          <span class="text-xs font-semibold text-graphite ${item.done ? 'line-through text-secondary' : ''}">${item.text}</span>
-        `;
-        container.appendChild(row);
-      });
-
-      const percent = Math.round((doneCount / checklistItems.length) * 100);
-      document.getElementById('checklist-progress').innerText = percent + '٪ تکمیل';
-    }
-
-    function toggleChecklist(id) {
-      checklistItems = checklistItems.map(item => item.id === id ? { ...item, done: !item.done } : item);
-      renderChecklist();
-    }
-
-    function answerQuiz(style) {
-      const resultDiv = document.getElementById('quiz-result');
-      const title = document.getElementById('quiz-result-title');
-      const desc = document.getElementById('quiz-result-desc');
-
-      resultDiv.classList.remove('hidden');
-
-      if (style === 'classic') {
-        title.innerText = 'سبک کلاسیک مجلل و باشکوه';
-        desc.innerText = 'پیشنهاد عروسی تو: رزرو باغ تالار تشریفاتی زمرد، منوی VIP تشریفات و ماشین عروسی کلاسیک.';
-      } else {
-        title.innerText = 'سبک مدرن و بوهو در فضای باز';
-        desc.innerText = 'پیشنهاد عروسی تو: آتلیه نور و تصویر، گل‌آرایی روستیک و سالن زیبایی رویال.';
-      }
-    }
-
     function renderCalendar() {
       const grid = document.getElementById('calendar-grid');
       grid.innerHTML = '';
@@ -1284,8 +1247,7 @@
     window.addEventListener('DOMContentLoaded', () => {
       renderVendors(vendors);
       renderRsvpModule();
-      calculateBudget();
-      renderChecklist();
+      runAiAllocation();
       renderCalendar();
       renderInquiries();
       renderAdminTable();
