@@ -1,0 +1,47 @@
+@import "tailwindcss";
+@import "@fontsource/vazirmatn/400.css";
+@import "@fontsource/vazirmatn/500.css";
+@import "@fontsource/vazirmatn/600.css";
+@import "@fontsource/vazirmatn/700.css";
+
+@theme {
+  --color-primary: #2E533F;
+  --color-primary-hover: #244232;
+  --color-secondary: #8D99AE;
+  --color-bg-custom: #FDFBFC;
+  --color-accent: #BDCFE0;
+  --color-graphite: #212529;
+  --font-vazir: "Vazirmatn", system-ui, -apple-system, sans-serif;
+}
+
+:root {
+  --background: #FDFBFC;
+  --foreground: #212529;
+}
+
+body {
+  background-color: var(--background);
+  color: var(--foreground);
+  font-family: var(--font-vazir), system-ui, -apple-system, sans-serif;
+  direction: rtl;
+  text-align: right;
+}
+
+/* Custom scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: #FDFBFC;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #BDCFE0;
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #8D99AE;
+}
