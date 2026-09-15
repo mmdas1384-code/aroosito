@@ -27,6 +27,7 @@ export const Header: React.FC = () => {
   const navLinks = [
     { href: "/directory", label: "دسته بندی کسب و کارها", icon: Search },
     { href: "/tools", label: "برنامه ریزی و چک لیست ها", icon: CheckSquare },
+    { href: "/invitation", label: "کارت دعوت دیجیتال", icon: Sparkles },
     { href: "/quizzes", label: "تست های روانشناسی و استایل", icon: HelpCircle },
     { href: "/inquiry", label: "استعلام قیمت آنلاین", icon: MessageSquareQuote },
   ];

@@ -85,6 +85,10 @@
               <i data-lucide="layout-grid" class="w-4 h-4 text-primary"></i>
               <span>صفحه اصلی و راهنما</span>
             </button>
+            <button onclick="switchTab('invitation')" id="nav-invitation" class="nav-btn flex items-center gap-2 px-3.5 py-2 rounded-lg text-sm font-semibold transition-colors text-graphite hover:text-primary hover:bg-slate-50">
+              <i data-lucide="sparkles" class="w-4 h-4 text-secondary"></i>
+              <span>کارت دعوت دیجیتال & RSVP</span>
+            </button>
             <button onclick="switchTab('tools')" id="nav-tools" class="nav-btn flex items-center gap-2 px-3.5 py-2 rounded-lg text-sm font-semibold transition-colors text-graphite hover:text-primary hover:bg-slate-50">
               <i data-lucide="calculator" class="w-4 h-4 text-secondary"></i>
               <span>محاسبه‌گر و ابزارها</span>
@@ -225,7 +229,167 @@
     </div>
 
     <!-- ========================================== -->
-    <!-- TAB 2: PLANNING TOOLS & SMART ESTIMATOR -->
+    <!-- TAB 2: DIGITAL INVITATION & RSVP MODULE     -->
+    <!-- ========================================== -->
+    <div id="tab-invitation" class="tab-content hidden space-y-8">
+
+      <!-- CUSTOM URL BANNER -->
+      <div class="bg-white border border-accent rounded-3xl p-6 shadow-xs flex flex-col sm:flex-row items-center justify-between gap-4">
+        <div>
+          <div class="inline-flex items-center gap-1.5 bg-primary/10 text-primary text-xs font-bold px-3 py-1 rounded-full mb-1">
+            <i data-lucide="sparkles" class="w-3.5 h-3.5"></i>
+            <span>کارت دعوت دیجیتال هوشمند</span>
+          </div>
+          <h2 class="text-xl font-bold text-graphite">لندینگ پیج اختصاصی: علی و سارا</h2>
+          <p class="text-xs text-secondary mt-0.5" dir="ltr">aroosito.com/invitation/ali-sara</p>
+        </div>
+
+        <div class="flex items-center gap-2">
+          <button onclick="alert('لینک کارت دعوت در حافظه کپی شد.')" class="flex items-center gap-2 bg-primary/10 hover:bg-primary/20 text-primary border border-primary/20 px-4 py-2.5 rounded-xl text-xs font-bold transition-all">
+            <i data-lucide="copy" class="w-4 h-4"></i>
+            <span>کپی لینک کارت دعوت</span>
+          </button>
+
+          <button id="music-toggle-btn" onclick="toggleMusic()" class="flex items-center gap-2 px-4 py-2.5 rounded-xl text-xs font-bold transition-all border bg-bgCustom border-accent text-graphite hover:border-primary">
+            <i data-lucide="volume-x" class="w-4 h-4 text-secondary"></i>
+            <span id="music-btn-text">پخش موزیک لایت عروسی</span>
+          </button>
+        </div>
+      </div>
+
+      <!-- INVITATION HERO CARD -->
+      <div class="relative bg-white border border-accent rounded-3xl overflow-hidden shadow-lg">
+        <div class="relative h-80 sm:h-96 w-full overflow-hidden bg-slate-900">
+          <img src="https://images.unsplash.com/photo-1519741497674-611481863552?auto=format&fit=crop&w=1600&q=80" alt="علی و سارا" class="w-full h-full object-cover opacity-80">
+          <div class="absolute inset-0 bg-gradient-to-t from-graphite via-graphite/40 to-transparent"></div>
+
+          <div class="absolute bottom-8 right-8 left-8 text-white text-center space-y-3">
+            <span class="text-xs sm:text-sm font-semibold tracking-widest text-accent uppercase">با افتخار شما را دعوت می‌نماییم به پیوند</span>
+            <h2 class="text-3xl sm:text-5xl font-black tracking-tight text-white flex items-center justify-center gap-2">
+              <span>علی</span>
+              <i data-lucide="heart" class="w-8 h-8 text-rose-400 fill-rose-400"></i>
+              <span>سارا</span>
+            </h2>
+            <p class="text-xs sm:text-sm text-slate-200 font-medium">پنج‌شنبه ۱۵ شهریور ۱۴۰۳ • ساعت ۱۸:۰۰ الی ۲۴:۰۰</p>
+          </div>
+        </div>
+
+        <!-- COUNTDOWN TIMER -->
+        <div class="p-8 bg-bgCustom border-b border-accent text-center space-y-6">
+          <h3 class="text-sm font-bold text-secondary flex items-center justify-center gap-2">
+            <i data-lucide="clock" class="w-4 h-4 text-primary"></i>
+            <span>شمارش معکوس تا آغاز جشن رویایی</span>
+          </h3>
+
+          <div class="grid grid-cols-4 gap-3 sm:gap-6 max-w-lg mx-auto">
+            <div class="bg-white border border-accent rounded-2xl p-3 shadow-xs">
+              <span id="timer-days" class="block text-2xl sm:text-3xl font-black text-primary">۴۵</span>
+              <span class="text-[11px] text-secondary font-medium">روز</span>
+            </div>
+            <div class="bg-white border border-accent rounded-2xl p-3 shadow-xs">
+              <span id="timer-hours" class="block text-2xl sm:text-3xl font-black text-primary">۱۴</span>
+              <span class="text-[11px] text-secondary font-medium">ساعت</span>
+            </div>
+            <div class="bg-white border border-accent rounded-2xl p-3 shadow-xs">
+              <span id="timer-mins" class="block text-2xl sm:text-3xl font-black text-primary">۳۲</span>
+              <span class="text-[11px] text-secondary font-medium">دقیقه</span>
+            </div>
+            <div class="bg-white border border-accent rounded-2xl p-3 shadow-xs">
+              <span id="timer-secs" class="block text-2xl sm:text-3xl font-black text-primary">۱۰</span>
+              <span class="text-[11px] text-secondary font-medium">ثانیه</span>
+            </div>
+          </div>
+
+          <div class="pt-2">
+            <button onclick="openRsvpModal()" class="bg-primary hover:bg-primary-hover text-white px-8 py-3.5 rounded-2xl font-bold text-sm shadow-lg transition-all transform hover:-translate-y-0.5 inline-flex items-center gap-2">
+              <i data-lucide="check-circle-2" class="w-5 h-5"></i>
+              <span>اعلام حضور و ثبت پاسخ RSVP</span>
+            </button>
+          </div>
+        </div>
+
+        <!-- LOCATION MAP -->
+        <div class="p-8 grid grid-cols-1 md:grid-cols-2 gap-8 items-center bg-white">
+          <div class="space-y-4">
+            <div class="flex items-center gap-2 text-primary font-bold text-lg">
+              <i data-lucide="map-pin" class="w-6 h-6 text-primary"></i>
+              <span>محل برگزاری جشن</span>
+            </div>
+            <h4 class="text-base font-bold text-graphite">باغ تالار تشریفاتی زمرد</h4>
+            <p class="text-xs text-graphite/80 leading-relaxed">
+              تهران، احمدآباد مستوفی، خیابان صنوبر، پلاک ۴۵ (ورودی اختصاصی با پارکینگ مجهز).
+            </p>
+          </div>
+
+          <div class="aspect-16/9 rounded-2xl overflow-hidden border-2 border-accent relative bg-slate-100 flex items-center justify-center shadow-inner">
+            <img src="https://images.unsplash.com/photo-1526778548025-fa2f459cd5c1?auto=format&fit=crop&w=800&q=80" alt="نقشه تالار" class="w-full h-full object-cover opacity-70">
+            <div class="absolute bg-white/90 backdrop-blur-xs px-4 py-2 rounded-xl border border-accent shadow-md flex items-center gap-2 text-xs font-bold text-primary">
+              <i data-lucide="map-pin" class="w-4 h-4 text-rose-600 fill-rose-600"></i>
+              <span>باغ تالار زمرد</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- COUPLE'S RSVP MANAGEMENT COUNTERS -->
+      <div class="bg-white border border-accent rounded-3xl p-8 shadow-xs space-y-6">
+        <div class="flex flex-col sm:flex-row justify-between sm:items-center gap-4 border-b border-accent pb-4">
+          <div>
+            <h3 class="text-xl font-bold text-graphite flex items-center gap-2">
+              <i data-lucide="users" class="w-6 h-6 text-primary"></i>
+              <span>داشبورد و آمار پاسخ‌ مهمانان (RSVP)</span>
+            </h3>
+            <p class="text-xs text-secondary mt-0.5">مدیریت آنلاین شرکت‌کنندگان و رژیم‌های غذایی</p>
+          </div>
+          <span class="text-xs font-bold text-primary bg-primary/10 px-3 py-1.5 rounded-full">
+            مجموع مدعوین: ۱۵۰ نفر
+          </span>
+        </div>
+
+        <div class="grid grid-cols-1 sm:grid-cols-3 gap-6">
+          <div class="bg-emerald-50 border border-emerald-200 p-5 rounded-2xl flex items-center justify-between">
+            <div>
+              <span class="text-xs text-emerald-800 font-bold">تعداد قطعی شرکت‌کنندگان</span>
+              <span id="rsvp-attending-count" class="block text-2xl font-black text-emerald-900 mt-1">۳ نفر</span>
+            </div>
+            <div class="w-10 h-10 rounded-xl bg-emerald-200 text-emerald-800 flex items-center justify-center">
+              <i data-lucide="check-circle-2" class="w-6 h-6"></i>
+            </div>
+          </div>
+
+          <div class="bg-rose-50 border border-rose-200 p-5 rounded-2xl flex items-center justify-between">
+            <div>
+              <span class="text-xs text-rose-800 font-bold">عذرخواهی کرده‌ها (عدم حضور)</span>
+              <span id="rsvp-declined-count" class="block text-2xl font-black text-rose-900 mt-1">۱ نفر</span>
+            </div>
+            <div class="w-10 h-10 rounded-xl bg-rose-200 text-rose-800 flex items-center justify-center">
+              <i data-lucide="x-circle" class="w-6 h-6"></i>
+            </div>
+          </div>
+
+          <div class="bg-amber-50 border border-amber-200 p-5 rounded-2xl flex items-center justify-between">
+            <div>
+              <span class="text-xs text-amber-800 font-bold">در انتظار پاسخ</span>
+              <span id="rsvp-pending-count" class="block text-2xl font-black text-amber-900 mt-1">۱۴۶ نفر</span>
+            </div>
+            <div class="w-10 h-10 rounded-xl bg-amber-200 text-amber-800 flex items-center justify-center">
+              <i data-lucide="clock" class="w-6 h-6"></i>
+            </div>
+          </div>
+        </div>
+
+        <div class="space-y-3 pt-4">
+          <h4 class="text-sm font-bold text-graphite">آخرین پاسخ‌های ثبت شده:</h4>
+          <div id="rsvp-list-container" class="space-y-2">
+            <!-- Populated via JS -->
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- ========================================== -->
+    <!-- TAB 3: PLANNING TOOLS & SMART ESTIMATOR -->
     <!-- ========================================== -->
     <div id="tab-tools" class="tab-content hidden space-y-12">
 
@@ -373,7 +537,7 @@
     </div>
 
     <!-- ========================================== -->
-    <!-- TAB 3: VENDOR DASHBOARD PANEL -->
+    <!-- TAB 4: VENDOR DASHBOARD PANEL -->
     <!-- ========================================== -->
     <div id="tab-vendor" class="tab-content hidden space-y-8">
 
@@ -460,7 +624,7 @@
     </div>
 
     <!-- ========================================== -->
-    <!-- TAB 4: SUPER ADMIN DASHBOARD PANEL -->
+    <!-- TAB 5: SUPER ADMIN DASHBOARD PANEL -->
     <!-- ========================================== -->
     <div id="tab-admin" class="tab-content hidden space-y-8">
 
@@ -536,10 +700,66 @@
   </main>
 
   <!-- ========================================== -->
+  <!-- MODAL: RSVP FORM POPUP                     -->
+  <!-- ========================================== -->
+  <div id="rsvp-modal" class="fixed inset-0 z-50 bg-black/50 backdrop-blur-xs flex items-center justify-center p-4 hidden">
+    <div class="bg-white border border-accent rounded-3xl max-w-md w-full p-6 shadow-2xl space-y-4 relative">
+      <button onclick="closeRsvpModal()" class="absolute top-4 left-4 text-secondary hover:text-graphite">
+        <i data-lucide="x" class="w-6 h-6"></i>
+      </button>
+
+      <div class="border-b border-accent pb-3">
+        <span class="text-xs font-bold text-primary">کارت دعوت عروسی علی و سارا</span>
+        <h3 class="text-lg font-bold text-graphite">تأیید حضور در جشن</h3>
+      </div>
+
+      <form id="rsvp-form" onsubmit="handleRsvpSubmit(event)" class="space-y-4">
+        <div>
+          <label class="block text-xs font-bold text-graphite mb-1">نام و نام خانوادگی:</label>
+          <input type="text" required id="rsvp-name" placeholder="مثلا: علی محمدی" class="w-full bg-bgCustom border border-accent rounded-xl p-2.5 text-xs font-medium focus:outline-none focus:border-primary">
+        </div>
+
+        <div>
+          <label class="block text-xs font-bold text-graphite mb-1">وضعیت حضور:</label>
+          <div class="grid grid-cols-2 gap-2">
+            <button type="button" onclick="setRsvpStatus('attending')" id="btn-rsvp-attending" class="py-2.5 rounded-xl text-xs font-bold border transition-all bg-primary text-white border-primary">
+              با افتخار شرکت می‌کنم
+            </button>
+            <button type="button" onclick="setRsvpStatus('declined')" id="btn-rsvp-declined" class="py-2.5 rounded-xl text-xs font-bold border transition-all border-accent text-graphite hover:border-rose-600">
+              متأسفانه نمی‌توانم بیایم
+            </button>
+          </div>
+        </div>
+
+        <div id="rsvp-attending-fields" class="grid grid-cols-2 gap-3">
+          <div>
+            <label class="block text-xs font-bold text-graphite mb-1">تعداد همراهان (شامل خودتان):</label>
+            <input type="number" min="1" max="10" value="1" id="rsvp-plus-ones" class="w-full bg-bgCustom border border-accent rounded-xl p-2.5 text-xs font-medium focus:outline-none focus:border-primary">
+          </div>
+          <div>
+            <label class="block text-xs font-bold text-graphite mb-1">ملاحظات غذایی (اختیاری):</label>
+            <input type="text" placeholder="گیاه‌خوار / بدون گلوتن..." id="rsvp-dietary" class="w-full bg-bgCustom border border-accent rounded-xl p-2.5 text-xs font-medium focus:outline-none focus:border-primary">
+          </div>
+        </div>
+
+        <div>
+          <label class="block text-xs font-bold text-graphite mb-1">پیام تبریک برای عروس و داماد:</label>
+          <textarea rows="2" id="rsvp-note" placeholder="آرزوی خوشبختی..." class="w-full bg-bgCustom border border-accent rounded-xl p-2.5 text-xs font-medium focus:outline-none focus:border-primary"></textarea>
+        </div>
+
+        <button type="submit" class="w-full bg-primary hover:bg-primary-hover text-white py-3 rounded-xl text-xs font-bold shadow-md transition-colors flex items-center justify-center gap-2">
+          <i data-lucide="send" class="w-4 h-4"></i>
+          <span>ثبت پاسخ نهایی</span>
+        </button>
+      </form>
+    </div>
+  </div>
+
+  <!-- ========================================== -->
   <!-- MODAL: DIRECT PRICE INQUIRY POPUP          -->
   <!-- ========================================== -->
   <div id="inquiry-modal" class="fixed inset-0 z-50 bg-black/50 backdrop-blur-xs flex items-center justify-center p-4 hidden">
-    <div class="bg-white border border-accent rounded-3xl max-w-lg w-full p-6 shadow-2xl space-y-4 relative animate-in fade-in zoom-in duration-200">
+    <div class="bg-white border border-accent rounded-3xl max-w-lg w-full p-6 shadow-2xl space-y-4 relative">
 
       <button onclick="closeInquiryModal()" class="absolute top-4 left-4 text-secondary hover:text-graphite">
         <i data-lucide="x" class="w-6 h-6"></i>
@@ -598,10 +818,8 @@
 
   <!-- JAVASCRIPT APP STATE & LOGIC -->
   <script>
-    // Initialize Lucide Icons
     lucide.createIcons();
 
-    // APP STATE MOCK DATA
     let vendors = [
       {
         id: 1,
@@ -646,6 +864,14 @@
     ];
 
     let currentTier = 'standard';
+    let isMusicPlaying = false;
+    let rsvpCurrentStatus = 'attending';
+
+    let rsvpEntries = [
+      { id: 1, name: "محمدحسین و همسر", status: "attending", plusOnes: 2, dietary: "بدون لکتوز", note: "با آرزوی خوشبختی برای علی و سارا عزیز ❤️" },
+      { id: 2, name: "زهرا حسینی", status: "attending", plusOnes: 1, dietary: "گیاه‌خوار", note: "بسیار خوشحالیم برای این جشن زیبا!" },
+      { id: 3, name: "رضا کریمی", status: "declined", plusOnes: 0, dietary: "", note: "متأسفانه مسافرت هستم ولی بهترین‌ها رو براتون آرزو دارم." }
+    ];
 
     let checklistItems = [
       { id: 1, text: "تعیین تاریخ تقریبی جشن و تعداد مهمانان", done: true },
@@ -661,7 +887,6 @@
 
     let bookedDates = [5, 12, 19, 26];
 
-    // TAB SWITCHER
     function switchTab(tabId) {
       document.querySelectorAll('.tab-content').forEach(el => el.classList.add('hidden'));
       document.getElementById('tab-' + tabId).classList.remove('hidden');
@@ -680,13 +905,111 @@
       lucide.createIcons();
     }
 
-    // RENDER VENDOR CARDS
+    function toggleMusic() {
+      isMusicPlaying = !isMusicPlaying;
+      const btn = document.getElementById('music-toggle-btn');
+      const text = document.getElementById('music-btn-text');
+      if (isMusicPlaying) {
+        btn.className = "flex items-center gap-2 px-4 py-2.5 rounded-xl text-xs font-bold transition-all border bg-rose-500 text-white border-rose-600 animate-pulse";
+        text.innerText = "توقف موزیک جادویی";
+      } else {
+        btn.className = "flex items-center gap-2 px-4 py-2.5 rounded-xl text-xs font-bold transition-all border bg-bgCustom border-accent text-graphite hover:border-primary";
+        text.innerText = "پخش موزیک لایت عروسی";
+      }
+    }
+
+    function renderRsvpModule() {
+      const attending = rsvpEntries.filter(r => r.status === 'attending').reduce((acc, curr) => acc + curr.plusOnes, 0);
+      const declined = rsvpEntries.filter(r => r.status === 'declined').length;
+      const pending = 150 - (attending + declined);
+
+      document.getElementById('rsvp-attending-count').innerText = attending + ' نفر';
+      document.getElementById('rsvp-declined-count').innerText = declined + ' نفر';
+      document.getElementById('rsvp-pending-count').innerText = pending + ' نفر';
+
+      const container = document.getElementById('rsvp-list-container');
+      container.innerHTML = '';
+
+      rsvpEntries.forEach(r => {
+        const item = document.createElement('div');
+        item.className = "p-4 bg-bgCustom rounded-2xl border border-accent/70 flex flex-col sm:flex-row justify-between sm:items-center gap-3";
+        item.innerHTML = `
+          <div class="space-y-1">
+            <div class="flex items-center gap-2">
+              <span class="text-sm font-bold text-graphite">${r.name}</span>
+              ${r.status === "attending" ? `
+                <span class="text-[11px] font-bold bg-emerald-100 text-emerald-800 px-2 py-0.5 rounded-full flex items-center gap-1">
+                  <i data-lucide="check-circle-2" class="w-3 h-3"></i> شرکت می‌کند (${r.plusOnes} نفر)
+                </span>
+              ` : `
+                <span class="text-[11px] font-bold bg-rose-100 text-rose-800 px-2 py-0.5 rounded-full flex items-center gap-1">
+                  <i data-lucide="x-circle" class="w-3 h-3"></i> عدم حضور
+                </span>
+              `}
+            </div>
+            ${r.note ? `<p class="text-xs text-graphite/80 italic">"${r.note}"</p>` : ''}
+          </div>
+          ${r.dietary ? `<span class="text-xs font-bold text-secondary bg-white px-3 py-1 rounded-lg border border-accent self-start sm:self-auto">رژیم: ${r.dietary}</span>` : ''}
+        `;
+        container.appendChild(item);
+      });
+
+      lucide.createIcons();
+    }
+
+    function openRsvpModal() {
+      document.getElementById('rsvp-modal').classList.remove('hidden');
+    }
+
+    function closeRsvpModal() {
+      document.getElementById('rsvp-modal').classList.add('hidden');
+    }
+
+    function setRsvpStatus(st) {
+      rsvpCurrentStatus = st;
+      const btnAtt = document.getElementById('btn-rsvp-attending');
+      const btnDec = document.getElementById('btn-rsvp-declined');
+      const fields = document.getElementById('rsvp-attending-fields');
+
+      if (st === 'attending') {
+        btnAtt.className = "py-2.5 rounded-xl text-xs font-bold border transition-all bg-primary text-white border-primary";
+        btnDec.className = "py-2.5 rounded-xl text-xs font-bold border transition-all border-accent text-graphite hover:border-rose-600";
+        fields.classList.remove('hidden');
+      } else {
+        btnDec.className = "py-2.5 rounded-xl text-xs font-bold border transition-all bg-rose-600 text-white border-rose-600";
+        btnAtt.className = "py-2.5 rounded-xl text-xs font-bold border transition-all border-accent text-graphite hover:border-primary";
+        fields.classList.add('hidden');
+      }
+    }
+
+    function handleRsvpSubmit(e) {
+      e.preventDefault();
+      const name = document.getElementById('rsvp-name').value;
+      const plusOnes = parseInt(document.getElementById('rsvp-plus-ones').value) || 1;
+      const dietary = document.getElementById('rsvp-dietary').value;
+      const note = document.getElementById('rsvp-note').value;
+
+      rsvpEntries.unshift({
+        id: Date.now(),
+        name,
+        status: rsvpCurrentStatus,
+        plusOnes: rsvpCurrentStatus === 'attending' ? plusOnes : 0,
+        dietary,
+        note
+      });
+
+      renderRsvpModule();
+      closeRsvpModal();
+      document.getElementById('rsvp-form').reset();
+      alert('پاسخ شما با موفقیت در سیستم RSVP عروسی تو ثبت شد.');
+    }
+
     function renderVendors(list) {
       const grid = document.getElementById('vendor-grid');
       grid.innerHTML = '';
 
       if (list.length === 0) {
-        grid.innerHTML = `<div class="col-span-full text-center py-12 text-secondary text-sm font-semibold">هیچ کسب و کاری با این مشخصات یافت نشد.</div>`;
+        grid.innerHTML = `<div class="col-span-full text-center py-12 text-secondary text-sm font-semibold">هیچ کسب و کاری یافت نشد.</div>`;
         return;
       }
 
@@ -739,7 +1062,6 @@
       lucide.createIcons();
     }
 
-    // FILTER VENDORS
     function filterVendors() {
       const search = document.getElementById('search-input').value.trim().toLowerCase();
       const cat = document.getElementById('category-filter').value;
@@ -755,7 +1077,6 @@
       renderVendors(filtered);
     }
 
-    // BUDGET ESTIMATOR CALCULATOR
     function setTier(tier) {
       currentTier = tier;
       document.querySelectorAll('.tier-btn').forEach(btn => {
@@ -773,7 +1094,7 @@
       const guests = parseInt(document.getElementById('guest-slider').value);
       document.getElementById('guest-count-label').innerText = guests + ' نفر';
 
-      let multiplier = 800000; // standard per guest base
+      let multiplier = 800000;
       if (currentTier === 'premium') multiplier = 1400000;
       if (currentTier === 'vip') multiplier = 2200000;
 
@@ -790,7 +1111,6 @@
       document.getElementById('total-budget').innerText = total.toLocaleString('fa-IR');
     }
 
-    // CHECKLIST LOGIC
     function renderChecklist() {
       const container = document.getElementById('checklist-container');
       container.innerHTML = '';
@@ -817,7 +1137,6 @@
       renderChecklist();
     }
 
-    // QUIZ LOGIC
     function answerQuiz(style) {
       const resultDiv = document.getElementById('quiz-result');
       const title = document.getElementById('quiz-result-title');
@@ -834,7 +1153,6 @@
       }
     }
 
-    // CALENDAR LOGIC
     function renderCalendar() {
       const grid = document.getElementById('calendar-grid');
       grid.innerHTML = '';
@@ -863,7 +1181,6 @@
       renderCalendar();
     }
 
-    // INQUIRIES LIST
     function renderInquiries() {
       const container = document.getElementById('inquiry-list');
       container.innerHTML = '';
@@ -883,14 +1200,13 @@
           </div>
           <p class="text-xs text-graphite/80">${inq.details}</p>
           <div class="pt-2 flex gap-2">
-            <button onclick="alert('پیش‌فاکتور برای ${inq.name} ارسال شد.')" class="bg-primary text-white px-3 py-1.5 rounded-lg text-xs font-bold">ارسال پیشنهاد قیمت</button>
+            <button onclick="alert('پیش‌فاکتور ارسال شد.')" class="bg-primary text-white px-3 py-1.5 rounded-lg text-xs font-bold">ارسال پیشنهاد قیمت</button>
           </div>
         `;
         container.appendChild(card);
       });
     }
 
-    // ADMIN TABLE
     function renderAdminTable() {
       const tbody = document.getElementById('admin-vendor-table');
       tbody.innerHTML = '';
@@ -937,10 +1253,9 @@
       item.innerHTML = `<span class="text-primary font-bold">ارسال شد:</span> ${text}`;
       history.prepend(item);
       document.getElementById('sms-text').value = '';
-      alert('پیامک انبوه با موفقیت به شماره‌های منتخب ارسال شد.');
+      alert('پیامک انبوه با موفقیت ارسال شد.');
     }
 
-    // MODAL HANDLERS
     function openInquiryModal(vendorId, vendorName) {
       document.getElementById('inquiry-vendor-id').value = vendorId;
       document.getElementById('modal-vendor-name').innerText = vendorName;
@@ -959,24 +1274,16 @@
       const guests = document.getElementById('inquiry-guests').value || '۲۰۰';
       const details = document.getElementById('inquiry-details').value;
 
-      inquiries.push({
-        id: Date.now(),
-        name,
-        phone,
-        date,
-        guests,
-        details
-      });
-
+      inquiries.push({ id: Date.now(), name, phone, date, guests, details });
       renderInquiries();
       closeInquiryModal();
       document.getElementById('inquiry-form').reset();
-      alert('استعلام قیمت شما با موفقیت ثبت گردید و پیامک تایید ارسال شد.');
+      alert('استعلام قیمت با موفقیت ثبت گردید.');
     }
 
-    // INITIALIZATION ON LOAD
     window.addEventListener('DOMContentLoaded', () => {
       renderVendors(vendors);
+      renderRsvpModule();
       calculateBudget();
       renderChecklist();
       renderCalendar();
