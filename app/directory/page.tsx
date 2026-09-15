@@ -24,6 +24,7 @@ function DirectoryContent() {
   const initialCategory = searchParams.get("category") || "all";
 
   const { vendors, categories } = useApp();
+  const activeCategories = categories.filter((c) => c.isActive !== false);
 
   const [selectedCategory, setSelectedCategory] = useState<string>(initialCategory);
   const [selectedCity, setSelectedCity] = useState<string>("all");
@@ -120,8 +121,8 @@ function DirectoryContent() {
               onChange={(e) => setSelectedCategory(e.target.value)}
               className="w-full py-2.5 px-3 rounded-xl border border-accent text-sm font-medium focus:outline-none focus:border-primary text-graphite bg-bg-custom"
             >
-              <option value="all">همه دسته‌بندی‌ها</option>
-              {categories.map((c) => (
+              <option value="all">همه دسته‌بندی‌ها ({activeCategories.length})</option>
+              {activeCategories.map((c) => (
                 <option key={c.id} value={c.name}>
                   {c.name}
                 </option>

@@ -85,9 +85,12 @@ export interface VendorQuote {
 export interface Category {
   id: string;
   name: string;
+  slug: string;
   iconName: string;
   count: number;
   description: string;
+  seoText: string;
+  isActive: boolean;
 }
 
 export interface ChecklistItem {
@@ -182,7 +185,9 @@ interface AppContextType {
   updateInquiryQuote: (id: string, quotePrice: string, quoteNotes: string) => void;
   toggleVendorVerification: (vendorId: string) => void;
   toggleVendorDate: (vendorId: string, dateStr: string) => void;
-  addCategory: (name: string, description: string) => void;
+  addCategory: (cat: Omit<Category, "id" | "count">) => void;
+  updateCategory: (id: string, cat: Partial<Omit<Category, "id">>) => void;
+  toggleCategoryStatus: (id: string) => void;
   deleteCategory: (id: string) => void;
   toggleChecklist: (id: string) => void;
   addChecklistItem: (title: string, category: string, dueDate: string) => void;
@@ -212,12 +217,12 @@ interface AppContextType {
 }
 
 const INITIAL_CATEGORIES: Category[] = [
-  { id: "1", name: "تالار و باغ تشریفات", iconName: "Building2", count: 42, description: "تالارهای مجلل، باغ تالارها و ویلاهای اختصاصی عروسی" },
-  { id: "2", name: "آتلیه و فیلمبرداری", iconName: "Camera", count: 35, description: "عکاسی و فیلمبرداری حرفه‌ای سینمایی و فرمالیته" },
-  { id: "3", name: "سالن زیبایی و آرایشگاه", iconName: "Sparkles", count: 58, description: "گریم تخصصی عروس، میکاپ و شینینون" },
-  { id: "4", name: "مزون عروس و لباس داماد", iconName: "Shirt", count: 29, description: "لباس عروس سفارشی، کت و شلوار داماد و اکسسوری" },
-  { id: "5", name: "گل‌آرایی و ماشین عروس", iconName: "Flower2", count: 24, description: "دیزاین گل سفره عقد، ماشین عروس و دسته گل" },
-  { id: "6", name: "موسیقی و دی‌جی", iconName: "Music", count: 18, description: "گروه موزیک زنده، نورپردازی و دی‌جی حرفه‌ای" },
+  { id: "1", name: "تالار و باغ تشریفات", slug: "venues-and-halls", iconName: "Building2", count: 42, description: "تالارهای مجلل، باغ تالارها و ویلاهای اختصاصی عروسی", seoText: "رزرو بهترین تالارها و باغ تالارهای عروسی تهران و شهرستان‌ها", isActive: true },
+  { id: "2", name: "آتلیه و فیلمبرداری", slug: "photography-and-atelier", iconName: "Camera", count: 35, description: "عکاسی و فیلمبرداری حرفه‌ای سینمایی و فرمالیته", seoText: "بهترین آتلیه‌ها و عکاسان فرمالیته و روز عروسی", isActive: true },
+  { id: "3", name: "سالن زیبایی و آرایشگاه", slug: "beauty-salons", iconName: "Sparkles", count: 58, description: "گریم تخصصی عروس، میکاپ و شینینون", seoText: "سالن‌های زیبایی و میکاپ‌آرتیست‌های برتر عروس", isActive: true },
+  { id: "4", name: "مزون عروس و لباس داماد", slug: "bridal-mezon-and-suits", iconName: "Shirt", count: 29, description: "لباس عروس سفارشی، کت و شلوار داماد و اکسسوری", seoText: "طراحی و دوخت لباس عروس و کت‌وشلوار تاکسیدو داماد", isActive: true },
+  { id: "5", name: "گل‌آرایی و ماشین عروس", slug: "flower-and-car", iconName: "Flower2", count: 24, description: "دیزاین گل سفره عقد، ماشین عروس و دسته گل", seoText: "اجاره ماشین عروس کلاسیک و گل‌آرایی طبیعی سفره عقد", isActive: true },
+  { id: "6", name: "موسیقی و دی‌جی", slug: "music-and-dj", iconName: "Music", count: 18, description: "گروه موزیک زنده، نورپردازی و دی‌جی حرفه‌ای", seoText: "گروه موزیک ارکستر زنده، استیج LED و دی‌جی عروسی", isActive: true },
 ];
 
 const INITIAL_VENDORS: Vendor[] = [
@@ -435,8 +440,27 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
     );
   };
 
-  const addCategory = (name: string, description: string) => {
-    setCategories((prev) => [...prev, { id: `cat-${Date.now()}`, name, description, iconName: "Sparkles", count: 0 }]);
+  const addCategory = (catData: Omit<Category, "id" | "count">) => {
+    setCategories((prev) => [
+      ...prev,
+      {
+        ...catData,
+        id: `cat-${Date.now()}`,
+        count: 0
+      }
+    ]);
+  };
+
+  const updateCategory = (id: string, catData: Partial<Omit<Category, "id">>) => {
+    setCategories((prev) =>
+      prev.map((c) => (c.id === id ? { ...c, ...catData } : c))
+    );
+  };
+
+  const toggleCategoryStatus = (id: string) => {
+    setCategories((prev) =>
+      prev.map((c) => (c.id === id ? { ...c, isActive: !c.isActive } : c))
+    );
   };
 
   const deleteCategory = (id: string) => {
@@ -568,6 +592,8 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
         toggleVendorVerification,
         toggleVendorDate,
         addCategory,
+        updateCategory,
+        toggleCategoryStatus,
         deleteCategory,
         toggleChecklist,
         addChecklistItem,

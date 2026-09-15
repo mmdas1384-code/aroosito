@@ -41,6 +41,8 @@ export default function HomePage() {
     updateBudgetItem
   } = useApp();
 
+  const activeCategories = categories.filter((c) => c.isActive !== false);
+
   // Inquiry Modal State
   const [selectedVendorForInquiry, setSelectedVendorForInquiry] = useState<any>(null);
   const [coupleName, setCoupleName] = useState("");
@@ -223,12 +225,13 @@ export default function HomePage() {
           </div>
 
           <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4">
-            {categories.map((cat) => {
+            {activeCategories.map((cat) => {
               const Icon = getCategoryIcon(cat.iconName);
+              const vendorCount = vendors.filter((v) => v.category === cat.name).length;
               return (
-                <button
+                <Link
                   key={cat.id}
-                  onClick={() => setSelectedCategory(cat.name)}
+                  href={`/directory?category=${encodeURIComponent(cat.name)}`}
                   className={`p-5 rounded-2xl border transition-all text-center flex flex-col items-center space-y-3 cursor-pointer ${
                     selectedCategory === cat.name
                       ? "bg-primary text-white border-primary shadow-md"
@@ -243,10 +246,10 @@ export default function HomePage() {
                   <div>
                     <h3 className="text-sm font-bold">{cat.name}</h3>
                     <p className={`text-[11px] mt-0.5 ${selectedCategory === cat.name ? "text-white/80" : "text-secondary"}`}>
-                      {cat.count}+ کسب و کار
+                      {vendorCount > 0 ? `${vendorCount} کسب و کار` : "جدید"}
                     </p>
                   </div>
-                </button>
+                </Link>
               );
             })}
           </div>
@@ -391,7 +394,7 @@ export default function HomePage() {
                 className="py-2 px-3 rounded-xl border border-accent text-xs font-bold bg-white text-graphite"
               >
                 <option value="all">همه دسته‌ها</option>
-                {categories.map((c) => (
+                {activeCategories.map((c) => (
                   <option key={c.id} value={c.name}>{c.name}</option>
                 ))}
               </select>

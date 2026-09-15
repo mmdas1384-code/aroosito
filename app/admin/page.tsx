@@ -22,8 +22,45 @@ import {
   Radio,
   Key,
   Server,
-  Bell
+  Bell,
+  Edit,
+  Eye,
+  EyeOff,
+  AlertTriangle,
+  Building2,
+  Camera,
+  Shirt,
+  Flower2,
+  Music,
+  Utensils,
+  Scissors,
+  Car,
+  Crown,
+  Gift,
+  Heart,
+  Globe
 } from "lucide-react";
+
+const CATEGORY_ICONS = [
+  { name: "Building2", label: "تالار / ساختمان", Icon: Building2 },
+  { name: "Camera", label: "آتلیه / دوربین", Icon: Camera },
+  { name: "Sparkles", label: "زیبایی / درخشش", Icon: Sparkles },
+  { name: "Shirt", label: "مزون / لباس", Icon: Shirt },
+  { name: "Flower2", label: "گل‌آرایی", Icon: Flower2 },
+  { name: "Music", label: "موزیک / دی‌جی", Icon: Music },
+  { name: "Utensils", label: "کترینگ / تشریفات", Icon: Utensils },
+  { name: "Scissors", label: "آرایشگاه / گریم", Icon: Scissors },
+  { name: "Car", label: "ماشین عروس", Icon: Car },
+  { name: "Crown", label: "تاج و اکسسوری", Icon: Crown },
+  { name: "Gift", label: "گیفت و هدایا", Icon: Gift },
+  { name: "Heart", label: "خدمات ویژه", Icon: Heart },
+];
+
+function RenderCategoryIcon({ iconName, className = "w-5 h-5" }: { iconName: string; className?: string }) {
+  const match = CATEGORY_ICONS.find((i) => i.name === iconName);
+  const IconComponent = match ? match.Icon : FolderTree;
+  return <IconComponent className={className} />;
+}
 
 export default function AdminDashboardPage() {
   const {
@@ -31,6 +68,8 @@ export default function AdminDashboardPage() {
     toggleVendorVerification,
     categories,
     addCategory,
+    updateCategory,
+    toggleCategoryStatus,
     deleteCategory,
     inquiries,
     smsLog,
@@ -39,11 +78,22 @@ export default function AdminDashboardPage() {
     updateSmsGatewayConfig
   } = useApp();
 
-  const [activeTab, setActiveTab] = useState<"verification" | "categories" | "users" | "analytics" | "sms" | "gateway">("sms");
+  const [activeTab, setActiveTab] = useState<"verification" | "categories" | "users" | "analytics" | "sms" | "gateway">("categories");
 
-  // Category Manager Form State
-  const [newCatName, setNewCatName] = useState("");
-  const [newCatDesc, setNewCatDesc] = useState("");
+  // Category Manager Modal States
+  const [isAddModalOpen, setIsAddModalOpen] = useState(false);
+  const [editingCatId, setEditingCatId] = useState<string | null>(null);
+  const [deletingCatId, setDeletingCatId] = useState<string | null>(null);
+
+  // Category Form State
+  const [catFormData, setCatFormData] = useState({
+    name: "",
+    slug: "",
+    iconName: "Building2",
+    description: "",
+    seoText: "",
+    isActive: true
+  });
 
   // SMS Broadcast Form State
   const [smsTargetGroup, setSmsTargetGroup] = useState("همه تامین‌کنندگان");
@@ -55,12 +105,76 @@ export default function AdminDashboardPage() {
   const [gatewayApiKey, setGatewayApiKey] = useState(smsGatewayConfig.apiKey);
   const [gatewaySenderLine, setGatewaySenderLine] = useState(smsGatewayConfig.senderLine);
 
-  const handleAddCategorySubmit = (e: React.FormEvent) => {
+  // Auto-generate slug from Persian name
+  const generateSlug = (name: string) => {
+    return name
+      .trim()
+      .toLowerCase()
+      .replace(/\s+/g, "-")
+      .replace(/[^\w\u0600-\u06FF\-]/g, "");
+  };
+
+  const handleOpenAddModal = () => {
+    setEditingCatId(null);
+    setCatFormData({
+      name: "",
+      slug: "",
+      iconName: "Building2",
+      description: "",
+      seoText: "",
+      isActive: true
+    });
+    setIsAddModalOpen(true);
+  };
+
+  const handleOpenEditModal = (cat: typeof categories[0]) => {
+    setEditingCatId(cat.id);
+    setCatFormData({
+      name: cat.name,
+      slug: cat.slug || generateSlug(cat.name),
+      iconName: cat.iconName || "Building2",
+      description: cat.description || "",
+      seoText: cat.seoText || "",
+      isActive: cat.isActive !== false
+    });
+    setIsAddModalOpen(true);
+  };
+
+  const handleSaveCategorySubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    if (!newCatName.trim()) return;
-    addCategory(newCatName, newCatDesc || "دسته‌بندی جدید در عروسی تو");
-    setNewCatName("");
-    setNewCatDesc("");
+    if (!catFormData.name.trim()) return;
+
+    const slug = catFormData.slug.trim() || generateSlug(catFormData.name);
+
+    if (editingCatId) {
+      updateCategory(editingCatId, {
+        name: catFormData.name,
+        slug,
+        iconName: catFormData.iconName,
+        description: catFormData.description,
+        seoText: catFormData.seoText,
+        isActive: catFormData.isActive
+      });
+    } else {
+      addCategory({
+        name: catFormData.name,
+        slug,
+        iconName: catFormData.iconName,
+        description: catFormData.description,
+        seoText: catFormData.seoText,
+        isActive: catFormData.isActive
+      });
+    }
+
+    setIsAddModalOpen(false);
+    setEditingCatId(null);
+  };
+
+  const handleConfirmDeleteCategory = () => {
+    if (deletingCatId) {
+      deleteCategory(deletingCatId);
+      setDeletingCatId(null);
+    }
   };
 
   const handleSendSmsBroadcast = (e: React.FormEvent) => {
@@ -345,50 +459,286 @@ export default function AdminDashboardPage() {
           {/* TAB 2: CATEGORY MANAGER */}
           {activeTab === "categories" && (
             <div className="space-y-6">
-              <form onSubmit={handleAddCategorySubmit} className="bg-white p-6 rounded-3xl border border-accent shadow-xs space-y-4">
-                <h3 className="text-base font-bold text-graphite">افزودن دسته‌بندی شغلی جدید</h3>
-                <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 text-xs">
-                  <input
-                    type="text"
-                    required
-                    placeholder="نام دسته (مثلاً: تشریفات آتش‌بازی و نورافشانی)"
-                    value={newCatName}
-                    onChange={(e) => setNewCatName(e.target.value)}
-                    className="p-3 rounded-xl border border-accent focus:outline-none focus:border-primary"
-                  />
-                  <input
-                    type="text"
-                    placeholder="توضیحات مختصر..."
-                    value={newCatDesc}
-                    onChange={(e) => setNewCatDesc(e.target.value)}
-                    className="p-3 rounded-xl border border-accent focus:outline-none focus:border-primary"
-                  />
+              {/* Top Action Bar */}
+              <div className="bg-white p-6 rounded-3xl border border-accent shadow-xs flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
+                <div>
+                  <h3 className="text-lg font-extrabold text-graphite">مدیریت پویای دسته‌بندی‌های شغلی</h3>
+                  <p className="text-xs text-secondary mt-1">
+                    تعریف، ویرایش، تغییر آیکون، تنظیمات SEO و تغییر وضعیت فعال/غیرفعال دسته‌بندی‌ها (بازتاب زنده در تمام پلتفرم)
+                  </p>
+                </div>
+
+                <button
+                  onClick={handleOpenAddModal}
+                  className="bg-primary hover:bg-primary-hover text-white px-5 py-2.5 rounded-xl text-xs font-bold transition-all shadow-xs flex items-center gap-2"
+                >
+                  <Plus className="w-4 h-4" />
+                  <span>افزودن دسته‌بندی جدید</span>
+                </button>
+              </div>
+
+              {/* Categories Grid Table */}
+              <div className="bg-white rounded-3xl border border-accent shadow-xs overflow-hidden">
+                <div className="overflow-x-auto">
+                  <table className="w-full text-right text-xs">
+                    <thead className="bg-bg-custom text-secondary border-b border-accent font-bold">
+                      <tr>
+                        <th className="p-4">آیکون و نام دسته‌بندی</th>
+                        <th className="p-4">نام لاتین / اسلاگ (Slug)</th>
+                        <th className="p-4">تعداد کسب‌وکارها</th>
+                        <th className="p-4">توضیحات و سئو</th>
+                        <th className="p-4">وضعیت</th>
+                        <th className="p-4 text-center">عملیات مدیریت</th>
+                      </tr>
+                    </thead>
+                    <tbody className="divide-y divide-accent/60">
+                      {categories.map((cat) => {
+                        const vendorCount = vendors.filter((v) => v.category === cat.name).length;
+                        return (
+                          <tr key={cat.id} className="hover:bg-bg-custom/50 transition-colors">
+                            <td className="p-4 font-bold text-graphite">
+                              <div className="flex items-center gap-3">
+                                <div className="w-10 h-10 rounded-xl bg-primary/10 text-primary flex items-center justify-center">
+                                  <RenderCategoryIcon iconName={cat.iconName} className="w-5 h-5" />
+                                </div>
+                                <div>
+                                  <span className="block font-extrabold text-sm">{cat.name}</span>
+                                  <span className="text-[10px] text-secondary">آیکون: {cat.iconName}</span>
+                                </div>
+                              </div>
+                            </td>
+
+                            <td className="p-4 font-mono text-secondary dir-ltr text-right">
+                              <span className="bg-bg-custom px-2.5 py-1 rounded-md border border-accent">
+                                /{cat.slug || cat.name.replace(/\s+/g, "-")}
+                              </span>
+                            </td>
+
+                            <td className="p-4 font-bold text-graphite">
+                              <span className="bg-emerald-50 text-primary px-3 py-1 rounded-full border border-emerald-200">
+                                {vendorCount} کسب‌وکار
+                              </span>
+                            </td>
+
+                            <td className="p-4 max-w-xs">
+                              <p className="font-semibold text-graphite truncate">{cat.description || "بدون توضیح"}</p>
+                              {cat.seoText && (
+                                <p className="text-[10px] text-secondary truncate mt-0.5">SEO: {cat.seoText}</p>
+                              )}
+                            </td>
+
+                            <td className="p-4">
+                              <button
+                                onClick={() => toggleCategoryStatus(cat.id)}
+                                className={`px-3 py-1 rounded-full text-[11px] font-bold border transition-all flex items-center gap-1.5 ${
+                                  cat.isActive !== false
+                                    ? "bg-emerald-50 text-emerald-700 border-emerald-300 hover:bg-emerald-100"
+                                    : "bg-rose-50 text-rose-700 border-rose-300 hover:bg-rose-100"
+                                }`}
+                              >
+                                {cat.isActive !== false ? (
+                                  <>
+                                    <Eye className="w-3.5 h-3.5" />
+                                    <span>فعال</span>
+                                  </>
+                                ) : (
+                                  <>
+                                    <EyeOff className="w-3.5 h-3.5" />
+                                    <span>غیرفعال</span>
+                                  </>
+                                )}
+                              </button>
+                            </td>
+
+                            <td className="p-4 text-center">
+                              <div className="flex items-center justify-center gap-2">
+                                <button
+                                  onClick={() => handleOpenEditModal(cat)}
+                                  className="p-2 rounded-xl bg-bg-custom text-graphite hover:bg-primary hover:text-white border border-accent transition-all"
+                                  title="ویرایش دسته‌بندی"
+                                >
+                                  <Edit className="w-4 h-4" />
+                                </button>
+                                <button
+                                  onClick={() => setDeletingCatId(cat.id)}
+                                  className="p-2 rounded-xl bg-rose-50 text-rose-600 hover:bg-rose-600 hover:text-white border border-rose-200 transition-all"
+                                  title="حذف دسته‌بندی"
+                                >
+                                  <Trash2 className="w-4 h-4" />
+                                </button>
+                              </div>
+                            </td>
+                          </tr>
+                        );
+                      })}
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            </div>
+          )}
+
+          {/* ADD / EDIT CATEGORY MODAL */}
+          {isAddModalOpen && (
+            <div className="fixed inset-0 bg-graphite/60 backdrop-blur-xs flex items-center justify-center p-4 z-50">
+              <div className="bg-white w-full max-w-xl rounded-3xl border border-accent p-6 shadow-2xl space-y-6 animate-in fade-in zoom-in duration-200">
+                <div className="flex justify-between items-center border-b border-accent pb-4">
+                  <div className="flex items-center gap-2">
+                    <FolderTree className="w-6 h-6 text-primary" />
+                    <h3 className="font-extrabold text-lg text-graphite">
+                      {editingCatId ? "ویرایش دسته‌بندی شغلی" : "افزودن دسته‌بندی شغلی جدید"}
+                    </h3>
+                  </div>
                   <button
-                    type="submit"
-                    className="bg-primary hover:bg-primary-hover text-white py-3 rounded-xl text-xs font-bold transition-all flex items-center justify-center gap-1.5"
+                    onClick={() => setIsAddModalOpen(false)}
+                    className="w-8 h-8 rounded-full bg-bg-custom hover:bg-accent text-secondary flex items-center justify-center"
                   >
-                    <Plus className="w-4 h-4" />
-                    <span>افزودن دسته‌بندی</span>
+                    ×
                   </button>
                 </div>
-              </form>
 
-              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-                {categories.map((cat) => (
-                  <div key={cat.id} className="bg-white p-5 rounded-2xl border border-accent shadow-xs flex items-center justify-between">
-                    <div>
-                      <h4 className="font-bold text-graphite text-sm">{cat.name}</h4>
-                      <p className="text-xs text-secondary mt-1">{cat.description}</p>
+                <form onSubmit={handleSaveCategorySubmit} className="space-y-4 text-xs">
+                  <div>
+                    <label className="block font-bold text-graphite mb-1.5">نام دسته‌بندی (فارسی) *</label>
+                    <input
+                      type="text"
+                      required
+                      placeholder="مثال: تشریفات و سفره عقد"
+                      value={catFormData.name}
+                      onChange={(e) => {
+                        const val = e.target.value;
+                        setCatFormData((prev) => ({
+                          ...prev,
+                          name: val,
+                          slug: generateSlug(val)
+                        }));
+                      }}
+                      className="w-full p-3 rounded-xl border border-accent font-semibold focus:outline-none focus:border-primary"
+                    />
+                  </div>
+
+                  <div>
+                    <label className="block font-bold text-graphite mb-1.5">آدرس اینترنتی / اسلاگ (URL Slug)</label>
+                    <div className="relative">
+                      <span className="absolute left-3 top-3 text-secondary font-mono text-[11px] dir-ltr">/category/</span>
+                      <input
+                        type="text"
+                        placeholder="venues-and-halls"
+                        value={catFormData.slug}
+                        onChange={(e) => setCatFormData({ ...catFormData, slug: e.target.value })}
+                        className="w-full p-3 pl-24 rounded-xl border border-accent font-mono text-left dir-ltr focus:outline-none focus:border-primary bg-bg-custom"
+                      />
                     </div>
+                  </div>
+
+                  {/* Icon Selection Picker */}
+                  <div>
+                    <label className="block font-bold text-graphite mb-1.5">انتخاب آیکون دسته‌بندی</label>
+                    <div className="grid grid-cols-4 sm:grid-cols-6 gap-2">
+                      {CATEGORY_ICONS.map((ico) => {
+                        const IconComponent = ico.Icon;
+                        const isSelected = catFormData.iconName === ico.name;
+                        return (
+                          <button
+                            key={ico.name}
+                            type="button"
+                            onClick={() => setCatFormData({ ...catFormData, iconName: ico.name })}
+                            className={`p-3 rounded-xl border flex flex-col items-center justify-center gap-1 transition-all ${
+                              isSelected
+                                ? "bg-primary text-white border-primary shadow-xs"
+                                : "bg-bg-custom text-graphite border-accent hover:border-primary"
+                            }`}
+                          >
+                            <IconComponent className="w-5 h-5" />
+                            <span className="text-[10px] truncate w-full text-center">{ico.label}</span>
+                          </button>
+                        );
+                      })}
+                    </div>
+                  </div>
+
+                  <div>
+                    <label className="block font-bold text-graphite mb-1.5">توضیحات دسته‌بندی (برای نمایش روی کارت‌ها)</label>
+                    <input
+                      type="text"
+                      placeholder="توضیحات مختصر..."
+                      value={catFormData.description}
+                      onChange={(e) => setCatFormData({ ...catFormData, description: e.target.value })}
+                      className="w-full p-3 rounded-xl border border-accent focus:outline-none focus:border-primary"
+                    />
+                  </div>
+
+                  <div>
+                    <label className="block font-bold text-graphite mb-1.5">متن سئو و توضیحات متاتگ (SEO Meta Description)</label>
+                    <textarea
+                      rows={2}
+                      placeholder="متن بهینه‌سازی شده برای موتورهای جستجو..."
+                      value={catFormData.seoText}
+                      onChange={(e) => setCatFormData({ ...catFormData, seoText: e.target.value })}
+                      className="w-full p-3 rounded-xl border border-accent focus:outline-none focus:border-primary"
+                    />
+                  </div>
+
+                  <div className="pt-2">
+                    <label className="bg-bg-custom p-3.5 rounded-xl border border-accent flex items-center justify-between cursor-pointer">
+                      <span className="font-bold text-graphite">وضعیت انتشار (دسته‌بندی فعال باشد)</span>
+                      <input
+                        type="checkbox"
+                        checked={catFormData.isActive}
+                        onChange={(e) => setCatFormData({ ...catFormData, isActive: e.target.checked })}
+                        className="w-4 h-4 text-primary rounded"
+                      />
+                    </label>
+                  </div>
+
+                  <div className="flex items-center justify-end gap-3 pt-4 border-t border-accent">
                     <button
-                      onClick={() => deleteCategory(cat.id)}
-                      className="text-rose-500 hover:text-rose-700 p-2 rounded-lg hover:bg-rose-50 transition-colors"
-                      title="حذف دسته‌بندی"
+                      type="button"
+                      onClick={() => setIsAddModalOpen(false)}
+                      className="px-5 py-2.5 rounded-xl border border-accent text-graphite font-bold hover:bg-bg-custom"
                     >
-                      <Trash2 className="w-4 h-4" />
+                      انصراف
+                    </button>
+                    <button
+                      type="submit"
+                      className="bg-primary hover:bg-primary-hover text-white px-6 py-2.5 rounded-xl font-bold shadow-md flex items-center gap-2"
+                    >
+                      <CheckCircle2 className="w-4 h-4" />
+                      <span>{editingCatId ? "ذخیره تغییرات" : "ایجاد دسته‌بندی"}</span>
                     </button>
                   </div>
-                ))}
+                </form>
+              </div>
+            </div>
+          )}
+
+          {/* DELETE CONFIRMATION DIALOG */}
+          {deletingCatId && (
+            <div className="fixed inset-0 bg-graphite/60 backdrop-blur-xs flex items-center justify-center p-4 z-50">
+              <div className="bg-white w-full max-w-md rounded-3xl border border-accent p-6 shadow-2xl space-y-5 animate-in fade-in zoom-in duration-200">
+                <div className="w-12 h-12 rounded-2xl bg-rose-100 text-rose-600 flex items-center justify-center mx-auto">
+                  <AlertTriangle className="w-7 h-7" />
+                </div>
+                <div className="text-center space-y-2">
+                  <h3 className="font-extrabold text-lg text-graphite">تایید حذف دسته‌بندی شغلی</h3>
+                  <p className="text-xs text-secondary leading-relaxed">
+                    آیا از حذف این دسته‌بندی اطمینان دارید؟ تمامی ارجاعات دایرکتوری و فرم‌های پلتفرم به‌روزرسانی خواهند شد.
+                  </p>
+                </div>
+                <div className="flex items-center justify-center gap-3 pt-2">
+                  <button
+                    onClick={() => setDeletingCatId(null)}
+                    className="px-5 py-2.5 rounded-xl border border-accent text-graphite font-bold text-xs hover:bg-bg-custom"
+                  >
+                    انصراف
+                  </button>
+                  <button
+                    onClick={handleConfirmDeleteCategory}
+                    className="bg-rose-600 hover:bg-rose-700 text-white px-6 py-2.5 rounded-xl text-xs font-bold shadow-md"
+                  >
+                    بله، حذف شود
+                  </button>
+                </div>
               </div>
             </div>
           )}

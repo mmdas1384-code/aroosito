@@ -17,13 +17,17 @@ import {
   Store,
   Sparkles,
   MessageSquareQuote,
-  MessageSquare
+  MessageSquare,
+  ChevronDown
 } from "lucide-react";
 
 export const Header: React.FC = () => {
   const pathname = usePathname();
-  const { role, setRole, conversations } = useApp();
+  const { role, setRole, conversations, categories } = useApp();
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const [categoriesDropdownOpen, setCategoriesDropdownOpen] = useState(false);
+
+  const activeCategories = categories.filter((c) => c.isActive !== false);
 
   const unreadMessagesCount = conversations.reduce((sum, c) => sum + (c.unreadCount || 0), 0);
 
@@ -60,7 +64,57 @@ export const Header: React.FC = () => {
 
             {/* Desktop Navigation Links */}
             <nav className="hidden lg:flex items-center gap-1 xl:gap-2">
-              {navLinks.map((link) => {
+              {/* Dynamic Vendor Categories Dropdown */}
+              <div
+                className="relative"
+                onMouseEnter={() => setCategoriesDropdownOpen(true)}
+                onMouseLeave={() => setCategoriesDropdownOpen(false)}
+              >
+                <Link
+                  href="/directory"
+                  className={`flex items-center gap-1.5 px-2.5 py-2 rounded-lg text-xs xl:text-sm font-medium transition-colors ${
+                    pathname === "/directory"
+                      ? "bg-primary/10 text-primary font-semibold"
+                      : "text-graphite hover:text-primary hover:bg-slate-50"
+                  }`}
+                >
+                  <Search className="w-4 h-4 text-secondary" />
+                  <span>دسته بندی کسب و کارها</span>
+                  <ChevronDown className="w-3.5 h-3.5 text-secondary" />
+                </Link>
+
+                {categoriesDropdownOpen && (
+                  <div className="absolute top-full right-0 w-64 bg-white border border-accent shadow-xl rounded-2xl py-2 z-50 animate-in fade-in zoom-in-95 duration-150">
+                    <div className="px-3 py-1.5 text-[11px] font-bold text-secondary border-b border-accent/60 mb-1">
+                      دسته‌بندی‌های فعال پلتفرم ({activeCategories.length})
+                    </div>
+                    {activeCategories.map((cat) => (
+                      <Link
+                        key={cat.id}
+                        href={`/directory?category=${encodeURIComponent(cat.name)}`}
+                        onClick={() => setCategoriesDropdownOpen(false)}
+                        className="flex items-center justify-between px-3.5 py-2 hover:bg-bg-custom text-xs font-semibold text-graphite hover:text-primary transition-colors"
+                      >
+                        <span>{cat.name}</span>
+                        <span className="text-[10px] text-secondary font-normal dir-ltr">
+                          {cat.count > 0 ? `${cat.count}+` : ""}
+                        </span>
+                      </Link>
+                    ))}
+                    <div className="pt-1 border-t border-accent/60 mt-1 px-2">
+                      <Link
+                        href="/directory"
+                        onClick={() => setCategoriesDropdownOpen(false)}
+                        className="block text-center text-xs font-bold text-primary py-1.5 hover:bg-primary/5 rounded-lg"
+                      >
+                        مشاهده همه دسته‌بندی‌ها
+                      </Link>
+                    </div>
+                  </div>
+                )}
+              </div>
+
+              {navLinks.slice(1).map((link) => {
                 const isActive = pathname === link.href;
                 const Icon = link.icon;
                 return (
