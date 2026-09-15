@@ -78,10 +78,13 @@ export default function AdminDashboardPage() {
     updateSmsGatewayConfig,
     reviews,
     moderateReview,
-    deleteReview
+    deleteReview,
+    vendorApplications,
+    approveVendorApplication,
+    rejectVendorApplication
   } = useApp();
 
-  const [activeTab, setActiveTab] = useState<"verification" | "reviews" | "categories" | "users" | "analytics" | "sms" | "gateway">("categories");
+  const [activeTab, setActiveTab] = useState<"applications" | "verification" | "reviews" | "categories" | "users" | "analytics" | "sms" | "gateway">("applications");
 
   // Category Manager Modal States
   const [isAddModalOpen, setIsAddModalOpen] = useState(false);
@@ -244,6 +247,23 @@ export default function AdminDashboardPage() {
 
           {/* Admin Tab Switcher */}
           <div className="flex flex-wrap items-center gap-2 border-b border-accent pb-2">
+            <button
+              onClick={() => setActiveTab("applications")}
+              className={`flex items-center gap-2 px-5 py-3 rounded-xl text-xs font-bold transition-all relative ${
+                activeTab === "applications"
+                  ? "bg-primary text-white shadow-xs"
+                  : "bg-white text-graphite hover:border-primary border border-accent"
+              }`}
+            >
+              <Building2 className="w-4 h-4" />
+              <span>درخواست‌های عضویت کسب‌وکارها ({vendorApplications.filter(a => a.status === "pending").length})</span>
+              {vendorApplications.filter(a => a.status === "pending").length > 0 && (
+                <span className="bg-rose-500 text-white text-[10px] font-extrabold px-1.5 py-0.2 rounded-full">
+                  {vendorApplications.filter(a => a.status === "pending").length}
+                </span>
+              )}
+            </button>
+
             <button
               onClick={() => setActiveTab("verification")}
               className={`flex items-center gap-2 px-5 py-3 rounded-xl text-xs font-bold transition-all ${
@@ -427,6 +447,115 @@ export default function AdminDashboardPage() {
                   </button>
                 </div>
               </form>
+            </div>
+          )}
+
+          {/* TAB: VENDOR ONBOARDING APPLICATIONS */}
+          {activeTab === "applications" && (
+            <div className="bg-white rounded-3xl border border-accent shadow-xs overflow-hidden space-y-4">
+              <div className="p-6 border-b border-accent flex justify-between items-center">
+                <div>
+                  <h3 className="text-lg font-extrabold text-graphite">درخواست‌های معلق عضویت کسب‌وکارها (Pending Vendors)</h3>
+                  <p className="text-xs text-secondary mt-0.5">بررسی مدارک، اطلاعات مدیریت و تایید یا رد سریع درخواست‌های ثبت‌نام جدید</p>
+                </div>
+                <span className="bg-amber-50 text-amber-800 text-xs font-bold px-3 py-1 rounded-full border border-amber-200">
+                  {vendorApplications.filter(a => a.status === "pending").length} درخواست جدید
+                </span>
+              </div>
+
+              <div className="divide-y divide-accent/60">
+                {vendorApplications.length === 0 ? (
+                  <div className="p-12 text-center text-xs text-secondary">هیچ درخواستی در صف ثبت‌نام وجود ندارد.</div>
+                ) : (
+                  vendorApplications.map((app) => (
+                    <div key={app.id} className="p-6 space-y-4">
+                      <div className="flex flex-col sm:flex-row justify-between sm:items-center gap-3">
+                        <div className="flex items-center gap-3">
+                          <div className="w-12 h-12 rounded-xl bg-primary/10 text-primary flex items-center justify-center font-bold text-lg">
+                            🏢
+                          </div>
+                          <div>
+                            <div className="flex items-center gap-2">
+                              <h4 className="font-extrabold text-graphite text-base">{app.businessName}</h4>
+                              <span className="text-xs text-primary bg-primary/10 px-2.5 py-0.5 rounded-full font-bold">
+                                {app.category}
+                              </span>
+                            </div>
+                            <p className="text-xs text-secondary mt-1">
+                              مکان: {app.province}، {app.city} • تاریخ ثبت: {app.createdAt}
+                            </p>
+                          </div>
+                        </div>
+
+                        <span className={`px-3 py-1 rounded-full text-xs font-bold border ${
+                          app.status === "approved"
+                            ? "bg-emerald-50 text-emerald-800 border-emerald-200"
+                            : app.status === "rejected"
+                            ? "bg-rose-50 text-rose-800 border-rose-200"
+                            : "bg-amber-50 text-amber-800 border-amber-200"
+                        }`}>
+                          {app.status === "approved" ? "تایید شده (دارای پنل)" : app.status === "rejected" ? "رد شده" : "در انتظار بررسی"}
+                        </span>
+                      </div>
+
+                      {/* Detail Info Card */}
+                      <div className="grid grid-cols-1 md:grid-cols-3 gap-4 bg-bg-custom p-4 rounded-2xl border border-accent text-xs">
+                        <div>
+                          <span className="block font-bold text-secondary">مدیریت مجموعه:</span>
+                          <span className="font-bold text-graphite text-sm">{app.managerName}</span>
+                          <span className="block text-secondary mt-1 dir-ltr text-right">موبایل: {app.phone}</span>
+                          {app.landline && <span className="block text-secondary dir-ltr text-right">ثابت: {app.landline}</span>}
+                        </div>
+
+                        <div>
+                          <span className="block font-bold text-secondary">اینستاگرام / وب‌سایت:</span>
+                          <span className="font-bold text-primary dir-ltr text-right block">{app.instagram || "ثبت نشده"}</span>
+                          <span className="block font-bold text-secondary mt-2">حدود قیمت:</span>
+                          <span className="font-bold text-graphite">{app.priceRange}</span>
+                        </div>
+
+                        <div>
+                          <span className="block font-bold text-secondary">شرح خدمات:</span>
+                          <p className="text-graphite line-clamp-2">{app.description}</p>
+                        </div>
+                      </div>
+
+                      {/* Document Preview & Action buttons */}
+                      <div className="flex flex-wrap items-center justify-between gap-3 pt-2">
+                        {app.licenseUrl && (
+                          <a
+                            href={app.licenseUrl}
+                            target="_blank"
+                            rel="noreferrer"
+                            className="text-xs font-bold text-primary hover:underline flex items-center gap-1"
+                          >
+                            <span>مشاهده پیش‌نمایش تصویر جواز/لوگو ↗</span>
+                          </a>
+                        )}
+
+                        {app.status === "pending" && (
+                          <div className="flex items-center gap-3 mr-auto">
+                            <button
+                              onClick={() => approveVendorApplication(app.id)}
+                              className="bg-primary hover:bg-emerald-900 text-white px-5 py-2.5 rounded-xl font-bold text-xs shadow-xs flex items-center gap-1.5"
+                            >
+                              <CheckCircle2 className="w-4 h-4" />
+                              <span>تایید و ایجاد پنل اختصاصی</span>
+                            </button>
+
+                            <button
+                              onClick={() => rejectVendorApplication(app.id)}
+                              className="bg-rose-50 text-rose-700 hover:bg-rose-600 hover:text-white px-4 py-2.5 rounded-xl border border-rose-200 font-bold text-xs transition-colors"
+                            >
+                              رد درخواست
+                            </button>
+                          </div>
+                        )}
+                      </div>
+                    </div>
+                  ))
+                )}
+              </div>
             </div>
           )}
 

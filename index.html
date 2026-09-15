@@ -112,8 +112,13 @@
           </nav>
         </div>
 
-        <!-- Quick Action / Inquiry CTA -->
+        <!-- Quick Action / Inquiry CTA & Vendor Onboarding CTA -->
         <div class="flex items-center gap-3">
+          <button onclick="toggleVendorModalStatic(true)" class="bg-primary/10 hover:bg-primary/20 text-primary border border-primary/30 px-4 py-2.5 rounded-xl text-xs sm:text-sm font-bold transition-all flex items-center gap-1.5">
+            <i data-lucide="building-2" class="w-4 h-4"></i>
+            <span>ثبت‌نام کسب‌وکارها</span>
+          </button>
+
           <button onclick="openInquiryModal('کلی', 'استعلام قیمت کلی خدمات')" class="flex items-center gap-2 bg-primary hover:bg-primary-hover text-white px-5 py-2.5 rounded-xl text-sm font-bold shadow-md transition-all transform hover:-translate-y-0.5">
             <i data-lucide="message-square-quote" class="w-4 h-4"></i>
             <span>استعلام قیمت آنلاین</span>
@@ -971,6 +976,33 @@
         </div>
       </div>
 
+      <!-- Pending Vendor Onboarding Applications Table -->
+      <div class="bg-white border border-accent rounded-3xl p-6 shadow-xs space-y-4">
+        <div class="flex justify-between items-center border-b border-accent pb-3">
+          <h3 class="text-lg font-bold text-graphite">درخواست‌های معلق عضویت کسب‌وکارها (Pending Vendors)</h3>
+          <span class="bg-amber-50 text-amber-800 text-xs font-bold px-3 py-1 rounded-full border border-amber-200">
+            بررسی سریع مدارک و ایجاد پنل
+          </span>
+        </div>
+
+        <div class="overflow-x-auto">
+          <table class="w-full text-right text-xs">
+            <thead class="bg-bgCustom text-secondary border-b border-accent font-bold">
+              <tr>
+                <th class="p-3">نام برند / مجموعه</th>
+                <th class="p-3">دسته‌بندی</th>
+                <th class="p-3">مدیریت & موبایل</th>
+                <th class="p-3">شهر</th>
+                <th class="p-3 text-center">عملیات تایید</th>
+              </tr>
+            </thead>
+            <tbody id="admin-pending-apps-table" class="divide-y divide-accent/60 font-medium">
+              <!-- Populated via JS -->
+            </tbody>
+          </table>
+        </div>
+      </div>
+
       <!-- SMS Broadcast Panel -->
       <div class="bg-white border border-accent rounded-3xl p-6 shadow-xs space-y-4">
         <h3 class="text-lg font-bold text-graphite border-b border-accent pb-3">پنل ارسال پیامک اطلاع‌رسانی و تبلیغاتی</h3>
@@ -1063,6 +1095,76 @@
         <button type="submit" class="w-full bg-primary hover:bg-primary-hover text-white py-3 rounded-xl text-xs font-bold shadow-md transition-colors flex items-center justify-center gap-2">
           <i data-lucide="send" class="w-4 h-4"></i>
           <span>ثبت پاسخ نهایی</span>
+        </button>
+      </form>
+    </div>
+  </div>
+
+  <!-- ========================================== -->
+  <!-- MODAL: VENDOR ONBOARDING REQUEST POPUP    -->
+  <!-- ========================================== -->
+  <div id="vendor-onboarding-modal" class="fixed inset-0 z-50 bg-black/60 backdrop-blur-xs flex items-center justify-center p-4 hidden">
+    <div class="bg-white border border-accent rounded-3xl max-w-xl w-full p-6 shadow-2xl space-y-4 relative">
+      <button onclick="toggleVendorModalStatic(false)" class="absolute top-4 left-4 text-secondary hover:text-graphite">
+        <i data-lucide="x" class="w-6 h-6"></i>
+      </button>
+
+      <div class="border-b border-accent pb-3">
+        <span class="text-xs font-bold text-primary">ثبت‌نام و جذب تامین‌کنندگان</span>
+        <h3 class="text-xl font-bold text-graphite mt-0.5">فرم درخواست عضویت کسب‌وکارها</h3>
+      </div>
+
+      <div id="v-modal-success" class="hidden text-center py-6 space-y-3">
+        <div class="w-12 h-12 rounded-full bg-emerald-100 text-emerald-600 flex items-center justify-center mx-auto">
+          <i data-lucide="check-circle-2" class="w-8 h-8"></i>
+        </div>
+        <h4 class="text-base font-bold text-graphite">درخواست عضویت با موفقیت ثبت شد!</h4>
+        <p class="text-xs text-secondary leading-relaxed">اطلاعات شما ثبت شد. پس از بررسی تیم مدیریت، پیامک تایید ارسال خواهد شد.</p>
+        <button onclick="toggleVendorModalStatic(false)" class="bg-primary text-white px-6 py-2 rounded-xl text-xs font-bold">بستن</button>
+      </div>
+
+      <form id="vendor-onboarding-form" onsubmit="handleVendorModalSubmit(event)" class="space-y-3 text-xs font-bold text-graphite">
+        <div>
+          <label class="block mb-1">نام برند / مجموعه تجاری *</label>
+          <input type="text" id="v-name" required placeholder="مثلاً: باغ تالار تشریفاتی زمرد" class="w-full bg-bgCustom border border-accent rounded-xl p-2.5 text-xs font-medium focus:outline-none focus:border-primary">
+        </div>
+
+        <div class="grid grid-cols-2 gap-3">
+          <div>
+            <label class="block mb-1">دسته‌بندی شغلی *</label>
+            <select id="v-cat" class="w-full bg-bgCustom border border-accent rounded-xl p-2.5 text-xs font-medium focus:outline-none focus:border-primary">
+              <option value="تالار و باغ تشریفات">تالار و باغ تشریفات</option>
+              <option value="آتلیه و عکاسی">آتلیه و عکاسی</option>
+              <option value="سالن زیبایی">سالن زیبایی</option>
+              <option value="مزون و لباس عروس">مزون و لباس عروس</option>
+              <option value="گل‌آرایی و ماشین عروس">گل‌آرایی و ماشین عروس</option>
+            </select>
+          </div>
+          <div>
+            <label class="block mb-1">شهر *</label>
+            <input type="text" id="v-city" required placeholder="مثلاً: تهران (لواسان)" class="w-full bg-bgCustom border border-accent rounded-xl p-2.5 text-xs font-medium focus:outline-none focus:border-primary">
+          </div>
+        </div>
+
+        <div class="grid grid-cols-2 gap-3">
+          <div>
+            <label class="block mb-1">نام مدیریت *</label>
+            <input type="text" id="v-manager" required placeholder="نام مدیریت" class="w-full bg-bgCustom border border-accent rounded-xl p-2.5 text-xs font-medium focus:outline-none focus:border-primary">
+          </div>
+          <div>
+            <label class="block mb-1">شماره همراه (SMS) *</label>
+            <input type="tel" id="v-phone" required placeholder="۰۹۱۲..." class="w-full bg-bgCustom border border-accent rounded-xl p-2.5 text-xs font-medium focus:outline-none focus:border-primary dir-ltr">
+          </div>
+        </div>
+
+        <div>
+          <label class="block mb-1">معرفی کوتاه و حدود قیمت:</label>
+          <textarea id="v-desc" rows="2" placeholder="توضیحات..." class="w-full bg-bgCustom border border-accent rounded-xl p-2.5 text-xs font-medium focus:outline-none focus:border-primary"></textarea>
+        </div>
+
+        <button type="submit" class="w-full bg-primary hover:bg-emerald-900 text-white py-3 rounded-xl text-xs font-bold shadow-md transition-colors flex items-center justify-center gap-2">
+          <i data-lucide="send" class="w-4 h-4"></i>
+          <span>ارسال درخواست عضویت</span>
         </button>
       </form>
     </div>
@@ -1436,6 +1538,104 @@
     let inquiries = [
       { id: 101, name: "امیرحسین رضایی", phone: "09121112233", date: "۱۴۰۳/۰۵/۲۰", guests: 250, details: "استعلام منوی دیس پرس همراه با ورودی و شمع‌آرایی" }
     ];
+
+    let staticVendorApplications = [
+      {
+        id: "app-101",
+        name: "مجموعه تشریفات و گل‌آرایی مگنولیا",
+        category: "گل‌آرایی و ماشین عروس",
+        city: "تهران",
+        manager: "سید علیرضا حسینی",
+        phone: "۰۹۱۲۹۸۷۶۵۴۳",
+        desc: "طراحی و اجرای گل‌آرایی مدرن، ورودی تالار و ماشین عروس",
+        status: "pending"
+      }
+    ];
+
+    function toggleVendorModalStatic(show) {
+      const modal = document.getElementById('vendor-onboarding-modal');
+      if (modal) {
+        if (show) modal.classList.remove('hidden');
+        else modal.classList.add('hidden');
+      }
+    }
+
+    function handleVendorModalSubmit(e) {
+      e.preventDefault();
+      const name = document.getElementById('v-name').value.trim();
+      const category = document.getElementById('v-cat').value;
+      const city = document.getElementById('v-city').value.trim();
+      const manager = document.getElementById('v-manager').value.trim();
+      const phone = document.getElementById('v-phone').value.trim();
+      const desc = document.getElementById('v-desc').value.trim();
+
+      if (!name || !phone) return;
+
+      staticVendorApplications.push({
+        id: 'app-' + Date.now(),
+        name,
+        category,
+        city,
+        manager,
+        phone,
+        desc,
+        status: 'pending'
+      });
+
+      document.getElementById('vendor-onboarding-form').classList.add('hidden');
+      document.getElementById('v-modal-success').classList.remove('hidden');
+
+      renderAdminPendingApps();
+    }
+
+    function approveVendorAppStatic(appId) {
+      const app = staticVendorApplications.find(a => a.id === appId);
+      if (app) {
+        app.status = 'approved';
+        vendors.push({
+          id: vendors.length + 1,
+          name: app.name,
+          category: app.category,
+          city: app.city,
+          rating: 5.0,
+          verified: true,
+          priceRange: "استعلام قیمت",
+          image: "https://images.unsplash.com/photo-1519167758481-83f550bb49b3?auto=format&fit=crop&w=800&q=80"
+        });
+        renderVendors(vendors);
+        renderAdminPendingApps();
+        renderAdminTable();
+      }
+    }
+
+    function renderAdminPendingApps() {
+      const tbody = document.getElementById('admin-pending-apps-table');
+      if (!tbody) return;
+      tbody.innerHTML = '';
+
+      const pending = staticVendorApplications.filter(a => a.status === 'pending');
+      if (pending.length === 0) {
+        tbody.innerHTML = '<tr><td colspan="5" class="p-4 text-center text-secondary">هیچ درخواست جدیدی در صف بررسی وجود ندارد.</td></tr>';
+        return;
+      }
+
+      pending.forEach(app => {
+        const tr = document.createElement('tr');
+        tr.className = "hover:bg-slate-50";
+        tr.innerHTML = `
+          <td class="p-3 font-bold text-graphite">${app.name}</td>
+          <td class="p-3 text-primary">${app.category}</td>
+          <td class="p-3 font-semibold text-graphite">${app.manager} (${app.phone})</td>
+          <td class="p-3 text-secondary">${app.city}</td>
+          <td class="p-3 text-center">
+            <button onclick="approveVendorAppStatic('${app.id}')" class="bg-primary text-white font-bold text-xs px-3 py-1.5 rounded-lg hover:bg-emerald-900 transition-colors">
+              تایید و ایجاد پنل
+            </button>
+          </td>
+        `;
+        tbody.appendChild(tr);
+      });
+    }
 
     let bookedDates = [5, 12, 19, 26];
 
@@ -1833,6 +2033,7 @@
       renderChecklistTimeline();
       renderCalendar();
       renderInquiries();
+      renderAdminPendingApps();
       renderAdminTable();
     });
   </script>

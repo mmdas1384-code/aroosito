@@ -195,6 +195,24 @@ export interface SmsGatewayConfig {
   triggerBookingReminder: boolean;
 }
 
+export interface VendorApplication {
+  id: string;
+  businessName: string;
+  category: string;
+  city: string;
+  province: string;
+  managerName: string;
+  phone: string;
+  landline?: string;
+  instagram?: string;
+  description: string;
+  priceRange: string;
+  logoUrl?: string;
+  licenseUrl?: string;
+  status: "pending" | "approved" | "rejected";
+  createdAt: string;
+}
+
 interface AppContextType {
   role: UserRole;
   setRole: (role: UserRole) => void;
@@ -253,6 +271,12 @@ interface AppContextType {
   addReview: (review: Omit<VendorReview, "id" | "createdAt" | "status">) => void;
   moderateReview: (id: string, status: "approved" | "rejected") => void;
   deleteReview: (id: string) => void;
+
+  // VENDOR ONBOARDING APPLICATIONS
+  vendorApplications: VendorApplication[];
+  submitVendorApplication: (app: Omit<VendorApplication, "id" | "createdAt" | "status">) => void;
+  approveVendorApplication: (id: string) => void;
+  rejectVendorApplication: (id: string) => void;
 }
 
 const INITIAL_CATEGORIES: Category[] = [
@@ -448,6 +472,26 @@ const INITIAL_CHECKLIST: ChecklistItem[] = [
   { id: "chk-26", title: "همراه داشتن کیف لوازم ضروری (کمک‌های اولیه، نخ و سوزن، شارژر)", category: "روز عروسی", completed: false, dueDate: "صبح عروسی", isUrgent: false }
 ];
 
+const INITIAL_VENDOR_APPLICATIONS: VendorApplication[] = [
+  {
+    id: "app-1",
+    businessName: "مجموعه تشریفات و گل‌آرایی مگنولیا",
+    category: "گل‌آرایی و ماشین عروس",
+    city: "تهران",
+    province: "تهران",
+    managerName: "سید علیرضا حسینی",
+    phone: "۰۹۱۲۹۸۷۶۵۴۳",
+    landline: "۰۲۱-۴۴۵۵۶۶۷۷",
+    instagram: "@magnolia.flowers",
+    description: "طراحی و اجرای گل‌آرایی مدرن، ورودی تالار و ماشین عروس با گل‌های تازه وارداتی",
+    priceRange: "۲۰ تا ۵۰ میلیون تومان",
+    logoUrl: "https://images.unsplash.com/photo-1561181286-d3fee7d55364?auto=format&fit=crop&w=200&q=80",
+    licenseUrl: "https://images.unsplash.com/photo-1554224155-8d04cb21cd6c?auto=format&fit=crop&w=400&q=80",
+    status: "pending",
+    createdAt: "۱۴۰۳/۱۲/۰۲"
+  }
+];
+
 const INITIAL_REVIEWS: VendorReview[] = [
   {
     id: "rev-1",
@@ -524,6 +568,7 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
   const [messages, setMessages] = useState<ChatMessage[]>(INITIAL_MESSAGES);
   const [notifications, setNotifications] = useState<NotificationItem[]>(INITIAL_NOTIFICATIONS);
   const [reviews, setReviews] = useState<VendorReview[]>(INITIAL_REVIEWS);
+  const [vendorApplications, setVendorApplications] = useState<VendorApplication[]>(INITIAL_VENDOR_APPLICATIONS);
   const [smsGatewayConfig, setSmsGatewayConfig] = useState<SmsGatewayConfig>({
     provider: "kavenegar",
     apiKey: "kv-98234-x89123-demo-key",
@@ -812,6 +857,66 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
     setReviews((prev) => prev.filter((r) => r.id !== id));
   };
 
+  const submitVendorApplication = (appData: Omit<VendorApplication, "id" | "createdAt" | "status">) => {
+    const newApp: VendorApplication = {
+      ...appData,
+      id: `app-${Date.now()}`,
+      createdAt: new Date().toLocaleDateString("fa-IR"),
+      status: "pending"
+    };
+    setVendorApplications((prev) => [newApp, ...prev]);
+
+    // Send SMS alert notification to Admin
+    setSmsLog((prev) => [
+      {
+        id: `sms-${Date.now()}`,
+        recipient: "مدیریت عروسی تو",
+        message: `درخواست عضویت جدید تامین‌کننده: ${appData.businessName} (${appData.phone}) ثبت گردید.`,
+        timestamp: new Date().toLocaleTimeString("fa-IR")
+      },
+      ...prev
+    ]);
+  };
+
+  const approveVendorApplication = (id: string) => {
+    const targetApp = vendorApplications.find((a) => a.id === id);
+    if (!targetApp) return;
+
+    // Update status
+    setVendorApplications((prev) => prev.map((a) => (a.id === id ? { ...a, status: "approved" } : a)));
+
+    // Create new active Vendor profile
+    const newVendor: Vendor = {
+      id: `v-${Date.now()}`,
+      name: targetApp.businessName,
+      category: targetApp.category,
+      city: targetApp.city,
+      address: `${targetApp.province}، ${targetApp.city}`,
+      phone: targetApp.phone,
+      rating: 5.0,
+      reviewCount: 1,
+      isVerified: true,
+      priceRange: targetApp.priceRange || "استعلام قیمت",
+      coverImage: targetApp.logoUrl || "https://images.unsplash.com/photo-1519167758481-83f550bb49b3?auto=format&fit=crop&w=1200&q=80",
+      logo: targetApp.logoUrl || "https://images.unsplash.com/photo-1560066984-138dadb4c035?auto=format&fit=crop&w=200&q=80",
+      gallery: [
+        "https://images.unsplash.com/photo-1519167758481-83f550bb49b3?auto=format&fit=crop&w=800&q=80"
+      ],
+      packages: [
+        { id: `p-${Date.now()}`, title: "پکیج پایه خدمات", price: targetApp.priceRange || "استعلام", features: ["خدمات استاندارد", "مشاوره رایگان"] }
+      ],
+      description: targetApp.description,
+      bookedDates: [],
+      instagram: targetApp.instagram
+    };
+
+    setVendors((prev) => [newVendor, ...prev]);
+  };
+
+  const rejectVendorApplication = (id: string) => {
+    setVendorApplications((prev) => prev.map((a) => (a.id === id ? { ...a, status: "rejected" } : a)));
+  };
+
   return (
     <AppContext.Provider
       value={{
@@ -867,7 +972,11 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
         reviews,
         addReview,
         moderateReview,
-        deleteReview
+        deleteReview,
+        vendorApplications,
+        submitVendorApplication,
+        approveVendorApplication,
+        rejectVendorApplication
       }}
     >
       {children}
