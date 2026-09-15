@@ -18,7 +18,11 @@ import {
   XCircle,
   Search,
   MessageSquare,
-  Sparkles
+  Sparkles,
+  Radio,
+  Key,
+  Server,
+  Bell
 } from "lucide-react";
 
 export default function AdminDashboardPage() {
@@ -30,10 +34,12 @@ export default function AdminDashboardPage() {
     deleteCategory,
     inquiries,
     smsLog,
-    sendSmsBroadcast
+    sendSmsBroadcast,
+    smsGatewayConfig,
+    updateSmsGatewayConfig
   } = useApp();
 
-  const [activeTab, setActiveTab] = useState<"verification" | "categories" | "users" | "analytics" | "sms">("verification");
+  const [activeTab, setActiveTab] = useState<"verification" | "categories" | "users" | "analytics" | "sms" | "gateway">("sms");
 
   // Category Manager Form State
   const [newCatName, setNewCatName] = useState("");
@@ -43,6 +49,11 @@ export default function AdminDashboardPage() {
   const [smsTargetGroup, setSmsTargetGroup] = useState("همه تامین‌کنندگان");
   const [smsMessage, setSmsMessage] = useState("");
   const [smsSuccess, setSmsSuccess] = useState(false);
+
+  // SMS Gateway Config Form State
+  const [gatewayProvider, setGatewayProvider] = useState<"kavenegar" | "ghasedak">(smsGatewayConfig.provider);
+  const [gatewayApiKey, setGatewayApiKey] = useState(smsGatewayConfig.apiKey);
+  const [gatewaySenderLine, setGatewaySenderLine] = useState(smsGatewayConfig.senderLine);
 
   const handleAddCategorySubmit = (e: React.FormEvent) => {
     e.preventDefault();
@@ -61,6 +72,15 @@ export default function AdminDashboardPage() {
       setSmsSuccess(false);
       setSmsMessage("");
     }, 2000);
+  };
+
+  const handleSaveSmsGateway = (e: React.FormEvent) => {
+    e.preventDefault();
+    updateSmsGatewayConfig({
+      provider: gatewayProvider,
+      apiKey: gatewayApiKey,
+      senderLine: gatewaySenderLine
+    });
   };
 
   // Mock export directory function
@@ -92,7 +112,7 @@ export default function AdminDashboardPage() {
               </div>
               <div>
                 <h1 className="text-2xl font-extrabold text-graphite">پنل مدیریت ارشد عروسی تو</h1>
-                <p className="text-xs text-secondary mt-0.5">کنترل هویت تامین‌کنندگان، دسته‌بندی‌ها، دایرکتوری و پنل ارسال پیامک</p>
+                <p className="text-xs text-secondary mt-0.5">کنترل هویت تامین‌کنندگان، دسته‌بندی‌ها، دایرکتوری، درگاه SMS و مرکز پیام</p>
               </div>
             </div>
 
@@ -116,7 +136,7 @@ export default function AdminDashboardPage() {
               }`}
             >
               <ShieldCheck className="w-4 h-4" />
-              <span>تایید هویت و اعطای نشان تاییدیه</span>
+              <span>تایید هویت و نشان اعتبارسنجی</span>
             </button>
 
             <button
@@ -140,19 +160,7 @@ export default function AdminDashboardPage() {
               }`}
             >
               <Users className="w-4 h-4" />
-              <span>دایرکتوری زوج‌ها و تامین‌کنندگان</span>
-            </button>
-
-            <button
-              onClick={() => setActiveTab("analytics")}
-              className={`flex items-center gap-2 px-5 py-3 rounded-xl text-xs font-bold transition-all ${
-                activeTab === "analytics"
-                  ? "bg-primary text-white shadow-xs"
-                  : "bg-white text-graphite hover:border-primary border border-accent"
-              }`}
-            >
-              <BarChart3 className="w-4 h-4" />
-              <span>گزارش‌گیری بازدیدها و عملکرد</span>
+              <span>دایرکتوری زنده کاربران</span>
             </button>
 
             <button
@@ -164,9 +172,134 @@ export default function AdminDashboardPage() {
               }`}
             >
               <Send className="w-4 h-4" />
-              <span>پنل ارسال پیامک انبوه (SMS)</span>
+              <span>ارسال پیامک سیستم</span>
+            </button>
+
+            <button
+              onClick={() => setActiveTab("gateway")}
+              className={`flex items-center gap-2 px-5 py-3 rounded-xl text-xs font-bold transition-all ${
+                activeTab === "gateway"
+                  ? "bg-primary text-white shadow-xs"
+                  : "bg-white text-graphite hover:border-primary border border-accent"
+              }`}
+            >
+              <Server className="w-4 h-4 text-emerald-400" />
+              <span>تنظیمات درگاه پیامک (کاوه‌نگار / قاصدک)</span>
+            </button>
+
+            <button
+              onClick={() => setActiveTab("analytics")}
+              className={`flex items-center gap-2 px-5 py-3 rounded-xl text-xs font-bold transition-all ${
+                activeTab === "analytics"
+                  ? "bg-primary text-white shadow-xs"
+                  : "bg-white text-graphite hover:border-primary border border-accent"
+              }`}
+            >
+              <BarChart3 className="w-4 h-4" />
+              <span>گزارش‌گیری</span>
             </button>
           </div>
+
+          {/* TAB: SMS GATEWAY CONTROL PANEL */}
+          {activeTab === "gateway" && (
+            <div className="space-y-6">
+              <form onSubmit={handleSaveSmsGateway} className="bg-white p-6 rounded-3xl border border-accent shadow-xs space-y-6">
+                <div className="flex items-center justify-between border-b border-accent pb-4">
+                  <div className="flex items-center gap-2">
+                    <Server className="w-6 h-6 text-primary" />
+                    <div>
+                      <h3 className="font-extrabold text-base text-graphite">تنظیمات درگاه ارسال پیامک خودکار (SMS Gateway)</h3>
+                      <p className="text-xs text-secondary mt-0.5">اتصال مستقیم به پنل‌های کاوه‌نگار یا قاصدک جهت ارسال پیامک کد تایید و اطلاع‌رسانی</p>
+                    </div>
+                  </div>
+                  <span className="bg-emerald-50 text-emerald-700 font-bold px-3 py-1 rounded-full text-xs border border-emerald-200">
+                    درگاه فعال: {smsGatewayConfig.provider.toUpperCase()}
+                  </span>
+                </div>
+
+                <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 text-xs">
+                  <div>
+                    <label className="block font-bold text-graphite mb-1.5">انتخاب وب‌سرویس پیامک:</label>
+                    <select
+                      value={gatewayProvider}
+                      onChange={(e: any) => setGatewayProvider(e.target.value)}
+                      className="w-full p-3 rounded-xl border border-accent font-bold bg-bg-custom"
+                    >
+                      <option value="kavenegar">کاوه‌نگار (Kavenegar WebService)</option>
+                      <option value="ghasedak">قاصدک (Ghasedak SMS API)</option>
+                    </select>
+                  </div>
+
+                  <div>
+                    <label className="block font-bold text-graphite mb-1.5">کلید اختصاصی API Key:</label>
+                    <input
+                      type="text"
+                      value={gatewayApiKey}
+                      onChange={(e) => setGatewayApiKey(e.target.value)}
+                      className="w-full p-3 rounded-xl border border-accent font-mono text-left dir-ltr bg-white"
+                    />
+                  </div>
+
+                  <div>
+                    <label className="block font-bold text-graphite mb-1.5">خط اختصاصی ارسال‌کننده:</label>
+                    <input
+                      type="text"
+                      value={gatewaySenderLine}
+                      onChange={(e) => setGatewaySenderLine(e.target.value)}
+                      className="w-full p-3 rounded-xl border border-accent font-mono text-left dir-ltr bg-white"
+                    />
+                  </div>
+                </div>
+
+                {/* Triggers Settings */}
+                <div className="space-y-3 pt-4 border-t border-accent text-xs">
+                  <h4 className="font-bold text-graphite">محرک‌های خودکار ارسال SMS:</h4>
+
+                  <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
+                    <label className="bg-bg-custom p-3.5 rounded-xl border border-accent flex items-center justify-between cursor-pointer">
+                      <span className="font-medium text-graphite">ارسال SMS هنگام ثبت استعلام جدید</span>
+                      <input
+                        type="checkbox"
+                        checked={smsGatewayConfig.triggerInquirySms}
+                        onChange={(e) => updateSmsGatewayConfig({ triggerInquirySms: e.target.checked })}
+                        className="w-4 h-4 text-primary rounded"
+                      />
+                    </label>
+
+                    <label className="bg-bg-custom p-3.5 rounded-xl border border-accent flex items-center justify-between cursor-pointer">
+                      <span className="font-medium text-graphite">ارسال SMS هنگام صادر شدن پیش‌فاکتور</span>
+                      <input
+                        type="checkbox"
+                        checked={smsGatewayConfig.triggerQuoteSms}
+                        onChange={(e) => updateSmsGatewayConfig({ triggerQuoteSms: e.target.checked })}
+                        className="w-4 h-4 text-primary rounded"
+                      />
+                    </label>
+
+                    <label className="bg-bg-custom p-3.5 rounded-xl border border-accent flex items-center justify-between cursor-pointer">
+                      <span className="font-medium text-graphite">ارسال یادآوری رزرو ۳ روز قبل مراسم</span>
+                      <input
+                        type="checkbox"
+                        checked={smsGatewayConfig.triggerBookingReminder}
+                        onChange={(e) => updateSmsGatewayConfig({ triggerBookingReminder: e.target.checked })}
+                        className="w-4 h-4 text-primary rounded"
+                      />
+                    </label>
+                  </div>
+                </div>
+
+                <div className="flex justify-end">
+                  <button
+                    type="submit"
+                    className="bg-primary hover:bg-primary-hover text-white px-6 py-2.5 rounded-xl text-xs font-bold transition-all shadow-md flex items-center gap-1.5"
+                  >
+                    <CheckCircle2 className="w-4 h-4" />
+                    <span>ذخیره تنظیمات درگاه پیامک</span>
+                  </button>
+                </div>
+              </form>
+            </div>
+          )}
 
           {/* TAB 1: VERIFICATION & BADGING */}
           {activeTab === "verification" && (

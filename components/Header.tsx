@@ -16,13 +16,16 @@ import {
   ShieldCheck,
   Store,
   Sparkles,
-  MessageSquareQuote
+  MessageSquareQuote,
+  MessageSquare
 } from "lucide-react";
 
 export const Header: React.FC = () => {
   const pathname = usePathname();
-  const { role, setRole } = useApp();
+  const { role, setRole, conversations } = useApp();
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+
+  const unreadMessagesCount = conversations.reduce((sum, c) => sum + (c.unreadCount || 0), 0);
 
   const navLinks = [
     { href: "/directory", label: "دسته بندی کسب و کارها", icon: Search },
@@ -31,6 +34,7 @@ export const Header: React.FC = () => {
     { href: "/invitation", label: "کارت دعوت دیجیتال", icon: Sparkles },
     { href: "/quizzes", label: "تست های روانشناسی و استایل", icon: HelpCircle },
     { href: "/inquiry", label: "استعلام قیمت آنلاین", icon: MessageSquareQuote },
+    { href: "/messages", label: "گفت‌وگوها", icon: MessageSquare, badge: unreadMessagesCount },
   ];
 
   return (
@@ -63,7 +67,7 @@ export const Header: React.FC = () => {
                   <Link
                     key={link.href}
                     href={link.href}
-                    className={`flex items-center gap-2 px-3 py-2 rounded-lg text-sm font-medium transition-colors ${
+                    className={`flex items-center gap-1.5 px-2.5 py-2 rounded-lg text-xs xl:text-sm font-medium transition-colors relative ${
                       isActive
                         ? "bg-primary/10 text-primary font-semibold"
                         : "text-graphite hover:text-primary hover:bg-slate-50"
@@ -71,6 +75,11 @@ export const Header: React.FC = () => {
                   >
                     <Icon className="w-4 h-4 text-secondary" />
                     <span>{link.label}</span>
+                    {!!link.badge && link.badge > 0 && (
+                      <span className="bg-rose-500 text-white text-[10px] font-extrabold px-1.5 py-0.2 rounded-full">
+                        {link.badge}
+                      </span>
+                    )}
                   </Link>
                 );
               })}
@@ -170,10 +179,17 @@ export const Header: React.FC = () => {
                   key={link.href}
                   href={link.href}
                   onClick={() => setMobileMenuOpen(false)}
-                  className="flex items-center gap-3 px-3 py-2.5 rounded-lg text-base font-medium text-graphite hover:bg-bg-custom hover:text-primary"
+                  className="flex items-center justify-between px-3 py-2.5 rounded-lg text-base font-medium text-graphite hover:bg-bg-custom hover:text-primary"
                 >
-                  <Icon className="w-5 h-5 text-secondary" />
-                  <span>{link.label}</span>
+                  <div className="flex items-center gap-3">
+                    <Icon className="w-5 h-5 text-secondary" />
+                    <span>{link.label}</span>
+                  </div>
+                  {!!link.badge && link.badge > 0 && (
+                    <span className="bg-rose-500 text-white text-xs font-bold px-2 py-0.5 rounded-full">
+                      {link.badge}
+                    </span>
+                  )}
                 </Link>
               );
             })}

@@ -373,8 +373,9 @@ export default function QuizzesAndMagazinePage() {
                       <HelpCircle className="w-4 h-4 text-primary" />
                       سوال {currentQuestion + 1} از {QUIZ_QUESTIONS.length}
                     </span>
-                    <span className="text-primary font-extrabold bg-primary/10 px-3 py-1 rounded-full">
-                      {Math.round(((currentQuestion + 1) / QUIZ_QUESTIONS.length) * 100)}٪ تکمیل شده
+                    <span className="text-primary font-extrabold bg-primary/10 px-3 py-1 rounded-full flex items-center gap-1">
+                      <span dir="ltr">{Math.round(((currentQuestion + 1) / QUIZ_QUESTIONS.length) * 100)}%</span>
+                      <span>تکمیل شده</span>
                     </span>
                   </div>
 
