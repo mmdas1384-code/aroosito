@@ -11,6 +11,13 @@ export interface VendorPackage {
   features: string[];
 }
 
+export interface PortfolioMedia {
+  id: string;
+  url: string;
+  type: "image" | "video";
+  title?: string;
+}
+
 export interface Vendor {
   id: string;
   name: string;
@@ -25,9 +32,13 @@ export interface Vendor {
   coverImage: string;
   logo: string;
   gallery: string[];
+  portfolioMedia?: PortfolioMedia[];
   packages: VendorPackage[];
   description: string;
   bookedDates: string[]; // ISO date strings (YYYY-MM-DD)
+  workingHours?: string;
+  instagram?: string;
+  mapEmbedUrl?: string;
 }
 
 export interface Inquiry {
@@ -189,6 +200,12 @@ interface AppContextType {
   updateCategory: (id: string, cat: Partial<Omit<Category, "id">>) => void;
   toggleCategoryStatus: (id: string) => void;
   deleteCategory: (id: string) => void;
+  updateVendorProfile: (vendorId: string, data: Partial<Vendor>) => void;
+  addVendorPackage: (vendorId: string, pkg: Omit<VendorPackage, "id">) => void;
+  updateVendorPackage: (vendorId: string, packageId: string, pkg: Partial<VendorPackage>) => void;
+  deleteVendorPackage: (vendorId: string, packageId: string) => void;
+  addVendorPortfolioMedia: (vendorId: string, media: Omit<PortfolioMedia, "id">) => void;
+  deleteVendorPortfolioMedia: (vendorId: string, mediaId: string) => void;
   toggleChecklist: (id: string) => void;
   addChecklistItem: (title: string, category: string, dueDate: string) => void;
   addGuestItem: (name: string, side: "bride" | "groom", plusOne: boolean) => void;
@@ -231,7 +248,7 @@ const INITIAL_VENDORS: Vendor[] = [
     name: "باغ تالار تشریفاتی رویال اسپیناس",
     category: "تالار و باغ تشریفات",
     city: "تهران",
-    address: "تهران، منطقه لواسانات، خروجی اول",
+    address: "تهران، منطقه لواسانات، خروجی اول، پلاک ۴۴",
     phone: "۰۲۱-۲۲۳۳۴۴۵۵",
     rating: 4.9,
     reviewCount: 128,
@@ -239,11 +256,21 @@ const INITIAL_VENDORS: Vendor[] = [
     priceRange: "۸۰ تا ۱۵۰ میلیون تومان",
     coverImage: "https://images.unsplash.com/photo-1519167758481-83f550bb49b3?auto=format&fit=crop&w=1200&q=80",
     logo: "https://images.unsplash.com/photo-1560066984-138dadb4c035?auto=format&fit=crop&w=200&q=80",
+    workingHours: "همه روزه از ۱۰:۰۰ الی ۲۲:۰۰ (با هماهنگی قبلی)",
+    instagram: "@espinas.royal.garden",
+    mapEmbedUrl: "https://maps.google.com/maps?q=35.823,51.589&z=15&output=embed",
     gallery: [
       "https://images.unsplash.com/photo-1519167758481-83f550bb49b3?auto=format&fit=crop&w=800&q=80",
       "https://images.unsplash.com/photo-1544078751-58fee2d8a03b?auto=format&fit=crop&w=800&q=80",
       "https://images.unsplash.com/photo-1465495976277-4387d4b0b4c6?auto=format&fit=crop&w=800&q=80",
       "https://images.unsplash.com/photo-1511795409834-ef04bbd61622?auto=format&fit=crop&w=800&q=80"
+    ],
+    portfolioMedia: [
+      { id: "m1", url: "https://images.unsplash.com/photo-1519167758481-83f550bb49b3?auto=format&fit=crop&w=800&q=80", type: "image", title: "ورودی باغ و آبنما" },
+      { id: "m2", url: "https://images.unsplash.com/photo-1544078751-58fee2d8a03b?auto=format&fit=crop&w=800&q=80", type: "image", title: "سالن VIP گل‌آرایی شده" },
+      { id: "m3", url: "https://images.unsplash.com/photo-1465495976277-4387d4b0b4c6?auto=format&fit=crop&w=800&q=80", type: "image", title: "دکوراسیون سفره عقد" },
+      { id: "m4", url: "https://images.unsplash.com/photo-1511795409834-ef04bbd61622?auto=format&fit=crop&w=800&q=80", type: "image", title: "نورپردازی شب باغ" },
+      { id: "m5", url: "https://interactive-examples.mdn.mozilla.net/media/cc0-videos/flower.mp4", type: "video", title: "تیزر معرفی فضای باغ تالار" }
     ],
     packages: [
       { id: "p1", title: "پکیج طلایی (VIP)", price: "۱۲۰,۰۰۰,۰۰۰ تومان", features: ["ظرفیت تا ۳۰۰ نفر", "منوی شام ۴ رنگ VIP", "موزیک زنده + نورپردازی", "گل‌آرایی طبیعی سالن و ورودی"] },
@@ -467,6 +494,78 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
     setCategories((prev) => prev.filter((c) => c.id !== id));
   };
 
+  const updateVendorProfile = (vendorId: string, data: Partial<Vendor>) => {
+    setVendors((prev) =>
+      prev.map((v) => (v.id === vendorId ? { ...v, ...data } : v))
+    );
+  };
+
+  const addVendorPackage = (vendorId: string, pkgData: Omit<VendorPackage, "id">) => {
+    setVendors((prev) =>
+      prev.map((v) => {
+        if (v.id !== vendorId) return v;
+        const newPkg: VendorPackage = { ...pkgData, id: `pkg-${Date.now()}` };
+        return { ...v, packages: [...v.packages, newPkg] };
+      })
+    );
+  };
+
+  const updateVendorPackage = (vendorId: string, packageId: string, pkgData: Partial<VendorPackage>) => {
+    setVendors((prev) =>
+      prev.map((v) => {
+        if (v.id !== vendorId) return v;
+        return {
+          ...v,
+          packages: v.packages.map((p) => (p.id === packageId ? { ...p, ...pkgData } : p))
+        };
+      })
+    );
+  };
+
+  const deleteVendorPackage = (vendorId: string, packageId: string) => {
+    setVendors((prev) =>
+      prev.map((v) => {
+        if (v.id !== vendorId) return v;
+        return {
+          ...v,
+          packages: v.packages.filter((p) => p.id !== packageId)
+        };
+      })
+    );
+  };
+
+  const addVendorPortfolioMedia = (vendorId: string, mediaData: Omit<PortfolioMedia, "id">) => {
+    setVendors((prev) =>
+      prev.map((v) => {
+        if (v.id !== vendorId) return v;
+        const existingMedia = v.portfolioMedia || [];
+        const newMediaItem: PortfolioMedia = { ...mediaData, id: `med-${Date.now()}` };
+        return {
+          ...v,
+          portfolioMedia: [...existingMedia, newMediaItem],
+          gallery: mediaData.type === "image" ? [...v.gallery, mediaData.url] : v.gallery
+        };
+      })
+    );
+  };
+
+  const deleteVendorPortfolioMedia = (vendorId: string, mediaId: string) => {
+    setVendors((prev) =>
+      prev.map((v) => {
+        if (v.id !== vendorId) return v;
+        const existingMedia = v.portfolioMedia || [];
+        const targetMedia = existingMedia.find((m) => m.id === mediaId);
+        const updatedMedia = existingMedia.filter((m) => m.id !== mediaId);
+        const updatedGallery = targetMedia ? v.gallery.filter((g) => g !== targetMedia.url) : v.gallery;
+        return {
+          ...v,
+          portfolioMedia: updatedMedia,
+          gallery: updatedGallery
+        };
+      })
+    );
+  };
+
   const toggleChecklist = (id: string) => {
     setChecklist((prev) => prev.map((c) => (c.id === id ? { ...c, completed: !c.completed } : c)));
   };
@@ -595,6 +694,12 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
         updateCategory,
         toggleCategoryStatus,
         deleteCategory,
+        updateVendorProfile,
+        addVendorPackage,
+        updateVendorPackage,
+        deleteVendorPackage,
+        addVendorPortfolioMedia,
+        deleteVendorPortfolioMedia,
         toggleChecklist,
         addChecklistItem,
         addGuestItem,

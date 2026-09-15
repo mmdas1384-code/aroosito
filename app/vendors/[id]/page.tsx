@@ -19,7 +19,12 @@ import {
   X,
   Clock,
   Send,
-  ChevronRight
+  ChevronRight,
+  Globe,
+  Play,
+  Maximize2,
+  ExternalLink,
+  Info
 } from "lucide-react";
 
 export default function VendorProfilePage() {
@@ -31,6 +36,16 @@ export default function VendorProfilePage() {
 
   const [activeTab, setActiveTab] = useState<"packages" | "gallery" | "calendar">("packages");
   const [isInquiryModalOpen, setIsInquiryModalOpen] = useState(false);
+
+  // Lightbox State
+  const [lightboxMedia, setLightboxMedia] = useState<{ url: string; type: "image" | "video"; title?: string } | null>(null);
+
+  const portfolioList = vendor.portfolioMedia || vendor.gallery.map((g, idx) => ({
+    id: `g-${idx}`,
+    url: g,
+    type: "image" as const,
+    title: `نمونه‌کار شماره ${idx + 1}`
+  }));
 
   // Inquiry Form State
   const [coupleName, setCoupleName] = useState("");
@@ -137,20 +152,122 @@ export default function VendorProfilePage() {
               </div>
             </div>
 
-            {/* Price Range & CTA */}
-            <div className="w-full md:w-auto flex flex-row md:flex-col items-center md:items-end justify-between border-t md:border-t-0 md:border-r border-accent pt-4 md:pt-0 md:pr-6 gap-4">
+            {/* Price Range & Direct Action Buttons */}
+            <div className="w-full md:w-auto flex flex-col items-stretch md:items-end border-t md:border-t-0 md:border-r border-accent pt-4 md:pt-0 md:pr-6 gap-3">
               <div className="text-right">
-                <span className="text-xs text-secondary block">حدود قیمت خدمات:</span>
+                <span className="text-xs text-secondary block">حدود تعرفه خدمات:</span>
                 <span className="text-lg font-extrabold text-primary">{vendor.priceRange}</span>
               </div>
 
-              <button
-                onClick={() => setIsInquiryModalOpen(true)}
-                className="bg-primary hover:bg-primary-hover text-white px-6 py-3 rounded-xl text-sm font-bold transition-all shadow-md flex items-center gap-2"
-              >
-                <MessageSquareQuote className="w-4 h-4" />
-                <span>استعلام قیمت مستقیم</span>
-              </button>
+              <div className="flex flex-wrap items-center gap-2">
+                <button
+                  onClick={() => setIsInquiryModalOpen(true)}
+                  className="bg-primary hover:bg-primary-hover text-white px-5 py-2.5 rounded-xl text-xs font-bold transition-all shadow-md flex items-center justify-center gap-1.5 flex-1 md:flex-none"
+                >
+                  <MessageSquareQuote className="w-4 h-4" />
+                  <span>استعلام قیمت آنلاین</span>
+                </button>
+
+                <a
+                  href={`tel:${vendor.phone.replace(/[^0-9]/g, "")}`}
+                  className="bg-white border-2 border-primary text-primary hover:bg-primary hover:text-white px-3.5 py-2 rounded-xl text-xs font-bold transition-all flex items-center justify-center gap-1.5"
+                  title="تماس مستقیم"
+                >
+                  <Phone className="w-4 h-4" />
+                  <span>تماس</span>
+                </a>
+
+                {vendor.instagram && (
+                  <a
+                    href={`https://instagram.com/${vendor.instagram.replace("@", "")}`}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="bg-rose-50 text-rose-600 border border-rose-200 hover:bg-rose-600 hover:text-white px-3 py-2 rounded-xl text-xs font-bold transition-all flex items-center justify-center gap-1.5"
+                    title="اینستاگرام"
+                  >
+                    <Globe className="w-4 h-4" />
+                    <span className="hidden sm:inline">اینستاگرام</span>
+                  </a>
+                )}
+              </div>
+            </div>
+
+          </div>
+        </div>
+
+        {/* Quick Info Bar & Interactive Map Embed Section */}
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mt-6">
+          <div className="bg-white p-6 rounded-3xl border border-accent shadow-xs grid grid-cols-1 lg:grid-cols-3 gap-6">
+
+            {/* Working Hours & Bio */}
+            <div className="space-y-4">
+              <div className="flex items-center gap-2 text-primary font-bold text-sm border-b border-accent pb-2">
+                <Clock className="w-4 h-4" />
+                <span>ساعات کاری و اطلاعات پذیرش</span>
+              </div>
+              <p className="text-xs text-graphite/80 leading-relaxed font-semibold">
+                {vendor.workingHours || "همه روزه از ۱۰:۰۰ الی ۲۱:۰۰ (مراجعه با هماهنگی قبلی)"}
+              </p>
+
+              <div className="space-y-2 text-xs pt-2">
+                <div className="flex items-center gap-2 text-graphite">
+                  <Phone className="w-4 h-4 text-secondary" />
+                  <span className="font-bold">شماره تماس مستقیم: </span>
+                  <a href={`tel:${vendor.phone}`} className="text-primary hover:underline font-mono dir-ltr">{vendor.phone}</a>
+                </div>
+
+                {vendor.instagram && (
+                  <div className="flex items-center gap-2 text-graphite">
+                    <Globe className="w-4 h-4 text-rose-500" />
+                    <span className="font-bold">پیج اینستاگرام: </span>
+                    <a
+                      href={`https://instagram.com/${vendor.instagram.replace("@", "")}`}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="text-rose-600 hover:underline font-mono dir-ltr"
+                    >
+                      {vendor.instagram}
+                    </a>
+                  </div>
+                )}
+              </div>
+            </div>
+
+            {/* Address & Neshan / Google Maps Embed */}
+            <div className="lg:col-span-2 space-y-3">
+              <div className="flex items-center justify-between border-b border-accent pb-2">
+                <div className="flex items-center gap-2 text-primary font-bold text-sm">
+                  <MapPin className="w-4 h-4" />
+                  <span>آدرس و موقعیت روی نقشه</span>
+                </div>
+                <span className="text-xs text-secondary font-medium">{vendor.address}</span>
+              </div>
+
+              {/* Interactive Map Embed / Preview */}
+              <div className="relative h-44 rounded-2xl overflow-hidden border border-accent bg-bg-custom shadow-inner flex items-center justify-center">
+                {vendor.mapEmbedUrl ? (
+                  <iframe
+                    title="موقعیت مکانی تامین کننده"
+                    src={vendor.mapEmbedUrl}
+                    className="w-full h-full border-0"
+                    loading="lazy"
+                  />
+                ) : (
+                  <div className="text-center p-4 space-y-2">
+                    <MapPin className="w-8 h-8 text-primary mx-auto" />
+                    <p className="text-xs font-bold text-graphite">{vendor.address}</p>
+                    <a
+                      href={`https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(vendor.name + " " + vendor.address)}`}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="inline-flex items-center gap-1.5 text-xs font-bold text-primary bg-primary/10 px-3 py-1.5 rounded-lg hover:bg-primary/20 transition-colors"
+                    >
+                      <ExternalLink className="w-3.5 h-3.5" />
+                      <span>مسیریابی در گوگل مپس / نشان</span>
+                    </a>
+                  </div>
+                )}
+              </div>
             </div>
 
           </div>
@@ -179,7 +296,7 @@ export default function VendorProfilePage() {
               }`}
             >
               <ImageIcon className="w-4 h-4" />
-              <span>گالری نمونه کارها ({vendor.gallery.length})</span>
+              <span>نمونه‌کارها و ویدیوها ({portfolioList.length})</span>
             </button>
             <button
               onClick={() => setActiveTab("calendar")}
@@ -204,7 +321,7 @@ export default function VendorProfilePage() {
 
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                 {vendor.packages.map((pkg) => (
-                  <div key={pkg.id} className="bg-white p-6 rounded-2xl border-2 border-accent hover:border-primary transition-all flex flex-col justify-between space-y-4">
+                  <div key={pkg.id} className="bg-white p-6 rounded-2xl border-2 border-accent hover:border-primary transition-all flex flex-col justify-between space-y-4 shadow-xs">
                     <div className="space-y-3">
                       <div className="flex items-center justify-between">
                         <h4 className="text-base font-bold text-graphite">{pkg.title}</h4>
@@ -235,17 +352,40 @@ export default function VendorProfilePage() {
             </div>
           )}
 
-          {/* Tab Content 2: Gallery */}
+          {/* Tab Content 2: Portfolio Gallery with Lightbox Viewer */}
           {activeTab === "gallery" && (
             <div className="mt-8">
               <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-                {vendor.gallery.map((imgUrl, idx) => (
-                  <div key={idx} className="relative h-64 rounded-2xl overflow-hidden border border-accent group shadow-sm">
-                    <img
-                      src={imgUrl}
-                      alt={`نمونه کار ${idx + 1}`}
-                      className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
-                    />
+                {portfolioList.map((item) => (
+                  <div
+                    key={item.id}
+                    onClick={() => setLightboxMedia(item)}
+                    className="relative h-64 rounded-2xl overflow-hidden border border-accent group shadow-sm cursor-pointer bg-black"
+                  >
+                    {item.type === "video" ? (
+                      <div className="w-full h-full relative flex items-center justify-center">
+                        <video src={item.url} className="w-full h-full object-cover opacity-80" />
+                        <div className="absolute w-14 h-14 rounded-full bg-primary/90 text-white flex items-center justify-center shadow-lg group-hover:scale-110 transition-transform">
+                          <Play className="w-6 h-6 fill-white ml-0.5" />
+                        </div>
+                        <span className="absolute top-3 right-3 bg-black/70 text-white text-[10px] font-bold px-2.5 py-1 rounded-full border border-white/20">
+                          ویدیو کلیپ
+                        </span>
+                      </div>
+                    ) : (
+                      <img
+                        src={item.url}
+                        alt={item.title || "نمونه‌کار"}
+                        className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+                      />
+                    )}
+
+                    <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity p-4 flex flex-col justify-end">
+                      <p className="text-white text-xs font-bold">{item.title || "مشاهده نمونه‌کار"}</p>
+                      <span className="text-[10px] text-white/80 flex items-center gap-1 mt-0.5">
+                        <Maximize2 className="w-3 h-3" /> برای بزرگ‌نمایی کلیک کنید
+                      </span>
+                    </div>
                   </div>
                 ))}
               </div>
@@ -300,6 +440,31 @@ export default function VendorProfilePage() {
             </div>
           )}
         </div>
+
+        {/* LIGHTBOX MEDIA VIEWER MODAL */}
+        {lightboxMedia && (
+          <div className="fixed inset-0 z-50 bg-black/90 backdrop-blur-md flex items-center justify-center p-4">
+            <button
+              onClick={() => setLightboxMedia(null)}
+              className="absolute top-6 left-6 text-white hover:text-accent bg-white/10 p-2.5 rounded-full border border-white/20 transition-colors z-50"
+            >
+              <X className="w-6 h-6" />
+            </button>
+
+            <div className="max-w-4xl w-full max-h-[85vh] flex flex-col items-center justify-center space-y-3">
+              {lightboxMedia.type === "video" ? (
+                <video src={lightboxMedia.url} controls autoPlay className="max-h-[75vh] w-auto rounded-2xl shadow-2xl border border-white/10" />
+              ) : (
+                <img src={lightboxMedia.url} alt={lightboxMedia.title || "نمونه کار"} className="max-h-[75vh] w-auto object-contain rounded-2xl shadow-2xl border border-white/10" />
+              )}
+              {lightboxMedia.title && (
+                <div className="bg-black/60 text-white px-4 py-1.5 rounded-full text-xs font-bold border border-white/10">
+                  {lightboxMedia.title}
+                </div>
+              )}
+            </div>
+          </div>
+        )}
 
         {/* Modal: Online Price Inquiry */}
         {isInquiryModalOpen && (

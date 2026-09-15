@@ -23,12 +23,21 @@ import {
   PlusCircle,
   Trash2,
   X,
-  FileText
+  FileText,
+  Settings,
+  Upload,
+  Globe,
+  MapPin,
+  Clock,
+  Phone,
+  Edit,
+  Play
 } from "lucide-react";
 
 export default function VendorDashboardPage() {
   const {
     vendors,
+    categories,
     inquiries,
     broadcastRequests,
     vendorQuotes,
@@ -36,7 +45,12 @@ export default function VendorDashboardPage() {
     updateInquiryQuote,
     toggleVendorDate,
     smsAlertsEnabled,
-    setSmsAlertsEnabled
+    setSmsAlertsEnabled,
+    updateVendorProfile,
+    addVendorPackage,
+    deleteVendorPackage,
+    addVendorPortfolioMedia,
+    deleteVendorPortfolioMedia
   } = useApp();
 
   const currentVendor = vendors[0]; // Active Vendor Demo Context
@@ -47,7 +61,72 @@ export default function VendorDashboardPage() {
     (req) => req.category === currentVendor.category || req.city === currentVendor.city
   );
 
-  const [activeTab, setActiveTab] = useState<"calendar" | "inquiries" | "market" | "packages">("market");
+  const [activeTab, setActiveTab] = useState<"market" | "profile" | "portfolio" | "packages" | "calendar" | "inquiries">("market");
+
+  // Vendor Profile Edit State
+  const [profileForm, setProfileForm] = useState({
+    name: currentVendor.name,
+    category: currentVendor.category,
+    city: currentVendor.city,
+    address: currentVendor.address,
+    phone: currentVendor.phone,
+    workingHours: currentVendor.workingHours || "۱۰:۰۰ الی ۲۲:۰۰",
+    instagram: currentVendor.instagram || "@vendor",
+    priceRange: currentVendor.priceRange,
+    description: currentVendor.description,
+    logo: currentVendor.logo,
+    coverImage: currentVendor.coverImage,
+    mapEmbedUrl: currentVendor.mapEmbedUrl || ""
+  });
+  const [profileSavedSuccess, setProfileSavedSuccess] = useState(false);
+
+  const handleSaveProfile = (e: React.FormEvent) => {
+    e.preventDefault();
+    updateVendorProfile(currentVendor.id, profileForm);
+    setProfileSavedSuccess(true);
+    setTimeout(() => setProfileSavedSuccess(false), 2500);
+  };
+
+  // Add Portfolio Media Modal State
+  const [isMediaModalOpen, setIsMediaModalOpen] = useState(false);
+  const [mediaForm, setMediaForm] = useState({
+    url: "",
+    type: "image" as "image" | "video",
+    title: ""
+  });
+
+  const handleAddMedia = (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!mediaForm.url) return;
+    addVendorPortfolioMedia(currentVendor.id, mediaForm);
+    setIsMediaModalOpen(false);
+    setMediaForm({ url: "", type: "image", title: "" });
+  };
+
+  // Add Package Modal State
+  const [isPkgModalOpen, setIsPkgModalOpen] = useState(false);
+  const [pkgForm, setPkgForm] = useState({
+    title: "",
+    price: "",
+    featuresText: ""
+  });
+
+  const handleAddPackage = (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!pkgForm.title || !pkgForm.price) return;
+    const features = pkgForm.featuresText
+      .split("\n")
+      .map((f) => f.trim())
+      .filter((f) => f.length > 0);
+
+    addVendorPackage(currentVendor.id, {
+      title: pkgForm.title,
+      price: pkgForm.price,
+      features
+    });
+    setIsPkgModalOpen(false);
+    setPkgForm({ title: "", price: "", featuresText: "" });
+  };
 
   // Custom Quote Form state
   const [selectedInquiryId, setSelectedInquiryId] = useState<string | null>(null);
@@ -214,6 +293,42 @@ export default function VendorDashboardPage() {
             </button>
 
             <button
+              onClick={() => setActiveTab("profile")}
+              className={`flex items-center gap-2 px-5 py-3 rounded-xl text-sm font-bold transition-all whitespace-nowrap ${
+                activeTab === "profile"
+                  ? "bg-primary text-white shadow-xs"
+                  : "bg-white text-graphite hover:border-primary border border-accent"
+              }`}
+            >
+              <Settings className="w-4 h-4" />
+              <span>ویرایش پروفایل کسب‌ووکار</span>
+            </button>
+
+            <button
+              onClick={() => setActiveTab("portfolio")}
+              className={`flex items-center gap-2 px-5 py-3 rounded-xl text-sm font-bold transition-all whitespace-nowrap ${
+                activeTab === "portfolio"
+                  ? "bg-primary text-white shadow-xs"
+                  : "bg-white text-graphite hover:border-primary border border-accent"
+              }`}
+            >
+              <ImageIcon className="w-4 h-4" />
+              <span>مدیریت نمونه‌کارها ({currentVendor.portfolioMedia?.length || currentVendor.gallery.length})</span>
+            </button>
+
+            <button
+              onClick={() => setActiveTab("packages")}
+              className={`flex items-center gap-2 px-5 py-3 rounded-xl text-sm font-bold transition-all whitespace-nowrap ${
+                activeTab === "packages"
+                  ? "bg-primary text-white shadow-xs"
+                  : "bg-white text-graphite hover:border-primary border border-accent"
+              }`}
+            >
+              <Package className="w-4 h-4" />
+              <span>پکیج‌ها و تعرفه خدمات ({currentVendor.packages.length})</span>
+            </button>
+
+            <button
               onClick={() => setActiveTab("calendar")}
               className={`flex items-center gap-2 px-5 py-3 rounded-xl text-sm font-bold transition-all whitespace-nowrap ${
                 activeTab === "calendar"
@@ -222,7 +337,7 @@ export default function VendorDashboardPage() {
               }`}
             >
               <CalendarIcon className="w-4 h-4" />
-              <span>تقویم روزهای پر و خالی (شمسی)</span>
+              <span>تقویم روزهای پر و خالی</span>
             </button>
 
             <button
@@ -235,18 +350,6 @@ export default function VendorDashboardPage() {
             >
               <MessageSquareQuote className="w-4 h-4" />
               <span>استعلام‌های مستقیم ({vendorInquiries.length})</span>
-            </button>
-
-            <button
-              onClick={() => setActiveTab("packages")}
-              className={`flex items-center gap-2 px-5 py-3 rounded-xl text-sm font-bold transition-all whitespace-nowrap ${
-                activeTab === "packages"
-                  ? "bg-primary text-white shadow-xs"
-                  : "bg-white text-graphite hover:border-primary border border-accent"
-              }`}
-            >
-              <Package className="w-4 h-4" />
-              <span>مدیریت پکیج‌ها و گالری</span>
             </button>
           </div>
 
@@ -581,35 +684,382 @@ export default function VendorDashboardPage() {
             </div>
           )}
 
-          {/* TAB 3: PACKAGES & PORTFOLIO */}
-          {activeTab === "packages" && (
-            <div className="bg-white p-6 rounded-3xl border border-accent shadow-xs space-y-6">
-              <div className="flex items-center justify-between">
+          {/* TAB: PROFILE SETTINGS EDITOR */}
+          {activeTab === "profile" && (
+            <form onSubmit={handleSaveProfile} className="bg-white p-6 sm:p-8 rounded-3xl border border-accent shadow-xs space-y-6 text-xs">
+              <div className="flex items-center justify-between border-b border-accent pb-4">
                 <div>
-                  <h3 className="text-lg font-bold text-graphite">پکیج‌ها و تعرفه‌های فعال</h3>
-                  <p className="text-xs text-secondary mt-0.5">مدیریت پکیج‌های نمایش داده شده در پروفایل عمومی شما</p>
+                  <h3 className="text-lg font-extrabold text-graphite">ویرایش اطلاعات عمومی و ارتباطی کسب‌وکار</h3>
+                  <p className="text-secondary mt-0.5">تغییرات شما بلافاصله در صفحه پروفایل عمومی زوج‌ها نمایش داده خواهد شد.</p>
                 </div>
+                {profileSavedSuccess && (
+                  <span className="bg-emerald-50 text-emerald-700 font-bold px-3 py-1.5 rounded-full border border-emerald-200 flex items-center gap-1.5 animate-in fade-in">
+                    <CheckCircle2 className="w-4 h-4 text-emerald-600" />
+                    <span>تغییرات با موفقیت ذخیره شد</span>
+                  </span>
+                )}
+              </div>
+
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                <div>
+                  <label className="block font-bold text-graphite mb-1.5">نام تجاری کسب‌ووکار *</label>
+                  <input
+                    type="text"
+                    required
+                    value={profileForm.name}
+                    onChange={(e) => setProfileForm({ ...profileForm, name: e.target.value })}
+                    className="w-full p-3 rounded-xl border border-accent font-bold focus:outline-none focus:border-primary"
+                  />
+                </div>
+
+                <div>
+                  <label className="block font-bold text-graphite mb-1.5">دسته‌بندی شغلی *</label>
+                  <select
+                    value={profileForm.category}
+                    onChange={(e) => setProfileForm({ ...profileForm, category: e.target.value })}
+                    className="w-full p-3 rounded-xl border border-accent font-bold bg-bg-custom focus:outline-none focus:border-primary"
+                  >
+                    {categories.map((c) => (
+                      <option key={c.id} value={c.name}>{c.name}</option>
+                    ))}
+                  </select>
+                </div>
+
+                <div>
+                  <label className="block font-bold text-graphite mb-1.5">شهر محل فعالیت *</label>
+                  <input
+                    type="text"
+                    required
+                    value={profileForm.city}
+                    onChange={(e) => setProfileForm({ ...profileForm, city: e.target.value })}
+                    className="w-full p-3 rounded-xl border border-accent font-bold focus:outline-none focus:border-primary"
+                  />
+                </div>
+              </div>
+
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                <div>
+                  <label className="block font-bold text-graphite mb-1.5">تلفن تماس مستقیم *</label>
+                  <input
+                    type="text"
+                    required
+                    value={profileForm.phone}
+                    onChange={(e) => setProfileForm({ ...profileForm, phone: e.target.value })}
+                    className="w-full p-3 rounded-xl border border-accent font-bold text-left dir-ltr focus:outline-none focus:border-primary"
+                  />
+                </div>
+
+                <div>
+                  <label className="block font-bold text-graphite mb-1.5">ساعات کاری و پذیرش</label>
+                  <input
+                    type="text"
+                    value={profileForm.workingHours}
+                    onChange={(e) => setProfileForm({ ...profileForm, workingHours: e.target.value })}
+                    className="w-full p-3 rounded-xl border border-accent font-bold focus:outline-none focus:border-primary"
+                  />
+                </div>
+
+                <div>
+                  <label className="block font-bold text-graphite mb-1.5">آیدی اینستاگرام</label>
+                  <input
+                    type="text"
+                    value={profileForm.instagram}
+                    onChange={(e) => setProfileForm({ ...profileForm, instagram: e.target.value })}
+                    className="w-full p-3 rounded-xl border border-accent font-mono text-left dir-ltr focus:outline-none focus:border-primary"
+                  />
+                </div>
+              </div>
+
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div>
+                  <label className="block font-bold text-graphite mb-1.5">محدوده قیمت و تعرفه پایه</label>
+                  <input
+                    type="text"
+                    value={profileForm.priceRange}
+                    onChange={(e) => setProfileForm({ ...profileForm, priceRange: e.target.value })}
+                    className="w-full p-3 rounded-xl border border-accent font-bold focus:outline-none focus:border-primary"
+                  />
+                </div>
+
+                <div>
+                  <label className="block font-bold text-graphite mb-1.5">آدرس کامل مجموعه *</label>
+                  <input
+                    type="text"
+                    required
+                    value={profileForm.address}
+                    onChange={(e) => setProfileForm({ ...profileForm, address: e.target.value })}
+                    className="w-full p-3 rounded-xl border border-accent font-bold focus:outline-none focus:border-primary"
+                  />
+                </div>
+              </div>
+
+              <div>
+                <label className="block font-bold text-graphite mb-1.5">لینک انکود نقشه گوگل / نشان (Map Embed URL)</label>
+                <input
+                  type="text"
+                  placeholder="https://maps.google.com/maps?q=35.823,51.589&output=embed"
+                  value={profileForm.mapEmbedUrl}
+                  onChange={(e) => setProfileForm({ ...profileForm, mapEmbedUrl: e.target.value })}
+                  className="w-full p-3 rounded-xl border border-accent font-mono text-left dir-ltr focus:outline-none focus:border-primary bg-bg-custom"
+                />
+              </div>
+
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div>
+                  <label className="block font-bold text-graphite mb-1.5">آدرس تصویر لوگو (URL)</label>
+                  <input
+                    type="text"
+                    value={profileForm.logo}
+                    onChange={(e) => setProfileForm({ ...profileForm, logo: e.target.value })}
+                    className="w-full p-3 rounded-xl border border-accent font-mono text-left dir-ltr focus:outline-none focus:border-primary"
+                  />
+                </div>
+
+                <div>
+                  <label className="block font-bold text-graphite mb-1.5">آدرس تصویر کاور اصلی (URL)</label>
+                  <input
+                    type="text"
+                    value={profileForm.coverImage}
+                    onChange={(e) => setProfileForm({ ...profileForm, coverImage: e.target.value })}
+                    className="w-full p-3 rounded-xl border border-accent font-mono text-left dir-ltr focus:outline-none focus:border-primary"
+                  />
+                </div>
+              </div>
+
+              <div>
+                <label className="block font-bold text-graphite mb-1.5">توضیحات و بیوگرافی مجموعه</label>
+                <textarea
+                  rows={4}
+                  value={profileForm.description}
+                  onChange={(e) => setProfileForm({ ...profileForm, description: e.target.value })}
+                  className="w-full p-3 rounded-xl border border-accent focus:outline-none focus:border-primary leading-relaxed"
+                />
+              </div>
+
+              <div className="flex justify-end pt-4 border-t border-accent">
+                <button
+                  type="submit"
+                  className="bg-primary hover:bg-primary-hover text-white px-8 py-3 rounded-xl font-bold shadow-md flex items-center gap-2"
+                >
+                  <CheckCircle2 className="w-4 h-4" />
+                  <span>ذخیره تغییرات پروفایل</span>
+                </button>
+              </div>
+            </form>
+          )}
+
+          {/* TAB: PORTFOLIO MANAGER */}
+          {activeTab === "portfolio" && (
+            <div className="space-y-6">
+              <div className="bg-white p-6 rounded-3xl border border-accent shadow-xs flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
+                <div>
+                  <h3 className="text-lg font-extrabold text-graphite">مدیریت آلبوم نمونه‌کارها و تیزرهای ویدئویی</h3>
+                  <p className="text-xs text-secondary mt-0.5">آپلود و مدیریت عکس‌ها و کلیپ‌های نمایش داده شده در گالری عمومی</p>
+                </div>
+                <button
+                  onClick={() => setIsMediaModalOpen(true)}
+                  className="bg-primary hover:bg-primary-hover text-white px-5 py-2.5 rounded-xl text-xs font-bold shadow-xs flex items-center gap-2"
+                >
+                  <Plus className="w-4 h-4" />
+                  <span>افزودن نمونه‌کار جدید</span>
+                </button>
+              </div>
+
+              {/* Media Grid */}
+              <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
+                {(currentVendor.portfolioMedia || currentVendor.gallery.map((g, i) => ({ id: `g-${i}`, url: g, type: "image" as const, title: `نمونه کار ${i+1}` }))).map((item) => (
+                  <div key={item.id} className="bg-white rounded-2xl border border-accent overflow-hidden shadow-xs flex flex-col justify-between group">
+                    <div className="relative h-48 bg-black">
+                      {item.type === "video" ? (
+                        <div className="w-full h-full flex items-center justify-center relative">
+                          <video src={item.url} className="w-full h-full object-cover opacity-80" />
+                          <Play className="w-10 h-10 text-white fill-white absolute" />
+                        </div>
+                      ) : (
+                        <img src={item.url} alt={item.title || "نمونه کار"} className="w-full h-full object-cover" />
+                      )}
+                    </div>
+
+                    <div className="p-4 flex items-center justify-between">
+                      <div>
+                        <span className="font-bold text-graphite text-xs block truncate max-w-[180px]">
+                          {item.title || "بدون عنوان"}
+                        </span>
+                        <span className="text-[10px] text-secondary">
+                          {item.type === "video" ? "ویدیو کلیپ" : "تصویر عکاسی"}
+                        </span>
+                      </div>
+
+                      <button
+                        onClick={() => deleteVendorPortfolioMedia(currentVendor.id, item.id)}
+                        className="text-rose-500 hover:text-rose-700 p-2 rounded-lg hover:bg-rose-50 transition-colors"
+                        title="حذف نمونه‌کار"
+                      >
+                        <Trash2 className="w-4 h-4" />
+                      </button>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+          )}
+
+          {/* TAB: PACKAGES & SERVICES MANAGER */}
+          {activeTab === "packages" && (
+            <div className="space-y-6">
+              <div className="bg-white p-6 rounded-3xl border border-accent shadow-xs flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
+                <div>
+                  <h3 className="text-lg font-extrabold text-graphite">مدیریت پکیج‌ها و تعرفه‌های خدماتی</h3>
+                  <p className="text-xs text-secondary mt-0.5">تعریف پکیج‌های VIP، رزرو آنلاین و آیتم‌های خدماتی</p>
+                </div>
+                <button
+                  onClick={() => setIsPkgModalOpen(true)}
+                  className="bg-primary hover:bg-primary-hover text-white px-5 py-2.5 rounded-xl text-xs font-bold shadow-xs flex items-center gap-2"
+                >
+                  <Plus className="w-4 h-4" />
+                  <span>افزودن پکیج خدماتی جدید</span>
+                </button>
               </div>
 
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                 {currentVendor.packages.map((pkg) => (
-                  <div key={pkg.id} className="p-5 rounded-2xl border border-accent space-y-3">
-                    <div className="flex items-center justify-between">
-                      <h4 className="font-bold text-graphite">{pkg.title}</h4>
-                      <span className="text-xs font-extrabold text-primary bg-primary/10 px-3 py-1 rounded-full">
-                        {pkg.price}
-                      </span>
+                  <div key={pkg.id} className="bg-white p-6 rounded-3xl border border-accent shadow-xs space-y-4 flex flex-col justify-between">
+                    <div className="space-y-3">
+                      <div className="flex items-center justify-between border-b border-accent pb-3">
+                        <h4 className="font-extrabold text-base text-graphite">{pkg.title}</h4>
+                        <span className="text-xs font-extrabold text-primary bg-primary/10 px-3 py-1 rounded-full">
+                          {pkg.price}
+                        </span>
+                      </div>
+                      <ul className="text-xs text-secondary space-y-2">
+                        {pkg.features.map((f, idx) => (
+                          <li key={idx} className="flex items-center gap-2">
+                            <CheckCircle2 className="w-4 h-4 text-primary shrink-0" />
+                            <span>{f}</span>
+                          </li>
+                        ))}
+                      </ul>
                     </div>
-                    <ul className="text-xs text-secondary space-y-1.5">
-                      {pkg.features.map((f, idx) => (
-                        <li key={idx} className="flex items-center gap-1.5">
-                          <CheckCircle2 className="w-3.5 h-3.5 text-primary" />
-                          <span>{f}</span>
-                        </li>
-                      ))}
-                    </ul>
+
+                    <div className="pt-3 border-t border-accent flex justify-end">
+                      <button
+                        onClick={() => deleteVendorPackage(currentVendor.id, pkg.id)}
+                        className="text-rose-600 hover:text-rose-800 text-xs font-bold flex items-center gap-1.5 px-3 py-1.5 rounded-xl hover:bg-rose-50"
+                      >
+                        <Trash2 className="w-4 h-4" />
+                        <span>حذف این پکیج</span>
+                      </button>
+                    </div>
                   </div>
                 ))}
+              </div>
+            </div>
+          )}
+
+          {/* ADD PORTFOLIO MEDIA MODAL */}
+          {isMediaModalOpen && (
+            <div className="fixed inset-0 bg-graphite/60 backdrop-blur-xs flex items-center justify-center p-4 z-50">
+              <div className="bg-white w-full max-w-lg rounded-3xl border border-accent p-6 shadow-2xl space-y-5 text-xs">
+                <div className="flex justify-between items-center border-b border-accent pb-3">
+                  <h3 className="font-extrabold text-base text-graphite">افزودن عکس یا ویدیو به گالری</h3>
+                  <button onClick={() => setIsMediaModalOpen(false)} className="text-secondary hover:text-graphite">×</button>
+                </div>
+
+                <form onSubmit={handleAddMedia} className="space-y-4">
+                  <div>
+                    <label className="block font-bold text-graphite mb-1">نوع فایل:</label>
+                    <select
+                      value={mediaForm.type}
+                      onChange={(e: any) => setMediaForm({ ...mediaForm, type: e.target.value })}
+                      className="w-full p-3 rounded-xl border border-accent font-bold bg-bg-custom"
+                    >
+                      <option value="image">تصویر / عکس نمونه‌کار</option>
+                      <option value="video">ویدیو کلیپ / تیزر</option>
+                    </select>
+                  </div>
+
+                  <div>
+                    <label className="block font-bold text-graphite mb-1">آدرس اینترنتی فایل (Direct URL) *</label>
+                    <input
+                      type="text"
+                      required
+                      placeholder="https://images.unsplash.com/..."
+                      value={mediaForm.url}
+                      onChange={(e) => setMediaForm({ ...mediaForm, url: e.target.value })}
+                      className="w-full p-3 rounded-xl border border-accent font-mono text-left dir-ltr"
+                    />
+                  </div>
+
+                  <div>
+                    <label className="block font-bold text-graphite mb-1">عنوان / توضیحات نمونه‌کار</label>
+                    <input
+                      type="text"
+                      placeholder="مثال: آلبوم فرمالیته شمال یا دکور سفره عقد"
+                      value={mediaForm.title}
+                      onChange={(e) => setMediaForm({ ...mediaForm, title: e.target.value })}
+                      className="w-full p-3 rounded-xl border border-accent font-semibold"
+                    />
+                  </div>
+
+                  <div className="flex justify-end gap-2 pt-3 border-t border-accent">
+                    <button type="button" onClick={() => setIsMediaModalOpen(false)} className="px-4 py-2 border rounded-xl">انصراف</button>
+                    <button type="submit" className="bg-primary text-white px-5 py-2 rounded-xl font-bold">ذخیره در گالری</button>
+                  </div>
+                </form>
+              </div>
+            </div>
+          )}
+
+          {/* ADD PACKAGE MODAL */}
+          {isPkgModalOpen && (
+            <div className="fixed inset-0 bg-graphite/60 backdrop-blur-xs flex items-center justify-center p-4 z-50">
+              <div className="bg-white w-full max-w-lg rounded-3xl border border-accent p-6 shadow-2xl space-y-5 text-xs">
+                <div className="flex justify-between items-center border-b border-accent pb-3">
+                  <h3 className="font-extrabold text-base text-graphite">تعریف پکیج خدماتی جدید</h3>
+                  <button onClick={() => setIsPkgModalOpen(false)} className="text-secondary hover:text-graphite">×</button>
+                </div>
+
+                <form onSubmit={handleAddPackage} className="space-y-4">
+                  <div>
+                    <label className="block font-bold text-graphite mb-1">عنوان پکیج *</label>
+                    <input
+                      type="text"
+                      required
+                      placeholder="مثال: پکیج برنزی یا پکیج اقتصادی VIP"
+                      value={pkgForm.title}
+                      onChange={(e) => setPkgForm({ ...pkgForm, title: e.target.value })}
+                      className="w-full p-3 rounded-xl border border-accent font-semibold"
+                    />
+                  </div>
+
+                  <div>
+                    <label className="block font-bold text-graphite mb-1">قیمت / تعرفه *</label>
+                    <input
+                      type="text"
+                      required
+                      placeholder="مثال: ۶۵,۰۰۰,۰۰۰ تومان"
+                      value={pkgForm.price}
+                      onChange={(e) => setPkgForm({ ...pkgForm, price: e.target.value })}
+                      className="w-full p-3 rounded-xl border border-accent font-bold"
+                    />
+                  </div>
+
+                  <div>
+                    <label className="block font-bold text-graphite mb-1">ویژگی‌ها و خدمات پکیج (هر سطر یک ویژگی):</label>
+                    <textarea
+                      rows={4}
+                      placeholder="ظرفیت تا ۱۵۰ نفر&#10;منوی ۲ رنگ&#10;نورپردازی سالن"
+                      value={pkgForm.featuresText}
+                      onChange={(e) => setPkgForm({ ...pkgForm, featuresText: e.target.value })}
+                      className="w-full p-3 rounded-xl border border-accent font-semibold leading-relaxed"
+                    />
+                  </div>
+
+                  <div className="flex justify-end gap-2 pt-3 border-t border-accent">
+                    <button type="button" onClick={() => setIsPkgModalOpen(false)} className="px-4 py-2 border rounded-xl">انصراف</button>
+                    <button type="submit" className="bg-primary text-white px-5 py-2 rounded-xl font-bold">افزودن پکیج</button>
+                  </div>
+                </form>
               </div>
             </div>
           )}
