@@ -1,0 +1,988 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl" class="h-full">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>عروسی تو | پلتفرم هوشمند برنامه‌ریزی عروسی و خدمات مجالس</title>
+
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+
+  <!-- Vazirmatn Font CDN -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/rastikerdar/vazirmatn@v33.003/Vazirmatn-font-face.css">
+
+  <!-- Lucide Icons CDN -->
+  <script src="https://unpkg.com/lucide@latest"></script>
+
+  <!-- Tailwind Custom Colors Configuration -->
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['Vazirmatn', 'sans-serif'],
+          },
+          colors: {
+            primary: {
+              DEFAULT: '#2E533F',
+              hover: '#223E2F',
+              light: '#EBF2EE'
+            },
+            secondary: {
+              DEFAULT: '#8D99AE',
+              hover: '#738096'
+            },
+            bgCustom: '#FDFBFC',
+            accent: '#BDCFE0',
+            graphite: '#212529',
+          }
+        }
+      }
+    }
+  </script>
+
+  <style>
+    body {
+      font-family: 'Vazirmatn', sans-serif;
+      background-color: #FDFBFC;
+      color: #212529;
+    }
+    .custom-scrollbar::-webkit-scrollbar {
+      width: 6px;
+      height: 6px;
+    }
+    .custom-scrollbar::-webkit-scrollbar-track {
+      background: #FDFBFC;
+    }
+    .custom-scrollbar::-webkit-scrollbar-thumb {
+      background: #BDCFE0;
+      border-radius: 4px;
+    }
+  </style>
+</head>
+<body class="min-h-full flex flex-col antialiased selection:bg-primary selection:text-white">
+
+  <!-- MAIN HEADER / NAVIGATION -->
+  <header class="sticky top-0 z-40 bg-white border-b border-accent shadow-xs">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="flex items-center justify-between h-20">
+
+        <!-- Brand Name & Logo -->
+        <div class="flex items-center gap-8">
+          <a href="#" onclick="switchTab('home')" class="flex items-center gap-3 group">
+            <div class="w-11 h-11 rounded-xl bg-primary flex items-center justify-center text-white shadow-md transition-transform group-hover:scale-105">
+              <i data-lucide="heart" class="w-6 h-6 fill-white stroke-primary"></i>
+            </div>
+            <div class="flex flex-col">
+              <span class="text-2xl font-bold text-primary tracking-tight">عروسی تو</span>
+              <span class="text-[11px] text-secondary font-medium">پلتفرم هوشمند خدمات مجالس</span>
+            </div>
+          </a>
+
+          <!-- Navigation Links -->
+          <nav class="hidden md:flex items-center gap-1 xl:gap-2">
+            <button onclick="switchTab('home')" id="nav-home" class="nav-btn flex items-center gap-2 px-3.5 py-2 rounded-lg text-sm font-semibold transition-colors bg-primary/10 text-primary">
+              <i data-lucide="layout-grid" class="w-4 h-4 text-primary"></i>
+              <span>صفحه اصلی و راهنما</span>
+            </button>
+            <button onclick="switchTab('tools')" id="nav-tools" class="nav-btn flex items-center gap-2 px-3.5 py-2 rounded-lg text-sm font-semibold transition-colors text-graphite hover:text-primary hover:bg-slate-50">
+              <i data-lucide="calculator" class="w-4 h-4 text-secondary"></i>
+              <span>محاسبه‌گر و ابزارها</span>
+            </button>
+            <button onclick="switchTab('vendor')" id="nav-vendor" class="nav-btn flex items-center gap-2 px-3.5 py-2 rounded-lg text-sm font-semibold transition-colors text-graphite hover:text-primary hover:bg-slate-50">
+              <i data-lucide="store" class="w-4 h-4 text-secondary"></i>
+              <span>پنل تامین‌کننده</span>
+            </button>
+            <button onclick="switchTab('admin')" id="nav-admin" class="nav-btn flex items-center gap-2 px-3.5 py-2 rounded-lg text-sm font-semibold transition-colors text-graphite hover:text-primary hover:bg-slate-50">
+              <i data-lucide="shield-check" class="w-4 h-4 text-secondary"></i>
+              <span>پنل مدیریت ارشد</span>
+            </button>
+          </nav>
+        </div>
+
+        <!-- Quick Action / Inquiry CTA -->
+        <div class="flex items-center gap-3">
+          <button onclick="openInquiryModal('کلی', 'استعلام قیمت کلی خدمات')" class="flex items-center gap-2 bg-primary hover:bg-primary-hover text-white px-5 py-2.5 rounded-xl text-sm font-bold shadow-md transition-all transform hover:-translate-y-0.5">
+            <i data-lucide="message-square-quote" class="w-4 h-4"></i>
+            <span>استعلام قیمت آنلاین</span>
+          </button>
+        </div>
+
+      </div>
+    </div>
+  </header>
+
+  <!-- MAIN CONTENT CONTAINER -->
+  <main class="flex-1 max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-8 space-y-12">
+
+    <!-- ========================================== -->
+    <!-- TAB 1: HOME PAGE & VENDOR DIRECTORY SECTION -->
+    <!-- ========================================== -->
+    <div id="tab-home" class="tab-content space-y-12">
+
+      <!-- HERO SECTION -->
+      <section class="relative bg-white border border-accent rounded-3xl p-8 lg:p-12 shadow-xs overflow-hidden">
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
+
+          <div class="lg:col-span-7 space-y-6">
+            <div class="inline-flex items-center gap-2 bg-primary/10 text-primary border border-primary/20 px-3.5 py-1.5 rounded-full text-xs font-bold">
+              <i data-lucide="sparkles" class="w-4 h-4"></i>
+              <span>پلتفرم تخصصی و هوشمند برنامه‌ریزی عروسی</span>
+            </div>
+
+            <h1 class="text-3xl sm:text-4xl lg:text-5xl font-black text-graphite leading-tight">
+              برنامه‌ریزی رویایی‌ترین شب زندگی با <span class="text-primary underline decoration-accent underline-offset-8">عروسی تو</span>
+            </h1>
+
+            <p class="text-base sm:text-lg text-graphite/80 leading-relaxed max-w-2xl">
+              بهترین باغ تالارها، آتلیه‌ها، سالن‌های زیبایی و خدمات مجالس را با تضمین قیمت، تاییدیه رسمی اعتبار و استعلام آنلاین رزرو کنید.
+            </p>
+
+            <!-- Search Bar -->
+            <div class="bg-bgCustom border-2 border-accent rounded-2xl p-2.5 flex flex-col sm:flex-row items-center gap-2 shadow-sm focus-within:border-primary transition-all">
+              <div class="flex items-center gap-2 px-3 w-full sm:w-auto flex-1">
+                <i data-lucide="search" class="w-5 h-5 text-secondary shrink-0"></i>
+                <input id="search-input" type="text" oninput="filterVendors()" placeholder="جستجوی نام کسب و کار، تالار یا حوزه فعالیت..." class="w-full bg-transparent border-none text-sm font-medium focus:outline-none text-graphite placeholder:text-secondary">
+              </div>
+
+              <div class="flex items-center gap-2 w-full sm:w-auto">
+                <select id="category-filter" onchange="filterVendors()" class="bg-white border border-accent rounded-xl px-3 py-2 text-xs font-semibold text-graphite focus:outline-none cursor-pointer">
+                  <option value="all">همه دسته‌بندی‌ها</option>
+                  <option value="تالار و باغ تشریفات">تالار و باغ تشریفات</option>
+                  <option value="آتلیه و عکاسی">آتلیه و عکاسی</option>
+                  <option value="سالن زیبایی">سالن زیبایی</option>
+                  <option value="مزون و لباس عروس">مزون و لباس عروس</option>
+                  <option value="گل‌آرایی و ماشین عروس">گل‌آرایی و ماشین عروس</option>
+                </select>
+
+                <button onclick="filterVendors()" class="w-full sm:w-auto bg-primary text-white px-6 py-2.5 rounded-xl text-sm font-bold hover:bg-primary-hover transition-colors shrink-0">
+                  جستجو
+                </button>
+              </div>
+            </div>
+
+            <!-- Stats Badge -->
+            <div class="pt-4 grid grid-cols-3 gap-4 border-t border-accent/60">
+              <div>
+                <span class="block text-2xl font-black text-primary">+۱,۲۰۰</span>
+                <span class="text-xs text-secondary font-medium">کسب و کار معتبر</span>
+              </div>
+              <div>
+                <span class="block text-2xl font-black text-primary">+۱۵,۰۰۰</span>
+                <span class="text-xs text-secondary font-medium">زوج موفق</span>
+              </div>
+              <div>
+                <span class="block text-2xl font-black text-primary">۹۸٪</span>
+                <span class="text-xs text-secondary font-medium">رضایتمندی</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Hero Image -->
+          <div class="lg:col-span-5 relative">
+            <div class="aspect-4/3 rounded-2xl overflow-hidden shadow-xl border-4 border-white">
+              <img src="https://images.unsplash.com/photo-1519167758481-83f550bb49b3?auto=format&fit=crop&w=1200&q=80" alt="عروسی تو" class="w-full h-full object-cover">
+            </div>
+            <div class="absolute -bottom-4 -right-4 bg-white p-4 rounded-2xl shadow-lg border border-accent flex items-center gap-3">
+              <div class="w-10 h-10 rounded-xl bg-primary/10 flex items-center justify-center text-primary">
+                <i data-lucide="shield-check" class="w-6 h-6"></i>
+              </div>
+              <div>
+                <span class="block text-xs font-bold text-graphite">تاییدیه رسمی اعتبار</span>
+                <span class="text-[11px] text-secondary">احراز هویت کامل توسط عروسی تو</span>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </section>
+
+      <!-- VENDOR DIRECTORY GRID SECTION -->
+      <section class="space-y-6">
+        <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-accent pb-4">
+          <div>
+            <h2 class="text-2xl font-bold text-graphite flex items-center gap-2">
+              <i data-lucide="building" class="w-6 h-6 text-primary"></i>
+              <span>دسته بندی و تالارهای برتر</span>
+            </h2>
+            <p class="text-xs text-secondary mt-1">تامین‌کنندگان تایید شده با امکان استعلام قیمت مستقیم</p>
+          </div>
+
+          <div class="flex items-center gap-2">
+            <label class="flex items-center gap-2 cursor-pointer text-xs font-bold text-graphite bg-white px-3 py-2 rounded-xl border border-accent shadow-xs">
+              <input type="checkbox" id="verified-only" onchange="filterVendors()" class="rounded text-primary focus:ring-primary w-4 h-4">
+              <span>فقط دارای تاییدیه رسمی</span>
+            </label>
+          </div>
+        </div>
+
+        <!-- Dynamic Vendor Grid -->
+        <div id="vendor-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+          <!-- Populated dynamically via JS -->
+        </div>
+      </section>
+
+    </div>
+
+    <!-- ========================================== -->
+    <!-- TAB 2: PLANNING TOOLS & SMART ESTIMATOR -->
+    <!-- ========================================== -->
+    <div id="tab-tools" class="tab-content hidden space-y-12">
+
+      <!-- SMART BUDGET ESTIMATOR -->
+      <section class="bg-white border border-accent rounded-3xl p-8 shadow-xs space-y-6">
+        <div class="flex items-center gap-3 border-b border-accent pb-4">
+          <div class="w-12 h-12 rounded-2xl bg-primary/10 flex items-center justify-center text-primary">
+            <i data-lucide="calculator" class="w-6 h-6"></i>
+          </div>
+          <div>
+            <h2 class="text-xl font-bold text-graphite">محاسبه‌گر و برآورد هوشمند بودجه عروسی</h2>
+            <p class="text-xs text-secondary">تخمین انفعالی هزینه‌های جشن بر اساس تعداد مهمانان و سطح کیفیت خدمات</p>
+          </div>
+        </div>
+
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
+
+          <div class="lg:col-span-7 space-y-6">
+            <!-- Guests Slider -->
+            <div class="space-y-2">
+              <div class="flex justify-between text-sm font-bold text-graphite">
+                <span>تعداد مهمانان:</span>
+                <span id="guest-count-label" class="text-primary font-black text-base">۲۰۰ نفر</span>
+              </div>
+              <input type="range" id="guest-slider" min="50" max="1000" step="25" value="200" oninput="calculateBudget()" class="w-full accent-primary h-2 bg-slate-100 rounded-lg cursor-pointer">
+            </div>
+
+            <!-- Quality Tier Selector -->
+            <div class="space-y-2">
+              <label class="block text-sm font-bold text-graphite">سطح کیفیت و تشریفات:</label>
+              <div class="grid grid-cols-3 gap-3">
+                <button type="button" onclick="setTier('standard')" id="tier-standard" class="tier-btn py-3 px-4 rounded-xl border-2 text-xs font-bold transition-all border-primary bg-primary/10 text-primary">
+                  اقتصادی / استاندارد
+                </button>
+                <button type="button" onclick="setTier('premium')" id="tier-premium" class="tier-btn py-3 px-4 rounded-xl border-2 border-accent text-xs font-bold transition-all text-graphite hover:border-primary">
+                  ویژه / نیمه‌لوکس
+                </button>
+                <button type="button" onclick="setTier('vip')" id="tier-vip" class="tier-btn py-3 px-4 rounded-xl border-2 border-accent text-xs font-bold transition-all text-graphite hover:border-primary">
+                  VIP / تشریفاتی کامل
+                </button>
+              </div>
+            </div>
+
+            <!-- Breakdown list -->
+            <div class="space-y-3 pt-4 border-t border-accent/60">
+              <h3 class="text-sm font-bold text-graphite">تفکیک تخمینی هزینه‌ها:</h3>
+              <div class="space-y-2 text-xs font-medium">
+                <div class="flex justify-between p-2.5 bg-bgCustom rounded-lg border border-accent/60">
+                  <span class="text-graphite">تالار و منوی پذیرایی (۵۰٪):</span>
+                  <span id="cost-venue" class="font-bold text-primary">۰ تومان</span>
+                </div>
+                <div class="flex justify-between p-2.5 bg-bgCustom rounded-lg border border-accent/60">
+                  <span class="text-graphite">آتلیه، فیلمبرداری و عکاسی (۲۰٪):</span>
+                  <span id="cost-photo" class="font-bold text-primary">۰ تومان</span>
+                </div>
+                <div class="flex justify-between p-2.5 bg-bgCustom rounded-lg border border-accent/60">
+                  <span class="text-graphite">لباس عروس، داماد و آرایشگاه (۱۵٪):</span>
+                  <span id="cost-attire" class="font-bold text-primary">۰ تومان</span>
+                </div>
+                <div class="flex justify-between p-2.5 bg-bgCustom rounded-lg border border-accent/60">
+                  <span class="text-graphite">گل‌آرایی، تشریفات و متفرقه (۱۵٪):</span>
+                  <span id="cost-decor" class="font-bold text-primary">۰ تومان</span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Total Result Card -->
+          <div class="lg:col-span-5 bg-primary text-white p-6 rounded-2xl shadow-lg space-y-6">
+            <div class="flex items-center gap-2 border-b border-white/20 pb-4">
+              <i data-lucide="sparkles" class="w-5 h-5 text-accent"></i>
+              <span class="text-sm font-bold">برآورد کل بودجه پیشنهادی</span>
+            </div>
+
+            <div class="text-center py-4 space-y-1">
+              <span class="text-xs text-accent font-medium">مبلغ کل تخمینی:</span>
+              <div id="total-budget" class="text-3xl font-black text-white">۰</div>
+              <span class="text-xs text-white/80">تومان</span>
+            </div>
+
+            <button onclick="openInquiryModal('کلی', 'برآورد هزینه اختصاصی با بودجه تخمینی')" class="w-full bg-white text-primary hover:bg-slate-100 py-3 rounded-xl font-bold text-sm shadow-md transition-colors flex items-center justify-center gap-2">
+              <i data-lucide="send" class="w-4 h-4"></i>
+              <span>دریافت پیش‌فاکتور از تامین‌کنندگان</span>
+            </button>
+          </div>
+
+        </div>
+      </section>
+
+      <!-- CHECKLIST & QUIZ MODULE -->
+      <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+
+        <!-- Checklist Module -->
+        <div class="bg-white border border-accent rounded-3xl p-6 shadow-xs space-y-4">
+          <div class="flex items-center justify-between border-b border-accent pb-3">
+            <h3 class="text-lg font-bold text-graphite flex items-center gap-2">
+              <i data-lucide="check-square" class="w-5 h-5 text-primary"></i>
+              <span>چک‌لیست کارهای ضروری عروسی</span>
+            </h3>
+            <span id="checklist-progress" class="text-xs font-bold text-primary bg-primary/10 px-2.5 py-1 rounded-full">۰٪ تکمیل</span>
+          </div>
+
+          <div id="checklist-container" class="space-y-2 max-h-80 overflow-y-auto custom-scrollbar pr-1">
+            <!-- Populated via JS -->
+          </div>
+        </div>
+
+        <!-- Quiz Module -->
+        <div class="bg-white border border-accent rounded-3xl p-6 shadow-xs space-y-4">
+          <div class="border-b border-accent pb-3">
+            <h3 class="text-lg font-bold text-graphite flex items-center gap-2">
+              <i data-lucide="help-circle" class="w-5 h-5 text-primary"></i>
+              <span>تست هوشمند استایل‌شناسی عروسی</span>
+            </h3>
+            <p class="text-xs text-secondary mt-0.5">تم و سبک برگزاری مراسم مناسب خود را پیدا کنید</p>
+          </div>
+
+          <div id="quiz-container" class="space-y-4">
+            <div class="p-4 bg-bgCustom rounded-2xl border border-accent space-y-3">
+              <span class="text-xs font-bold text-secondary">سوال ۱ از ۲</span>
+              <p class="text-sm font-bold text-graphite">فضای رویایی شما برای برگزاری مراسم عروسی کدام است؟</p>
+
+              <div class="space-y-2">
+                <button onclick="answerQuiz('classic')" class="w-full text-right p-3 rounded-xl border border-accent bg-white text-xs font-semibold hover:border-primary hover:bg-primary/5 transition-all flex items-center justify-between">
+                  <span>باغ تالار باشکوه با معماری کلاسیک و لوکس</span>
+                  <i data-lucide="chevron-left" class="w-4 h-4 text-secondary"></i>
+                </button>
+                <button onclick="answerQuiz('modern')" class="w-full text-right p-3 rounded-xl border border-accent bg-white text-xs font-semibold hover:border-primary hover:bg-primary/5 transition-all flex items-center justify-between">
+                  <span>فضای باز و طبیعت سبز (بوهو و مدرن)</span>
+                  <i data-lucide="chevron-left" class="w-4 h-4 text-secondary"></i>
+                </button>
+              </div>
+            </div>
+
+            <div id="quiz-result" class="hidden p-4 bg-primary/10 border border-primary/20 rounded-2xl space-y-2">
+              <span class="text-xs font-bold text-primary block">نتیجه پیشنهاد استایل شما:</span>
+              <h4 id="quiz-result-title" class="text-sm font-bold text-graphite">سبک کلاسیک مجلل</h4>
+              <p id="quiz-result-desc" class="text-xs text-graphite/80 leading-relaxed">با توجه به انتخابتان، تالار تشریفاتی زمرد و آتلیه نور بهترین گزینه‌ها برای شما هستند.</p>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+    </div>
+
+    <!-- ========================================== -->
+    <!-- TAB 3: VENDOR DASHBOARD PANEL -->
+    <!-- ========================================== -->
+    <div id="tab-vendor" class="tab-content hidden space-y-8">
+
+      <div class="bg-white border border-accent rounded-3xl p-6 shadow-xs flex flex-col sm:flex-row justify-between sm:items-center gap-4">
+        <div>
+          <span class="text-xs font-bold text-secondary">پنل مدیریت اختصاصی تامین‌کنندگان</span>
+          <h2 class="text-2xl font-bold text-graphite flex items-center gap-2">
+            <span>کسب و کار: باغ تالار تشریفاتی زمرد</span>
+            <span class="inline-flex items-center gap-1 text-xs bg-primary text-white px-2.5 py-0.5 rounded-full font-semibold">
+              <i data-lucide="shield-check" class="w-3.5 h-3.5"></i>
+              <span>دارای تاییدیه رسمی</span>
+            </span>
+          </h2>
+        </div>
+
+        <div class="flex items-center gap-3">
+          <label class="flex items-center gap-2 text-xs font-bold text-graphite bg-bgCustom px-3.5 py-2 rounded-xl border border-accent cursor-pointer">
+            <input type="checkbox" id="sms-toggle" checked onchange="alert('تنظیمات دریافت پیامک فوری مشتری به‌روزرسانی شد.')" class="rounded text-primary focus:ring-primary w-4 h-4">
+            <span>دریافت پیامک فوری مشتری جدید</span>
+          </label>
+        </div>
+      </div>
+
+      <!-- Vendor Metrics -->
+      <div class="grid grid-cols-1 sm:grid-cols-3 gap-6">
+        <div class="bg-white p-5 rounded-2xl border border-accent shadow-xs flex items-center justify-between">
+          <div>
+            <span class="text-xs text-secondary font-medium">کل بازدید پروفایل</span>
+            <span class="block text-2xl font-black text-graphite mt-1">۳,۴۵۰</span>
+          </div>
+          <div class="w-10 h-10 rounded-xl bg-primary/10 text-primary flex items-center justify-center">
+            <i data-lucide="eye" class="w-5 h-5"></i>
+          </div>
+        </div>
+
+        <div class="bg-white p-5 rounded-2xl border border-accent shadow-xs flex items-center justify-between">
+          <div>
+            <span class="text-xs text-secondary font-medium">استعلام‌های جدید</span>
+            <span class="block text-2xl font-black text-primary mt-1">۱۲ درخواست</span>
+          </div>
+          <div class="w-10 h-10 rounded-xl bg-primary/10 text-primary flex items-center justify-center">
+            <i data-lucide="message-square-quote" class="w-5 h-5"></i>
+          </div>
+        </div>
+
+        <div class="bg-white p-5 rounded-2xl border border-accent shadow-xs flex items-center justify-between">
+          <div>
+            <span class="text-xs text-secondary font-medium">نرخ رزرو موثر</span>
+            <span class="block text-2xl font-black text-graphite mt-1">۷۴٪</span>
+          </div>
+          <div class="w-10 h-10 rounded-xl bg-primary/10 text-primary flex items-center justify-center">
+            <i data-lucide="trending-up" class="w-5 h-5"></i>
+          </div>
+        </div>
+      </div>
+
+      <!-- Persian Booking Calendar Simulator -->
+      <div class="bg-white border border-accent rounded-3xl p-6 shadow-xs space-y-4">
+        <div class="flex items-center justify-between border-b border-accent pb-3">
+          <div>
+            <h3 class="text-lg font-bold text-graphite">تقویم رزرو و روزهای پر/خالی (اردیبهشت ۱۴۰۳)</h3>
+            <p class="text-xs text-secondary">روی روزها کلیک کنید تا وضعیت آنها بین "آزاد" (سبز) و "رزرو شده" (قرمز) تغییر کند</p>
+          </div>
+          <div class="flex items-center gap-3 text-xs font-bold">
+            <span class="flex items-center gap-1"><span class="w-3 h-3 rounded-full bg-primary inline-block"></span> آزاد</span>
+            <span class="flex items-center gap-1"><span class="w-3 h-3 rounded-full bg-rose-500 inline-block"></span> رزرو شده</span>
+          </div>
+        </div>
+
+        <div id="calendar-grid" class="grid grid-cols-7 gap-2 text-center">
+          <!-- Calendar Days rendered via JS -->
+        </div>
+      </div>
+
+      <!-- Incoming Inquiries Response Panel -->
+      <div class="bg-white border border-accent rounded-3xl p-6 shadow-xs space-y-4">
+        <h3 class="text-lg font-bold text-graphite border-b border-accent pb-3">استعلام‌های جدید دریافتی از زوج‌ها</h3>
+
+        <div id="inquiry-list" class="space-y-3">
+          <!-- Populated via JS -->
+        </div>
+      </div>
+
+    </div>
+
+    <!-- ========================================== -->
+    <!-- TAB 4: SUPER ADMIN DASHBOARD PANEL -->
+    <!-- ========================================== -->
+    <div id="tab-admin" class="tab-content hidden space-y-8">
+
+      <div class="bg-white border border-accent rounded-3xl p-6 shadow-xs">
+        <span class="text-xs font-bold text-secondary">پنل مدیریت ارشد پلتفرم عروسی تو</span>
+        <h2 class="text-2xl font-bold text-graphite">مدیریت اعتبار تامین‌کنندگان و ارسال پیامک</h2>
+      </div>
+
+      <!-- Vendor Verification Management -->
+      <div class="bg-white border border-accent rounded-3xl p-6 shadow-xs space-y-4">
+        <div class="flex justify-between items-center border-b border-accent pb-3">
+          <h3 class="text-lg font-bold text-graphite">لیست تامین‌کنندگان و اعطای تاییدیه رسمی اعتبار</h3>
+          <span class="text-xs text-secondary">کنترل نشان رسمی "تاییدیه عروسی تو"</span>
+        </div>
+
+        <div class="overflow-x-auto">
+          <table class="w-full text-right text-xs">
+            <thead class="bg-bgCustom text-secondary border-b border-accent font-bold">
+              <tr>
+                <th class="p-3">نام برند</th>
+                <th class="p-3">دسته‌بندی</th>
+                <th class="p-3">تلفن همراه</th>
+                <th class="p-3">وضعیت تاییدیه رسمی</th>
+                <th class="p-3">عملیات</th>
+              </tr>
+            </thead>
+            <tbody id="admin-vendor-table" class="divide-y divide-accent/60 font-medium">
+              <!-- Populated via JS -->
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- SMS Broadcast Panel -->
+      <div class="bg-white border border-accent rounded-3xl p-6 shadow-xs space-y-4">
+        <h3 class="text-lg font-bold text-graphite border-b border-accent pb-3">پنل ارسال پیامک اطلاع‌رسانی و تبلیغاتی</h3>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+          <div class="space-y-3">
+            <div>
+              <label class="block text-xs font-bold text-graphite mb-1">گیرندگان:</label>
+              <select id="sms-target" class="w-full bg-bgCustom border border-accent rounded-xl p-2.5 text-xs font-semibold">
+                <option value="all-vendors">همه تامین‌کنندگان (۱,۲۰۰ شماره)</option>
+                <option value="all-couples">زوج‌های ثبت‌نام شده (۱۵,۰۰۰ شماره)</option>
+              </select>
+            </div>
+
+            <div>
+              <label class="block text-xs font-bold text-graphite mb-1">متن پیامک:</label>
+              <textarea id="sms-text" rows="4" class="w-full bg-bgCustom border border-accent rounded-xl p-3 text-xs font-medium focus:outline-none focus:border-primary" placeholder="متن پیامک خود را وارد کنید..."></textarea>
+            </div>
+
+            <button onclick="sendSmsBroadcast()" class="bg-primary text-white font-bold text-xs px-6 py-2.5 rounded-xl hover:bg-primary-hover transition-colors flex items-center gap-2">
+              <i data-lucide="send" class="w-4 h-4"></i>
+              <span>ارسال انبوه پیامک</span>
+            </button>
+          </div>
+
+          <div class="bg-bgCustom border border-accent rounded-2xl p-4 space-y-2">
+            <span class="text-xs font-bold text-secondary">تاریخچه پیامک‌های ارسالی اخیر:</span>
+            <div id="sms-history" class="space-y-2 text-xs font-medium text-graphite max-h-48 overflow-y-auto">
+              <div class="p-2 bg-white rounded-lg border border-accent/60">
+                <span class="text-primary font-bold">ارسال شد:</span> یادآوری تکمیل مدارک رسمی به تامین‌کنندگان جدید
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+    </div>
+
+  </main>
+
+  <!-- ========================================== -->
+  <!-- MODAL: DIRECT PRICE INQUIRY POPUP          -->
+  <!-- ========================================== -->
+  <div id="inquiry-modal" class="fixed inset-0 z-50 bg-black/50 backdrop-blur-xs flex items-center justify-center p-4 hidden">
+    <div class="bg-white border border-accent rounded-3xl max-w-lg w-full p-6 shadow-2xl space-y-4 relative animate-in fade-in zoom-in duration-200">
+
+      <button onclick="closeInquiryModal()" class="absolute top-4 left-4 text-secondary hover:text-graphite">
+        <i data-lucide="x" class="w-6 h-6"></i>
+      </button>
+
+      <div class="border-b border-accent pb-3">
+        <span class="text-xs font-bold text-primary">استعلام قیمت آنلاین و مستقیم</span>
+        <h3 id="modal-vendor-name" class="text-xl font-bold text-graphite mt-0.5">درخواست استعلام قیمت</h3>
+      </div>
+
+      <form id="inquiry-form" onsubmit="handleInquirySubmit(event)" class="space-y-3">
+        <input type="hidden" id="inquiry-vendor-id" value="">
+
+        <div>
+          <label class="block text-xs font-bold text-graphite mb-1">نام و نام خانوادگی:</label>
+          <input type="text" required id="inquiry-name" class="w-full bg-bgCustom border border-accent rounded-xl p-2.5 text-xs font-medium focus:outline-none focus:border-primary">
+        </div>
+
+        <div>
+          <label class="block text-xs font-bold text-graphite mb-1">شماره تماس (جهت دریافت پیش‌فاکتور/پیامک):</label>
+          <input type="tel" required id="inquiry-phone" placeholder="۰۹۱۲..." class="w-full bg-bgCustom border border-accent rounded-xl p-2.5 text-xs font-medium focus:outline-none focus:border-primary" dir="ltr">
+        </div>
+
+        <div class="grid grid-cols-2 gap-3">
+          <div>
+            <label class="block text-xs font-bold text-graphite mb-1">تاریخ تقریبی مراسم:</label>
+            <input type="text" placeholder="۱۴۰۳/۰۶/۱۵" id="inquiry-date" class="w-full bg-bgCustom border border-accent rounded-xl p-2.5 text-xs font-medium focus:outline-none focus:border-primary">
+          </div>
+          <div>
+            <label class="block text-xs font-bold text-graphite mb-1">تعداد مهمانان:</label>
+            <input type="number" placeholder="۲۰۰" id="inquiry-guests" class="w-full bg-bgCustom border border-accent rounded-xl p-2.5 text-xs font-medium focus:outline-none focus:border-primary">
+          </div>
+        </div>
+
+        <div>
+          <label class="block text-xs font-bold text-graphite mb-1">توضیحات و خدمات مورد نیاز:</label>
+          <textarea id="inquiry-details" rows="3" placeholder="مثلا: منوی دیس پرس همراه با ورودی باغ..." class="w-full bg-bgCustom border border-accent rounded-xl p-2.5 text-xs font-medium focus:outline-none focus:border-primary"></textarea>
+        </div>
+
+        <button type="submit" class="w-full bg-primary hover:bg-primary-hover text-white font-bold py-3 rounded-xl text-sm transition-colors shadow-md flex items-center justify-center gap-2">
+          <i data-lucide="send" class="w-4 h-4"></i>
+          <span>ثبت و ارسال استعلام قیمت</span>
+        </button>
+      </form>
+
+    </div>
+  </div>
+
+  <!-- FOOTER -->
+  <footer class="bg-white border-t border-accent mt-16 py-8">
+    <div class="max-w-7xl mx-auto px-4 text-center text-xs text-secondary space-y-2">
+      <p class="font-bold text-primary">عروسی تو | پلتفرم هوشمند برنامه‌ریزی عروسی و خدمات مجالس</p>
+      <p>© تمامی حقوق مادی و معنوی این وب‌سایت متعلق به پلتفرم عروسی تو می‌باشد.</p>
+    </div>
+  </footer>
+
+  <!-- JAVASCRIPT APP STATE & LOGIC -->
+  <script>
+    // Initialize Lucide Icons
+    lucide.createIcons();
+
+    // APP STATE MOCK DATA
+    let vendors = [
+      {
+        id: 1,
+        name: "باغ تالار تشریفاتی زمرد",
+        category: "تالار و باغ تشریفات",
+        city: "تهران (احمدآباد مستوفی)",
+        rating: 4.9,
+        verified: true,
+        priceRange: "از ۱۲۰,۰۰۰,۰۰۰ تومان",
+        image: "https://images.unsplash.com/photo-1519167758481-83f550bb49b3?auto=format&fit=crop&w=800&q=80"
+      },
+      {
+        id: 2,
+        name: "آتلیه تخصصی نور و تصویر",
+        category: "آتلیه و عکاسی",
+        city: "تهران (سعادت‌آباد)",
+        rating: 4.8,
+        verified: true,
+        priceRange: "از ۳۵,۰۰۰,۰۰۰ تومان",
+        image: "https://images.unsplash.com/photo-1537633552985-df8429e8048b?auto=format&fit=crop&w=800&q=80"
+      },
+      {
+        id: 3,
+        name: "سالن زیبایی VIP رویال",
+        category: "سالن زیبایی",
+        city: "تهران (الهیه)",
+        rating: 4.7,
+        verified: false,
+        priceRange: "از ۱۸,۰۰۰,۰۰۰ تومان",
+        image: "https://images.unsplash.com/photo-1487412720507-e7ab37603c6f?auto=format&fit=crop&w=800&q=80"
+      },
+      {
+        id: 4,
+        name: "مزون عروس لوسیا",
+        category: "مزون و لباس عروس",
+        city: "تهران (شهرک غرب)",
+        rating: 4.9,
+        verified: true,
+        priceRange: "از ۲۵,۰۰۰,۰۰۰ تومان",
+        image: "https://images.unsplash.com/photo-1594552072238-b8a33785b261?auto=format&fit=crop&w=800&q=80"
+      }
+    ];
+
+    let currentTier = 'standard';
+
+    let checklistItems = [
+      { id: 1, text: "تعیین تاریخ تقریبی جشن و تعداد مهمانان", done: true },
+      { id: 2, text: "محاسبه و برآورد بودجه در عروسی تو", done: true },
+      { id: 3, text: "رزرو باغ تالار و بررسی منوی پذیرایی", done: false },
+      { id: 4, text: "قرارداد با آتلیه و عکاس مجهز به هلی‌شات", done: false },
+      { id: 5, text: "انتخاب و پرو لباس عروس در مزون", done: false },
+    ];
+
+    let inquiries = [
+      { id: 101, name: "امیرحسین رضایی", phone: "09121112233", date: "۱۴۰۳/۰۵/۲۰", guests: 250, details: "استعلام منوی دیس پرس همراه با ورودی و شمع‌آرایی" }
+    ];
+
+    let bookedDates = [5, 12, 19, 26];
+
+    // TAB SWITCHER
+    function switchTab(tabId) {
+      document.querySelectorAll('.tab-content').forEach(el => el.classList.add('hidden'));
+      document.getElementById('tab-' + tabId).classList.remove('hidden');
+
+      document.querySelectorAll('.nav-btn').forEach(btn => {
+        btn.classList.remove('bg-primary/10', 'text-primary');
+        btn.classList.add('text-graphite');
+      });
+
+      const activeBtn = document.getElementById('nav-' + tabId);
+      if (activeBtn) {
+        activeBtn.classList.add('bg-primary/10', 'text-primary');
+        activeBtn.classList.remove('text-graphite');
+      }
+
+      lucide.createIcons();
+    }
+
+    // RENDER VENDOR CARDS
+    function renderVendors(list) {
+      const grid = document.getElementById('vendor-grid');
+      grid.innerHTML = '';
+
+      if (list.length === 0) {
+        grid.innerHTML = `<div class="col-span-full text-center py-12 text-secondary text-sm font-semibold">هیچ کسب و کاری با این مشخصات یافت نشد.</div>`;
+        return;
+      }
+
+      list.forEach(v => {
+        const card = document.createElement('div');
+        card.className = "bg-white border border-accent rounded-3xl overflow-hidden shadow-xs hover:shadow-md transition-all flex flex-col justify-between";
+        card.innerHTML = `
+          <div>
+            <div class="relative h-48 overflow-hidden bg-slate-100">
+              <img src="${v.image}" alt="${v.name}" class="w-full h-full object-cover">
+              ${v.verified ? `
+                <div class="absolute top-3 right-3 bg-primary text-white text-[11px] font-bold px-3 py-1 rounded-full flex items-center gap-1 shadow-md">
+                  <i data-lucide="shield-check" class="w-3.5 h-3.5"></i>
+                  <span>تاییدیه رسمی</span>
+                </div>
+              ` : ''}
+              <div class="absolute bottom-3 left-3 bg-black/60 backdrop-blur-xs text-white text-xs font-bold px-2.5 py-1 rounded-lg flex items-center gap-1">
+                <i data-lucide="star" class="w-3.5 h-3.5 text-yellow-400 fill-yellow-400"></i>
+                <span>${v.rating}</span>
+              </div>
+            </div>
+
+            <div class="p-5 space-y-3">
+              <div>
+                <span class="text-[11px] font-bold text-secondary">${v.category}</span>
+                <h3 class="text-base font-bold text-graphite leading-tight mt-0.5">${v.name}</h3>
+                <span class="text-xs text-graphite/70 flex items-center gap-1 mt-1">
+                  <i data-lucide="map-pin" class="w-3.5 h-3.5 text-secondary"></i>
+                  <span>${v.city}</span>
+                </span>
+              </div>
+
+              <div class="text-xs font-bold text-primary bg-primary/5 p-2.5 rounded-xl border border-primary/10 flex justify-between items-center">
+                <span class="text-graphite font-normal">حدود قیمت:</span>
+                <span>${v.priceRange}</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="p-5 pt-0">
+            <button onclick="openInquiryModal(${v.id}, '${v.name}')" class="w-full bg-primary hover:bg-primary-hover text-white py-2.5 rounded-xl text-xs font-bold transition-colors flex items-center justify-center gap-2">
+              <i data-lucide="message-square-quote" class="w-4 h-4"></i>
+              <span>استعلام قیمت آنلاین</span>
+            </button>
+          </div>
+        `;
+        grid.appendChild(card);
+      });
+
+      lucide.createIcons();
+    }
+
+    // FILTER VENDORS
+    function filterVendors() {
+      const search = document.getElementById('search-input').value.trim().toLowerCase();
+      const cat = document.getElementById('category-filter').value;
+      const verifiedOnly = document.getElementById('verified-only').checked;
+
+      const filtered = vendors.filter(v => {
+        const matchesSearch = v.name.toLowerCase().includes(search) || v.category.toLowerCase().includes(search);
+        const matchesCat = cat === 'all' || v.category === cat;
+        const matchesVerified = !verifiedOnly || v.verified;
+        return matchesSearch && matchesCat && matchesVerified;
+      });
+
+      renderVendors(filtered);
+    }
+
+    // BUDGET ESTIMATOR CALCULATOR
+    function setTier(tier) {
+      currentTier = tier;
+      document.querySelectorAll('.tier-btn').forEach(btn => {
+        btn.classList.remove('border-primary', 'bg-primary/10', 'text-primary');
+        btn.classList.add('border-accent', 'text-graphite');
+      });
+      const active = document.getElementById('tier-' + tier);
+      active.classList.add('border-primary', 'bg-primary/10', 'text-primary');
+      active.classList.remove('border-accent', 'text-graphite');
+
+      calculateBudget();
+    }
+
+    function calculateBudget() {
+      const guests = parseInt(document.getElementById('guest-slider').value);
+      document.getElementById('guest-count-label').innerText = guests + ' نفر';
+
+      let multiplier = 800000; // standard per guest base
+      if (currentTier === 'premium') multiplier = 1400000;
+      if (currentTier === 'vip') multiplier = 2200000;
+
+      const venueCost = guests * multiplier;
+      const photoCost = Math.round(venueCost * 0.35);
+      const attireCost = Math.round(venueCost * 0.25);
+      const decorCost = Math.round(venueCost * 0.20);
+      const total = venueCost + photoCost + attireCost + decorCost;
+
+      document.getElementById('cost-venue').innerText = venueCost.toLocaleString('fa-IR') + ' تومان';
+      document.getElementById('cost-photo').innerText = photoCost.toLocaleString('fa-IR') + ' تومان';
+      document.getElementById('cost-attire').innerText = attireCost.toLocaleString('fa-IR') + ' تومان';
+      document.getElementById('cost-decor').innerText = decorCost.toLocaleString('fa-IR') + ' تومان';
+      document.getElementById('total-budget').innerText = total.toLocaleString('fa-IR');
+    }
+
+    // CHECKLIST LOGIC
+    function renderChecklist() {
+      const container = document.getElementById('checklist-container');
+      container.innerHTML = '';
+
+      let doneCount = 0;
+      checklistItems.forEach(item => {
+        if (item.done) doneCount++;
+        const row = document.createElement('div');
+        row.className = "flex items-center gap-3 p-3 bg-bgCustom rounded-xl border border-accent/60 cursor-pointer hover:bg-slate-50 transition-colors";
+        row.onclick = () => toggleChecklist(item.id);
+        row.innerHTML = `
+          <input type="checkbox" ${item.done ? 'checked' : ''} class="rounded text-primary focus:ring-primary w-4 h-4 cursor-pointer">
+          <span class="text-xs font-semibold text-graphite ${item.done ? 'line-through text-secondary' : ''}">${item.text}</span>
+        `;
+        container.appendChild(row);
+      });
+
+      const percent = Math.round((doneCount / checklistItems.length) * 100);
+      document.getElementById('checklist-progress').innerText = percent + '٪ تکمیل';
+    }
+
+    function toggleChecklist(id) {
+      checklistItems = checklistItems.map(item => item.id === id ? { ...item, done: !item.done } : item);
+      renderChecklist();
+    }
+
+    // QUIZ LOGIC
+    function answerQuiz(style) {
+      const resultDiv = document.getElementById('quiz-result');
+      const title = document.getElementById('quiz-result-title');
+      const desc = document.getElementById('quiz-result-desc');
+
+      resultDiv.classList.remove('hidden');
+
+      if (style === 'classic') {
+        title.innerText = 'سبک کلاسیک مجلل و باشکوه';
+        desc.innerText = 'پیشنهاد عروسی تو: رزرو باغ تالار تشریفاتی زمرد، منوی VIP تشریفات و ماشین عروسی کلاسیک.';
+      } else {
+        title.innerText = 'سبک مدرن و بوهو در فضای باز';
+        desc.innerText = 'پیشنهاد عروسی تو: آتلیه نور و تصویر، گل‌آرایی روستیک و سالن زیبایی رویال.';
+      }
+    }
+
+    // CALENDAR LOGIC
+    function renderCalendar() {
+      const grid = document.getElementById('calendar-grid');
+      grid.innerHTML = '';
+
+      for (let i = 1; i <= 30; i++) {
+        const isBooked = bookedDates.includes(i);
+        const dayBtn = document.createElement('button');
+        dayBtn.type = 'button';
+        dayBtn.onclick = () => toggleDate(i);
+        dayBtn.className = `p-3 rounded-xl text-xs font-bold transition-all ${
+          isBooked
+            ? 'bg-rose-500 text-white shadow-xs'
+            : 'bg-primary text-white shadow-xs hover:bg-primary-hover'
+        }`;
+        dayBtn.innerText = i;
+        grid.appendChild(dayBtn);
+      }
+    }
+
+    function toggleDate(date) {
+      if (bookedDates.includes(date)) {
+        bookedDates = bookedDates.filter(d => d !== date);
+      } else {
+        bookedDates.push(date);
+      }
+      renderCalendar();
+    }
+
+    // INQUIRIES LIST
+    function renderInquiries() {
+      const container = document.getElementById('inquiry-list');
+      container.innerHTML = '';
+
+      if (inquiries.length === 0) {
+        container.innerHTML = '<div class="text-xs text-secondary">هیچ استعلامی ثبت نشده است.</div>';
+        return;
+      }
+
+      inquiries.forEach(inq => {
+        const card = document.createElement('div');
+        card.className = "p-4 bg-bgCustom rounded-2xl border border-accent space-y-2";
+        card.innerHTML = `
+          <div class="flex justify-between items-center text-xs">
+            <span class="font-bold text-graphite">${inq.name} (${inq.phone})</span>
+            <span class="text-secondary font-medium">تاریخ: ${inq.date} | ${inq.guests} مهمان</span>
+          </div>
+          <p class="text-xs text-graphite/80">${inq.details}</p>
+          <div class="pt-2 flex gap-2">
+            <button onclick="alert('پیش‌فاکتور برای ${inq.name} ارسال شد.')" class="bg-primary text-white px-3 py-1.5 rounded-lg text-xs font-bold">ارسال پیشنهاد قیمت</button>
+          </div>
+        `;
+        container.appendChild(card);
+      });
+    }
+
+    // ADMIN TABLE
+    function renderAdminTable() {
+      const tbody = document.getElementById('admin-vendor-table');
+      tbody.innerHTML = '';
+
+      vendors.forEach(v => {
+        const tr = document.createElement('tr');
+        tr.className = "hover:bg-slate-50";
+        tr.innerHTML = `
+          <td class="p-3 font-bold text-graphite">${v.name}</td>
+          <td class="p-3 text-secondary">${v.category}</td>
+          <td class="p-3 text-graphite" dir="ltr">۰۹۱۲۰۰۰۰۰۰۰</td>
+          <td class="p-3">
+            <span class="inline-flex items-center gap-1 px-2.5 py-1 rounded-full text-[11px] font-bold ${
+              v.verified ? 'bg-primary/10 text-primary' : 'bg-slate-100 text-secondary'
+            }">
+              ${v.verified ? 'تایید شده' : 'در انتظار بررسی'}
+            </span>
+          </td>
+          <td class="p-3">
+            <button onclick="toggleVendorVerification(${v.id})" class="text-xs font-bold underline ${v.verified ? 'text-rose-600' : 'text-primary'}">
+              ${v.verified ? 'لغو تاییدیه' : 'اعطای تاییدیه رسمی'}
+            </button>
+          </td>
+        `;
+        tbody.appendChild(tr);
+      });
+    }
+
+    function toggleVendorVerification(id) {
+      vendors = vendors.map(v => v.id === id ? { ...v, verified: !v.verified } : v);
+      renderVendors(vendors);
+      renderAdminTable();
+    }
+
+    function sendSmsBroadcast() {
+      const text = document.getElementById('sms-text').value.trim();
+      if (!text) {
+        alert('لطفا متن پیامک را وارد کنید.');
+        return;
+      }
+      const history = document.getElementById('sms-history');
+      const item = document.createElement('div');
+      item.className = "p-2 bg-white rounded-lg border border-accent/60";
+      item.innerHTML = `<span class="text-primary font-bold">ارسال شد:</span> ${text}`;
+      history.prepend(item);
+      document.getElementById('sms-text').value = '';
+      alert('پیامک انبوه با موفقیت به شماره‌های منتخب ارسال شد.');
+    }
+
+    // MODAL HANDLERS
+    function openInquiryModal(vendorId, vendorName) {
+      document.getElementById('inquiry-vendor-id').value = vendorId;
+      document.getElementById('modal-vendor-name').innerText = vendorName;
+      document.getElementById('inquiry-modal').classList.remove('hidden');
+    }
+
+    function closeInquiryModal() {
+      document.getElementById('inquiry-modal').classList.add('hidden');
+    }
+
+    function handleInquirySubmit(e) {
+      e.preventDefault();
+      const name = document.getElementById('inquiry-name').value;
+      const phone = document.getElementById('inquiry-phone').value;
+      const date = document.getElementById('inquiry-date').value || '۱۴۰۳/۰۶/۰۱';
+      const guests = document.getElementById('inquiry-guests').value || '۲۰۰';
+      const details = document.getElementById('inquiry-details').value;
+
+      inquiries.push({
+        id: Date.now(),
+        name,
+        phone,
+        date,
+        guests,
+        details
+      });
+
+      renderInquiries();
+      closeInquiryModal();
+      document.getElementById('inquiry-form').reset();
+      alert('استعلام قیمت شما با موفقیت ثبت گردید و پیامک تایید ارسال شد.');
+    }
+
+    // INITIALIZATION ON LOAD
+    window.addEventListener('DOMContentLoaded', () => {
+      renderVendors(vendors);
+      calculateBudget();
+      renderChecklist();
+      renderCalendar();
+      renderInquiries();
+      renderAdminTable();
+    });
+  </script>
+</body>
+</html>
