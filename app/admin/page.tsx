@@ -75,10 +75,13 @@ export default function AdminDashboardPage() {
     smsLog,
     sendSmsBroadcast,
     smsGatewayConfig,
-    updateSmsGatewayConfig
+    updateSmsGatewayConfig,
+    reviews,
+    moderateReview,
+    deleteReview
   } = useApp();
 
-  const [activeTab, setActiveTab] = useState<"verification" | "categories" | "users" | "analytics" | "sms" | "gateway">("categories");
+  const [activeTab, setActiveTab] = useState<"verification" | "reviews" | "categories" | "users" | "analytics" | "sms" | "gateway">("categories");
 
   // Category Manager Modal States
   const [isAddModalOpen, setIsAddModalOpen] = useState(false);
@@ -251,6 +254,18 @@ export default function AdminDashboardPage() {
             >
               <ShieldCheck className="w-4 h-4" />
               <span>تایید هویت و نشان اعتبارسنجی</span>
+            </button>
+
+            <button
+              onClick={() => setActiveTab("reviews")}
+              className={`flex items-center gap-2 px-5 py-3 rounded-xl text-xs font-bold transition-all ${
+                activeTab === "reviews"
+                  ? "bg-primary text-white shadow-xs"
+                  : "bg-white text-graphite hover:border-primary border border-accent"
+              }`}
+            >
+              <MessageSquare className="w-4 h-4 text-amber-500" />
+              <span>نظارت بر دیدگاه‌ها و نظرات ({reviews.length})</span>
             </button>
 
             <button
@@ -452,6 +467,88 @@ export default function AdminDashboardPage() {
                     </div>
                   </div>
                 ))}
+              </div>
+            </div>
+          )}
+
+          {/* TAB: REVIEW MODERATION PANEL */}
+          {activeTab === "reviews" && (
+            <div className="bg-white rounded-3xl border border-accent shadow-xs overflow-hidden space-y-4">
+              <div className="p-6 border-b border-accent flex justify-between items-center">
+                <div>
+                  <h3 className="text-lg font-extrabold text-graphite">مدیریت و نظارت بر نظرات و امتیازات کاربر/زوج</h3>
+                  <p className="text-xs text-secondary mt-0.5">تایید، رد یا حذف دیدگاه‌های ارسالی کاربران قبل از انتشار عمومی</p>
+                </div>
+                <span className="bg-amber-50 text-amber-800 text-xs font-bold px-3 py-1 rounded-full border border-amber-200">
+                  {reviews.filter(r => r.status === "pending").length} نظر در انتظار بررسی
+                </span>
+              </div>
+
+              <div className="divide-y divide-accent/60">
+                {reviews.map((rev) => {
+                  const targetVendor = vendors.find(v => v.id === rev.vendorId);
+                  return (
+                    <div key={rev.id} className="p-6 space-y-3">
+                      <div className="flex flex-col sm:flex-row justify-between sm:items-center gap-2">
+                        <div className="flex items-center gap-2">
+                          <span className="font-bold text-sm text-graphite">{rev.authorName}</span>
+                          <span className="text-xs text-secondary">برای: {targetVendor?.name || "تامین‌کننده"}</span>
+                          {rev.isVerifiedCustomer && (
+                            <span className="bg-emerald-50 text-emerald-800 text-[10px] font-bold px-2 py-0.5 rounded-full border border-emerald-200">
+                              مشتری تایید شده
+                            </span>
+                          )}
+                        </div>
+
+                        <div className="flex items-center gap-2">
+                          <span className={`px-2.5 py-0.5 rounded-full text-[11px] font-bold border ${
+                            rev.status === "approved"
+                              ? "bg-emerald-50 text-emerald-800 border-emerald-200"
+                              : rev.status === "rejected"
+                              ? "bg-rose-50 text-rose-800 border-rose-200"
+                              : "bg-amber-50 text-amber-800 border-amber-200"
+                          }`}>
+                            {rev.status === "approved" ? "تایید شده" : rev.status === "rejected" ? "رد شده" : "در انتظار تایید"}
+                          </span>
+                        </div>
+                      </div>
+
+                      <p className="text-xs text-graphite/80 font-medium bg-bg-custom p-3 rounded-xl border border-accent">
+                        "{rev.comment}"
+                      </p>
+
+                      <div className="flex flex-wrap items-center justify-between gap-3 text-xs pt-1">
+                        <div className="flex gap-4 text-secondary font-medium">
+                          <span>کیفیت: {rev.serviceQuality}</span>
+                          <span>وقت‌شناسی: {rev.punctuality}</span>
+                          <span>ارزش: {rev.valueForMoney}</span>
+                          <span>تاریخ: {rev.createdAt}</span>
+                        </div>
+
+                        <div className="flex items-center gap-2">
+                          <button
+                            onClick={() => moderateReview(rev.id, "approved")}
+                            className="bg-emerald-50 text-emerald-700 hover:bg-emerald-600 hover:text-white px-3 py-1.5 rounded-lg border border-emerald-200 font-bold text-xs transition-colors"
+                          >
+                            تایید دیدگاه
+                          </button>
+                          <button
+                            onClick={() => moderateReview(rev.id, "rejected")}
+                            className="bg-amber-50 text-amber-700 hover:bg-amber-600 hover:text-white px-3 py-1.5 rounded-lg border border-amber-200 font-bold text-xs transition-colors"
+                          >
+                            رد دیدگاه
+                          </button>
+                          <button
+                            onClick={() => deleteReview(rev.id)}
+                            className="bg-rose-50 text-rose-700 hover:bg-rose-600 hover:text-white px-3 py-1.5 rounded-lg border border-rose-200 font-bold text-xs transition-colors"
+                          >
+                            حذف
+                          </button>
+                        </div>
+                      </div>
+                    </div>
+                  );
+                })}
               </div>
             </div>
           )}

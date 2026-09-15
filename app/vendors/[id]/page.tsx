@@ -34,11 +34,55 @@ export default function VendorProfilePage() {
 
   const vendor = vendors.find((v) => v.id === vendorId) || vendors[0];
 
-  const [activeTab, setActiveTab] = useState<"packages" | "gallery" | "calendar">("packages");
+  const { reviews, addReview } = useApp();
+
+  const [activeTab, setActiveTab] = useState<"packages" | "gallery" | "calendar" | "reviews">("packages");
   const [isInquiryModalOpen, setIsInquiryModalOpen] = useState(false);
+  const [isReviewModalOpen, setIsReviewModalOpen] = useState(false);
 
   // Lightbox State
   const [lightboxMedia, setLightboxMedia] = useState<{ url: string; type: "image" | "video"; title?: string } | null>(null);
+
+  // Review Form State
+  const [reviewAuthor, setReviewAuthor] = useState("");
+  const [reviewComment, setReviewComment] = useState("");
+  const [qualityRating, setQualityRating] = useState(5.0);
+  const [punctualityRating, setPunctualityRating] = useState(5.0);
+  const [valueRating, setValueRating] = useState(5.0);
+  const [reviewSuccess, setReviewSuccess] = useState(false);
+
+  const vendorReviews = reviews.filter((r) => r.vendorId === vendor.id && r.status === "approved");
+
+  const avgQuality = vendorReviews.length ? (vendorReviews.reduce((a, b) => a + b.serviceQuality, 0) / vendorReviews.length).toFixed(1) : "5.0";
+  const avgPunctuality = vendorReviews.length ? (vendorReviews.reduce((a, b) => a + b.punctuality, 0) / vendorReviews.length).toFixed(1) : "5.0";
+  const avgValue = vendorReviews.length ? (vendorReviews.reduce((a, b) => a + b.valueForMoney, 0) / vendorReviews.length).toFixed(1) : "4.8";
+
+  const handleReviewSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!reviewAuthor || !reviewComment) return;
+
+    const overall = parseFloat(((qualityRating + punctualityRating + valueRating) / 3).toFixed(1));
+
+    addReview({
+      vendorId: vendor.id,
+      authorName: reviewAuthor,
+      overallRating: overall,
+      serviceQuality: qualityRating,
+      punctuality: punctualityRating,
+      valueForMoney: valueRating,
+      comment: reviewComment,
+      isVerifiedCustomer: true,
+      eventDate: "۱۴۰۳/۰۴/۱۰"
+    });
+
+    setReviewSuccess(true);
+    setTimeout(() => {
+      setReviewSuccess(false);
+      setIsReviewModalOpen(false);
+      setReviewAuthor("");
+      setReviewComment("");
+    }, 2000);
+  };
 
   const portfolioList = vendor.portfolioMedia || vendor.gallery.map((g, idx) => ({
     id: `g-${idx}`,
@@ -309,6 +353,17 @@ export default function VendorProfilePage() {
               <CalendarIcon className="w-4 h-4" />
               <span>تقویم روزهای رزرو شده</span>
             </button>
+            <button
+              onClick={() => setActiveTab("reviews")}
+              className={`flex items-center gap-2 px-5 py-2.5 rounded-xl text-sm font-bold transition-all ${
+                activeTab === "reviews"
+                  ? "bg-primary text-white shadow-xs"
+                  : "text-graphite hover:bg-white"
+              }`}
+            >
+              <Star className="w-4 h-4 fill-amber-400 text-amber-400" />
+              <span>نظرات و امتیازدهی ({vendorReviews.length})</span>
+            </button>
           </div>
 
           {/* Tab Content 1: Packages */}
@@ -439,7 +494,228 @@ export default function VendorProfilePage() {
               </div>
             </div>
           )}
+
+          {/* Tab Content 4: Verified Reviews & Ratings */}
+          {activeTab === "reviews" && (
+            <div className="mt-8 space-y-6">
+              {/* Ratings Overview Header Card */}
+              <div className="bg-white p-6 rounded-3xl border border-accent shadow-xs grid grid-cols-1 lg:grid-cols-12 gap-6 items-center">
+
+                {/* Overall Score */}
+                <div className="lg:col-span-4 text-center lg:border-l border-accent lg:pl-6 space-y-2">
+                  <span className="text-xs text-secondary font-bold block">میانگین کل رضایتمندی زوجین</span>
+                  <div className="text-4xl sm:text-5xl font-black text-primary flex items-center justify-center gap-2">
+                    <span>{vendor.rating}</span>
+                    <Star className="w-8 h-8 fill-amber-400 text-amber-400" />
+                  </div>
+                  <p className="text-xs text-graphite/80 font-semibold">بر اساس {vendorReviews.length} نظر تایید شده</p>
+
+                  <button
+                    onClick={() => setIsReviewModalOpen(true)}
+                    className="mt-3 w-full bg-primary hover:bg-primary-hover text-white py-2.5 rounded-xl text-xs font-bold transition-all shadow-md flex items-center justify-center gap-2"
+                  >
+                    <Star className="w-4 h-4 fill-white" />
+                    <span>ثبت نظر و امتیاز شما</span>
+                  </button>
+                </div>
+
+                {/* Sub-ratings Detailed Progress Breakdown */}
+                <div className="lg:col-span-8 space-y-3">
+                  <h4 className="text-xs font-bold text-graphite mb-2">تفکیک شاخص‌های کیفیت خدمات:</h4>
+
+                  {/* Quality */}
+                  <div className="space-y-1">
+                    <div className="flex justify-between text-xs font-bold">
+                      <span className="text-graphite">کیفیت خدمات و پذیرایی:</span>
+                      <span className="text-primary">{avgQuality} / ۵.۰</span>
+                    </div>
+                    <div className="w-full h-2.5 bg-bg-custom rounded-full border border-accent overflow-hidden">
+                      <div className="h-full bg-primary" style={{ width: `${(parseFloat(avgQuality) / 5) * 100}%` }} />
+                    </div>
+                  </div>
+
+                  {/* Punctuality */}
+                  <div className="space-y-1">
+                    <div className="flex justify-between text-xs font-bold">
+                      <span className="text-graphite">نظم، وقت‌شناسی و مدیریت زمان:</span>
+                      <span className="text-primary">{avgPunctuality} / ۵.۰</span>
+                    </div>
+                    <div className="w-full h-2.5 bg-bg-custom rounded-full border border-accent overflow-hidden">
+                      <div className="h-full bg-primary" style={{ width: `${(parseFloat(avgPunctuality) / 5) * 100}%` }} />
+                    </div>
+                  </div>
+
+                  {/* Value for Money */}
+                  <div className="space-y-1">
+                    <div className="flex justify-between text-xs font-bold">
+                      <span className="text-graphite">ارزش نسبت به قیمت (ارزشمندی):</span>
+                      <span className="text-primary">{avgValue} / ۵.۰</span>
+                    </div>
+                    <div className="w-full h-2.5 bg-bg-custom rounded-full border border-accent overflow-hidden">
+                      <div className="h-full bg-primary" style={{ width: `${(parseFloat(avgValue) / 5) * 100}%` }} />
+                    </div>
+                  </div>
+                </div>
+
+              </div>
+
+              {/* Reviews List */}
+              <div className="space-y-4">
+                <h3 className="text-base font-bold text-graphite">نظرات ثبتی زوجین و مشتریان تایید شده:</h3>
+
+                {vendorReviews.length === 0 ? (
+                  <div className="bg-white p-8 rounded-2xl border border-accent text-center text-xs text-secondary font-bold">
+                    هنوز نظری برای این تامین‌کننده ثبت نشده است. اولین نفری باشید که نظر ثبت می‌کنید!
+                  </div>
+                ) : (
+                  vendorReviews.map((rev) => (
+                    <div key={rev.id} className="bg-white p-6 rounded-2xl border border-accent shadow-xs space-y-3">
+                      <div className="flex flex-col sm:flex-row justify-between sm:items-center gap-2">
+                        <div className="flex items-center gap-3">
+                          <span className="font-bold text-graphite text-sm">{rev.authorName}</span>
+
+                          {rev.isVerifiedCustomer && (
+                            <span className="bg-emerald-50 text-emerald-800 border border-emerald-200 px-2.5 py-0.5 rounded-full text-[10px] font-bold flex items-center gap-1">
+                              <ShieldCheck className="w-3.5 h-3.5 text-emerald-600" />
+                              <span>مشتری تایید شده عروسی تو</span>
+                            </span>
+                          )}
+                        </div>
+
+                        <div className="flex items-center gap-2 text-xs font-bold text-amber-500 bg-amber-50 px-3 py-1 rounded-full border border-amber-200">
+                          <span>امتیاز: {rev.overallRating}</span>
+                          <Star className="w-3.5 h-3.5 fill-amber-400" />
+                        </div>
+                      </div>
+
+                      <p className="text-xs text-graphite/80 leading-relaxed font-medium">{rev.comment}</p>
+
+                      <div className="flex items-center justify-between pt-2 border-t border-accent/60 text-[11px] text-secondary">
+                        <span>تاریخ برگزاری مراسم: {rev.eventDate || "ثبت شده"}</span>
+                        <span>{rev.createdAt}</span>
+                      </div>
+                    </div>
+                  ))
+                )}
+              </div>
+            </div>
+          )}
         </div>
+
+        {/* MODAL: SUBMIT REVIEW FORM */}
+        {isReviewModalOpen && (
+          <div className="fixed inset-0 z-50 bg-black/50 backdrop-blur-xs flex items-center justify-center p-4">
+            <div className="bg-white rounded-3xl border border-accent w-full max-w-lg p-6 space-y-5 shadow-2xl relative">
+              <div className="flex items-center justify-between border-b border-accent pb-3">
+                <div className="flex items-center gap-2">
+                  <Star className="w-5 h-5 fill-amber-400 text-amber-400" />
+                  <h3 className="text-base font-bold text-graphite">ثبت نظر و امتیاز برای {vendor.name}</h3>
+                </div>
+                <button onClick={() => setIsReviewModalOpen(false)} className="text-secondary hover:text-graphite">
+                  <X className="w-5 h-5" />
+                </button>
+              </div>
+
+              {reviewSuccess ? (
+                <div className="py-8 text-center space-y-3">
+                  <div className="w-14 h-14 bg-emerald-100 text-primary rounded-full flex items-center justify-center mx-auto">
+                    <CheckCircle2 className="w-8 h-8" />
+                  </div>
+                  <h4 className="text-lg font-bold text-primary">نظر شما با موفقیت ثبت شد!</h4>
+                  <p className="text-xs text-secondary">
+                    دیدگاه شما پس از بررسی توسط تیم نظارت عروسی تو منتشر خواهد شد.
+                  </p>
+                </div>
+              ) : (
+                <form onSubmit={handleReviewSubmit} className="space-y-4 text-xs">
+                  <div>
+                    <label className="block font-bold text-graphite mb-1">نام و نام خانوادگی:</label>
+                    <input
+                      type="text"
+                      required
+                      placeholder="مانند: علیرضا محمدی"
+                      value={reviewAuthor}
+                      onChange={(e) => setReviewAuthor(e.target.value)}
+                      className="w-full p-2.5 rounded-xl border border-accent focus:outline-none focus:border-primary font-medium"
+                    />
+                  </div>
+
+                  <div className="space-y-3 bg-bg-custom p-3.5 rounded-2xl border border-accent">
+                    <h4 className="font-bold text-graphite">امتیازدهی تخصصی شاخص‌ها:</h4>
+
+                    <div>
+                      <div className="flex justify-between font-bold mb-1">
+                        <span>کیفیت خدمات و امکانات:</span>
+                        <span className="text-primary">{qualityRating} از ۵</span>
+                      </div>
+                      <input
+                        type="range"
+                        min="1"
+                        max="5"
+                        step="0.5"
+                        value={qualityRating}
+                        onChange={(e) => setQualityRating(parseFloat(e.target.value))}
+                        className="w-full accent-primary cursor-pointer"
+                      />
+                    </div>
+
+                    <div>
+                      <div className="flex justify-between font-bold mb-1">
+                        <span>نظم و وقت‌شناسی:</span>
+                        <span className="text-primary">{punctualityRating} از ۵</span>
+                      </div>
+                      <input
+                        type="range"
+                        min="1"
+                        max="5"
+                        step="0.5"
+                        value={punctualityRating}
+                        onChange={(e) => setPunctualityRating(parseFloat(e.target.value))}
+                        className="w-full accent-primary cursor-pointer"
+                      />
+                    </div>
+
+                    <div>
+                      <div className="flex justify-between font-bold mb-1">
+                        <span>ارزش خدمات نسبت به قیمت:</span>
+                        <span className="text-primary">{valueRating} از ۵</span>
+                      </div>
+                      <input
+                        type="range"
+                        min="1"
+                        max="5"
+                        step="0.5"
+                        value={valueRating}
+                        onChange={(e) => setValueRating(parseFloat(e.target.value))}
+                        className="w-full accent-primary cursor-pointer"
+                      />
+                    </div>
+                  </div>
+
+                  <div>
+                    <label className="block font-bold text-graphite mb-1">توضیحات و تجربه شخصی شما:</label>
+                    <textarea
+                      rows={3}
+                      required
+                      placeholder="تجربه شما از کیفیت پذیرایی، برخورد پرسنل و..."
+                      value={reviewComment}
+                      onChange={(e) => setReviewComment(e.target.value)}
+                      className="w-full p-2.5 rounded-xl border border-accent focus:outline-none focus:border-primary font-medium"
+                    />
+                  </div>
+
+                  <button
+                    type="submit"
+                    className="w-full bg-primary hover:bg-primary-hover text-white py-3 rounded-xl font-bold shadow-md transition-all flex items-center justify-center gap-2"
+                  >
+                    <Send className="w-4 h-4" />
+                    <span>ارسال نظر برای بررسی</span>
+                  </button>
+                </form>
+              )}
+            </div>
+          </div>
+        )}
 
         {/* LIGHTBOX MEDIA VIEWER MODAL */}
         {lightboxMedia && (

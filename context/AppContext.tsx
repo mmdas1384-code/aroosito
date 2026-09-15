@@ -137,6 +137,21 @@ export interface SeatingElement {
   assignedGuestIds: string[];
 }
 
+export interface VendorReview {
+  id: string;
+  vendorId: string;
+  authorName: string;
+  overallRating: number;
+  serviceQuality: number;
+  punctuality: number;
+  valueForMoney: number;
+  comment: string;
+  isVerifiedCustomer: boolean;
+  eventDate?: string;
+  createdAt: string;
+  status: "approved" | "pending" | "rejected";
+}
+
 // CHAT & NOTIFICATION MODELS
 export interface ChatMessage {
   id: string;
@@ -231,6 +246,12 @@ interface AppContextType {
   sendChatMessage: (conversationId: string, text: string, senderRole: "couple" | "vendor", attachmentUrl?: string, attachmentName?: string) => void;
   markNotificationRead: (id: string) => void;
   updateSmsGatewayConfig: (config: Partial<SmsGatewayConfig>) => void;
+
+  // REVIEWS MODULE
+  reviews: VendorReview[];
+  addReview: (review: Omit<VendorReview, "id" | "createdAt" | "status">) => void;
+  moderateReview: (id: string, status: "approved" | "rejected") => void;
+  deleteReview: (id: string) => void;
 }
 
 const INITIAL_CATEGORIES: Category[] = [
@@ -386,6 +407,65 @@ const INITIAL_NOTIFICATIONS: NotificationItem[] = [
   }
 ];
 
+const INITIAL_REVIEWS: VendorReview[] = [
+  {
+    id: "rev-1",
+    vendorId: "v1",
+    authorName: "مهندس علیرضا محمدی",
+    overallRating: 5.0,
+    serviceQuality: 5.0,
+    punctuality: 5.0,
+    valueForMoney: 4.8,
+    comment: "مراسم ما ۱۵ اردیبهشت در سالن VIP اسپیناس برگزار شد. کیفیت غذا فوق‌العاده، برخورد پرسنل و مدیریت زمان بی‌نظیر بود.",
+    isVerifiedCustomer: true,
+    eventDate: "۱۴۰۳/۰۲/۱۵",
+    createdAt: "۱۴۰۳/۰۲/۱۸",
+    status: "approved"
+  },
+  {
+    id: "rev-2",
+    vendorId: "v1",
+    authorName: "فاطمه شریفی",
+    overallRating: 4.7,
+    serviceQuality: 4.8,
+    punctuality: 4.5,
+    valueForMoney: 4.8,
+    comment: "فضای باغ در شب فوق‌العاده زیبا بود. گل‌آرایی exatamente طبق طرحی که انتخاب کرده بودیم انجام شد.",
+    isVerifiedCustomer: true,
+    eventDate: "۱۴۰۳/۰۳/۰۱",
+    createdAt: "۱۴۰۳/۰۳/۰۴",
+    status: "approved"
+  },
+  {
+    id: "rev-3",
+    vendorId: "v2",
+    authorName: "نیلوفر و کامران",
+    overallRating: 4.9,
+    serviceQuality: 5.0,
+    punctuality: 4.8,
+    valueForMoney: 4.9,
+    comment: "آلبوم ایتالیایی و فیلم سینمایی کیفیت بی‌نظیری داشت. تیم صبور و بسیار حرفه‌ای عمل کردند.",
+    isVerifiedCustomer: true,
+    eventDate: "۱۴۰۲/۱۱/۲۰",
+    createdAt: "۱۴۰۲/۱۱/۲۵",
+    status: "approved"
+  },
+  {
+    id: "rev-4",
+    vendorId: "v1",
+    authorName: "حسین ابراهیمی",
+    overallRating: 2.0,
+    serviceQuality: 2.0,
+    punctuality: 2.0,
+    valueForMoney: 2.0,
+    comment: "قیمت نسبت به کیفیت پذیرایی بالا بود و تاخیر در شروع پذیرایی داشتیم.",
+    isVerifiedCustomer: false,
+    eventDate: "۱۴۰۳/۰۴/۰۱",
+    createdAt: "۱۴۰۳/۰۴/۰۲",
+    status: "pending"
+  }
+];
+
 const AppContext = createContext<AppContextType | undefined>(undefined);
 
 export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
@@ -402,6 +482,7 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
   const [conversations, setConversations] = useState<ChatConversation[]>(INITIAL_CONVERSATIONS);
   const [messages, setMessages] = useState<ChatMessage[]>(INITIAL_MESSAGES);
   const [notifications, setNotifications] = useState<NotificationItem[]>(INITIAL_NOTIFICATIONS);
+  const [reviews, setReviews] = useState<VendorReview[]>(INITIAL_REVIEWS);
   const [smsGatewayConfig, setSmsGatewayConfig] = useState<SmsGatewayConfig>({
     provider: "kavenegar",
     apiKey: "kv-98234-x89123-demo-key",
@@ -672,6 +753,24 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
     setSmsGatewayConfig((prev) => ({ ...prev, ...config }));
   };
 
+  const addReview = (reviewData: Omit<VendorReview, "id" | "createdAt" | "status">) => {
+    const newRev: VendorReview = {
+      ...reviewData,
+      id: `rev-${Date.now()}`,
+      createdAt: new Date().toLocaleDateString("fa-IR"),
+      status: "pending" // Auto moderation pending
+    };
+    setReviews((prev) => [newRev, ...prev]);
+  };
+
+  const moderateReview = (id: string, status: "approved" | "rejected") => {
+    setReviews((prev) => prev.map((r) => (r.id === id ? { ...r, status } : r)));
+  };
+
+  const deleteReview = (id: string) => {
+    setReviews((prev) => prev.filter((r) => r.id !== id));
+  };
+
   return (
     <AppContext.Provider
       value={{
@@ -723,7 +822,11 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
         smsGatewayConfig,
         sendChatMessage,
         markNotificationRead,
-        updateSmsGatewayConfig
+        updateSmsGatewayConfig,
+        reviews,
+        addReview,
+        moderateReview,
+        deleteReview
       }}
     >
       {children}

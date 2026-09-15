@@ -101,6 +101,10 @@
               <i data-lucide="users" class="w-4 h-4 text-secondary"></i>
               <span>چیدمان صندلی‌ها</span>
             </button>
+            <button onclick="switchTab('messages')" id="nav-messages" class="nav-btn flex items-center gap-2 px-3.5 py-2 rounded-lg text-sm font-semibold transition-colors text-graphite hover:text-primary hover:bg-slate-50">
+              <i data-lucide="message-square" class="w-4 h-4 text-secondary"></i>
+              <span>گفتگوی مستقیم</span>
+            </button>
             <button onclick="switchTab('admin')" id="nav-admin" class="nav-btn flex items-center gap-2 px-3.5 py-2 rounded-lg text-sm font-semibold transition-colors text-graphite hover:text-primary hover:bg-slate-50">
               <i data-lucide="shield-check" class="w-4 h-4 text-secondary"></i>
               <span>پنل مدیریت ارشد</span>
@@ -716,7 +720,104 @@
     </div>
 
     <!-- ========================================== -->
-    <!-- TAB 6: SUPER ADMIN DASHBOARD PANEL -->
+    <!-- TAB 6: DIRECT MESSAGING & CHAT MODULE      -->
+    <!-- ========================================== -->
+    <div id="tab-messages" class="tab-content hidden space-y-8">
+
+      <div class="bg-white border border-accent rounded-3xl p-6 shadow-xs flex flex-col sm:flex-row justify-between sm:items-center gap-4">
+        <div>
+          <span class="text-xs font-bold text-secondary">پلتفرم ارتباط مستقیم زوج و تامین‌کننده</span>
+          <h2 class="text-2xl font-bold text-graphite">گفتگوی آنلاین و دریافت پیش‌فاکتور اختصاصی</h2>
+        </div>
+        <span class="bg-primary/10 text-primary font-bold px-3.5 py-1.5 rounded-full text-xs">
+          ارتباط امن و مستقیم
+        </span>
+      </div>
+
+      <div class="bg-white rounded-3xl border border-accent shadow-xs overflow-hidden grid grid-cols-1 md:grid-cols-12 min-h-[500px]">
+
+        <!-- SIDEBAR CONVERSATIONS -->
+        <div class="md:col-span-4 border-l border-accent p-4 space-y-3 bg-slate-50/50">
+          <h3 class="font-bold text-sm text-graphite border-b border-accent pb-2">گفتگوهای فعال شما:</h3>
+
+          <div class="space-y-2">
+            <div class="p-3 bg-white border-2 border-primary rounded-2xl shadow-xs flex items-center gap-3 cursor-pointer">
+              <div class="w-10 h-10 rounded-xl bg-primary/10 text-primary flex items-center justify-center font-bold text-xs">
+                زمرد
+              </div>
+              <div class="flex-1 min-w-0">
+                <h4 class="font-bold text-xs text-graphite truncate">باغ تالار تشریفاتی زمرد</h4>
+                <p class="text-[11px] text-secondary truncate mt-0.5">سلام، پیش‌فاکتور منوی دیس پرس ارسال گردید.</p>
+              </div>
+            </div>
+
+            <div class="p-3 bg-white border border-accent rounded-2xl flex items-center gap-3 cursor-pointer opacity-70">
+              <div class="w-10 h-10 rounded-xl bg-slate-100 text-slate-600 flex items-center justify-center font-bold text-xs">
+                نور
+              </div>
+              <div class="flex-1 min-w-0">
+                <h4 class="font-bold text-xs text-graphite truncate">آتلیه تخصصی نور و تصویر</h4>
+                <p class="text-[11px] text-secondary truncate mt-0.5">پکیج فیلمبرداری سینمایی برای تاریخ ۱۵ تیر آزاد است.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- CHAT AREA -->
+        <div class="md:col-span-8 flex flex-col justify-between p-6 bg-white space-y-4">
+          <div class="border-b border-accent pb-3 flex justify-between items-center">
+            <div>
+              <h3 class="font-bold text-sm text-graphite">باغ تالار تشریفاتی زمرد</h3>
+              <span class="text-[10px] text-emerald-600 font-bold">پاسخگویی سریع (کمتر از ۱۵ دقیقه)</span>
+            </div>
+            <button onclick="alert('رزرو اولیه صادر شد.')" class="bg-primary/10 text-primary font-bold text-xs px-3 py-1.5 rounded-xl border border-primary/20">
+              درخواست رزرو اولیه تاریخ
+            </button>
+          </div>
+
+          <!-- MESSAGES FEED -->
+          <div id="chat-messages-container" class="space-y-3 max-h-80 overflow-y-auto p-2">
+            <div class="flex flex-col items-start space-y-1">
+              <div class="bg-bgCustom border border-accent p-3 rounded-2xl text-xs max-w-sm">
+                <span class="font-bold text-graphite block mb-1">شما:</span>
+                سلام وقت بخیر، آیا تاریخ ۱۵ شهریور سالن اصلی برای ۲۵۰ مهمان آزاد است؟
+              </div>
+              <span class="text-[9px] text-secondary">۱۰:۳۰</span>
+            </div>
+
+            <div class="flex flex-col items-end space-y-1">
+              <div class="bg-primary text-white p-3 rounded-2xl text-xs max-w-sm shadow-xs">
+                <span class="font-bold block mb-1 text-accent">باغ تالار زمرد:</span>
+                سلام و درود، بله این تاریخ آزاد است. فایل پیش‌فاکتور منو به پیوست تقدیم شد.
+                <div class="mt-2 bg-white/10 p-2 rounded-xl text-[10px] flex items-center gap-1">
+                  <i data-lucide="file-text" class="w-3.5 h-3.5"></i>
+                  <span>پیش‌فاکتور_منوی_VIP.pdf</span>
+                </div>
+              </div>
+              <span class="text-[9px] text-secondary">۱۰:۴۵</span>
+            </div>
+          </div>
+
+          <!-- INPUT FORM -->
+          <form onsubmit="sendLiveChatMessage(event)" class="flex items-center gap-2 pt-2 border-t border-accent">
+            <button type="button" onclick="alert('فایل نمونه‌کار پیوست شد.')" class="p-2.5 rounded-xl border border-accent text-secondary hover:text-primary">
+              <i data-lucide="paperclip" class="w-4 h-4"></i>
+            </button>
+            <input type="text" id="chat-input-text" placeholder="پیام خود را بنویسید..." class="flex-1 bg-bgCustom border border-accent p-2.5 rounded-xl text-xs font-medium focus:outline-none focus:border-primary">
+            <button type="submit" class="bg-primary text-white px-5 py-2.5 rounded-xl text-xs font-bold hover:bg-primary-hover flex items-center gap-1.5">
+              <i data-lucide="send" class="w-3.5 h-3.5"></i>
+              <span>ارسال</span>
+            </button>
+          </form>
+
+        </div>
+
+      </div>
+
+    </div>
+
+    <!-- ========================================== -->
+    <!-- TAB 7: SUPER ADMIN DASHBOARD PANEL -->
     <!-- ========================================== -->
     <div id="tab-admin" class="tab-content hidden space-y-8">
 
@@ -960,7 +1061,7 @@
       { category: "آتلیه و فیلمبرداری", allocated: 60000000, actual: 65000000, deposit: 25000000 },
       { category: "لباس عروس و میکاپ", allocated: 45000000, actual: 40000000, deposit: 20000000 },
       { category: "موزیک زنده و نور", allocated: 45000000, actual: 45000000, deposit: 15000000 },
-      { category: "گل‌آرایی و متفرقه", allocated: 30000000, allocated: 30000000, actual: 32000000, deposit: 10000000 }
+      { category: "گل‌آرایی و متفرقه", allocated: 30000000, actual: 32000000, deposit: 10000000 }
     ];
 
     let isMusicPlaying = false;
@@ -1302,6 +1403,27 @@
       vendors = vendors.map(v => v.id === id ? { ...v, verified: !v.verified } : v);
       renderVendors(vendors);
       renderAdminTable();
+    }
+
+    function sendLiveChatMessage(e) {
+      e.preventDefault();
+      const input = document.getElementById('chat-input-text');
+      const text = input.value.trim();
+      if (!text) return;
+
+      const container = document.getElementById('chat-messages-container');
+      const msgDiv = document.createElement('div');
+      msgDiv.className = "flex flex-col items-start space-y-1";
+      msgDiv.innerHTML = `
+        <div class="bg-bgCustom border border-accent p-3 rounded-2xl text-xs max-w-sm">
+          <span class="font-bold text-graphite block mb-1">شما:</span>
+          ${text}
+        </div>
+        <span class="text-[9px] text-secondary">هم‌اکنون</span>
+      `;
+      container.appendChild(msgDiv);
+      input.value = '';
+      container.scrollTop = container.scrollHeight;
     }
 
     function sendSmsBroadcast() {
