@@ -154,6 +154,14 @@ export default function PlanningToolsPage() {
               <CheckSquare className="w-4 h-4" />
               <span>چک‌لیست کارهای ضروری</span>
             </button>
+
+            <a
+              href="/seating-chart"
+              className="px-4 py-2 rounded-xl text-xs font-bold transition-all flex items-center gap-2 text-graphite hover:text-primary border border-accent hover:border-primary"
+            >
+              <Users className="w-4 h-4 text-primary" />
+              <span>چیدمان بصری صندلی‌ها ↗</span>
+            </a>
           </div>
         </div>
 

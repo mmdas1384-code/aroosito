@@ -77,6 +77,16 @@ export interface BudgetItem {
   actual: number;
 }
 
+export interface SeatingElement {
+  id: string;
+  name: string;
+  type: "circular" | "rectangular" | "stage" | "dancefloor" | "entrance";
+  capacity: number;
+  x: number; // grid position X percentage or px
+  y: number; // grid position Y percentage or px
+  assignedGuestIds: string[];
+}
+
 interface AppContextType {
   role: UserRole;
   setRole: (role: UserRole) => void;
@@ -86,6 +96,7 @@ interface AppContextType {
   checklist: ChecklistItem[];
   guests: GuestItem[];
   budget: BudgetItem[];
+  seatingElements: SeatingElement[];
   smsAlertsEnabled: boolean;
   setSmsAlertsEnabled: (enabled: boolean) => void;
   smsLog: { id: string; recipient: string; message: string; timestamp: string }[];
@@ -100,6 +111,11 @@ interface AppContextType {
   addGuestItem: (name: string, side: "bride" | "groom", plusOne: boolean) => void;
   toggleGuestStatus: (id: string, status: "confirmed" | "pending" | "declined") => void;
   updateBudgetItem: (id: string, actual: number) => void;
+  addSeatingElement: (name: string, type: SeatingElement["type"], capacity: number) => void;
+  removeSeatingElement: (id: string) => void;
+  updateSeatingElementPosition: (id: string, x: number, y: number) => void;
+  assignGuestToSeat: (guestId: string, tableId: string) => void;
+  unassignGuestFromSeat: (guestId: string) => void;
   sendSmsBroadcast: (targetGroup: string, message: string) => void;
 }
 
@@ -255,7 +271,18 @@ const INITIAL_GUESTS: GuestItem[] = [
   { id: "g1", name: "خانواده آقای محمدی", side: "groom", status: "confirmed", plusOne: true },
   { id: "g2", name: "دکتر حسینی و بانو", side: "bride", status: "confirmed", plusOne: true },
   { id: "g3", name: "مهندس احمدی", side: "groom", status: "pending", plusOne: false },
-  { id: "g4", name: "خانم ناصری", side: "bride", status: "pending", plusOne: false }
+  { id: "g4", name: "خانم ناصری", side: "bride", status: "pending", plusOne: false },
+  { id: "g5", name: "استاد کریمی", side: "groom", status: "confirmed", plusOne: true },
+  { id: "g6", name: "خانواده رضایی", side: "bride", status: "confirmed", plusOne: true }
+];
+
+const INITIAL_SEATING_ELEMENTS: SeatingElement[] = [
+  { id: "stg-1", name: "جایگاه عروس و داماد", type: "stage", capacity: 2, x: 40, y: 5, assignedGuestIds: [] },
+  { id: "df-1", name: "سن رقص و نورپردازی", type: "dancefloor", capacity: 0, x: 35, y: 30, assignedGuestIds: [] },
+  { id: "t-1", name: "میز گرد ۱ (وی‌آی‌پی)", type: "circular", capacity: 8, x: 10, y: 25, assignedGuestIds: ["g1", "g2"] },
+  { id: "t-2", name: "میز گرد ۲", type: "circular", capacity: 8, x: 70, y: 25, assignedGuestIds: ["g5"] },
+  { id: "t-3", name: "میز مستطیل افتخار", type: "rectangular", capacity: 10, x: 15, y: 65, assignedGuestIds: ["g6"] },
+  { id: "ent-1", name: "ورودی اصلی سالن", type: "entrance", capacity: 0, x: 42, y: 85, assignedGuestIds: [] }
 ];
 
 const INITIAL_BUDGET: BudgetItem[] = [
@@ -275,6 +302,7 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
   const [checklist, setChecklist] = useState<ChecklistItem[]>(INITIAL_CHECKLIST);
   const [guests, setGuests] = useState<GuestItem[]>(INITIAL_GUESTS);
   const [budget, setBudget] = useState<BudgetItem[]>(INITIAL_BUDGET);
+  const [seatingElements, setSeatingElements] = useState<SeatingElement[]>(INITIAL_SEATING_ELEMENTS);
   const [smsAlertsEnabled, setSmsAlertsEnabled] = useState<boolean>(true);
   const [smsLog, setSmsLog] = useState<{ id: string; recipient: string; message: string; timestamp: string }[]>([
     { id: "s1", recipient: "۰۹۱۲۳۴۵۶۷۸۹", message: "استعلام جدیدی از زوج (سارا و علی) در عروسی تو دریافت شد.", timestamp: "۱۴۰۳/۱۲/۰۱ ۱۰:۳۰" }
@@ -378,6 +406,53 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
     );
   };
 
+  const addSeatingElement = (name: string, type: SeatingElement["type"], capacity: number) => {
+    const newEl: SeatingElement = {
+      id: `seat-${Date.now()}`,
+      name,
+      type,
+      capacity,
+      x: 20 + (seatingElements.length % 5) * 15,
+      y: 40 + (seatingElements.length % 3) * 15,
+      assignedGuestIds: []
+    };
+    setSeatingElements((prev) => [...prev, newEl]);
+  };
+
+  const removeSeatingElement = (id: string) => {
+    setSeatingElements((prev) => prev.filter((el) => el.id !== id));
+  };
+
+  const updateSeatingElementPosition = (id: string, x: number, y: number) => {
+    setSeatingElements((prev) =>
+      prev.map((el) => (el.id === id ? { ...el, x, y } : el))
+    );
+  };
+
+  const assignGuestToSeat = (guestId: string, tableId: string) => {
+    setSeatingElements((prev) =>
+      prev.map((table) => {
+        // remove guest from all tables first
+        const cleaned = table.assignedGuestIds.filter((gid) => gid !== guestId);
+        if (table.id === tableId) {
+          if (cleaned.length < table.capacity) {
+            return { ...table, assignedGuestIds: [...cleaned, guestId] };
+          }
+        }
+        return { ...table, assignedGuestIds: cleaned };
+      })
+    );
+  };
+
+  const unassignGuestFromSeat = (guestId: string) => {
+    setSeatingElements((prev) =>
+      prev.map((table) => ({
+        ...table,
+        assignedGuestIds: table.assignedGuestIds.filter((gid) => gid !== guestId)
+      }))
+    );
+  };
+
   const sendSmsBroadcast = (targetGroup: string, message: string) => {
     setSmsLog((prev) => [
       {
@@ -415,6 +490,12 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
         addGuestItem,
         toggleGuestStatus,
         updateBudgetItem,
+        seatingElements,
+        addSeatingElement,
+        removeSeatingElement,
+        updateSeatingElementPosition,
+        assignGuestToSeat,
+        unassignGuestFromSeat,
         sendSmsBroadcast
       }}
     >

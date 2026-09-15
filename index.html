@@ -97,6 +97,10 @@
               <i data-lucide="store" class="w-4 h-4 text-secondary"></i>
               <span>پنل تامین‌کننده</span>
             </button>
+            <button onclick="switchTab('seating')" id="nav-seating" class="nav-btn flex items-center gap-2 px-3.5 py-2 rounded-lg text-sm font-semibold transition-colors text-graphite hover:text-primary hover:bg-slate-50">
+              <i data-lucide="users" class="w-4 h-4 text-secondary"></i>
+              <span>چیدمان صندلی‌ها</span>
+            </button>
             <button onclick="switchTab('admin')" id="nav-admin" class="nav-btn flex items-center gap-2 px-3.5 py-2 rounded-lg text-sm font-semibold transition-colors text-graphite hover:text-primary hover:bg-slate-50">
               <i data-lucide="shield-check" class="w-4 h-4 text-secondary"></i>
               <span>پنل مدیریت ارشد</span>
@@ -616,7 +620,103 @@
     </div>
 
     <!-- ========================================== -->
-    <!-- TAB 5: SUPER ADMIN DASHBOARD PANEL -->
+    <!-- TAB 5: VISUAL SEATING CHART BUILDER        -->
+    <!-- ========================================== -->
+    <div id="tab-seating" class="tab-content hidden space-y-8">
+
+      <div class="bg-white border border-accent rounded-3xl p-6 shadow-xs flex flex-col sm:flex-row justify-between sm:items-center gap-4">
+        <div>
+          <span class="text-xs font-bold text-secondary">طراح بصری دوبعدی چیدمان سالن</span>
+          <h2 class="text-2xl font-bold text-graphite">نقشه صندلی‌ها و جاینمایی میهمانان</h2>
+        </div>
+
+        <div class="flex items-center gap-2">
+          <button onclick="window.print()" class="bg-bgCustom border border-accent px-4 py-2.5 rounded-xl text-xs font-bold text-graphite flex items-center gap-2">
+            <i data-lucide="printer" class="w-4 h-4 text-secondary"></i>
+            <span>چاپ نقشه</span>
+          </button>
+          <button onclick="alert('خروجی گزارش چیدمان صندلی‌ها برای مدیر تالار ایجاد شد.')" class="bg-primary text-white px-5 py-2.5 rounded-xl text-xs font-bold flex items-center gap-2">
+            <i data-lucide="download" class="w-4 h-4"></i>
+            <span>خروجی لیست میزها برای تالار</span>
+          </button>
+        </div>
+      </div>
+
+      <!-- WORKSPACE CONTAINER -->
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
+
+        <!-- CANVAS AREA -->
+        <div class="lg:col-span-8 bg-white border border-accent rounded-3xl p-6 shadow-xs space-y-4">
+          <div class="flex justify-between items-center border-b border-accent pb-3">
+            <h3 class="text-lg font-bold text-graphite">محیط چیدمان سالن پذیرایی</h3>
+            <span class="text-xs text-secondary">ظرفیت کل: ۲۴ صندلی | پر شده: ۴ نفر</span>
+          </div>
+
+          <div class="relative w-full h-[400px] bg-bgCustom rounded-2xl border-2 border-dashed border-accent p-4 flex flex-col justify-between items-center">
+
+            <!-- STAGE -->
+            <div class="w-48 h-12 bg-amber-100 border-2 border-primary rounded-xl flex items-center justify-center font-bold text-xs text-primary shadow-xs">
+              👑 جایگاه عروس و داماد
+            </div>
+
+            <!-- TABLES GRID -->
+            <div class="grid grid-cols-2 gap-8 w-full max-w-md my-auto">
+              <div class="p-4 bg-white border-2 border-primary rounded-full text-center shadow-md">
+                <span class="block text-xs font-bold text-primary">میز گرد ۱ (VIP)</span>
+                <span class="text-[10px] text-emerald-700 font-bold">۲ / ۸ صندلی</span>
+              </div>
+
+              <div class="p-4 bg-white border-2 border-primary rounded-full text-center shadow-md">
+                <span class="block text-xs font-bold text-primary">میز گرد ۲</span>
+                <span class="text-[10px] text-emerald-700 font-bold">۱ / ۸ صندلی</span>
+              </div>
+            </div>
+
+            <!-- DANCE FLOOR -->
+            <div class="w-64 h-16 bg-slate-100 border-2 border-accent rounded-2xl flex items-center justify-center font-bold text-xs text-secondary">
+              🎵 سن رقص و نورپردازی
+            </div>
+
+          </div>
+        </div>
+
+        <!-- SIDE PANEL GUESTS -->
+        <div class="lg:col-span-4 bg-white border border-accent rounded-3xl p-6 shadow-xs space-y-4">
+          <h3 class="text-base font-bold text-graphite border-b border-accent pb-3">لیست میهمانان</h3>
+
+          <div class="space-y-2 text-xs font-medium">
+            <div class="p-3 bg-bgCustom rounded-xl border border-accent flex justify-between items-center">
+              <div>
+                <span class="font-bold text-graphite block">محمدحسین و همسر</span>
+                <span class="text-[10px] text-secondary">فامیل داماد</span>
+              </div>
+              <span class="bg-emerald-100 text-emerald-800 font-bold px-2 py-0.5 rounded-full text-[10px]">میز گرد ۱</span>
+            </div>
+
+            <div class="p-3 bg-bgCustom rounded-xl border border-accent flex justify-between items-center">
+              <div>
+                <span class="font-bold text-graphite block">دکتر حسینی</span>
+                <span class="text-[10px] text-secondary">فامیل عروس</span>
+              </div>
+              <span class="bg-emerald-100 text-emerald-800 font-bold px-2 py-0.5 rounded-full text-[10px]">میز گرد ۱</span>
+            </div>
+
+            <div class="p-3 bg-bgCustom rounded-xl border border-accent flex justify-between items-center">
+              <div>
+                <span class="font-bold text-graphite block">مهندس احمدی</span>
+                <span class="text-[10px] text-secondary">فامیل داماد</span>
+              </div>
+              <button onclick="alert('به میز گرد ۲ اضافه شد.')" class="bg-primary text-white font-bold px-2.5 py-1 rounded-lg text-[10px]">تخصیص صندلی</button>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+    </div>
+
+    <!-- ========================================== -->
+    <!-- TAB 6: SUPER ADMIN DASHBOARD PANEL -->
     <!-- ========================================== -->
     <div id="tab-admin" class="tab-content hidden space-y-8">
 
