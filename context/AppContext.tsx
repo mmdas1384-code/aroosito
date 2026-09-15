@@ -46,6 +46,42 @@ export interface Inquiry {
   createdAt: string;
 }
 
+export interface BroadcastRequest {
+  id: string;
+  coupleName: string;
+  phone: string;
+  category: string;
+  city: string;
+  district: string;
+  eventDate: string;
+  maxBudget: number; // Toman
+  guestCount: number;
+  stylePreferences: string;
+  notes: string;
+  createdAt: string;
+  status: "open" | "closed";
+}
+
+export interface QuoteItem {
+  description: string;
+  price: number;
+}
+
+export interface VendorQuote {
+  id: string;
+  requestId: string;
+  vendorId: string;
+  vendorName: string;
+  vendorLogo: string;
+  vendorRating: number;
+  totalPrice: number;
+  validDays: number;
+  coverLetter: string;
+  items: QuoteItem[];
+  status: "pending" | "accepted" | "declined";
+  createdAt: string;
+}
+
 export interface Category {
   id: string;
   name: string;
@@ -117,6 +153,11 @@ interface AppContextType {
   assignGuestToSeat: (guestId: string, tableId: string) => void;
   unassignGuestFromSeat: (guestId: string) => void;
   sendSmsBroadcast: (targetGroup: string, message: string) => void;
+  broadcastRequests: BroadcastRequest[];
+  vendorQuotes: VendorQuote[];
+  addBroadcastRequest: (req: Omit<BroadcastRequest, "id" | "createdAt" | "status">) => void;
+  submitVendorQuote: (quote: Omit<VendorQuote, "id" | "createdAt" | "status">) => void;
+  acceptQuote: (quoteId: string) => void;
 }
 
 const INITIAL_CATEGORIES: Category[] = [
@@ -292,6 +333,79 @@ const INITIAL_BUDGET: BudgetItem[] = [
   { id: "b4", category: "موزیک و نورپردازی", estimated: 25000000, actual: 0 }
 ];
 
+const INITIAL_BROADCAST_REQUESTS: BroadcastRequest[] = [
+  {
+    id: "br-1",
+    coupleName: "سارا و علی",
+    phone: "۰۹۱۲۳۴۵۶۷۸۹",
+    category: "تالار و باغ تشریفات",
+    city: "تهران",
+    district: "شمال تهران / لواسان",
+    eventDate: "۱۴۰۴/۰۶/۲۰",
+    maxBudget: 130000000,
+    guestCount: 250,
+    stylePreferences: "تشریفات سینمایی VIP، گل‌آرایی طبیعی و شمع‌آرایی ورودی",
+    notes: "نیازمند سالن بدون ستون با پارکینگ اختصاصی میهمانان.",
+    createdAt: "۱۴۰۳/۱۲/۰۲",
+    status: "open"
+  },
+  {
+    id: "br-2",
+    coupleName: "نرگس و کیوان",
+    phone: "۰۹۱۹۸۷۶۵۴۳۲",
+    category: "آتلیه و فیلمبرداری",
+    city: "تهران",
+    district: "سعادت آباد / شمال غربی",
+    eventDate: "۱۴۰۴/۰۷/۱۰",
+    maxBudget: 55000000,
+    guestCount: 180,
+    stylePreferences: "تصویربرداری ۴K سینمایی + هلی‌شات + آلبوم دیجیتال",
+    notes: "فرمالیته کویر یا شمال مد نظر است.",
+    createdAt: "۱۴۰۳/۱۲/۰۱",
+    status: "open"
+  }
+];
+
+const INITIAL_VENDOR_QUOTES: VendorQuote[] = [
+  {
+    id: "vq-1",
+    requestId: "br-1",
+    vendorId: "v1",
+    vendorName: "باغ تالار تشریفاتی رویال اسپیناس",
+    vendorLogo: "https://images.unsplash.com/photo-1560066984-138dadb4c035?auto=format&fit=crop&w=200&q=80",
+    vendorRating: 4.9,
+    totalPrice: 125000000,
+    validDays: 7,
+    coverLetter: "پیش‌فاکتور رسمی پکیج سوپر VIP باغ تالار اسپیناس شامل ورودی، شام ۴ رنگ و گل‌آرایی کامل.",
+    items: [
+      { description: "ورودی باغ تالار و ورودی VIP میهمانان (۲۵۰ نفر)", price: 40000000 },
+      { description: "منوی شام ۴ رنگ دیس‌پرس و بوفه سالاد اختصاصی", price: 55000000 },
+      { description: "گل‌آرایی طبیعی جایگاه عروس و ورودی سالن", price: 18000000 },
+      { description: "موزیک زنده، نورپردازی و آتش‌بازی ورودی", price: 12000000 }
+    ],
+    status: "pending",
+    createdAt: "۱۴۰۳/۱۲/۰۲"
+  },
+  {
+    id: "vq-2",
+    requestId: "br-2",
+    vendorId: "v2",
+    vendorName: "استودیو عکاسی و فیلمبرداری لنز طلایی",
+    vendorLogo: "https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=200&q=80",
+    vendorRating: 4.8,
+    totalPrice: 48000000,
+    validDays: 10,
+    coverLetter: "پکیج فیلمبرداری سینمایی با ۲ دوربین Sony FX3 و هلی‌شات هوایی در فرمالیته.",
+    items: [
+      { description: "فیلمبرداری ۴K مراسم با دو دوربین و استابلیزر", price: 22000000 },
+      { description: "تصویربرداری هلی‌شات فرمالیته کویر مرنجاب", price: 12000000 },
+      { description: "آلبوم دیجیتال ژورنالی ۸۰ در ۴۰ ایتالیایی", price: 14000000 }
+    ],
+    status: "pending",
+    createdAt: "۱۴۰۳/۱۲/۰۲"
+  }
+];
+
 const AppContext = createContext<AppContextType | undefined>(undefined);
 
 export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
@@ -303,6 +417,8 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
   const [guests, setGuests] = useState<GuestItem[]>(INITIAL_GUESTS);
   const [budget, setBudget] = useState<BudgetItem[]>(INITIAL_BUDGET);
   const [seatingElements, setSeatingElements] = useState<SeatingElement[]>(INITIAL_SEATING_ELEMENTS);
+  const [broadcastRequests, setBroadcastRequests] = useState<BroadcastRequest[]>(INITIAL_BROADCAST_REQUESTS);
+  const [vendorQuotes, setVendorQuotes] = useState<VendorQuote[]>(INITIAL_VENDOR_QUOTES);
   const [smsAlertsEnabled, setSmsAlertsEnabled] = useState<boolean>(true);
   const [smsLog, setSmsLog] = useState<{ id: string; recipient: string; message: string; timestamp: string }[]>([
     { id: "s1", recipient: "۰۹۱۲۳۴۵۶۷۸۹", message: "استعلام جدیدی از زوج (سارا و علی) در عروسی تو دریافت شد.", timestamp: "۱۴۰۳/۱۲/۰۱ ۱۰:۳۰" }
@@ -465,6 +581,56 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
     ]);
   };
 
+  const addBroadcastRequest = (req: Omit<BroadcastRequest, "id" | "createdAt" | "status">) => {
+    const newReq: BroadcastRequest = {
+      ...req,
+      id: `br-${Date.now()}`,
+      createdAt: new Date().toLocaleDateString("fa-IR"),
+      status: "open"
+    };
+    setBroadcastRequests((prev) => [newReq, ...prev]);
+
+    if (smsAlertsEnabled) {
+      setSmsLog((prev) => [
+        {
+          id: `sms-${Date.now()}`,
+          recipient: `تامین‌کنندگان گروه ${req.category} در ${req.city}`,
+          message: `مناقصه جدید: زوج ${req.coupleName} درخواستی برای ${req.category} با سقف بودجه ${req.maxBudget.toLocaleString('fa-IR')} تومان ثبت کردند.`,
+          timestamp: new Date().toLocaleTimeString("fa-IR")
+        },
+        ...prev
+      ]);
+    }
+  };
+
+  const submitVendorQuote = (quote: Omit<VendorQuote, "id" | "createdAt" | "status">) => {
+    const newQuote: VendorQuote = {
+      ...quote,
+      id: `vq-${Date.now()}`,
+      createdAt: new Date().toLocaleDateString("fa-IR"),
+      status: "pending"
+    };
+    setVendorQuotes((prev) => [newQuote, ...prev]);
+
+    if (smsAlertsEnabled) {
+      setSmsLog((prev) => [
+        {
+          id: `sms-${Date.now()}`,
+          recipient: `زوج درخواست دهنده`,
+          message: `پیش‌فاکتور جدید از طرف ${quote.vendorName} ثبت شد. مبلغ کل: ${quote.totalPrice.toLocaleString('fa-IR')} تومان`,
+          timestamp: new Date().toLocaleTimeString("fa-IR")
+        },
+        ...prev
+      ]);
+    }
+  };
+
+  const acceptQuote = (quoteId: string) => {
+    setVendorQuotes((prev) =>
+      prev.map((q) => (q.id === quoteId ? { ...q, status: "accepted" } : q))
+    );
+  };
+
   return (
     <AppContext.Provider
       value={{
@@ -496,7 +662,12 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
         updateSeatingElementPosition,
         assignGuestToSeat,
         unassignGuestFromSeat,
-        sendSmsBroadcast
+        sendSmsBroadcast,
+        broadcastRequests,
+        vendorQuotes,
+        addBroadcastRequest,
+        submitVendorQuote,
+        acceptQuote
       }}
     >
       {children}

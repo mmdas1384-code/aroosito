@@ -17,13 +17,22 @@ import {
   ShieldCheck,
   Store,
   Package,
-  Image as ImageIcon
+  Image as ImageIcon,
+  Radio,
+  FileSpreadsheet,
+  PlusCircle,
+  Trash2,
+  X,
+  FileText
 } from "lucide-react";
 
 export default function VendorDashboardPage() {
   const {
     vendors,
     inquiries,
+    broadcastRequests,
+    vendorQuotes,
+    submitVendorQuote,
     updateInquiryQuote,
     toggleVendorDate,
     smsAlertsEnabled,
@@ -33,7 +42,12 @@ export default function VendorDashboardPage() {
   const currentVendor = vendors[0]; // Active Vendor Demo Context
   const vendorInquiries = inquiries.filter((i) => i.vendorId === currentVendor.id || i.vendorId === "v1");
 
-  const [activeTab, setActiveTab] = useState<"calendar" | "inquiries" | "packages">("calendar");
+  // Matching market requests for vendor's category/city
+  const matchingMarketRequests = broadcastRequests.filter(
+    (req) => req.category === currentVendor.category || req.city === currentVendor.city
+  );
+
+  const [activeTab, setActiveTab] = useState<"calendar" | "inquiries" | "market" | "packages">("market");
 
   // Custom Quote Form state
   const [selectedInquiryId, setSelectedInquiryId] = useState<string | null>(null);
@@ -47,6 +61,50 @@ export default function VendorDashboardPage() {
     setSelectedInquiryId(null);
     setQuotePrice("");
     setQuoteNotes("");
+  };
+
+  // Itemized Quote Builder Modal State
+  const [biddingReqModal, setBiddingReqModal] = useState<any | null>(null);
+  const [quoteItems, setQuoteItems] = useState<{ description: string; price: number }[]>([
+    { description: "ورودی سالن و خدمات تشریفات اولیه", price: 25000000 },
+    { description: "منوی غذا و پذیرایی ویژه میهمانان", price: 45000000 }
+  ]);
+  const [coverLetter, setCoverLetter] = useState("پیش‌فاکتور رسمی ویژه زوج محترم شامل تمامی خدمات فوق همراه با گارانتی کیفیت اجرای مراسم.");
+  const [validDays, setValidDays] = useState<number>(7);
+
+  const handleAddQuoteItem = () => {
+    setQuoteItems((prev) => [...prev, { description: "", price: 0 }]);
+  };
+
+  const handleRemoveQuoteItem = (index: number) => {
+    setQuoteItems((prev) => prev.filter((_, idx) => idx !== index));
+  };
+
+  const handleQuoteItemChange = (index: number, field: "description" | "price", value: any) => {
+    setQuoteItems((prev) =>
+      prev.map((item, idx) => (idx === index ? { ...item, [field]: value } : item))
+    );
+  };
+
+  const calculatedTotalPrice = quoteItems.reduce((sum, item) => sum + (Number(item.price) || 0), 0);
+
+  const handleSendBiddingQuote = (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!biddingReqModal || quoteItems.length === 0) return;
+
+    submitVendorQuote({
+      requestId: biddingReqModal.id,
+      vendorId: currentVendor.id,
+      vendorName: currentVendor.name,
+      vendorLogo: currentVendor.logo,
+      vendorRating: currentVendor.rating,
+      totalPrice: calculatedTotalPrice,
+      validDays,
+      coverLetter,
+      items: quoteItems
+    });
+
+    setBiddingReqModal(null);
   };
 
   // Jalali Calendar Days Mock
@@ -142,10 +200,22 @@ export default function VendorDashboardPage() {
           </div>
 
           {/* Tab Navigation */}
-          <div className="flex items-center gap-2 border-b border-accent pb-2">
+          <div className="flex items-center gap-2 border-b border-accent pb-2 overflow-x-auto">
+            <button
+              onClick={() => setActiveTab("market")}
+              className={`flex items-center gap-2 px-5 py-3 rounded-xl text-sm font-bold transition-all whitespace-nowrap ${
+                activeTab === "market"
+                  ? "bg-primary text-white shadow-xs"
+                  : "bg-white text-graphite hover:border-primary border border-accent"
+              }`}
+            >
+              <Radio className="w-4 h-4 text-emerald-300 animate-pulse" />
+              <span>فرصت‌های بازار و مناقصات مشتریان ({matchingMarketRequests.length})</span>
+            </button>
+
             <button
               onClick={() => setActiveTab("calendar")}
-              className={`flex items-center gap-2 px-5 py-3 rounded-xl text-sm font-bold transition-all ${
+              className={`flex items-center gap-2 px-5 py-3 rounded-xl text-sm font-bold transition-all whitespace-nowrap ${
                 activeTab === "calendar"
                   ? "bg-primary text-white shadow-xs"
                   : "bg-white text-graphite hover:border-primary border border-accent"
@@ -157,28 +227,226 @@ export default function VendorDashboardPage() {
 
             <button
               onClick={() => setActiveTab("inquiries")}
-              className={`flex items-center gap-2 px-5 py-3 rounded-xl text-sm font-bold transition-all ${
+              className={`flex items-center gap-2 px-5 py-3 rounded-xl text-sm font-bold transition-all whitespace-nowrap ${
                 activeTab === "inquiries"
                   ? "bg-primary text-white shadow-xs"
                   : "bg-white text-graphite hover:border-primary border border-accent"
               }`}
             >
               <MessageSquareQuote className="w-4 h-4" />
-              <span>پاسخ‌دهی به استعلام‌های زوج‌ها ({vendorInquiries.length})</span>
+              <span>استعلام‌های مستقیم ({vendorInquiries.length})</span>
             </button>
 
             <button
               onClick={() => setActiveTab("packages")}
-              className={`flex items-center gap-2 px-5 py-3 rounded-xl text-sm font-bold transition-all ${
+              className={`flex items-center gap-2 px-5 py-3 rounded-xl text-sm font-bold transition-all whitespace-nowrap ${
                 activeTab === "packages"
                   ? "bg-primary text-white shadow-xs"
                   : "bg-white text-graphite hover:border-primary border border-accent"
               }`}
             >
               <Package className="w-4 h-4" />
-              <span>مدیریت پکیج‌ها و گالری نمونه کارها</span>
+              <span>مدیریت پکیج‌ها و گالری</span>
             </button>
           </div>
+
+          {/* TAB 0: MARKET BIDDING REQUESTS */}
+          {activeTab === "market" && (
+            <div className="space-y-6">
+              <div className="bg-white p-6 rounded-3xl border border-accent shadow-xs flex items-center justify-between">
+                <div>
+                  <h3 className="text-base font-extrabold text-graphite">درخواست‌های مناقصه عمومی مشتریان</h3>
+                  <p className="text-xs text-secondary mt-0.5">درخواست‌های مرتبط با دسته {currentVendor.category} در {currentVendor.city}</p>
+                </div>
+                <span className="bg-primary/10 text-primary px-3 py-1.5 rounded-full text-xs font-bold">
+                  {matchingMarketRequests.length} درخواست فعال
+                </span>
+              </div>
+
+              <div className="space-y-4">
+                {matchingMarketRequests.map((req) => {
+                  const existingQuote = vendorQuotes.find(
+                    (q) => q.requestId === req.id && q.vendorId === currentVendor.id
+                  );
+
+                  return (
+                    <div key={req.id} className="bg-white p-6 rounded-3xl border border-accent shadow-xs space-y-4">
+                      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 border-b border-accent pb-3">
+                        <div>
+                          <div className="flex items-center gap-2">
+                            <h4 className="font-extrabold text-base text-graphite">{req.coupleName}</h4>
+                            <span className="text-xs bg-bg-custom border border-accent px-2.5 py-0.5 rounded-full font-bold text-secondary">
+                              دسته: {req.category}
+                            </span>
+                          </div>
+                          <p className="text-xs text-secondary mt-1">محدوده: {req.city} ({req.district}) • ثبت شده در: {req.createdAt}</p>
+                        </div>
+
+                        <div className="text-left dir-rtl">
+                          <span className="text-[10px] text-secondary block">سقف بودجه زوج:</span>
+                          <span className="font-extrabold text-primary text-base">
+                            {req.maxBudget.toLocaleString('fa-IR')} <span className="text-xs font-normal">تومان</span>
+                          </span>
+                        </div>
+                      </div>
+
+                      <div className="grid grid-cols-2 sm:grid-cols-3 gap-3 text-xs bg-bg-custom p-3.5 rounded-2xl border border-accent/60">
+                        <div><span className="text-secondary block">تاریخ مراسم:</span><span className="font-bold text-graphite">{req.eventDate}</span></div>
+                        <div><span className="text-secondary block">تعداد مهمانان:</span><span className="font-bold text-graphite">{req.guestCount} نفر</span></div>
+                        <div><span className="text-secondary block">استایل مدنظر:</span><span className="font-bold text-graphite">{req.stylePreferences}</span></div>
+                      </div>
+
+                      <p className="text-xs text-secondary bg-white p-3 rounded-xl border border-accent/60 leading-relaxed">
+                        <span className="font-bold text-graphite">توضیحات تکمیلی مشتری: </span>
+                        {req.notes || "توضیحات اضافه ثبت نشده است."}
+                      </p>
+
+                      <div className="pt-2 flex justify-end">
+                        {existingQuote ? (
+                          <div className="bg-emerald-50 text-emerald-700 border border-emerald-200 px-4 py-2.5 rounded-xl text-xs font-bold flex items-center gap-2">
+                            <CheckCircle2 className="w-4 h-4 text-emerald-600" />
+                            <span>پیش‌فاکتور ارسال شده: {existingQuote.totalPrice.toLocaleString('fa-IR')} تومان</span>
+                          </div>
+                        ) : (
+                          <button
+                            onClick={() => setBiddingReqModal(req)}
+                            className="bg-primary hover:bg-primary-hover text-white px-5 py-2.5 rounded-xl text-xs font-bold transition-all shadow-md flex items-center gap-1.5"
+                          >
+                            <FileSpreadsheet className="w-4 h-4" />
+                            <span>ارسال پیش‌فاکتور اقلام‌بندی شده</span>
+                          </button>
+                        )}
+                      </div>
+                    </div>
+                  );
+                })}
+              </div>
+            </div>
+          )}
+
+          {/* ITEMIZATION QUOTE BUILDER MODAL */}
+          {biddingReqModal && (
+            <div className="fixed inset-0 bg-black/60 backdrop-blur-sm z-50 flex items-center justify-center p-4">
+              <div className="bg-white rounded-3xl max-w-2xl w-full max-h-[90vh] overflow-y-auto p-6 sm:p-8 space-y-6 shadow-2xl relative border border-accent text-xs">
+
+                <div className="flex items-center justify-between border-b border-accent pb-4">
+                  <div className="flex items-center gap-2">
+                    <FileSpreadsheet className="w-6 h-6 text-primary" />
+                    <div>
+                      <h3 className="font-extrabold text-base text-graphite">صدور پیش‌فاکتور رسمی برای مناقصه</h3>
+                      <p className="text-secondary text-[11px]">متقاضی: {biddingReqModal.coupleName} • سقف بودجه: {biddingReqModal.maxBudget.toLocaleString('fa-IR')} تومان</p>
+                    </div>
+                  </div>
+                  <button
+                    onClick={() => setBiddingReqModal(null)}
+                    className="p-2 text-secondary hover:text-graphite rounded-xl hover:bg-bg-custom"
+                  >
+                    <X className="w-5 h-5" />
+                  </button>
+                </div>
+
+                <form onSubmit={handleSendBiddingQuote} className="space-y-5">
+                  {/* Itemized Rows */}
+                  <div className="space-y-3">
+                    <div className="flex items-center justify-between">
+                      <label className="font-bold text-graphite">ریز آیتم‌ها و خدمات قابل ارائه:</label>
+                      <button
+                        type="button"
+                        onClick={handleAddQuoteItem}
+                        className="text-primary hover:text-primary-hover font-bold flex items-center gap-1 text-[11px]"
+                      >
+                        <PlusCircle className="w-4 h-4" />
+                        <span>افزودن ردیف خدماتی</span>
+                      </button>
+                    </div>
+
+                    <div className="space-y-2">
+                      {quoteItems.map((item, idx) => (
+                        <div key={idx} className="flex items-center gap-2 bg-bg-custom p-2.5 rounded-xl border border-accent">
+                          <span className="font-bold text-secondary w-5 text-center">{idx + 1}</span>
+                          <input
+                            type="text"
+                            required
+                            placeholder="شرح خدمت (مثلا: منوی شام VIP یا ۲ دوربین ۴K)"
+                            value={item.description}
+                            onChange={(e) => handleQuoteItemChange(idx, "description", e.target.value)}
+                            className="flex-1 p-2 rounded-lg border border-accent bg-white focus:outline-none focus:border-primary"
+                          />
+                          <input
+                            type="number"
+                            required
+                            placeholder="مبلغ (تومان)"
+                            value={item.price}
+                            onChange={(e) => handleQuoteItemChange(idx, "price", e.target.value)}
+                            className="w-36 p-2 rounded-lg border border-accent bg-white focus:outline-none focus:border-primary text-left dir-ltr"
+                          />
+                          {quoteItems.length > 1 && (
+                            <button
+                              type="button"
+                              onClick={() => handleRemoveQuoteItem(idx)}
+                              className="text-rose-500 hover:text-rose-700 p-1"
+                            >
+                              <Trash2 className="w-4 h-4" />
+                            </button>
+                          )}
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+
+                  {/* Calculated Total Bar */}
+                  <div className="bg-primary/5 border border-primary/20 p-4 rounded-xl flex items-center justify-between font-vazir">
+                    <div>
+                      <span className="font-bold text-graphite block">مبلغ کل پیشنهادی پیش‌فاکتور:</span>
+                      <span className="text-[10px] text-secondary">جمع کل ردیف‌های فوق</span>
+                    </div>
+                    <span className="text-base font-extrabold text-primary">
+                      {calculatedTotalPrice.toLocaleString('fa-IR')} تومان
+                    </span>
+                  </div>
+
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                    <div>
+                      <label className="block font-bold text-graphite mb-1">مدت اعتبار پیش‌فاکتور (روز):</label>
+                      <input
+                        type="number"
+                        value={validDays}
+                        onChange={(e) => setValidDays(Number(e.target.value))}
+                        className="w-full p-2.5 rounded-xl border border-accent focus:outline-none focus:border-primary"
+                      />
+                    </div>
+                    <div>
+                      <label className="block font-bold text-graphite mb-1">تعهدات و توضیحات صادرکننده:</label>
+                      <input
+                        type="text"
+                        value={coverLetter}
+                        onChange={(e) => setCoverLetter(e.target.value)}
+                        className="w-full p-2.5 rounded-xl border border-accent focus:outline-none focus:border-primary"
+                      />
+                    </div>
+                  </div>
+
+                  <div className="flex justify-end gap-3 pt-3 border-t border-accent">
+                    <button
+                      type="button"
+                      onClick={() => setBiddingReqModal(null)}
+                      className="border border-accent text-graphite px-5 py-2.5 rounded-xl font-bold hover:bg-bg-custom"
+                    >
+                      انصراف
+                    </button>
+                    <button
+                      type="submit"
+                      className="bg-primary hover:bg-primary-hover text-white px-6 py-2.5 rounded-xl font-bold shadow-md flex items-center gap-1.5"
+                    >
+                      <Send className="w-4 h-4" />
+                      <span>ارسال پیش‌فاکتور نهایی برای زوج (SMS)</span>
+                    </button>
+                  </div>
+                </form>
+
+              </div>
+            </div>
+          )}
 
           {/* TAB 1: CALENDAR */}
           {activeTab === "calendar" && (
