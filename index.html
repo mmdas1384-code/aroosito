@@ -248,18 +248,18 @@
       </section>
 
       <!-- CATEGORY SHOWCASE GRID SECTION -->
-      <section class="bg-white border border-accent rounded-3xl p-6 sm:p-8 shadow-xs space-y-6">
-        <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-accent pb-4">
+      <section class="bg-white border border-accent rounded-3xl p-4 sm:p-5 py-4 my-2 shadow-xs space-y-4">
+        <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 border-b border-accent pb-3">
           <div>
-            <h2 class="text-xl sm:text-2xl font-bold text-graphite flex items-center gap-2">
-              <i data-lucide="grid" class="w-6 h-6 text-primary"></i>
+            <h2 class="text-lg sm:text-xl font-bold text-graphite flex items-center gap-2">
+              <i data-lucide="grid" class="w-5 h-5 text-primary"></i>
               <span>دسته‌بندی‌های خدمات عروسی</span>
             </h2>
-            <p class="text-xs text-secondary mt-1">دسترسی سریع به برترین تأمین‌کنندگان و مشاغل تشریفات مجالس</p>
+            <p class="text-[11px] sm:text-xs text-secondary mt-0.5">دسترسی سریع به برترین تأمین‌کنندگان و مشاغل تشریفات مجالس</p>
           </div>
 
           <div class="flex items-center gap-2">
-            <button id="toggle-categories-btn" onclick="toggleCategoriesExpand()" class="text-xs font-bold text-primary bg-primary/10 hover:bg-primary/20 border border-primary/20 px-4 py-2 rounded-xl transition-all flex items-center gap-1.5">
+            <button id="toggle-categories-btn" onclick="toggleCategoriesExpand()" class="text-xs font-bold text-primary bg-primary/10 hover:bg-primary/20 border border-primary/20 px-3 py-1.5 rounded-xl transition-all flex items-center gap-1.5">
               <span id="toggle-categories-text">مشاهده بیشتر</span>
               <i id="toggle-categories-icon" data-lucide="chevron-down" class="w-4 h-4"></i>
             </button>
@@ -267,7 +267,7 @@
         </div>
 
         <!-- Dynamic Category Cards Grid -->
-        <div id="category-cards-grid" class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-3 sm:gap-4">
+        <div id="category-cards-grid" class="grid grid-cols-3 sm:grid-cols-4 lg:grid-cols-6 gap-2.5">
           <!-- Populated dynamically via JS -->
         </div>
       </section>
@@ -3117,12 +3117,12 @@
           e.preventDefault();
           filterVendorsByCategoryTitle(cat.title);
         };
-        card.className = "bg-bgCustom border border-accent rounded-xl sm:rounded-2xl p-4 flex flex-col items-center justify-center text-center gap-3 transition-all duration-200 hover:-translate-y-1 hover:border-primary hover:shadow-md group cursor-pointer";
+        card.className = "bg-bgCustom border border-accent rounded-xl p-2 sm:p-2.5 flex flex-col items-center justify-center text-center gap-1.5 transition-all duration-200 hover:-translate-y-0.5 hover:border-primary hover:shadow-xs group cursor-pointer";
         card.innerHTML = `
-          <div class="w-10 h-10 sm:w-12 sm:h-12 rounded-xl bg-primary/10 text-primary flex items-center justify-center transition-colors group-hover:bg-primary group-hover:text-white shadow-xs">
-            <i data-lucide="${cat.icon || 'grid'}" class="w-5 h-5 sm:w-6 sm:h-6"></i>
+          <div class="w-8 h-8 sm:w-9 sm:h-9 rounded-lg bg-primary/10 text-primary flex items-center justify-center transition-colors group-hover:bg-primary group-hover:text-white shrink-0">
+            <i data-lucide="${cat.icon || 'grid'}" class="w-4 h-4 sm:w-5 sm:h-5"></i>
           </div>
-          <span class="text-xs sm:text-sm font-bold text-graphite group-hover:text-primary transition-colors leading-tight">${cat.title}</span>
+          <span class="text-[11px] sm:text-xs font-bold text-graphite group-hover:text-primary transition-colors leading-tight truncate w-full" title="${cat.title}">${cat.title}</span>
         `;
         grid.appendChild(card);
       });
