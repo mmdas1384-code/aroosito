@@ -690,6 +690,44 @@
         </div>
       </div>
 
+
+      <!-- Profile Avatar / Logo Management -->
+      <section class="bg-white border border-accent rounded-3xl p-6 shadow-xs space-y-4">
+        <div class="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 border-b border-accent pb-4">
+          <div class="flex items-center gap-4">
+            <div class="relative group shrink-0">
+              <div id="vd-avatar-container" class="w-24 h-24 sm:w-28 sm:h-28 rounded-full border-4 border-accent overflow-hidden bg-bgCustom flex items-center justify-center shadow-md text-primary font-black text-2xl">
+                <img id="vd-avatar-img" src="https://images.unsplash.com/photo-1519167758481-83f550bb49b3?auto=format&fit=crop&w=400&q=80" alt="لوگوی کسب‌وکار" class="w-full h-full object-cover">
+              </div>
+              <span class="absolute bottom-0 right-0 bg-primary text-white text-[10px] font-bold px-2 py-0.5 rounded-full border-2 border-white flex items-center gap-1 shadow-xs">
+                <i data-lucide="shield-check" class="w-3 h-3"></i>
+                <span>تایید شده</span>
+              </span>
+            </div>
+
+            <div class="space-y-1">
+              <h3 class="text-base font-bold text-graphite flex items-center gap-2">
+                <span>لوگو و عکس پروفایل کسب‌وکار</span>
+              </h3>
+              <p class="text-xs text-secondary max-w-md">این عکس به عنوان لوگوی اصلی برند شما در دایرکتوری و بالای صفحه اختصاصی نمایش داده می‌شود.</p>
+            </div>
+          </div>
+
+          <div class="flex items-center gap-2.5 shrink-0">
+            <input type="file" id="vd-avatar-input" accept="image/*" class="hidden" onchange="handleAvatarUpload(event)">
+            <button type="button" onclick="document.getElementById('vd-avatar-input').click()" class="bg-primary hover:bg-emerald-900 text-white font-bold px-4 py-2.5 rounded-xl text-xs shadow-xs transition-colors flex items-center gap-1.5">
+              <i data-lucide="upload-cloud" class="w-4 h-4"></i>
+              <span>تغییر / آپلود عکس پروفایل</span>
+            </button>
+            <button type="button" onclick="handleAvatarDelete()" class="bg-white hover:bg-rose-50 text-rose-600 border border-rose-200 font-bold px-3.5 py-2.5 rounded-xl text-xs transition-colors flex items-center gap-1.5">
+              <i data-lucide="trash-2" class="w-4 h-4"></i>
+              <span>حذف عکس</span>
+            </button>
+          </div>
+        </div>
+      </section>
+
+
       <!-- Business Profile Editor Form -->
       <section class="bg-white border border-accent rounded-3xl p-6 shadow-xs space-y-4">
         <h3 class="text-lg font-bold text-graphite border-b border-accent pb-3 flex items-center gap-2">
@@ -725,6 +763,30 @@
           </div>
         </form>
       </section>
+
+
+      <!-- Portfolio Gallery CRUD Manager -->
+      <section class="bg-white border border-accent rounded-3xl p-6 shadow-xs space-y-6">
+        <div class="flex flex-col sm:flex-row justify-between sm:items-center gap-4 border-b border-accent pb-4">
+          <div>
+            <h3 class="text-lg font-bold text-graphite flex items-center gap-2">
+              <i data-lucide="image" class="w-5 h-5 text-primary"></i>
+              <span>مدیریت گالری نمونه‌کارها (Portfolio Gallery Manager)</span>
+            </h3>
+            <p class="text-xs text-secondary mt-1">تصاویر نمونه‌کار خود را مدیریت کنید. تغییرات بلافاصله در پروفایل عمومی شما ثبت می‌شوند.</p>
+          </div>
+          <button type="button" onclick="openPortfolioModal()" class="bg-primary hover:bg-emerald-900 text-white font-bold px-4 py-2.5 rounded-xl text-xs shadow-xs transition-colors flex items-center gap-1.5 shrink-0">
+            <i data-lucide="plus-circle" class="w-4 h-4"></i>
+            <span>افزودن نمونه‌کار جدید</span>
+          </button>
+        </div>
+
+        <!-- Portfolio Items Grid -->
+        <div id="vd-portfolio-grid" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+          <!-- Rendered dynamically via JS -->
+        </div>
+      </section>
+
 
       <!-- Portfolio & Service Packages Manager -->
       <section class="bg-white border border-accent rounded-3xl p-6 shadow-xs space-y-6">
@@ -1796,6 +1858,77 @@
   <!-- ========================================== -->
   <!-- MODAL: ADD PACKAGE MODAL (VENDOR DASHBOARD)-->
   <!-- ========================================== -->
+
+  <!-- ========================================== -->
+  <!-- PORTFOLIO ITEM MODAL (ADD / EDIT)          -->
+  <!-- ========================================== -->
+  <div id="portfolio-modal" class="fixed inset-0 z-50 bg-black/60 backdrop-blur-xs flex items-center justify-center p-4 hidden">
+    <div class="bg-white border border-accent rounded-3xl max-w-lg w-full p-6 shadow-2xl space-y-4 relative max-h-[90vh] overflow-y-auto custom-scrollbar">
+      <button type="button" onclick="closePortfolioModal()" class="absolute top-4 left-4 text-secondary hover:text-graphite transition-colors">
+        <i data-lucide="x" class="w-6 h-6"></i>
+      </button>
+
+      <div class="border-b border-accent pb-3">
+        <h3 id="portfolio-modal-title" class="text-lg font-bold text-graphite">افزودن نمونه‌کار جدید</h3>
+      </div>
+
+      <form onsubmit="handlePortfolioSubmit(event)" class="space-y-4 text-xs font-bold text-graphite">
+        <input type="hidden" id="port-id" value="">
+
+        <div>
+          <label class="block mb-1">عنوان نمونه‌کار *</label>
+          <input type="text" id="port-title" required placeholder="مثلاً: دیزاین گل‌آرایی سالن اصلی - مراسم تیرماه" class="w-full bg-bgCustom border border-accent rounded-xl p-2.5 text-xs font-medium focus:outline-none focus:border-primary">
+        </div>
+
+        <div>
+          <label class="block mb-1">دسته‌بندی / تگ *</label>
+          <select id="port-category" class="w-full bg-bgCustom border border-accent rounded-xl p-2.5 text-xs font-medium focus:outline-none focus:border-primary">
+            <option value="فرمالیته">فرمالیته</option>
+            <option value="مراسم عقد">مراسم عقد</option>
+            <option value="جشن عروسی">جشن عروسی</option>
+            <option value="دیزاین & گل‌آرایی">دیزاین & گل‌آرایی</option>
+            <option value="میکاپ & زیبایی">میکاپ & زیبایی</option>
+            <option value="لباس & مزون">لباس & مزون</option>
+          </select>
+        </div>
+
+        <div>
+          <label class="block mb-1">آدرس تصویر (URL) یا انتخاب فایل:</label>
+          <div class="space-y-2">
+            <input type="url" id="port-img-url" oninput="previewPortfolioModalImage(this.value)" placeholder="https://images.unsplash.com/..." class="w-full bg-bgCustom border border-accent rounded-xl p-2.5 text-xs font-medium focus:outline-none focus:border-primary dir-ltr">
+            <div class="flex items-center gap-2">
+              <span class="text-[11px] text-secondary">یا فایل تصویر را انتخاب کنید:</span>
+              <input type="file" id="port-img-file" accept="image/*" onchange="handlePortfolioFileSelect(event)" class="text-xs text-secondary file:mr-2 file:py-1 file:px-3 file:rounded-xl file:border-0 file:text-xs file:font-semibold file:bg-primary/10 file:text-primary hover:file:bg-primary/20">
+            </div>
+          </div>
+        </div>
+
+        <!-- Image Preview Container -->
+        <div>
+          <label class="block mb-1 text-secondary">پیش‌نمایش تصویر:</label>
+          <div class="w-full h-44 rounded-2xl border-2 border-dashed border-accent bg-bgCustom overflow-hidden flex items-center justify-center relative">
+            <img id="port-img-preview" src="" alt="پیش‌نمایش" class="w-full h-full object-cover hidden">
+            <div id="port-img-placeholder" class="text-center space-y-1 text-secondary p-4">
+              <i data-lucide="image" class="w-8 h-8 mx-auto text-secondary/60"></i>
+              <p class="text-[11px]">تصویر پس از وارد کردن URL یا انتخاب فایل اینجا نمایش داده می‌شود</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="flex justify-end gap-2 border-t border-accent pt-4">
+          <button type="button" onclick="closePortfolioModal()" class="bg-bgCustom hover:bg-slate-100 text-graphite border border-accent font-bold px-4 py-2.5 rounded-xl text-xs transition-colors">
+            انصراف
+          </button>
+          <button type="submit" class="bg-primary hover:bg-emerald-900 text-white font-bold px-6 py-2.5 rounded-xl text-xs shadow-xs transition-colors flex items-center gap-1.5">
+            <i data-lucide="check" class="w-4 h-4"></i>
+            <span>ذخیره نمونه‌کار</span>
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+
   <div id="package-modal" class="fixed inset-0 z-50 bg-black/60 backdrop-blur-xs flex items-center justify-center p-4 hidden">
     <div class="bg-white border border-accent rounded-3xl max-w-md w-full p-6 shadow-2xl space-y-4 relative">
       <button onclick="toggleAddPackageModal(false)" class="absolute top-4 left-4 text-secondary hover:text-graphite">
@@ -2642,6 +2775,221 @@
     }
 
     // GALLERY LIGHTBOX
+
+    // PORTFOLIO GALLERY CRUD STATE & HANDLERS
+    let vendorPortfolio = [
+      {
+        id: 'port-1',
+        title: 'دیزاین سفره عقد و گل‌آرایی سالن زمرد',
+        category: 'مراسم عقد',
+        image: 'https://images.unsplash.com/photo-1519167758481-83f550bb49b3?auto=format&fit=crop&w=800&q=80'
+      },
+      {
+        id: 'port-2',
+        title: 'نورپردازی مدرن و دکوراسیون جایگاه عروس و داماد',
+        category: 'جشن عروسی',
+        image: 'https://images.unsplash.com/photo-1519741497674-611481863552?auto=format&fit=crop&w=800&q=80'
+      },
+      {
+        id: 'port-3',
+        title: 'چیدمان فضای باز و پذیرایی کوکتل فضا',
+        category: 'فرمالیته',
+        image: 'https://images.unsplash.com/photo-1511285560929-80b456fea0bc?auto=format&fit=crop&w=800&q=80'
+      },
+      {
+        id: 'port-4',
+        title: 'گل‌آرایی اختصاصی ورود و ماشین عروس',
+        category: 'دیزاین & گل‌آرایی',
+        image: 'https://images.unsplash.com/photo-1520854221256-17451cc331bf?auto=format&fit=crop&w=800&q=80'
+      }
+    ];
+
+    function renderPortfolioUI() {
+      const dashContainer = document.getElementById('vd-portfolio-grid');
+      const publicContainer = document.getElementById('vp-gallery-grid');
+
+      // 1. Render Dashboard Portfolio Grid
+      if (dashContainer) {
+        dashContainer.innerHTML = '';
+        if (vendorPortfolio.length === 0) {
+          dashContainer.innerHTML = `
+            <div class="col-span-full border-2 border-dashed border-accent rounded-2xl p-8 text-center text-secondary space-y-2">
+              <i data-lucide="image-off" class="w-10 h-10 mx-auto text-secondary/50"></i>
+              <p class="text-xs font-bold">هیچ نمونه‌کاری ثبت نشده است.</p>
+              <p class="text-[11px]">با استفاده از دکمه «افزودن نمونه‌کار جدید» اولین نمونه کار خود را قرار دهید.</p>
+            </div>
+          `;
+        } else {
+          vendorPortfolio.forEach(item => {
+            const card = document.createElement('div');
+            card.className = "bg-bgCustom border border-accent rounded-2xl overflow-hidden shadow-xs hover:shadow-md transition-shadow flex flex-col justify-between";
+            card.innerHTML = `
+              <div>
+                <div class="h-40 w-full relative bg-slate-100 overflow-hidden">
+                  <img src="${item.image}" alt="${item.title}" class="w-full h-full object-cover">
+                  <span class="absolute top-2.5 right-2.5 bg-graphite/80 backdrop-blur-xs text-white text-[10px] font-bold px-2.5 py-1 rounded-full">
+                    ${item.category}
+                  </span>
+                </div>
+                <div class="p-3 space-y-1">
+                  <h4 class="text-xs font-bold text-graphite line-clamp-2 min-h-[2.25rem]">${item.title}</h4>
+                </div>
+              </div>
+              <div class="p-3 pt-0 border-t border-accent/40 mt-2 flex items-center justify-between gap-2 text-xs font-bold">
+                <button type="button" onclick="openPortfolioModal('${item.id}')" class="flex-1 bg-white hover:bg-slate-100 text-graphite border border-accent py-1.5 px-2 rounded-xl transition-colors flex items-center justify-center gap-1 text-[11px]">
+                  <i data-lucide="edit-2" class="w-3.5 h-3.5 text-primary"></i>
+                  <span>ویرایش</span>
+                </button>
+                <button type="button" onclick="deletePortfolioItem('${item.id}')" class="bg-white hover:bg-rose-50 text-rose-600 border border-rose-200 py-1.5 px-2.5 rounded-xl transition-colors flex items-center justify-center gap-1 text-[11px]">
+                  <i data-lucide="trash-2" class="w-3.5 h-3.5"></i>
+                  <span>حذف</span>
+                </button>
+              </div>
+            `;
+            dashContainer.appendChild(card);
+          });
+        }
+      }
+
+      // 2. Render Public Profile Gallery Grid
+      if (publicContainer) {
+        publicContainer.innerHTML = '';
+        if (vendorPortfolio.length === 0) {
+          publicContainer.innerHTML = `
+            <div class="col-span-full border border-accent rounded-2xl p-8 text-center text-secondary text-xs font-bold">
+              نمونه‌کاری برای نمایش وجود ندارد.
+            </div>
+          `;
+        } else {
+          vendorPortfolio.forEach((item, idx) => {
+            const div = document.createElement('div');
+            div.className = "aspect-square rounded-2xl overflow-hidden border border-accent relative group cursor-pointer shadow-xs";
+            div.onclick = () => openLightbox(item.image);
+            div.innerHTML = `
+              <img src="${item.image}" alt="${item.title}" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300">
+              <div class="absolute inset-0 bg-primary/60 opacity-0 group-hover:opacity-100 transition-opacity flex flex-col justify-between p-3 text-white">
+                <span class="self-end bg-white/20 backdrop-blur-xs text-[10px] font-bold px-2 py-0.5 rounded-full">${item.category}</span>
+                <div>
+                  <p class="text-xs font-bold line-clamp-1">${item.title}</p>
+                  <p class="text-[10px] opacity-80 flex items-center gap-1 mt-1"><i data-lucide="maximize-2" class="w-3 h-3"></i> کلیک جهت مشاهده</p>
+                </div>
+              </div>
+            `;
+            publicContainer.appendChild(div);
+          });
+        }
+      }
+
+      lucide.createIcons();
+    }
+
+    let tempModalImageBase64 = null;
+
+    function openPortfolioModal(id = null) {
+      const modal = document.getElementById('portfolio-modal');
+      const modalTitle = document.getElementById('portfolio-modal-title');
+      const idInput = document.getElementById('port-id');
+      const titleInput = document.getElementById('port-title');
+      const catInput = document.getElementById('port-category');
+      const urlInput = document.getElementById('port-img-url');
+      const fileInput = document.getElementById('port-img-file');
+
+      tempModalImageBase64 = null;
+      if (fileInput) fileInput.value = '';
+
+      if (id) {
+        const item = vendorPortfolio.find(p => p.id === id);
+        if (item) {
+          modalTitle.innerText = 'ویرایش نمونه‌کار';
+          idInput.value = item.id;
+          titleInput.value = item.title;
+          catInput.value = item.category || 'مراسم عقد';
+          urlInput.value = item.image.startsWith('data:') ? '' : item.image;
+          previewPortfolioModalImage(item.image);
+        }
+      } else {
+        modalTitle.innerText = 'افزودن نمونه‌کار جدید';
+        idInput.value = '';
+        titleInput.value = '';
+        catInput.value = 'مراسم عقد';
+        urlInput.value = '';
+        previewPortfolioModalImage('');
+      }
+
+      if (modal) modal.classList.remove('hidden');
+    }
+
+    function closePortfolioModal() {
+      const modal = document.getElementById('portfolio-modal');
+      if (modal) modal.classList.add('hidden');
+    }
+
+    function previewPortfolioModalImage(src) {
+      const img = document.getElementById('port-img-preview');
+      const placeholder = document.getElementById('port-img-placeholder');
+
+      if (src && src.trim() !== '') {
+        img.src = src;
+        img.classList.remove('hidden');
+        placeholder.classList.add('hidden');
+      } else {
+        img.src = '';
+        img.classList.add('hidden');
+        placeholder.classList.remove('hidden');
+      }
+    }
+
+    function handlePortfolioFileSelect(event) {
+      const file = event.target.files && event.target.files[0];
+      if (!file) return;
+
+      const reader = new FileReader();
+      reader.onload = function(e) {
+        tempModalImageBase64 = e.target.result;
+        previewPortfolioModalImage(tempModalImageBase64);
+        document.getElementById('port-img-url').value = '';
+      };
+      reader.readAsDataURL(file);
+    }
+
+    function handlePortfolioSubmit(e) {
+      e.preventDefault();
+      const id = document.getElementById('port-id').value;
+      const title = document.getElementById('port-title').value.trim();
+      const category = document.getElementById('port-category').value;
+      const url = document.getElementById('port-img-url').value.trim();
+
+      const finalImg = tempModalImageBase64 || url || 'https://images.unsplash.com/photo-1519167758481-83f550bb49b3?auto=format&fit=crop&w=800&q=80';
+
+      if (id) {
+        // Edit mode
+        const index = vendorPortfolio.findIndex(p => p.id === id);
+        if (index !== -1) {
+          vendorPortfolio[index] = { id, title, category, image: finalImg };
+        }
+      } else {
+        // Add mode
+        const newItem = {
+          id: 'port-' + Date.now(),
+          title,
+          category,
+          image: finalImg
+        };
+        vendorPortfolio.push(newItem);
+      }
+
+      renderPortfolioUI();
+      closePortfolioModal();
+    }
+
+    function deletePortfolioItem(id) {
+      if (confirm('آیا از حذف این نمونه‌کار مطمئن هستید؟')) {
+        vendorPortfolio = vendorPortfolio.filter(p => p.id !== id);
+        renderPortfolioUI();
+      }
+    }
+
+
     function renderGallery() {
       const container = document.getElementById('vp-gallery-grid');
       if (!container) return;
@@ -2887,6 +3235,70 @@
       document.getElementById('cat-title').value = '';
       document.getElementById('cat-icon').value = '';
     }
+
+
+    // VENDOR AVATAR MANAGEMENT
+    let defaultVendorAvatar = 'https://images.unsplash.com/photo-1519167758481-83f550bb49b3?auto=format&fit=crop&w=400&q=80';
+    let currentVendorAvatar = defaultVendorAvatar;
+
+    function handleAvatarUpload(event) {
+      const file = event.target.files && event.target.files[0];
+      if (!file) return;
+
+      const reader = new FileReader();
+      reader.onload = function(e) {
+        currentVendorAvatar = e.target.result;
+        updateVendorAvatarUI();
+      };
+      reader.readAsDataURL(file);
+    }
+
+    function handleAvatarDelete() {
+      if (confirm('آیا از حذف عکس پروفایل کسب‌وکار خود مطمئن هستید؟')) {
+        currentVendorAvatar = null;
+        updateVendorAvatarUI();
+      }
+    }
+
+    function updateVendorAvatarUI() {
+      const dashImg = document.getElementById('vd-avatar-img');
+      const dashContainer = document.getElementById('vd-avatar-container');
+      const publicImg = document.getElementById('vp-logo');
+
+      if (currentVendorAvatar) {
+        if (dashImg) {
+          dashImg.src = currentVendorAvatar;
+          dashImg.classList.remove('hidden');
+        }
+        if (publicImg) {
+          publicImg.src = currentVendorAvatar;
+          publicImg.classList.remove('hidden');
+        }
+        if (dashContainer) {
+          const initialsDiv = dashContainer.querySelector('.avatar-initials');
+          if (initialsDiv) initialsDiv.remove();
+        }
+      } else {
+        if (dashImg) dashImg.classList.add('hidden');
+        if (publicImg) publicImg.classList.add('hidden');
+
+        if (dashContainer && !dashContainer.querySelector('.avatar-initials')) {
+          const initials = document.createElement('div');
+          initials.className = 'avatar-initials w-full h-full flex flex-col items-center justify-center bg-accent/30 text-primary font-black text-xl text-center p-2';
+          initials.innerHTML = '<i data-lucide="store" class="w-8 h-8 mb-1 text-primary"></i><span>زمرد</span>';
+          dashContainer.appendChild(initials);
+        }
+
+        if (publicImg && publicImg.parentElement && !publicImg.parentElement.querySelector('.avatar-initials')) {
+          const initialsPub = document.createElement('div');
+          initialsPub.className = 'avatar-initials w-full h-full flex flex-col items-center justify-center bg-accent/30 text-primary font-black text-2xl text-center p-2';
+          initialsPub.innerHTML = '<i data-lucide="store" class="w-10 h-10 mb-1 text-primary"></i><span>زمرد</span>';
+          publicImg.parentElement.appendChild(initialsPub);
+        }
+      }
+      lucide.createIcons();
+    }
+
 
     // VENDOR PROFILE EDIT FORM (VENDOR DASHBOARD)
     function handleVendorProfileUpdate(e) {
@@ -4322,7 +4734,7 @@
     window.addEventListener('DOMContentLoaded', () => {
       renderCategoryCards();
       renderVendors(vendors);
-      renderGallery();
+      renderPortfolioUI();
       renderVendorPackages();
       renderAdminCategories();
       renderAdminPendingApps();
