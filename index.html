@@ -86,6 +86,9 @@
         <button onclick="switchTab('invitation')" id="demo-tab-invitation" class="demo-tab-btn px-3.5 py-1.5 rounded-lg text-xs font-bold transition-all bg-white/10 hover:bg-white/20 text-slate-200">
           کارت دعوت & RSVP
         </button>
+        <button onclick="switchTab('quizzes')" id="demo-tab-quizzes" class="demo-tab-btn px-3.5 py-1.5 rounded-lg text-xs font-bold transition-all bg-white/10 hover:bg-white/20 text-slate-200">
+          <i data-lucide="help-circle" class="w-3.5 h-3.5 inline ml-1"></i>تست‌های استایل & روانشناسی
+        </button>
         <button onclick="switchTab('tools')" id="demo-tab-tools" class="demo-tab-btn px-3.5 py-1.5 rounded-lg text-xs font-bold transition-all bg-white/10 hover:bg-white/20 text-slate-200">
           بودجه AI
         </button>
@@ -121,8 +124,11 @@
             <button onclick="switchTab('invitation')" class="px-3 py-2 rounded-lg text-xs xl:text-sm font-semibold transition-colors text-graphite hover:text-primary hover:bg-slate-50">
               <span>کارت دعوت دیجیتال</span>
             </button>
+            <button onclick="switchTab('quizzes')" class="px-3 py-2 rounded-lg text-xs xl:text-sm font-semibold transition-colors text-graphite hover:text-primary hover:bg-slate-50">
+              <span>تست‌های روانشناسی & استایل</span>
+            </button>
             <button onclick="switchTab('tools')" class="px-3 py-2 rounded-lg text-xs xl:text-sm font-semibold transition-colors text-graphite hover:text-primary hover:bg-slate-50">
-              <span>تست‌ها و دستیار AI</span>
+              <span>دستیار بودجه AI</span>
             </button>
             <button onclick="openInquiryModal('کلی', 'استعلام قیمت آنلاین')" class="px-3 py-2 rounded-lg text-xs xl:text-sm font-semibold transition-colors text-graphite hover:text-primary hover:bg-slate-50">
               <span>استعلام قیمت آنلاین</span>
@@ -1291,7 +1297,69 @@
     </div>
 
     <!-- ========================================== -->
-    <!-- VIEW 6: WEDDING BUDGET WIZARD MODULE      -->
+    <!-- VIEW 6: PSYCHOLOGY & STYLE QUIZZES HUB    -->
+    <!-- ========================================== -->
+    <div id="tab-quizzes" class="tab-content hidden space-y-8">
+
+      <!-- TOP BANNER HEADER -->
+      <div class="bg-white border border-accent rounded-3xl p-6 sm:p-8 shadow-xs flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
+        <div class="space-y-1">
+          <div class="inline-flex items-center gap-1.5 bg-primary/10 text-primary text-xs font-bold px-3 py-1 rounded-full">
+            <i data-lucide="sparkles" class="w-3.5 h-3.5"></i>
+            <span>تست‌های هوشمند استایل‌شناسی و روانشناسی عروسی</span>
+          </div>
+          <h2 class="text-2xl sm:text-3xl font-black text-graphite">شناخت دقیق استایل، تم و آمادگی ازدواج</h2>
+          <p class="text-xs text-secondary font-medium">پاسخ به سوالات تصویری، دریافت آنالیز اختصاصی و هماهنگی با بهترین تأمین‌کنندگان</p>
+        </div>
+
+        <div class="flex items-center gap-2">
+          <span class="bg-primary text-white text-xs font-bold px-3 py-2 rounded-xl shadow-xs">
+            تحلیل هوشمند زنده
+          </span>
+        </div>
+      </div>
+
+      <!-- MAIN QUIZ HUB WRAPPER (CATALOG VS RUNNER VS RESULT) -->
+      <div id="quiz-hub-container" class="space-y-6">
+
+        <!-- QUIZ CATALOG SELECTION SCREEN -->
+        <div id="quiz-catalog-view" class="space-y-6">
+
+          <!-- CATEGORY FILTER TABS -->
+          <div class="flex bg-white border border-accent rounded-2xl p-1.5 text-xs font-bold max-w-md shadow-xs">
+            <button id="quiz-tab-style" onclick="switchQuizCategoryTab('style')" class="flex-1 py-3 rounded-xl transition-all bg-primary text-white text-center flex items-center justify-center gap-1.5 shadow-xs">
+              <i data-lucide="palette" class="w-4 h-4"></i>
+              <span>استایل‌شناسی و زیبایی</span>
+            </button>
+            <button id="quiz-tab-psych" onclick="switchQuizCategoryTab('psychology')" class="flex-1 py-3 rounded-xl transition-all text-secondary hover:text-graphite text-center flex items-center justify-center gap-1.5">
+              <i data-lucide="heart-handshake" class="w-4 h-4"></i>
+              <span>روانشناسی و سازگاری</span>
+            </button>
+          </div>
+
+          <!-- QUIZ CARDS GRID -->
+          <div id="quiz-cards-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            <!-- Dynamically populated via JS -->
+          </div>
+
+        </div>
+
+        <!-- QUIZ RUNNER INTERACTIVE UX (Hidden by default) -->
+        <div id="quiz-runner-view" class="bg-white border border-accent rounded-3xl p-6 sm:p-10 shadow-lg space-y-8 hidden">
+          <!-- Populated via JS -->
+        </div>
+
+        <!-- DYNAMIC RESULT DASHBOARD (Hidden by default) -->
+        <div id="quiz-result-view" class="bg-white border border-accent rounded-3xl p-6 sm:p-10 shadow-lg space-y-8 hidden">
+          <!-- Populated via JS -->
+        </div>
+
+      </div>
+
+    </div>
+
+    <!-- ========================================== -->
+    <!-- VIEW 7: WEDDING BUDGET WIZARD MODULE      -->
     <!-- ========================================== -->
     <div id="tab-tools" class="tab-content hidden space-y-8">
       <section class="bg-white border border-accent rounded-3xl p-6 sm:p-10 shadow-xs space-y-8">
@@ -2124,6 +2192,453 @@
       }
 
       lucide.createIcons();
+    }
+
+    function startQuizRunner(quizId) {
+      const quiz = quizState.quizzes.find(q => q.id === quizId);
+      if (!quiz) return;
+
+      quizState.currentQuiz = quiz;
+      quizState.currentQuestionIndex = 0;
+      quizState.userAnswers = {};
+      quizState.quizCompleted = false;
+
+      document.getElementById('quiz-catalog-view').classList.add('hidden');
+      document.getElementById('quiz-result-view').classList.add('hidden');
+
+      const runnerView = document.getElementById('quiz-runner-view');
+      if (runnerView) {
+        runnerView.classList.remove('hidden');
+        renderQuizQuestion();
+      }
+    }
+
+    function finishQuizRunner() {
+      const quiz = quizState.currentQuiz;
+      if (!quiz) return;
+
+      quizState.quizCompleted = true;
+      document.getElementById('quiz-runner-view').classList.add('hidden');
+
+      const resultView = document.getElementById('quiz-result-view');
+      if (resultView) {
+        resultView.classList.remove('hidden');
+        renderQuizResultDashboard();
+      }
+    }
+
+    function renderQuizResultDashboard() {
+      const resultView = document.getElementById('quiz-result-view');
+      const quiz = quizState.currentQuiz;
+      if (!resultView || !quiz) return;
+
+      // Calculate scores
+      const styleScores = {
+        boho: 0,
+        luxury: 0,
+        modern: 0,
+        classic: 0,
+        vintage: 0,
+        romantic: 0,
+        compat: 0
+      };
+
+      let totalPoints = 0;
+
+      Object.values(quizState.userAnswers).forEach(answer => {
+        if (answer && answer.score) {
+          Object.keys(answer.score).forEach(key => {
+            styleScores[key] = (styleScores[key] || 0) + answer.score[key];
+            totalPoints += answer.score[key];
+          });
+        }
+      });
+
+      let mainResultHTML = '';
+
+      if (quiz.category === 'style') {
+        // Sort styles by highest score
+        const sortedStyles = Object.keys(styleScores)
+          .filter(k => k !== 'compat' && styleScores[k] > 0)
+          .sort((a, b) => styleScores[b] - a[a]);
+
+        const dominantKey = sortedStyles[0] || 'boho';
+        const secondaryKey = sortedStyles[1] || 'romantic';
+
+        const domPct = totalPoints > 0 ? Math.round((styleScores[dominantKey] / totalPoints) * 100) : 75;
+        const secPct = totalPoints > 0 && secondaryKey ? Math.round((styleScores[secondaryKey] / totalPoints) * 100) : 25;
+
+        const styleTitles = {
+          boho: "بوهو و طبیعت‌گرا (Boho Chic)",
+          luxury: "لوکس و باشکوه (VIP Royal)",
+          modern: "مدرن و مینی‌مال (Modern Minimal)",
+          classic: "کلاسیک و اصیل (Classic Regal)",
+          vintage: "وینتیج و نوستالژیک (Vintage Warmth)",
+          romantic: "رومانتیک و رویایی (Romantic Floral)"
+        };
+
+        const styleDescriptions = {
+          boho: "استایل شما برپایه صمیمیت، المان‌های چوبی طبیعی، گل‌آرایی‌های آزاد وحشی و اتمسفر گرم طبیعت شکل گرفته است. لباس‌های سبک گیپور و سفره عقد با طاق برنجی بهترین مکمل زیبایی شماست.",
+          luxury: "استایل شما جلوه‌گر شکوه، عمارت‌های ستون‌دار با نورپردازی کریستال، سفره عقد طبقاتی تمام سنگ و پذیرایی VIP شاهانه است.",
+          modern: "استایل شما طرفدار خطوط پاک هندسی، تزئینات مینی‌مال، پالت‌های رنگی خنثی شیک و معماری مدرن با نورپردازی مهندسی شده است.",
+          classic: "استایل شما وفادار به اصالت کلاسیـک، لباس پرنسسی، سفره عقد ترمه و آینه‌کاری‌های سنتی با اتمسفر وقار و متانت است.",
+          vintage: "استایل شما دارای حس گرم نوستالژی، شمعدان‌های لاله‌عباسی، ظروف برنجی قدیمی و دکوراسیون گرم و دلنشین است.",
+          romantic: "استایل شما سرشار از شکوفه‌های رز صورتی و پودری، طاق‌های گل‌آرایی شده، موزیک ملایم ویولن و لحظات عاطفی خاص است."
+        };
+
+        const palettes = {
+          boho: [
+            { name: "سبز زیتونی", hex: "#2E533F" },
+            { name: "تراکوتا گرم", hex: "#D4A373" },
+            { name: "کرم خاکی", hex: "#E9D8A6" },
+            { name: "عاجی روشن", hex: "#FAEDCD" }
+          ],
+          luxury: [
+            { name: "زمردی تیره", hex: "#1B3B2B" },
+            { name: "طلایی شاهانه", hex: "#D4AF37" },
+            { name: "شرابی VIP", hex: "#5C1325" },
+            { name: "سفید کریستالی", hex: "#FFFFFF" }
+          ],
+          modern: [
+            { name: "مشکی گرافیت", hex: "#212529" },
+            { name: "خاکستری فولادی", hex: "#8D99AE" },
+            { name: "پلاتینیوم", hex: "#BDCFE0" },
+            { name: "سفید یخچالی", hex: "#FDFBFC" }
+          ],
+          classic: [
+            { name: "سرمه‌ای سلطنتی", hex: "#1A2E40" },
+            { name: "طلایی مات", hex: "#C5A059" },
+            { name: "کرم عاجی", hex: "#F5F0EB" },
+            { name: "زرشکی کلاسیـک", hex: "#800020" }
+          ],
+          vintage: [
+            { name: "قهوه‌ای بلوطی", hex: "#6B4226" },
+            { name: "خردلی گرم", hex: "#E3A857" },
+            { name: "بژ نوستالژیک", hex: "#D2B48C" },
+            { name: "سبز کهن", hex: "#4A5D4E" }
+          ],
+          romantic: [
+            { name: "صورتی پودری", hex: "#F4C2C2" },
+            { name: "یاسی ملایم", hex: "#E6E6FA" },
+            { name: "سفید مرواریدی", hex: "#FDFBF7" },
+            { name: "سبز زیتونی روشن", hex: "#A8BBA2" }
+          ]
+        };
+
+        const currentPalette = palettes[dominantKey] || palettes.boho;
+
+        quizState.appliedStyleFilter = dominantKey;
+
+        mainResultHTML = `
+          <!-- MAIN MATCH BANNER -->
+          <div class="bg-gradient-to-br from-primary/10 via-emerald-50 to-bgCustom border border-primary/20 rounded-3xl p-6 sm:p-8 space-y-6">
+            <div class="flex flex-col sm:flex-row justify-between sm:items-center gap-4 border-b border-primary/20 pb-4">
+              <div class="space-y-1">
+                <span class="text-xs font-bold text-primary bg-primary/10 px-3 py-1 rounded-full">نتیجه محاسبات هوشمند استایل</span>
+                <h3 class="text-2xl font-black text-graphite mt-1">${styleTitles[dominantKey]}</h3>
+              </div>
+
+              <div class="flex items-center gap-2 self-start sm:self-auto">
+                <div class="text-left dir-ltr">
+                  <span class="block text-2xl font-black text-primary">${domPct}٪</span>
+                  <span class="text-[10px] font-bold text-secondary">درصد تطابق اصلی</span>
+                </div>
+              </div>
+            </div>
+
+            <!-- SCORE BREAKDOWN BARS -->
+            <div class="space-y-3">
+              <span class="block text-xs font-bold text-graphite">تفکیک تمایل استایل بصری شما:</span>
+
+              <div class="space-y-2">
+                <div class="flex justify-between items-center text-xs font-bold">
+                  <span class="text-primary">${styleTitles[dominantKey]}</span>
+                  <span class="text-primary">${domPct}٪</span>
+                </div>
+                <div class="w-full bg-slate-200 rounded-full h-3 overflow-hidden">
+                  <div class="bg-primary h-full rounded-full" style="width: ${domPct}%"></div>
+                </div>
+              </div>
+
+              ${secondaryKey ? `
+                <div class="space-y-2">
+                  <div class="flex justify-between items-center text-xs font-bold">
+                    <span class="text-secondary">${styleTitles[secondaryKey]}</span>
+                    <span class="text-secondary">${secPct}٪</span>
+                  </div>
+                  <div class="w-full bg-slate-200 rounded-full h-2.5 overflow-hidden">
+                    <div class="bg-secondary h-full rounded-full" style="width: ${secPct}%"></div>
+                  </div>
+                </div>
+              ` : ''}
+            </div>
+
+            <!-- AESTHETIC SUMMARY GUIDANCE -->
+            <div class="p-4 bg-white rounded-2xl border border-accent/80 text-xs text-graphite leading-relaxed space-y-2">
+              <span class="font-bold text-primary block text-sm">راهنمای بصری و دکوراسیون پیشنهادی:</span>
+              <p>${styleDescriptions[dominantKey]}</p>
+            </div>
+
+            <!-- COLOR PALETTE SWATCHES -->
+            <div class="space-y-2">
+              <span class="block text-xs font-bold text-graphite">پالت رنگی پیشنهادی برای تزئینات و گل‌آرایی:</span>
+              <div class="grid grid-cols-2 sm:grid-cols-4 gap-3">
+                ${currentPalette.map(c => `
+                  <div class="p-2.5 bg-white rounded-xl border border-accent flex items-center gap-2.5 shadow-xs">
+                    <div class="w-8 h-8 rounded-lg border border-accent shadow-xs shrink-0" style="background-color: ${c.hex}"></div>
+                    <div>
+                      <span class="block text-xs font-bold text-graphite">${c.name}</span>
+                      <span class="text-[10px] text-secondary font-mono dir-ltr block">${c.hex}</span>
+                    </div>
+                  </div>
+                `).join('')}
+              </div>
+            </div>
+          </div>
+        `;
+      } else {
+        // Psychology Compatibility Result
+        const compatScore = Math.min(98, Math.max(65, Math.round((styleScores.compat / (quiz.questions.length * 90)) * 100)));
+
+        mainResultHTML = `
+          <div class="bg-gradient-to-br from-rose-50 via-pink-50/30 to-bgCustom border border-rose-200 rounded-3xl p-6 sm:p-8 space-y-6">
+            <div class="flex flex-col sm:flex-row justify-between sm:items-center gap-4 border-b border-rose-200 pb-4">
+              <div>
+                <span class="text-xs font-bold text-rose-700 bg-rose-100 px-3 py-1 rounded-full">نتیجه آنالیز روانشناسی</span>
+                <h3 class="text-2xl font-black text-graphite mt-1">شاخص تفاهم و سازگاری در برنامه‌ریزی: عالی</h3>
+              </div>
+
+              <div class="text-left dir-ltr bg-white p-3 rounded-2xl border border-rose-200 shadow-xs">
+                <span class="block text-3xl font-black text-rose-600">${compatScore}٪</span>
+                <span class="text-[10px] font-bold text-secondary">میزان تفاهم مشترک</span>
+              </div>
+            </div>
+
+            <div class="p-5 bg-white rounded-2xl border border-rose-100 text-xs text-graphite leading-relaxed space-y-3">
+              <h4 class="font-bold text-rose-800 text-sm">توصیه‌های مشاوره خانواده برای روزهای برنامه‌ریزی:</h4>
+              <p>الگوهای انتخابی شما نشان‌دهنده سطح بالای پختگی هیجانی، احترام متقابل به نظرات خانواده‌ها و توانایی گفتگو در شرایط پرچالش است. پیشنهاد می‌شود وظایف چک‌لیست را بر اساس علاقه‌مندی‌های شخصی تقسیم کنید.</p>
+            </div>
+          </div>
+        `;
+      }
+
+      resultView.innerHTML = `
+        <!-- HEADER ACTIONS -->
+        <div class="flex justify-between items-center border-b border-accent pb-4">
+          <div class="flex items-center gap-2">
+            <i data-lucide="award" class="w-6 h-6 text-primary"></i>
+            <h2 class="text-xl font-bold text-graphite">کارت تحلیل زنده و اختصاصی تست</h2>
+          </div>
+
+          <button onclick="exitQuizRunner()" class="text-xs font-bold text-secondary hover:text-graphite flex items-center gap-1">
+            <i data-lucide="rotate-ccw" class="w-4 h-4"></i>
+            <span>تکرار یا شرکت در تست دیگر</span>
+          </button>
+        </div>
+
+        <!-- MAIN RESULT RENDER -->
+        ${mainResultHTML}
+
+        <!-- INTEGRATED ACTION BUTTONS -->
+        <div class="pt-4 border-t border-accent grid grid-cols-1 sm:grid-cols-3 gap-3">
+          <button onclick="applyStyleToDirectory()" class="bg-primary hover:bg-emerald-900 text-white font-bold py-3 px-4 rounded-2xl text-xs shadow-md transition-all flex items-center justify-center gap-2">
+            <i data-lucide="filter" class="w-4 h-4"></i>
+            <span>اعمال این استایل روی دایرکتوری و چک‌لیست</span>
+          </button>
+
+          <button onclick="alert('کارت تحلیل خلاصه استایل با موفقیت جهت دانلود یا پرینت آماده شد.');" class="bg-bgCustom border border-accent hover:border-primary text-graphite font-bold py-3 px-4 rounded-2xl text-xs shadow-xs transition-all flex items-center justify-center gap-2">
+            <i data-lucide="download" class="w-4 h-4 text-primary"></i>
+            <span>دانلود کارت تحلیل استایل</span>
+          </button>
+
+          <button onclick="copyQuizResultLink()" class="bg-bgCustom border border-accent hover:border-primary text-graphite font-bold py-3 px-4 rounded-2xl text-xs shadow-xs transition-all flex items-center justify-center gap-2">
+            <i data-lucide="share-2" class="w-4 h-4 text-primary"></i>
+            <span>اشتراک‌گذاری با همسر / پارتنر</span>
+          </button>
+        </div>
+      `;
+
+      lucide.createIcons();
+    }
+
+    function applyStyleToDirectory() {
+      switchTab('home');
+      const vendorSection = document.getElementById('vendor-grid');
+      if (vendorSection) vendorSection.scrollIntoView({ behavior: 'smooth' });
+      alert('استایل انتخابی شما روی دایرکتوری تامین‌کنندگان و پیشنهادات چک‌لیست اعمال گردید.');
+    }
+
+    function copyQuizResultLink() {
+      const link = 'https://aroosito.com/quizzes/result?id=' + (quizState.currentQuiz ? quizState.currentQuiz.id : 'style');
+      if (navigator.clipboard) {
+        navigator.clipboard.writeText(link);
+        alert('لینک خلاصه تحلیل استایل برای اشتراک‌گذاری کپی شد:\n' + link);
+      } else {
+        alert('لینک تحلیل استایل:\n' + link);
+      }
+    }
+
+    function exitQuizRunner() {
+      quizState.currentQuiz = null;
+      quizState.currentQuestionIndex = 0;
+      quizState.userAnswers = {};
+
+      document.getElementById('quiz-runner-view').classList.add('hidden');
+      document.getElementById('quiz-result-view').classList.add('hidden');
+      document.getElementById('quiz-catalog-view').classList.remove('hidden');
+    }
+
+    function renderQuizQuestion() {
+      const runnerView = document.getElementById('quiz-runner-view');
+      const quiz = quizState.currentQuiz;
+      if (!runnerView || !quiz) return;
+
+      const totalQuestions = quiz.questions.length;
+      const currentIndex = quizState.currentQuestionIndex;
+      const question = quiz.questions[currentIndex];
+      const selectedOption = quizState.userAnswers[question.id];
+
+      const progressPercent = Math.round(((currentIndex + 1) / totalQuestions) * 100);
+
+      let optionsHTML = '';
+
+      if (question.options[0] && question.options[0].image) {
+        // Render Image Choice Cards Grid
+        optionsHTML = `
+          <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+            ${question.options.map(opt => {
+              const isSelected = selectedOption && selectedOption.id === opt.id;
+              return `
+                <div onclick="selectQuizOption('${question.id}', '${opt.id}')" class="p-3.5 rounded-2xl border-2 transition-all cursor-pointer flex flex-col justify-between space-y-3 ${
+                  isSelected ? 'bg-primary/10 border-primary shadow-md' : 'bg-bgCustom border-accent hover:border-primary/50'
+                }">
+                  <div class="aspect-4/3 rounded-xl overflow-hidden bg-slate-900 border border-accent">
+                    <img src="${opt.image}" alt="${opt.label}" class="w-full h-full object-cover">
+                  </div>
+                  <div class="flex items-center justify-between text-xs font-bold text-graphite">
+                    <span class="leading-snug">${opt.label}</span>
+                    <div class="w-5 h-5 rounded-full border-2 flex items-center justify-center shrink-0 ${
+                      isSelected ? 'border-primary bg-primary text-white' : 'border-secondary/40'
+                    }">
+                      ${isSelected ? '✓' : ''}
+                    </div>
+                  </div>
+                </div>
+              `;
+            }).join('')}
+          </div>
+        `;
+      } else {
+        // Render Text Choice Cards
+        optionsHTML = `
+          <div class="space-y-3 max-w-2xl mx-auto">
+            ${question.options.map(opt => {
+              const isSelected = selectedOption && selectedOption.id === opt.id;
+              return `
+                <div onclick="selectQuizOption('${question.id}', '${opt.id}')" class="p-4 rounded-2xl border-2 transition-all cursor-pointer flex items-center justify-between gap-3 ${
+                  isSelected ? 'bg-primary/10 border-primary shadow-md' : 'bg-bgCustom border-accent hover:border-primary/50'
+                }">
+                  <span class="text-xs sm:text-sm font-bold text-graphite leading-relaxed">${opt.label}</span>
+                  <div class="w-5 h-5 rounded-full border-2 flex items-center justify-center shrink-0 ${
+                    isSelected ? 'border-primary bg-primary text-white' : 'border-secondary/40'
+                  }">
+                    ${isSelected ? '✓' : ''}
+                  </div>
+                </div>
+              `;
+            }).join('')}
+          </div>
+        `;
+      }
+
+      runnerView.innerHTML = `
+        <!-- HEADER & PROGRESS BAR -->
+        <div class="border-b border-accent pb-6 space-y-4">
+          <div class="flex justify-between items-center text-xs font-bold">
+            <button onclick="exitQuizRunner()" class="text-secondary hover:text-graphite flex items-center gap-1">
+              <i data-lucide="x" class="w-4 h-4"></i>
+              <span>انصراف و خروج</span>
+            </button>
+
+            <span class="text-primary font-black bg-primary/10 px-3 py-1 rounded-full">
+              سوال ${currentIndex + 1} از ${totalQuestions}
+            </span>
+          </div>
+
+          <div class="space-y-1.5">
+            <div class="flex justify-between text-[11px] font-bold text-secondary">
+              <span>میزان پیشرفت تست</span>
+              <span>${progressPercent}٪</span>
+            </div>
+            <div class="w-full bg-slate-100 rounded-full h-2.5 overflow-hidden border border-accent/60">
+              <div class="bg-primary h-full transition-all duration-300 rounded-full" style="width: ${progressPercent}%"></div>
+            </div>
+          </div>
+        </div>
+
+        <!-- QUESTION PROMPT -->
+        <div class="text-center space-y-2 py-2">
+          <h3 class="text-lg sm:text-xl font-black text-graphite leading-relaxed">${question.text}</h3>
+          <p class="text-xs text-secondary font-medium">گزینه‌ای که بیشترین تطابق را با نظر و روحیات شما دارد انتخاب کنید</p>
+        </div>
+
+        <!-- OPTIONS GRID/LIST -->
+        <div>
+          ${optionsHTML}
+        </div>
+
+        <!-- NAVIGATION CONTROLS -->
+        <div class="pt-6 border-t border-accent flex justify-between items-center">
+          <button onclick="navigateQuizQuestion(-1)" class="px-5 py-2.5 rounded-xl border border-accent text-secondary hover:text-graphite font-bold text-xs transition-all ${
+            currentIndex === 0 ? 'opacity-40 pointer-events-none' : ''
+          }">
+            سوال قبلی
+          </button>
+
+          ${currentIndex === totalQuestions - 1 ? `
+            <button onclick="finishQuizRunner()" class="bg-primary hover:bg-emerald-900 text-white px-8 py-3 rounded-xl font-bold text-xs shadow-md transition-all flex items-center gap-1.5 ${
+              !selectedOption ? 'opacity-50 pointer-events-none' : ''
+            }">
+              <i data-lucide="check-circle-2" class="w-4 h-4"></i>
+              <span>مشاهده خروجی و تحلیل نهایی</span>
+            </button>
+          ` : `
+            <button onclick="navigateQuizQuestion(1)" class="bg-primary hover:bg-emerald-900 text-white px-6 py-2.5 rounded-xl font-bold text-xs shadow-md transition-all flex items-center gap-1.5 ${
+              !selectedOption ? 'opacity-50 pointer-events-none' : ''
+            }">
+              <span>سوال بعدی</span>
+              <i data-lucide="arrow-left" class="w-4 h-4"></i>
+            </button>
+          `}
+        </div>
+      `;
+
+      lucide.createIcons();
+    }
+
+    function selectQuizOption(questionId, optionId) {
+      const quiz = quizState.currentQuiz;
+      if (!quiz) return;
+
+      const question = quiz.questions.find(q => q.id === questionId);
+      if (!question) return;
+
+      const option = question.options.find(o => o.id === optionId);
+      if (!option) return;
+
+      quizState.userAnswers[questionId] = option;
+      renderQuizQuestion();
+    }
+
+    function navigateQuizQuestion(dir) {
+      const quiz = quizState.currentQuiz;
+      if (!quiz) return;
+
+      const newIndex = quizState.currentQuestionIndex + dir;
+      if (newIndex >= 0 && newIndex < quiz.questions.length) {
+        quizState.currentQuestionIndex = newIndex;
+        renderQuizQuestion();
+      }
     }
 
     // GALLERY LIGHTBOX
@@ -3252,6 +3767,166 @@
     }
 
     // ==========================================
+    // QUIZ HUB & ENGINE STATE & DATA STRUCTURES
+    // ==========================================
+    let quizState = {
+      activeTab: "style", // style, psychology
+      currentQuiz: null, // active quiz object
+      currentQuestionIndex: 0,
+      userAnswers: {}, // questionId: selectedOptionObject
+      quizCompleted: false,
+      appliedStyleFilter: null,
+      quizzes: [
+        {
+          id: "style-main",
+          category: "style",
+          title: "تست تعیین استایل اصلی و تم عروسی",
+          description: "شناسایی سبک چیدمان، سفره عقد و آرشیتکت دیزاین متناسب با روحیه و سلیقه بصری شما",
+          image: "https://images.unsplash.com/photo-1519741497674-611481863552?auto=format&fit=crop&w=800&q=80",
+          duration: "۴ دقیقه",
+          questionsCount: 5,
+          badge: "محبوب‌ترین تست استایل",
+          questions: [
+            {
+              id: "q1",
+              text: "کدام نوع لوکیشن و فضای برگزاری جشن برای شما مطلوب‌تر است؟",
+              options: [
+                { id: "opt1", label: "باغ عمارت باشکوه با معماری ستون‌دار و کریستال", image: "https://images.unsplash.com/photo-1519167758481-83f550bb49b3?auto=format&fit=crop&w=600&q=80", styleKey: "luxury", score: { luxury: 80, classic: 20 } },
+                { id: "opt2", label: "باغ طبیعی در دل طبیعت با چیدمان چوبی و گل‌آرایی وحشی", image: "https://images.unsplash.com/photo-1465495976277-4387d4b0b4c6?auto=format&fit=crop&w=600&q=80", styleKey: "boho", score: { boho: 85, romantic: 15 } },
+                { id: "opt3", label: "تالار مدرن مینی‌مال با نورپردازی ساده و خطوط هندسی پاک", image: "https://images.unsplash.com/photo-1511285560929-80b456fea0bc?auto=format&fit=crop&w=600&q=80", styleKey: "modern", score: { modern: 90 } },
+                { id: "opt4", label: "خانه تاریخی قدیمی با آینه‌کاری و حس نوستالژیک کلاسیک", image: "https://images.unsplash.com/photo-1520854221256-17451cc331bf?auto=format&fit=crop&w=600&q=80", styleKey: "vintage", score: { vintage: 85, classic: 15 } }
+              ]
+            },
+            {
+              id: "q2",
+              text: "کدام ترکیب رنگی و پالت تزئینات را بیشتر می‌پسندید؟",
+              options: [
+                { id: "opt1", label: "طلایی، سفید عاجی و زمردی سنگین", image: "https://images.unsplash.com/photo-1519167758481-83f550bb49b3?auto=format&fit=crop&w=600&q=80", styleKey: "luxury", score: { luxury: 75, classic: 25 } },
+                { id: "opt2", label: "سبز زیتونی، کرم خاکی، زنگار و چوب طبیعی", image: "https://images.unsplash.com/photo-1465495976277-4387d4b0b4c6?auto=format&fit=crop&w=600&q=80", styleKey: "boho", score: { boho: 80, romantic: 20 } },
+                { id: "opt3", label: "سفید خالص، خاکستری روشن و نقره‌ای مینی‌مال", image: "https://images.unsplash.com/photo-1511285560929-80b456fea0bc?auto=format&fit=crop&w=600&q=80", styleKey: "modern", score: { modern: 85 } },
+                { id: "opt4", label: "صورتی ملایم، پودری، یاسی و رز مینیاتوری", image: "https://images.unsplash.com/photo-1522673607200-164d1b6ce486?auto=format&fit=crop&w=600&q=80", styleKey: "romantic", score: { romantic: 85, boho: 15 } }
+              ]
+            },
+            {
+              id: "q3",
+              text: "کدام سبک مدل لباس عروس و اکسسوری مورد علاقه شماست؟",
+              options: [
+                { id: "opt1", label: "لباس پرنسسی سنگ‌دوزی شده با دنباله بلند و تاج درخشان", image: "https://images.unsplash.com/photo-1594552072238-b8a33785b261?auto=format&fit=crop&w=600&q=80", styleKey: "luxury", score: { luxury: 80, classic: 20 } },
+                { id: "opt2", label: "لباس گیپور سبک و راحت با تاج گل طبیعی روی موها", image: "https://images.unsplash.com/photo-1519741497674-611481863552?auto=format&fit=crop&w=600&q=80", styleKey: "boho", score: { boho: 90 } },
+                { id: "opt3", label: "لباس ساتن ساده و بدون کاردست با برش‌های مدرن شیک", image: "https://images.unsplash.com/photo-1537633552985-df8429e8048b?auto=format&fit=crop&w=600&q=80", styleKey: "modern", score: { modern: 85 } },
+                { id: "opt4", label: "لباس تور عتیقه کلاسیـک با آستین‌های دانتل و تور سر بلند", image: "https://images.unsplash.com/photo-1520854221256-17451cc331bf?auto=format&fit=crop&w=600&q=80", styleKey: "classic", score: { classic: 85, vintage: 15 } }
+              ]
+            },
+            {
+              id: "q4",
+              text: "کدام سبک سفره عقد و گل‌آرایی طاق ورودی را می‌پسندید؟",
+              options: [
+                { id: "opt1", label: "سفره عقد تمام کریستال با شمعدان‌های نقره و گل‌آرایی طبقاتی", image: "https://images.unsplash.com/photo-1519167758481-83f550bb49b3?auto=format&fit=crop&w=600&q=80", styleKey: "luxury", score: { luxury: 85 } },
+                { id: "opt2", label: "سفره عقد با ظروف برنجی، شمع‌های بژ و گل‌پامپاس کویری", image: "https://images.unsplash.com/photo-1465495976277-4387d4b0b4c6?auto=format&fit=crop&w=600&q=80", styleKey: "boho", score: { boho: 85 } },
+                { id: "opt3", label: "طاق ورودی مثلثی/دایره‌ای هندسی با گل‌های تک‌رنگ سفید", image: "https://images.unsplash.com/photo-1511285560929-80b456fea0bc?auto=format&fit=crop&w=600&q=80", styleKey: "modern", score: { modern: 80 } },
+                { id: "opt4", label: "سفره عقد سنتی ترمه با آینه‌شمعدان قدیمی و شمعدان‌های لاله‌عباسی", image: "https://images.unsplash.com/photo-1520854221256-17451cc331bf?auto=format&fit=crop&w=600&q=80", styleKey: "vintage", score: { vintage: 80, classic: 20 } }
+              ]
+            },
+            {
+              id: "q5",
+              text: "کدام اتمسفر و موسیقی ورودی جشن بیشترین هیجان را به شما می‌دهد؟",
+              options: [
+                { id: "opt1", label: "ورودی باشکوه با نورافشانی ارکستر زنده فیلارمونیک", image: "https://images.unsplash.com/photo-1519167758481-83f550bb49b3?auto=format&fit=crop&w=600&q=80", styleKey: "luxury", score: { luxury: 75, classic: 25 } },
+                { id: "opt2", label: "اجرای زنده گیتار آکوستیک و آهنگ‌های صمیمی و شاد", image: "https://images.unsplash.com/photo-1511285560929-80b456fea0bc?auto=format&fit=crop&w=600&q=80", styleKey: "boho", score: { boho: 80 } },
+                { id: "opt3", label: "موزیک الکترونیک هاوس لایت و نورپردازی لیزری ملایم", image: "https://images.unsplash.com/photo-1487412720507-e7ab37603c6f?auto=format&fit=crop&w=600&q=80", styleKey: "modern", score: { modern: 85 } },
+                { id: "opt4", label: "قطعات بیکلام کلاسیک ویولن و پیانوی رومانتیک", image: "https://images.unsplash.com/photo-1522673607200-164d1b6ce486?auto=format&fit=crop&w=600&q=80", styleKey: "romantic", score: { romantic: 80, classic: 20 } }
+              ]
+            }
+          ]
+        },
+        {
+          id: "style-dress",
+          category: "style",
+          title: "تست هوشمند پیشنهاد فرم لباس عروس و کت‌وشلوار",
+          description: "پیشنهاد فرم یقه، برش دامن و پارچه متناسب با فرم اندام و استایل چهره",
+          image: "https://images.unsplash.com/photo-1594552072238-b8a33785b261?auto=format&fit=crop&w=800&q=80",
+          duration: "۳ دقیقه",
+          questionsCount: 3,
+          badge: "پیشنهاد اختصاصی",
+          questions: [
+            {
+              id: "q1",
+              text: "ترجیح شما برای راحتی حرکتی و وزن لباس عروس چیست؟",
+              options: [
+                { id: "opt1", label: "لباس کاملاً سبک، بدون فنرکشی سنگین و دارای راحتی حداکثری", styleKey: "boho", score: { boho: 85, romantic: 15 } },
+                { id: "opt2", label: "لباس گن‌دوزی شده با فرم پرنسسی و حچم دامن باکیفیت", styleKey: "luxury", score: { luxury: 80, classic: 20 } },
+                { id: "opt3", label: "لباس ماهی (Mermaid) جذّاب با اندام‌نمایی مینی‌مال", styleKey: "modern", score: { modern: 85 } }
+              ]
+            },
+            {
+              id: "q2",
+              text: "کدام پارچه حس بهتری به شما انتقال می‌دهد؟",
+              options: [
+                { id: "opt1", label: "ساتن آمریکایی و میکادو با ایستایی صیقلی شیک", styleKey: "modern", score: { modern: 80, classic: 20 } },
+                { id: "opt2", label: "تور فرانسوی و دانتل کارشده با منجوق و سنگ", styleKey: "luxury", score: { luxury: 85 } },
+                { id: "opt3", label: "گیپور کتان با طرح‌های اسلیمی و بوهمیان", styleKey: "boho", score: { boho: 85 } }
+              ]
+            },
+            {
+              id: "q3",
+              text: "استایل مورد نظر شما برای کت و شلوار داماد چیست؟",
+              options: [
+                { id: "opt1", label: "تاکسیدو مشکی یقه آرشال با پاپیون کلاسیک", styleKey: "luxury", score: { luxury: 80, classic: 20 } },
+                { id: "opt2", label: "کت و شلوار سورمه‌ای یا طوسی روشن بدون کراوات سخت", styleKey: "modern", score: { modern: 85 } },
+                { id: "opt3", label: "کت تک کتانی با جلیقه چرم و ساسپندر قهوه‌ای", styleKey: "boho", score: { boho: 85 } }
+              ]
+            }
+          ]
+        },
+        {
+          id: "psych-compat",
+          category: "psychology",
+          title: "تست سنجش میزان تفاهم زوجین در مدیریت جشن",
+          description: "تحلیل الگوهای تصمیم‌گیری، تعامل با خانواده‌ها و بودجه‌بندی مشترک عروسی",
+          image: "https://images.unsplash.com/photo-1522673607200-164d1b6ce486?auto=format&fit=crop&w=800&q=80",
+          duration: "۵ دقیقه",
+          questionsCount: 4,
+          badge: "تست روانشناسی",
+          questions: [
+            {
+              id: "q1",
+              text: "هنگام مواجهه با اختلاف نظر درباره لیست مهمانان یا بودجه، چه واکنشی نشان می‌دهید؟",
+              options: [
+                { id: "opt1", label: "گفتگوی منطقی، اولویت‌بندی بر اساس بودجه و رسیدن به گزینه مابین", styleKey: "compat_high", score: { compat: 90 } },
+                { id: "opt2", label: "سپردن تصمیم نهایی به یکی از طرفین جهت جلوگیری از تنش", styleKey: "compat_mid", score: { compat: 70 } },
+                { id: "opt3", label: "تأکید شدید روی خواسته شخص خودم تا جلب موافقت", styleKey: "compat_low", score: { compat: 45 } }
+              ]
+            },
+            {
+              id: "q2",
+              text: "نقش دخالت‌ها یا نظرات خانواده‌ها را در تصمیم‌گیری‌ها چگونه مدیریت می‌کنید؟",
+              options: [
+                { id: "opt1", label: "احترام کامل به نظرات همراه با حفظ استقلال نهایی زوجین", styleKey: "compat_high", score: { compat: 90 } },
+                { id: "opt2", label: "پذیرش اکثر پیشنهادات خانواده‌ها برای حفظ آرامش", styleKey: "compat_mid", score: { compat: 75 } }
+              ]
+            },
+            {
+              id: "q3",
+              text: "میزان اشتراک نظر شما در انتخاب سبک موسیقی، تشریفات و فیلم‌برداری چه میزان است؟",
+              options: [
+                { id: "opt1", label: "بیش از ۸۰٪ سلیقه و دیدگاه یکسان داریم", styleKey: "compat_high", score: { compat: 95 } },
+                { id: "opt2", label: "تفاوت‌هایی وجود دارد اما با انعطاف‌پذیری حل می‌کنیم", styleKey: "compat_mid", score: { compat: 80 } }
+              ]
+            },
+            {
+              id: "q4",
+              text: "نگرش شما به مدیریت استرس‌های روز جشن عروسی چگونه است؟",
+              options: [
+                { id: "opt1", label: "نگاه شاد و مثبت، تمرکز بر لذت بردن از لحظات و عبور از خطاهای جزئی", styleKey: "compat_high", score: { compat: 90 } },
+                { id: "opt2", label: "حساسیت بالا روی جزییات که ممکن است استرس ایجاد کند", styleKey: "compat_mid", score: { compat: 65 } }
+              ]
+            }
+          ]
+        }
+      ]
+    };
+
+    // ==========================================
     // DIGITAL INVITATION BUILDER STATE & LOGIC
     // ==========================================
     let invitationState = {
@@ -3578,6 +4253,72 @@
       if (modal) modal.classList.add('hidden');
     }
 
+    function switchQuizCategoryTab(catKey) {
+      quizState.activeTab = catKey;
+      const styleBtn = document.getElementById('quiz-tab-style');
+      const psychBtn = document.getElementById('quiz-tab-psych');
+
+      if (catKey === 'style') {
+        if (styleBtn) styleBtn.className = "flex-1 py-3 rounded-xl transition-all bg-primary text-white text-center flex items-center justify-center gap-1.5 shadow-xs";
+        if (psychBtn) psychBtn.className = "flex-1 py-3 rounded-xl transition-all text-secondary hover:text-graphite text-center flex items-center justify-center gap-1.5";
+      } else {
+        if (psychBtn) psychBtn.className = "flex-1 py-3 rounded-xl transition-all bg-primary text-white text-center flex items-center justify-center gap-1.5 shadow-xs";
+        if (styleBtn) styleBtn.className = "flex-1 py-3 rounded-xl transition-all text-secondary hover:text-graphite text-center flex items-center justify-center gap-1.5";
+      }
+
+      renderQuizCatalogCards();
+    }
+
+    function renderQuizCatalogCards() {
+      const grid = document.getElementById('quiz-cards-grid');
+      if (!grid) return;
+      grid.innerHTML = '';
+
+      const filteredQuizzes = quizState.quizzes.filter(q => q.category === quizState.activeTab);
+
+      filteredQuizzes.forEach(quiz => {
+        const card = document.createElement('div');
+        card.className = "bg-white border border-accent rounded-3xl overflow-hidden shadow-xs hover:shadow-md transition-all flex flex-col justify-between";
+        card.innerHTML = `
+          <div>
+            <div class="relative h-48 overflow-hidden bg-slate-900">
+              <img src="${quiz.image}" alt="${quiz.title}" class="w-full h-full object-cover opacity-90 hover:scale-105 transition-transform duration-300">
+              <div class="absolute top-3 right-3 bg-primary text-white text-[11px] font-bold px-3 py-1 rounded-full shadow-md">
+                ${quiz.badge}
+              </div>
+            </div>
+
+            <div class="p-6 space-y-3">
+              <div class="flex items-center gap-3 text-xs font-bold text-secondary">
+                <span class="flex items-center gap-1">
+                  <i data-lucide="help-circle" class="w-4 h-4 text-primary"></i>
+                  <span>${quiz.questionsCount} سوال</span>
+                </span>
+                <span>•</span>
+                <span class="flex items-center gap-1">
+                  <i data-lucide="clock" class="w-4 h-4 text-primary"></i>
+                  <span>زمان: ${quiz.duration}</span>
+                </span>
+              </div>
+
+              <h3 class="text-lg font-bold text-graphite leading-snug">${quiz.title}</h3>
+              <p class="text-xs text-secondary leading-relaxed">${quiz.description}</p>
+            </div>
+          </div>
+
+          <div class="p-6 pt-0">
+            <button onclick="startQuizRunner('${quiz.id}')" class="w-full bg-primary hover:bg-emerald-900 text-white font-bold py-3 rounded-2xl text-xs shadow-md transition-all flex items-center justify-center gap-2">
+              <span>شروع تست هوشمند</span>
+              <i data-lucide="arrow-left" class="w-4 h-4"></i>
+            </button>
+          </div>
+        `;
+        grid.appendChild(card);
+      });
+
+      lucide.createIcons();
+    }
+
     window.addEventListener('DOMContentLoaded', () => {
       renderCategoryCards();
       renderVendors(vendors);
@@ -3597,6 +4338,9 @@
 
       // Initialize Digital Invitation Builder
       renderInvitationPreview();
+
+      // Initialize Quiz Hub
+      renderQuizCatalogCards();
     });
   </script>
 </body>
