@@ -111,32 +111,44 @@
           </a>
 
           <!-- Navigation Links -->
-          <nav class="hidden md:flex items-center gap-1 xl:gap-2">
-            <button onclick="switchTab('home')" class="px-3.5 py-2 rounded-lg text-sm font-semibold transition-colors text-graphite hover:text-primary hover:bg-slate-50">
-              <span>دسته بندی کسب و کارها</span>
+          <nav class="hidden lg:flex items-center gap-1 xl:gap-1.5">
+            <button onclick="switchTab('home')" class="px-3 py-2 rounded-lg text-xs xl:text-sm font-semibold transition-colors text-graphite hover:text-primary hover:bg-slate-50">
+              <span>دسته‌بندی‌ها</span>
             </button>
-            <button onclick="switchTab('home')" class="px-3.5 py-2 rounded-lg text-sm font-semibold transition-colors text-graphite hover:text-primary hover:bg-slate-50">
-              <span>برنامه ریزی و چک لیست ها</span>
+            <button onclick="switchTab('home')" class="px-3 py-2 rounded-lg text-xs xl:text-sm font-semibold transition-colors text-graphite hover:text-primary hover:bg-slate-50">
+              <span>برنامه‌ریزی و چک‌لیست</span>
             </button>
-            <button onclick="switchTab('tools')" class="px-3.5 py-2 rounded-lg text-sm font-semibold transition-colors text-graphite hover:text-primary hover:bg-slate-50">
-              <span>تست ها و دستیار AI</span>
+            <button onclick="switchTab('invitation')" class="px-3 py-2 rounded-lg text-xs xl:text-sm font-semibold transition-colors text-graphite hover:text-primary hover:bg-slate-50">
+              <span>کارت دعوت دیجیتال</span>
             </button>
-            <button onclick="openInquiryModal('کلی', 'استعلام قیمت کلی')" class="px-3.5 py-2 rounded-lg text-sm font-semibold transition-colors text-graphite hover:text-primary hover:bg-slate-50">
+            <button onclick="switchTab('tools')" class="px-3 py-2 rounded-lg text-xs xl:text-sm font-semibold transition-colors text-graphite hover:text-primary hover:bg-slate-50">
+              <span>تست‌ها و دستیار AI</span>
+            </button>
+            <button onclick="openInquiryModal('کلی', 'استعلام قیمت آنلاین')" class="px-3 py-2 rounded-lg text-xs xl:text-sm font-semibold transition-colors text-graphite hover:text-primary hover:bg-slate-50">
               <span>استعلام قیمت آنلاین</span>
             </button>
           </nav>
         </div>
 
-        <!-- Auth Buttons & Vendor Onboarding CTA -->
+        <!-- Left Side Header: 3-Way Role Switcher Control & Primary Action CTA -->
         <div class="flex items-center gap-3">
-          <button onclick="toggleVendorModalStatic(true)" class="bg-primary/10 hover:bg-primary/20 text-primary border border-primary/30 px-4 py-2.5 rounded-xl text-xs sm:text-sm font-bold transition-all flex items-center gap-1.5">
+          <!-- 3-Way Role Switcher Segmented Control -->
+          <div class="bg-bgCustom border border-accent rounded-2xl p-1 flex items-center gap-1 text-xs font-bold shadow-xs">
+            <button onclick="switchRole('couple')" id="role-btn-couple" class="role-btn px-3.5 py-1.5 rounded-xl transition-all bg-primary text-white shadow-xs">
+              زوج
+            </button>
+            <button onclick="switchRole('vendor')" id="role-btn-vendor" class="role-btn px-3.5 py-1.5 rounded-xl transition-all text-secondary hover:text-graphite hover:bg-slate-100">
+              تأمین‌کننده
+            </button>
+            <button onclick="switchRole('admin')" id="role-btn-admin" class="role-btn px-3.5 py-1.5 rounded-xl transition-all text-secondary hover:text-graphite hover:bg-slate-100">
+              مدیر ارشد
+            </button>
+          </div>
+
+          <!-- Primary Action CTA Button: Join as Vendor -->
+          <button onclick="toggleVendorModalStatic(true)" class="bg-primary hover:bg-emerald-900 text-white px-4 py-2.5 rounded-2xl text-xs sm:text-sm font-bold transition-all flex items-center gap-1.5 shadow-md transform hover:-translate-y-0.5">
             <i data-lucide="building-2" class="w-4 h-4"></i>
             <span>ثبت‌نام کسب‌وکارها</span>
-          </button>
-
-          <button onclick="openInquiryModal('کلی', 'استعلام قیمت کلی خدمات')" class="flex items-center gap-2 bg-primary hover:bg-primary-hover text-white px-5 py-2.5 rounded-xl text-sm font-bold shadow-md transition-all transform hover:-translate-y-0.5">
-            <i data-lucide="message-square-quote" class="w-4 h-4"></i>
-            <span>استعلام قیمت آنلاین</span>
           </button>
         </div>
 
@@ -1158,6 +1170,26 @@
     ];
 
     let bookedDates = [5, 12, 19, 26];
+
+    // ROLE SWITCHER FUNCTION
+    function switchRole(role) {
+      document.querySelectorAll('.role-btn').forEach(btn => {
+        btn.className = "role-btn px-3.5 py-1.5 rounded-xl transition-all text-secondary hover:text-graphite hover:bg-slate-100";
+      });
+
+      const activeRoleBtn = document.getElementById('role-btn-' + role);
+      if (activeRoleBtn) {
+        activeRoleBtn.className = "role-btn px-3.5 py-1.5 rounded-xl transition-all bg-primary text-white shadow-xs";
+      }
+
+      if (role === 'couple') {
+        switchTab('home');
+      } else if (role === 'vendor') {
+        switchTab('vendor-dash');
+      } else if (role === 'admin') {
+        switchTab('admin');
+      }
+    }
 
     // TAB SWITCHING FUNCTION
     function switchTab(tabId) {
