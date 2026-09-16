@@ -762,48 +762,287 @@
     </div>
 
     <!-- ========================================== -->
-    <!-- VIEW 6: AI BUDGET TOOL MODULE             -->
+    <!-- VIEW 6: WEDDING BUDGET WIZARD MODULE      -->
     <!-- ========================================== -->
     <div id="tab-tools" class="tab-content hidden space-y-8">
-      <section class="bg-white border border-accent rounded-3xl p-8 shadow-xs space-y-6">
-        <div class="flex items-center gap-3 border-b border-accent pb-4">
-          <div class="w-12 h-12 rounded-2xl bg-primary/10 flex items-center justify-center text-primary">
-            <i data-lucide="bot" class="w-6 h-6"></i>
+      <section class="bg-white border border-accent rounded-3xl p-6 sm:p-10 shadow-xs space-y-8">
+
+        <!-- HEADER & STEPPER BAR -->
+        <div class="border-b border-accent pb-6 space-y-6">
+          <div class="flex flex-col sm:flex-row justify-between sm:items-center gap-4">
+            <div class="flex items-center gap-3">
+              <div class="w-12 h-12 rounded-2xl bg-primary/10 flex items-center justify-center text-primary shrink-0">
+                <i data-lucide="calculator" class="w-6 h-6"></i>
+              </div>
+              <div>
+                <h2 class="text-xl font-bold text-graphite">موتور هوشمند برنامه‌ریزی و تخمین بودجه عروسی</h2>
+                <p class="text-xs text-secondary mt-0.5">Wedding Budget Wizard • محاسبه و تخصیص هوشمند سهم هزینه‌ها به تفکیک خدمات</p>
+              </div>
+            </div>
+
+            <div id="wizard-step-badge" class="inline-flex items-center gap-2 bg-primary/10 text-primary border border-primary/20 px-4 py-2 rounded-2xl text-xs font-bold self-start sm:self-auto">
+              <i data-lucide="sparkles" class="w-4 h-4 text-primary"></i>
+              <span id="wizard-step-label">گام ۱ از ۴</span>
+            </div>
           </div>
-          <div>
-            <h2 class="text-xl font-bold text-graphite">موتور هوش مصنوعی تخصیص بهینه بودجه عروسی</h2>
-            <p class="text-xs text-secondary">پیشنهاد دقیق درصد هزینه‌کرد تالار، آتلیه، میکاپ و تشریفات</p>
+
+          <!-- Stepper Progress Bar -->
+          <div class="space-y-2">
+            <div class="flex justify-between items-center text-xs font-bold">
+              <span id="wizard-progress-title" class="text-primary">پایه مالی و موقعیت مکانی</span>
+              <span id="wizard-progress-percent" class="text-secondary">۲۵٪ تکمیل شده</span>
+            </div>
+            <div class="w-full bg-slate-100 rounded-full h-2.5 overflow-hidden border border-accent/60">
+              <div id="wizard-progress-bar" class="bg-primary h-full transition-all duration-300 rounded-full" style="width: 25%"></div>
+            </div>
           </div>
         </div>
 
-        <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
-          <div class="lg:col-span-6 space-y-4 bg-bgCustom p-6 rounded-2xl border border-accent">
-            <div>
-              <label class="block text-xs font-bold text-graphite mb-1">کل بودجه (تومان):</label>
-              <input type="number" id="ai-budget-input" value="300000000" step="10000000" oninput="runAiAllocation()" class="w-full bg-white border border-accent rounded-xl p-3 text-sm font-bold text-primary focus:outline-none focus:border-primary">
-            </div>
-
-            <button onclick="runAiAllocation()" class="w-full bg-primary hover:bg-primary-hover text-white py-3 rounded-xl text-xs font-bold shadow-md transition-colors flex items-center justify-center gap-2">
-              <i data-lucide="sparkles" class="w-4 h-4"></i>
-              <span>محاسبه مجدد تخصیص هوشمند</span>
-            </button>
+        <!-- WIZARD STEP 1: FINANCIAL BASELINE & LOCATION -->
+        <div id="bw-step-1" class="bw-step-panel space-y-6">
+          <div class="space-y-1">
+            <h3 class="text-lg font-bold text-graphite flex items-center gap-2">
+              <span class="w-7 h-7 rounded-xl bg-primary text-white flex items-center justify-center text-xs font-black">۱</span>
+              <span>سقف بودجه کل و موقعیت برگزاری مراسم</span>
+            </h3>
+            <p class="text-xs text-secondary mr-9">میزان بودجه مد نظر و استان محل برگزاری را جهت اعمال ضریب تورم منطقه‌ای مشخص کنید.</p>
           </div>
 
-          <div class="lg:col-span-6 bg-primary text-white p-6 rounded-2xl shadow-md space-y-3 text-xs font-medium">
-            <div class="flex justify-between items-center p-2.5 bg-white/10 rounded-xl">
-              <span>🏰 تالار و تشریفات (۴۰٪):</span>
-              <span id="ai-res-venue" class="font-bold text-sm">۱۲۰۰,۰۰۰,۰۰۰ تومان</span>
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-6 bg-bgCustom p-6 rounded-2xl border border-accent">
+            <!-- Target Budget Input -->
+            <div class="space-y-2">
+              <label class="block text-xs font-bold text-graphite">سقف بودجه کل (تومان) *</label>
+              <div class="relative">
+                <input type="number" id="bw-budget-input" value="350000000" step="10000000" oninput="updateBudgetFormattedDisplay()" class="w-full bg-white border border-accent rounded-xl p-3 text-base font-black text-primary focus:outline-none focus:border-primary pl-16">
+                <span class="absolute left-3 top-3.5 text-xs font-bold text-secondary">تومان</span>
+              </div>
+              <span id="bw-budget-formatted" class="block text-xs font-bold text-primary">۳۵۰,۰۰۰,۰۰۰ تومان (سیصد و پنجاه میلیون تومان)</span>
             </div>
-            <div class="flex justify-between items-center p-2.5 bg-white/10 rounded-xl">
-              <span>📸 آتلیه و عکاسی (۲۰٪):</span>
-              <span id="ai-res-photo" class="font-bold text-sm">۶۰,۰۰۰,۰۰۰ تومان</span>
-            </div>
-            <div class="flex justify-between items-center p-2.5 bg-white/10 rounded-xl">
-              <span>👗 لباس و میکاپ (۱۵٪):</span>
-              <span id="ai-res-attire" class="font-bold text-sm">۴۵,۰۰۰,۰۰۰ تومان</span>
+
+            <!-- Province & City Selection -->
+            <div class="grid grid-cols-2 gap-3">
+              <div class="space-y-2">
+                <label class="block text-xs font-bold text-graphite">استان *</label>
+                <select id="bw-province-select" onchange="handleProvinceChange()" class="w-full bg-white border border-accent rounded-xl p-3 text-xs font-semibold text-graphite focus:outline-none focus:border-primary">
+                  <option value="تهران">تهران (شاخص ۱.۲x)</option>
+                  <option value="اصفهان">اصفهان (شاخص ۱.۰x)</option>
+                  <option value="فارس">فارس / شیراز (شاخص ۱.۰x)</option>
+                  <option value="خراسان رضوی">خراسان رضوی (شاخص ۱.۰x)</option>
+                  <option value="البرز">البرز / کرج (شاخص ۱.۰۵x)</option>
+                  <option value="آذربایجان شرقی">آذربایجان شرقی (شاخص ۰.۹۵x)</option>
+                  <option value="سایر استان‌ها">سایر استان‌ها (شاخص ۰.۹x)</option>
+                </select>
+              </div>
+
+              <div class="space-y-2">
+                <label class="block text-xs font-bold text-graphite">شهر اصلی *</label>
+                <input type="text" id="bw-city-input" value="تهران" placeholder="نام شهر" class="w-full bg-white border border-accent rounded-xl p-3 text-xs font-semibold text-graphite focus:outline-none focus:border-primary">
+              </div>
             </div>
           </div>
         </div>
+
+        <!-- WIZARD STEP 2: WEDDING STYLE SELECTION -->
+        <div id="bw-step-2" class="bw-step-panel hidden space-y-6">
+          <div class="space-y-1">
+            <h3 class="text-lg font-bold text-graphite flex items-center gap-2">
+              <span class="w-7 h-7 rounded-xl bg-primary text-white flex items-center justify-center text-xs font-black">۲</span>
+              <span>سبک و سطح تشریفات مراسم (Wedding Style)</span>
+            </h3>
+            <p class="text-xs text-secondary mr-9">انتخاب سبک تشریفات بر توزیع درصدی بودجه و انتخاب پکیج‌ها تاثیر مستقیم دارد.</p>
+          </div>
+
+          <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+            <!-- Style Card 1: Economic -->
+            <div onclick="selectBwStyle('economic')" id="style-card-economic" class="bw-style-card bg-bgCustom border-2 border-accent rounded-2xl p-5 cursor-pointer hover:border-primary transition-all space-y-3">
+              <div class="w-10 h-10 rounded-xl bg-emerald-100 text-primary flex items-center justify-center">
+                <i data-lucide="piggy-bank" class="w-5 h-5"></i>
+              </div>
+              <div>
+                <h4 class="text-sm font-bold text-graphite">اقتصادی و ساده</h4>
+                <p class="text-[11px] text-secondary mt-1 leading-relaxed">تمرکز بر تالار و عکاسی پایه، مدیریت هوشمند هزینه‌ها بدون تشریفات اضافه.</p>
+              </div>
+            </div>
+
+            <!-- Style Card 2: Modern (Selected by default) -->
+            <div onclick="selectBwStyle('modern')" id="style-card-modern" class="bw-style-card bg-primary/5 border-2 border-primary rounded-2xl p-5 cursor-pointer transition-all space-y-3">
+              <div class="w-10 h-10 rounded-xl bg-primary text-white flex items-center justify-center shadow-xs">
+                <i data-lucide="sparkles" class="w-5 h-5"></i>
+              </div>
+              <div>
+                <h4 class="text-sm font-bold text-primary">مدرن و شیک</h4>
+                <p class="text-[11px] text-secondary mt-1 leading-relaxed">توازن عالی میان تشریفات ورودی، منوی چند غذایی و گالری آتلیه کیفیت بالا.</p>
+              </div>
+            </div>
+
+            <!-- Style Card 3: Luxury -->
+            <div onclick="selectBwStyle('luxury')" id="style-card-luxury" class="bw-style-card bg-bgCustom border-2 border-accent rounded-2xl p-5 cursor-pointer hover:border-primary transition-all space-y-3">
+              <div class="w-10 h-10 rounded-xl bg-amber-100 text-amber-800 flex items-center justify-center">
+                <i data-lucide="crown" class="w-5 h-5"></i>
+              </div>
+              <div>
+                <h4 class="text-sm font-bold text-graphite">لوکس و تشریفاتی (VIP)</h4>
+                <p class="text-[11px] text-secondary mt-1 leading-relaxed">باغ تالار لوکس، آتش‌بازی چندمرحله‌ای، تصویربرداری کرین و هلی‌شات.</p>
+              </div>
+            </div>
+
+            <!-- Style Card 4: Formalite -->
+            <div onclick="selectBwStyle('formalite')" id="style-card-formalite" class="bw-style-card bg-bgCustom border-2 border-accent rounded-2xl p-5 cursor-pointer hover:border-primary transition-all space-y-3">
+              <div class="w-10 h-10 rounded-xl bg-purple-100 text-purple-800 flex items-center justify-center">
+                <i data-lucide="camera" class="w-5 h-5"></i>
+              </div>
+              <div>
+                <h4 class="text-sm font-bold text-graphite">فرمالیته و خاص</h4>
+                <p class="text-[11px] text-secondary mt-1 leading-relaxed">سهم ویژه برای تور عکاسی فرمالیته شمال/جنوب و کلیپ اختصاصی عروسی.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- WIZARD STEP 3: GUEST COUNT & EVENT SCALE -->
+        <div id="bw-step-3" class="bw-step-panel hidden space-y-6">
+          <div class="space-y-1">
+            <h3 class="text-lg font-bold text-graphite flex items-center gap-2">
+              <span class="w-7 h-7 rounded-xl bg-primary text-white flex items-center justify-center text-xs font-black">۳</span>
+              <span>تعداد مهمانان و مقیاس جشن</span>
+            </h3>
+            <p class="text-xs text-secondary mr-9">تعداد دقیق یا محدوده تقریبی مهمانان را انتخاب نمایید.</p>
+          </div>
+
+          <div class="space-y-6 bg-bgCustom p-6 rounded-2xl border border-accent">
+            <!-- Preset Guest Count Range Buttons -->
+            <div class="space-y-2">
+              <label class="block text-xs font-bold text-secondary">انتخاب سریع محدوده مهمانان:</label>
+              <div class="grid grid-cols-2 sm:grid-cols-4 gap-3">
+                <button type="button" onclick="setBwGuestCount(80)" class="bw-guest-btn py-3 px-4 rounded-xl text-xs font-bold border border-accent bg-white hover:border-primary text-graphite transition-all">
+                  زیر ۱۰۰ نفر (مینی‌مال)
+                </button>
+                <button type="button" onclick="setBwGuestCount(200)" class="bw-guest-btn py-3 px-4 rounded-xl text-xs font-bold border-2 border-primary bg-primary text-white transition-all shadow-xs">
+                  ۱۰۰ تا ۲۵۰ نفر (استاندارد)
+                </button>
+                <button type="button" onclick="setBwGuestCount(350)" class="bw-guest-btn py-3 px-4 rounded-xl text-xs font-bold border border-accent bg-white hover:border-primary text-graphite transition-all">
+                  ۲۵۰ تا ۵۰۰ نفر (بزرگ)
+                </button>
+                <button type="button" onclick="setBwGuestCount(600)" class="bw-guest-btn py-3 px-4 rounded-xl text-xs font-bold border border-accent bg-white hover:border-primary text-graphite transition-all">
+                  بالای ۵۰۰ نفر (مجلل)
+                </button>
+              </div>
+            </div>
+
+            <!-- Exact Numeric Input -->
+            <div class="space-y-2 max-w-xs">
+              <label class="block text-xs font-bold text-graphite">تعداد دقیق مهمانان (قابل ویرایش):</label>
+              <div class="flex items-center gap-2">
+                <input type="number" id="bw-guest-input" value="200" min="20" max="2000" oninput="handleGuestInputChange()" class="w-full bg-white border border-accent rounded-xl p-3 text-sm font-bold text-primary focus:outline-none focus:border-primary">
+                <span class="text-xs font-bold text-graphite shrink-0">نفر</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- WIZARD STEP 4: CUSTOMIZABLE SERVICE CHECKLIST -->
+        <div id="bw-step-4" class="bw-step-panel hidden space-y-6">
+          <div class="space-y-1">
+            <h3 class="text-lg font-bold text-graphite flex items-center gap-2">
+              <span class="w-7 h-7 rounded-xl bg-primary text-white flex items-center justify-center text-xs font-black">۴</span>
+              <span>انتخاب دقیق خدمات مورد نیاز (Service Checklist)</span>
+            </h3>
+            <p class="text-xs text-secondary mr-9">خدماتی که نیاز دارید را تیک بزنید. بودجه کل به صورت هوشمند **صرفاً بین موارد فعال** تقسیم خواهد شد.</p>
+          </div>
+
+          <!-- Services Grid -->
+          <div id="bw-services-checklist" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3">
+            <!-- Dynamically populated via JS -->
+          </div>
+
+          <!-- Add Custom Service Form -->
+          <div class="bg-bgCustom border border-accent rounded-2xl p-4 space-y-3">
+            <span class="block text-xs font-bold text-graphite flex items-center gap-1.5">
+              <i data-lucide="plus-circle" class="w-4 h-4 text-primary"></i>
+              <span>افزودن خدمت اختصاصی یا هزینه متفرقه شخصی:</span>
+            </span>
+            <div class="grid grid-cols-1 sm:grid-cols-12 gap-2">
+              <input type="text" id="bw-custom-title" placeholder="عنوان خدمت (مثلا: گیفت و یادبود)" class="sm:col-span-6 bg-white border border-accent rounded-xl p-2.5 text-xs font-medium focus:outline-none focus:border-primary">
+              <input type="number" id="bw-custom-price" placeholder="مبلغ برآوردی (تومان)" class="sm:col-span-4 bg-white border border-accent rounded-xl p-2.5 text-xs font-medium focus:outline-none focus:border-primary">
+              <button type="button" onclick="handleAddCustomBwService()" class="sm:col-span-2 bg-primary hover:bg-emerald-900 text-white font-bold text-xs rounded-xl py-2.5 transition-colors">
+                افزودن
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <!-- WIZARD STEP 5: DYNAMIC CALCULATED RESULT VIEW -->
+        <div id="bw-step-result" class="bw-step-panel hidden space-y-8">
+          <div class="bg-primary/10 border border-primary/20 rounded-3xl p-6 sm:p-8 space-y-6">
+            <div class="flex flex-col sm:flex-row justify-between sm:items-center gap-4 border-b border-primary/20 pb-4">
+              <div>
+                <span class="text-xs font-bold text-primary">نتیجه محاسبات هوشمند</span>
+                <h3 class="text-2xl font-black text-graphite mt-0.5">جدول برآورد و تخصیص بهینه بودجه</h3>
+              </div>
+
+              <div class="flex items-center gap-3">
+                <button type="button" onclick="resetBwWizard()" class="bg-white hover:bg-slate-50 text-graphite border border-accent px-4 py-2.5 rounded-xl text-xs font-bold transition-all flex items-center gap-1.5 shadow-xs">
+                  <i data-lucide="rotate-ccw" class="w-4 h-4 text-primary"></i>
+                  <span>ویرایش مجدد پاسخ‌ها</span>
+                </button>
+              </div>
+            </div>
+
+            <!-- Overall Summary Banner -->
+            <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
+              <div class="bg-white p-4 rounded-2xl border border-accent">
+                <span class="text-[11px] font-bold text-secondary">سقف بودجه کل:</span>
+                <span id="res-total-budget" class="block text-lg font-black text-primary mt-1">۳۵۰,۰۰۰,۰۰۰ تومان</span>
+              </div>
+              <div class="bg-white p-4 rounded-2xl border border-accent">
+                <span class="text-[11px] font-bold text-secondary">سبک و شهر:</span>
+                <span id="res-style-city" class="block text-sm font-bold text-graphite mt-1">مدرن و شیک • تهران</span>
+              </div>
+              <div class="bg-white p-4 rounded-2xl border border-accent">
+                <span class="text-[11px] font-bold text-secondary">تعداد خدمات فعال:</span>
+                <span id="res-active-services-count" class="block text-sm font-bold text-graphite mt-1">۸ خدمت منتخب</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Itemized Breakdown Table -->
+          <div class="bg-white border border-accent rounded-3xl p-6 shadow-xs space-y-4">
+            <h4 class="text-base font-bold text-graphite flex items-center gap-2 border-b border-accent pb-3">
+              <i data-lucide="list-checks" class="w-5 h-5 text-primary"></i>
+              <span>تفکیک دقیق بودجه هدف برای خدمات فعال</span>
+            </h4>
+
+            <div class="overflow-x-auto">
+              <table class="w-full text-right text-xs">
+                <thead class="bg-bgCustom text-secondary border-b border-accent font-bold">
+                  <tr>
+                    <th class="p-3">عنوان خدمت</th>
+                    <th class="p-3">درصد تخصیصی</th>
+                    <th class="p-3">مبلغ برآوردی (تومان)</th>
+                    <th class="p-3">پیشنهاد هوشمند / توضیحات</th>
+                  </tr>
+                </thead>
+                <tbody id="bw-result-table-body" class="divide-y divide-accent/60 font-medium">
+                  <!-- Dynamically populated via JS -->
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+
+        <!-- WIZARD NAVIGATION CONTROL BUTTONS -->
+        <div id="bw-nav-buttons" class="flex items-center justify-between pt-6 border-t border-accent">
+          <button type="button" id="bw-prev-btn" onclick="navigateBwStep(-1)" class="px-6 py-3 rounded-2xl border border-accent text-secondary hover:text-graphite hover:bg-slate-50 font-bold text-xs transition-all flex items-center gap-2 hidden">
+            <i data-lucide="arrow-right" class="w-4 h-4"></i>
+            <span>گام قبلی</span>
+          </button>
+
+          <button type="button" id="bw-next-btn" onclick="navigateBwStep(1)" class="mr-auto bg-primary hover:bg-emerald-900 text-white px-8 py-3.5 rounded-2xl font-bold text-xs shadow-md transition-all flex items-center gap-2">
+            <span>گام بعدی</span>
+            <i data-lucide="arrow-left" class="w-4 h-4"></i>
+          </button>
+        </div>
+
       </section>
     </div>
 
@@ -1839,6 +2078,324 @@
       alert('پیامک انبوه ارسال شد.');
     }
 
+    // ==========================================
+    // WEDDING BUDGET WIZARD STATE & LOGIC
+    // ==========================================
+    let bwState = {
+      currentStep: 1,
+      targetBudget: 350000000,
+      province: "تهران",
+      provinceMultiplier: 1.2,
+      city: "تهران",
+      style: "modern", // economic, modern, luxury, formalite
+      guestCount: 200,
+      services: [
+        { id: "venue", title: "تالار و باغ عروسی (Venue & Catering)", icon: "building", defaultWeight: 0.38, checked: true, isCustom: false },
+        { id: "photo", title: "آتلیه و فیلم‌برداری (Photo & Video)", icon: "camera", defaultWeight: 0.18, checked: true, isCustom: false },
+        { id: "bride_makeup", title: "سالن زیبایی عروس (Bride Makeup)", icon: "sparkles", defaultWeight: 0.08, checked: true, isCustom: false },
+        { id: "groom_styling", title: "کت و شلوار و آرایشگاه داماد (Groom Suit)", icon: "scissors", defaultWeight: 0.06, checked: true, isCustom: false },
+        { id: "bridal_dress", title: "لباس عروس و اکسسوری (Bridal Dress)", icon: "shirt", defaultWeight: 0.09, checked: true, isCustom: false },
+        { id: "music", title: "موسیقی و دی‌جی (Music & DJ)", icon: "music", defaultWeight: 0.07, checked: true, isCustom: false },
+        { id: "car_flower", title: "ماشین عروس و گل‌آرایی (Car & Floral)", icon: "flower-2", defaultWeight: 0.06, checked: true, isCustom: false },
+        { id: "invitation", title: "کارت دعوت و هدایا (Invitations & Favors)", icon: "mail", defaultWeight: 0.02, checked: true, isCustom: false },
+        { id: "honeymoon", title: "سفر فرمالیته / ماه عسل (Honeymoon)", icon: "plane", defaultWeight: 0.06, checked: false, isCustom: false }
+      ]
+    };
+
+    function updateBudgetFormattedDisplay() {
+      const inputVal = parseInt(document.getElementById('bw-budget-input').value) || 0;
+      bwState.targetBudget = inputVal;
+      const formatted = inputVal.toLocaleString('fa-IR');
+      document.getElementById('bw-budget-formatted').innerText = `${formatted} تومان`;
+    }
+
+    function handleProvinceChange() {
+      const provSelect = document.getElementById('bw-province-select');
+      bwState.province = provSelect.value;
+      if (provSelect.value === 'تهران') bwState.provinceMultiplier = 1.2;
+      else if (provSelect.value === 'البرز') bwState.provinceMultiplier = 1.05;
+      else if (provSelect.value === 'آذربایجان شرقی' || provSelect.value === 'سایر استان‌ها') bwState.provinceMultiplier = 0.95;
+      else bwState.provinceMultiplier = 1.0;
+    }
+
+    function selectBwStyle(styleKey) {
+      bwState.style = styleKey;
+      const cards = ['economic', 'modern', 'luxury', 'formalite'];
+      cards.forEach(key => {
+        const el = document.getElementById('style-card-' + key);
+        if (!el) return;
+        if (key === styleKey) {
+          el.className = "bw-style-card bg-primary/5 border-2 border-primary rounded-2xl p-5 cursor-pointer transition-all space-y-3 shadow-xs";
+          const iconBox = el.querySelector('div');
+          if (iconBox) iconBox.className = "w-10 h-10 rounded-xl bg-primary text-white flex items-center justify-center shadow-xs";
+          const h4 = el.querySelector('h4');
+          if (h4) h4.className = "text-sm font-bold text-primary";
+        } else {
+          el.className = "bw-style-card bg-bgCustom border-2 border-accent rounded-2xl p-5 cursor-pointer hover:border-primary transition-all space-y-3";
+          const iconBox = el.querySelector('div');
+          if (iconBox) iconBox.className = "w-10 h-10 rounded-xl bg-slate-100 text-graphite flex items-center justify-center";
+          const h4 = el.querySelector('h4');
+          if (h4) h4.className = "text-sm font-bold text-graphite";
+        }
+      });
+    }
+
+    function setBwGuestCount(count) {
+      bwState.guestCount = count;
+      document.getElementById('bw-guest-input').value = count;
+      updateGuestBtnStyles(count);
+    }
+
+    function handleGuestInputChange() {
+      const val = parseInt(document.getElementById('bw-guest-input').value) || 200;
+      bwState.guestCount = val;
+      updateGuestBtnStyles(val);
+    }
+
+    function updateGuestBtnStyles(count) {
+      const btns = document.querySelectorAll('.bw-guest-btn');
+      btns.forEach(btn => {
+        btn.className = "bw-guest-btn py-3 px-4 rounded-xl text-xs font-bold border border-accent bg-white hover:border-primary text-graphite transition-all";
+      });
+
+      let targetIdx = 1;
+      if (count < 100) targetIdx = 0;
+      else if (count >= 100 && count <= 250) targetIdx = 1;
+      else if (count > 250 && count <= 500) targetIdx = 2;
+      else if (count > 500) targetIdx = 3;
+
+      if (btns[targetIdx]) {
+        btns[targetIdx].className = "bw-guest-btn py-3 px-4 rounded-xl text-xs font-bold border-2 border-primary bg-primary text-white transition-all shadow-xs";
+      }
+    }
+
+    function renderBwServicesChecklist() {
+      const container = document.getElementById('bw-services-checklist');
+      if (!container) return;
+      container.innerHTML = '';
+
+      bwState.services.forEach(srv => {
+        const card = document.createElement('div');
+        card.onclick = (e) => {
+          if (e.target.tagName !== 'INPUT' && e.target.tagName !== 'BUTTON') {
+            toggleBwService(srv.id);
+          }
+        };
+        card.className = `p-4 rounded-2xl border-2 transition-all cursor-pointer flex items-center justify-between gap-3 ${
+          srv.checked ? 'bg-primary/5 border-primary' : 'bg-white border-accent hover:border-accent/80 opacity-75'
+        }`;
+
+        card.innerHTML = `
+          <div class="flex items-center gap-3">
+            <input type="checkbox" ${srv.checked ? 'checked' : ''} onchange="toggleBwService('${srv.id}')" class="rounded text-primary focus:ring-primary w-5 h-5 cursor-pointer">
+            <div class="flex items-center gap-2">
+              <i data-lucide="${srv.icon}" class="w-4 h-4 ${srv.checked ? 'text-primary' : 'text-secondary'}"></i>
+              <span class="text-xs font-bold ${srv.checked ? 'text-graphite' : 'text-secondary'}">${srv.title}</span>
+            </div>
+          </div>
+          ${srv.isCustom ? `<button onclick="deleteCustomBwService('${srv.id}')" class="text-rose-600 hover:text-rose-800 text-[11px] font-bold">حذف</button>` : ''}
+        `;
+        container.appendChild(card);
+      });
+
+      lucide.createIcons();
+    }
+
+    function toggleBwService(srvId) {
+      const srv = bwState.services.find(s => s.id === srvId);
+      if (srv) {
+        srv.checked = !srv.checked;
+        renderBwServicesChecklist();
+      }
+    }
+
+    function handleAddCustomBwService() {
+      const titleInput = document.getElementById('bw-custom-title');
+      const priceInput = document.getElementById('bw-custom-price');
+      const title = titleInput.value.trim();
+      const price = parseInt(priceInput.value) || 0;
+
+      if (!title) return alert('لطفاً عنوان خدمت اختصاصی را وارد نمایید.');
+
+      const customId = 'custom-' + Date.now();
+      bwState.services.push({
+        id: customId,
+        title: title + (price > 0 ? ` (برآورد: ${price.toLocaleString('fa-IR')} تومان)` : ''),
+        icon: 'package-plus',
+        defaultWeight: 0.05,
+        fixedPrice: price > 0 ? price : null,
+        checked: true,
+        isCustom: true
+      });
+
+      titleInput.value = '';
+      priceInput.value = '';
+      renderBwServicesChecklist();
+    }
+
+    function deleteCustomBwService(srvId) {
+      bwState.services = bwState.services.filter(s => s.id !== srvId);
+      renderBwServicesChecklist();
+    }
+
+    function navigateBwStep(direction) {
+      const newStep = bwState.currentStep + direction;
+      if (newStep < 1 || newStep > 5) return;
+
+      // Validate inputs before advancing
+      if (direction > 0 && bwState.currentStep === 1) {
+        if (!bwState.targetBudget || bwState.targetBudget < 10000000) {
+          alert('لطفاً سقف بودجه معتبر وارد نمایید (حداقل ۱۰ میلیون تومان).');
+          return;
+        }
+        bwState.city = document.getElementById('bw-city-input').value.trim() || 'تهران';
+      }
+
+      if (direction > 0 && bwState.currentStep === 4) {
+        const activeCount = bwState.services.filter(s => s.checked).length;
+        if (activeCount === 0) {
+          alert('لطفاً حداقل یک خدمت را جهت تخصیص بودجه فعال/تیک بزنید.');
+          return;
+        }
+      }
+
+      bwState.currentStep = newStep;
+      updateBwStepUI();
+    }
+
+    function updateBwStepUI() {
+      // Hide all panels
+      for (let i = 1; i <= 4; i++) {
+        const panel = document.getElementById('bw-step-' + i);
+        if (panel) panel.classList.add('hidden');
+      }
+      const resPanel = document.getElementById('bw-step-result');
+      if (resPanel) resPanel.classList.add('hidden');
+
+      // Show current panel
+      if (bwState.currentStep <= 4) {
+        const currentPanel = document.getElementById('bw-step-' + bwState.currentStep);
+        if (currentPanel) currentPanel.classList.remove('hidden');
+      } else {
+        if (resPanel) resPanel.classList.remove('hidden');
+        calculateAndRenderBwResults();
+      }
+
+      // Update Stepper Progress Bar & Badges
+      const stepLabel = document.getElementById('wizard-step-label');
+      const progressTitle = document.getElementById('wizard-progress-title');
+      const progressPercent = document.getElementById('wizard-progress-percent');
+      const progressBar = document.getElementById('wizard-progress-bar');
+      const prevBtn = document.getElementById('bw-prev-btn');
+      const nextBtn = document.getElementById('bw-next-btn');
+
+      if (bwState.currentStep <= 4) {
+        stepLabel.innerText = `گام ${bwState.currentStep} از ۴`;
+        const percent = bwState.currentStep * 25;
+        progressPercent.innerText = `${percent}٪ تکمیل شده`;
+        progressBar.style.width = `${percent}%`;
+
+        const titles = [
+          "پایه مالی و موقعیت مکانی",
+          "انتخاب سبک و سطح تشریفات",
+          "تعداد مهمانان و مقیاس مراسم",
+          "تکمیل چک‌لیست خدمات مورد نیاز"
+        ];
+        progressTitle.innerText = titles[bwState.currentStep - 1];
+
+        prevBtn.classList.toggle('hidden', bwState.currentStep === 1);
+        nextBtn.classList.remove('hidden');
+        nextBtn.querySelector('span').innerText = bwState.currentStep === 4 ? "محاسبه نهایی و نمایش خروجی" : "گام بعدی";
+      } else {
+        stepLabel.innerText = "خروجی محاسبات هوشمند";
+        progressPercent.innerText = "۱۰۰٪ تکمیل شده";
+        progressBar.style.width = "100%";
+        progressTitle.innerText = "جدول تخصیص هوشمند بودجه بر اساس خدمات انتخابی";
+
+        prevBtn.classList.remove('hidden');
+        nextBtn.classList.add('hidden');
+      }
+
+      if (bwState.currentStep === 4) {
+        renderBwServicesChecklist();
+      }
+
+      lucide.createIcons();
+    }
+
+    function calculateAndRenderBwResults() {
+      const activeServices = bwState.services.filter(s => s.checked);
+      const totalBudget = bwState.targetBudget;
+
+      // Separate custom fixed price services from weighted percentage services
+      let sumFixedPrices = 0;
+      activeServices.forEach(s => {
+        if (s.fixedPrice) sumFixedPrices += s.fixedPrice;
+      });
+
+      const remainingBudgetForWeighted = Math.max(0, totalBudget - sumFixedPrices);
+
+      // Sum weights of active non-fixed services
+      let totalWeight = 0;
+      activeServices.forEach(s => {
+        if (!s.fixedPrice) totalWeight += s.defaultWeight;
+      });
+
+      const tbody = document.getElementById('bw-result-table-body');
+      if (!tbody) return;
+      tbody.innerHTML = '';
+
+      document.getElementById('res-total-budget').innerText = `${totalBudget.toLocaleString('fa-IR')} تومان`;
+      const styleNames = {
+        economic: "اقتصادی و ساده",
+        modern: "مدرن و شیک",
+        luxury: "لوکس و تشریفاتی (VIP)",
+        formalite: "فرمالیته و خاص"
+      };
+      document.getElementById('res-style-city').innerText = `${styleNames[bwState.style] || 'مدرن'} • ${bwState.province} (${bwState.city})`;
+      document.getElementById('res-active-services-count').innerText = `${activeServices.length} خدمت منتخب فعال`;
+
+      activeServices.forEach(srv => {
+        let calculatedAmount = 0;
+        let percentageText = "";
+
+        if (srv.fixedPrice) {
+          calculatedAmount = srv.fixedPrice;
+          const pct = Math.round((srv.fixedPrice / totalBudget) * 100);
+          percentageText = `${pct}٪ (ثابت)`;
+        } else {
+          const serviceRatio = totalWeight > 0 ? (srv.defaultWeight / totalWeight) : 0;
+          calculatedAmount = Math.round(remainingBudgetForWeighted * serviceRatio);
+          const pct = Math.round((calculatedAmount / totalBudget) * 100);
+          percentageText = `${pct}٪`;
+        }
+
+        const tr = document.createElement('tr');
+        tr.className = "hover:bg-slate-50 transition-colors";
+        tr.innerHTML = `
+          <td class="p-3.5 font-bold text-graphite flex items-center gap-2">
+            <div class="w-8 h-8 rounded-xl bg-primary/10 text-primary flex items-center justify-center shrink-0">
+              <i data-lucide="${srv.icon}" class="w-4 h-4"></i>
+            </div>
+            <span>${srv.title}</span>
+          </td>
+          <td class="p-3.5 font-bold text-primary">${percentageText}</td>
+          <td class="p-3.5 font-black text-graphite">${calculatedAmount.toLocaleString('fa-IR')} تومان</td>
+          <td class="p-3.5 text-secondary text-[11px] leading-relaxed">
+            برآورد سهم استاندارد متناسب با ${bwState.guestCount} نفر مهمان و سبک ${styleNames[bwState.style]}
+          </td>
+        `;
+        tbody.appendChild(tr);
+      });
+
+      lucide.createIcons();
+    }
+
+    function resetBwWizard() {
+      bwState.currentStep = 1;
+      updateBwStepUI();
+    }
+
     window.addEventListener('DOMContentLoaded', () => {
       renderVendors(vendors);
       renderGallery();
@@ -1849,6 +2406,10 @@
       renderCalendar();
       renderInquiries();
       renderChecklistTimeline();
+
+      // Initialize Budget Wizard
+      updateBudgetFormattedDisplay();
+      renderBwServicesChecklist();
     });
   </script>
 </body>
