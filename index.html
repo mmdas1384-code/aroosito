@@ -241,6 +241,31 @@
         </div>
       </section>
 
+      <!-- CATEGORY SHOWCASE GRID SECTION -->
+      <section class="bg-white border border-accent rounded-3xl p-6 sm:p-8 shadow-xs space-y-6">
+        <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-accent pb-4">
+          <div>
+            <h2 class="text-xl sm:text-2xl font-bold text-graphite flex items-center gap-2">
+              <i data-lucide="grid" class="w-6 h-6 text-primary"></i>
+              <span>دسته‌بندی‌های خدمات عروسی</span>
+            </h2>
+            <p class="text-xs text-secondary mt-1">دسترسی سریع به برترین تأمین‌کنندگان و مشاغل تشریفات مجالس</p>
+          </div>
+
+          <div class="flex items-center gap-2">
+            <button id="toggle-categories-btn" onclick="toggleCategoriesExpand()" class="text-xs font-bold text-primary bg-primary/10 hover:bg-primary/20 border border-primary/20 px-4 py-2 rounded-xl transition-all flex items-center gap-1.5">
+              <span id="toggle-categories-text">مشاهده بیشتر</span>
+              <i id="toggle-categories-icon" data-lucide="chevron-down" class="w-4 h-4"></i>
+            </button>
+          </div>
+        </div>
+
+        <!-- Dynamic Category Cards Grid -->
+        <div id="category-cards-grid" class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-3 sm:gap-4">
+          <!-- Populated dynamically via JS -->
+        </div>
+      </section>
+
       <!-- VENDOR DIRECTORY GRID SECTION -->
       <section class="space-y-6">
         <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-accent pb-4">
@@ -1323,11 +1348,31 @@
 
     // APP GLOBAL STATE
     let categories = [
-      { id: "cat-1", title: "تالار و باغ تشریفات", icon: "building", count: 420, active: true },
-      { id: "cat-2", title: "آتلیه و عکاسی", icon: "camera", count: 310, active: true },
-      { id: "cat-3", title: "سالن زیبایی", icon: "sparkles", count: 280, active: true },
-      { id: "cat-4", title: "مزون و لباس عروس", icon: "shirt", count: 190, active: true },
-      { id: "cat-5", title: "گل‌آرایی و ماشین عروس", icon: "flower-2", count: 150, active: true }
+      { id: "cat-1", title: "تالار و باغ تالار عروسی", icon: "building", count: 420, active: true },
+      { id: "cat-2", title: "آتلیه عکاسی و فیلمبرداری", icon: "camera", count: 310, active: true },
+      { id: "cat-3", title: "سالن زیبایی و آرایشگاه عروس", icon: "sparkles", count: 280, active: true },
+      { id: "cat-4", title: "مزون لباس عروس", icon: "shirt", count: 190, active: true },
+      { id: "cat-5", title: "تشریفات عروسی", icon: "crown", count: 160, active: true },
+      { id: "cat-6", title: "گل و گل‌آرایی", icon: "flower-2", count: 150, active: true },
+      { id: "cat-7", title: "کت و شلوار داماد", icon: "user-check", count: 120, active: true },
+      { id: "cat-8", title: "آرایشگاه داماد", icon: "scissors", count: 110, active: true },
+      { id: "cat-9", title: "اجاره ماشین عروس", icon: "car", count: 95, active: true },
+      { id: "cat-10", title: "موزیک", icon: "music", count: 140, active: true },
+      { id: "cat-11", title: "طلافروشی و جواهرفروشی", icon: "gem", count: 180, active: true },
+      { id: "cat-12", title: "کیک و شیرینی‌فروشی", icon: "cake", count: 130, active: true },
+      { id: "cat-13", title: "سفره عقد", icon: "utensils", count: 85, active: true },
+      { id: "cat-14", title: "دفتر ازدواج و سالن عقد", icon: "landmark", count: 90, active: true },
+      { id: "cat-15", title: "تور ماه عسل", icon: "plane", count: 115, active: true },
+      { id: "cat-16", title: "آزمایشگاه ازدواج", icon: "flask-conical", count: 60, active: true },
+      { id: "cat-17", title: "آینه و شمعدان", icon: "sparkles", count: 70, active: true },
+      { id: "cat-18", title: "مانتو عقد", icon: "shirt", count: 65, active: true },
+      { id: "cat-19", title: "مشاوره ازدواج", icon: "heart-handshake", count: 50, active: true },
+      { id: "cat-20", title: "اکسسوری جشن عروسی", icon: "gem", count: 80, active: true },
+      { id: "cat-21", title: "بادکنک‌آرایی و دکوراسیون", icon: "party-popper", count: 75, active: true },
+      { id: "cat-22", title: "فینگرفود", icon: "utensils-crossed", count: 105, active: true },
+      { id: "cat-23", title: "لباس شب و نامزدی", icon: "shirt", count: 125, active: true },
+      { id: "cat-24", title: "سالن تولد", icon: "cake-slice", count: 45, active: true },
+      { id: "cat-25", title: "آتلیه کودک", icon: "baby", count: 55, active: true }
     ];
 
     let vendors = [
@@ -1558,6 +1603,62 @@
       renderVendorPackages();
     }
 
+    // CATEGORY CARDS SHOWCASE (LANDING PAGE)
+    let categoriesExpanded = false;
+
+    function renderCategoryCards() {
+      const grid = document.getElementById('category-cards-grid');
+      if (!grid) return;
+      grid.innerHTML = '';
+
+      const activeCategories = categories.filter(c => c.active);
+      const displayCategories = categoriesExpanded ? activeCategories : activeCategories.slice(0, 12);
+
+      displayCategories.forEach(cat => {
+        const card = document.createElement('a');
+        card.href = "#";
+        card.onclick = (e) => {
+          e.preventDefault();
+          filterVendorsByCategoryTitle(cat.title);
+        };
+        card.className = "bg-bgCustom border border-accent rounded-xl sm:rounded-2xl p-4 flex flex-col items-center justify-center text-center gap-3 transition-all duration-200 hover:-translate-y-1 hover:border-primary hover:shadow-md group cursor-pointer";
+        card.innerHTML = `
+          <div class="w-10 h-10 sm:w-12 sm:h-12 rounded-xl bg-primary/10 text-primary flex items-center justify-center transition-colors group-hover:bg-primary group-hover:text-white shadow-xs">
+            <i data-lucide="${cat.icon || 'grid'}" class="w-5 h-5 sm:w-6 sm:h-6"></i>
+          </div>
+          <span class="text-xs sm:text-sm font-bold text-graphite group-hover:text-primary transition-colors leading-tight">${cat.title}</span>
+        `;
+        grid.appendChild(card);
+      });
+
+      const btnText = document.getElementById('toggle-categories-text');
+      const btnIcon = document.getElementById('toggle-categories-icon');
+      if (btnText && btnIcon) {
+        if (categoriesExpanded) {
+          btnText.innerText = 'مشاهده کمتر';
+          btnIcon.setAttribute('data-lucide', 'chevron-up');
+        } else {
+          btnText.innerText = 'مشاهده بیشتر';
+          btnIcon.setAttribute('data-lucide', 'chevron-down');
+        }
+      }
+
+      lucide.createIcons();
+    }
+
+    function toggleCategoriesExpand() {
+      categoriesExpanded = !categoriesExpanded;
+      renderCategoryCards();
+    }
+
+    function filterVendorsByCategoryTitle(title) {
+      const searchInput = document.getElementById('search-input');
+      if (searchInput) searchInput.value = title;
+      filterVendors();
+      const vendorSection = document.getElementById('vendor-grid');
+      if (vendorSection) vendorSection.scrollIntoView({ behavior: 'smooth' });
+    }
+
     // SUPER ADMIN CATEGORY EDITOR
     function renderAdminCategories() {
       const tbody = document.getElementById('admin-category-table');
@@ -1608,6 +1709,7 @@
     function deleteCategory(id) {
       categories = categories.filter(c => c.id !== id);
       renderAdminCategories();
+      renderCategoryCards();
     }
 
     function handleSaveCategory(e) {
@@ -1631,6 +1733,7 @@
       }
 
       renderAdminCategories();
+      renderCategoryCards();
       toggleCategoryModal(false);
       document.getElementById('cat-edit-id').value = '';
       document.getElementById('cat-title').value = '';
@@ -2397,6 +2500,7 @@
     }
 
     window.addEventListener('DOMContentLoaded', () => {
+      renderCategoryCards();
       renderVendors(vendors);
       renderGallery();
       renderVendorPackages();
