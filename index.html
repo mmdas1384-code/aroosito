@@ -62,8 +62,39 @@
 </head>
 <body class="min-h-full flex flex-col antialiased selection:bg-primary selection:text-white">
 
+  <!-- TOP DEMO VIEW SWITCHER BAR -->
+  <div class="bg-graphite text-white sticky top-0 z-50 border-b border-white/10 px-4 py-2.5 shadow-md">
+    <div class="max-w-7xl mx-auto flex flex-col md:flex-row items-center justify-between gap-3">
+      <div class="flex items-center gap-2 text-xs font-bold text-accent">
+        <i data-lucide="layers" class="w-4 h-4 text-emerald-400"></i>
+        <span>نوار تست دمو و سوئیچ سریع صفحات (Demo View Switcher):</span>
+      </div>
+
+      <div class="flex flex-wrap items-center gap-2">
+        <button onclick="switchTab('home')" id="demo-tab-home" class="demo-tab-btn px-3.5 py-1.5 rounded-lg text-xs font-bold transition-all bg-primary text-white shadow-xs">
+          <i data-lucide="home" class="w-3.5 h-3.5 inline ml-1"></i>صفحه اصلی (Home)
+        </button>
+        <button onclick="switchTab('vendor-profile')" id="demo-tab-vendor-profile" class="demo-tab-btn px-3.5 py-1.5 rounded-lg text-xs font-bold transition-all bg-white/10 hover:bg-white/20 text-slate-200">
+          <i data-lucide="store" class="w-3.5 h-3.5 inline ml-1"></i>پروفایل اختصاصی تامین‌کننده
+        </button>
+        <button onclick="switchTab('admin')" id="demo-tab-admin" class="demo-tab-btn px-3.5 py-1.5 rounded-lg text-xs font-bold transition-all bg-white/10 hover:bg-white/20 text-slate-200">
+          <i data-lucide="shield-check" class="w-3.5 h-3.5 inline ml-1"></i>پنل مدیریت (Admin Panel)
+        </button>
+        <button onclick="switchTab('vendor-dash')" id="demo-tab-vendor-dash" class="demo-tab-btn px-3.5 py-1.5 rounded-lg text-xs font-bold transition-all bg-white/10 hover:bg-white/20 text-slate-200">
+          <i data-lucide="layout-dashboard" class="w-3.5 h-3.5 inline ml-1"></i>پنل تامین‌کننده (Vendor Dashboard)
+        </button>
+        <button onclick="switchTab('invitation')" id="demo-tab-invitation" class="demo-tab-btn px-3.5 py-1.5 rounded-lg text-xs font-bold transition-all bg-white/10 hover:bg-white/20 text-slate-200">
+          کارت دعوت & RSVP
+        </button>
+        <button onclick="switchTab('tools')" id="demo-tab-tools" class="demo-tab-btn px-3.5 py-1.5 rounded-lg text-xs font-bold transition-all bg-white/10 hover:bg-white/20 text-slate-200">
+          بودجه AI
+        </button>
+      </div>
+    </div>
+  </div>
+
   <!-- MAIN HEADER / NAVIGATION -->
-  <header class="sticky top-0 z-40 bg-white border-b border-accent shadow-xs">
+  <header class="bg-white border-b border-accent shadow-xs">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
       <div class="flex items-center justify-between h-20">
 
@@ -81,38 +112,22 @@
 
           <!-- Navigation Links -->
           <nav class="hidden md:flex items-center gap-1 xl:gap-2">
-            <button onclick="switchTab('home')" id="nav-home" class="nav-btn flex items-center gap-2 px-3.5 py-2 rounded-lg text-sm font-semibold transition-colors bg-primary/10 text-primary">
-              <i data-lucide="layout-grid" class="w-4 h-4 text-primary"></i>
-              <span>صفحه اصلی و راهنما</span>
+            <button onclick="switchTab('home')" class="px-3.5 py-2 rounded-lg text-sm font-semibold transition-colors text-graphite hover:text-primary hover:bg-slate-50">
+              <span>دسته بندی کسب و کارها</span>
             </button>
-            <button onclick="switchTab('invitation')" id="nav-invitation" class="nav-btn flex items-center gap-2 px-3.5 py-2 rounded-lg text-sm font-semibold transition-colors text-graphite hover:text-primary hover:bg-slate-50">
-              <i data-lucide="sparkles" class="w-4 h-4 text-secondary"></i>
-              <span>کارت دعوت دیجیتال & RSVP</span>
+            <button onclick="switchTab('home')" class="px-3.5 py-2 rounded-lg text-sm font-semibold transition-colors text-graphite hover:text-primary hover:bg-slate-50">
+              <span>برنامه ریزی و چک لیست ها</span>
             </button>
-            <button onclick="switchTab('tools')" id="nav-tools" class="nav-btn flex items-center gap-2 px-3.5 py-2 rounded-lg text-sm font-semibold transition-colors text-graphite hover:text-primary hover:bg-slate-50">
-              <i data-lucide="bot" class="w-4 h-4 text-secondary"></i>
-              <span>دستیار AI & مدیریت بودجه</span>
+            <button onclick="switchTab('tools')" class="px-3.5 py-2 rounded-lg text-sm font-semibold transition-colors text-graphite hover:text-primary hover:bg-slate-50">
+              <span>تست ها و دستیار AI</span>
             </button>
-            <button onclick="switchTab('vendor')" id="nav-vendor" class="nav-btn flex items-center gap-2 px-3.5 py-2 rounded-lg text-sm font-semibold transition-colors text-graphite hover:text-primary hover:bg-slate-50">
-              <i data-lucide="store" class="w-4 h-4 text-secondary"></i>
-              <span>پنل تامین‌کننده</span>
-            </button>
-            <button onclick="switchTab('seating')" id="nav-seating" class="nav-btn flex items-center gap-2 px-3.5 py-2 rounded-lg text-sm font-semibold transition-colors text-graphite hover:text-primary hover:bg-slate-50">
-              <i data-lucide="users" class="w-4 h-4 text-secondary"></i>
-              <span>چیدمان صندلی‌ها</span>
-            </button>
-            <button onclick="switchTab('messages')" id="nav-messages" class="nav-btn flex items-center gap-2 px-3.5 py-2 rounded-lg text-sm font-semibold transition-colors text-graphite hover:text-primary hover:bg-slate-50">
-              <i data-lucide="message-square" class="w-4 h-4 text-secondary"></i>
-              <span>گفتگوی مستقیم</span>
-            </button>
-            <button onclick="switchTab('admin')" id="nav-admin" class="nav-btn flex items-center gap-2 px-3.5 py-2 rounded-lg text-sm font-semibold transition-colors text-graphite hover:text-primary hover:bg-slate-50">
-              <i data-lucide="shield-check" class="w-4 h-4 text-secondary"></i>
-              <span>پنل مدیریت ارشد</span>
+            <button onclick="openInquiryModal('کلی', 'استعلام قیمت کلی')" class="px-3.5 py-2 rounded-lg text-sm font-semibold transition-colors text-graphite hover:text-primary hover:bg-slate-50">
+              <span>استعلام قیمت آنلاین</span>
             </button>
           </nav>
         </div>
 
-        <!-- Quick Action / Inquiry CTA & Vendor Onboarding CTA -->
+        <!-- Auth Buttons & Vendor Onboarding CTA -->
         <div class="flex items-center gap-3">
           <button onclick="toggleVendorModalStatic(true)" class="bg-primary/10 hover:bg-primary/20 text-primary border border-primary/30 px-4 py-2.5 rounded-xl text-xs sm:text-sm font-bold transition-all flex items-center gap-1.5">
             <i data-lucide="building-2" class="w-4 h-4"></i>
@@ -133,7 +148,7 @@
   <main class="flex-1 max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-8 space-y-12">
 
     <!-- ========================================== -->
-    <!-- TAB 1: HOME PAGE & VENDOR DIRECTORY SECTION -->
+    <!-- VIEW 1: MAIN LANDING PAGE VIEW            -->
     <!-- ========================================== -->
     <div id="tab-home" class="tab-content space-y-12">
 
@@ -220,9 +235,9 @@
           <div>
             <h2 class="text-2xl font-bold text-graphite flex items-center gap-2">
               <i data-lucide="building" class="w-6 h-6 text-primary"></i>
-              <span>دسته بندی و تالارهای برتر</span>
+              <span>دسته بندی و تامین‌کنندگان برتر</span>
             </h2>
-            <p class="text-xs text-secondary mt-1">تامین‌کنندگان تایید شده با امکان استعلام قیمت مستقیم</p>
+            <p class="text-xs text-secondary mt-1">امکان مشاهده پروفایل عمومی، نمونه‌کارها و استعلام قیمت مستقیم</p>
           </div>
 
           <div class="flex items-center gap-2">
@@ -248,7 +263,7 @@
                 <i data-lucide="check-square" class="w-6 h-6 text-primary"></i>
                 <span>زمان‌بندی و چک‌لیست حرفه‌ای عروسی</span>
               </h2>
-              <p class="text-xs text-secondary mt-1">مدیریت کرونولوژیک (زمان‌بندی‌شده) تمامی اقدامات از ۱۲ ماه قبل تا شب عروسی</p>
+              <p class="text-xs text-secondary mt-1">مدیریت کرونولوژیک تمامی اقدامات از ۱۲ ماه قبل تا شب عروسی</p>
             </div>
 
             <button onclick="toggleNewTaskModal(true)" class="bg-primary hover:bg-emerald-900 text-white px-4 py-2.5 rounded-xl text-xs font-bold transition-all flex items-center gap-2 shadow-xs">
@@ -288,688 +303,201 @@
               <!-- Populated via JS -->
             </div>
           </div>
-
-          <!-- Status Sub-filter -->
-          <div class="flex flex-wrap items-center gap-2 pt-2 border-t border-accent/50 text-xs">
-            <span class="font-bold text-secondary flex items-center gap-1 ml-2">
-              <i data-lucide="filter" class="w-3.5 h-3.5"></i> وضعیت نمایش:
-            </span>
-            <button onclick="setChecklistStatusFilter('all')" id="st-filter-all" class="px-3 py-1.5 rounded-lg font-semibold transition-all bg-secondary text-white">همه کارهای این بخش</button>
-            <button onclick="setChecklistStatusFilter('pending')" id="st-filter-pending" class="px-3 py-1.5 rounded-lg font-semibold transition-all bg-slate-100 text-graphite hover:bg-slate-200">در حال انجام (انجام نشده)</button>
-            <button onclick="setChecklistStatusFilter('completed')" id="st-filter-completed" class="px-3 py-1.5 rounded-lg font-semibold transition-all bg-slate-100 text-graphite hover:bg-slate-200">تکمیل شده</button>
-            <button onclick="setChecklistStatusFilter('urgent')" id="st-filter-urgent" class="px-3 py-1.5 rounded-lg font-semibold transition-all bg-slate-100 text-graphite hover:bg-slate-200">فقط کارهای فوری ⚠️</button>
-          </div>
         </div>
 
         <!-- Task Timeline Render -->
         <div id="checklist-timeline-container" class="space-y-8">
           <!-- Rendered via JS -->
         </div>
-
-        <!-- Add Custom Task Modal -->
-        <div id="new-task-modal" class="hidden fixed inset-0 z-50 bg-black/50 backdrop-blur-xs flex items-center justify-center p-4">
-          <div class="bg-white border border-accent rounded-3xl p-6 w-full max-w-lg shadow-2xl space-y-6">
-            <div class="flex items-center justify-between border-b border-accent pb-4">
-              <h3 class="text-base font-bold text-graphite flex items-center gap-2">
-                <i data-lucide="plus" class="w-5 h-5 text-primary"></i>
-                <span>افزودن اقدام شخصی جدید</span>
-              </h3>
-              <button onclick="toggleNewTaskModal(false)" class="text-secondary hover:text-graphite p-1 rounded-lg">
-                <i data-lucide="x" class="w-5 h-5"></i>
-              </button>
-            </div>
-
-            <form onsubmit="handleAddChecklistTask(event)" class="space-y-4 text-xs font-bold text-graphite">
-              <div class="space-y-1.5">
-                <label>عنوان اقدام یا وظیفه:</label>
-                <input type="text" id="new-task-title" required placeholder="مثلاً: هماهنگی خیاط لباس مادرزن..." class="w-full p-3 rounded-xl border border-accent text-xs font-semibold focus:outline-none focus:border-primary">
-              </div>
-
-              <div class="space-y-1.5">
-                <label>بازه زمانی (مرحله):</label>
-                <select id="new-task-tf" class="w-full p-3 rounded-xl border border-accent text-xs font-semibold focus:outline-none focus:border-primary bg-white">
-                  <option value="۱۲ تا ۹ ماه قبل">۱۲ تا ۹ ماه قبل</option>
-                  <option value="۹ تا ۶ ماه قبل">۹ تا ۶ ماه قبل</option>
-                  <option value="۶ تا ۳ ماه قبل">۶ تا ۳ ماه قبل</option>
-                  <option value="۳ تا ۱ ماه قبل">۳ تا ۱ ماه قبل</option>
-                  <option value="۱ هفته قبل">۱ هفته قبل</option>
-                  <option value="روز عروسی">روز عروسی</option>
-                </select>
-              </div>
-
-              <div class="space-y-1.5">
-                <label>مهلت انجام (اختیاری):</label>
-                <input type="text" id="new-task-date" placeholder="مثلاً: تا آخر ماه یا ۲ هفته قبل..." class="w-full p-3 rounded-xl border border-accent text-xs font-semibold focus:outline-none focus:border-primary">
-              </div>
-
-              <div class="flex items-center gap-2 pt-2">
-                <input type="checkbox" id="new-task-urgent" class="rounded text-rose-600 focus:ring-rose-500 w-4 h-4 cursor-pointer">
-                <label for="new-task-urgent" class="cursor-pointer text-xs text-rose-700 flex items-center gap-1">
-                  <i data-lucide="alert-circle" class="w-4 h-4"></i>
-                  این کار فوری و حیاتی است (نیاز به هشدار ویژه)
-                </label>
-              </div>
-
-              <div class="flex justify-end gap-3 pt-4 border-t border-accent">
-                <button type="button" onclick="toggleNewTaskModal(false)" class="px-4 py-2.5 rounded-xl border border-accent text-secondary hover:bg-slate-100 font-bold">انصراف</button>
-                <button type="submit" class="px-5 py-2.5 rounded-xl bg-primary hover:bg-emerald-900 text-white font-bold shadow-xs">ثبت در چک‌لیست</button>
-              </div>
-            </form>
-          </div>
-        </div>
       </section>
 
     </div>
 
     <!-- ========================================== -->
-    <!-- TAB 2: DIGITAL INVITATION & RSVP MODULE     -->
+    <!-- VIEW 2: VENDOR PUBLIC PROFILE VIEW        -->
     <!-- ========================================== -->
-    <div id="tab-invitation" class="tab-content hidden space-y-8">
+    <div id="tab-vendor-profile" class="tab-content hidden space-y-8">
 
-      <!-- CUSTOM URL BANNER -->
-      <div class="bg-white border border-accent rounded-3xl p-6 shadow-xs flex flex-col sm:flex-row items-center justify-between gap-4">
-        <div>
-          <div class="inline-flex items-center gap-1.5 bg-primary/10 text-primary text-xs font-bold px-3 py-1 rounded-full mb-1">
-            <i data-lucide="sparkles" class="w-3.5 h-3.5"></i>
-            <span>کارت دعوت دیجیتال هوشمند</span>
-          </div>
-          <h2 class="text-xl font-bold text-graphite">لندینگ پیج اختصاصی: علی و سارا</h2>
-          <p class="text-xs text-secondary mt-0.5" dir="ltr">aroosito.com/invitation/ali-sara</p>
+      <!-- Hero Cover & Logo Header -->
+      <div class="bg-white border border-accent rounded-3xl overflow-hidden shadow-xs relative">
+        <div class="h-64 sm:h-80 w-full relative bg-slate-800">
+          <img id="vp-cover" src="https://images.unsplash.com/photo-1519167758481-83f550bb49b3?auto=format&fit=crop&w=1600&q=80" alt="کاور کسب‌وکار" class="w-full h-full object-cover opacity-90">
+          <div class="absolute inset-0 bg-gradient-to-t from-graphite/90 via-graphite/30 to-transparent"></div>
         </div>
 
-        <div class="flex items-center gap-2">
-          <button onclick="alert('لینک کارت دعوت در حافظه کپی شد.')" class="flex items-center gap-2 bg-primary/10 hover:bg-primary/20 text-primary border border-primary/20 px-4 py-2.5 rounded-xl text-xs font-bold transition-all">
-            <i data-lucide="copy" class="w-4 h-4"></i>
-            <span>کپی لینک کارت دعوت</span>
-          </button>
+        <div class="p-6 sm:p-8 relative flex flex-col md:flex-row md:items-end justify-between gap-6 -mt-20">
+          <div class="flex flex-col sm:flex-row items-center sm:items-end gap-5">
+            <div class="w-28 h-28 sm:w-36 sm:h-36 rounded-3xl border-4 border-white bg-white shadow-xl overflow-hidden shrink-0">
+              <img id="vp-logo" src="https://images.unsplash.com/photo-1519167758481-83f550bb49b3?auto=format&fit=crop&w=400&q=80" alt="لوگو" class="w-full h-full object-cover">
+            </div>
 
-          <button id="music-toggle-btn" onclick="toggleMusic()" class="flex items-center gap-2 px-4 py-2.5 rounded-xl text-xs font-bold transition-all border bg-bgCustom border-accent text-graphite hover:border-primary">
-            <i data-lucide="volume-x" class="w-4 h-4 text-secondary"></i>
-            <span id="music-btn-text">پخش موزیک لایت عروسی</span>
-          </button>
+            <div class="space-y-2 text-center sm:text-right text-graphite md:text-white">
+              <div class="flex items-center justify-center sm:justify-start gap-2 flex-wrap">
+                <h1 id="vp-name" class="text-2xl sm:text-3xl font-black">باغ تالار تشریفاتی زمرد</h1>
+                <span id="vp-badge" class="bg-primary text-white text-xs font-bold px-3 py-1 rounded-full inline-flex items-center gap-1 shadow-sm">
+                  <i data-lucide="shield-check" class="w-4 h-4"></i>
+                  <span>تاییدیه رسمی عروسی تو</span>
+                </span>
+              </div>
+
+              <div class="flex items-center justify-center sm:justify-start gap-4 text-xs font-medium text-slate-200">
+                <span id="vp-category" class="bg-white/20 backdrop-blur-xs px-2.5 py-1 rounded-lg">تالار و باغ تشریفات</span>
+                <span id="vp-rating" class="flex items-center gap-1 text-yellow-300 font-bold">
+                  <i data-lucide="star" class="w-4 h-4 fill-yellow-300"></i> ۴.۹ (۴۸ نظر)
+                </span>
+              </div>
+            </div>
+          </div>
+
+          <div class="flex items-center justify-center gap-3">
+            <button onclick="openInquiryModal(1, 'باغ تالار تشریفاتی زمرد')" class="bg-primary hover:bg-emerald-900 text-white font-bold px-6 py-3 rounded-2xl text-xs sm:text-sm shadow-lg transition-all flex items-center gap-2">
+              <i data-lucide="message-square-quote" class="w-4 h-4"></i>
+              <span>استعلام قیمت آنلاین</span>
+            </button>
+          </div>
+        </div>
+
+        <!-- Info Bar -->
+        <div class="border-t border-accent bg-bgCustom p-6 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 text-xs">
+          <div class="flex items-center gap-3">
+            <div class="w-9 h-9 rounded-xl bg-primary/10 text-primary flex items-center justify-center shrink-0">
+              <i data-lucide="clock" class="w-5 h-5"></i>
+            </div>
+            <div>
+              <span class="block font-bold text-graphite">ساعات کاری و بازدید:</span>
+              <span id="vp-hours" class="text-secondary font-semibold">همه روزه از ۱۰:۰۰ الی ۲۱:۰۰</span>
+            </div>
+          </div>
+
+          <div class="flex items-center gap-3">
+            <div class="w-9 h-9 rounded-xl bg-primary/10 text-primary flex items-center justify-center shrink-0">
+              <i data-lucide="phone" class="w-5 h-5"></i>
+            </div>
+            <div>
+              <span class="block font-bold text-graphite">تلفن تماس مستقیم:</span>
+              <span id="vp-phone" class="text-secondary font-semibold dir-ltr">۰۲۱-۴۴۵۵۶۶۷۷</span>
+            </div>
+          </div>
+
+          <div class="flex items-center gap-3">
+            <div class="w-9 h-9 rounded-xl bg-primary/10 text-primary flex items-center justify-center shrink-0">
+              <i data-lucide="instagram" class="w-5 h-5"></i>
+            </div>
+            <div>
+              <span class="block font-bold text-graphite">اینستاگرام رسمی:</span>
+              <a id="vp-instagram" href="https://instagram.com" target="_blank" class="text-primary font-bold hover:underline">@zomorrod_hall</a>
+            </div>
+          </div>
+
+          <div class="flex items-center gap-3">
+            <div class="w-9 h-9 rounded-xl bg-primary/10 text-primary flex items-center justify-center shrink-0">
+              <i data-lucide="map-pin" class="w-5 h-5"></i>
+            </div>
+            <div class="min-w-0">
+              <span class="block font-bold text-graphite">آدرس کامل:</span>
+              <span id="vp-address" class="text-secondary font-semibold truncate block">تهران، احمدآباد مستوفی، خیابان صنوبر</span>
+            </div>
+          </div>
         </div>
       </div>
 
-      <!-- INVITATION HERO CARD -->
-      <div class="relative bg-white border border-accent rounded-3xl overflow-hidden shadow-lg">
-        <div class="relative h-80 sm:h-96 w-full overflow-hidden bg-slate-900">
-          <img src="https://images.unsplash.com/photo-1519741497674-611481863552?auto=format&fit=crop&w=1600&q=80" alt="علی و سارا" class="w-full h-full object-cover opacity-80">
-          <div class="absolute inset-0 bg-gradient-to-t from-graphite via-graphite/40 to-transparent"></div>
-
-          <div class="absolute bottom-8 right-8 left-8 text-white text-center space-y-3">
-            <span class="text-xs sm:text-sm font-semibold tracking-widest text-accent uppercase">با افتخار شما را دعوت می‌نماییم به پیوند</span>
-            <h2 class="text-3xl sm:text-5xl font-black tracking-tight text-white flex items-center justify-center gap-2">
-              <span>علی</span>
-              <i data-lucide="heart" class="w-8 h-8 text-rose-400 fill-rose-400"></i>
-              <span>سارا</span>
+      <!-- Photo Lightbox Gallery (نمونه‌کارها) -->
+      <section class="bg-white border border-accent rounded-3xl p-6 sm:p-8 shadow-xs space-y-6">
+        <div class="flex items-center justify-between border-b border-accent pb-4">
+          <div>
+            <h2 class="text-xl font-bold text-graphite flex items-center gap-2">
+              <i data-lucide="camera" class="w-6 h-6 text-primary"></i>
+              <span>گالری عکس و نمونه‌کارها (Interactive Lightbox)</span>
             </h2>
-            <p class="text-xs sm:text-sm text-slate-200 font-medium">پنج‌شنبه ۱۵ شهریور ۱۴۰۳ • ساعت ۱۸:۰۰ الی ۲۴:۰۰</p>
+            <p class="text-xs text-secondary mt-1">روی هر تصویر کلیک کنید تا در نمای لایت‌باکس بزرگنمایی شود</p>
           </div>
+          <span class="text-xs font-bold text-primary bg-primary/10 px-3 py-1.5 rounded-full">۱۲ تصویر</span>
         </div>
 
-        <!-- COUNTDOWN TIMER -->
-        <div class="p-8 bg-bgCustom border-b border-accent text-center space-y-6">
-          <h3 class="text-sm font-bold text-secondary flex items-center justify-center gap-2">
-            <i data-lucide="clock" class="w-4 h-4 text-primary"></i>
-            <span>شمارش معکوس تا آغاز جشن رویایی</span>
-          </h3>
-
-          <div class="grid grid-cols-4 gap-3 sm:gap-6 max-w-lg mx-auto">
-            <div class="bg-white border border-accent rounded-2xl p-3 shadow-xs">
-              <span id="timer-days" class="block text-2xl sm:text-3xl font-black text-primary">۴۵</span>
-              <span class="text-[11px] text-secondary font-medium">روز</span>
-            </div>
-            <div class="bg-white border border-accent rounded-2xl p-3 shadow-xs">
-              <span id="timer-hours" class="block text-2xl sm:text-3xl font-black text-primary">۱۴</span>
-              <span class="text-[11px] text-secondary font-medium">ساعت</span>
-            </div>
-            <div class="bg-white border border-accent rounded-2xl p-3 shadow-xs">
-              <span id="timer-mins" class="block text-2xl sm:text-3xl font-black text-primary">۳۲</span>
-              <span class="text-[11px] text-secondary font-medium">دقیقه</span>
-            </div>
-            <div class="bg-white border border-accent rounded-2xl p-3 shadow-xs">
-              <span id="timer-secs" class="block text-2xl sm:text-3xl font-black text-primary">۱۰</span>
-              <span class="text-[11px] text-secondary font-medium">ثانیه</span>
-            </div>
-          </div>
-
-          <div class="pt-2">
-            <button onclick="openRsvpModal()" class="bg-primary hover:bg-primary-hover text-white px-8 py-3.5 rounded-2xl font-bold text-sm shadow-lg transition-all transform hover:-translate-y-0.5 inline-flex items-center gap-2">
-              <i data-lucide="check-circle-2" class="w-5 h-5"></i>
-              <span>اعلام حضور و ثبت پاسخ RSVP</span>
-            </button>
-          </div>
-        </div>
-
-        <!-- LOCATION MAP -->
-        <div class="p-8 grid grid-cols-1 md:grid-cols-2 gap-8 items-center bg-white">
-          <div class="space-y-4">
-            <div class="flex items-center gap-2 text-primary font-bold text-lg">
-              <i data-lucide="map-pin" class="w-6 h-6 text-primary"></i>
-              <span>محل برگزاری جشن</span>
-            </div>
-            <h4 class="text-base font-bold text-graphite">باغ تالار تشریفاتی زمرد</h4>
-            <p class="text-xs text-graphite/80 leading-relaxed">
-              تهران، احمدآباد مستوفی، خیابان صنوبر، پلاک ۴۵ (ورودی اختصاصی با پارکینگ مجهز).
-            </p>
-          </div>
-
-          <div class="aspect-16/9 rounded-2xl overflow-hidden border-2 border-accent relative bg-slate-100 flex items-center justify-center shadow-inner">
-            <img src="https://images.unsplash.com/photo-1526778548025-fa2f459cd5c1?auto=format&fit=crop&w=800&q=80" alt="نقشه تالار" class="w-full h-full object-cover opacity-70">
-            <div class="absolute bg-white/90 backdrop-blur-xs px-4 py-2 rounded-xl border border-accent shadow-md flex items-center gap-2 text-xs font-bold text-primary">
-              <i data-lucide="map-pin" class="w-4 h-4 text-rose-600 fill-rose-600"></i>
-              <span>باغ تالار زمرد</span>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <!-- COUPLE'S RSVP MANAGEMENT COUNTERS -->
-      <div class="bg-white border border-accent rounded-3xl p-8 shadow-xs space-y-6">
-        <div class="flex flex-col sm:flex-row justify-between sm:items-center gap-4 border-b border-accent pb-4">
-          <div>
-            <h3 class="text-xl font-bold text-graphite flex items-center gap-2">
-              <i data-lucide="users" class="w-6 h-6 text-primary"></i>
-              <span>داشبورد و آمار پاسخ‌ مهمانان (RSVP)</span>
-            </h3>
-            <p class="text-xs text-secondary mt-0.5">مدیریت آنلاین شرکت‌کنندگان و رژیم‌های غذایی</p>
-          </div>
-          <span class="text-xs font-bold text-primary bg-primary/10 px-3 py-1.5 rounded-full">
-            مجموع مدعوین: ۱۵۰ نفر
-          </span>
-        </div>
-
-        <div class="grid grid-cols-1 sm:grid-cols-3 gap-6">
-          <div class="bg-emerald-50 border border-emerald-200 p-5 rounded-2xl flex items-center justify-between">
-            <div>
-              <span class="text-xs text-emerald-800 font-bold">تعداد قطعی شرکت‌کنندگان</span>
-              <span id="rsvp-attending-count" class="block text-2xl font-black text-emerald-900 mt-1">۳ نفر</span>
-            </div>
-            <div class="w-10 h-10 rounded-xl bg-emerald-200 text-emerald-800 flex items-center justify-center">
-              <i data-lucide="check-circle-2" class="w-6 h-6"></i>
-            </div>
-          </div>
-
-          <div class="bg-rose-50 border border-rose-200 p-5 rounded-2xl flex items-center justify-between">
-            <div>
-              <span class="text-xs text-rose-800 font-bold">عذرخواهی کرده‌ها (عدم حضور)</span>
-              <span id="rsvp-declined-count" class="block text-2xl font-black text-rose-900 mt-1">۱ نفر</span>
-            </div>
-            <div class="w-10 h-10 rounded-xl bg-rose-200 text-rose-800 flex items-center justify-center">
-              <i data-lucide="x-circle" class="w-6 h-6"></i>
-            </div>
-          </div>
-
-          <div class="bg-amber-50 border border-amber-200 p-5 rounded-2xl flex items-center justify-between">
-            <div>
-              <span class="text-xs text-amber-800 font-bold">در انتظار پاسخ</span>
-              <span id="rsvp-pending-count" class="block text-2xl font-black text-amber-900 mt-1">۱۴۶ نفر</span>
-            </div>
-            <div class="w-10 h-10 rounded-xl bg-amber-200 text-amber-800 flex items-center justify-center">
-              <i data-lucide="clock" class="w-6 h-6"></i>
-            </div>
-          </div>
-        </div>
-
-        <div class="space-y-3 pt-4">
-          <h4 class="text-sm font-bold text-graphite">آخرین پاسخ‌های ثبت شده:</h4>
-          <div id="rsvp-list-container" class="space-y-2">
-            <!-- Populated via JS -->
-          </div>
-        </div>
-      </div>
-
-    </div>
-
-    <!-- ========================================== -->
-    <!-- TAB 3: AI ASSISTANT & ADVANCED BUDGET MODULE -->
-    <!-- ========================================== -->
-    <div id="tab-tools" class="tab-content hidden space-y-8">
-
-      <!-- AI ASSISTANT QUIZ SECTION -->
-      <section class="bg-white border border-accent rounded-3xl p-8 shadow-xs space-y-6">
-        <div class="flex items-center gap-3 border-b border-accent pb-4">
-          <div class="w-12 h-12 rounded-2xl bg-primary/10 flex items-center justify-center text-primary">
-            <i data-lucide="bot" class="w-6 h-6"></i>
-          </div>
-          <div>
-            <h2 class="text-xl font-bold text-graphite">موتور هوش مصنوعی تخصیص بهینه بودجه عروسی</h2>
-            <p class="text-xs text-secondary">پیشنهاد دقیق درصد هزینه‌کرد تالار، آتلیه، میکاپ و تشریفات بر اساس بودجه کل شما</p>
-          </div>
-        </div>
-
-        <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
-
-          <div class="lg:col-span-6 space-y-4 bg-bgCustom p-6 rounded-2xl border border-accent">
-            <div>
-              <label class="block text-xs font-bold text-graphite mb-1">۱. کل بودجه در نظر گرفته شده (تومان):</label>
-              <input type="number" id="ai-budget-input" value="300000000" step="10000000" oninput="runAiAllocation()" class="w-full bg-white border border-accent rounded-xl p-3 text-sm font-bold text-primary focus:outline-none focus:border-primary">
-            </div>
-
-            <div class="grid grid-cols-2 gap-3">
-              <div>
-                <label class="block text-xs font-bold text-graphite mb-1">۲. تعداد مهمانان:</label>
-                <input type="number" id="ai-guests-input" value="250" oninput="runAiAllocation()" class="w-full bg-white border border-accent rounded-xl p-3 text-xs font-semibold focus:outline-none focus:border-primary">
-              </div>
-
-              <div>
-                <label class="block text-xs font-bold text-graphite mb-1">۳. شهر برگزاری:</label>
-
-                <select id="ai-city-input" class="w-full bg-white border border-accent rounded-xl p-3 text-xs font-semibold focus:outline-none focus:border-primary">
-                  <option value="تهران">تهران</option>
-                  <option value="شیراز">شیراز</option>
-                  <option value="اصفهان">اصفهان</option>
-                </select>
-              </div>
-            </div>
-
-            <div>
-              <label class="block text-xs font-bold text-graphite mb-1">۴. سبک مراسم:</label>
-              <select id="ai-style-input" onchange="runAiAllocation()" class="w-full bg-white border border-accent rounded-xl p-3 text-xs font-semibold focus:outline-none focus:border-primary">
-                <option value="classic">کلاسیک و مجلل</option>
-                <option value="rustic">روستیک و فضای باز</option>
-                <option value="modern">مدرن و مینی‌مال</option>
-              </select>
-            </div>
-
-            <button onclick="runAiAllocation()" class="w-full bg-primary hover:bg-primary-hover text-white py-3 rounded-xl text-xs font-bold shadow-md transition-colors flex items-center justify-center gap-2">
-              <i data-lucide="sparkles" class="w-4 h-4"></i>
-              <span>محاسبه مجدد تخصیص هوشمند</span>
-            </button>
-          </div>
-
-          <!-- RESULT ALLOCATION -->
-          <div class="lg:col-span-6 bg-primary text-white p-6 rounded-2xl shadow-md space-y-4">
-            <div class="flex justify-between items-center border-b border-white/20 pb-3">
-              <span class="text-xs font-bold text-accent">تفکیک پیشنهادی هوش مصنوعی</span>
-              <span class="text-xs bg-white/20 px-2.5 py-1 rounded-full font-bold">پیشنهاد هوشمند</span>
-            </div>
-
-            <div class="space-y-3 text-xs font-medium">
-              <div class="flex justify-between items-center p-2.5 bg-white/10 rounded-xl">
-                <span>🏰 تالار و تشریفات پذیرایی (۴۰٪):</span>
-                <span id="ai-res-venue" class="font-bold text-sm">۱۲۰,۰۰۰,۰۰۰ تومان</span>
-              </div>
-              <div class="flex justify-between items-center p-2.5 bg-white/10 rounded-xl">
-                <span>📸 آتلیه و فیلمبرداری سینمایی (۲۰٪):</span>
-                <span id="ai-res-photo" class="font-bold text-sm">۶۰,۰۰۰,۰۰۰ تومان</span>
-              </div>
-              <div class="flex justify-between items-center p-2.5 bg-white/10 rounded-xl">
-                <span>👗 لباس عروس، داماد و میکاپ (۱۵٪):</span>
-                <span id="ai-res-attire" class="font-bold text-sm">۴۵,۰۰۰,۰۰۰ تومان</span>
-              </div>
-              <div class="flex justify-between items-center p-2.5 bg-white/10 rounded-xl">
-                <span>🎵 موزیک زنده و نورپردازی (۱۵٪):</span>
-                <span id="ai-res-music" class="font-bold text-sm">۴۵,۰۰۰,۰۰۰ تومان</span>
-              </div>
-              <div class="flex justify-between items-center p-2.5 bg-white/10 rounded-xl">
-                <span>💐 گل‌آرایی و متفرقه (۱۰٪):</span>
-                <span id="ai-res-decor" class="font-bold text-sm">۳۰,۰۰۰,۰۰۰ تومان</span>
-              </div>
-            </div>
-          </div>
-
-        </div>
-      </section>
-
-      <!-- ADVANCED DYNAMIC BUDGET TRACKER TABLE -->
-      <section class="bg-white border border-accent rounded-3xl p-8 shadow-xs space-y-6">
-        <div class="flex flex-col sm:flex-row justify-between sm:items-center gap-4 border-b border-accent pb-4">
-          <div>
-            <h3 class="text-xl font-bold text-graphite flex items-center gap-2">
-              <i data-lucide="file-spreadsheet" class="w-6 h-6 text-primary"></i>
-              <span>جدول پیشرفته مدیریت و ردیابی بودجه عروسی</span>
-            </h3>
-            <p class="text-xs text-secondary mt-0.5">ثبت بیعانه‌ها، هزینه واقعی و محاسبه لحظه‌ای باقیمانده</p>
-          </div>
-
-          <button onclick="alert('فایل اکسل/PDF گزارش بودجه با موفقیت دانلود شد.')" class="bg-primary/10 hover:bg-primary/20 text-primary border border-primary/20 px-4 py-2.5 rounded-xl text-xs font-bold transition-all flex items-center gap-1.5">
-            <i data-lucide="download" class="w-4 h-4"></i>
-            <span>دانلود خروجی (Excel / PDF)</span>
-          </button>
-        </div>
-
-        <!-- PROGRESS BAR -->
-        <div class="space-y-2">
-          <div class="flex justify-between text-xs font-bold">
-            <span class="text-graphite">میزان مصرف بودجه کل:</span>
-            <span id="budget-progress-percent" class="text-primary font-black">۹۸٪ مصرف شده</span>
-          </div>
-          <div class="w-full h-3 bg-slate-100 rounded-full overflow-hidden border border-accent">
-            <div id="budget-progress-bar" class="h-full bg-primary transition-all duration-300" style="width: 98%"></div>
-          </div>
-        </div>
-
-        <!-- BUDGET TABLE -->
-        <div class="overflow-x-auto">
-          <table class="w-full text-right text-xs">
-            <thead class="bg-bgCustom text-secondary border-b border-accent font-bold">
-              <tr>
-                <th class="p-3">دسته‌بندی / عنوان</th>
-                <th class="p-3">بودجه اولیه (تومان)</th>
-                <th class="p-3">هزینه واقعی (تومان)</th>
-                <th class="p-3">بیعانه پرداختی (تومان)</th>
-                <th class="p-3">باقیمانده</th>
-              </tr>
-            </thead>
-            <tbody id="budget-table-body" class="divide-y divide-accent/60 font-medium">
-              <!-- Populated via JS -->
-            </tbody>
-          </table>
-        </div>
-      </section>
-
-    </div>
-
-    <!-- ========================================== -->
-    <!-- TAB 4: VENDOR DASHBOARD PANEL -->
-    <!-- ========================================== -->
-    <div id="tab-vendor" class="tab-content hidden space-y-8">
-
-      <div class="bg-white border border-accent rounded-3xl p-6 shadow-xs flex flex-col sm:flex-row justify-between sm:items-center gap-4">
-        <div>
-          <span class="text-xs font-bold text-secondary">پنل مدیریت اختصاصی تامین‌کنندگان</span>
-          <h2 class="text-2xl font-bold text-graphite flex items-center gap-2">
-            <span>کسب و کار: باغ تالار تشریفاتی زمرد</span>
-            <span class="inline-flex items-center gap-1 text-xs bg-primary text-white px-2.5 py-0.5 rounded-full font-semibold">
-              <i data-lucide="shield-check" class="w-3.5 h-3.5"></i>
-              <span>دارای تاییدیه رسمی</span>
-            </span>
-          </h2>
-        </div>
-
-        <div class="flex items-center gap-3">
-          <label class="flex items-center gap-2 text-xs font-bold text-graphite bg-bgCustom px-3.5 py-2 rounded-xl border border-accent cursor-pointer">
-            <input type="checkbox" id="sms-toggle" checked onchange="alert('تنظیمات دریافت پیامک فوری مشتری به‌روزرسانی شد.')" class="rounded text-primary focus:ring-primary w-4 h-4">
-            <span>دریافت پیامک فوری مشتری جدید</span>
-          </label>
-        </div>
-      </div>
-
-      <!-- Vendor Metrics -->
-      <div class="grid grid-cols-1 sm:grid-cols-3 gap-6">
-        <div class="bg-white p-5 rounded-2xl border border-accent shadow-xs flex items-center justify-between">
-          <div>
-            <span class="text-xs text-secondary font-medium">کل بازدید پروفایل</span>
-            <span class="block text-2xl font-black text-graphite mt-1">۳,۴۵۰</span>
-          </div>
-          <div class="w-10 h-10 rounded-xl bg-primary/10 text-primary flex items-center justify-center">
-            <i data-lucide="eye" class="w-5 h-5"></i>
-          </div>
-        </div>
-
-        <div class="bg-white p-5 rounded-2xl border border-accent shadow-xs flex items-center justify-between">
-          <div>
-            <span class="text-xs text-secondary font-medium">استعلام‌های جدید</span>
-            <span class="block text-2xl font-black text-primary mt-1">۱۲ درخواست</span>
-          </div>
-          <div class="w-10 h-10 rounded-xl bg-primary/10 text-primary flex items-center justify-center">
-            <i data-lucide="message-square-quote" class="w-5 h-5"></i>
-          </div>
-        </div>
-
-        <div class="bg-white p-5 rounded-2xl border border-accent shadow-xs flex items-center justify-between">
-          <div>
-            <span class="text-xs text-secondary font-medium">نرخ رزرو موثر</span>
-            <span class="block text-2xl font-black text-graphite mt-1">۷۴٪</span>
-          </div>
-          <div class="w-10 h-10 rounded-xl bg-primary/10 text-primary flex items-center justify-center">
-            <i data-lucide="trending-up" class="w-5 h-5"></i>
-          </div>
-        </div>
-      </div>
-
-      <!-- Persian Booking Calendar Simulator -->
-      <div class="bg-white border border-accent rounded-3xl p-6 shadow-xs space-y-4">
-        <div class="flex items-center justify-between border-b border-accent pb-3">
-          <div>
-            <h3 class="text-lg font-bold text-graphite">تقویم رزرو و روزهای پر/خالی (اردیبهشت ۱۴۰۳)</h3>
-            <p class="text-xs text-secondary">روی روزها کلیک کنید تا وضعیت آنها بین "آزاد" (سبز) و "رزرو شده" (قرمز) تغییر کند</p>
-          </div>
-          <div class="flex items-center gap-3 text-xs font-bold">
-            <span class="flex items-center gap-1"><span class="w-3 h-3 rounded-full bg-primary inline-block"></span> آزاد</span>
-            <span class="flex items-center gap-1"><span class="w-3 h-3 rounded-full bg-rose-500 inline-block"></span> رزرو شده</span>
-          </div>
-        </div>
-
-        <div id="calendar-grid" class="grid grid-cols-7 gap-2 text-center">
-          <!-- Calendar Days rendered via JS -->
-        </div>
-      </div>
-
-      <!-- Incoming Inquiries Response Panel -->
-      <div class="bg-white border border-accent rounded-3xl p-6 shadow-xs space-y-4">
-        <h3 class="text-lg font-bold text-graphite border-b border-accent pb-3">استعلام‌های جدید دریافتی از زوج‌ها</h3>
-
-        <div id="inquiry-list" class="space-y-3">
+        <div id="vp-gallery-grid" class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4">
           <!-- Populated via JS -->
         </div>
-      </div>
+      </section>
 
-    </div>
-
-    <!-- ========================================== -->
-    <!-- TAB 5: VISUAL SEATING CHART BUILDER        -->
-    <!-- ========================================== -->
-    <div id="tab-seating" class="tab-content hidden space-y-8">
-
-      <div class="bg-white border border-accent rounded-3xl p-6 shadow-xs flex flex-col sm:flex-row justify-between sm:items-center gap-4">
-        <div>
-          <span class="text-xs font-bold text-secondary">طراح بصری دوبعدی چیدمان سالن</span>
-          <h2 class="text-2xl font-bold text-graphite">نقشه صندلی‌ها و جاینمایی میهمانان</h2>
-        </div>
-
-        <div class="flex items-center gap-2">
-          <button onclick="window.print()" class="bg-bgCustom border border-accent px-4 py-2.5 rounded-xl text-xs font-bold text-graphite flex items-center gap-2">
-            <i data-lucide="printer" class="w-4 h-4 text-secondary"></i>
-            <span>چاپ نقشه</span>
-          </button>
-          <button onclick="alert('خروجی گزارش چیدمان صندلی‌ها برای مدیر تالار ایجاد شد.')" class="bg-primary text-white px-5 py-2.5 rounded-xl text-xs font-bold flex items-center gap-2">
-            <i data-lucide="download" class="w-4 h-4"></i>
-            <span>خروجی لیست میزها برای تالار</span>
-          </button>
-        </div>
-      </div>
-
-      <!-- WORKSPACE CONTAINER -->
-      <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
-
-        <!-- CANVAS AREA -->
-        <div class="lg:col-span-8 bg-white border border-accent rounded-3xl p-6 shadow-xs space-y-4">
-          <div class="flex justify-between items-center border-b border-accent pb-3">
-            <h3 class="text-lg font-bold text-graphite">محیط چیدمان سالن پذیرایی</h3>
-            <span class="text-xs text-secondary">ظرفیت کل: ۲۴ صندلی | پر شده: ۴ نفر</span>
-          </div>
-
-          <div class="relative w-full h-[400px] bg-bgCustom rounded-2xl border-2 border-dashed border-accent p-4 flex flex-col justify-between items-center">
-
-            <!-- STAGE -->
-            <div class="w-48 h-12 bg-amber-100 border-2 border-primary rounded-xl flex items-center justify-center font-bold text-xs text-primary shadow-xs">
-              👑 جایگاه عروس و داماد
-            </div>
-
-            <!-- TABLES GRID -->
-            <div class="grid grid-cols-2 gap-8 w-full max-w-md my-auto">
-              <div class="p-4 bg-white border-2 border-primary rounded-full text-center shadow-md">
-                <span class="block text-xs font-bold text-primary">میز گرد ۱ (VIP)</span>
-                <span class="text-[10px] text-emerald-700 font-bold">۲ / ۸ صندلی</span>
-              </div>
-
-              <div class="p-4 bg-white border-2 border-primary rounded-full text-center shadow-md">
-                <span class="block text-xs font-bold text-primary">میز گرد ۲</span>
-                <span class="text-[10px] text-emerald-700 font-bold">۱ / ۸ صندلی</span>
-              </div>
-            </div>
-
-            <!-- DANCE FLOOR -->
-            <div class="w-64 h-16 bg-slate-100 border-2 border-accent rounded-2xl flex items-center justify-center font-bold text-xs text-secondary">
-              🎵 سن رقص و نورپردازی
-            </div>
-
-          </div>
-        </div>
-
-        <!-- SIDE PANEL GUESTS -->
-        <div class="lg:col-span-4 bg-white border border-accent rounded-3xl p-6 shadow-xs space-y-4">
-          <h3 class="text-base font-bold text-graphite border-b border-accent pb-3">لیست میهمانان</h3>
-
-          <div class="space-y-2 text-xs font-medium">
-            <div class="p-3 bg-bgCustom rounded-xl border border-accent flex justify-between items-center">
-              <div>
-                <span class="font-bold text-graphite block">محمدحسین و همسر</span>
-                <span class="text-[10px] text-secondary">فامیل داماد</span>
-              </div>
-              <span class="bg-emerald-100 text-emerald-800 font-bold px-2 py-0.5 rounded-full text-[10px]">میز گرد ۱</span>
-            </div>
-
-            <div class="p-3 bg-bgCustom rounded-xl border border-accent flex justify-between items-center">
-              <div>
-                <span class="font-bold text-graphite block">دکتر حسینی</span>
-                <span class="text-[10px] text-secondary">فامیل عروس</span>
-              </div>
-              <span class="bg-emerald-100 text-emerald-800 font-bold px-2 py-0.5 rounded-full text-[10px]">میز گرد ۱</span>
-            </div>
-
-            <div class="p-3 bg-bgCustom rounded-xl border border-accent flex justify-between items-center">
-              <div>
-                <span class="font-bold text-graphite block">مهندس احمدی</span>
-                <span class="text-[10px] text-secondary">فامیل داماد</span>
-              </div>
-              <button onclick="alert('به میز گرد ۲ اضافه شد.')" class="bg-primary text-white font-bold px-2.5 py-1 rounded-lg text-[10px]">تخصیص صندلی</button>
-            </div>
-          </div>
-        </div>
-
-      </div>
-
-    </div>
-
-    <!-- ========================================== -->
-    <!-- TAB 6: DIRECT MESSAGING & CHAT MODULE      -->
-    <!-- ========================================== -->
-    <div id="tab-messages" class="tab-content hidden space-y-8">
-
-      <div class="bg-white border border-accent rounded-3xl p-6 shadow-xs flex flex-col sm:flex-row justify-between sm:items-center gap-4">
-        <div>
-          <span class="text-xs font-bold text-secondary">پلتفرم ارتباط مستقیم زوج و تامین‌کننده</span>
-          <h2 class="text-2xl font-bold text-graphite">گفتگوی آنلاین و دریافت پیش‌فاکتور اختصاصی</h2>
-        </div>
-        <span class="bg-primary/10 text-primary font-bold px-3.5 py-1.5 rounded-full text-xs">
-          ارتباط امن و مستقیم
-        </span>
-      </div>
-
-      <div class="bg-white rounded-3xl border border-accent shadow-xs overflow-hidden grid grid-cols-1 md:grid-cols-12 min-h-[500px]">
-
-        <!-- SIDEBAR CONVERSATIONS -->
-        <div class="md:col-span-4 border-l border-accent p-4 space-y-3 bg-slate-50/50">
-          <h3 class="font-bold text-sm text-graphite border-b border-accent pb-2">گفتگوهای فعال شما:</h3>
-
-          <div class="space-y-2">
-            <div class="p-3 bg-white border-2 border-primary rounded-2xl shadow-xs flex items-center gap-3 cursor-pointer">
-              <div class="w-10 h-10 rounded-xl bg-primary/10 text-primary flex items-center justify-center font-bold text-xs">
-                زمرد
-              </div>
-              <div class="flex-1 min-w-0">
-                <h4 class="font-bold text-xs text-graphite truncate">باغ تالار تشریفاتی زمرد</h4>
-                <p class="text-[11px] text-secondary truncate mt-0.5">سلام، پیش‌فاکتور منوی دیس پرس ارسال گردید.</p>
-              </div>
-            </div>
-
-            <div class="p-3 bg-white border border-accent rounded-2xl flex items-center gap-3 cursor-pointer opacity-70">
-              <div class="w-10 h-10 rounded-xl bg-slate-100 text-slate-600 flex items-center justify-center font-bold text-xs">
-                نور
-              </div>
-              <div class="flex-1 min-w-0">
-                <h4 class="font-bold text-xs text-graphite truncate">آتلیه تخصصی نور و تصویر</h4>
-                <p class="text-[11px] text-secondary truncate mt-0.5">پکیج فیلمبرداری سینمایی برای تاریخ ۱۵ تیر آزاد است.</p>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <!-- CHAT AREA -->
-        <div class="md:col-span-8 flex flex-col justify-between p-6 bg-white space-y-4">
-          <div class="border-b border-accent pb-3 flex justify-between items-center">
+      <!-- Map & Location Embed -->
+      <section class="bg-white border border-accent rounded-3xl p-6 sm:p-8 shadow-xs space-y-4">
+        <h3 class="text-lg font-bold text-graphite flex items-center gap-2">
+          <i data-lucide="map-pin" class="w-5 h-5 text-primary"></i>
+          <span>موقعیت مکانی روی نقشه نشان / گوگل</span>
+        </h3>
+        <div class="aspect-21/9 rounded-2xl overflow-hidden border border-accent bg-slate-100 relative flex items-center justify-center">
+          <img src="https://images.unsplash.com/photo-1526778548025-fa2f459cd5c1?auto=format&fit=crop&w=1200&q=80" alt="نقشه نشان" class="w-full h-full object-cover opacity-75">
+          <div class="absolute bg-white/95 backdrop-blur-xs px-6 py-3 rounded-2xl shadow-xl border border-accent flex items-center gap-3">
+            <i data-lucide="map-pin" class="w-6 h-6 text-rose-600 fill-rose-600"></i>
             <div>
-              <h3 class="font-bold text-sm text-graphite">باغ تالار تشریفاتی زمرد</h3>
-              <span class="text-[10px] text-emerald-600 font-bold">پاسخگویی سریع (کمتر از ۱۵ دقیقه)</span>
-            </div>
-            <button onclick="alert('رزرو اولیه صادر شد.')" class="bg-primary/10 text-primary font-bold text-xs px-3 py-1.5 rounded-xl border border-primary/20">
-              درخواست رزرو اولیه تاریخ
-            </button>
-          </div>
-
-          <!-- MESSAGES FEED -->
-          <div id="chat-messages-container" class="space-y-3 max-h-80 overflow-y-auto p-2">
-            <div class="flex flex-col items-start space-y-1">
-              <div class="bg-bgCustom border border-accent p-3 rounded-2xl text-xs max-w-sm">
-                <span class="font-bold text-graphite block mb-1">شما:</span>
-                سلام وقت بخیر، آیا تاریخ ۱۵ شهریور سالن اصلی برای ۲۵۰ مهمان آزاد است؟
-              </div>
-              <span class="text-[9px] text-secondary">۱۰:۳۰</span>
-            </div>
-
-            <div class="flex flex-col items-end space-y-1">
-              <div class="bg-primary text-white p-3 rounded-2xl text-xs max-w-sm shadow-xs">
-                <span class="font-bold block mb-1 text-accent">باغ تالار زمرد:</span>
-                سلام و درود، بله این تاریخ آزاد است. فایل پیش‌فاکتور منو به پیوست تقدیم شد.
-                <div class="mt-2 bg-white/10 p-2 rounded-xl text-[10px] flex items-center gap-1">
-                  <i data-lucide="file-text" class="w-3.5 h-3.5"></i>
-                  <span>پیش‌فاکتور_منوی_VIP.pdf</span>
-                </div>
-              </div>
-              <span class="text-[9px] text-secondary">۱۰:۴۵</span>
+              <span class="block text-xs font-bold text-graphite">باغ تالار تشریفاتی زمرد</span>
+              <span class="text-[11px] text-secondary">مسیر یابی با نشان و اسنپ</span>
             </div>
           </div>
+        </div>
+      </section>
 
-          <!-- INPUT FORM -->
-          <form onsubmit="sendLiveChatMessage(event)" class="flex items-center gap-2 pt-2 border-t border-accent">
-            <button type="button" onclick="alert('فایل نمونه‌کار پیوست شد.')" class="p-2.5 rounded-xl border border-accent text-secondary hover:text-primary">
-              <i data-lucide="paperclip" class="w-4 h-4"></i>
-            </button>
-            <input type="text" id="chat-input-text" placeholder="پیام خود را بنویسید..." class="flex-1 bg-bgCustom border border-accent p-2.5 rounded-xl text-xs font-medium focus:outline-none focus:border-primary">
-            <button type="submit" class="bg-primary text-white px-5 py-2.5 rounded-xl text-xs font-bold hover:bg-primary-hover flex items-center gap-1.5">
-              <i data-lucide="send" class="w-3.5 h-3.5"></i>
-              <span>ارسال</span>
-            </button>
-          </form>
-
+      <!-- Service Packages & Pricing Table -->
+      <section class="bg-white border border-accent rounded-3xl p-6 sm:p-8 shadow-xs space-y-6">
+        <div class="border-b border-accent pb-4 flex justify-between items-center">
+          <h2 class="text-xl font-bold text-graphite flex items-center gap-2">
+            <i data-lucide="package" class="w-6 h-6 text-primary"></i>
+            <span>پکیج‌ها و خدمات (Service Packages)</span>
+          </h2>
+          <span class="text-xs text-secondary font-semibold">تضمین بهترین قیمت پلتفرم عروسی تو</span>
         </div>
 
-      </div>
+        <div id="vp-packages-container" class="grid grid-cols-1 md:grid-cols-3 gap-6">
+          <!-- Populated via JS -->
+        </div>
+      </section>
 
     </div>
 
     <!-- ========================================== -->
-    <!-- TAB 7: SUPER ADMIN DASHBOARD PANEL -->
+    <!-- VIEW 3: SUPER ADMIN DASHBOARD VIEW         -->
     <!-- ========================================== -->
     <div id="tab-admin" class="tab-content hidden space-y-8">
 
-      <div class="bg-white border border-accent rounded-3xl p-6 shadow-xs">
-        <span class="text-xs font-bold text-secondary">پنل مدیریت ارشد پلتفرم عروسی تو</span>
-        <h2 class="text-2xl font-bold text-graphite">مدیریت اعتبار تامین‌کنندگان و ارسال پیامک</h2>
+      <div class="bg-white border border-accent rounded-3xl p-6 shadow-xs flex justify-between items-center">
+        <div>
+          <span class="text-xs font-bold text-secondary">پنل مدیریت ارشد پلتفرم عروسی تو (Super Admin)</span>
+          <h2 class="text-2xl font-bold text-graphite">مدیریت دسته‌بندی‌ها، اعتبارسنجی و پیامک</h2>
+        </div>
+        <span class="bg-primary/10 text-primary font-bold text-xs px-4 py-2 rounded-xl border border-primary/20">
+          دسترسی مدیر ارشد
+        </span>
       </div>
 
-      <!-- Vendor Verification Management -->
-      <div class="bg-white border border-accent rounded-3xl p-6 shadow-xs space-y-4">
-        <div class="flex justify-between items-center border-b border-accent pb-3">
-          <h3 class="text-lg font-bold text-graphite">لیست تامین‌کنندگان و اعطای تاییدیه رسمی اعتبار</h3>
-          <span class="text-xs text-secondary">کنترل نشان رسمی "تاییدیه عروسی تو"</span>
+      <!-- Dynamic Category Editor (مدیریت دسته‌ها) -->
+      <div class="bg-white border border-accent rounded-3xl p-6 shadow-xs space-y-6">
+        <div class="flex flex-col sm:flex-row justify-between sm:items-center gap-4 border-b border-accent pb-4">
+          <div>
+            <h3 class="text-lg font-bold text-graphite flex items-center gap-2">
+              <i data-lucide="layers" class="w-5 h-5 text-primary"></i>
+              <span>ویرایشگر پویا دسته‌بندی‌های شغلی (Dynamic Category Editor)</span>
+            </h3>
+            <p class="text-xs text-secondary mt-0.5">افزودن، ویرایش، حذف دسته‌ها و تخصیص آیکون Lucide</p>
+          </div>
+
+          <button onclick="toggleCategoryModal(true)" class="bg-primary text-white px-4 py-2 rounded-xl text-xs font-bold hover:bg-emerald-900 transition-colors flex items-center gap-1.5">
+            <i data-lucide="plus" class="w-4 h-4"></i>
+            <span>افزودن دسته‌بندی جدید</span>
+          </button>
         </div>
 
         <div class="overflow-x-auto">
           <table class="w-full text-right text-xs">
             <thead class="bg-bgCustom text-secondary border-b border-accent font-bold">
               <tr>
-                <th class="p-3">نام برند</th>
-                <th class="p-3">دسته‌بندی</th>
-                <th class="p-3">تلفن همراه</th>
-                <th class="p-3">وضعیت تاییدیه رسمی</th>
-                <th class="p-3">عملیات</th>
+                <th class="p-3">عنوان دسته</th>
+                <th class="p-3">نام آیکون (Lucide)</th>
+                <th class="p-3">تعداد کسب‌وکارها</th>
+                <th class="p-3">وضعیت فعال</th>
+                <th class="p-3 text-center">عملیات</th>
               </tr>
             </thead>
-            <tbody id="admin-vendor-table" class="divide-y divide-accent/60 font-medium">
+            <tbody id="admin-category-table" class="divide-y divide-accent/60 font-medium">
               <!-- Populated via JS -->
             </tbody>
           </table>
@@ -981,7 +509,7 @@
         <div class="flex justify-between items-center border-b border-accent pb-3">
           <h3 class="text-lg font-bold text-graphite">درخواست‌های معلق عضویت کسب‌وکارها (Pending Vendors)</h3>
           <span class="bg-amber-50 text-amber-800 text-xs font-bold px-3 py-1 rounded-full border border-amber-200">
-            بررسی سریع مدارک و ایجاد پنل
+            بررسی مدارک و اعطای تاییدیه رسمی
           </span>
         </div>
 
@@ -997,6 +525,30 @@
               </tr>
             </thead>
             <tbody id="admin-pending-apps-table" class="divide-y divide-accent/60 font-medium">
+              <!-- Populated via JS -->
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- Vendor Verification Badge Management -->
+      <div class="bg-white border border-accent rounded-3xl p-6 shadow-xs space-y-4">
+        <div class="flex justify-between items-center border-b border-accent pb-3">
+          <h3 class="text-lg font-bold text-graphite">لیست کامل تامین‌کنندگان و اعطای "تاییدیه رسمی اعتبار"</h3>
+        </div>
+
+        <div class="overflow-x-auto">
+          <table class="w-full text-right text-xs">
+            <thead class="bg-bgCustom text-secondary border-b border-accent font-bold">
+              <tr>
+                <th class="p-3">نام برند</th>
+                <th class="p-3">دسته‌بندی</th>
+                <th class="p-3">تلفن همراه</th>
+                <th class="p-3">وضعیت تاییدیه رسمی</th>
+                <th class="p-3 text-center">تغییر نشان</th>
+              </tr>
+            </thead>
+            <tbody id="admin-vendor-table" class="divide-y divide-accent/60 font-medium">
               <!-- Populated via JS -->
             </tbody>
           </table>
@@ -1042,7 +594,343 @@
 
     </div>
 
+    <!-- ========================================== -->
+    <!-- VIEW 4: VENDOR DASHBOARD VIEW             -->
+    <!-- ========================================== -->
+    <div id="tab-vendor-dash" class="tab-content hidden space-y-8">
+
+      <div class="bg-white border border-accent rounded-3xl p-6 shadow-xs flex flex-col sm:flex-row justify-between sm:items-center gap-4">
+        <div>
+          <span class="text-xs font-bold text-secondary">پنل مدیریت اختصاصی تامین‌کنندگان</span>
+          <h2 id="vd-header-name" class="text-2xl font-bold text-graphite flex items-center gap-2">
+            <span>کسب و کار: باغ تالار تشریفاتی زمرد</span>
+            <span class="inline-flex items-center gap-1 text-xs bg-primary text-white px-2.5 py-0.5 rounded-full font-semibold">
+              <i data-lucide="shield-check" class="w-3.5 h-3.5"></i>
+              <span>تاییدیه رسمی</span>
+            </span>
+          </h2>
+        </div>
+
+        <div class="flex items-center gap-3">
+          <label class="flex items-center gap-2 text-xs font-bold text-graphite bg-bgCustom px-3.5 py-2 rounded-xl border border-accent cursor-pointer">
+            <input type="checkbox" id="sms-toggle" checked onchange="alert('تنظیمات دریافت پیامک فوری مشتری به روزرسانی شد.')" class="rounded text-primary focus:ring-primary w-4 h-4">
+            <span>دریافت پیامک فوری مشتری جدید</span>
+          </label>
+        </div>
+      </div>
+
+      <!-- Business Profile Editor Form -->
+      <section class="bg-white border border-accent rounded-3xl p-6 shadow-xs space-y-4">
+        <h3 class="text-lg font-bold text-graphite border-b border-accent pb-3 flex items-center gap-2">
+          <i data-lucide="edit-3" class="w-5 h-5 text-primary"></i>
+          <span>ویرایش اطلاعات و پروفایل عمومی کسب‌وکار (Profile Editor)</span>
+        </h3>
+
+        <form onsubmit="handleVendorProfileUpdate(event)" class="grid grid-cols-1 md:grid-cols-2 gap-4 text-xs font-bold text-graphite">
+          <div>
+            <label class="block mb-1">نام برند / کسب‌وکار:</label>
+            <input type="text" id="vd-edit-name" value="باغ تالار تشریفاتی زمرد" class="w-full bg-bgCustom border border-accent rounded-xl p-2.5 text-xs font-medium focus:outline-none focus:border-primary">
+          </div>
+
+          <div>
+            <label class="block mb-1">ساعات کاری و بازدید:</label>
+            <input type="text" id="vd-edit-hours" value="همه روزه از ۱۰:۰۰ الی ۲۱:۰۰" class="w-full bg-bgCustom border border-accent rounded-xl p-2.5 text-xs font-medium focus:outline-none focus:border-primary">
+          </div>
+
+          <div>
+            <label class="block mb-1">آدرس کامل:</label>
+            <input type="text" id="vd-edit-address" value="تهران، احمدآباد مستوفی، خیابان صنوبر، پلاک ۴۵" class="w-full bg-bgCustom border border-accent rounded-xl p-2.5 text-xs font-medium focus:outline-none focus:border-primary">
+          </div>
+
+          <div>
+            <label class="block mb-1">لینک اینستاگرام:</label>
+            <input type="text" id="vd-edit-insta" value="@zomorrod_hall" class="w-full bg-bgCustom border border-accent rounded-xl p-2.5 text-xs font-medium focus:outline-none focus:border-primary dir-ltr">
+          </div>
+
+          <div class="md:col-span-2 flex justify-end">
+            <button type="submit" class="bg-primary hover:bg-emerald-900 text-white font-bold px-6 py-2.5 rounded-xl text-xs shadow-xs transition-colors">
+              ذخیره تغییرات پروفایل
+            </button>
+          </div>
+        </form>
+      </section>
+
+      <!-- Portfolio & Service Packages Manager -->
+      <section class="bg-white border border-accent rounded-3xl p-6 shadow-xs space-y-6">
+        <div class="flex justify-between items-center border-b border-accent pb-4">
+          <h3 class="text-lg font-bold text-graphite flex items-center gap-2">
+            <i data-lucide="package-plus" class="w-5 h-5 text-primary"></i>
+            <span>مدیریت پکیج‌های قیمت و نمونه‌کارها (Portfolio & Package Manager)</span>
+          </h3>
+          <button onclick="toggleAddPackageModal(true)" class="bg-primary text-white font-bold px-4 py-2 rounded-xl text-xs hover:bg-emerald-900 transition-colors flex items-center gap-1.5">
+            <i data-lucide="plus" class="w-4 h-4"></i>
+            <span>افزودن پکیج خدمات جدید</span>
+          </button>
+        </div>
+
+        <div id="vd-packages-list" class="grid grid-cols-1 md:grid-cols-3 gap-4">
+          <!-- Populated via JS -->
+        </div>
+      </section>
+
+      <!-- Persian Booking Calendar Simulator -->
+      <section class="bg-white border border-accent rounded-3xl p-6 shadow-xs space-y-4">
+        <div class="flex items-center justify-between border-b border-accent pb-3">
+          <div>
+            <h3 class="text-lg font-bold text-graphite">تقویم رزرو و روزهای پر/خالی (اردیبهشت ۱۴۰۳)</h3>
+            <p class="text-xs text-secondary">روی روزها کلیک کنید تا وضعیت آنها بین "آزاد" (سبز) و "رزرو شده" (قرمز) تغییر کند</p>
+          </div>
+          <div class="flex items-center gap-3 text-xs font-bold">
+            <span class="flex items-center gap-1"><span class="w-3 h-3 rounded-full bg-primary inline-block"></span> آزاد</span>
+            <span class="flex items-center gap-1"><span class="w-3 h-3 rounded-full bg-rose-500 inline-block"></span> رزرو شده</span>
+          </div>
+        </div>
+
+        <div id="calendar-grid" class="grid grid-cols-7 gap-2 text-center">
+          <!-- Calendar Days rendered via JS -->
+        </div>
+      </section>
+
+      <!-- Incoming Inquiries Response Panel -->
+      <section class="bg-white border border-accent rounded-3xl p-6 shadow-xs space-y-4">
+        <h3 class="text-lg font-bold text-graphite border-b border-accent pb-3">استعلام‌های جدید دریافتی از زوج‌ها</h3>
+
+        <div id="inquiry-list" class="space-y-3">
+          <!-- Populated via JS -->
+        </div>
+      </section>
+
+    </div>
+
+    <!-- ========================================== -->
+    <!-- VIEW 5: DIGITAL INVITATION & RSVP MODULE   -->
+    <!-- ========================================== -->
+    <div id="tab-invitation" class="tab-content hidden space-y-8">
+      <div class="bg-white border border-accent rounded-3xl p-6 shadow-xs flex flex-col sm:flex-row items-center justify-between gap-4">
+        <div>
+          <div class="inline-flex items-center gap-1.5 bg-primary/10 text-primary text-xs font-bold px-3 py-1 rounded-full mb-1">
+            <i data-lucide="sparkles" class="w-3.5 h-3.5"></i>
+            <span>کارت دعوت دیجیتال هوشمند</span>
+          </div>
+          <h2 class="text-xl font-bold text-graphite">لندینگ پیج اختصاصی: علی و سارا</h2>
+          <p class="text-xs text-secondary mt-0.5" dir="ltr">aroosito.com/invitation/ali-sara</p>
+        </div>
+
+        <button onclick="alert('لینک کارت دعوت کپی شد.')" class="bg-primary/10 hover:bg-primary/20 text-primary border border-primary/20 px-4 py-2.5 rounded-xl text-xs font-bold transition-all flex items-center gap-1.5">
+          <i data-lucide="copy" class="w-4 h-4"></i>
+          <span>کپی لینک کارت دعوت</span>
+        </button>
+      </div>
+
+      <!-- INVITATION HERO CARD -->
+      <div class="relative bg-white border border-accent rounded-3xl overflow-hidden shadow-lg">
+        <div class="relative h-80 sm:h-96 w-full overflow-hidden bg-slate-900">
+          <img src="https://images.unsplash.com/photo-1519741497674-611481863552?auto=format&fit=crop&w=1600&q=80" alt="علی و سارا" class="w-full h-full object-cover opacity-80">
+          <div class="absolute inset-0 bg-gradient-to-t from-graphite via-graphite/40 to-transparent"></div>
+
+          <div class="absolute bottom-8 right-8 left-8 text-white text-center space-y-3">
+            <span class="text-xs sm:text-sm font-semibold tracking-widest text-accent uppercase">با افتخار شما را دعوت می‌نماییم به پیوند</span>
+            <h2 class="text-3xl sm:text-5xl font-black tracking-tight text-white flex items-center justify-center gap-2">
+              <span>علی</span>
+              <i data-lucide="heart" class="w-8 h-8 text-rose-400 fill-rose-400"></i>
+              <span>سارا</span>
+            </h2>
+            <p class="text-xs sm:text-sm text-slate-200 font-medium">پنج‌شنبه ۱۵ شهریور ۱۴۰۳ • ساعت ۱۸:۰۰ الی ۲۴:۰۰</p>
+          </div>
+        </div>
+
+        <!-- RSVP BUTTON -->
+        <div class="p-8 bg-bgCustom border-b border-accent text-center space-y-4">
+          <button onclick="openRsvpModal()" class="bg-primary hover:bg-primary-hover text-white px-8 py-3.5 rounded-2xl font-bold text-sm shadow-lg transition-all inline-flex items-center gap-2">
+            <i data-lucide="check-circle-2" class="w-5 h-5"></i>
+            <span>اعلام حضور و ثبت پاسخ RSVP</span>
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- ========================================== -->
+    <!-- VIEW 6: AI BUDGET TOOL MODULE             -->
+    <!-- ========================================== -->
+    <div id="tab-tools" class="tab-content hidden space-y-8">
+      <section class="bg-white border border-accent rounded-3xl p-8 shadow-xs space-y-6">
+        <div class="flex items-center gap-3 border-b border-accent pb-4">
+          <div class="w-12 h-12 rounded-2xl bg-primary/10 flex items-center justify-center text-primary">
+            <i data-lucide="bot" class="w-6 h-6"></i>
+          </div>
+          <div>
+            <h2 class="text-xl font-bold text-graphite">موتور هوش مصنوعی تخصیص بهینه بودجه عروسی</h2>
+            <p class="text-xs text-secondary">پیشنهاد دقیق درصد هزینه‌کرد تالار، آتلیه، میکاپ و تشریفات</p>
+          </div>
+        </div>
+
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
+          <div class="lg:col-span-6 space-y-4 bg-bgCustom p-6 rounded-2xl border border-accent">
+            <div>
+              <label class="block text-xs font-bold text-graphite mb-1">کل بودجه (تومان):</label>
+              <input type="number" id="ai-budget-input" value="300000000" step="10000000" oninput="runAiAllocation()" class="w-full bg-white border border-accent rounded-xl p-3 text-sm font-bold text-primary focus:outline-none focus:border-primary">
+            </div>
+
+            <button onclick="runAiAllocation()" class="w-full bg-primary hover:bg-primary-hover text-white py-3 rounded-xl text-xs font-bold shadow-md transition-colors flex items-center justify-center gap-2">
+              <i data-lucide="sparkles" class="w-4 h-4"></i>
+              <span>محاسبه مجدد تخصیص هوشمند</span>
+            </button>
+          </div>
+
+          <div class="lg:col-span-6 bg-primary text-white p-6 rounded-2xl shadow-md space-y-3 text-xs font-medium">
+            <div class="flex justify-between items-center p-2.5 bg-white/10 rounded-xl">
+              <span>🏰 تالار و تشریفات (۴۰٪):</span>
+              <span id="ai-res-venue" class="font-bold text-sm">۱۲۰۰,۰۰۰,۰۰۰ تومان</span>
+            </div>
+            <div class="flex justify-between items-center p-2.5 bg-white/10 rounded-xl">
+              <span>📸 آتلیه و عکاسی (۲۰٪):</span>
+              <span id="ai-res-photo" class="font-bold text-sm">۶۰,۰۰۰,۰۰۰ تومان</span>
+            </div>
+            <div class="flex justify-between items-center p-2.5 bg-white/10 rounded-xl">
+              <span>👗 لباس و میکاپ (۱۵٪):</span>
+              <span id="ai-res-attire" class="font-bold text-sm">۴۵,۰۰۰,۰۰۰ تومان</span>
+            </div>
+          </div>
+        </div>
+      </section>
+    </div>
+
   </main>
+
+  <!-- ========================================== -->
+  <!-- MODAL: ADD NEW CHECKLIST TASK MODAL        -->
+  <!-- ========================================== -->
+  <div id="new-task-modal" class="fixed inset-0 z-50 bg-black/60 backdrop-blur-xs flex items-center justify-center p-4 hidden">
+    <div class="bg-white border border-accent rounded-3xl max-w-md w-full p-6 shadow-2xl space-y-4 relative">
+      <button onclick="toggleNewTaskModal(false)" class="absolute top-4 left-4 text-secondary hover:text-graphite">
+        <i data-lucide="x" class="w-6 h-6"></i>
+      </button>
+
+      <div class="border-b border-accent pb-3">
+        <h3 class="text-lg font-bold text-graphite">افزودن اقدام جدید به چک‌لیست</h3>
+      </div>
+
+      <form onsubmit="handleAddNewTaskSubmit(event)" class="space-y-3 text-xs font-bold text-graphite">
+        <div>
+          <label class="block mb-1">عنوان اقدام *</label>
+          <input type="text" id="task-title" required placeholder="مثلاً: هماهنگی سفره عقد و خنچه" class="w-full bg-bgCustom border border-accent rounded-xl p-2.5 text-xs font-medium focus:outline-none focus:border-primary">
+        </div>
+
+        <div>
+          <label class="block mb-1">زمان‌بندی اقدام *</label>
+          <select id="task-cat" class="w-full bg-bgCustom border border-accent rounded-xl p-2.5 text-xs font-medium focus:outline-none focus:border-primary">
+            <option value="۱۲ تا ۹ ماه قبل">۱۲ تا ۹ ماه قبل</option>
+            <option value="۹ تا ۶ ماه قبل">۹ تا ۶ ماه قبل</option>
+            <option value="۶ تا ۳ ماه قبل">۶ تا ۳ ماه قبل</option>
+            <option value="۳ تا ۱ ماه قبل">۳ تا ۱ ماه قبل</option>
+            <option value="ماه آخر">ماه آخر</option>
+          </select>
+        </div>
+
+        <div>
+          <label class="block mb-1">مهلت انجام (تاریخ / توضیحات):</label>
+          <input type="text" id="task-date" placeholder="مثلاً: ۳ ماه قبل" class="w-full bg-bgCustom border border-accent rounded-xl p-2.5 text-xs font-medium focus:outline-none focus:border-primary">
+        </div>
+
+        <div class="flex items-center gap-2 pt-1">
+          <input type="checkbox" id="task-urgent" class="rounded text-rose-600 focus:ring-rose-500 w-4 h-4 cursor-pointer">
+          <label for="task-urgent" class="cursor-pointer text-xs font-bold text-rose-700">اقدام ضروری و فوری است</label>
+        </div>
+
+        <button type="submit" class="w-full bg-primary hover:bg-emerald-900 text-white font-bold py-3 rounded-xl shadow-xs transition-colors mt-2">
+          ثبت در چک‌لیست
+        </button>
+      </form>
+    </div>
+  </div>
+
+  <!-- ========================================== -->
+  <!-- MODAL: PHOTO LIGHTBOX GALLERY MODAL       -->
+  <!-- ========================================== -->
+  <div id="lightbox-modal" class="fixed inset-0 z-50 bg-black/90 backdrop-blur-md flex items-center justify-center p-4 hidden">
+    <button onclick="closeLightbox()" class="absolute top-6 left-6 text-white hover:text-accent p-2 rounded-full bg-white/10">
+      <i data-lucide="x" class="w-8 h-8"></i>
+    </button>
+    <div class="max-w-4xl max-h-[85vh] overflow-hidden rounded-2xl shadow-2xl">
+      <img id="lightbox-img" src="" alt="بزرگنمایی نمونه‌کار" class="w-full h-full object-contain">
+    </div>
+  </div>
+
+  <!-- ========================================== -->
+  <!-- MODAL: DYNAMIC CATEGORY EDITOR MODAL       -->
+  <!-- ========================================== -->
+  <div id="category-modal" class="fixed inset-0 z-50 bg-black/60 backdrop-blur-xs flex items-center justify-center p-4 hidden">
+    <div class="bg-white border border-accent rounded-3xl max-w-md w-full p-6 shadow-2xl space-y-4 relative">
+      <button onclick="toggleCategoryModal(false)" class="absolute top-4 left-4 text-secondary hover:text-graphite">
+        <i data-lucide="x" class="w-6 h-6"></i>
+      </button>
+
+      <div class="border-b border-accent pb-3">
+        <h3 id="cat-modal-title" class="text-lg font-bold text-graphite">افزودن دسته‌بندی شغلی جدید</h3>
+      </div>
+
+      <form onsubmit="handleSaveCategory(event)" class="space-y-4 text-xs font-bold text-graphite">
+        <input type="hidden" id="cat-edit-id" value="">
+
+        <div>
+          <label class="block mb-1">عنوان دسته شغلی *</label>
+          <input type="text" id="cat-title" required placeholder="مثلاً: تشریفات و تشریفات مجالس" class="w-full bg-bgCustom border border-accent rounded-xl p-2.5 text-xs font-medium focus:outline-none focus:border-primary">
+        </div>
+
+        <div>
+          <label class="block mb-1">نام آیکون Lucide *</label>
+          <input type="text" id="cat-icon" required placeholder="مثلاً: building, camera, sparkles..." class="w-full bg-bgCustom border border-accent rounded-xl p-2.5 text-xs font-medium focus:outline-none focus:border-primary dir-ltr">
+        </div>
+
+        <div class="flex items-center gap-2 pt-2">
+          <input type="checkbox" id="cat-active" checked class="rounded text-primary focus:ring-primary w-4 h-4 cursor-pointer">
+          <label for="cat-active" class="cursor-pointer text-xs font-bold text-graphite">وضعیت دسته: فعال باشد</label>
+        </div>
+
+        <div class="flex justify-end gap-3 pt-3 border-t border-accent">
+          <button type="button" onclick="toggleCategoryModal(false)" class="px-4 py-2 rounded-xl border border-accent text-secondary font-bold">انصراف</button>
+          <button type="submit" class="px-5 py-2 rounded-xl bg-primary hover:bg-emerald-900 text-white font-bold shadow-xs">ذخیره دسته‌بندی</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- ========================================== -->
+  <!-- MODAL: ADD PACKAGE MODAL (VENDOR DASHBOARD)-->
+  <!-- ========================================== -->
+  <div id="package-modal" class="fixed inset-0 z-50 bg-black/60 backdrop-blur-xs flex items-center justify-center p-4 hidden">
+    <div class="bg-white border border-accent rounded-3xl max-w-md w-full p-6 shadow-2xl space-y-4 relative">
+      <button onclick="toggleAddPackageModal(false)" class="absolute top-4 left-4 text-secondary hover:text-graphite">
+        <i data-lucide="x" class="w-6 h-6"></i>
+      </button>
+
+      <div class="border-b border-accent pb-3">
+        <h3 class="text-lg font-bold text-graphite">افزودن پکیج خدمات جدید</h3>
+      </div>
+
+      <form onsubmit="handleAddPackageSubmit(event)" class="space-y-3 text-xs font-bold text-graphite">
+        <div>
+          <label class="block mb-1">نام پکیج *</label>
+          <input type="text" id="pkg-name" required placeholder="مثلاً: پکیج منوی VIP دیس‌پرس" class="w-full bg-bgCustom border border-accent rounded-xl p-2.5 text-xs font-medium focus:outline-none focus:border-primary">
+        </div>
+
+        <div>
+          <label class="block mb-1">حدود قیمت *</label>
+          <input type="text" id="pkg-price" required placeholder="مثلاً: از ۱۵۰,۰۰۰,۰۰۰ تومان" class="w-full bg-bgCustom border border-accent rounded-xl p-2.5 text-xs font-medium focus:outline-none focus:border-primary">
+        </div>
+
+        <div>
+          <label class="block mb-1">جزئیات و امکانات (با کاما جدا کنید):</label>
+
+          <textarea id="pkg-features" rows="3" placeholder="منوی ۵ رنگ غذا, سالاد بار, نوشیدنی لایت..." class="w-full bg-bgCustom border border-accent rounded-xl p-2.5 text-xs font-medium focus:outline-none focus:border-primary"></textarea>
+        </div>
+
+        <button type="submit" class="w-full bg-primary hover:bg-emerald-900 text-white font-bold py-3 rounded-xl shadow-xs transition-colors">
+          افزودن پکیج به پروفایل
+        </button>
+      </form>
+    </div>
+  </div>
 
   <!-- ========================================== -->
   <!-- MODAL: RSVP FORM POPUP                     -->
@@ -1064,37 +952,8 @@
           <input type="text" required id="rsvp-name" placeholder="مثلا: علی محمدی" class="w-full bg-bgCustom border border-accent rounded-xl p-2.5 text-xs font-medium focus:outline-none focus:border-primary">
         </div>
 
-        <div>
-          <label class="block text-xs font-bold text-graphite mb-1">وضعیت حضور:</label>
-          <div class="grid grid-cols-2 gap-2">
-            <button type="button" onclick="setRsvpStatus('attending')" id="btn-rsvp-attending" class="py-2.5 rounded-xl text-xs font-bold border transition-all bg-primary text-white border-primary">
-              با افتخار شرکت می‌کنم
-            </button>
-            <button type="button" onclick="setRsvpStatus('declined')" id="btn-rsvp-declined" class="py-2.5 rounded-xl text-xs font-bold border transition-all border-accent text-graphite hover:border-rose-600">
-              متأسفانه نمی‌توانم بیایم
-            </button>
-          </div>
-        </div>
-
-        <div id="rsvp-attending-fields" class="grid grid-cols-2 gap-3">
-          <div>
-            <label class="block text-xs font-bold text-graphite mb-1">تعداد همراهان (شامل خودتان):</label>
-            <input type="number" min="1" max="10" value="1" id="rsvp-plus-ones" class="w-full bg-bgCustom border border-accent rounded-xl p-2.5 text-xs font-medium focus:outline-none focus:border-primary">
-          </div>
-          <div>
-            <label class="block text-xs font-bold text-graphite mb-1">ملاحظات غذایی (اختیاری):</label>
-            <input type="text" placeholder="گیاه‌خوار / بدون گلوتن..." id="rsvp-dietary" class="w-full bg-bgCustom border border-accent rounded-xl p-2.5 text-xs font-medium focus:outline-none focus:border-primary">
-          </div>
-        </div>
-
-        <div>
-          <label class="block text-xs font-bold text-graphite mb-1">پیام تبریک برای عروس و داماد:</label>
-          <textarea rows="2" id="rsvp-note" placeholder="آرزوی خوشبختی..." class="w-full bg-bgCustom border border-accent rounded-xl p-2.5 text-xs font-medium focus:outline-none focus:border-primary"></textarea>
-        </div>
-
-        <button type="submit" class="w-full bg-primary hover:bg-primary-hover text-white py-3 rounded-xl text-xs font-bold shadow-md transition-colors flex items-center justify-center gap-2">
-          <i data-lucide="send" class="w-4 h-4"></i>
-          <span>ثبت پاسخ نهایی</span>
+        <button type="submit" class="w-full bg-primary hover:bg-primary-hover text-white py-3 rounded-xl text-xs font-bold shadow-md transition-colors">
+          ثبت پاسخ نهایی
         </button>
       </form>
     </div>
@@ -1137,12 +996,11 @@
               <option value="آتلیه و عکاسی">آتلیه و عکاسی</option>
               <option value="سالن زیبایی">سالن زیبایی</option>
               <option value="مزون و لباس عروس">مزون و لباس عروس</option>
-              <option value="گل‌آرایی و ماشین عروس">گل‌آرایی و ماشین عروس</option>
             </select>
           </div>
           <div>
             <label class="block mb-1">شهر *</label>
-            <input type="text" id="v-city" required placeholder="مثلاً: تهران (لواسان)" class="w-full bg-bgCustom border border-accent rounded-xl p-2.5 text-xs font-medium focus:outline-none focus:border-primary">
+            <input type="text" id="v-city" required placeholder="تهران" class="w-full bg-bgCustom border border-accent rounded-xl p-2.5 text-xs font-medium focus:outline-none focus:border-primary">
           </div>
         </div>
 
@@ -1155,11 +1013,6 @@
             <label class="block mb-1">شماره همراه (SMS) *</label>
             <input type="tel" id="v-phone" required placeholder="۰۹۱۲..." class="w-full bg-bgCustom border border-accent rounded-xl p-2.5 text-xs font-medium focus:outline-none focus:border-primary dir-ltr">
           </div>
-        </div>
-
-        <div>
-          <label class="block mb-1">معرفی کوتاه و حدود قیمت:</label>
-          <textarea id="v-desc" rows="2" placeholder="توضیحات..." class="w-full bg-bgCustom border border-accent rounded-xl p-2.5 text-xs font-medium focus:outline-none focus:border-primary"></textarea>
         </div>
 
         <button type="submit" class="w-full bg-primary hover:bg-emerald-900 text-white py-3 rounded-xl text-xs font-bold shadow-md transition-colors flex items-center justify-center gap-2">
@@ -1175,7 +1028,6 @@
   <!-- ========================================== -->
   <div id="inquiry-modal" class="fixed inset-0 z-50 bg-black/50 backdrop-blur-xs flex items-center justify-center p-4 hidden">
     <div class="bg-white border border-accent rounded-3xl max-w-lg w-full p-6 shadow-2xl space-y-4 relative">
-
       <button onclick="closeInquiryModal()" class="absolute top-4 left-4 text-secondary hover:text-graphite">
         <i data-lucide="x" class="w-6 h-6"></i>
       </button>
@@ -1198,28 +1050,11 @@
           <input type="tel" required id="inquiry-phone" placeholder="۰۹۱۲..." class="w-full bg-bgCustom border border-accent rounded-xl p-2.5 text-xs font-medium focus:outline-none focus:border-primary" dir="ltr">
         </div>
 
-        <div class="grid grid-cols-2 gap-3">
-          <div>
-            <label class="block text-xs font-bold text-graphite mb-1">تاریخ تقریبی مراسم:</label>
-            <input type="text" placeholder="۱۴۰۳/۰۶/۱۵" id="inquiry-date" class="w-full bg-bgCustom border border-accent rounded-xl p-2.5 text-xs font-medium focus:outline-none focus:border-primary">
-          </div>
-          <div>
-            <label class="block text-xs font-bold text-graphite mb-1">تعداد مهمانان:</label>
-            <input type="number" placeholder="۲۰۰" id="inquiry-guests" class="w-full bg-bgCustom border border-accent rounded-xl p-2.5 text-xs font-medium focus:outline-none focus:border-primary">
-          </div>
-        </div>
-
-        <div>
-          <label class="block text-xs font-bold text-graphite mb-1">توضیحات و خدمات مورد نیاز:</label>
-          <textarea id="inquiry-details" rows="3" placeholder="مثلا: منوی دیس پرس همراه با ورودی باغ..." class="w-full bg-bgCustom border border-accent rounded-xl p-2.5 text-xs font-medium focus:outline-none focus:border-primary"></textarea>
-        </div>
-
         <button type="submit" class="w-full bg-primary hover:bg-primary-hover text-white font-bold py-3 rounded-xl text-sm transition-colors shadow-md flex items-center justify-center gap-2">
           <i data-lucide="send" class="w-4 h-4"></i>
           <span>ثبت و ارسال استعلام قیمت</span>
         </button>
       </form>
-
     </div>
   </div>
 
@@ -1234,6 +1069,15 @@
   <!-- JAVASCRIPT APP STATE & LOGIC -->
   <script>
     lucide.createIcons();
+
+    // APP GLOBAL STATE
+    let categories = [
+      { id: "cat-1", title: "تالار و باغ تشریفات", icon: "building", count: 420, active: true },
+      { id: "cat-2", title: "آتلیه و عکاسی", icon: "camera", count: 310, active: true },
+      { id: "cat-3", title: "سالن زیبایی", icon: "sparkles", count: 280, active: true },
+      { id: "cat-4", title: "مزون و لباس عروس", icon: "shirt", count: 190, active: true },
+      { id: "cat-5", title: "گل‌آرایی و ماشین عروس", icon: "flower-2", count: 150, active: true }
+    ];
 
     let vendors = [
       {
@@ -1278,607 +1122,271 @@
       }
     ];
 
-    let budgetItemsStatic = [
-      { category: "تالار و پذیرایی منو", allocated: 120000000, actual: 115000000, deposit: 50000000 },
-      { category: "آتلیه و فیلمبرداری", allocated: 60000000, actual: 65000000, deposit: 25000000 },
-      { category: "لباس عروس و میکاپ", allocated: 45000000, actual: 40000000, deposit: 20000000 },
-      { category: "موزیک زنده و نور", allocated: 45000000, actual: 45000000, deposit: 15000000 },
-      { category: "گل‌آرایی و متفرقه", allocated: 30000000, actual: 32000000, deposit: 10000000 }
+    let galleryPhotos = [
+      "https://images.unsplash.com/photo-1519167758481-83f550bb49b3?auto=format&fit=crop&w=800&q=80",
+      "https://images.unsplash.com/photo-1519741497674-611481863552?auto=format&fit=crop&w=800&q=80",
+      "https://images.unsplash.com/photo-1511285560929-80b456fea0bc?auto=format&fit=crop&w=800&q=80",
+      "https://images.unsplash.com/photo-1520854221256-17451cc331bf?auto=format&fit=crop&w=800&q=80",
+      "https://images.unsplash.com/photo-1465495976277-4387d4b0b4c6?auto=format&fit=crop&w=800&q=80",
+      "https://images.unsplash.com/photo-1522673607200-164d1b6ce486?auto=format&fit=crop&w=800&q=80"
     ];
 
-    let checklistTimeframes = [
-      "۱۲ تا ۹ ماه قبل",
-      "۹ تا ۶ ماه قبل",
-      "۶ تا ۳ ماه قبل",
-      "۳ تا ۱ ماه قبل",
-      "۱ هفته قبل",
-      "روز عروسی"
+    let vendorPackages = [
+      { id: "pkg-1", name: "پکیج نقره‌ای منوی دیس‌پرس", price: "از ۸۵,۰۰۰,۰۰۰ تومان", features: ["منوی ۲ رنگ غذا همراه با نوشیدنی", "ورودی باغ و سیستم صوت", "مهماندار مجرب برای هر ۳۰ نفر"] },
+      { id: "pkg-2", name: "پکیج طلایی منوی VIP", price: "از ۱۲۰,۰۰۰,۰۰۰ تومان", features: ["منوی ۴ رنگ غذا همراه با باقالی‌پلو با گوشت", "شمع‌آرایی و ورودی رپتایل", "مهماندار مجرب برای هر ۲۰ نفر", "تست رایگان غذا برای ۴ نفر"] },
+      { id: "pkg-3", name: "پکیج سوپر لاکچری زمرد", price: "از ۱۸۰,۰۰۰,۰۰۰ تومان", features: ["سفره عقد اختصاصی سالن", "آتش‌بازی ۴ مرحله‌ای و یخ خشک", "منوی کامل سلف‌سرویس با ۴۰ مدل فینگرفود"] }
     ];
 
     let staticChecklist = [
       { id: "chk-1", title: "تعیین بودجه اولیه و سقف هزینه‌ها", category: "۱۲ تا ۹ ماه قبل", completed: true, dueDate: "۱۲ ماه قبل", isUrgent: false },
-      { id: "chk-2", title: "تعیین تاریخ تقریبی برگزاری مراسم", category: "۱۲ تا ۹ ماه قبل", completed: true, dueDate: "۱۲ ماه قبل", isUrgent: false },
-      { id: "chk-3", title: "برآورد اولیه تعداد مهمانان", category: "۱۲ تا ۹ ماه قبل", completed: true, dueDate: "۱۱ ماه قبل", isUrgent: false },
-      { id: "chk-4", title: "رزرو و عقد قرارداد با تالار یا باغ عروسی", category: "۱۲ تا ۹ ماه قبل", completed: true, dueDate: "۱۰ ماه قبل", isUrgent: true },
-      { id: "chk-5", title: "انتخاب و رزرو آتلیه فیلم و عکس", category: "۱۲ تا ۹ ماه قبل", completed: false, dueDate: "۹ ماه قبل", isUrgent: true },
-      { id: "chk-6", title: "انتخاب و رزرو سالن زیبایی عروس (آرایشگاه)", category: "۹ تا ۶ ماه قبل", completed: false, dueDate: "۸ ماه قبل", isUrgent: true },
-      { id: "chk-7", title: "انتخاب و رزرو گروه موسیقی، دی‌جی و نورپردازی", category: "۹ تا ۶ ماه قبل", completed: false, dueDate: "۷ ماه قبل", isUrgent: false },
-      { id: "chk-8", title: "انتخاب و سفارش یا اجاره لباس عروس و اکسسوری‌ها", category: "۹ تا ۶ ماه قبل", completed: false, dueDate: "۶ ماه قبل", isUrgent: false },
-      { id: "chk-9", title: "بررسی و انتخاب تشریفات و گروه گل‌آرایی", category: "۹ تا ۶ ماه قبل", completed: false, dueDate: "۶ ماه قبل", isUrgent: false },
-      { id: "chk-10", title: "رزرو و انتخاب کت‌وشلوار داماد", category: "۶ تا ۳ ماه قبل", completed: false, dueDate: "۵ ماه قبل", isUrgent: false },
-      { id: "chk-11", title: "انتخاب و سفارش کارت دعوت (فیزیکی و دیجیتال)", category: "۶ تا ۳ ماه قبل", completed: false, dueDate: "۴ ماه قبل", isUrgent: false },
-      { id: "chk-12", title: "نهایی‌سازی لیست مهمانان و دسته‌بندی خانواده‌ها", category: "۶ تا ۳ ماه قبل", completed: false, dueDate: "۴ ماه قبل", isUrgent: false },
-      { id: "chk-13", title: "رزرو ماشین عروس و گل‌آرایی آن", category: "۶ تا ۳ ماه قبل", completed: false, dueDate: "۳ ماه قبل", isUrgent: false },
-      { id: "chk-14", title: "رزرو گروه فیلم‌برداری ساخت فرمالیته و سفر فرمالیته (در صورت نیاز)", category: "۶ تا ۳ ماه قبل", completed: false, dueDate: "۳ ماه قبل", isUrgent: false },
-      { id: "chk-15", title: "خرید حلقه و سرویس طلا", category: "۳ تا ۱ ماه قبل", completed: false, dueDate: "۲ ماه قبل", isUrgent: false },
-      { id: "chk-16", title: "ارسال کارت‌های دعوت و دریافت تاییدیه حضور (RSVP)", category: "۳ تا ۱ ماه قبل", completed: false, dueDate: "۶ هفته قبل", isUrgent: true },
-      { id: "chk-17", title: "هماهنگی منوی غذایی و پذیرایی با تالار/تشریفات", category: "۳ تا ۱ ماه قبل", completed: false, dueDate: "۱ ماه قبل", isUrgent: false },
-      { id: "chk-18", title: "پرو نهایی لباس عروس و کت‌وشلوار داماد", category: "۳ تا ۱ ماه قبل", completed: false, dueDate: "۱ ماه قبل", isUrgent: false },
-      { id: "chk-19", title: "تست آرایش و میکاپ عروس (میکاپ تست)", category: "۳ تا ۱ ماه قبل", completed: false, dueDate: "۱ ماه قبل", isUrgent: false },
-      { id: "chk-20", title: "پیگیری نهایی تعداد مهمانان قطعی و اعلام به تالار", category: "۱ هفته قبل", completed: false, dueDate: "۵ روز قبل", isUrgent: true },
-      { id: "chk-21", title: "چینش آنلاین جایگاه مهمانان سر میزها (Seating Chart)", category: "۱ هفته قبل", completed: false, dueDate: "۴ روز قبل", isUrgent: false },
-      { id: "chk-22", title: "آماده‌سازی ساک/کیف لوازم ضروری روز عروسی", category: "۱ هفته قبل", completed: false, dueDate: "۲ روز قبل", isUrgent: false },
-      { id: "chk-23", title: "هماهنگی ساعت دقیق با آرایشگاه، آتلیه و تالار", category: "۱ هفته قبل", completed: false, dueDate: "۱ روز قبل", isUrgent: true },
-      { id: "chk-24", title: "تحویل گرفتن گل ماشین و دسته گل عروس", category: "روز عروسی", completed: false, dueDate: "صبح عروسی", isUrgent: true },
-      { id: "chk-25", title: "چک کردن مدارک و حلقه‌ها", category: "روز عروسی", completed: false, dueDate: "صبح عروسی", isUrgent: true },
-      { id: "chk-26", title: "همراه داشتن کیف لوازم ضروری (کمک‌های اولیه، نخ و سوزن، شارژر)", category: "روز عروسی", completed: false, dueDate: "صبح عروسی", isUrgent: false }
+      { id: "chk-2", title: "رزرو و عقد قرارداد با تالار یا باغ عروسی", category: "۱۲ تا ۹ ماه قبل", completed: true, dueDate: "۱۰ ماه قبل", isUrgent: true },
+      { id: "chk-3", title: "انتخاب و رزرو آتلیه فیلم و عکس", category: "۱۲ تا ۹ ماه قبل", completed: false, dueDate: "۹ ماه قبل", isUrgent: true },
+      { id: "chk-4", title: "انتخاب و رزرو سالن زیبایی عروس", category: "۹ تا ۶ ماه قبل", completed: false, dueDate: "۸ ماه قبل", isUrgent: true },
+      { id: "chk-5", title: "خرید یا اجاره لباس عروس و کت و شلوار داماد", category: "۶ تا ۳ ماه قبل", completed: false, dueDate: "۴ ماه قبل", isUrgent: false },
+      { id: "chk-6", title: "طراحی و ارسال کارت دعوت دیجیتال", category: "۳ تا ۱ ماه قبل", completed: false, dueDate: "۲ ماه قبل", isUrgent: false },
+      { id: "chk-7", title: "هماهنگی نهایی با تشریفات و گروه موسیقی", category: "ماه آخر", completed: false, dueDate: "۲ هفته قبل", isUrgent: true }
     ];
 
-    let activeChecklistTf = 'all';
-    let activeChecklistStatus = 'all';
+    let activeChecklistFilter = "همه";
 
-    function setChecklistStatusFilter(status) {
-      activeChecklistStatus = status;
-      ['all', 'pending', 'completed', 'urgent'].forEach(st => {
-        const btn = document.getElementById('st-filter-' + st);
-        if (btn) {
-          if (st === status) {
-            btn.className = "px-3 py-1.5 rounded-lg font-semibold transition-all bg-secondary text-white";
-          } else {
-            btn.className = "px-3 py-1.5 rounded-lg font-semibold transition-all bg-slate-100 text-graphite hover:bg-slate-200";
-          }
-        }
-      });
-      renderChecklistTimeline();
-    }
-
-    function selectChecklistTimeframe(tf) {
-      activeChecklistTf = tf;
-      renderChecklistTimeline();
-    }
-
-    function toggleChecklistTask(id) {
-      const task = staticChecklist.find(t => t.id === id);
-      if (task) {
-        task.completed = !task.completed;
-        renderChecklistTimeline();
-      }
-    }
-
-    function toggleNewTaskModal(show) {
-      const modal = document.getElementById('new-task-modal');
-      if (modal) {
-        if (show) modal.classList.remove('hidden');
-        else modal.classList.add('hidden');
-      }
-    }
-
-    function handleAddChecklistTask(e) {
-      e.preventDefault();
-      const title = document.getElementById('new-task-title').value.trim();
-      const category = document.getElementById('new-task-tf').value;
-      const dueDate = document.getElementById('new-task-date').value.trim() || 'در حال برنامه‌ریزی';
-      const isUrgent = document.getElementById('new-task-urgent').checked;
-
-      if (!title) return;
-
-      staticChecklist.push({
-        id: 'chk-' + Date.now(),
-        title,
-        category,
-        completed: false,
-        dueDate,
-        isUrgent
-      });
-
-      document.getElementById('new-task-title').value = '';
-      document.getElementById('new-task-date').value = '';
-      document.getElementById('new-task-urgent').checked = false;
-      toggleNewTaskModal(false);
-
-      renderChecklistTimeline();
-    }
-
-    function renderChecklistTimeline() {
-      const total = staticChecklist.length;
-      const completed = staticChecklist.filter(t => t.completed).length;
-      const urgentRemaining = staticChecklist.filter(t => t.isUrgent && !t.completed).length;
-      const percent = total > 0 ? Math.round((completed / total) * 100) : 0;
-
-      const pBar = document.getElementById('checklist-progress-bar');
-      const pText = document.getElementById('checklist-progress-text');
-      const uBadge = document.getElementById('checklist-urgent-badge');
-      const uCount = document.getElementById('checklist-urgent-count');
-
-      if (pBar) pBar.style.width = percent + '%';
-      if (pText) pText.innerText = percent + '٪ انجام شده (' + completed + ' از ' + total + ')';
-      if (uBadge && uCount) {
-        if (urgentRemaining > 0) {
-          uBadge.classList.remove('hidden');
-          uCount.innerText = urgentRemaining + ' کار فوری باقی‌مانده';
-        } else {
-          uBadge.classList.add('hidden');
-        }
-      }
-
-      // Timeframe buttons
-      const tfContainer = document.getElementById('checklist-timeframe-buttons');
-      if (tfContainer) {
-        tfContainer.innerHTML = '';
-
-        const allBtn = document.createElement('button');
-        allBtn.onclick = () => selectChecklistTimeframe('all');
-        allBtn.className = `px-3.5 py-2 rounded-xl text-xs font-bold transition-all border ${
-          activeChecklistTf === 'all'
-            ? 'bg-primary text-white border-primary shadow-xs'
-            : 'bg-white text-graphite border-accent hover:border-primary'
-        }`;
-        allBtn.innerText = `همه مراحل (${total})`;
-        tfContainer.appendChild(allBtn);
-
-        checklistTimeframes.forEach(tf => {
-          const count = staticChecklist.filter(t => t.category === tf).length;
-          const btn = document.createElement('button');
-          btn.onclick = () => selectChecklistTimeframe(tf);
-          btn.className = `px-3.5 py-2 rounded-xl text-xs font-bold transition-all border ${
-            activeChecklistTf === tf
-              ? 'bg-primary text-white border-primary shadow-xs'
-              : 'bg-white text-graphite border-accent hover:border-primary'
-          }`;
-          btn.innerText = `${tf} (${count})`;
-          tfContainer.appendChild(btn);
-        });
-      }
-
-      // Filter tasks
-      const filtered = staticChecklist.filter(task => {
-        const matchesTf = activeChecklistTf === 'all' || task.category === activeChecklistTf;
-        if (!matchesTf) return false;
-        if (activeChecklistStatus === 'completed') return task.completed;
-        if (activeChecklistStatus === 'pending') return !task.completed;
-        if (activeChecklistStatus === 'urgent') return task.isUrgent && !task.completed;
-        return true;
-      });
-
-      const container = document.getElementById('checklist-timeline-container');
-      if (!container) return;
-      container.innerHTML = '';
-
-      if (filtered.length === 0) {
-        container.innerHTML = `
-          <div class="text-center py-12 bg-bgCustom rounded-2xl border border-dashed border-accent space-y-2">
-            <i data-lucide="check-circle-2" class="w-10 h-10 text-secondary mx-auto opacity-50"></i>
-            <p class="text-sm font-bold text-graphite">هیچ موردی در این فیلتر یافت نشد</p>
-            <p class="text-xs text-secondary">فیلترهای زمان‌بندی یا وضعیت را تغییر دهید.</p>
-          </div>
-        `;
-        lucide.createIcons();
-        return;
-      }
-
-      const visibleTimeframes = activeChecklistTf === 'all' ? checklistTimeframes : [activeChecklistTf];
-
-      visibleTimeframes.forEach(tf => {
-        const tfTasks = filtered.filter(t => t.category === tf);
-        if (tfTasks.length === 0) return;
-
-        const tfCompleted = tfTasks.filter(t => t.completed).length;
-
-        const sectionDiv = document.createElement('div');
-        sectionDiv.className = "space-y-4";
-        sectionDiv.innerHTML = `
-          <div class="flex items-center justify-between border-b border-accent/70 pb-2">
-            <h3 class="text-sm font-bold text-primary flex items-center gap-2">
-              <span class="w-2.5 h-2.5 rounded-full bg-primary inline-block"></span>
-              <span>بازه زمانی: ${tf}</span>
-            </h3>
-            <span class="text-xs font-semibold text-secondary bg-slate-100 px-2.5 py-0.5 rounded-full border border-accent">
-              ${tfCompleted} از ${tfTasks.length} انجام شده
-            </span>
-          </div>
-
-          <div class="grid grid-cols-1 gap-3">
-            ${tfTasks.map(t => `
-              <div onclick="toggleChecklistTask('${t.id}')" class="p-4 rounded-2xl border transition-all cursor-pointer flex items-center justify-between gap-4 ${
-                t.completed
-                  ? 'bg-emerald-50/40 border-emerald-200'
-                  : t.isUrgent
-                  ? 'bg-rose-50/50 border-rose-200 hover:border-rose-400 shadow-xs'
-                  : 'bg-white border-accent hover:border-primary shadow-xs'
-              }">
-                <div class="flex items-center gap-3.5 flex-1 min-w-0">
-                  <div class="w-6 h-6 rounded-lg border-2 flex items-center justify-center transition-all ${
-                    t.completed ? 'bg-primary border-primary text-white' : 'border-secondary bg-white'
-                  }">
-                    ${t.completed ? '<i data-lucide="check" class="w-4 h-4 stroke-[3]"></i>' : ''}
-                  </div>
-                  <div class="space-y-1 min-w-0 flex-1">
-                    <div class="flex items-center gap-2 flex-wrap">
-                      <span class="text-sm font-bold truncate ${t.completed ? 'line-through text-secondary' : 'text-graphite'}">${t.title}</span>
-                      ${t.isUrgent && !t.completed ? '<span class="bg-rose-500 text-white text-[10px] font-bold px-2 py-0.5 rounded-md flex items-center gap-1"><i data-lucide="alert-circle" class="w-3 h-3"></i> فوری / حیاتی</span>' : ''}
-                    </div>
-                  </div>
-                </div>
-
-                <div class="flex items-center gap-2 shrink-0">
-                  <span class="text-[11px] font-semibold text-secondary bg-bgCustom px-3 py-1 rounded-lg border border-accent flex items-center gap-1">
-                    <i data-lucide="calendar" class="w-3 h-3 text-primary"></i>
-                    <span>${t.dueDate}</span>
-                  </span>
-                </div>
-              </div>
-            `).join('')}
-          </div>
-        `;
-        container.appendChild(sectionDiv);
-      });
-
-      lucide.createIcons();
-    }
-
-    let isMusicPlaying = false;
-    let rsvpCurrentStatus = 'attending';
-
-    let rsvpEntries = [
-      { id: 1, name: "محمدحسین و همسر", status: "attending", plusOnes: 2, dietary: "بدون لکتوز", note: "با آرزوی خوشبختی برای علی و سارا عزیز ❤️" },
-      { id: 2, name: "زهرا حسینی", status: "attending", plusOnes: 1, dietary: "گیاه‌خوار", note: "بسیار خوشحالیم برای این جشن زیبا!" },
-      { id: 3, name: "رضا کریمی", status: "declined", plusOnes: 0, dietary: "", note: "متأسفانه مسافرت هستم ولی بهترین‌ها رو براتون آرزو دارم." }
+    let staticVendorApplications = [
+      { id: "app-101", name: "تشریفات و گل‌آرایی مگنولیا", category: "گل‌آرایی و ماشین عروس", city: "تهران", manager: "علیرضا حسینی", phone: "۰۹۱۲۹۸۷۶۵۴۳", status: "pending" }
     ];
 
     let inquiries = [
       { id: 101, name: "امیرحسین رضایی", phone: "09121112233", date: "۱۴۰۳/۰۵/۲۰", guests: 250, details: "استعلام منوی دیس پرس همراه با ورودی و شمع‌آرایی" }
     ];
 
-    let staticVendorApplications = [
-      {
-        id: "app-101",
-        name: "مجموعه تشریفات و گل‌آرایی مگنولیا",
-        category: "گل‌آرایی و ماشین عروس",
-        city: "تهران",
-        manager: "سید علیرضا حسینی",
-        phone: "۰۹۱۲۹۸۷۶۵۴۳",
-        desc: "طراحی و اجرای گل‌آرایی مدرن، ورودی تالار و ماشین عروس",
-        status: "pending"
-      }
-    ];
+    let bookedDates = [5, 12, 19, 26];
 
-    function toggleVendorModalStatic(show) {
-      const modal = document.getElementById('vendor-onboarding-modal');
+    // TAB SWITCHING FUNCTION
+    function switchTab(tabId) {
+      document.querySelectorAll('.tab-content').forEach(el => el.classList.add('hidden'));
+      const target = document.getElementById('tab-' + tabId);
+      if (target) target.classList.remove('hidden');
+
+      document.querySelectorAll('.demo-tab-btn').forEach(btn => {
+        btn.className = "demo-tab-btn px-3.5 py-1.5 rounded-lg text-xs font-bold transition-all bg-white/10 hover:bg-white/20 text-slate-200";
+      });
+
+      const activeDemoBtn = document.getElementById('demo-tab-' + tabId);
+      if (activeDemoBtn) {
+        activeDemoBtn.className = "demo-tab-btn px-3.5 py-1.5 rounded-lg text-xs font-bold transition-all bg-primary text-white shadow-xs";
+      }
+
+      lucide.createIcons();
+    }
+
+    // GALLERY LIGHTBOX
+    function renderGallery() {
+      const container = document.getElementById('vp-gallery-grid');
+      if (!container) return;
+      container.innerHTML = '';
+
+      galleryPhotos.forEach((img, idx) => {
+        const div = document.createElement('div');
+        div.className = "aspect-square rounded-2xl overflow-hidden border border-accent relative group cursor-pointer shadow-xs";
+        div.onclick = () => openLightbox(img);
+        div.innerHTML = `
+          <img src="${img}" alt="نمونه کار ${idx + 1}" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300">
+          <div class="absolute inset-0 bg-primary/40 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center text-white font-bold text-xs">
+            <i data-lucide="maximize-2" class="w-6 h-6"></i>
+          </div>
+        `;
+        container.appendChild(div);
+      });
+      lucide.createIcons();
+    }
+
+    function openLightbox(src) {
+      document.getElementById('lightbox-img').src = src;
+      document.getElementById('lightbox-modal').classList.remove('hidden');
+    }
+
+    function closeLightbox() {
+      document.getElementById('lightbox-modal').classList.add('hidden');
+    }
+
+    // VENDOR PACKAGES
+    function renderVendorPackages() {
+      const pubContainer = document.getElementById('vp-packages-container');
+      const dashContainer = document.getElementById('vd-packages-list');
+
+      if (pubContainer) {
+        pubContainer.innerHTML = '';
+        vendorPackages.forEach(pkg => {
+          const card = document.createElement('div');
+          card.className = "bg-bgCustom border border-accent rounded-2xl p-5 space-y-4 shadow-xs hover:border-primary transition-all flex flex-col justify-between";
+          card.innerHTML = `
+            <div class="space-y-2">
+              <span class="text-[11px] font-bold text-primary bg-primary/10 px-2.5 py-0.5 rounded-full">پکیج رسمی</span>
+              <h4 class="text-base font-bold text-graphite">${pkg.name}</h4>
+              <p class="text-sm font-black text-primary">${pkg.price}</p>
+
+              <ul class="space-y-2 pt-2 border-t border-accent/60 text-xs text-graphite">
+                ${pkg.features.map(f => `<li class="flex items-center gap-2"><i data-lucide="check-circle" class="w-4 h-4 text-primary shrink-0"></i><span>${f}</span></li>`).join('')}
+              </ul>
+            </div>
+
+            <button onclick="openInquiryModal(1, '${pkg.name}')" class="w-full bg-primary hover:bg-emerald-900 text-white font-bold py-2.5 rounded-xl text-xs transition-colors">
+              استعلام و رزرو این پکیج
+            </button>
+          `;
+          pubContainer.appendChild(card);
+        });
+      }
+
+      if (dashContainer) {
+        dashContainer.innerHTML = '';
+        vendorPackages.forEach(pkg => {
+          const card = document.createElement('div');
+          card.className = "bg-bgCustom border border-accent rounded-2xl p-4 space-y-2 text-xs";
+          card.innerHTML = `
+            <div class="flex justify-between items-center font-bold text-graphite">
+              <span>${pkg.name}</span>
+              <button onclick="deletePackage('${pkg.id}')" class="text-rose-600 hover:underline text-[11px]">حذف</button>
+            </div>
+            <p class="text-primary font-bold">${pkg.price}</p>
+            <p class="text-secondary text-[11px] truncate">${pkg.features.join(' ، ')}</p>
+          `;
+          dashContainer.appendChild(card);
+        });
+      }
+
+      lucide.createIcons();
+    }
+
+    function toggleAddPackageModal(show) {
+      const modal = document.getElementById('package-modal');
       if (modal) {
         if (show) modal.classList.remove('hidden');
         else modal.classList.add('hidden');
       }
     }
 
-    function handleVendorModalSubmit(e) {
+    function handleAddPackageSubmit(e) {
       e.preventDefault();
-      const name = document.getElementById('v-name').value.trim();
-      const category = document.getElementById('v-cat').value;
-      const city = document.getElementById('v-city').value.trim();
-      const manager = document.getElementById('v-manager').value.trim();
-      const phone = document.getElementById('v-phone').value.trim();
-      const desc = document.getElementById('v-desc').value.trim();
+      const name = document.getElementById('pkg-name').value.trim();
+      const price = document.getElementById('pkg-price').value.trim();
+      const featuresRaw = document.getElementById('pkg-features').value.trim();
 
-      if (!name || !phone) return;
+      if (!name || !price) return;
 
-      staticVendorApplications.push({
-        id: 'app-' + Date.now(),
-        name,
-        category,
-        city,
-        manager,
-        phone,
-        desc,
-        status: 'pending'
-      });
+      const features = featuresRaw ? featuresRaw.split(',').map(f => f.trim()) : ['خدمات با کیفیت کامل'];
 
-      document.getElementById('vendor-onboarding-form').classList.add('hidden');
-      document.getElementById('v-modal-success').classList.remove('hidden');
-
-      renderAdminPendingApps();
+      vendorPackages.push({ id: 'pkg-' + Date.now(), name, price, features });
+      renderVendorPackages();
+      toggleAddPackageModal(false);
+      document.getElementById('pkg-name').value = '';
+      document.getElementById('pkg-price').value = '';
+      document.getElementById('pkg-features').value = '';
     }
 
-    function approveVendorAppStatic(appId) {
-      const app = staticVendorApplications.find(a => a.id === appId);
-      if (app) {
-        app.status = 'approved';
-        vendors.push({
-          id: vendors.length + 1,
-          name: app.name,
-          category: app.category,
-          city: app.city,
-          rating: 5.0,
-          verified: true,
-          priceRange: "استعلام قیمت",
-          image: "https://images.unsplash.com/photo-1519167758481-83f550bb49b3?auto=format&fit=crop&w=800&q=80"
-        });
-        renderVendors(vendors);
-        renderAdminPendingApps();
-        renderAdminTable();
-      }
+    function deletePackage(id) {
+      vendorPackages = vendorPackages.filter(p => p.id !== id);
+      renderVendorPackages();
     }
 
-    function renderAdminPendingApps() {
-      const tbody = document.getElementById('admin-pending-apps-table');
+    // SUPER ADMIN CATEGORY EDITOR
+    function renderAdminCategories() {
+      const tbody = document.getElementById('admin-category-table');
       if (!tbody) return;
       tbody.innerHTML = '';
 
-      const pending = staticVendorApplications.filter(a => a.status === 'pending');
-      if (pending.length === 0) {
-        tbody.innerHTML = '<tr><td colspan="5" class="p-4 text-center text-secondary">هیچ درخواست جدیدی در صف بررسی وجود ندارد.</td></tr>';
-        return;
-      }
-
-      pending.forEach(app => {
+      categories.forEach(cat => {
         const tr = document.createElement('tr');
         tr.className = "hover:bg-slate-50";
         tr.innerHTML = `
-          <td class="p-3 font-bold text-graphite">${app.name}</td>
-          <td class="p-3 text-primary">${app.category}</td>
-          <td class="p-3 font-semibold text-graphite">${app.manager} (${app.phone})</td>
-          <td class="p-3 text-secondary">${app.city}</td>
-          <td class="p-3 text-center">
-            <button onclick="approveVendorAppStatic('${app.id}')" class="bg-primary text-white font-bold text-xs px-3 py-1.5 rounded-lg hover:bg-emerald-900 transition-colors">
-              تایید و ایجاد پنل
-            </button>
+          <td class="p-3 font-bold text-graphite">${cat.title}</td>
+          <td class="p-3 text-secondary font-mono dir-ltr">${cat.icon}</td>
+          <td class="p-3">${cat.count} مجموعه</td>
+          <td class="p-3">
+            <span class="px-2.5 py-1 rounded-full text-[11px] font-bold ${cat.active ? 'bg-emerald-100 text-emerald-800' : 'bg-slate-100 text-slate-600'}">
+              ${cat.active ? 'فعال' : 'غیرفعال'}
+            </span>
+          </td>
+          <td class="p-3 text-center space-x-2 space-x-reverse">
+            <button onclick="editCategory('${cat.id}')" class="text-primary hover:underline font-bold">ویرایش</button>
+            <button onclick="deleteCategory('${cat.id}')" class="text-rose-600 hover:underline font-bold">حذف</button>
           </td>
         `;
         tbody.appendChild(tr);
       });
     }
 
-    let bookedDates = [5, 12, 19, 26];
-
-    function switchTab(tabId) {
-      document.querySelectorAll('.tab-content').forEach(el => el.classList.add('hidden'));
-      document.getElementById('tab-' + tabId).classList.remove('hidden');
-
-      document.querySelectorAll('.nav-btn').forEach(btn => {
-        btn.classList.remove('bg-primary/10', 'text-primary');
-        btn.classList.add('text-graphite');
-      });
-
-      const activeBtn = document.getElementById('nav-' + tabId);
-      if (activeBtn) {
-        activeBtn.classList.add('bg-primary/10', 'text-primary');
-        activeBtn.classList.remove('text-graphite');
-      }
-
-      lucide.createIcons();
-    }
-
-    function runAiAllocation() {
-      const budget = parseInt(document.getElementById('ai-budget-input').value) || 300000000;
-      document.getElementById('ai-res-venue').innerText = Math.round(budget * 0.40).toLocaleString('fa-IR') + ' تومان';
-      document.getElementById('ai-res-photo').innerText = Math.round(budget * 0.20).toLocaleString('fa-IR') + ' تومان';
-      document.getElementById('ai-res-attire').innerText = Math.round(budget * 0.15).toLocaleString('fa-IR') + ' تومان';
-      document.getElementById('ai-res-music').innerText = Math.round(budget * 0.15).toLocaleString('fa-IR') + ' تومان';
-      document.getElementById('ai-res-decor').innerText = Math.round(budget * 0.10).toLocaleString('fa-IR') + ' تومان';
-
-      budgetItemsStatic = [
-        { category: "تالار و پذیرایی (۴۰٪)", allocated: Math.round(budget * 0.40), actual: Math.round(budget * 0.38), deposit: Math.round(budget * 0.20) },
-        { category: "آتلیه و عکاسی (۲۰٪)", allocated: Math.round(budget * 0.20), actual: Math.round(budget * 0.21), deposit: Math.round(budget * 0.10) },
-        { category: "لباس و میکاپ (۱۵٪)", allocated: Math.round(budget * 0.15), actual: Math.round(budget * 0.14), deposit: Math.round(budget * 0.08) },
-        { category: "موزیک و نور (۱۵٪)", allocated: Math.round(budget * 0.15), actual: Math.round(budget * 0.15), deposit: Math.round(budget * 0.05) },
-        { category: "گل‌آرایی و متفرقه (۱۰٪)", allocated: Math.round(budget * 0.10), actual: Math.round(budget * 0.09), deposit: Math.round(budget * 0.04) }
-      ];
-
-      renderBudgetTable();
-    }
-
-    function renderBudgetTable() {
-      const tbody = document.getElementById('budget-table-body');
-      tbody.innerHTML = '';
-
-      let totAllocated = 0;
-      let totActual = 0;
-
-      budgetItemsStatic.forEach(b => {
-        totAllocated += b.allocated;
-        totActual += b.actual;
-        const rem = b.allocated - b.actual;
-
-        const tr = document.createElement('tr');
-        tr.className = "hover:bg-slate-50";
-        tr.innerHTML = `
-          <td class="p-3 font-bold text-graphite">${b.category}</td>
-          <td class="p-3">${b.allocated.toLocaleString('fa-IR')}</td>
-          <td class="p-3">${b.actual.toLocaleString('fa-IR')}</td>
-          <td class="p-3">${b.deposit.toLocaleString('fa-IR')}</td>
-          <td class="p-3 font-bold ${rem < 0 ? 'text-rose-600' : 'text-emerald-700'}">${rem.toLocaleString('fa-IR')}</td>
-        `;
-        tbody.appendChild(tr);
-      });
-
-      const pct = Math.round((totActual / (totAllocated || 1)) * 100);
-      document.getElementById('budget-progress-percent').innerText = pct + '٪ مصرف شده';
-      document.getElementById('budget-progress-bar').style.width = Math.min(100, pct) + '%';
-    }
-
-    function toggleMusic() {
-      isMusicPlaying = !isMusicPlaying;
-      const btn = document.getElementById('music-toggle-btn');
-      const text = document.getElementById('music-btn-text');
-      if (isMusicPlaying) {
-        btn.className = "flex items-center gap-2 px-4 py-2.5 rounded-xl text-xs font-bold transition-all border bg-rose-500 text-white border-rose-600 animate-pulse";
-        text.innerText = "توقف موزیک جادویی";
-      } else {
-        btn.className = "flex items-center gap-2 px-4 py-2.5 rounded-xl text-xs font-bold transition-all border bg-bgCustom border-accent text-graphite hover:border-primary";
-        text.innerText = "پخش موزیک لایت عروسی";
+    function toggleCategoryModal(show) {
+      const modal = document.getElementById('category-modal');
+      if (modal) {
+        if (show) modal.classList.remove('hidden');
+        else modal.classList.add('hidden');
       }
     }
 
-    function renderRsvpModule() {
-      const attending = rsvpEntries.filter(r => r.status === 'attending').reduce((acc, curr) => acc + curr.plusOnes, 0);
-      const declined = rsvpEntries.filter(r => r.status === 'declined').length;
-      const pending = 150 - (attending + declined);
-
-      document.getElementById('rsvp-attending-count').innerText = attending + ' نفر';
-      document.getElementById('rsvp-declined-count').innerText = declined + ' نفر';
-      document.getElementById('rsvp-pending-count').innerText = pending + ' نفر';
-
-      const container = document.getElementById('rsvp-list-container');
-      container.innerHTML = '';
-
-      rsvpEntries.forEach(r => {
-        const item = document.createElement('div');
-        item.className = "p-4 bg-bgCustom rounded-2xl border border-accent/70 flex flex-col sm:flex-row justify-between sm:items-center gap-3";
-        item.innerHTML = `
-          <div class="space-y-1">
-            <div class="flex items-center gap-2">
-              <span class="text-sm font-bold text-graphite">${r.name}</span>
-              ${r.status === "attending" ? `
-                <span class="text-[11px] font-bold bg-emerald-100 text-emerald-800 px-2 py-0.5 rounded-full flex items-center gap-1">
-                  <i data-lucide="check-circle-2" class="w-3 h-3"></i> شرکت می‌کند (${r.plusOnes} نفر)
-                </span>
-              ` : `
-                <span class="text-[11px] font-bold bg-rose-100 text-rose-800 px-2 py-0.5 rounded-full flex items-center gap-1">
-                  <i data-lucide="x-circle" class="w-3 h-3"></i> عدم حضور
-                </span>
-              `}
-            </div>
-            ${r.note ? `<p class="text-xs text-graphite/80 italic">"${r.note}"</p>` : ''}
-          </div>
-          ${r.dietary ? `<span class="text-xs font-bold text-secondary bg-white px-3 py-1 rounded-lg border border-accent self-start sm:self-auto">رژیم: ${r.dietary}</span>` : ''}
-        `;
-        container.appendChild(item);
-      });
-
-      lucide.createIcons();
-    }
-
-    function openRsvpModal() {
-      document.getElementById('rsvp-modal').classList.remove('hidden');
-    }
-
-    function closeRsvpModal() {
-      document.getElementById('rsvp-modal').classList.add('hidden');
-    }
-
-    function setRsvpStatus(st) {
-      rsvpCurrentStatus = st;
-      const btnAtt = document.getElementById('btn-rsvp-attending');
-      const btnDec = document.getElementById('btn-rsvp-declined');
-      const fields = document.getElementById('rsvp-attending-fields');
-
-      if (st === 'attending') {
-        btnAtt.className = "py-2.5 rounded-xl text-xs font-bold border transition-all bg-primary text-white border-primary";
-        btnDec.className = "py-2.5 rounded-xl text-xs font-bold border transition-all border-accent text-graphite hover:border-rose-600";
-        fields.classList.remove('hidden');
-      } else {
-        btnDec.className = "py-2.5 rounded-xl text-xs font-bold border transition-all bg-rose-600 text-white border-rose-600";
-        btnAtt.className = "py-2.5 rounded-xl text-xs font-bold border transition-all border-accent text-graphite hover:border-primary";
-        fields.classList.add('hidden');
+    function editCategory(id) {
+      const cat = categories.find(c => c.id === id);
+      if (cat) {
+        document.getElementById('cat-edit-id').value = cat.id;
+        document.getElementById('cat-title').value = cat.title;
+        document.getElementById('cat-icon').value = cat.icon;
+        document.getElementById('cat-active').checked = cat.active;
+        document.getElementById('cat-modal-title').innerText = "ویرایش دسته‌بندی شغلی";
+        toggleCategoryModal(true);
       }
     }
 
-    function handleRsvpSubmit(e) {
+    function deleteCategory(id) {
+      categories = categories.filter(c => c.id !== id);
+      renderAdminCategories();
+    }
+
+    function handleSaveCategory(e) {
       e.preventDefault();
-      const name = document.getElementById('rsvp-name').value;
-      const plusOnes = parseInt(document.getElementById('rsvp-plus-ones').value) || 1;
-      const dietary = document.getElementById('rsvp-dietary').value;
-      const note = document.getElementById('rsvp-note').value;
+      const editId = document.getElementById('cat-edit-id').value;
+      const title = document.getElementById('cat-title').value.trim();
+      const icon = document.getElementById('cat-icon').value.trim();
+      const active = document.getElementById('cat-active').checked;
 
-      rsvpEntries.unshift({
-        id: Date.now(),
-        name,
-        status: rsvpCurrentStatus,
-        plusOnes: rsvpCurrentStatus === 'attending' ? plusOnes : 0,
-        dietary,
-        note
-      });
+      if (!title || !icon) return;
 
-      renderRsvpModule();
-      closeRsvpModal();
-      document.getElementById('rsvp-form').reset();
-      alert('پاسخ شما با موفقیت در سیستم RSVP عروسی تو ثبت شد.');
-    }
-
-    function renderVendors(list) {
-      const grid = document.getElementById('vendor-grid');
-      grid.innerHTML = '';
-
-      if (list.length === 0) {
-        grid.innerHTML = `<div class="col-span-full text-center py-12 text-secondary text-sm font-semibold">هیچ کسب و کاری یافت نشد.</div>`;
-        return;
+      if (editId) {
+        const cat = categories.find(c => c.id === editId);
+        if (cat) {
+          cat.title = title;
+          cat.icon = icon;
+          cat.active = active;
+        }
+      } else {
+        categories.push({ id: 'cat-' + Date.now(), title, icon, count: 0, active });
       }
 
-      list.forEach(v => {
-        const card = document.createElement('div');
-        card.className = "bg-white border border-accent rounded-3xl overflow-hidden shadow-xs hover:shadow-md transition-all flex flex-col justify-between";
-        card.innerHTML = `
-          <div>
-            <div class="relative h-48 overflow-hidden bg-slate-100">
-              <img src="${v.image}" alt="${v.name}" class="w-full h-full object-cover">
-              ${v.verified ? `
-                <div class="absolute top-3 right-3 bg-primary text-white text-[11px] font-bold px-3 py-1 rounded-full flex items-center gap-1 shadow-md">
-                  <i data-lucide="shield-check" class="w-3.5 h-3.5"></i>
-                  <span>تاییدیه رسمی</span>
-                </div>
-              ` : ''}
-              <div class="absolute bottom-3 left-3 bg-black/60 backdrop-blur-xs text-white text-xs font-bold px-2.5 py-1 rounded-lg flex items-center gap-1">
-                <i data-lucide="star" class="w-3.5 h-3.5 text-yellow-400 fill-yellow-400"></i>
-                <span>${v.rating}</span>
-              </div>
-            </div>
-
-            <div class="p-5 space-y-3">
-              <div>
-                <span class="text-[11px] font-bold text-secondary">${v.category}</span>
-                <h3 class="text-base font-bold text-graphite leading-tight mt-0.5">${v.name}</h3>
-                <span class="text-xs text-graphite/70 flex items-center gap-1 mt-1">
-                  <i data-lucide="map-pin" class="w-3.5 h-3.5 text-secondary"></i>
-                  <span>${v.city}</span>
-                </span>
-              </div>
-
-              <div class="text-xs font-bold text-primary bg-primary/5 p-2.5 rounded-xl border border-primary/10 flex justify-between items-center">
-                <span class="text-graphite font-normal">حدود قیمت:</span>
-                <span>${v.priceRange}</span>
-              </div>
-            </div>
-          </div>
-
-          <div class="p-5 pt-0">
-            <button onclick="openInquiryModal(${v.id}, '${v.name}')" class="w-full bg-primary hover:bg-primary-hover text-white py-2.5 rounded-xl text-xs font-bold transition-colors flex items-center justify-center gap-2">
-              <i data-lucide="message-square-quote" class="w-4 h-4"></i>
-              <span>استعلام قیمت آنلاین</span>
-            </button>
-          </div>
-        `;
-        grid.appendChild(card);
-      });
-
-      lucide.createIcons();
+      renderAdminCategories();
+      toggleCategoryModal(false);
+      document.getElementById('cat-edit-id').value = '';
+      document.getElementById('cat-title').value = '';
+      document.getElementById('cat-icon').value = '';
     }
 
-    function filterVendors() {
-      const search = document.getElementById('search-input').value.trim().toLowerCase();
-      const cat = document.getElementById('category-filter').value;
-      const verifiedOnly = document.getElementById('verified-only').checked;
+    // VENDOR PROFILE EDIT FORM (VENDOR DASHBOARD)
+    function handleVendorProfileUpdate(e) {
+      e.preventDefault();
+      const name = document.getElementById('vd-edit-name').value.trim();
+      const hours = document.getElementById('vd-edit-hours').value.trim();
+      const address = document.getElementById('vd-edit-address').value.trim();
+      const insta = document.getElementById('vd-edit-insta').value.trim();
 
-      const filtered = vendors.filter(v => {
-        const matchesSearch = v.name.toLowerCase().includes(search) || v.category.toLowerCase().includes(search);
-        const matchesCat = cat === 'all' || v.category === cat;
-        const matchesVerified = !verifiedOnly || v.verified;
-        return matchesSearch && matchesCat && matchesVerified;
-      });
+      document.getElementById('vp-name').innerText = name;
+      document.getElementById('vp-hours').innerText = hours;
+      document.getElementById('vp-address').innerText = address;
+      document.getElementById('vp-instagram').innerText = insta;
+      document.getElementById('vd-header-name').innerText = "کسب و کار: " + name;
 
-      renderVendors(filtered);
+      alert('اطلاعات پروفایل عمومی کسب‌وکار شما با موفقیت به روزرسانی شد.');
     }
 
+    // CALENDAR & INQUIRIES & DIRECTORY
     function renderCalendar() {
       const grid = document.getElementById('calendar-grid');
+      if (!grid) return;
       grid.innerHTML = '';
 
       for (let i = 1; i <= 30; i++) {
@@ -1905,14 +1413,293 @@
       renderCalendar();
     }
 
-    function renderInquiries() {
-      const container = document.getElementById('inquiry-list');
+    function renderVendors(list) {
+      const grid = document.getElementById('vendor-grid');
+      if (!grid) return;
+      grid.innerHTML = '';
+
+      list.forEach(v => {
+        const card = document.createElement('div');
+        card.className = "bg-white border border-accent rounded-3xl overflow-hidden shadow-xs hover:shadow-md transition-all flex flex-col justify-between";
+        card.innerHTML = `
+          <div>
+            <div class="relative h-48 overflow-hidden bg-slate-100">
+              <img src="${v.image}" alt="${v.name}" class="w-full h-full object-cover">
+              ${v.verified ? `
+                <div class="absolute top-3 right-3 bg-primary text-white text-[11px] font-bold px-3 py-1 rounded-full flex items-center gap-1 shadow-md">
+                  <i data-lucide="shield-check" class="w-3.5 h-3.5"></i>
+                  <span>تاییدیه رسمی</span>
+                </div>
+              ` : ''}
+            </div>
+
+            <div class="p-5 space-y-3">
+              <div>
+                <span class="text-[11px] font-bold text-secondary">${v.category}</span>
+                <h3 class="text-base font-bold text-graphite leading-tight mt-0.5">${v.name}</h3>
+                <span class="text-xs text-graphite/70 flex items-center gap-1 mt-1">
+                  <i data-lucide="map-pin" class="w-3.5 h-3.5 text-secondary"></i>
+                  <span>${v.city}</span>
+                </span>
+              </div>
+
+              <div class="text-xs font-bold text-primary bg-primary/5 p-2.5 rounded-xl border border-primary/10 flex justify-between items-center">
+                <span class="text-graphite font-normal">حدود قیمت:</span>
+                <span>${v.priceRange}</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="p-5 pt-0 flex gap-2">
+            <button onclick="switchTab('vendor-profile')" class="flex-1 bg-bgCustom border border-accent text-graphite hover:border-primary py-2.5 rounded-xl text-xs font-bold transition-colors">
+              مشاهده پروفایل
+            </button>
+            <button onclick="openInquiryModal(${v.id}, '${v.name}')" class="flex-1 bg-primary hover:bg-primary-hover text-white py-2.5 rounded-xl text-xs font-bold transition-colors">
+              استعلام قیمت
+            </button>
+          </div>
+        `;
+        grid.appendChild(card);
+      });
+
+      lucide.createIcons();
+    }
+
+    function filterVendors() {
+      const search = document.getElementById('search-input').value.trim().toLowerCase();
+      const cat = document.getElementById('category-filter').value;
+      const verifiedOnly = document.getElementById('verified-only').checked;
+
+      const filtered = vendors.filter(v => {
+        const matchesSearch = v.name.toLowerCase().includes(search) || v.category.toLowerCase().includes(search);
+        const matchesCat = cat === 'all' || v.category === cat;
+        const matchesVerified = !verifiedOnly || v.verified;
+        return matchesSearch && matchesCat && matchesVerified;
+      });
+
+      renderVendors(filtered);
+    }
+
+    function renderChecklistTimeframeButtons() {
+      const btnContainer = document.getElementById('checklist-timeframe-buttons');
+      if (!btnContainer) return;
+
+      const timeframes = ["همه", "۱۲ تا ۹ ماه قبل", "۹ تا ۶ ماه قبل", "۶ تا ۳ ماه قبل", "۳ تا ۱ ماه قبل", "ماه آخر"];
+      btnContainer.innerHTML = '';
+
+      timeframes.forEach(tf => {
+        const btn = document.createElement('button');
+        btn.type = 'button';
+        btn.onclick = () => {
+          activeChecklistFilter = tf;
+          renderChecklistTimeline();
+          renderChecklistTimeframeButtons();
+        };
+        const isActive = activeChecklistFilter === tf;
+        btn.className = `px-3 py-1.5 rounded-xl text-xs font-bold transition-all ${
+          isActive
+            ? 'bg-primary text-white shadow-xs'
+            : 'bg-bgCustom text-graphite border border-accent hover:border-primary'
+        }`;
+        btn.innerText = tf;
+        btnContainer.appendChild(btn);
+      });
+    }
+
+    function toggleChecklistTask(id) {
+      const task = staticChecklist.find(t => t.id === id);
+      if (task) {
+        task.completed = !task.completed;
+        renderChecklistTimeline();
+      }
+    }
+
+    function renderChecklistTimeline() {
+      const container = document.getElementById('checklist-timeline-container');
+      if (!container) return;
+
+      // Update progress
+      const total = staticChecklist.length;
+      const completedCount = staticChecklist.filter(t => t.completed).length;
+      const percent = total > 0 ? Math.round((completedCount / total) * 100) : 0;
+
+      const progressBar = document.getElementById('checklist-progress-bar');
+      const progressText = document.getElementById('checklist-progress-text');
+      if (progressBar) progressBar.style.width = percent + '%';
+      if (progressText) progressText.innerText = percent + '٪ انجام شده';
+
+      const urgentUncompleted = staticChecklist.filter(t => t.isUrgent && !t.completed).length;
+      const urgentBadge = document.getElementById('checklist-urgent-badge');
+      const urgentCountEl = document.getElementById('checklist-urgent-count');
+      if (urgentBadge && urgentCountEl) {
+        if (urgentUncompleted > 0) {
+          urgentBadge.classList.remove('hidden');
+          urgentCountEl.innerText = `${urgentUncompleted} کار فوری باقی‌مانده`;
+        } else {
+          urgentBadge.classList.add('hidden');
+        }
+      }
+
       container.innerHTML = '';
 
-      if (inquiries.length === 0) {
-        container.innerHTML = '<div class="text-xs text-secondary">هیچ استعلامی ثبت نشده است.</div>';
+      const itemsToRender = activeChecklistFilter === "همه"
+        ? staticChecklist
+        : staticChecklist.filter(t => t.category === activeChecklistFilter);
+
+      if (itemsToRender.length === 0) {
+        container.innerHTML = '<div class="p-6 text-center text-secondary text-xs font-semibold">هیچ اقدامی برای این بازه زمانی یافت نشد.</div>';
         return;
       }
+
+      itemsToRender.forEach(t => {
+        const div = document.createElement('div');
+        div.className = `p-4 rounded-2xl border transition-all flex flex-col sm:flex-row sm:items-center justify-between gap-3 ${
+          t.completed ? 'bg-primary/5 border-primary/20' : 'bg-white border-accent hover:border-primary/50'
+        }`;
+        div.innerHTML = `
+          <div class="flex items-center gap-3">
+            <button type="button" onclick="toggleChecklistTask('${t.id}')" class="w-6 h-6 rounded-lg border-2 flex items-center justify-center font-bold text-xs transition-colors ${
+              t.completed ? 'bg-primary border-primary text-white' : 'border-secondary/40 text-transparent hover:border-primary'
+            }">
+              ✓
+            </button>
+            <div>
+              <span class="text-sm font-bold ${t.completed ? 'line-through text-graphite/60' : 'text-graphite'}">${t.title}</span>
+              ${t.isUrgent && !t.completed ? '<span class="mr-2 text-[10px] font-bold bg-rose-100 text-rose-700 px-2 py-0.5 rounded-full border border-rose-200">فوری</span>' : ''}
+            </div>
+          </div>
+
+          <div class="flex items-center gap-2 self-end sm:self-auto">
+            <span class="text-[11px] font-semibold text-secondary bg-bgCustom px-3 py-1 rounded-lg border border-accent/80">${t.dueDate}</span>
+            <span class="text-[11px] font-bold text-primary bg-primary/10 px-3 py-1 rounded-lg">${t.category}</span>
+          </div>
+        `;
+        container.appendChild(div);
+      });
+
+      lucide.createIcons();
+    }
+
+    function toggleNewTaskModal(show) {
+      const modal = document.getElementById('new-task-modal');
+      if (modal) {
+        if (show) modal.classList.remove('hidden');
+        else modal.classList.add('hidden');
+      }
+    }
+
+    function handleAddNewTaskSubmit(e) {
+      e.preventDefault();
+      const title = document.getElementById('task-title').value.trim();
+      const category = document.getElementById('task-cat').value;
+      const dueDate = document.getElementById('task-date').value.trim() || 'به زودی';
+      const isUrgent = document.getElementById('task-urgent').checked;
+
+      if (!title) return;
+
+      staticChecklist.push({
+        id: 'chk-' + Date.now(),
+        title,
+        category,
+        completed: false,
+        dueDate,
+        isUrgent
+      });
+
+      renderChecklistTimeline();
+      toggleNewTaskModal(false);
+      document.getElementById('task-title').value = '';
+      document.getElementById('task-date').value = '';
+    }
+
+    function renderAdminPendingApps() {
+      const tbody = document.getElementById('admin-pending-apps-table');
+      if (!tbody) return;
+      tbody.innerHTML = '';
+
+      const pending = staticVendorApplications.filter(a => a.status === 'pending');
+      if (pending.length === 0) {
+        tbody.innerHTML = '<tr><td colspan="5" class="p-4 text-center text-secondary">هیچ درخواست معلقی وجود ندارد.</td></tr>';
+        return;
+      }
+
+      pending.forEach(app => {
+        const tr = document.createElement('tr');
+        tr.className = "hover:bg-slate-50";
+        tr.innerHTML = `
+          <td class="p-3 font-bold text-graphite">${app.name}</td>
+          <td class="p-3 text-primary">${app.category}</td>
+          <td class="p-3 font-semibold text-graphite">${app.manager} (${app.phone})</td>
+          <td class="p-3 text-secondary">${app.city}</td>
+          <td class="p-3 text-center">
+            <button onclick="approveVendorAppStatic('${app.id}')" class="bg-primary text-white font-bold text-xs px-3 py-1.5 rounded-lg hover:bg-emerald-900 transition-colors">
+              تایید و اعطای پنل
+            </button>
+          </td>
+        `;
+        tbody.appendChild(tr);
+      });
+    }
+
+    function approveVendorAppStatic(appId) {
+      const app = staticVendorApplications.find(a => a.id === appId);
+      if (app) {
+        app.status = 'approved';
+        vendors.push({
+          id: vendors.length + 1,
+          name: app.name,
+          category: app.category,
+          city: app.city,
+          rating: 5.0,
+          verified: true,
+          priceRange: "استعلام قیمت",
+          image: "https://images.unsplash.com/photo-1519167758481-83f550bb49b3?auto=format&fit=crop&w=800&q=80"
+        });
+        renderVendors(vendors);
+        renderAdminPendingApps();
+        renderAdminTable();
+      }
+    }
+
+    function renderAdminTable() {
+      const tbody = document.getElementById('admin-vendor-table');
+      if (!tbody) return;
+      tbody.innerHTML = '';
+
+      vendors.forEach(v => {
+        const tr = document.createElement('tr');
+        tr.className = "hover:bg-slate-50";
+        tr.innerHTML = `
+          <td class="p-3 font-bold text-graphite">${v.name}</td>
+          <td class="p-3 text-secondary">${v.category}</td>
+          <td class="p-3 text-graphite" dir="ltr">۰۹۱۲۰۰۰۰۰۰۰</td>
+          <td class="p-3">
+            <span class="inline-flex items-center gap-1 px-2.5 py-1 rounded-full text-[11px] font-bold ${
+              v.verified ? 'bg-primary/10 text-primary' : 'bg-slate-100 text-secondary'
+            }">
+              ${v.verified ? 'تایید شده' : 'در انتظار بررسی'}
+            </span>
+          </td>
+          <td class="p-3 text-center">
+            <button onclick="toggleVendorVerification(${v.id})" class="text-xs font-bold underline ${v.verified ? 'text-rose-600' : 'text-primary'}">
+              ${v.verified ? 'لغو تاییدیه' : 'اعطای تاییدیه رسمی'}
+            </button>
+          </td>
+        `;
+        tbody.appendChild(tr);
+      });
+    }
+
+    function toggleVendorVerification(id) {
+      vendors = vendors.map(v => v.id === id ? { ...v, verified: !v.verified } : v);
+      renderVendors(vendors);
+      renderAdminTable();
+    }
+
+    function renderInquiries() {
+      const container = document.getElementById('inquiry-list');
+      if (!container) return;
+      container.innerHTML = '';
 
       inquiries.forEach(inq => {
         const card = document.createElement('div');
@@ -1931,74 +1718,45 @@
       });
     }
 
-    function renderAdminTable() {
-      const tbody = document.getElementById('admin-vendor-table');
-      tbody.innerHTML = '';
-
-      vendors.forEach(v => {
-        const tr = document.createElement('tr');
-        tr.className = "hover:bg-slate-50";
-        tr.innerHTML = `
-          <td class="p-3 font-bold text-graphite">${v.name}</td>
-          <td class="p-3 text-secondary">${v.category}</td>
-          <td class="p-3 text-graphite" dir="ltr">۰۹۱۲۰۰۰۰۰۰۰</td>
-          <td class="p-3">
-            <span class="inline-flex items-center gap-1 px-2.5 py-1 rounded-full text-[11px] font-bold ${
-              v.verified ? 'bg-primary/10 text-primary' : 'bg-slate-100 text-secondary'
-            }">
-              ${v.verified ? 'تایید شده' : 'در انتظار بررسی'}
-            </span>
-          </td>
-          <td class="p-3">
-            <button onclick="toggleVendorVerification(${v.id})" class="text-xs font-bold underline ${v.verified ? 'text-rose-600' : 'text-primary'}">
-              ${v.verified ? 'لغو تاییدیه' : 'اعطای تاییدیه رسمی'}
-            </button>
-          </td>
-        `;
-        tbody.appendChild(tr);
-      });
+    function runAiAllocation() {
+      const budget = parseInt(document.getElementById('ai-budget-input').value) || 300000000;
+      document.getElementById('ai-res-venue').innerText = Math.round(budget * 0.40).toLocaleString('fa-IR') + ' تومان';
+      document.getElementById('ai-res-photo').innerText = Math.round(budget * 0.20).toLocaleString('fa-IR') + ' تومان';
+      document.getElementById('ai-res-attire').innerText = Math.round(budget * 0.15).toLocaleString('fa-IR') + ' تومان';
     }
 
-    function toggleVendorVerification(id) {
-      vendors = vendors.map(v => v.id === id ? { ...v, verified: !v.verified } : v);
-      renderVendors(vendors);
-      renderAdminTable();
-    }
-
-    function sendLiveChatMessage(e) {
-      e.preventDefault();
-      const input = document.getElementById('chat-input-text');
-      const text = input.value.trim();
-      if (!text) return;
-
-      const container = document.getElementById('chat-messages-container');
-      const msgDiv = document.createElement('div');
-      msgDiv.className = "flex flex-col items-start space-y-1";
-      msgDiv.innerHTML = `
-        <div class="bg-bgCustom border border-accent p-3 rounded-2xl text-xs max-w-sm">
-          <span class="font-bold text-graphite block mb-1">شما:</span>
-          ${text}
-        </div>
-        <span class="text-[9px] text-secondary">هم‌اکنون</span>
-      `;
-      container.appendChild(msgDiv);
-      input.value = '';
-      container.scrollTop = container.scrollHeight;
-    }
-
-    function sendSmsBroadcast() {
-      const text = document.getElementById('sms-text').value.trim();
-      if (!text) {
-        alert('لطفا متن پیامک را وارد کنید.');
-        return;
+    function toggleVendorModalStatic(show) {
+      const modal = document.getElementById('vendor-onboarding-modal');
+      if (modal) {
+        if (show) modal.classList.remove('hidden');
+        else modal.classList.add('hidden');
       }
-      const history = document.getElementById('sms-history');
-      const item = document.createElement('div');
-      item.className = "p-2 bg-white rounded-lg border border-accent/60";
-      item.innerHTML = `<span class="text-primary font-bold">ارسال شد:</span> ${text}`;
-      history.prepend(item);
-      document.getElementById('sms-text').value = '';
-      alert('پیامک انبوه با موفقیت ارسال شد.');
+    }
+
+    function handleVendorModalSubmit(e) {
+      e.preventDefault();
+      const name = document.getElementById('v-name').value.trim();
+      const category = document.getElementById('v-cat').value;
+      const city = document.getElementById('v-city').value.trim();
+      const manager = document.getElementById('v-manager').value.trim();
+      const phone = document.getElementById('v-phone').value.trim();
+
+      if (!name || !phone) return;
+
+      staticVendorApplications.push({
+        id: 'app-' + Date.now(),
+        name,
+        category,
+        city,
+        manager,
+        phone,
+        status: 'pending'
+      });
+
+      document.getElementById('vendor-onboarding-form').classList.add('hidden');
+      document.getElementById('v-modal-success').classList.remove('hidden');
+
+      renderAdminPendingApps();
     }
 
     function openInquiryModal(vendorId, vendorName) {
@@ -2015,26 +1773,50 @@
       e.preventDefault();
       const name = document.getElementById('inquiry-name').value;
       const phone = document.getElementById('inquiry-phone').value;
-      const date = document.getElementById('inquiry-date').value || '۱۴۰۳/۰۶/۰۱';
-      const guests = document.getElementById('inquiry-guests').value || '۲۰۰';
-      const details = document.getElementById('inquiry-details').value;
 
-      inquiries.push({ id: Date.now(), name, phone, date, guests, details });
+      inquiries.push({ id: Date.now(), name, phone, date: '۱۴۰۳/۰۶/۰۱', guests: 200, details: 'درخواست پیش فاکتور' });
       renderInquiries();
       closeInquiryModal();
       document.getElementById('inquiry-form').reset();
       alert('استعلام قیمت با موفقیت ثبت گردید.');
     }
 
+    function openRsvpModal() {
+      document.getElementById('rsvp-modal').classList.remove('hidden');
+    }
+
+    function closeRsvpModal() {
+      document.getElementById('rsvp-modal').classList.add('hidden');
+    }
+
+    function handleRsvpSubmit(e) {
+      e.preventDefault();
+      closeRsvpModal();
+      alert('پاسخ RSVP شما ثبت شد.');
+    }
+
+    function sendSmsBroadcast() {
+      const text = document.getElementById('sms-text').value.trim();
+      if (!text) return alert('لطفا متن پیامک را وارد کنید.');
+      const history = document.getElementById('sms-history');
+      const item = document.createElement('div');
+      item.className = "p-2 bg-white rounded-lg border border-accent/60";
+      item.innerHTML = `<span class="text-primary font-bold">ارسال شد:</span> ${text}`;
+      history.prepend(item);
+      document.getElementById('sms-text').value = '';
+      alert('پیامک انبوه ارسال شد.');
+    }
+
     window.addEventListener('DOMContentLoaded', () => {
       renderVendors(vendors);
-      renderRsvpModule();
-      runAiAllocation();
-      renderChecklistTimeline();
-      renderCalendar();
-      renderInquiries();
+      renderGallery();
+      renderVendorPackages();
+      renderAdminCategories();
       renderAdminPendingApps();
       renderAdminTable();
+      renderCalendar();
+      renderInquiries();
+      renderChecklistTimeline();
     });
   </script>
 </body>
