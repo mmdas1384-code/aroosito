@@ -771,47 +771,523 @@
     <!-- VIEW 5: DIGITAL INVITATION & RSVP MODULE   -->
     <!-- ========================================== -->
     <div id="tab-invitation" class="tab-content hidden space-y-8">
-      <div class="bg-white border border-accent rounded-3xl p-6 shadow-xs flex flex-col sm:flex-row items-center justify-between gap-4">
-        <div>
-          <div class="inline-flex items-center gap-1.5 bg-primary/10 text-primary text-xs font-bold px-3 py-1 rounded-full mb-1">
+
+      <!-- TOP HEADER BAR & LINK SHARING ACTIONS -->
+      <div class="bg-white border border-accent rounded-3xl p-6 shadow-xs flex flex-col lg:flex-row items-start lg:items-center justify-between gap-4">
+        <div class="space-y-1">
+          <div class="inline-flex items-center gap-1.5 bg-primary/10 text-primary text-xs font-bold px-3 py-1 rounded-full">
             <i data-lucide="sparkles" class="w-3.5 h-3.5"></i>
-            <span>کارت دعوت دیجیتال هوشمند</span>
+            <span>سازنده و پیش‌نمایش کارت دعوت دیجیتال (Digital Invitation Builder)</span>
           </div>
-          <h2 class="text-xl font-bold text-graphite">لندینگ پیج اختصاصی: علی و سارا</h2>
-          <p class="text-xs text-secondary mt-0.5" dir="ltr">aroosito.com/invitation/ali-sara</p>
+          <h2 class="text-2xl font-black text-graphite flex items-center gap-2">
+            <span id="inv-header-title">کارت دعوت آنلاین: علی و سارا</span>
+          </h2>
+          <p class="text-xs text-secondary font-medium" dir="ltr">https://aroosito.com/invitation/ali-and-sara</p>
         </div>
 
-        <button onclick="alert('لینک کارت دعوت کپی شد.')" class="bg-primary/10 hover:bg-primary/20 text-primary border border-primary/20 px-4 py-2.5 rounded-xl text-xs font-bold transition-all flex items-center gap-1.5">
-          <i data-lucide="copy" class="w-4 h-4"></i>
-          <span>کپی لینک کارت دعوت</span>
-        </button>
-      </div>
+        <div class="flex flex-wrap items-center gap-2.5">
+          <button onclick="copyInvitationLink()" class="bg-primary hover:bg-emerald-900 text-white px-4 py-2.5 rounded-xl text-xs font-bold transition-all flex items-center gap-1.5 shadow-sm">
+            <i data-lucide="copy" class="w-4 h-4"></i>
+            <span>دریافت لینک اختصاصی</span>
+          </button>
 
-      <!-- INVITATION HERO CARD -->
-      <div class="relative bg-white border border-accent rounded-3xl overflow-hidden shadow-lg">
-        <div class="relative h-80 sm:h-96 w-full overflow-hidden bg-slate-900">
-          <img src="https://images.unsplash.com/photo-1519741497674-611481863552?auto=format&fit=crop&w=1600&q=80" alt="علی و سارا" class="w-full h-full object-cover opacity-80">
-          <div class="absolute inset-0 bg-gradient-to-t from-graphite via-graphite/40 to-transparent"></div>
+          <button onclick="openQrModal()" class="bg-bgCustom border border-accent hover:border-primary text-graphite px-4 py-2.5 rounded-xl text-xs font-bold transition-all flex items-center gap-1.5 shadow-xs">
+            <i data-lucide="qr-code" class="w-4 h-4 text-primary"></i>
+            <span>دانلود QR Code</span>
+          </button>
 
-          <div class="absolute bottom-8 right-8 left-8 text-white text-center space-y-3">
-            <span class="text-xs sm:text-sm font-semibold tracking-widest text-accent uppercase">با افتخار شما را دعوت می‌نماییم به پیوند</span>
-            <h2 class="text-3xl sm:text-5xl font-black tracking-tight text-white flex items-center justify-center gap-2">
-              <span>علی</span>
-              <i data-lucide="heart" class="w-8 h-8 text-rose-400 fill-rose-400"></i>
-              <span>سارا</span>
-            </h2>
-            <p class="text-xs sm:text-sm text-slate-200 font-medium">پنج‌شنبه ۱۵ شهریور ۱۴۰۳ • ساعت ۱۸:۰۰ الی ۲۴:۰۰</p>
-          </div>
-        </div>
-
-        <!-- RSVP BUTTON -->
-        <div class="p-8 bg-bgCustom border-b border-accent text-center space-y-4">
-          <button onclick="openRsvpModal()" class="bg-primary hover:bg-primary-hover text-white px-8 py-3.5 rounded-2xl font-bold text-sm shadow-lg transition-all inline-flex items-center gap-2">
-            <i data-lucide="check-circle-2" class="w-5 h-5"></i>
-            <span>اعلام حضور و ثبت پاسخ RSVP</span>
+          <button onclick="resetEnvelopeAnimation()" class="bg-bgCustom border border-accent hover:border-primary text-graphite px-4 py-2.5 rounded-xl text-xs font-bold transition-all flex items-center gap-1.5 shadow-xs">
+            <i data-lucide="mail-open" class="w-4 h-4 text-primary"></i>
+            <span>تست مجدد باز شدن پاکت</span>
           </button>
         </div>
       </div>
+
+      <!-- MOBILE SWITCHER TABS (Visible on screens smaller than lg) -->
+      <div class="lg:hidden flex bg-bgCustom border border-accent rounded-2xl p-1 text-xs font-bold shadow-xs">
+        <button id="inv-mobtab-edit" onclick="switchInvMobileTab('edit')" class="flex-1 py-2.5 rounded-xl transition-all bg-primary text-white text-center">
+          <i data-lucide="sliders" class="w-3.5 h-3.5 inline ml-1"></i>تنظیمات و شخصی‌سازی
+        </button>
+        <button id="inv-mobtab-preview" onclick="switchInvMobileTab('preview')" class="flex-1 py-2.5 rounded-xl transition-all text-secondary hover:text-graphite text-center">
+          <i data-lucide="smartphone" class="w-3.5 h-3.5 inline ml-1"></i>پیش‌نمایش زنده مهمان
+        </button>
+      </div>
+
+      <!-- SPLIT-SCREEN CONTAINER (CONTROL PANEL + LIVE PHONE PREVIEW) -->
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
+
+        <!-- LEFT COLUMN: CUSTOMIZATION CONTROL PANEL (پنل تنظیمات) -->
+        <div id="inv-control-panel" class="lg:col-span-7 space-y-6">
+
+          <!-- 1. THEME & VISUAL STYLE SELECTOR -->
+          <div class="bg-white border border-accent rounded-3xl p-6 shadow-xs space-y-4">
+            <div class="border-b border-accent pb-3 flex justify-between items-center">
+              <h3 class="text-base font-bold text-graphite flex items-center gap-2">
+                <i data-lucide="palette" class="w-5 h-5 text-primary"></i>
+                <span>انتخاب تم و سبک visual کارت (Theme Selector)</span>
+              </h3>
+              <span class="text-xs font-bold text-primary bg-primary/10 px-2.5 py-0.5 rounded-full">۵ تم گرافیکی</span>
+            </div>
+
+            <div class="grid grid-cols-2 sm:grid-cols-3 gap-3">
+              <!-- Theme 1: Emerald -->
+              <div onclick="setInvTheme('emerald')" id="inv-theme-emerald" class="inv-theme-card p-3.5 rounded-2xl border-2 border-primary bg-emerald-50/50 cursor-pointer transition-all space-y-2">
+                <div class="h-10 rounded-xl bg-gradient-to-r from-[#2E533F] via-[#3a6950] to-[#2E533F] border border-amber-300 flex items-center justify-center text-amber-200 text-xs font-bold">
+                  لوکس زمردی
+                </div>
+                <div class="flex justify-between items-center text-[11px] font-bold text-graphite">
+                  <span>زمردی & طلایی</span>
+                  <i data-lucide="check-circle-2" class="w-4 h-4 text-primary theme-check"></i>
+                </div>
+              </div>
+
+              <!-- Theme 2: Minimal Gold -->
+              <div onclick="setInvTheme('gold')" id="inv-theme-gold" class="inv-theme-card p-3.5 rounded-2xl border border-accent bg-white hover:border-primary cursor-pointer transition-all space-y-2">
+                <div class="h-10 rounded-xl bg-gradient-to-r from-amber-100 via-yellow-50 to-amber-100 border border-amber-400 flex items-center justify-center text-amber-900 text-xs font-bold">
+                  مینی‌مال طلایی
+                </div>
+                <div class="flex justify-between items-center text-[11px] font-bold text-graphite">
+                  <span>طلا & کرم</span>
+                  <i data-lucide="check-circle-2" class="w-4 h-4 text-primary theme-check hidden"></i>
+                </div>
+              </div>
+
+              <!-- Theme 3: Classic Osmani / Royal -->
+              <div onclick="setInvTheme('osmani')" id="inv-theme-osmani" class="inv-theme-card p-3.5 rounded-2xl border border-accent bg-white hover:border-primary cursor-pointer transition-all space-y-2">
+                <div class="h-10 rounded-xl bg-gradient-to-r from-indigo-900 via-slate-900 to-indigo-950 border border-indigo-400 flex items-center justify-center text-indigo-200 text-xs font-bold">
+                  کلاسیک اسلیمی
+                </div>
+                <div class="flex justify-between items-center text-[11px] font-bold text-graphite">
+                  <span>سرمه‌ای & اسلیمی</span>
+                  <i data-lucide="check-circle-2" class="w-4 h-4 text-primary theme-check hidden"></i>
+                </div>
+              </div>
+
+              <!-- Theme 4: Modern Dark -->
+              <div onclick="setInvTheme('dark')" id="inv-theme-dark" class="inv-theme-card p-3.5 rounded-2xl border border-accent bg-white hover:border-primary cursor-pointer transition-all space-y-2">
+                <div class="h-10 rounded-xl bg-slate-900 border border-slate-700 flex items-center justify-center text-slate-100 text-xs font-bold">
+                  مدرن دارک
+                </div>
+                <div class="flex justify-between items-center text-[11px] font-bold text-graphite">
+                  <span>مشکی & طلایی</span>
+                  <i data-lucide="check-circle-2" class="w-4 h-4 text-primary theme-check hidden"></i>
+                </div>
+              </div>
+
+              <!-- Theme 5: Floral Rose -->
+              <div onclick="setInvTheme('floral')" id="inv-theme-floral" class="inv-theme-card p-3.5 rounded-2xl border border-accent bg-white hover:border-primary cursor-pointer transition-all space-y-2">
+                <div class="h-10 rounded-xl bg-gradient-to-r from-rose-100 via-rose-50 to-pink-100 border border-rose-300 flex items-center justify-center text-rose-800 text-xs font-bold">
+                  گل‌دار شیک
+                </div>
+                <div class="flex justify-between items-center text-[11px] font-bold text-graphite">
+                  <span>رزبرگ & صورتی</span>
+                  <i data-lucide="check-circle-2" class="w-4 h-4 text-primary theme-check hidden"></i>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- 2. COUPLE & CEREMONY DETAILS FORM -->
+          <div class="bg-white border border-accent rounded-3xl p-6 shadow-xs space-y-4">
+            <h3 class="text-base font-bold text-graphite border-b border-accent pb-3 flex items-center gap-2">
+              <i data-lucide="user-check" class="w-5 h-5 text-primary"></i>
+              <span>اطلاعات زوجین و زمان‌بندی جشن</span>
+            </h3>
+
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 text-xs font-bold text-graphite">
+              <div>
+                <label class="block mb-1.5">نام داماد *</label>
+                <input type="text" id="inv-input-groom" value="علی" oninput="updateInvStateFromForm()" class="w-full bg-bgCustom border border-accent rounded-xl p-2.5 text-xs font-medium focus:outline-none focus:border-primary">
+              </div>
+
+              <div>
+                <label class="block mb-1.5">نام عروس *</label>
+                <input type="text" id="inv-input-bride" value="سارا" oninput="updateInvStateFromForm()" class="w-full bg-bgCustom border border-accent rounded-xl p-2.5 text-xs font-medium focus:outline-none focus:border-primary">
+              </div>
+
+              <div>
+                <label class="block mb-1.5">تاریخ شمسی مراسم *</label>
+                <input type="text" id="inv-input-date" value="۱۴۰۳/۰۶/۱۵" oninput="updateInvStateFromForm()" class="w-full bg-bgCustom border border-accent rounded-xl p-2.5 text-xs font-medium focus:outline-none focus:border-primary">
+              </div>
+
+              <div>
+                <label class="block mb-1.5">ساعت برگزاری مراسم *</label>
+                <input type="text" id="inv-input-time" value="۱۸:۰۰ الی ۲۴:۰۰" oninput="updateInvStateFromForm()" class="w-full bg-bgCustom border border-accent rounded-xl p-2.5 text-xs font-medium focus:outline-none focus:border-primary">
+              </div>
+
+              <div class="sm:col-span-2">
+                <label class="block mb-1.5">شعر یا متن خیره‌مقدم کارت دعوت:</label>
+                <textarea id="inv-input-poem" rows="3" oninput="updateInvStateFromForm()" class="w-full bg-bgCustom border border-accent rounded-xl p-2.5 text-xs font-medium focus:outline-none focus:border-primary leading-relaxed">در مکتب عشق، تو بهترین همسفری
+با مقدم گرمتان در شب پیوند ما، محفل‌مان بهشت می‌گردد.</textarea>
+              </div>
+            </div>
+          </div>
+
+          <!-- 3. VENUE LOCATION & DIRECT NAVIGATION LINKS -->
+          <div class="bg-white border border-accent rounded-3xl p-6 shadow-xs space-y-4">
+            <h3 class="text-base font-bold text-graphite border-b border-accent pb-3 flex items-center gap-2">
+              <i data-lucide="map-pin" class="w-5 h-5 text-primary"></i>
+              <span>مکان برگزاری و لینک‌های مسیریابی (Venue Location)</span>
+            </h3>
+
+            <div class="space-y-3 text-xs font-bold text-graphite">
+              <div>
+                <label class="block mb-1">نام تالار یا باغ تشریفات *</label>
+                <input type="text" id="inv-input-venue" value="باغ تالار تشریفاتی زمرد" oninput="updateInvStateFromForm()" class="w-full bg-bgCustom border border-accent rounded-xl p-2.5 text-xs font-medium focus:outline-none focus:border-primary">
+              </div>
+
+              <div>
+                <label class="block mb-1">آدرس دقیق محل جشن *</label>
+                <input type="text" id="inv-input-address" value="تهران، احمدآباد مستوفی، خیابان صنوبر، پلاک ۴۵" oninput="updateInvStateFromForm()" class="w-full bg-bgCustom border border-accent rounded-xl p-2.5 text-xs font-medium focus:outline-none focus:border-primary">
+              </div>
+
+              <div class="grid grid-cols-3 gap-2 pt-1">
+                <div>
+                  <label class="block mb-1 text-[11px] text-secondary">گوگل مپ (Google Maps):</label>
+                  <input type="text" id="inv-input-gmaps" value="https://maps.google.com" oninput="updateInvStateFromForm()" class="w-full bg-bgCustom border border-accent rounded-xl p-2 text-[11px] font-mono dir-ltr">
+                </div>
+                <div>
+                  <label class="block mb-1 text-[11px] text-secondary">مسیریاب نشان (Neshan):</label>
+                  <input type="text" id="inv-input-neshan" value="https://neshan.org" oninput="updateInvStateFromForm()" class="w-full bg-bgCustom border border-accent rounded-xl p-2 text-[11px] font-mono dir-ltr">
+                </div>
+                <div>
+                  <label class="block mb-1 text-[11px] text-secondary">مسیریاب بلد (Balad):</label>
+                  <input type="text" id="inv-input-balad" value="https://balad.ir" oninput="updateInvStateFromForm()" class="w-full bg-bgCustom border border-accent rounded-xl p-2 text-[11px] font-mono dir-ltr">
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- 4. AUDIO BACKGROUND & MUSIC SETTINGS -->
+          <div class="bg-white border border-accent rounded-3xl p-6 shadow-xs space-y-4">
+            <h3 class="text-base font-bold text-graphite border-b border-accent pb-3 flex items-center gap-2">
+              <i data-lucide="music" class="w-5 h-5 text-primary"></i>
+              <span>موزیک زمینه کارت دعوت (Audio Background)</span>
+            </h3>
+
+            <div class="grid grid-cols-1 sm:grid-cols-3 gap-3 text-xs font-bold text-graphite">
+              <label class="flex items-center gap-2 p-3 bg-bgCustom border border-accent rounded-xl cursor-pointer hover:border-primary">
+                <input type="radio" name="inv-audio-preset" value="lovers" checked onchange="setInvAudioChoice('lovers')" class="text-primary focus:ring-primary w-4 h-4">
+                <span>ملودی عاشقانه</span>
+              </label>
+              <label class="flex items-center gap-2 p-3 bg-bgCustom border border-accent rounded-xl cursor-pointer hover:border-primary">
+                <input type="radio" name="inv-audio-preset" value="piano" onchange="setInvAudioChoice('piano')" class="text-primary focus:ring-primary w-4 h-4">
+                <span>پیانو آرام (Soft Piano)</span>
+              </label>
+              <label class="flex items-center gap-2 p-3 bg-bgCustom border border-accent rounded-xl cursor-pointer hover:border-primary">
+                <input type="radio" name="inv-audio-preset" value="custom" onchange="setInvAudioChoice('custom')" class="text-primary focus:ring-primary w-4 h-4">
+                <span>لینک MP3 اختصاصی</span>
+              </label>
+            </div>
+
+            <div id="inv-custom-audio-box" class="hidden text-xs font-bold text-graphite space-y-1">
+              <label class="block text-secondary">آدرس مستقیم فایل صوتی (MP3 Direct Link):</label>
+              <input type="text" id="inv-input-audio-url" placeholder="https://example.com/music.mp3" oninput="updateInvStateFromForm()" class="w-full bg-bgCustom border border-accent rounded-xl p-2.5 text-xs font-mono dir-ltr">
+            </div>
+          </div>
+
+          <!-- 5. MONEY GIFT / SHAGOON BOX DETAILS -->
+          <div class="bg-white border border-accent rounded-3xl p-6 shadow-xs space-y-4">
+            <h3 class="text-base font-bold text-graphite border-b border-accent pb-3 flex items-center gap-2">
+              <i data-lucide="gift" class="w-5 h-5 text-primary"></i>
+              <span>صندوق هدایای نقدی / شماره کارت (Shagoon Box)</span>
+            </h3>
+
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 text-xs font-bold text-graphite">
+              <div>
+                <label class="block mb-1">شماره کارت جهت شاباش نقدی:</label>
+                <input type="text" id="inv-input-cardnum" value="۶۰۳۷-۹۹۷۹-۱۲۳۴-۵۶۷۸" oninput="updateInvStateFromForm()" class="w-full bg-bgCustom border border-accent rounded-xl p-2.5 text-xs font-mono dir-ltr">
+              </div>
+              <div>
+                <label class="block mb-1">نام دارنده حساب:</label>
+                <input type="text" id="inv-input-cardholder" value="علی محمدی و سارا حسینی" oninput="updateInvStateFromForm()" class="w-full bg-bgCustom border border-accent rounded-xl p-2.5 text-xs font-medium">
+              </div>
+            </div>
+          </div>
+
+          <!-- 6. INTERACTIVE MODULE TOGGLES -->
+          <div class="bg-white border border-accent rounded-3xl p-6 shadow-xs space-y-4">
+            <h3 class="text-base font-bold text-graphite border-b border-accent pb-3 flex items-center gap-2">
+              <i data-lucide="toggle-right" class="w-5 h-5 text-primary"></i>
+              <span>فعال‌سازی بخش‌های تعاملی کارت دعوت</span>
+            </h3>
+
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 text-xs font-bold text-graphite">
+              <label class="flex items-center justify-between p-3.5 bg-bgCustom border border-accent rounded-2xl cursor-pointer hover:border-primary">
+                <span class="flex items-center gap-2">
+                  <i data-lucide="check-square" class="w-4 h-4 text-primary"></i>
+                  <span>فرم اعلام حضور (RSVP)</span>
+                </span>
+                <input type="checkbox" id="inv-toggle-rsvp" checked onchange="toggleInvFeature('enableRsvp')" class="rounded text-primary focus:ring-primary w-4 h-4 cursor-pointer">
+              </label>
+
+              <label class="flex items-center justify-between p-3.5 bg-bgCustom border border-accent rounded-2xl cursor-pointer hover:border-primary">
+                <span class="flex items-center gap-2">
+                  <i data-lucide="gift" class="w-4 h-4 text-primary"></i>
+                  <span>صندوق شاباش نقدی</span>
+                </span>
+                <input type="checkbox" id="inv-toggle-shagoon" checked onchange="toggleInvFeature('enableShagoon')" class="rounded text-primary focus:ring-primary w-4 h-4 cursor-pointer">
+              </label>
+
+              <label class="flex items-center justify-between p-3.5 bg-bgCustom border border-accent rounded-2xl cursor-pointer hover:border-primary">
+                <span class="flex items-center gap-2">
+                  <i data-lucide="timer" class="w-4 h-4 text-primary"></i>
+                  <span>شمارش معکوس روز جشن</span>
+                </span>
+                <input type="checkbox" id="inv-toggle-countdown" checked onchange="toggleInvFeature('enableCountdown')" class="rounded text-primary focus:ring-primary w-4 h-4 cursor-pointer">
+              </label>
+
+              <label class="flex items-center justify-between p-3.5 bg-bgCustom border border-accent rounded-2xl cursor-pointer hover:border-primary">
+                <span class="flex items-center gap-2">
+                  <i data-lucide="images" class="w-4 h-4 text-primary"></i>
+                  <span>گالری تصاویر فرمالیته</span>
+                </span>
+                <input type="checkbox" id="inv-toggle-gallery" checked onchange="toggleInvFeature('enableGallery')" class="rounded text-primary focus:ring-primary w-4 h-4 cursor-pointer">
+              </label>
+            </div>
+          </div>
+
+          <!-- ADMIN RSVP RESPONSES MANAGEMENT TABLE -->
+          <div class="bg-white border border-accent rounded-3xl p-6 shadow-xs space-y-4">
+            <div class="flex flex-col sm:flex-row justify-between sm:items-center gap-3 border-b border-accent pb-3">
+              <div>
+                <h3 class="text-base font-bold text-graphite flex items-center gap-2">
+                  <i data-lucide="users" class="w-5 h-5 text-primary"></i>
+                  <span>لیست پاسخ‌های مهمانان (RSVP Submissions)</span>
+                </h3>
+                <p class="text-xs text-secondary mt-0.5">آمار تعداد حاضرین و همراهان جهت هماهنگی کترینگ تالار</p>
+              </div>
+
+              <div id="inv-rsvp-summary-badge" class="inline-flex items-center gap-2 bg-primary/10 text-primary px-3 py-1.5 rounded-xl text-xs font-bold">
+                <span>تعداد کل حاضرین: ۳ نفر</span>
+              </div>
+            </div>
+
+            <div class="overflow-x-auto">
+              <table class="w-full text-right text-xs">
+                <thead class="bg-bgCustom text-secondary border-b border-accent font-bold">
+                  <tr>
+                    <th class="p-3">نام مهمان</th>
+                    <th class="p-3">وضعیت حضور</th>
+                    <th class="p-3">تعداد همراهان</th>
+                    <th class="p-3">پیام / توضیحات</th>
+                  </tr>
+                </thead>
+                <tbody id="inv-admin-rsvp-table" class="divide-y divide-accent/60 font-medium">
+                  <!-- Populated via JS -->
+                </tbody>
+              </table>
+            </div>
+          </div>
+
+        </div>
+
+        <!-- RIGHT COLUMN: LIVE INTERACTIVE CARD PREVIEW (پیش‌نمایش زنده در فریم موبایل) -->
+        <div id="inv-preview-panel" class="lg:col-span-5 border-2 border-accent rounded-[2.5rem] bg-slate-900 p-4 shadow-2xl lg:sticky lg:top-24">
+          <div class="text-center pb-2 text-xs font-bold text-accent flex items-center justify-center gap-1.5">
+            <i data-lucide="smartphone" class="w-4 h-4 text-emerald-400"></i>
+            <span>پیش‌نمایش زنده نمای موبایل مهمان (Live Preview)</span>
+          </div>
+
+          <!-- MOBILE FRAME CONTAINER -->
+          <div id="inv-phone-container" class="max-w-sm mx-auto bg-bgCustom rounded-[2rem] overflow-hidden shadow-2xl relative border-4 border-slate-800 min-h-[640px] max-h-[720px] overflow-y-auto custom-scrollbar flex flex-col transition-all">
+
+            <!-- PHONE TOP NOTCH HEADER -->
+            <div class="bg-slate-900 text-white px-4 py-2 flex justify-between items-center text-[10px] font-bold sticky top-0 z-30 opacity-90 backdrop-blur-xs">
+              <span class="text-emerald-400 font-mono">عروسی تو • آنلاین</span>
+              <div class="flex items-center gap-2">
+                <!-- Music Audio Toggle Button -->
+                <button id="inv-music-toggle-btn" onclick="toggleInvMusic()" class="bg-white/20 hover:bg-white/30 text-white px-2 py-0.5 rounded-full flex items-center gap-1 text-[10px] transition-colors">
+                  <i id="inv-music-icon" data-lucide="music" class="w-3 h-3 text-emerald-400"></i>
+                  <span id="inv-music-text">موزیک</span>
+                </button>
+              </div>
+            </div>
+
+            <!-- ENVELOPE OPENING ANIMATION OVERLAY -->
+            <div id="inv-envelope-overlay" class="absolute inset-0 z-40 bg-gradient-to-b from-[#2E533F] via-[#223E2F] to-[#172b21] flex flex-col items-center justify-center p-6 text-center text-white transition-all duration-700 space-y-6">
+              <div class="w-20 h-20 rounded-full bg-amber-400/20 border-2 border-amber-300 flex items-center justify-center text-amber-200 shadow-xl animate-pulse">
+                <i data-lucide="mail-open" class="w-10 h-10"></i>
+              </div>
+
+              <div class="space-y-2">
+                <span class="text-xs font-semibold text-amber-200 uppercase tracking-widest">کارت دعوت اختصاصی</span>
+                <h3 id="env-couple-names" class="text-2xl font-black text-white">علی & سارا</h3>
+                <p class="text-[11px] text-slate-200 leading-relaxed">جهت مشاهده دعوت‌نامه رسمی لمس کنید</p>
+              </div>
+
+              <button onclick="openEnvelopeAnimation()" class="bg-gradient-to-r from-amber-400 to-amber-500 hover:from-amber-500 hover:to-amber-600 text-graphite font-black px-6 py-3 rounded-2xl text-xs shadow-2xl border border-amber-200 transition-transform active:scale-95 flex items-center gap-2">
+                <i data-lucide="sparkles" class="w-4 h-4"></i>
+                <span>باز کردن پاکت نامه</span>
+              </button>
+            </div>
+
+            <!-- INVITATION CARD CONTENT (DYNAMIC THEME RENDER) -->
+            <div id="inv-card-inner" class="p-6 space-y-6 flex-1 transition-all text-center">
+
+              <!-- MONOGRAM & HEADER EMBLEM -->
+              <div class="pt-2 space-y-2">
+                <div id="inv-theme-emblem" class="w-12 h-12 rounded-full mx-auto flex items-center justify-center border text-lg font-black shadow-xs">
+                  <span id="inv-monogram">ع & س</span>
+                </div>
+                <span id="inv-theme-tagline" class="text-[11px] font-bold block tracking-widest">با افتخار شما را دعوت می‌نماییم</span>
+              </div>
+
+              <!-- WELCOME POEM / QUOTE -->
+              <div class="p-4 rounded-2xl border bg-white/40 backdrop-blur-xs text-xs font-semibold leading-relaxed whitespace-pre-line shadow-xs">
+                <p id="inv-preview-poem">در مکتب عشق، تو بهترین همسفری&#10;با مقدم گرمتان در شب پیوند ما، محفل‌مان بهشت می‌گردد.</p>
+              </div>
+
+              <!-- BRIDE & GROOM CALLIGRAPHY NAMES -->
+              <div class="py-2 space-y-1">
+                <span class="text-xs font-bold opacity-80">پیوند آسمانی</span>
+                <h2 id="inv-preview-names" class="text-3xl sm:text-4xl font-black tracking-tight flex items-center justify-center gap-2">
+                  <span>علی</span>
+                  <i data-lucide="heart" class="w-6 h-6 text-rose-500 fill-rose-500 inline shrink-0"></i>
+                  <span>سارا</span>
+                </h2>
+              </div>
+
+              <!-- DATE & CEREMONY TIME -->
+              <div class="p-4 rounded-2xl border bg-white/60 backdrop-blur-xs space-y-1">
+                <span class="block text-xs font-bold" id="inv-preview-date">پنج‌شنبه ۱۵ شهریور ۱۴۰۳</span>
+                <span class="block text-[11px] font-semibold opacity-80" id="inv-preview-time">ساعت ۱۸:۰۰ الی ۲۴:۰۰</span>
+              </div>
+
+              <!-- COUNTDOWN TIMER MODULE -->
+              <div id="inv-mod-countdown" class="p-4 rounded-2xl border bg-white/80 space-y-2">
+                <span class="text-[11px] font-bold opacity-80 block">زمان باقی‌مانده تا آغاز جشن:</span>
+                <div class="grid grid-cols-4 gap-1.5 text-center dir-ltr">
+                  <div class="bg-slate-900 text-white rounded-xl p-2">
+                    <span id="inv-cnt-days" class="block text-base font-black">۱۴۵</span>
+                    <span class="text-[9px] block text-slate-300">روز</span>
+                  </div>
+                  <div class="bg-slate-900 text-white rounded-xl p-2">
+                    <span id="inv-cnt-hours" class="block text-base font-black">۰۸</span>
+                    <span class="text-[9px] block text-slate-300">ساعت</span>
+                  </div>
+                  <div class="bg-slate-900 text-white rounded-xl p-2">
+                    <span id="inv-cnt-mins" class="block text-base font-black">۲۴</span>
+                    <span class="text-[9px] block text-slate-300">دقیقه</span>
+                  </div>
+                  <div class="bg-slate-900 text-white rounded-xl p-2">
+                    <span id="inv-cnt-secs" class="block text-base font-black">۵۰</span>
+                    <span class="text-[9px] block text-slate-300">ثانیه</span>
+                  </div>
+                </div>
+              </div>
+
+              <!-- VENUE LOCATION & NAVIGATION BUTTONS -->
+              <div class="p-4 rounded-2xl border bg-white/80 space-y-3 text-right">
+                <div class="flex items-center gap-2">
+                  <i data-lucide="map-pin" class="w-5 h-5 text-rose-600 shrink-0"></i>
+                  <div>
+                    <h4 id="inv-preview-venue" class="text-xs font-bold text-graphite">باغ تالار تشریفاتی زمرد</h4>
+                    <p id="inv-preview-address" class="text-[11px] text-secondary font-medium">تهران، احمدآباد مستوفی، خیابان صنوبر، پلاک ۴۵</p>
+                  </div>
+                </div>
+
+                <div class="grid grid-cols-3 gap-1.5 pt-1">
+                  <a id="inv-link-gmaps" href="https://maps.google.com" target="_blank" class="bg-white border border-accent hover:border-primary text-graphite py-2 rounded-xl text-[10px] font-bold text-center block shadow-xs">
+                    گوگل مپ
+                  </a>
+                  <a id="inv-link-neshan" href="https://neshan.org" target="_blank" class="bg-white border border-accent hover:border-primary text-graphite py-2 rounded-xl text-[10px] font-bold text-center block shadow-xs">
+                    مسیریاب نشان
+                  </a>
+                  <a id="inv-link-balad" href="https://balad.ir" target="_blank" class="bg-white border border-accent hover:border-primary text-graphite py-2 rounded-xl text-[10px] font-bold text-center block shadow-xs">
+                    مسیریاب بلد
+                  </a>
+                </div>
+              </div>
+
+              <!-- PHOTO GALLERY PREVIEW MODULE -->
+              <div id="inv-mod-gallery" class="p-4 rounded-2xl border bg-white/80 space-y-2 text-right">
+                <span class="text-xs font-bold text-graphite flex items-center gap-1">
+                  <i data-lucide="camera" class="w-4 h-4 text-primary"></i>
+                  <span>تصاویر فرمالیته زوج</span>
+                </span>
+                <div class="grid grid-cols-3 gap-1.5">
+                  <div class="aspect-square rounded-xl overflow-hidden border border-accent bg-slate-100">
+                    <img src="https://images.unsplash.com/photo-1519741497674-611481863552?auto=format&fit=crop&w=400&q=80" alt="فرمالیته ۱" class="w-full h-full object-cover">
+                  </div>
+                  <div class="aspect-square rounded-xl overflow-hidden border border-accent bg-slate-100">
+                    <img src="https://images.unsplash.com/photo-1511285560929-80b456fea0bc?auto=format&fit=crop&w=400&q=80" alt="فرمالیته ۲" class="w-full h-full object-cover">
+                  </div>
+                  <div class="aspect-square rounded-xl overflow-hidden border border-accent bg-slate-100">
+                    <img src="https://images.unsplash.com/photo-1520854221256-17451cc331bf?auto=format&fit=crop&w=400&q=80" alt="فرمالیته ۳" class="w-full h-full object-cover">
+                  </div>
+                </div>
+              </div>
+
+              <!-- SHAGOON / MONEY GIFT MODULE -->
+              <div id="inv-mod-shagoon" class="p-4 rounded-2xl border bg-amber-50/80 border-amber-200 text-right space-y-2">
+                <div class="flex items-center gap-2 text-amber-900">
+                  <i data-lucide="gift" class="w-4 h-4 shrink-0"></i>
+                  <span class="text-xs font-bold">صندوق هدایای نقدی و شاباش</span>
+                </div>
+                <p id="inv-preview-cardholder" class="text-[11px] text-amber-800 font-medium">علی محمدی و سارا حسینی (صندوق شاباش و هدیه)</p>
+
+                <div class="bg-white p-2.5 rounded-xl border border-amber-200 flex justify-between items-center text-xs">
+                  <span id="inv-preview-cardnum" class="font-mono text-graphite dir-ltr font-bold">۶۰۳۷-۹۹۷۹-۱۲۳۴-۵۶۷۸</span>
+                  <button onclick="copyBankCardNumber()" class="bg-amber-100 text-amber-900 hover:bg-amber-200 px-2.5 py-1 rounded-lg text-[10px] font-bold">
+                    کپی کارت
+                  </button>
+                </div>
+              </div>
+
+              <!-- RSVP FORM MODULE -->
+              <div id="inv-mod-rsvp" class="p-4 rounded-2xl border bg-white/90 text-right space-y-3">
+                <div class="border-b border-accent pb-2">
+                  <h4 class="text-xs font-bold text-graphite flex items-center gap-1.5">
+                    <i data-lucide="check-circle-2" class="w-4 h-4 text-primary"></i>
+                    <span>تأیید حضور مهمانان (RSVP)</span>
+                  </h4>
+                  <p class="text-[10px] text-secondary">لطفاً وضعیت حضور خود را اعلام بفرمایید</p>
+                </div>
+
+                <form onsubmit="handleGuestRsvpSubmit(event)" class="space-y-3 text-xs font-bold text-graphite">
+                  <div>
+                    <label class="block mb-1 text-[11px]">نام و نام خانوادگی شما:</label>
+                    <input type="text" id="guest-rsvp-name" required placeholder="مثلاً: محمد حسینی" class="w-full bg-bgCustom border border-accent rounded-xl p-2 text-xs font-medium focus:outline-none focus:border-primary">
+                  </div>
+
+                  <div class="space-y-1">
+                    <label class="block text-[11px]">وضعیت حضور:</label>
+                    <div class="grid grid-cols-2 gap-2">
+                      <label class="flex items-center gap-1.5 p-2 bg-bgCustom border border-accent rounded-xl cursor-pointer text-[11px]">
+                        <input type="radio" name="guest-rsvp-status" value="attending" checked class="text-primary focus:ring-primary w-3.5 h-3.5">
+                        <span>شرکت می‌کنم</span>
+                      </label>
+                      <label class="flex items-center gap-1.5 p-2 bg-bgCustom border border-accent rounded-xl cursor-pointer text-[11px]">
+                        <input type="radio" name="guest-rsvp-status" value="declined" class="text-primary focus:ring-primary w-3.5 h-3.5">
+                        <span>نمی‌توانم بیایم</span>
+                      </label>
+                    </div>
+                  </div>
+
+                  <div>
+                    <label class="block mb-1 text-[11px]">تعداد همراهان (شامل خودتان):</label>
+                    <input type="number" id="guest-rsvp-count" value="1" min="1" max="10" class="w-full bg-bgCustom border border-accent rounded-xl p-2 text-xs font-bold text-primary">
+                  </div>
+
+                  <div>
+                    <label class="block mb-1 text-[11px]">پیام تبریک برای عروس و داماد:</label>
+                    <textarea id="guest-rsvp-note" rows="2" placeholder="پیام خود را بنویسید..." class="w-full bg-bgCustom border border-accent rounded-xl p-2 text-xs font-medium focus:outline-none focus:border-primary"></textarea>
+                  </div>
+
+                  <button type="submit" class="w-full bg-primary hover:bg-emerald-900 text-white font-bold py-2.5 rounded-xl text-xs shadow-md transition-all">
+                    ثبت و ارسال پاسخ
+                  </button>
+                </form>
+              </div>
+
+            </div>
+
+          </div>
+        </div>
+
+      </div>
+
     </div>
 
     <!-- ========================================== -->
@@ -1283,6 +1759,51 @@
           افزودن پکیج به پروفایل
         </button>
       </form>
+    </div>
+  </div>
+
+  <!-- ========================================== -->
+  <!-- MODAL: QR CODE INVITATION MODAL            -->
+  <!-- ========================================== -->
+  <div id="inv-qr-modal" class="fixed inset-0 z-50 bg-black/60 backdrop-blur-xs flex items-center justify-center p-4 hidden">
+    <div class="bg-white border border-accent rounded-3xl max-w-sm w-full p-6 shadow-2xl space-y-4 relative text-center">
+      <button onclick="closeQrModal()" class="absolute top-4 left-4 text-secondary hover:text-graphite">
+        <i data-lucide="x" class="w-6 h-6"></i>
+      </button>
+
+      <div class="border-b border-accent pb-3">
+        <span class="text-xs font-bold text-primary">کارت دعوت دیجیتال عروسی تو</span>
+        <h3 class="text-lg font-bold text-graphite mt-0.5">بارکد اختصاصی (QR Code)</h3>
+      </div>
+
+      <div class="p-4 bg-bgCustom rounded-2xl border border-accent inline-block mx-auto shadow-inner">
+        <!-- SVG QR Code Representation -->
+        <svg class="w-48 h-48 mx-auto" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <rect width="100" height="100" fill="white"/>
+          <path d="M10 10H40V40H10V10ZM15 15V35H35V15H15Z" fill="#2E533F"/>
+          <path d="M20 20H30V30H20V20Z" fill="#2E533F"/>
+          <path d="M60 10H90V40H60V10ZM65 15V35H85V15H65Z" fill="#2E533F"/>
+          <path d="M70 20H80V30H70V20Z" fill="#2E533F"/>
+          <path d="M10 60H40V90H10V60ZM15 65V85H35V65H15Z" fill="#2E533F"/>
+          <path d="M20 70H30V80H20V70Z" fill="#2E533F"/>
+          <rect x="50" y="50" width="10" height="10" fill="#2E533F"/>
+          <rect x="70" y="50" width="10" height="10" fill="#2E533F"/>
+          <rect x="60" y="60" width="10" height="10" fill="#2E533F"/>
+          <rect x="80" y="60" width="10" height="10" fill="#2E533F"/>
+          <rect x="50" y="70" width="10" height="10" fill="#2E533F"/>
+          <rect x="70" y="70" width="10" height="10" fill="#2E533F"/>
+          <rect x="60" y="80" width="20" height="10" fill="#2E533F"/>
+        </svg>
+      </div>
+
+      <p class="text-xs text-secondary font-medium leading-relaxed">
+        این QR Code را دانلود کنید و روی کارت چاپی کاغذ قرار دهید تا مهمانان با اسکن آن وارد لندینگ پیج اختصاصی شما شوند.
+      </p>
+
+      <button onclick="alert('فایل تصویر QR Code با موفقیت دانلود شد.'); closeQrModal();" class="w-full bg-primary hover:bg-emerald-900 text-white py-2.5 rounded-xl text-xs font-bold shadow-md transition-colors flex items-center justify-center gap-2">
+        <i data-lucide="download" class="w-4 h-4"></i>
+        <span>دانلود تصویر کیفیت بالا (PNG)</span>
+      </button>
     </div>
   </div>
 
@@ -2730,6 +3251,333 @@
       updateBwStepUI();
     }
 
+    // ==========================================
+    // DIGITAL INVITATION BUILDER STATE & LOGIC
+    // ==========================================
+    let invitationState = {
+      theme: "emerald", // emerald, gold, osmani, dark, floral
+      envelopeOpened: false,
+      isPlayingAudio: false,
+      audioChoice: "lovers", // lovers, piano, custom
+      customAudioUrl: "",
+      mobileTab: "edit", // edit, preview
+      groomName: "علی",
+      brideName: "سارا",
+      weddingDateJalali: "۱۴۰۳/۰۶/۱۵",
+      ceremonyTime: "۱۸:۰۰ الی ۲۴:۰۰",
+      welcomePoem: "در مکتب عشق، تو بهترین همسفری\nبا مقدم گرمتان در شب پیوند ما، محفل‌مان بهشت می‌گردد.",
+      venueName: "باغ تالار تشریفاتی زمرد",
+      venueAddress: "تهران، احمدآباد مستوفی، خیابان صنوبر، پلاک ۴۵",
+      googleMapsUrl: "https://maps.google.com",
+      neshanUrl: "https://neshan.org",
+      baladUrl: "https://balad.ir",
+      bankCardNumber: "۶۰۳۷-۹۹۷۹-۱۲۳۴-۵۶۷۸",
+      bankCardHolder: "علی محمدی و سارا حسینی (صندوق شاباش و هدیه)",
+      enableRsvp: true,
+      enableShagoon: true,
+      enableCountdown: true,
+      enableGallery: true,
+      galleryImages: [
+        "https://images.unsplash.com/photo-1519741497674-611481863552?auto=format&fit=crop&w=800&q=80",
+        "https://images.unsplash.com/photo-1511285560929-80b456fea0bc?auto=format&fit=crop&w=800&q=80",
+        "https://images.unsplash.com/photo-1520854221256-17451cc331bf?auto=format&fit=crop&w=800&q=80"
+      ],
+      rsvps: [
+        { id: 1, name: "رضا احمدی", status: "attending", guestsCount: 2, note: "با آرزوی خوشبخت‌ترین روزها" },
+        { id: 2, name: "مریم کریمی", status: "attending", guestsCount: 1, note: "تبریک فراوان" },
+        { id: 3, name: "امیرحسین کاظمی", status: "declined", guestsCount: 0, note: "متاسفانه مسافرت هستم" }
+      ]
+    };
+
+    function updateInvStateFromForm() {
+      invitationState.groomName = document.getElementById('inv-input-groom').value.trim() || 'علی';
+      invitationState.brideName = document.getElementById('inv-input-bride').value.trim() || 'سارا';
+      invitationState.weddingDateJalali = document.getElementById('inv-input-date').value.trim() || '۱۴۰۳/۰۶/۱۵';
+      invitationState.ceremonyTime = document.getElementById('inv-input-time').value.trim() || '۱۸:۰۰ الی ۲۴:۰۰';
+      invitationState.welcomePoem = document.getElementById('inv-input-poem').value.trim();
+      invitationState.venueName = document.getElementById('inv-input-venue').value.trim();
+      invitationState.venueAddress = document.getElementById('inv-input-address').value.trim();
+      invitationState.googleMapsUrl = document.getElementById('inv-input-gmaps').value.trim();
+      invitationState.neshanUrl = document.getElementById('inv-input-neshan').value.trim();
+      invitationState.baladUrl = document.getElementById('inv-input-balad').value.trim();
+      invitationState.bankCardNumber = document.getElementById('inv-input-cardnum').value.trim();
+      invitationState.bankCardHolder = document.getElementById('inv-input-cardholder').value.trim();
+      invitationState.customAudioUrl = document.getElementById('inv-input-audio-url').value.trim();
+
+      renderInvitationPreview();
+    }
+
+    function setInvTheme(themeName) {
+      invitationState.theme = themeName;
+      document.querySelectorAll('.inv-theme-card').forEach(card => {
+        card.className = "inv-theme-card p-3.5 rounded-2xl border border-accent bg-white hover:border-primary cursor-pointer transition-all space-y-2";
+        const check = card.querySelector('.theme-check');
+        if (check) check.classList.add('hidden');
+      });
+
+      const activeCard = document.getElementById('inv-theme-' + themeName);
+      if (activeCard) {
+        activeCard.className = "inv-theme-card p-3.5 rounded-2xl border-2 border-primary bg-emerald-50/50 cursor-pointer transition-all space-y-2";
+        const check = activeCard.querySelector('.theme-check');
+        if (check) check.classList.remove('hidden');
+      }
+
+      renderInvitationPreview();
+    }
+
+    function setInvAudioChoice(choice) {
+      invitationState.audioChoice = choice;
+      const customBox = document.getElementById('inv-custom-audio-box');
+      if (customBox) {
+        customBox.classList.toggle('hidden', choice !== 'custom');
+      }
+    }
+
+    function toggleInvFeature(featureKey) {
+      invitationState[featureKey] = !invitationState[featureKey];
+      renderInvitationPreview();
+    }
+
+    function switchInvMobileTab(tab) {
+      invitationState.mobileTab = tab;
+      const editBtn = document.getElementById('inv-mobtab-edit');
+      const prevBtn = document.getElementById('inv-mobtab-preview');
+      const controlPanel = document.getElementById('inv-control-panel');
+      const previewPanel = document.getElementById('inv-preview-panel');
+
+      if (tab === 'edit') {
+        editBtn.className = "flex-1 py-2.5 rounded-xl transition-all bg-primary text-white text-center";
+        prevBtn.className = "flex-1 py-2.5 rounded-xl transition-all text-secondary hover:text-graphite text-center";
+        controlPanel.classList.remove('hidden');
+        previewPanel.classList.add('hidden');
+      } else {
+        prevBtn.className = "flex-1 py-2.5 rounded-xl transition-all bg-primary text-white text-center";
+        editBtn.className = "flex-1 py-2.5 rounded-xl transition-all text-secondary hover:text-graphite text-center";
+        controlPanel.classList.add('hidden');
+        previewPanel.classList.remove('hidden');
+      }
+    }
+
+    function openEnvelopeAnimation() {
+      invitationState.envelopeOpened = true;
+      const overlay = document.getElementById('inv-envelope-overlay');
+      if (overlay) {
+        overlay.classList.add('opacity-0', 'pointer-events-none', '-translate-y-full');
+      }
+    }
+
+    function resetEnvelopeAnimation() {
+      invitationState.envelopeOpened = false;
+      const overlay = document.getElementById('inv-envelope-overlay');
+      if (overlay) {
+        overlay.classList.remove('opacity-0', 'pointer-events-none', '-translate-y-full');
+      }
+    }
+
+    function toggleInvMusic() {
+      invitationState.isPlayingAudio = !invitationState.isPlayingAudio;
+      const text = document.getElementById('inv-music-text');
+      const icon = document.getElementById('inv-music-icon');
+      if (invitationState.isPlayingAudio) {
+        if (text) text.innerText = 'پخش موزیک...';
+        if (icon) icon.className = "w-3 h-3 text-rose-400 animate-spin";
+      } else {
+        if (text) text.innerText = 'موزیک';
+        if (icon) icon.className = "w-3 h-3 text-emerald-400";
+      }
+    }
+
+    function renderInvitationPreview() {
+      // 1. Header Title
+      const headerTitle = document.getElementById('inv-header-title');
+      if (headerTitle) {
+        headerTitle.innerText = `کارت دعوت آنلاین: ${invitationState.groomName} و ${invitationState.brideName}`;
+      }
+
+      const envCoupleNames = document.getElementById('env-couple-names');
+      if (envCoupleNames) {
+        envCoupleNames.innerText = `${invitationState.groomName} & ${invitationState.brideName}`;
+      }
+
+      // 2. Monogram & Poem
+      const monogram = document.getElementById('inv-monogram');
+      if (monogram) {
+        const gChar = invitationState.groomName.charAt(0) || 'ع';
+        const bChar = invitationState.brideName.charAt(0) || 'س';
+        monogram.innerText = `${gChar} & ${bChar}`;
+      }
+
+      const previewPoem = document.getElementById('inv-preview-poem');
+      if (previewPoem) previewPoem.innerText = invitationState.welcomePoem;
+
+      const previewNames = document.getElementById('inv-preview-names');
+      if (previewNames) {
+        previewNames.innerHTML = `
+          <span>${invitationState.groomName}</span>
+          <i data-lucide="heart" class="w-6 h-6 text-rose-500 fill-rose-500 inline shrink-0"></i>
+          <span>${invitationState.brideName}</span>
+        `;
+      }
+
+      // 3. Date & Time
+      const previewDate = document.getElementById('inv-preview-date');
+      const previewTime = document.getElementById('inv-preview-time');
+      if (previewDate) previewDate.innerText = invitationState.weddingDateJalali;
+      if (previewTime) previewTime.innerText = `ساعت ${invitationState.ceremonyTime}`;
+
+      // 4. Venue & Map Links
+      const previewVenue = document.getElementById('inv-preview-venue');
+      const previewAddress = document.getElementById('inv-preview-address');
+      if (previewVenue) previewVenue.innerText = invitationState.venueName;
+      if (previewAddress) previewAddress.innerText = invitationState.venueAddress;
+
+      const linkGmaps = document.getElementById('inv-link-gmaps');
+      const linkNeshan = document.getElementById('inv-link-neshan');
+      const linkBalad = document.getElementById('inv-link-balad');
+      if (linkGmaps) linkGmaps.href = invitationState.googleMapsUrl || "#";
+      if (linkNeshan) linkNeshan.href = invitationState.neshanUrl || "#";
+      if (linkBalad) linkBalad.href = invitationState.baladUrl || "#";
+
+      // 5. Shagoon Card
+      const previewCardnum = document.getElementById('inv-preview-cardnum');
+      const previewCardholder = document.getElementById('inv-preview-cardholder');
+      if (previewCardnum) previewCardnum.innerText = invitationState.bankCardNumber;
+      if (previewCardholder) previewCardholder.innerText = invitationState.bankCardHolder;
+
+      // 6. Toggles
+      const modCountdown = document.getElementById('inv-mod-countdown');
+      const modGallery = document.getElementById('inv-mod-gallery');
+      const modShagoon = document.getElementById('inv-mod-shagoon');
+      const modRsvp = document.getElementById('inv-mod-rsvp');
+
+      if (modCountdown) modCountdown.classList.toggle('hidden', !invitationState.enableCountdown);
+      if (modGallery) modGallery.classList.toggle('hidden', !invitationState.enableGallery);
+      if (modShagoon) modShagoon.classList.toggle('hidden', !invitationState.enableShagoon);
+      if (modRsvp) modRsvp.classList.toggle('hidden', !invitationState.enableRsvp);
+
+      // 7. Theme Styling Application
+      const cardInner = document.getElementById('inv-card-inner');
+      const themeEmblem = document.getElementById('inv-theme-emblem');
+      const themeTagline = document.getElementById('inv-theme-tagline');
+
+      if (cardInner) {
+        if (invitationState.theme === 'emerald') {
+          cardInner.className = "p-6 space-y-6 flex-1 transition-all text-center bg-gradient-to-b from-[#FDFBFC] via-[#EBF2EE] to-[#FDFBFC] text-graphite";
+          if (themeEmblem) themeEmblem.className = "w-12 h-12 rounded-full mx-auto flex items-center justify-center border-2 border-primary bg-primary text-amber-200 text-lg font-black shadow-md";
+          if (themeTagline) themeTagline.className = "text-[11px] font-bold block tracking-widest text-primary";
+        } else if (invitationState.theme === 'gold') {
+          cardInner.className = "p-6 space-y-6 flex-1 transition-all text-center bg-gradient-to-b from-amber-50 via-yellow-50/40 to-amber-50 text-amber-950";
+          if (themeEmblem) themeEmblem.className = "w-12 h-12 rounded-full mx-auto flex items-center justify-center border-2 border-amber-400 bg-amber-100 text-amber-900 text-lg font-black shadow-md";
+          if (themeTagline) themeTagline.className = "text-[11px] font-bold block tracking-widest text-amber-800";
+        } else if (invitationState.theme === 'osmani') {
+          cardInner.className = "p-6 space-y-6 flex-1 transition-all text-center bg-gradient-to-b from-slate-900 via-indigo-950 to-slate-900 text-indigo-100";
+          if (themeEmblem) themeEmblem.className = "w-12 h-12 rounded-full mx-auto flex items-center justify-center border-2 border-amber-300 bg-indigo-900 text-amber-300 text-lg font-black shadow-md";
+          if (themeTagline) themeTagline.className = "text-[11px] font-bold block tracking-widest text-amber-300";
+        } else if (invitationState.theme === 'dark') {
+          cardInner.className = "p-6 space-y-6 flex-1 transition-all text-center bg-gradient-to-b from-graphite via-slate-900 to-graphite text-white";
+          if (themeEmblem) themeEmblem.className = "w-12 h-12 rounded-full mx-auto flex items-center justify-center border-2 border-amber-400 bg-slate-800 text-amber-400 text-lg font-black shadow-md";
+          if (themeTagline) themeTagline.className = "text-[11px] font-bold block tracking-widest text-amber-400";
+        } else if (invitationState.theme === 'floral') {
+          cardInner.className = "p-6 space-y-6 flex-1 transition-all text-center bg-gradient-to-b from-rose-50 via-pink-50/50 to-rose-50 text-rose-950";
+          if (themeEmblem) themeEmblem.className = "w-12 h-12 rounded-full mx-auto flex items-center justify-center border-2 border-rose-300 bg-rose-100 text-rose-800 text-lg font-black shadow-md";
+          if (themeTagline) themeTagline.className = "text-[11px] font-bold block tracking-widest text-rose-700";
+        }
+      }
+
+      // 8. Admin RSVP Table Render
+      renderInvAdminRsvpTable();
+
+      lucide.createIcons();
+    }
+
+    function renderInvAdminRsvpTable() {
+      const tbody = document.getElementById('inv-admin-rsvp-table');
+      const badge = document.getElementById('inv-rsvp-summary-badge');
+      if (!tbody) return;
+
+      tbody.innerHTML = '';
+      let totalAttendingGuests = 0;
+
+      invitationState.rsvps.forEach(r => {
+        if (r.status === 'attending') {
+          totalAttendingGuests += (r.guestsCount || 1);
+        }
+
+        const tr = document.createElement('tr');
+        tr.className = "hover:bg-slate-50 transition-colors";
+        tr.innerHTML = `
+          <td class="p-3 font-bold text-graphite">${r.name}</td>
+          <td class="p-3">
+            <span class="px-2.5 py-0.5 rounded-full text-[10px] font-bold ${
+              r.status === 'attending' ? 'bg-emerald-100 text-emerald-800' : 'bg-rose-100 text-rose-800'
+            }">
+              ${r.status === 'attending' ? 'شرکت می‌کند' : 'عذرخواهی / عدم حضور'}
+            </span>
+          </td>
+          <td class="p-3 font-bold text-primary">${r.status === 'attending' ? r.guestsCount + ' نفر' : '-'}</td>
+          <td class="p-3 text-secondary text-[11px]">${r.note || '-'}</td>
+        `;
+        tbody.appendChild(tr);
+      });
+
+      if (badge) {
+        badge.innerHTML = `<span>تعداد حاضرین قطعی: ${totalAttendingGuests} نفر</span>`;
+      }
+    }
+
+    function handleGuestRsvpSubmit(e) {
+      e.preventDefault();
+      const name = document.getElementById('guest-rsvp-name').value.trim();
+      const status = document.querySelector('input[name="guest-rsvp-status"]:checked').value;
+      const count = parseInt(document.getElementById('guest-rsvp-count').value) || 1;
+      const note = document.getElementById('guest-rsvp-note').value.trim();
+
+      if (!name) return;
+
+      invitationState.rsvps.unshift({
+        id: Date.now(),
+        name,
+        status,
+        guestsCount: status === 'attending' ? count : 0,
+        note
+      });
+
+      renderInvAdminRsvpTable();
+      document.getElementById('guest-rsvp-name').value = '';
+      document.getElementById('guest-rsvp-note').value = '';
+
+      alert('پاسخ شما با موفقیت ثبت شد. با تشکر از اعلام حضور شما!');
+    }
+
+    function copyBankCardNumber() {
+      if (navigator.clipboard && invitationState.bankCardNumber) {
+        navigator.clipboard.writeText(invitationState.bankCardNumber);
+        alert('شماره کارت با موفقیت در حافظه کپی شد: ' + invitationState.bankCardNumber);
+      } else {
+        alert('شماره کارت: ' + invitationState.bankCardNumber);
+      }
+    }
+
+    function copyInvitationLink() {
+      const link = 'https://aroosito.com/invitation/ali-and-sara';
+      if (navigator.clipboard) {
+        navigator.clipboard.writeText(link);
+        alert('لینک اختصاصی کارت دعوت کپی شد:\n' + link);
+      } else {
+        alert('لینک کارت دعوت:\n' + link);
+      }
+    }
+
+    function openQrModal() {
+      const modal = document.getElementById('inv-qr-modal');
+      if (modal) modal.classList.remove('hidden');
+    }
+
+    function closeQrModal() {
+      const modal = document.getElementById('inv-qr-modal');
+      if (modal) modal.classList.add('hidden');
+    }
+
     window.addEventListener('DOMContentLoaded', () => {
       renderCategoryCards();
       renderVendors(vendors);
@@ -2746,6 +3594,9 @@
       // Initialize Budget Wizard
       updateBudgetFormattedDisplay();
       renderBwServicesChecklist();
+
+      // Initialize Digital Invitation Builder
+      renderInvitationPreview();
     });
   </script>
 </body>
