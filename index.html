@@ -1487,15 +1487,23 @@
         <!-- QUIZ CATALOG SELECTION SCREEN -->
         <div id="quiz-catalog-view" class="space-y-6">
 
-          <!-- CATEGORY FILTER TABS -->
-          <div class="flex bg-white border border-accent rounded-2xl p-1.5 text-xs font-bold max-w-md shadow-xs">
-            <button id="quiz-tab-style" onclick="switchQuizCategoryTab('style')" class="flex-1 py-3 rounded-xl transition-all bg-primary text-white text-center flex items-center justify-center gap-1.5 shadow-xs">
+          <!-- CATEGORY FILTER TABS (4 DISTINCT CATEGORIES) -->
+          <div class="flex flex-wrap bg-white border border-accent rounded-2xl p-1.5 text-xs font-bold shadow-xs gap-1 max-w-4xl">
+            <button id="quiz-tab-style" onclick="switchQuizCategoryTab('style')" class="flex-1 min-w-[140px] py-3 px-3 rounded-xl transition-all bg-primary text-white text-center flex items-center justify-center gap-1.5 shadow-xs">
               <i data-lucide="palette" class="w-4 h-4"></i>
-              <span>استایل‌شناسی و زیبایی</span>
+              <span>استایل‌شناسی & فرمالیته</span>
             </button>
-            <button id="quiz-tab-psych" onclick="switchQuizCategoryTab('psychology')" class="flex-1 py-3 rounded-xl transition-all text-secondary hover:text-graphite text-center flex items-center justify-center gap-1.5">
+            <button id="quiz-tab-psychology" onclick="switchQuizCategoryTab('psychology')" class="flex-1 min-w-[140px] py-3 px-3 rounded-xl transition-all text-secondary hover:text-graphite text-center flex items-center justify-center gap-1.5">
               <i data-lucide="heart-handshake" class="w-4 h-4"></i>
-              <span>روانشناسی و سازگاری</span>
+              <span>روانشناسی & تفاهم</span>
+            </button>
+            <button id="quiz-tab-beauty" onclick="switchQuizCategoryTab('beauty')" class="flex-1 min-w-[140px] py-3 px-3 rounded-xl transition-all text-secondary hover:text-graphite text-center flex items-center justify-center gap-1.5">
+              <i data-lucide="sparkles" class="w-4 h-4"></i>
+              <span>زیبایی & اکسسوری</span>
+            </button>
+            <button id="quiz-tab-catering" onclick="switchQuizCategoryTab('catering')" class="flex-1 min-w-[140px] py-3 px-3 rounded-xl transition-all text-secondary hover:text-graphite text-center flex items-center justify-center gap-1.5">
+              <i data-lucide="utensils" class="w-4 h-4"></i>
+              <span>پذیرایی & تشریفات</span>
             </button>
           </div>
 
@@ -2489,7 +2497,7 @@
 
       let mainResultHTML = '';
 
-      if (quiz.category === 'style') {
+      if (quiz.category !== 'psychology') {
         // Sort styles by highest score
         const sortedStyles = Object.keys(styleScores)
           .filter(k => k !== 'compat' && styleScores[k] > 0)
@@ -4448,153 +4456,1696 @@
       quizCompleted: false,
       appliedStyleFilter: null,
       quizzes: [
-        {
-          id: "style-main",
-          category: "style",
-          title: "تست تعیین استایل اصلی و تم عروسی",
-          description: "شناسایی سبک چیدمان، سفره عقد و آرشیتکت دیزاین متناسب با روحیه و سلیقه بصری شما",
-          image: "https://images.unsplash.com/photo-1519741497674-611481863552?auto=format&fit=crop&w=800&q=80",
-          duration: "۴ دقیقه",
-          questionsCount: 5,
-          badge: "محبوب‌ترین تست استایل",
-          questions: [
-            {
-              id: "q1",
-              text: "کدام نوع لوکیشن و فضای برگزاری جشن برای شما مطلوب‌تر است؟",
-              options: [
-                { id: "opt1", label: "باغ عمارت باشکوه با معماری ستون‌دار و کریستال", image: "https://images.unsplash.com/photo-1519167758481-83f550bb49b3?auto=format&fit=crop&w=600&q=80", styleKey: "luxury", score: { luxury: 80, classic: 20 } },
-                { id: "opt2", label: "باغ طبیعی در دل طبیعت با چیدمان چوبی و گل‌آرایی وحشی", image: "https://images.unsplash.com/photo-1465495976277-4387d4b0b4c6?auto=format&fit=crop&w=600&q=80", styleKey: "boho", score: { boho: 85, romantic: 15 } },
-                { id: "opt3", label: "تالار مدرن مینی‌مال با نورپردازی ساده و خطوط هندسی پاک", image: "https://images.unsplash.com/photo-1511285560929-80b456fea0bc?auto=format&fit=crop&w=600&q=80", styleKey: "modern", score: { modern: 90 } },
-                { id: "opt4", label: "خانه تاریخی قدیمی با آینه‌کاری و حس نوستالژیک کلاسیک", image: "https://images.unsplash.com/photo-1520854221256-17451cc331bf?auto=format&fit=crop&w=600&q=80", styleKey: "vintage", score: { vintage: 85, classic: 15 } }
-              ]
-            },
-            {
-              id: "q2",
-              text: "کدام ترکیب رنگی و پالت تزئینات را بیشتر می‌پسندید؟",
-              options: [
-                { id: "opt1", label: "طلایی، سفید عاجی و زمردی سنگین", image: "https://images.unsplash.com/photo-1519167758481-83f550bb49b3?auto=format&fit=crop&w=600&q=80", styleKey: "luxury", score: { luxury: 75, classic: 25 } },
-                { id: "opt2", label: "سبز زیتونی، کرم خاکی، زنگار و چوب طبیعی", image: "https://images.unsplash.com/photo-1465495976277-4387d4b0b4c6?auto=format&fit=crop&w=600&q=80", styleKey: "boho", score: { boho: 80, romantic: 20 } },
-                { id: "opt3", label: "سفید خالص، خاکستری روشن و نقره‌ای مینی‌مال", image: "https://images.unsplash.com/photo-1511285560929-80b456fea0bc?auto=format&fit=crop&w=600&q=80", styleKey: "modern", score: { modern: 85 } },
-                { id: "opt4", label: "صورتی ملایم، پودری، یاسی و رز مینیاتوری", image: "https://images.unsplash.com/photo-1522673607200-164d1b6ce486?auto=format&fit=crop&w=600&q=80", styleKey: "romantic", score: { romantic: 85, boho: 15 } }
-              ]
-            },
-            {
-              id: "q3",
-              text: "کدام سبک مدل لباس عروس و اکسسوری مورد علاقه شماست؟",
-              options: [
-                { id: "opt1", label: "لباس پرنسسی سنگ‌دوزی شده با دنباله بلند و تاج درخشان", image: "https://images.unsplash.com/photo-1594552072238-b8a33785b261?auto=format&fit=crop&w=600&q=80", styleKey: "luxury", score: { luxury: 80, classic: 20 } },
-                { id: "opt2", label: "لباس گیپور سبک و راحت با تاج گل طبیعی روی موها", image: "https://images.unsplash.com/photo-1519741497674-611481863552?auto=format&fit=crop&w=600&q=80", styleKey: "boho", score: { boho: 90 } },
-                { id: "opt3", label: "لباس ساتن ساده و بدون کاردست با برش‌های مدرن شیک", image: "https://images.unsplash.com/photo-1537633552985-df8429e8048b?auto=format&fit=crop&w=600&q=80", styleKey: "modern", score: { modern: 85 } },
-                { id: "opt4", label: "لباس تور عتیقه کلاسیـک با آستین‌های دانتل و تور سر بلند", image: "https://images.unsplash.com/photo-1520854221256-17451cc331bf?auto=format&fit=crop&w=600&q=80", styleKey: "classic", score: { classic: 85, vintage: 15 } }
-              ]
-            },
-            {
-              id: "q4",
-              text: "کدام سبک سفره عقد و گل‌آرایی طاق ورودی را می‌پسندید؟",
-              options: [
-                { id: "opt1", label: "سفره عقد تمام کریستال با شمعدان‌های نقره و گل‌آرایی طبقاتی", image: "https://images.unsplash.com/photo-1519167758481-83f550bb49b3?auto=format&fit=crop&w=600&q=80", styleKey: "luxury", score: { luxury: 85 } },
-                { id: "opt2", label: "سفره عقد با ظروف برنجی، شمع‌های بژ و گل‌پامپاس کویری", image: "https://images.unsplash.com/photo-1465495976277-4387d4b0b4c6?auto=format&fit=crop&w=600&q=80", styleKey: "boho", score: { boho: 85 } },
-                { id: "opt3", label: "طاق ورودی مثلثی/دایره‌ای هندسی با گل‌های تک‌رنگ سفید", image: "https://images.unsplash.com/photo-1511285560929-80b456fea0bc?auto=format&fit=crop&w=600&q=80", styleKey: "modern", score: { modern: 80 } },
-                { id: "opt4", label: "سفره عقد سنتی ترمه با آینه‌شمعدان قدیمی و شمعدان‌های لاله‌عباسی", image: "https://images.unsplash.com/photo-1520854221256-17451cc331bf?auto=format&fit=crop&w=600&q=80", styleKey: "vintage", score: { vintage: 80, classic: 20 } }
-              ]
-            },
-            {
-              id: "q5",
-              text: "کدام اتمسفر و موسیقی ورودی جشن بیشترین هیجان را به شما می‌دهد؟",
-              options: [
-                { id: "opt1", label: "ورودی باشکوه با نورافشانی ارکستر زنده فیلارمونیک", image: "https://images.unsplash.com/photo-1519167758481-83f550bb49b3?auto=format&fit=crop&w=600&q=80", styleKey: "luxury", score: { luxury: 75, classic: 25 } },
-                { id: "opt2", label: "اجرای زنده گیتار آکوستیک و آهنگ‌های صمیمی و شاد", image: "https://images.unsplash.com/photo-1511285560929-80b456fea0bc?auto=format&fit=crop&w=600&q=80", styleKey: "boho", score: { boho: 80 } },
-                { id: "opt3", label: "موزیک الکترونیک هاوس لایت و نورپردازی لیزری ملایم", image: "https://images.unsplash.com/photo-1487412720507-e7ab37603c6f?auto=format&fit=crop&w=600&q=80", styleKey: "modern", score: { modern: 85 } },
-                { id: "opt4", label: "قطعات بیکلام کلاسیک ویولن و پیانوی رومانتیک", image: "https://images.unsplash.com/photo-1522673607200-164d1b6ce486?auto=format&fit=crop&w=600&q=80", styleKey: "romantic", score: { romantic: 80, classic: 20 } }
-              ]
+  {
+    "id": "quiz-style-main",
+    "category": "style",
+    "title": "تست تعیین استایل اصلی عروسی",
+    "description": "کلاسیک، بوهو، لاکچری، روستیک، مینی‌مال یا مدرن - کشف تم بصری متناسب با سلیقه شما",
+    "image": "https://images.unsplash.com/photo-1519741497674-611481863552?auto=format&fit=crop&w=800&q=80",
+    "duration": "۴ دقیقه",
+    "questionsCount": 4,
+    "badge": "استایل اصلی",
+    "questions": [
+      {
+        "id": "q1",
+        "text": "کدام جوم و معماری چیدمان فضایی جشن عروسی را بیشتر می‌پسندید؟",
+        "options": [
+          {
+            "id": "opt1",
+            "label": "باغ عمارت باشکوه با ستون‌های کریستالی و گل‌آرایی سنقر",
+            "image": "https://images.unsplash.com/photo-1519167758481-83f550bb49b3?auto=format&fit=crop&w=600&q=80",
+            "styleKey": "luxury",
+            "score": {
+              "luxury": 90,
+              "classic": 20
             }
-          ]
-        },
-        {
-          id: "style-dress",
-          category: "style",
-          title: "تست هوشمند پیشنهاد فرم لباس عروس و کت‌وشلوار",
-          description: "پیشنهاد فرم یقه، برش دامن و پارچه متناسب با فرم اندام و استایل چهره",
-          image: "https://images.unsplash.com/photo-1594552072238-b8a33785b261?auto=format&fit=crop&w=800&q=80",
-          duration: "۳ دقیقه",
-          questionsCount: 3,
-          badge: "پیشنهاد اختصاصی",
-          questions: [
-            {
-              id: "q1",
-              text: "ترجیح شما برای راحتی حرکتی و وزن لباس عروس چیست؟",
-              options: [
-                { id: "opt1", label: "لباس کاملاً سبک، بدون فنرکشی سنگین و دارای راحتی حداکثری", styleKey: "boho", score: { boho: 85, romantic: 15 } },
-                { id: "opt2", label: "لباس گن‌دوزی شده با فرم پرنسسی و حچم دامن باکیفیت", styleKey: "luxury", score: { luxury: 80, classic: 20 } },
-                { id: "opt3", label: "لباس ماهی (Mermaid) جذّاب با اندام‌نمایی مینی‌مال", styleKey: "modern", score: { modern: 85 } }
-              ]
-            },
-            {
-              id: "q2",
-              text: "کدام پارچه حس بهتری به شما انتقال می‌دهد؟",
-              options: [
-                { id: "opt1", label: "ساتن آمریکایی و میکادو با ایستایی صیقلی شیک", styleKey: "modern", score: { modern: 80, classic: 20 } },
-                { id: "opt2", label: "تور فرانسوی و دانتل کارشده با منجوق و سنگ", styleKey: "luxury", score: { luxury: 85 } },
-                { id: "opt3", label: "گیپور کتان با طرح‌های اسلیمی و بوهمیان", styleKey: "boho", score: { boho: 85 } }
-              ]
-            },
-            {
-              id: "q3",
-              text: "استایل مورد نظر شما برای کت و شلوار داماد چیست؟",
-              options: [
-                { id: "opt1", label: "تاکسیدو مشکی یقه آرشال با پاپیون کلاسیک", styleKey: "luxury", score: { luxury: 80, classic: 20 } },
-                { id: "opt2", label: "کت و شلوار سورمه‌ای یا طوسی روشن بدون کراوات سخت", styleKey: "modern", score: { modern: 85 } },
-                { id: "opt3", label: "کت تک کتانی با جلیقه چرم و ساسپندر قهوه‌ای", styleKey: "boho", score: { boho: 85 } }
-              ]
+          },
+          {
+            "id": "opt2",
+            "label": "فضای باز در دل طبیعت با چیدمان چوبی، طاق پامپاس و حس آزاد بوهو",
+            "image": "https://images.unsplash.com/photo-1465495976277-4387d4b0b4c6?auto=format&fit=crop&w=600&q=80",
+            "styleKey": "boho",
+            "score": {
+              "boho": 90,
+              "romantic": 15
             }
-          ]
-        },
-        {
-          id: "psych-compat",
-          category: "psychology",
-          title: "تست سنجش میزان تفاهم زوجین در مدیریت جشن",
-          description: "تحلیل الگوهای تصمیم‌گیری، تعامل با خانواده‌ها و بودجه‌بندی مشترک عروسی",
-          image: "https://images.unsplash.com/photo-1522673607200-164d1b6ce486?auto=format&fit=crop&w=800&q=80",
-          duration: "۵ دقیقه",
-          questionsCount: 4,
-          badge: "تست روانشناسی",
-          questions: [
-            {
-              id: "q1",
-              text: "هنگام مواجهه با اختلاف نظر درباره لیست مهمانان یا بودجه، چه واکنشی نشان می‌دهید؟",
-              options: [
-                { id: "opt1", label: "گفتگوی منطقی، اولویت‌بندی بر اساس بودجه و رسیدن به گزینه مابین", styleKey: "compat_high", score: { compat: 90 } },
-                { id: "opt2", label: "سپردن تصمیم نهایی به یکی از طرفین جهت جلوگیری از تنش", styleKey: "compat_mid", score: { compat: 70 } },
-                { id: "opt3", label: "تأکید شدید روی خواسته شخص خودم تا جلب موافقت", styleKey: "compat_low", score: { compat: 45 } }
-              ]
-            },
-            {
-              id: "q2",
-              text: "نقش دخالت‌ها یا نظرات خانواده‌ها را در تصمیم‌گیری‌ها چگونه مدیریت می‌کنید؟",
-              options: [
-                { id: "opt1", label: "احترام کامل به نظرات همراه با حفظ استقلال نهایی زوجین", styleKey: "compat_high", score: { compat: 90 } },
-                { id: "opt2", label: "پذیرش اکثر پیشنهادات خانواده‌ها برای حفظ آرامش", styleKey: "compat_mid", score: { compat: 75 } }
-              ]
-            },
-            {
-              id: "q3",
-              text: "میزان اشتراک نظر شما در انتخاب سبک موسیقی، تشریفات و فیلم‌برداری چه میزان است؟",
-              options: [
-                { id: "opt1", label: "بیش از ۸۰٪ سلیقه و دیدگاه یکسان داریم", styleKey: "compat_high", score: { compat: 95 } },
-                { id: "opt2", label: "تفاوت‌هایی وجود دارد اما با انعطاف‌پذیری حل می‌کنیم", styleKey: "compat_mid", score: { compat: 80 } }
-              ]
-            },
-            {
-              id: "q4",
-              text: "نگرش شما به مدیریت استرس‌های روز جشن عروسی چگونه است؟",
-              options: [
-                { id: "opt1", label: "نگاه شاد و مثبت، تمرکز بر لذت بردن از لحظات و عبور از خطاهای جزئی", styleKey: "compat_high", score: { compat: 90 } },
-                { id: "opt2", label: "حساسیت بالا روی جزییات که ممکن است استرس ایجاد کند", styleKey: "compat_mid", score: { compat: 65 } }
-              ]
+          },
+          {
+            "id": "opt3",
+            "label": "سالن مدرن شیک با خطوط هندسی پاک، نورپردازی مهندسی و دکور مینی‌مال",
+            "image": "https://images.unsplash.com/photo-1511285560929-80b456fea0bc?auto=format&fit=crop&w=600&q=80",
+            "styleKey": "modern",
+            "score": {
+              "modern": 90
             }
-          ]
-        }
-      ]
+          },
+          {
+            "id": "opt4",
+            "label": "عمارت تاریخی با آینه‌کاری‌های سنتی اصیل و شمعدان‌های شاهانه",
+            "image": "https://images.unsplash.com/photo-1520854221256-17451cc331bf?auto=format&fit=crop&w=600&q=80",
+            "styleKey": "classic",
+            "score": {
+              "classic": 90,
+              "vintage": 20
+            }
+          }
+        ]
+      },
+      {
+        "id": "q2",
+        "text": "پالت رنگی مطلوب شما برای تزئینات و دکوراسیون سالن چیست؟",
+        "options": [
+          {
+            "id": "opt1",
+            "label": "زمردی تیره، طلایی براق و سفید کریستالی",
+            "image": "https://images.unsplash.com/photo-1519167758481-83f550bb49b3?auto=format&fit=crop&w=600&q=80",
+            "styleKey": "luxury",
+            "score": {
+              "luxury": 85
+            }
+          },
+          {
+            "id": "opt2",
+            "label": "رنگ‌های نود گرم، شنی، خاکی و سبز زیتونی",
+            "image": "https://images.unsplash.com/photo-1465495976277-4387d4b0b4c6?auto=format&fit=crop&w=600&q=80",
+            "styleKey": "boho",
+            "score": {
+              "boho": 85
+            }
+          },
+          {
+            "id": "opt3",
+            "label": "سفید یخچالی، گرافیت، خاکستری پلاتینیوم و نقره‌ای",
+            "image": "https://images.unsplash.com/photo-1511285560929-80b456fea0bc?auto=format&fit=crop&w=600&q=80",
+            "styleKey": "modern",
+            "score": {
+              "modern": 85
+            }
+          },
+          {
+            "id": "opt4",
+            "label": "صورتی پودری، یاسی ملایم و سفید مرواریدی",
+            "image": "https://images.unsplash.com/photo-1522673607200-164d1b6ce486?auto=format&fit=crop&w=600&q=80",
+            "styleKey": "romantic",
+            "score": {
+              "romantic": 85
+            }
+          }
+        ]
+      },
+      {
+        "id": "q3",
+        "text": "طراحی سفره عقد مورد علاقه شما چه ویژگی‌هایی دارد؟",
+        "options": [
+          {
+            "id": "opt1",
+            "label": "سفره عقد تمام کریستال با آینه‌کاری و شمعدان‌های نقره",
+            "styleKey": "luxury",
+            "score": {
+              "luxury": 85
+            }
+          },
+          {
+            "id": "opt2",
+            "label": "سفره عقد روستیک روی کنده‌های چوب با گل‌آرایی طبیعی خشخاش و گندم",
+            "styleKey": "boho",
+            "score": {
+              "boho": 85
+            }
+          },
+          {
+            "id": "opt3",
+            "label": "سفره عقد مینی‌مال روی پایه‌های شیشه‌ای و گل سفید یکدست",
+            "styleKey": "modern",
+            "score": {
+              "modern": 85
+            }
+          },
+          {
+            "id": "opt4",
+            "label": "سفره عقد اصیل پارچه‌ای ترمه با ظروف عتیقه قلم‌زنی",
+            "styleKey": "classic",
+            "score": {
+              "classic": 85
+            }
+          }
+        ]
+      },
+      {
+        "id": "q4",
+        "text": "کدام اتمسفر کلی در شب جشن هیجان بیشتری به شما می‌دهد؟",
+        "options": [
+          {
+            "id": "opt1",
+            "label": "شکوه شاهانه با تشریفات سنگین و ورودی آتش‌بازی طبقاتی",
+            "styleKey": "luxury",
+            "score": {
+              "luxury": 90
+            }
+          },
+          {
+            "id": "opt2",
+            "label": "اتمسفر صمیمی، دوستانه، پر از انرژی مثبت و رقص آزاد",
+            "styleKey": "boho",
+            "score": {
+              "boho": 90
+            }
+          },
+          {
+            "id": "opt3",
+            "label": "موزیک مدرن، نورپردازی لیزری ملایم و نظم دقیق زمان‌بندی",
+            "styleKey": "modern",
+            "score": {
+              "modern": 90
+            }
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "quiz-style-location",
+    "category": "style",
+    "title": "تست انتخاب لوکیشن و سبک فرمالیته",
+    "description": "کویر، جنگل، دریا، عمارت یا استودیو - انتخاب بهترین لوکیشن عکاسی کلیپ فرمالیته",
+    "image": "https://images.unsplash.com/photo-1511285560929-80b456fea0bc?auto=format&fit=crop&w=800&q=80",
+    "duration": "۳ دقیقه",
+    "questionsCount": 3,
+    "badge": "عکاسی فرمالیته",
+    "questions": [
+      {
+        "id": "q1",
+        "text": "کدام تصویر طبیعت حس آرامش و زیبایی بیشتری برای ویدیوی کلیپ شما دارد؟",
+        "options": [
+          {
+            "id": "opt1",
+            "label": "کویر باشکوه با رمل‌های طلایی و غروب آفتاب گرم",
+            "image": "https://images.unsplash.com/photo-1509316975850-ff9c5deb0cd9?auto=format&fit=crop&w=600&q=80",
+            "styleKey": "boho",
+            "score": {
+              "boho": 85,
+              "modern": 15
+            }
+          },
+          {
+            "id": "opt2",
+            "label": "جنگل‌های سرسبز شمال با مه صبحگاهی و درختان کهنسال",
+            "image": "https://images.unsplash.com/photo-1448375240586-882707db888b?auto=format&fit=crop&w=600&q=80",
+            "styleKey": "romantic",
+            "score": {
+              "romantic": 85,
+              "boho": 15
+            }
+          },
+          {
+            "id": "opt3",
+            "label": "ساحل دریا با امواج خروشان و لباس‌های سبک سفید",
+            "image": "https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=600&q=80",
+            "styleKey": "boho",
+            "score": {
+              "boho": 80,
+              "romantic": 20
+            }
+          },
+          {
+            "id": "opt4",
+            "label": "عمارت اروپایی با معمار کلاسیک، پله‌های سنگی و کالسکه",
+            "image": "https://images.unsplash.com/photo-1519167758481-83f550bb49b3?auto=format&fit=crop&w=600&q=80",
+            "styleKey": "luxury",
+            "score": {
+              "luxury": 90
+            }
+          }
+        ]
+      },
+      {
+        "id": "q2",
+        "text": "سبک لباس مورد نظر شما برای روز عکاسی فرمالیته چیست؟",
+        "options": [
+          {
+            "id": "opt1",
+            "label": "لباس اسپرت شیک، کلاه حصیری و کتانی راحت",
+            "styleKey": "modern",
+            "score": {
+              "modern": 85
+            }
+          },
+          {
+            "id": "opt2",
+            "label": "لباس تور سبک حریر با دامن دنباله‌دار در باد",
+            "styleKey": "romantic",
+            "score": {
+              "romantic": 90
+            }
+          },
+          {
+            "id": "opt3",
+            "label": "لباس رسمی فرمالیته با تاج و تور کارشده",
+            "styleKey": "luxury",
+            "score": {
+              "luxury": 85
+            }
+          }
+        ]
+      },
+      {
+        "id": "q3",
+        "text": "زمان‌بندی ایده‌آل شما برای عکاسی فرمالیته چیست؟",
+        "options": [
+          {
+            "id": "opt1",
+            "label": "سفر ۲ روزه به شمال یا جنوب قبل از عروسی",
+            "styleKey": "boho",
+            "score": {
+              "boho": 85
+            }
+          },
+          {
+            "id": "opt2",
+            "label": "عکاسی یک‌روزه در عمارت اطراف شهر",
+            "styleKey": "luxury",
+            "score": {
+              "luxury": 85
+            }
+          },
+          {
+            "id": "opt3",
+            "label": "عکاسی استودیویی مینی‌مال با نورپردازی حرفه‌ای",
+            "styleKey": "modern",
+            "score": {
+              "modern": 90
+            }
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "quiz-style-palette",
+    "category": "style",
+    "title": "تست پالت رنگی و تم دکوراسیون جشن",
+    "description": "رنگ‌های نود، زمردی/طلایی، پاستلی، دارک لوکس - کشف پالت رنگی اختصاصی گل‌آرایی",
+    "image": "https://images.unsplash.com/photo-1522673607200-164d1b6ce486?auto=format&fit=crop&w=800&q=80",
+    "duration": "۳ دقیقه",
+    "questionsCount": 3,
+    "badge": "پالت رنگی",
+    "questions": [
+      {
+        "id": "q1",
+        "text": "کدام حس رنگی در نگاه اول چشم شما را می‌نوازد؟",
+        "options": [
+          {
+            "id": "opt1",
+            "label": "پالت دارک لوکس (مشکی گرافیت، زرشکی عمیق و طلایی)",
+            "image": "https://images.unsplash.com/photo-1519167758481-83f550bb49b3?auto=format&fit=crop&w=600&q=80",
+            "styleKey": "luxury",
+            "score": {
+              "luxury": 90
+            }
+          },
+          {
+            "id": "opt2",
+            "label": "پالت نود و شنی (کرم گرم، خاکی، زیتونی و نسکافه‌ای)",
+            "image": "https://images.unsplash.com/photo-1465495976277-4387d4b0b4c6?auto=format&fit=crop&w=600&q=80",
+            "styleKey": "boho",
+            "score": {
+              "boho": 90
+            }
+          },
+          {
+            "id": "opt3",
+            "label": "پالت پاستلی (صورتی روشن، یاسی ملایم، نعنایی و لیمویی)",
+            "image": "https://images.unsplash.com/photo-1522673607200-164d1b6ce486?auto=format&fit=crop&w=600&q=80",
+            "styleKey": "romantic",
+            "score": {
+              "romantic": 90
+            }
+          },
+          {
+            "id": "opt4",
+            "label": "پالت تک‌رنگ مینی‌مال (سفید خالص، پلاتینیوم و نقره‌ای)",
+            "image": "https://images.unsplash.com/photo-1511285560929-80b456fea0bc?auto=format&fit=crop&w=600&q=80",
+            "styleKey": "modern",
+            "score": {
+              "modern": 90
+            }
+          }
+        ]
+      },
+      {
+        "id": "q2",
+        "text": "ترجیح شما برای رنگ گل‌آرایی میزهای مهمانان چیست؟",
+        "options": [
+          {
+            "id": "opt1",
+            "label": "گل‌های ارکیده و رز سفید خالص",
+            "styleKey": "modern",
+            "score": {
+              "modern": 85
+            }
+          },
+          {
+            "id": "opt2",
+            "label": "رزهای قرمز مخملی و گل‌های تیره‌رنگ باشکوه",
+            "styleKey": "luxury",
+            "score": {
+              "luxury": 85
+            }
+          },
+          {
+            "id": "opt3",
+            "label": "ترکیب گل‌های وحشی زرد، نارنجی و برگ‌های اکالیپتوس",
+            "styleKey": "boho",
+            "score": {
+              "boho": 85
+            }
+          }
+        ]
+      },
+      {
+        "id": "q3",
+        "text": "رنگ رانر و رومیزهای سالن پذیرایی چگونه باشد؟",
+        "options": [
+          {
+            "id": "opt1",
+            "label": "مخمل سرمه‌ای یا زرشکی",
+            "styleKey": "classic",
+            "score": {
+              "classic": 85
+            }
+          },
+          {
+            "id": "opt2",
+            "label": "کتان نود و شنی با بافت طبیعی",
+            "styleKey": "boho",
+            "score": {
+              "boho": 85
+            }
+          },
+          {
+            "id": "opt3",
+            "label": "ساتن سفید و براق",
+            "styleKey": "modern",
+            "score": {
+              "modern": 85
+            }
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "quiz-style-gown",
+    "category": "style",
+    "title": "تست مدل لباس عروس بر اساس اندام و روحیات",
+    "description": "پرنسسی، ماهی، A-line، یا ساده مینی‌مال - پیشنهاد برش دامن و یقه متناسب",
+    "image": "https://images.unsplash.com/photo-1594552072238-b8a33785b261?auto=format&fit=crop&w=800&q=80",
+    "duration": "۳ دقیقه",
+    "questionsCount": 3,
+    "badge": "مدل لباس عروس",
+    "questions": [
+      {
+        "id": "q1",
+        "text": "کدام برش دامن احساس شیک بودن و اعتماد به نفس بیشتری به شما می‌دهد؟",
+        "options": [
+          {
+            "id": "opt1",
+            "label": "دامن پرنسسی اسکارلت پف‌دار با ژپون بزرگ",
+            "image": "https://images.unsplash.com/photo-1594552072238-b8a33785b261?auto=format&fit=crop&w=600&q=80",
+            "styleKey": "luxury",
+            "score": {
+              "luxury": 90,
+              "classic": 20
+            }
+          },
+          {
+            "id": "opt2",
+            "label": "برش اندامی ماهی (Mermaid) با جذب کامل و دنباله شیک",
+            "image": "https://images.unsplash.com/photo-1537633552985-df8429e8048b?auto=format&fit=crop&w=600&q=80",
+            "styleKey": "modern",
+            "score": {
+              "modern": 90
+            }
+          },
+          {
+            "id": "opt3",
+            "label": "دامن A-line کلاسیک با ریزش ملایم و راحتی بالا",
+            "image": "https://images.unsplash.com/photo-1519741497674-611481863552?auto=format&fit=crop&w=600&q=80",
+            "styleKey": "romantic",
+            "score": {
+              "romantic": 85,
+              "classic": 15
+            }
+          },
+          {
+            "id": "opt4",
+            "label": "لباس مستقیم ساده ساتن بدون پف و سنگ‌دوزی",
+            "image": "https://images.unsplash.com/photo-1520854221256-17451cc331bf?auto=format&fit=crop&w=600&q=80",
+            "styleKey": "modern",
+            "score": {
+              "modern": 85,
+              "boho": 15
+            }
+          }
+        ]
+      },
+      {
+        "id": "q2",
+        "text": "سبک یقه مورد علاقه شما چیست؟",
+        "options": [
+          {
+            "id": "opt1",
+            "label": "یقه دلبری یا دکلته کلاسیک",
+            "styleKey": "classic",
+            "score": {
+              "classic": 85
+            }
+          },
+          {
+            "id": "opt2",
+            "label": "یقه قایقی یا آستین‌دار دانتل",
+            "styleKey": "romantic",
+            "score": {
+              "romantic": 85
+            }
+          },
+          {
+            "id": "opt3",
+            "label": "یقه خشتی یا رومی مدرن",
+            "styleKey": "modern",
+            "score": {
+              "modern": 85
+            }
+          }
+        ]
+      },
+      {
+        "id": "q3",
+        "text": "میزان کاردست و سنگ‌دوزی روی پارچه چه مقدار باشد؟",
+        "options": [
+          {
+            "id": "opt1",
+            "label": "کریستال‌دوزی و ملیله‌دوزی متراکم و درخشان",
+            "styleKey": "luxury",
+            "score": {
+              "luxury": 90
+            }
+          },
+          {
+            "id": "opt2",
+            "label": "دانتل و گیپور ظریف برجسته",
+            "styleKey": "romantic",
+            "score": {
+              "romantic": 85
+            }
+          },
+          {
+            "id": "opt3",
+            "label": "پارچه مینی‌مال کاملاً بدون کاردست",
+            "styleKey": "modern",
+            "score": {
+              "modern": 90
+            }
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "quiz-style-groom",
+    "category": "style",
+    "title": "تست سبک استایل و کت‌وشلوار داماد",
+    "description": "تاکسیدو کلاسیک، اسپرت شیک یا مدرن - پیشنهاد رنگ، یقه و اکسسوری دامادی",
+    "image": "https://images.unsplash.com/photo-1507679799987-c73779587ccf?auto=format&fit=crop&w=800&q=80",
+    "duration": "۲ دقیقه",
+    "questionsCount": 2,
+    "badge": "استایل داماد",
+    "questions": [
+      {
+        "id": "q1",
+        "text": "کدام فرم کت و شلوار دامادی با روحیات شما سازگارتر است؟",
+        "options": [
+          {
+            "id": "opt1",
+            "label": "تاکسیدو مشکی با یقه آرشال ساتن و پاپیون مشکی رسمی",
+            "styleKey": "luxury",
+            "score": {
+              "luxury": 90,
+              "classic": 20
+            }
+          },
+          {
+            "id": "opt2",
+            "label": "کت و شلوار سورمه‌ای یا طوسی با کراوات ابریشمی شیک",
+            "styleKey": "modern",
+            "score": {
+              "modern": 85
+            }
+          },
+          {
+            "id": "opt3",
+            "label": "کت شش‌دکمه دوبل (Double Breasted) سرمه‌ای سلطنتی",
+            "styleKey": "classic",
+            "score": {
+              "classic": 90
+            }
+          },
+          {
+            "id": "opt4",
+            "label": "کت کتانی یا کرم روشن با ساسپندر و جلیقه بدون کراوات",
+            "styleKey": "boho",
+            "score": {
+              "boho": 90
+            }
+          }
+        ]
+      },
+      {
+        "id": "q2",
+        "text": "انتخاب شما برای کفش و ساعت دامادی چیست؟",
+        "options": [
+          {
+            "id": "opt1",
+            "label": "کفش ورنی مشکی براق با ساعت بند چرمی کلاسیک",
+            "styleKey": "luxury",
+            "score": {
+              "luxury": 85
+            }
+          },
+          {
+            "id": "opt2",
+            "label": "کفش چرم هشترک قهوه‌ای با ساعت استیل اسپرت",
+            "styleKey": "modern",
+            "score": {
+              "modern": 85
+            }
+          },
+          {
+            "id": "opt3",
+            "label": "کفش کالج چرم شاموا نود",
+            "styleKey": "boho",
+            "score": {
+              "boho": 85
+            }
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "quiz-psych-budget",
+    "category": "psychology",
+    "title": "تست سنجش تفاهم در مدیریت هزینه‌ها و بودجه",
+    "description": "تحلیل هم‌نظری در اولویت‌بندی مالی، تقسیم هزینه‌ها و پیشگیری از چالش‌های بودجه",
+    "image": "https://images.unsplash.com/photo-1554224155-8d04cb21cd6c?auto=format&fit=crop&w=800&q=80",
+    "duration": "۴ دقیقه",
+    "questionsCount": 3,
+    "badge": "مدیریت بودجه",
+    "questions": [
+      {
+        "id": "q1",
+        "text": "ما و همسرم درباره سقف بودجه کل عروسی و نحوه تقسیم آن توافق کامل داریم.",
+        "options": [
+          {
+            "id": "lk1",
+            "label": "کاملاً موافقم",
+            "styleKey": "compat_high",
+            "score": {
+              "compat": 100,
+              "budget_sync": 100
+            }
+          },
+          {
+            "id": "lk2",
+            "label": "موافقم",
+            "styleKey": "compat_mid",
+            "score": {
+              "compat": 80,
+              "budget_sync": 80
+            }
+          },
+          {
+            "id": "lk3",
+            "label": "نظری ندارم / خنثی",
+            "styleKey": "compat_neutral",
+            "score": {
+              "compat": 50,
+              "budget_sync": 50
+            }
+          },
+          {
+            "id": "lk4",
+            "label": "مخالفم",
+            "styleKey": "compat_low",
+            "score": {
+              "compat": 30,
+              "budget_sync": 30
+            }
+          },
+          {
+            "id": "lk5",
+            "label": "کاملاً مخالفم",
+            "styleKey": "compat_vlow",
+            "score": {
+              "compat": 10,
+              "budget_sync": 10
+            }
+          }
+        ]
+      },
+      {
+        "id": "q2",
+        "text": "در صورت افزایش غیرمنتظره هزینه‌ها، می‌توانیم با آرامش و گفتگو آیتم‌های کم‌اهمیت‌تر را حذف کنیم.",
+        "options": [
+          {
+            "id": "lk1",
+            "label": "کاملاً موافقم",
+            "styleKey": "compat_high",
+            "score": {
+              "compat": 100,
+              "budget_sync": 100
+            }
+          },
+          {
+            "id": "lk2",
+            "label": "موافقم",
+            "styleKey": "compat_mid",
+            "score": {
+              "compat": 80,
+              "budget_sync": 80
+            }
+          },
+          {
+            "id": "lk3",
+            "label": "نظری ندارم / خنثی",
+            "styleKey": "compat_neutral",
+            "score": {
+              "compat": 50,
+              "budget_sync": 50
+            }
+          },
+          {
+            "id": "lk4",
+            "label": "مخالفم",
+            "styleKey": "compat_low",
+            "score": {
+              "compat": 30,
+              "budget_sync": 30
+            }
+          },
+          {
+            "id": "lk5",
+            "label": "کاملاً مخالفم",
+            "styleKey": "compat_vlow",
+            "score": {
+              "compat": 10,
+              "budget_sync": 10
+            }
+          }
+        ]
+      },
+      {
+        "id": "q3",
+        "text": "اولویت‌های مالی ما (مثلاً بین کیفیت تالار در برابر عکاسی و فیلم‌برداری) کاملاً همسو است.",
+        "options": [
+          {
+            "id": "lk1",
+            "label": "کاملاً موافقم",
+            "styleKey": "compat_high",
+            "score": {
+              "compat": 100,
+              "budget_sync": 100
+            }
+          },
+          {
+            "id": "lk2",
+            "label": "موافقم",
+            "styleKey": "compat_mid",
+            "score": {
+              "compat": 80,
+              "budget_sync": 80
+            }
+          },
+          {
+            "id": "lk3",
+            "label": "نظری ندارم / خنثی",
+            "styleKey": "compat_neutral",
+            "score": {
+              "compat": 50,
+              "budget_sync": 50
+            }
+          },
+          {
+            "id": "lk4",
+            "label": "مخالفم",
+            "styleKey": "compat_low",
+            "score": {
+              "compat": 30,
+              "budget_sync": 30
+            }
+          },
+          {
+            "id": "lk5",
+            "label": "کاملاً مخالفم",
+            "styleKey": "compat_vlow",
+            "score": {
+              "compat": 10,
+              "budget_sync": 10
+            }
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "quiz-psych-stress",
+    "category": "psychology",
+    "title": "تست تحلیل سبک مدیریت استرس و بحران‌های قبل از عروسی",
+    "description": "شناسایی نقاط محرک استرس، صبوری هیجانی و راهکارهای حفظ آرامش مشترک",
+    "image": "https://images.unsplash.com/photo-1522673607200-164d1b6ce486?auto=format&fit=crop&w=800&q=80",
+    "duration": "۳ دقیقه",
+    "questionsCount": 3,
+    "badge": "مدیریت استرس",
+    "questions": [
+      {
+        "id": "q1",
+        "text": "هنگامی که برنامه‌ریزی‌ها طبق زمان‌بندی دقیق پیش نمی‌رود، می‌توانم خونسردی خود را حفظ کنم.",
+        "options": [
+          {
+            "id": "lk1",
+            "label": "کاملاً موافقم",
+            "styleKey": "compat_high",
+            "score": {
+              "compat": 100,
+              "budget_sync": 100
+            }
+          },
+          {
+            "id": "lk2",
+            "label": "موافقم",
+            "styleKey": "compat_mid",
+            "score": {
+              "compat": 80,
+              "budget_sync": 80
+            }
+          },
+          {
+            "id": "lk3",
+            "label": "نظری ندارم / خنثی",
+            "styleKey": "compat_neutral",
+            "score": {
+              "compat": 50,
+              "budget_sync": 50
+            }
+          },
+          {
+            "id": "lk4",
+            "label": "مخالفم",
+            "styleKey": "compat_low",
+            "score": {
+              "compat": 30,
+              "budget_sync": 30
+            }
+          },
+          {
+            "id": "lk5",
+            "label": "کاملاً مخالفم",
+            "styleKey": "compat_vlow",
+            "score": {
+              "compat": 10,
+              "budget_sync": 10
+            }
+          }
+        ]
+      },
+      {
+        "id": "q2",
+        "text": "من و همسرم در روزهای پرفشار قبل از عروسی تکیه‌گاه عاطفی یکدیگر هستیم و استرس را منتقل نمی‌کنیم.",
+        "options": [
+          {
+            "id": "lk1",
+            "label": "کاملاً موافقم",
+            "styleKey": "compat_high",
+            "score": {
+              "compat": 100,
+              "budget_sync": 100
+            }
+          },
+          {
+            "id": "lk2",
+            "label": "موافقم",
+            "styleKey": "compat_mid",
+            "score": {
+              "compat": 80,
+              "budget_sync": 80
+            }
+          },
+          {
+            "id": "lk3",
+            "label": "نظری ندارم / خنثی",
+            "styleKey": "compat_neutral",
+            "score": {
+              "compat": 50,
+              "budget_sync": 50
+            }
+          },
+          {
+            "id": "lk4",
+            "label": "مخالفم",
+            "styleKey": "compat_low",
+            "score": {
+              "compat": 30,
+              "budget_sync": 30
+            }
+          },
+          {
+            "id": "lk5",
+            "label": "کاملاً مخالفم",
+            "styleKey": "compat_vlow",
+            "score": {
+              "compat": 10,
+              "budget_sync": 10
+            }
+          }
+        ]
+      },
+      {
+        "id": "q3",
+        "text": "توانایی عبور از خطاهای جزئی تامین‌کنندگان در روز جشن بدون خراب کردن حالم را دارم.",
+        "options": [
+          {
+            "id": "lk1",
+            "label": "کاملاً موافقم",
+            "styleKey": "compat_high",
+            "score": {
+              "compat": 100,
+              "budget_sync": 100
+            }
+          },
+          {
+            "id": "lk2",
+            "label": "موافقم",
+            "styleKey": "compat_mid",
+            "score": {
+              "compat": 80,
+              "budget_sync": 80
+            }
+          },
+          {
+            "id": "lk3",
+            "label": "نظری ندارم / خنثی",
+            "styleKey": "compat_neutral",
+            "score": {
+              "compat": 50,
+              "budget_sync": 50
+            }
+          },
+          {
+            "id": "lk4",
+            "label": "مخالفم",
+            "styleKey": "compat_low",
+            "score": {
+              "compat": 30,
+              "budget_sync": 30
+            }
+          },
+          {
+            "id": "lk5",
+            "label": "کاملاً مخالفم",
+            "styleKey": "compat_vlow",
+            "score": {
+              "compat": 10,
+              "budget_sync": 10
+            }
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "quiz-psych-readiness",
+    "category": "psychology",
+    "title": "تست خودشناسی و آمادگی عاطفی ورود به زندگی مشترک",
+    "description": "ارزیابی بلوغ ارتباطی، مسئولیت‌پذیری و آمادگی روحی برای شروع فصل جدید زندگی",
+    "image": "https://images.unsplash.com/photo-1511285560929-80b456fea0bc?auto=format&fit=crop&w=800&q=80",
+    "duration": "۴ دقیقه",
+    "questionsCount": 3,
+    "badge": "خودشناسی ازدواج",
+    "questions": [
+      {
+        "id": "q1",
+        "text": "تصویر ذهنی من از زندگی مشترک متکی بر واقع‌گرایی، همدلی و پذیرش مسئولیت‌های جدید است.",
+        "options": [
+          {
+            "id": "lk1",
+            "label": "کاملاً موافقم",
+            "styleKey": "compat_high",
+            "score": {
+              "compat": 100,
+              "budget_sync": 100
+            }
+          },
+          {
+            "id": "lk2",
+            "label": "موافقم",
+            "styleKey": "compat_mid",
+            "score": {
+              "compat": 80,
+              "budget_sync": 80
+            }
+          },
+          {
+            "id": "lk3",
+            "label": "نظری ندارم / خنثی",
+            "styleKey": "compat_neutral",
+            "score": {
+              "compat": 50,
+              "budget_sync": 50
+            }
+          },
+          {
+            "id": "lk4",
+            "label": "مخالفم",
+            "styleKey": "compat_low",
+            "score": {
+              "compat": 30,
+              "budget_sync": 30
+            }
+          },
+          {
+            "id": "lk5",
+            "label": "کاملاً مخالفم",
+            "styleKey": "compat_vlow",
+            "score": {
+              "compat": 10,
+              "budget_sync": 10
+            }
+          }
+        ]
+      },
+      {
+        "id": "q2",
+        "text": "توانایی گفتگو درباره نیازها و احساسات عمیق خود بدون ترس از قضاوت شدن را دارم.",
+        "options": [
+          {
+            "id": "lk1",
+            "label": "کاملاً موافقم",
+            "styleKey": "compat_high",
+            "score": {
+              "compat": 100,
+              "budget_sync": 100
+            }
+          },
+          {
+            "id": "lk2",
+            "label": "موافقم",
+            "styleKey": "compat_mid",
+            "score": {
+              "compat": 80,
+              "budget_sync": 80
+            }
+          },
+          {
+            "id": "lk3",
+            "label": "نظری ندارم / خنثی",
+            "styleKey": "compat_neutral",
+            "score": {
+              "compat": 50,
+              "budget_sync": 50
+            }
+          },
+          {
+            "id": "lk4",
+            "label": "مخالفم",
+            "styleKey": "compat_low",
+            "score": {
+              "compat": 30,
+              "budget_sync": 30
+            }
+          },
+          {
+            "id": "lk5",
+            "label": "کاملاً مخالفم",
+            "styleKey": "compat_vlow",
+            "score": {
+              "compat": 10,
+              "budget_sync": 10
+            }
+          }
+        ]
+      },
+      {
+        "id": "q3",
+        "text": "آمادگی کافی برای اولویت دادن به تصمیمات دو نفره در برابر تمایلات فردی گذشته را احساس می‌کنم.",
+        "options": [
+          {
+            "id": "lk1",
+            "label": "کاملاً موافقم",
+            "styleKey": "compat_high",
+            "score": {
+              "compat": 100,
+              "budget_sync": 100
+            }
+          },
+          {
+            "id": "lk2",
+            "label": "موافقم",
+            "styleKey": "compat_mid",
+            "score": {
+              "compat": 80,
+              "budget_sync": 80
+            }
+          },
+          {
+            "id": "lk3",
+            "label": "نظری ندارم / خنثی",
+            "styleKey": "compat_neutral",
+            "score": {
+              "compat": 50,
+              "budget_sync": 50
+            }
+          },
+          {
+            "id": "lk4",
+            "label": "مخالفم",
+            "styleKey": "compat_low",
+            "score": {
+              "compat": 30,
+              "budget_sync": 30
+            }
+          },
+          {
+            "id": "lk5",
+            "label": "کاملاً مخالفم",
+            "styleKey": "compat_vlow",
+            "score": {
+              "compat": 10,
+              "budget_sync": 10
+            }
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "quiz-psych-family",
+    "category": "psychology",
+    "title": "تست میزان هم‌نظری در تصمیم‌گیری‌ها و مداخله اطرافیان",
+    "description": "تحلیل مرزبندی سالم با اطرافیان، حفظ استقلال زوجین و مدیریت محترمانه نظرات خانواده",
+    "image": "https://images.unsplash.com/photo-1520854221256-17451cc331bf?auto=format&fit=crop&w=800&q=80",
+    "duration": "۳ دقیقه",
+    "questionsCount": 3,
+    "badge": "مرزبندی خانواده",
+    "questions": [
+      {
+        "id": "q1",
+        "text": "من و همسرم مرز مشخصی برای حفظ استقلال تصمیم‌گیری‌های دو نفره خود تعیین کرده‌ایم.",
+        "options": [
+          {
+            "id": "lk1",
+            "label": "کاملاً موافقم",
+            "styleKey": "compat_high",
+            "score": {
+              "compat": 100,
+              "budget_sync": 100
+            }
+          },
+          {
+            "id": "lk2",
+            "label": "موافقم",
+            "styleKey": "compat_mid",
+            "score": {
+              "compat": 80,
+              "budget_sync": 80
+            }
+          },
+          {
+            "id": "lk3",
+            "label": "نظری ندارم / خنثی",
+            "styleKey": "compat_neutral",
+            "score": {
+              "compat": 50,
+              "budget_sync": 50
+            }
+          },
+          {
+            "id": "lk4",
+            "label": "مخالفم",
+            "styleKey": "compat_low",
+            "score": {
+              "compat": 30,
+              "budget_sync": 30
+            }
+          },
+          {
+            "id": "lk5",
+            "label": "کاملاً مخالفم",
+            "styleKey": "compat_vlow",
+            "score": {
+              "compat": 10,
+              "budget_sync": 10
+            }
+          }
+        ]
+      },
+      {
+        "id": "q2",
+        "text": "توانایی شنیدن محترمانه نظرات اطرافیان بدون ایجاد تعارض در رابطه دونفره‌مان را داریم.",
+        "options": [
+          {
+            "id": "lk1",
+            "label": "کاملاً موافقم",
+            "styleKey": "compat_high",
+            "score": {
+              "compat": 100,
+              "budget_sync": 100
+            }
+          },
+          {
+            "id": "lk2",
+            "label": "موافقم",
+            "styleKey": "compat_mid",
+            "score": {
+              "compat": 80,
+              "budget_sync": 80
+            }
+          },
+          {
+            "id": "lk3",
+            "label": "نظری ندارم / خنثی",
+            "styleKey": "compat_neutral",
+            "score": {
+              "compat": 50,
+              "budget_sync": 50
+            }
+          },
+          {
+            "id": "lk4",
+            "label": "مخالفم",
+            "styleKey": "compat_low",
+            "score": {
+              "compat": 30,
+              "budget_sync": 30
+            }
+          },
+          {
+            "id": "lk5",
+            "label": "کاملاً مخالفم",
+            "styleKey": "compat_vlow",
+            "score": {
+              "compat": 10,
+              "budget_sync": 10
+            }
+          }
+        ]
+      },
+      {
+        "id": "q3",
+        "text": "در صورت بروز اختلاف نظر میان خانواده‌ها، پشت یکدیگر ایستاده و حامی هم هستیم.",
+        "options": [
+          {
+            "id": "lk1",
+            "label": "کاملاً موافقم",
+            "styleKey": "compat_high",
+            "score": {
+              "compat": 100,
+              "budget_sync": 100
+            }
+          },
+          {
+            "id": "lk2",
+            "label": "موافقم",
+            "styleKey": "compat_mid",
+            "score": {
+              "compat": 80,
+              "budget_sync": 80
+            }
+          },
+          {
+            "id": "lk3",
+            "label": "نظری ندارم / خنثی",
+            "styleKey": "compat_neutral",
+            "score": {
+              "compat": 50,
+              "budget_sync": 50
+            }
+          },
+          {
+            "id": "lk4",
+            "label": "مخالفم",
+            "styleKey": "compat_low",
+            "score": {
+              "compat": 30,
+              "budget_sync": 30
+            }
+          },
+          {
+            "id": "lk5",
+            "label": "کاملاً مخالفم",
+            "styleKey": "compat_vlow",
+            "score": {
+              "compat": 10,
+              "budget_sync": 10
+            }
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "quiz-beauty-makeup",
+    "category": "beauty",
+    "title": "تست پیشنهاد میکاپ و شینیون عروس",
+    "description": "اروپایی و نود، لایت شیک، کلاسیک، عربی/غلیظ - بهترین سبک آرایش چهره",
+    "image": "https://images.unsplash.com/photo-1487412720507-e7ab37603c6f?auto=format&fit=crop&w=800&q=80",
+    "duration": "۳ دقیقه",
+    "questionsCount": 3,
+    "badge": "میکاپ & شینیون",
+    "questions": [
+      {
+        "id": "q1",
+        "text": "کدام سبک آرایش چشم و غلظت سایه را ترجیح می‌دهید؟",
+        "options": [
+          {
+            "id": "opt1",
+            "label": "میکاپ نود و اروپایی (تاترا، کانتور لایت و سایه قهوه‌ای ملایم)",
+            "image": "https://images.unsplash.com/photo-1487412720507-e7ab37603c6f?auto=format&fit=crop&w=600&q=80",
+            "styleKey": "modern",
+            "score": {
+              "modern": 90,
+              "boho": 10
+            }
+          },
+          {
+            "id": "opt2",
+            "label": "میکاپ لایت شیک و درخشان (گلیتر ملایم و خط چشم دقیق)",
+            "image": "https://images.unsplash.com/photo-1522673607200-164d1b6ce486?auto=format&fit=crop&w=600&q=80",
+            "styleKey": "romantic",
+            "score": {
+              "romantic": 90
+            }
+          },
+          {
+            "id": "opt3",
+            "label": "میکاپ کلاسیـک هالیوودی (رژ لب قرمز یا زرشکی با خط چشم گربه‌ای)",
+            "image": "https://images.unsplash.com/photo-1520854221256-17451cc331bf?auto=format&fit=crop&w=600&q=80",
+            "styleKey": "classic",
+            "score": {
+              "classic": 90
+            }
+          },
+          {
+            "id": "opt4",
+            "label": "میکاپ غلیظ و عربی (اسموکی تیره، مژه پرحجم و کانتورینگ برجسته)",
+            "image": "https://images.unsplash.com/photo-1519167758481-83f550bb49b3?auto=format&fit=crop&w=600&q=80",
+            "styleKey": "luxury",
+            "score": {
+              "luxury": 90
+            }
+          }
+        ]
+      },
+      {
+        "id": "q2",
+        "text": "مدل مو و شینیون دلخواه شما چیست؟",
+        "options": [
+          {
+            "id": "opt1",
+            "label": "شینیون بسته مینی‌مال خطی پایین گردن",
+            "styleKey": "modern",
+            "score": {
+              "modern": 85
+            }
+          },
+          {
+            "id": "opt2",
+            "label": "موهای باز یا نیمه‌باز با فر درشت رومانتیک",
+            "styleKey": "romantic",
+            "score": {
+              "romantic": 90
+            }
+          },
+          {
+            "id": "opt3",
+            "label": "شینیون کلاسیک خلوج و جمع بالای سر",
+            "styleKey": "classic",
+            "score": {
+              "classic": 85
+            }
+          }
+        ]
+      },
+      {
+        "id": "q3",
+        "text": "انتخاب شما برای رژ لب چیست؟",
+        "options": [
+          {
+            "id": "opt1",
+            "label": "رژ لب گوشتی / کالباسی مات نود",
+            "styleKey": "modern",
+            "score": {
+              "modern": 85
+            }
+          },
+          {
+            "id": "opt2",
+            "label": "رژ لب صورتی ملایم یا برق لب شاین",
+            "styleKey": "romantic",
+            "score": {
+              "romantic": 85
+            }
+          },
+          {
+            "id": "opt3",
+            "label": "رژ لب قرمز مخملی کلاسیک",
+            "styleKey": "classic",
+            "score": {
+              "classic": 90
+            }
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "quiz-beauty-accessories",
+    "category": "beauty",
+    "title": "تست انتخاب تاج، تور و اکسسوری مناسب",
+    "description": "تاج ملکه، ریسه زری، تور بلند حریر یا کلاه فرانسوی - تکمیل استایل زیبایی",
+    "image": "https://images.unsplash.com/photo-1594552072238-b8a33785b261?auto=format&fit=crop&w=800&q=80",
+    "duration": "۲ دقیقه",
+    "questionsCount": 2,
+    "badge": "تاج & اکسسوری",
+    "questions": [
+      {
+        "id": "q1",
+        "text": "کدام نوع تاج یا اکسسوری سر را برای شینیون خود می‌پسندید؟",
+        "options": [
+          {
+            "id": "opt1",
+            "label": "تاج فلزی بلند مروارید و کریستال طرح ملکه‌ای",
+            "styleKey": "luxury",
+            "score": {
+              "luxury": 90,
+              "classic": 20
+            }
+          },
+          {
+            "id": "opt2",
+            "label": "ریسه ظریف کریستالی یا تل مینی‌مال شیشه‌ای",
+            "styleKey": "modern",
+            "score": {
+              "modern": 85
+            }
+          },
+          {
+            "id": "opt3",
+            "label": "تاج گل طبیعی یا ریسه مروارید بوهمیان",
+            "styleKey": "boho",
+            "score": {
+              "boho": 90
+            }
+          },
+          {
+            "id": "opt4",
+            "label": "کلاه توردار فرانسوی کلاسیـک vintage",
+            "styleKey": "vintage",
+            "score": {
+              "vintage": 90
+            }
+          }
+        ]
+      },
+      {
+        "id": "q2",
+        "text": "قد تور سر عروس تا چه اندازه باشد؟",
+        "options": [
+          {
+            "id": "opt1",
+            "label": "تور سر خیلی بلند رویکف زمین با حاشیه دانتل",
+            "styleKey": "classic",
+            "score": {
+              "classic": 90,
+              "luxury": 20
+            }
+          },
+          {
+            "id": "opt2",
+            "label": "تور سر متوسط تا کمر با اکلیل ملایم",
+            "styleKey": "romantic",
+            "score": {
+              "romantic": 85
+            }
+          },
+          {
+            "id": "opt3",
+            "label": "بدون تور سر یا تور کوتاه‌مینی‌مال",
+            "styleKey": "modern",
+            "score": {
+              "modern": 85
+            }
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "quiz-beauty-cinematography",
+    "category": "beauty",
+    "title": "تست سبک فیلم‌برداری و عکاسی عروسی",
+    "description": "مستند داستانی، کلاسیک، سناریومحور یا هالیوودی - ساخت خاطره ماندگار تصویری",
+    "image": "https://images.unsplash.com/photo-1516035069371-29a1b244cc32?auto=format&fit=crop&w=800&q=80",
+    "duration": "۳ دقیقه",
+    "questionsCount": 2,
+    "badge": "سبک تصویربرداری",
+    "questions": [
+      {
+        "id": "q1",
+        "text": "کدام سبک تدوین کلیپ عروسی با روحیات شما سازگارتر است؟",
+        "options": [
+          {
+            "id": "opt1",
+            "label": "سبک مستند داستانی (Documentary) با ضبط لحظات واقعی بدون ژست تصنعی",
+            "styleKey": "boho",
+            "score": {
+              "boho": 90,
+              "modern": 20
+            }
+          },
+          {
+            "id": "opt2",
+            "label": "سبک سینمایی هالیوودی با تجهیزات کرین، هلی‌شات و نورپردازی سینمایی",
+            "styleKey": "luxury",
+            "score": {
+              "luxury": 90
+            }
+          },
+          {
+            "id": "opt3",
+            "label": "سبک کلاسیک با آهنگ‌های صمیمی و ژست‌های وقار عروسی",
+            "styleKey": "classic",
+            "score": {
+              "classic": 85
+            }
+          },
+          {
+            "id": "opt4",
+            "label": "کلیپ سناریومحور کوتاه با دیالوگ‌های عاشقانه زوج",
+            "styleKey": "romantic",
+            "score": {
+              "romantic": 90
+            }
+          }
+        ]
+      },
+      {
+        "id": "q2",
+        "text": "نوع چاپ آلبوم دیجیتال عکاسی چگونه باشد؟",
+        "options": [
+          {
+            "id": "opt1",
+            "label": "آلبوم جلد چرم با افکت‌های عکاسی سیاه و سفید کلاسیـک",
+            "styleKey": "classic",
+            "score": {
+              "classic": 85
+            }
+          },
+          {
+            "id": "opt2",
+            "label": "آلبوم جلد شیشه‌ای ژورنالی ایتالیایی با صفحه بزرگ",
+            "styleKey": "luxury",
+            "score": {
+              "luxury": 85
+            }
+          },
+          {
+            "id": "opt3",
+            "label": "آلبوم پارچه‌ای نود با کاغذ مات مینی‌مال",
+            "styleKey": "modern",
+            "score": {
+              "modern": 85
+            }
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "quiz-catering-menu",
+    "category": "catering",
+    "title": "تست انتخاب سبک پذیرایی و منوی غذایی",
+    "description": "دیس‌پرس، سلف‌سرویس، فینگرفود یا کافه بار ویژه - طعم پذیرایی شام عروسی",
+    "image": "https://images.unsplash.com/photo-1555244162-803834f70033?auto=format&fit=crop&w=800&q=80",
+    "duration": "۳ دقیقه",
+    "questionsCount": 2,
+    "badge": "منو و پذیرایی",
+    "questions": [
+      {
+        "id": "q1",
+        "text": "کدام مدل سرو غذا برای مهمانان شما راحتی و جذابیت بیشتری ایجاد می‌کند؟",
+        "options": [
+          {
+            "id": "opt1",
+            "label": "سلف‌سرویس کامل با چندین مدل کباب، خورشت، سالادبار و دسر اختصاصی",
+            "styleKey": "luxury",
+            "score": {
+              "luxury": 90,
+              "classic": 15
+            }
+          },
+          {
+            "id": "opt2",
+            "label": "سرو دیس‌پرس همزمان روی میزهای مهمانان بدون صف ایستادن",
+            "styleKey": "classic",
+            "score": {
+              "classic": 90
+            }
+          },
+          {
+            "id": "opt3",
+            "label": "ایستگاه‌های فینگرفود گرم، باربیکیو زنده و استیشن باریستا در فضای باز",
+            "styleKey": "boho",
+            "score": {
+              "boho": 90,
+              "modern": 20
+            }
+          }
+        ]
+      },
+      {
+        "id": "q2",
+        "text": "کدام آیتم پذیرایی جانبی هیجان بیشتری برای مهمانان ایجاد می‌کند؟",
+        "options": [
+          {
+            "id": "opt1",
+            "label": "بار اختصاصی موکتیل و آبمیوه طبیعی تازه",
+            "styleKey": "modern",
+            "score": {
+              "modern": 85
+            }
+          },
+          {
+            "id": "opt2",
+            "label": "استیشن قهوه اسپرسو و وافل گرم",
+            "styleKey": "romantic",
+            "score": {
+              "romantic": 85
+            }
+          },
+          {
+            "id": "opt3",
+            "label": "میز شوکولات‌بار و آبشار شکلات فونتانا",
+            "styleKey": "luxury",
+            "score": {
+              "luxury": 85
+            }
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "quiz-catering-music",
+    "category": "catering",
+    "title": "تست تم موسیقی و سبک دی‌جی / ارکستر زنده",
+    "description": "سنتی تلفیقی، پاپ و شاد، الکترونیک/مدرن یا نوستالژیک - ساخت انرژی شب جشن",
+    "image": "https://images.unsplash.com/photo-1470225620780-dba8ba36b745?auto=format&fit=crop&w=800&q=80",
+    "duration": "۳ دقیقه",
+    "questionsCount": 2,
+    "badge": "موسیقی & دی‌جی",
+    "questions": [
+      {
+        "id": "q1",
+        "text": "کدام ترکیب موسیقی برای سیستم صوتی و هیجان سالن رقص جشن شما عالی است؟",
+        "options": [
+          {
+            "id": "opt1",
+            "label": "دی‌جی حرفه‌ای با رمیکس‌های انرژی بالای پاپ، ریمیکس شاد و نورپردازی لیزری",
+            "styleKey": "modern",
+            "score": {
+              "modern": 90
+            }
+          },
+          {
+            "id": "opt2",
+            "label": "ارکستر زنده با خواننده مطرح، نوازندگان ساکسیفون و پرکاشن",
+            "styleKey": "luxury",
+            "score": {
+              "luxury": 90
+            }
+          },
+          {
+            "id": "opt3",
+            "label": "گروه موسیقی سنتی تلفیقی (کمانچه و تمبک) به همراه موزیک پاپ",
+            "styleKey": "classic",
+            "score": {
+              "classic": 85,
+              "vintage": 20
+            }
+          },
+          {
+            "id": "opt4",
+            "label": "آهنگ‌های نوستالژیک قدیمی و خاطره‌انگیز دهه ۶۰ و ۷۰",
+            "styleKey": "vintage",
+            "score": {
+              "vintage": 90
+            }
+          }
+        ]
+      },
+      {
+        "id": "q2",
+        "text": "آهنگ تانگو و رقص دونفره ورودی عروس و داماد چه سبک ملودی داشته باشد؟",
+        "options": [
+          {
+            "id": "opt1",
+            "label": "موزیک بیکلام ویولن و پیانو کلاسیک شاهانه",
+            "styleKey": "classic",
+            "score": {
+              "classic": 90
+            }
+          },
+          {
+            "id": "opt2",
+            "label": "آهنگ عاشقانه پاپ ایرانی یا انگلیسی با صدای خواننده مورد علاقه",
+            "styleKey": "romantic",
+            "score": {
+              "romantic": 90
+            }
+          },
+          {
+            "id": "opt3",
+            "label": "تانگوی اصیل آکاردئون خنک و احساسی",
+            "styleKey": "boho",
+            "score": {
+              "boho": 85
+            }
+          }
+        ]
+      }
+    ]
+  }
+]
     };
 
     // ==========================================
@@ -4926,16 +6477,17 @@
 
     function switchQuizCategoryTab(catKey) {
       quizState.activeTab = catKey;
-      const styleBtn = document.getElementById('quiz-tab-style');
-      const psychBtn = document.getElementById('quiz-tab-psych');
 
-      if (catKey === 'style') {
-        if (styleBtn) styleBtn.className = "flex-1 py-3 rounded-xl transition-all bg-primary text-white text-center flex items-center justify-center gap-1.5 shadow-xs";
-        if (psychBtn) psychBtn.className = "flex-1 py-3 rounded-xl transition-all text-secondary hover:text-graphite text-center flex items-center justify-center gap-1.5";
-      } else {
-        if (psychBtn) psychBtn.className = "flex-1 py-3 rounded-xl transition-all bg-primary text-white text-center flex items-center justify-center gap-1.5 shadow-xs";
-        if (styleBtn) styleBtn.className = "flex-1 py-3 rounded-xl transition-all text-secondary hover:text-graphite text-center flex items-center justify-center gap-1.5";
-      }
+      ['style', 'psychology', 'beauty', 'catering'].forEach(tab => {
+        const btn = document.getElementById('quiz-tab-' + tab);
+        if (btn) {
+          if (tab === catKey) {
+            btn.className = "flex-1 min-w-[140px] py-3 px-3 rounded-xl transition-all bg-primary text-white text-center flex items-center justify-center gap-1.5 shadow-xs";
+          } else {
+            btn.className = "flex-1 min-w-[140px] py-3 px-3 rounded-xl transition-all text-secondary hover:text-graphite text-center flex items-center justify-center gap-1.5";
+          }
+        }
+      });
 
       renderQuizCatalogCards();
     }
