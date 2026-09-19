@@ -2862,6 +2862,80 @@
   </div>
 
   <!-- ========================================== -->
+  <!-- MODAL: IDEA DETAIL & VENDOR HIGHLIGHT      -->
+  <!-- ========================================== -->
+  <div id="idea-detail-modal" class="fixed inset-0 z-50 bg-black/60 backdrop-blur-xs flex items-center justify-center p-4 hidden">
+    <div class="bg-white border border-accent rounded-3xl max-w-2xl w-full p-6 sm:p-8 shadow-2xl space-y-6 relative max-h-[92vh] overflow-y-auto custom-scrollbar">
+      <button onclick="closeIdeaDetailModal()" class="absolute top-5 left-5 text-secondary hover:text-graphite transition-colors bg-white/80 p-1.5 rounded-full z-10 shadow-sm">
+        <i data-lucide="x" class="w-6 h-6"></i>
+      </button>
+
+      <!-- Idea Image & Basic Info -->
+      <div class="space-y-4">
+        <div class="relative aspect-16/10 rounded-2xl overflow-hidden bg-slate-900 border border-accent/60">
+          <img id="modal-idea-img" src="" alt="Idea" class="w-full h-full object-cover">
+          <div class="absolute top-3 right-3 bg-black/60 backdrop-blur-md text-white text-xs font-bold px-3 py-1 rounded-full flex items-center gap-1.5">
+            <i data-lucide="sparkles" class="w-3.5 h-3.5 text-amber-400"></i>
+            <span id="modal-idea-category">دسته‌بندی</span>
+          </div>
+        </div>
+
+        <div>
+          <h3 id="modal-idea-title" class="text-lg sm:text-xl font-black text-graphite leading-relaxed">عنوان ایده</h3>
+          <p id="modal-idea-views" class="text-xs text-secondary mt-1 flex items-center gap-1">
+            <i data-lucide="eye" class="w-3.5 h-3.5 text-primary"></i>
+            <span>تعداد بازدید: ۰</span>
+          </p>
+        </div>
+      </div>
+
+      <!-- Dedicated Creator Vendor Highlight Box (ارائه‌شده توسط) -->
+      <div class="bg-bgCustom border-2 border-primary/20 rounded-2xl p-5 space-y-4 shadow-xs">
+        <div class="flex items-center justify-between border-b border-accent/80 pb-3">
+          <div class="flex items-center gap-1.5 text-primary text-xs font-bold">
+            <i data-lucide="award" class="w-4 h-4"></i>
+            <span>ارائه‌شده توسط تامین‌کننده رسمی پلتفرم</span>
+          </div>
+          <span class="bg-primary/10 text-primary text-[11px] font-extrabold px-2.5 py-0.5 rounded-full">تاییدشده</span>
+        </div>
+
+        <div class="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
+          <div class="flex items-center gap-3">
+            <img id="modal-idea-vendor-avatar" src="" alt="Vendor Avatar" class="w-14 h-14 rounded-2xl object-cover border border-primary/20 shadow-xs shrink-0">
+            <div class="space-y-1">
+              <h4 id="modal-idea-vendor-name" class="text-base font-extrabold text-graphite">نام تامین‌کننده</h4>
+              <div class="flex items-center gap-2 text-xs text-secondary">
+                <span id="modal-idea-vendor-cat" class="bg-slate-200/60 px-2 py-0.5 rounded-md font-semibold text-graphite">دسته‌بندی</span>
+                <span id="modal-idea-vendor-district" class="flex items-center gap-1">
+                  <i data-lucide="map-pin" class="w-3 h-3 text-secondary"></i>
+                  <span id="modal-idea-vendor-district-text">یزد</span>
+                </span>
+              </div>
+            </div>
+          </div>
+
+          <div class="flex items-center gap-1 text-amber-500 font-bold text-sm bg-amber-50 px-3 py-1.5 rounded-xl border border-amber-200/60 shrink-0">
+            <i data-lucide="star" class="w-4 h-4 fill-amber-400"></i>
+            <span id="modal-idea-vendor-rating">۴.۸</span>
+          </div>
+        </div>
+
+        <!-- Action CTAs for this specific vendor -->
+        <div class="pt-2 flex flex-col sm:flex-row items-center gap-2.5">
+          <button id="modal-idea-inquiry-btn" class="w-full sm:flex-1 bg-primary hover:bg-emerald-900 text-white font-bold py-3 rounded-xl text-xs transition-all shadow-md flex items-center justify-center gap-2">
+            <i data-lucide="message-square-quote" class="w-4 h-4"></i>
+            <span>دریافت استعلام قیمت برای این ایده</span>
+          </button>
+          <button id="modal-idea-profile-btn" class="w-full sm:w-auto bg-white hover:bg-slate-50 text-graphite border border-accent font-bold py-3 px-4 rounded-xl text-xs transition-all flex items-center justify-center gap-1.5 shrink-0">
+            <i data-lucide="external-link" class="w-4 h-4 text-secondary"></i>
+            <span>مشاهده تمام نمونه‌کارهای این تامین‌کننده</span>
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ========================================== -->
   <!-- MODAL: DIRECT PRICE INQUIRY POPUP          -->
   <!-- ========================================== -->
   <div id="inquiry-modal" class="fixed inset-0 z-50 bg-black/60 backdrop-blur-xs flex items-center justify-center p-4 hidden">
@@ -4380,6 +4454,29 @@
           image: finalImg
         };
         vendorPortfolio.push(newItem);
+
+        // Sync into public Inspiration Hub ideas linked directly to creator vendor profile
+        const activeVendor = vendors[0];
+        const newIdea = {
+          id: Date.now(),
+          title,
+          categoryKey: 'all',
+          categoryName: category,
+          vendorCategoryMatch: activeVendor ? activeVendor.category : 'تالار و باغ تشریفات',
+          image: finalImg,
+          viewsCount: '۱ (جدید)',
+          vendor: {
+            id: activeVendor ? activeVendor.id : 1,
+            name: activeVendor ? activeVendor.name : 'تامین‌کننده',
+            avatar: activeVendor ? activeVendor.image : finalImg,
+            category: activeVendor ? activeVendor.category : category,
+            district: activeVendor ? activeVendor.district : 'صفائیه یزد',
+            rating: activeVendor ? activeVendor.rating : 4.9
+          }
+        };
+        inspirationState.items.unshift(newIdea);
+        renderInspirationGalleryGrid();
+        showToast('نمونه‌کار و ایده جدید با موفقیت منتشر گردید', 'success');
       }
 
       renderPortfolioUI();
@@ -8602,7 +8699,15 @@
           categoryName: 'لباس و تور عروس',
           vendorCategoryMatch: 'مزون و لباس عروس',
           image: 'https://images.unsplash.com/photo-1594552072238-b8a33785b261?auto=format&fit=crop&w=800&q=80',
-          viewsCount: '۴.۲ هزار'
+          viewsCount: '۴.۲ هزار',
+          vendor: {
+            id: 5,
+            name: 'مزون عروس ترمه & اسلیمی یزد',
+            avatar: 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=200&q=80',
+            category: 'مزون و لباس عروس',
+            district: 'صفائیه یزد',
+            rating: 4.8
+          }
         },
         {
           id: 2,
@@ -8611,7 +8716,15 @@
           categoryName: 'گل‌آرایی و دکور تالار',
           vendorCategoryMatch: 'گل‌آرایی و ماشین عروس',
           image: 'https://images.unsplash.com/photo-1519167758481-83f550bb49b3?auto=format&fit=crop&w=800&q=80',
-          viewsCount: '۶.۸ هزار'
+          viewsCount: '۶.۸ هزار',
+          vendor: {
+            id: 1,
+            name: 'هتل باغ و تشریفات مشیرالممالک یزد',
+            avatar: 'https://images.unsplash.com/photo-1519167758481-83f550bb49b3?auto=format&fit=crop&w=200&q=80',
+            category: 'تالار و باغ تشریفات',
+            district: 'خیابان انقلاب یزد',
+            rating: 4.9
+          }
         },
         {
           id: 3,
@@ -8620,7 +8733,15 @@
           categoryName: 'ژست‌های عکاسی و فرمالیته',
           vendorCategoryMatch: 'آتلیه و عکاسی',
           image: 'https://images.unsplash.com/photo-1509316975850-ff9c5deb0cd9?auto=format&fit=crop&w=800&q=80',
-          viewsCount: '۸.۱ هزار'
+          viewsCount: '۸.۱ هزار',
+          vendor: {
+            id: 2,
+            name: 'استودیو و آتلیه تخصصی کویر یزد',
+            avatar: 'https://images.unsplash.com/photo-1537633552985-df8429e8048b?auto=format&fit=crop&w=200&q=80',
+            category: 'آتلیه و عکاسی',
+            district: 'میدان اطلسی صفائیه',
+            rating: 4.8
+          }
         },
         {
           id: 4,
@@ -8629,7 +8750,15 @@
           categoryName: 'کت‌وشلوار و اکسسوری',
           vendorCategoryMatch: 'کت و شلوار و آرایشگاه داماد',
           image: 'https://images.unsplash.com/photo-1507679799987-c73779587ccf?auto=format&fit=crop&w=800&q=80',
-          viewsCount: '۳.۵ هزار'
+          viewsCount: '۳.۵ هزار',
+          vendor: {
+            id: 4,
+            name: 'مزون و کت‌وشلوار دامادی کلاسیک یزد',
+            avatar: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=200&q=80',
+            category: 'کت و شلوار دامادی',
+            district: 'خیابان کاشانی یزد',
+            rating: 4.7
+          }
         },
         {
           id: 5,
@@ -8638,7 +8767,15 @@
           categoryName: 'کیک و تشریفات',
           vendorCategoryMatch: 'کترینگ و تشریفات پذیرایی',
           image: 'https://images.unsplash.com/photo-1535141192574-5d4897c13136?auto=format&fit=crop&w=800&q=80',
-          viewsCount: '۵.۳ هزار'
+          viewsCount: '۵.۳ هزار',
+          vendor: {
+            id: 3,
+            name: 'عمارت و کترینگ تشریفات قصر یزد',
+            avatar: 'https://images.unsplash.com/photo-1519741497674-611481863552?auto=format&fit=crop&w=200&q=80',
+            category: 'کترینگ و تشریفات پذیرایی',
+            district: 'بلوار جمهوری یزد',
+            rating: 4.9
+          }
         },
         {
           id: 6,
@@ -8647,7 +8784,15 @@
           categoryName: 'حلقه و سرویس طلا',
           vendorCategoryMatch: 'طلا، جواهر و حلقه ازدواج',
           image: 'https://images.unsplash.com/photo-1605100804763-247f67b3557e?auto=format&fit=crop&w=800&q=80',
-          viewsCount: '۹.۴ هزار'
+          viewsCount: '۹.۴ هزار',
+          vendor: {
+            id: 6,
+            name: 'گالری طلا و جواهر برلیان یزد',
+            avatar: 'https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?auto=format&fit=crop&w=200&q=80',
+            category: 'طلا و جواهرات',
+            district: 'بازار خان یزد',
+            rating: 4.9
+          }
         },
         {
           id: 7,
@@ -8656,7 +8801,15 @@
           categoryName: 'لباس و تور عروس',
           vendorCategoryMatch: 'مزون و لباس عروس',
           image: 'https://images.unsplash.com/photo-1537633552985-df8429e8048b?auto=format&fit=crop&w=800&q=80',
-          viewsCount: '۷.۶ هزار'
+          viewsCount: '۷.۶ هزار',
+          vendor: {
+            id: 5,
+            name: 'مزون عروس ترمه & اسلیمی یزد',
+            avatar: 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=200&q=80',
+            category: 'مزون و لباس عروس',
+            district: 'صفائیه یزد',
+            rating: 4.8
+          }
         },
         {
           id: 8,
@@ -8665,7 +8818,15 @@
           categoryName: 'گل‌آرایی و دکور تالار',
           vendorCategoryMatch: 'گل‌آرایی و ماشین عروس',
           image: 'https://images.unsplash.com/photo-1465495976277-4387d4b0b4c6?auto=format&fit=crop&w=800&q=80',
-          viewsCount: '۶.۱ هزار'
+          viewsCount: '۶.۱ هزار',
+          vendor: {
+            id: 1,
+            name: 'هتل باغ و تشریفات مشیرالممالک یزد',
+            avatar: 'https://images.unsplash.com/photo-1519167758481-83f550bb49b3?auto=format&fit=crop&w=200&q=80',
+            category: 'تالار و باغ تشریفات',
+            district: 'خیابان انقلاب یزد',
+            rating: 4.9
+          }
         },
         {
           id: 9,
@@ -8674,7 +8835,15 @@
           categoryName: 'ژست‌های عکاسی و فرمالیته',
           vendorCategoryMatch: 'آتلیه و عکاسی',
           image: 'https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=800&q=80',
-          viewsCount: '۱۰.۲ هزار'
+          viewsCount: '۱۰.۲ هزار',
+          vendor: {
+            id: 2,
+            name: 'استودیو و آتلیه تخصصی کویر یزد',
+            avatar: 'https://images.unsplash.com/photo-1537633552985-df8429e8048b?auto=format&fit=crop&w=200&q=80',
+            category: 'آتلیه و عکاسی',
+            district: 'میدان اطلسی صفائیه',
+            rating: 4.8
+          }
         }
       ]
     };
@@ -8760,6 +8929,74 @@
       if (summaryText) summaryText.innerText = `${inspirationState.bookmarkedIds.length} ایده منتخب برای ارائه به همسر، طراح تشریفات یا آتلیه`;
     }
 
+    function openIdeaDetailModal(ideaId) {
+      const item = inspirationState.items.find(i => i.id === ideaId);
+      if (!item) return;
+
+      const modal = document.getElementById('idea-detail-modal');
+      if (!modal) return;
+
+      const imgEl = document.getElementById('modal-idea-img');
+      if (imgEl) imgEl.src = item.image;
+
+      const catEl = document.getElementById('modal-idea-category');
+      if (catEl) catEl.innerText = item.categoryName || 'ایده عروسی';
+
+      const titleEl = document.getElementById('modal-idea-title');
+      if (titleEl) titleEl.innerText = item.title;
+
+      const viewsEl = document.getElementById('modal-idea-views');
+      if (viewsEl) viewsEl.innerHTML = `<i data-lucide="eye" class="w-3.5 h-3.5 text-primary"></i><span>تعداد بازدید: ${item.viewsCount || '۱.۲ هزار'}</span>`;
+
+      const v = item.vendor || {
+        id: 1,
+        name: 'تامین‌کننده رسمی عروسی تو',
+        avatar: 'https://images.unsplash.com/photo-1519167758481-83f550bb49b3?auto=format&fit=crop&w=200&q=80',
+        category: item.vendorCategoryMatch || 'خدمات عروسی',
+        district: 'استان یزد',
+        rating: 4.8
+      };
+
+      const avatarEl = document.getElementById('modal-idea-vendor-avatar');
+      if (avatarEl) avatarEl.src = v.avatar;
+
+      const vNameEl = document.getElementById('modal-idea-vendor-name');
+      if (vNameEl) vNameEl.innerText = v.name;
+
+      const vCatEl = document.getElementById('modal-idea-vendor-cat');
+      if (vCatEl) vCatEl.innerText = v.category;
+
+      const vDistEl = document.getElementById('modal-idea-vendor-district-text');
+      if (vDistEl) vDistEl.innerText = v.district || 'یزد';
+
+      const vRatingEl = document.getElementById('modal-idea-vendor-rating');
+      if (vRatingEl) vRatingEl.innerText = v.rating || '۴.۸';
+
+      const inquiryBtn = document.getElementById('modal-idea-inquiry-btn');
+      if (inquiryBtn) {
+        inquiryBtn.onclick = function() {
+          closeIdeaDetailModal();
+          openInquiryModal(v.id, v.name);
+        };
+      }
+
+      const profileBtn = document.getElementById('modal-idea-profile-btn');
+      if (profileBtn) {
+        profileBtn.onclick = function() {
+          closeIdeaDetailModal();
+          switchTab('vendor-profile');
+        };
+      }
+
+      modal.classList.remove('hidden');
+      lucide.createIcons();
+    }
+
+    function closeIdeaDetailModal() {
+      const modal = document.getElementById('idea-detail-modal');
+      if (modal) modal.classList.add('hidden');
+    }
+
     function filterDirectoryByVendorCategory(vendorCategory) {
       switchTab('home');
       const select = document.getElementById('category-filter');
@@ -8798,9 +9035,11 @@
         const card = document.createElement('div');
         card.className = "bg-white border border-accent rounded-3xl overflow-hidden shadow-xs hover:shadow-lg transition-all group flex flex-col justify-between";
 
+        const vendorName = item.vendor ? item.vendor.name : 'تامین‌کننده';
+
         card.innerHTML = `
           <div>
-            <div class="relative aspect-4/5 overflow-hidden bg-slate-900 cursor-pointer">
+            <div onclick="openIdeaDetailModal(${item.id})" class="relative aspect-4/5 overflow-hidden bg-slate-900 cursor-pointer">
               <img src="${item.image}" alt="${item.title}" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
               <div class="absolute inset-0 bg-gradient-to-t from-graphite/80 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity flex flex-col justify-between p-4">
                 <div class="flex justify-between items-center">
@@ -8812,9 +9051,9 @@
                   </button>
                 </div>
 
-                <button onclick="filterDirectoryByVendorCategory('${item.vendorCategoryMatch}')" class="w-full bg-primary hover:bg-emerald-900 text-white font-bold text-xs py-2.5 rounded-xl shadow-lg transition-all flex items-center justify-center gap-1.5">
-                  <i data-lucide="search" class="w-3.5 h-3.5"></i>
-                  <span>مشاهده تامین‌کنندگان مرتبط</span>
+                <button onclick="event.stopPropagation(); openIdeaDetailModal(${item.id});" class="w-full bg-primary hover:bg-emerald-900 text-white font-bold text-xs py-2.5 rounded-xl shadow-lg transition-all flex items-center justify-center gap-1.5">
+                  <i data-lucide="eye" class="w-3.5 h-3.5"></i>
+                  <span>مشاهده جزییات و استعلام</span>
                 </button>
               </div>
 
@@ -8832,8 +9071,12 @@
               </div>
             </div>
 
-            <div class="p-4 space-y-2">
-              <h4 class="text-xs font-bold text-graphite line-clamp-2 leading-relaxed">${item.title}</h4>
+            <div onclick="openIdeaDetailModal(${item.id})" class="p-4 space-y-2 cursor-pointer">
+              <h4 class="text-xs font-bold text-graphite line-clamp-2 leading-relaxed hover:text-primary transition-colors">${item.title}</h4>
+              <p class="text-[11px] text-secondary font-medium truncate flex items-center gap-1">
+                <i data-lucide="store" class="w-3 h-3 text-primary"></i>
+                <span>ارائه‌شده توسط: ${vendorName}</span>
+              </p>
             </div>
           </div>
 
@@ -8843,8 +9086,8 @@
               <span>${isBookmarked ? 'ذخیره شده در مودبورد' : 'ذخیره در مودبورد'}</span>
             </button>
 
-            <button onclick="filterDirectoryByVendorCategory('${item.vendorCategoryMatch}')" class="text-[11px] font-bold text-primary hover:underline flex items-center gap-1">
-              <span>تامین‌کننده</span>
+            <button onclick="openIdeaDetailModal(${item.id})" class="text-[11px] font-bold text-primary hover:underline flex items-center gap-1">
+              <span>استعلام ایده</span>
               <i data-lucide="chevron-left" class="w-3.5 h-3.5"></i>
             </button>
           </div>
