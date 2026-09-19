@@ -71,6 +71,20 @@
 </head>
 <body class="min-h-full flex flex-col antialiased selection:bg-primary selection:text-white">
 
+  <!-- YAZD ANNOUNCEMENT BAR -->
+  <div class="bg-[#1C3A27] text-[#D4AF37] border-b border-amber-500/20 px-4 py-2 text-xs font-bold shadow-xs">
+    <div class="max-w-7xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-2 text-center sm:text-right">
+      <div class="flex items-center gap-2">
+        <i data-lucide="sparkles" class="w-4 h-4 text-[#D4AF37] shrink-0"></i>
+        <span>🌸 اولین سامانه جامع و هوشمند برنامه‌ریزی عروسی و تشریفات استان یزد | رزرو آنلاین آتلیه، باغ‌تالار و خدمات تشریفات یزد</span>
+      </div>
+      <button onclick="switchTab('quizzes')" class="bg-[#D4AF37] hover:bg-amber-400 text-[#1C3A27] font-extrabold px-3 py-1 rounded-full transition-all text-[11px] shrink-0 shadow-xs flex items-center gap-1">
+        <span>پکیج‌های ویژه کویر یزد 🌵</span>
+        <i data-lucide="arrow-left" class="w-3.5 h-3.5"></i>
+      </button>
+    </div>
+  </div>
+
   <!-- TOP DEMO VIEW SWITCHER BAR -->
   <div class="bg-graphite text-white sticky top-0 z-50 border-b border-white/10 px-4 py-2.5 shadow-md">
     <div class="max-w-7xl mx-auto flex flex-col md:flex-row items-center justify-between gap-3">
@@ -169,8 +183,15 @@
           </nav>
         </div>
 
-        <!-- Left Side Header: 3-Way Role Switcher Control & Primary Action CTA -->
+        <!-- Left Side Header: Location Picker & 3-Way Role Switcher Control & Primary Action CTA -->
         <div class="flex items-center gap-3">
+          <!-- Location Picker Button -->
+          <button onclick="openLocationModal()" id="header-location-btn" class="bg-amber-50 hover:bg-amber-100 text-amber-900 border border-amber-200 px-3 py-1.5 rounded-2xl text-xs font-bold transition-all flex items-center gap-1.5 shadow-xs">
+            <i data-lucide="map-pin" class="w-3.5 h-3.5 text-amber-700"></i>
+            <span id="header-location-label">شهر یزد 📍</span>
+            <i data-lucide="chevron-down" class="w-3 h-3 text-amber-600"></i>
+          </button>
+
           <!-- 3-Way Role Switcher Segmented Control -->
           <div class="bg-bgCustom border border-accent rounded-2xl p-1 flex items-center gap-1 text-xs font-bold shadow-xs">
             <button onclick="switchRole('couple')" id="role-btn-couple" class="role-btn px-3.5 py-1.5 rounded-xl transition-all bg-primary text-white shadow-xs">
@@ -240,6 +261,37 @@
 
                 <button onclick="filterVendors()" class="w-full sm:w-auto bg-primary text-white px-6 py-2.5 rounded-xl text-sm font-bold hover:bg-primary-hover transition-colors shrink-0">
                   جستجو
+                </button>
+              </div>
+            </div>
+
+            <!-- YAZD DISTRICTS QUICK-FILTER BAR (محله‌های شهر یزد) -->
+            <div class="space-y-2 pt-1">
+              <div class="flex items-center justify-between text-xs font-bold text-secondary">
+                <div class="flex items-center gap-1.5">
+                  <i data-lucide="map-pin" class="w-3.5 h-3.5 text-amber-600"></i>
+                  <span>فیلتر محله‌های شهر یزد:</span>
+                </div>
+                <span class="text-[11px] text-amber-700 font-semibold bg-amber-50 px-2 py-0.5 rounded-md border border-amber-200">استان یزد 📍</span>
+              </div>
+              <div id="yazd-district-pills" class="flex items-center gap-2 overflow-x-auto custom-scrollbar pb-1 text-xs font-bold">
+                <button onclick="filterByYazdDistrict('all')" class="yazd-district-pill px-3 py-1.5 rounded-xl transition-all bg-primary text-white shadow-xs shrink-0" data-district="all">
+                  همه مناطق یزد
+                </button>
+                <button onclick="filterByYazdDistrict('صفائیه & اطلسی')" class="yazd-district-pill px-3 py-1.5 rounded-xl transition-all bg-bgCustom border border-accent hover:border-primary text-graphite shrink-0" data-district="صفائیه & اطلسی">
+                  صفائیه & اطلسی
+                </button>
+                <button onclick="filterByYazdDistrict('بلوار جمهوری')" class="yazd-district-pill px-3 py-1.5 rounded-xl transition-all bg-bgCustom border border-accent hover:border-primary text-graphite shrink-0" data-district="بلوار جمهوری">
+                  بلوار جمهوری
+                </button>
+                <button onclick="filterByYazdDistrict('خیابان کاشانی & ملاصدرا')" class="yazd-district-pill px-3 py-1.5 rounded-xl transition-all bg-bgCustom border border-accent hover:border-primary text-graphite shrink-0" data-district="خیابان کاشانی & ملاصدرا">
+                  خیابان کاشانی & ملاصدرا
+                </button>
+                <button onclick="filterByYazdDistrict('بافت تاریخی & آزادشهر')" class="yazd-district-pill px-3 py-1.5 rounded-xl transition-all bg-bgCustom border border-accent hover:border-primary text-graphite shrink-0" data-district="بافت تاریخی & آزادشهر">
+                  بافت تاریخی & آزادشهر
+                </button>
+                <button onclick="filterByYazdDistrict('بلوار دانشگاه')" class="yazd-district-pill px-3 py-1.5 rounded-xl transition-all bg-bgCustom border border-accent hover:border-primary text-graphite shrink-0" data-district="بلوار دانشگاه">
+                  بلوار دانشگاه
                 </button>
               </div>
             </div>
@@ -2928,6 +2980,91 @@
     </div>
   </div>
 
+  <!-- LOCATION & PROVINCE EXPANSION MODAL -->
+  <div id="location-modal" class="fixed inset-0 z-50 bg-black/60 backdrop-blur-xs flex items-center justify-center p-4 hidden">
+    <div class="bg-white rounded-3xl max-w-lg w-full p-6 sm:p-8 space-y-6 shadow-2xl border border-accent relative">
+      <button onclick="closeLocationModal()" class="absolute top-6 left-6 text-secondary hover:text-graphite transition-colors">
+        <i data-lucide="x" class="w-5 h-5"></i>
+      </button>
+
+      <div class="space-y-1">
+        <div class="inline-flex items-center gap-1.5 bg-amber-50 text-amber-900 border border-amber-200 px-3 py-1 rounded-full text-xs font-bold">
+          <i data-lucide="map-pin" class="w-3.5 h-3.5 text-amber-700"></i>
+          <span>انتخاب شهر و منطقه استان یزد</span>
+        </div>
+        <h3 class="text-xl font-bold text-graphite">موقعیت مکانی فعال شما</h3>
+        <p class="text-xs text-secondary">مشاهده تامین‌کنندگان، باغ‌تالارها و آتلیه‌های فعال استان یزد</p>
+      </div>
+
+      <!-- ACTIVE CITY STATUS -->
+      <div class="bg-emerald-50 border border-emerald-200 p-4 rounded-2xl flex items-center justify-between">
+        <div class="flex items-center gap-3">
+          <div class="w-10 h-10 rounded-xl bg-primary text-white flex items-center justify-center font-bold">
+            <i data-lucide="building-2" class="w-5 h-5"></i>
+          </div>
+          <div>
+            <span class="block text-xs font-bold text-graphite">استان یزد - مرکز استان</span>
+            <span class="text-[11px] text-primary font-bold">شهر یزد (فعال و کامل)</span>
+          </div>
+        </div>
+        <span class="bg-primary text-white text-[10px] font-bold px-2.5 py-1 rounded-full">پوشش ۱۰۰٪</span>
+      </div>
+
+      <!-- DISTRICT SELECTION IN YAZD -->
+      <div class="space-y-2">
+        <label class="block text-xs font-bold text-graphite">انتخاب محله‌های اصلی شهر یزد:</label>
+        <div class="grid grid-cols-2 gap-2 text-xs font-bold">
+          <button onclick="selectLocationCity('شهر یزد', 'all')" class="p-3 rounded-xl border border-primary bg-primary/10 text-primary text-right flex items-center justify-between">
+            <span>همه مناطق یزد</span>
+            <i data-lucide="check" class="w-4 h-4 text-primary"></i>
+          </button>
+          <button onclick="selectLocationCity('شهر یزد', 'صفائیه & اطلسی')" class="p-3 rounded-xl border border-accent bg-bgCustom text-graphite hover:border-primary text-right flex items-center justify-between">
+            <span>صفائیه & اطلسی</span>
+          </button>
+          <button onclick="selectLocationCity('شهر یزد', 'بلوار جمهوری')" class="p-3 rounded-xl border border-accent bg-bgCustom text-graphite hover:border-primary text-right flex items-center justify-between">
+            <span>بلوار جمهوری</span>
+          </button>
+          <button onclick="selectLocationCity('شهر یزد', 'خیابان کاشانی & ملاصدرا')" class="p-3 rounded-xl border border-accent bg-bgCustom text-graphite hover:border-primary text-right flex items-center justify-between">
+            <span>خیابان کاشانی & ملاصدرا</span>
+          </button>
+          <button onclick="selectLocationCity('شهر یزد', 'بافت تاریخی & آزادشهر')" class="p-3 rounded-xl border border-accent bg-bgCustom text-graphite hover:border-primary text-right flex items-center justify-between">
+            <span>بافت تاریخی & آزادشهر</span>
+          </button>
+          <button onclick="selectLocationCity('شهر یزد', 'بلوار دانشگاه')" class="p-3 rounded-xl border border-accent bg-bgCustom text-graphite hover:border-primary text-right flex items-center justify-between">
+            <span>بلوار دانشگاه</span>
+          </button>
+        </div>
+      </div>
+
+      <!-- PROVINCIAL EXPANSION PREVIEW -->
+      <div class="border-t border-accent pt-4 space-y-3">
+        <div class="flex items-center justify-between">
+          <span class="text-xs font-bold text-graphite flex items-center gap-1.5">
+            <i data-lucide="sparkles" class="w-4 h-4 text-amber-600"></i>
+            <span>توسعه فاز ۲ در سایر شهرستان‌های استان یزد:</span>
+          </span>
+          <span class="text-[10px] text-amber-800 bg-amber-100 font-bold px-2 py-0.5 rounded-md">به زودی ⏳</span>
+        </div>
+
+        <div class="flex flex-wrap gap-2 text-xs font-medium text-secondary">
+          <span class="px-3 py-1.5 bg-slate-100 rounded-xl border border-slate-200">تفت 🏞️</span>
+          <span class="px-3 py-1.5 bg-slate-100 rounded-xl border border-slate-200">میبد 🏛️</span>
+          <span class="px-3 py-1.5 bg-slate-100 rounded-xl border border-slate-200">اردکان 🌿</span>
+          <span class="px-3 py-1.5 bg-slate-100 rounded-xl border border-slate-200">بافق 🌴</span>
+          <span class="px-3 py-1.5 bg-slate-100 rounded-xl border border-slate-200">مهریز 🌸</span>
+        </div>
+
+        <div class="p-3 bg-bgCustom border border-accent rounded-2xl flex items-center justify-between gap-2">
+          <span class="text-[11px] text-graphite font-semibold">مایلید هنگام فعال‌سازی شهرستان خود باخبر شوید؟</span>
+          <button onclick="requestCityNotify('شهرستان‌های استان یزد')" class="bg-primary hover:bg-emerald-900 text-white font-bold px-3 py-1.5 rounded-xl text-[11px] transition-colors shrink-0">
+            اطلاع‌رسانی به من
+          </button>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
   <!-- FOOTER -->
   <footer class="bg-white border-t border-accent mt-16 py-8">
     <div class="max-w-7xl mx-auto px-4 text-center text-xs text-secondary space-y-2">
@@ -2969,46 +3106,86 @@
       { id: "cat-25", title: "آتلیه کودک", icon: "baby", count: 55, active: true }
     ];
 
+    let selectedYazdDistrict = 'all';
+
     let vendors = [
       {
         id: 1,
-        name: "باغ تالار تشریفاتی زمرد",
+        name: "هتل باغ و تشریفات مشیرالممالک یزد",
         category: "تالار و باغ تشریفات",
-        city: "تهران (احمدآباد مستوفی)",
+        province: "یزد",
+        cityName: "یزد",
+        district: "صفائیه & اطلسی",
+        city: "یزد (صفائیه)",
         rating: 4.9,
         verified: true,
-        priceRange: "از ۱۲۰,۰۰۰,۰۰۰ تومان",
+        priceRange: "از ۹۵,۰۰۰,۰۰۰ تومان",
         image: "https://images.unsplash.com/photo-1519167758481-83f550bb49b3?auto=format&fit=crop&w=800&q=80"
       },
       {
         id: 2,
-        name: "آتلیه تخصصی نور و تصویر",
+        name: "استودیو و آتلیه تخصصی کویر یزد",
         category: "آتلیه و عکاسی",
-        city: "تهران (سعادت‌آباد)",
+        province: "یزد",
+        cityName: "یزد",
+        district: "صفائیه & اطلسی",
+        city: "یزد (میدان اطلسی)",
         rating: 4.8,
         verified: true,
-        priceRange: "از ۳۵,۰۰۰,۰۰۰ تومان",
+        priceRange: "از ۲۸,۰۰۰,۰۰۰ تومان",
         image: "https://images.unsplash.com/photo-1537633552985-df8429e8048b?auto=format&fit=crop&w=800&q=80"
       },
       {
         id: 3,
-        name: "سالن زیبایی VIP رویال",
-        category: "سالن زیبایی",
-        city: "تهران (الهیه)",
-        rating: 4.7,
-        verified: false,
-        priceRange: "از ۱۸,۰۰۰,۰۰۰ تومان",
-        image: "https://images.unsplash.com/photo-1487412720507-e7ab37603c6f?auto=format&fit=crop&w=800&q=80"
+        name: "عمارت و تالار تشریفات قصر یزد",
+        category: "تالار و باغ تشریفات",
+        province: "یزد",
+        cityName: "یزد",
+        district: "بلوار جمهوری",
+        city: "یزد (بلوار جمهوری)",
+        rating: 4.9,
+        verified: true,
+        priceRange: "از ۱۱۰,۰۰۰,۰۰۰ تومان",
+        image: "https://images.unsplash.com/photo-1519741497674-611481863552?auto=format&fit=crop&w=800&q=80"
       },
       {
         id: 4,
-        name: "مزون عروس لوسیا",
+        name: "سالن زیبایی VIP بانو یزد",
+        category: "سالن زیبایی",
+        province: "یزد",
+        cityName: "یزد",
+        district: "خیابان کاشانی & ملاصدرا",
+        city: "یزد (خیابان کاشانی)",
+        rating: 4.7,
+        verified: true,
+        priceRange: "از ۱۵,۰۰۰,۰۰۰ تومان",
+        image: "https://images.unsplash.com/photo-1487412720507-e7ab37603c6f?auto=format&fit=crop&w=800&q=80"
+      },
+      {
+        id: 5,
+        name: "مزون عروس ترمه & اسلیمی یزد",
         category: "مزون و لباس عروس",
-        city: "تهران (شهرک غرب)",
+        province: "یزد",
+        cityName: "یزد",
+        district: "بلوار دانشگاه",
+        city: "یزد (بلوار دانشگاه)",
         rating: 4.9,
         verified: true,
-        priceRange: "از ۲۵,۰۰۰,۰۰۰ تومان",
+        priceRange: "از ۲۲,۰۰۰,۰۰۰ تومان",
         image: "https://images.unsplash.com/photo-1594552072238-b8a33785b261?auto=format&fit=crop&w=800&q=80"
+      },
+      {
+        id: 6,
+        name: "عمارت تشریفاتی بادگیر یزد",
+        category: "تالار و باغ تشریفات",
+        province: "یزد",
+        cityName: "یزد",
+        district: "بافت تاریخی & آزادشهر",
+        city: "یزد (بافت تاریخی)",
+        rating: 4.8,
+        verified: true,
+        priceRange: "از ۸۰,۰۰۰,۰۰۰ تومان",
+        image: "https://images.unsplash.com/photo-1520854221256-17451cc331bf?auto=format&fit=crop&w=800&q=80"
       }
     ];
 
@@ -4624,16 +4801,63 @@
       lucide.createIcons();
     }
 
+    function openLocationModal() {
+      const modal = document.getElementById('location-modal');
+      if (modal) modal.classList.remove('hidden');
+    }
+
+    function closeLocationModal() {
+      const modal = document.getElementById('location-modal');
+      if (modal) modal.classList.add('hidden');
+    }
+
+    function selectLocationCity(cityName, districtKey) {
+      const label = document.getElementById('header-location-label');
+      if (label) {
+        if (districtKey && districtKey !== 'all') {
+          label.innerText = `یزد (${districtKey}) 📍`;
+        } else {
+          label.innerText = `شهر یزد 📍`;
+        }
+      }
+      filterByYazdDistrict(districtKey || 'all');
+      closeLocationModal();
+      showToastNotification(`📍 موقعیت مکانی شما به ${districtKey && districtKey !== 'all' ? districtKey : 'شهر یزد'} تغییر یافت`);
+    }
+
+    function requestCityNotify(regionName) {
+      closeLocationModal();
+      showToastNotification(`🔔 درخواست اطلاع‌رسانی برای توسعه ${regionName} ثبت گردید`);
+    }
+
+    function filterByYazdDistrict(districtKey) {
+      selectedYazdDistrict = districtKey;
+      const pills = document.querySelectorAll('.yazd-district-pill');
+      pills.forEach(pill => {
+        const d = pill.getAttribute('data-district');
+        if (d === districtKey) {
+          pill.className = "yazd-district-pill px-3 py-1.5 rounded-xl transition-all bg-primary text-white shadow-xs shrink-0";
+        } else {
+          pill.className = "yazd-district-pill px-3 py-1.5 rounded-xl transition-all bg-bgCustom border border-accent hover:border-primary text-graphite shrink-0";
+        }
+      });
+      filterVendors();
+    }
+
     function filterVendors() {
       const search = document.getElementById('search-input').value.trim().toLowerCase();
       const cat = document.getElementById('category-filter').value;
       const verifiedOnly = document.getElementById('verified-only').checked;
 
       const filtered = vendors.filter(v => {
-        const matchesSearch = v.name.toLowerCase().includes(search) || v.category.toLowerCase().includes(search);
+        const matchesSearch = v.name.toLowerCase().includes(search) ||
+                              v.category.toLowerCase().includes(search) ||
+                              (v.district && v.district.toLowerCase().includes(search)) ||
+                              (v.city && v.city.toLowerCase().includes(search));
         const matchesCat = cat === 'all' || v.category === cat;
         const matchesVerified = !verifiedOnly || v.verified;
-        return matchesSearch && matchesCat && matchesVerified;
+        const matchesDistrict = selectedYazdDistrict === 'all' || v.district === selectedYazdDistrict;
+        return matchesSearch && matchesCat && matchesVerified && matchesDistrict;
       });
 
       renderVendors(filtered);
