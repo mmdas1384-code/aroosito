@@ -2929,20 +2929,50 @@
           </div>
         </div>
 
-        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
-          <div>
-            <label class="block mb-1">محدوده بودجه مد نظر:</label>
-            <select id="inquiry-budget-range" class="w-full bg-bgCustom border border-accent rounded-xl p-2.5 text-xs font-semibold focus:outline-none focus:border-primary cursor-pointer">
-              <option value="زیر ۵۰ میلیون تومان">زیر ۵۰ میلیون تومان</option>
-              <option value="۵۰ تا ۱۰۰ میلیون تومان">۵۰ تا ۱۰۰ میلیون تومان</option>
-              <option value="۱۰۰ تا ۱۵۰ میلیون تومان" selected>۱۰۰ تا ۱۵۰ میلیون تومان</option>
-              <option value="بالای ۱۵۰ میلیون تومان">بالای ۱۵۰ میلیون تومان (VIP)</option>
-            </select>
+        <div class="space-y-3">
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+            <div>
+              <label class="block mb-1">محدوده بودجه مد نظر:</label>
+              <select id="inquiry-budget-range" class="w-full bg-bgCustom border border-accent rounded-xl p-2.5 text-xs font-semibold focus:outline-none focus:border-primary cursor-pointer">
+                <option value="۱۰ تا ۲۰ میلیون تومان">۱۰ تا ۲۰ میلیون تومان</option>
+                <option value="۲۰ تا ۴۰ میلیون تومان">۲۰ تا ۴۰ میلیون تومان</option>
+                <option value="۴۰ تا ۷۰ میلیون تومان">۴۰ تا ۷۰ میلیون تومان</option>
+                <option value="۷۰ تا ۱۲۰ میلیون تومان" selected>۷۰ تا ۱۲۰ میلیون تومان</option>
+                <option value="بالای ۱۲۰ میلیون تومان (VIP)">بالای ۱۲۰ میلیون تومان (VIP)</option>
+                <option value="توافقی / استعلام متقابل">توافقی / استعلام متقابل</option>
+              </select>
+            </div>
+
+            <div>
+              <label class="block mb-1">توضیحات و پیام اختصاصی برای تامین‌کننده:</label>
+              <input type="text" id="inquiry-note" value="سلام، درخواست استعلام قیمت و دریافت پیش‌فاکتور را دارم." class="w-full bg-bgCustom border border-accent rounded-xl p-2.5 text-xs font-medium focus:outline-none focus:border-primary">
+            </div>
           </div>
 
-          <div>
-            <label class="block mb-1">توضیحات و پیام اختصاصی برای تامین‌کننده:</label>
-            <input type="text" id="inquiry-note" value="سلام، درخواست استعلام قیمت و دریافت پیش‌فاکتور منوی VIP را دارم." class="w-full bg-bgCustom border border-accent rounded-xl p-2.5 text-xs font-medium focus:outline-none focus:border-primary">
+          <!-- Manual Budget Input & Quick Selector Pills -->
+          <div class="p-3 bg-primary/5 border border-primary/20 rounded-2xl space-y-2">
+            <div class="flex items-center justify-between">
+              <label class="block text-xs font-bold text-primary">مبلغ بودجه پیشنهادی یا حداکثر سقف پرداختی (تومان - اختیاری):</label>
+              <span class="text-[11px] text-secondary font-normal">انتخاب سریع یا ورود دستی</span>
+            </div>
+            <div class="flex items-center gap-2">
+              <input type="text" id="inquiry-budget-custom" placeholder="مثلاً: ۳۵,۰۰۰,۰۰۰ تومان" class="w-full bg-white border border-accent rounded-xl p-2 text-xs font-bold text-graphite focus:outline-none focus:border-primary">
+            </div>
+            <div class="flex items-center gap-1.5 flex-wrap pt-1">
+              <span class="text-[11px] text-secondary">پیشنهاد سریع:</span>
+              <button type="button" onclick="setInquiryBudgetPill('۱۰ تا ۲۰ میلیون تومان', '۱۵,۰۰۰,۰۰۰ تومان')" class="px-2.5 py-1 bg-white hover:bg-primary/10 border border-accent hover:border-primary/40 rounded-lg text-[11px] text-graphite transition-all">
+                ۱۰ تا ۲۰ میلیون
+              </button>
+              <button type="button" onclick="setInquiryBudgetPill('۲۰ تا ۴۰ میلیون تومان', '۳۰,۰۰۰,۰۰۰ تومان')" class="px-2.5 py-1 bg-white hover:bg-primary/10 border border-accent hover:border-primary/40 rounded-lg text-[11px] text-graphite transition-all">
+                ۲۰ تا ۴۰ میلیون
+              </button>
+              <button type="button" onclick="setInquiryBudgetPill('۴۰ تا ۷۰ میلیون تومان', '۵۰,۰۰۰,۰۰۰ تومان')" class="px-2.5 py-1 bg-white hover:bg-primary/10 border border-accent hover:border-primary/40 rounded-lg text-[11px] text-graphite transition-all">
+                ۴۰ تا ۷۰ میلیون
+              </button>
+              <button type="button" onclick="setInquiryBudgetPill('توافقی / استعلام متقابل', 'توافقی')" class="px-2.5 py-1 bg-white hover:bg-primary/10 border border-accent hover:border-primary/40 rounded-lg text-[11px] text-graphite transition-all">
+                توافقی / استعلام متقابل
+              </button>
+            </div>
           </div>
         </div>
 
@@ -5403,6 +5433,17 @@
       renderAdminPendingApps();
     }
 
+    function setInquiryBudgetPill(rangeVal, customVal) {
+      const rangeSel = document.getElementById('inquiry-budget-range');
+      const customInp = document.getElementById('inquiry-budget-custom');
+      if (rangeSel && rangeVal) {
+        rangeSel.value = rangeVal;
+      }
+      if (customInp && customVal) {
+        customInp.value = customVal;
+      }
+    }
+
     function openInquiryModal(vendorId, vendorName) {
       let vId = vendorId;
       if (typeof vendorId === 'string' && !isNaN(parseInt(vendorId))) {
@@ -5414,10 +5455,15 @@
       document.getElementById('inquiry-vendor-id').value = vendor ? vendor.id : 1;
       document.getElementById('modal-vendor-name').innerText = targetName;
 
+      // Clear custom budget field on open
+      const customBudgetInp = document.getElementById('inquiry-budget-custom');
+      if (customBudgetInp) customBudgetInp.value = '';
+
       // Update checkboxes dynamically according to vendor category if available
       const container = document.getElementById('inquiry-services-checklist');
-      if (container) {
-        if (vendor && vendor.category.includes("آتلیه")) {
+      if (container && vendor) {
+        const cat = vendor.category || '';
+        if (cat.includes("آتلیه") || cat.includes("عکاسی") || cat.includes("فیلمبرداری")) {
           container.innerHTML = `
             <label class="flex items-center gap-2 cursor-pointer p-1.5 hover:bg-white rounded-lg">
               <input type="checkbox" value="عکاسی و فیلمبرداری روز عروسی" checked class="rounded text-primary focus:ring-primary w-4 h-4">
@@ -5436,7 +5482,7 @@
               <span>تصویربرداری هلی‌شات & کرین</span>
             </label>
           `;
-        } else if (vendor && vendor.category.includes("سالن زیبایی")) {
+        } else if (cat.includes("سالن زیبایی") || cat.includes("میکاپ") || cat.includes("آرایشگاه")) {
           container.innerHTML = `
             <label class="flex items-center gap-2 cursor-pointer p-1.5 hover:bg-white rounded-lg">
               <input type="checkbox" value="میکاپ و گریم اختصاصی عروس" checked class="rounded text-primary focus:ring-primary w-4 h-4">
@@ -5453,6 +5499,63 @@
             <label class="flex items-center gap-2 cursor-pointer p-1.5 hover:bg-white rounded-lg">
               <input type="checkbox" value="میکاپ همراهان" class="rounded text-primary focus:ring-primary w-4 h-4">
               <span>میکاپ همراهان</span>
+            </label>
+          `;
+        } else if (cat.includes("گل") || cat.includes("ماشین")) {
+          container.innerHTML = `
+            <label class="flex items-center gap-2 cursor-pointer p-1.5 hover:bg-white rounded-lg">
+              <input type="checkbox" value="دسته گل عروس (رز/ارکیده VIP)" checked class="rounded text-primary focus:ring-primary w-4 h-4">
+              <span>دسته گل عروس (رز/ارکیده VIP)</span>
+            </label>
+            <label class="flex items-center gap-2 cursor-pointer p-1.5 hover:bg-white rounded-lg">
+              <input type="checkbox" value="گل‌آرایی کامل ماشین عروس" checked class="rounded text-primary focus:ring-primary w-4 h-4">
+              <span>گل‌آرایی کامل ماشین عروس</span>
+            </label>
+            <label class="flex items-center gap-2 cursor-pointer p-1.5 hover:bg-white rounded-lg">
+              <input type="checkbox" value="گل‌آرایی ورودی و جایگاه عروس‌وداماد" class="rounded text-primary focus:ring-primary w-4 h-4">
+              <span>گل‌آرایی ورودی و جایگاه عروس‌وداماد</span>
+            </label>
+            <label class="flex items-center gap-2 cursor-pointer p-1.5 hover:bg-white rounded-lg">
+              <input type="checkbox" value="گل‌آرایی میزهای مهمانان" class="rounded text-primary focus:ring-primary w-4 h-4">
+              <span>گل‌آرایی میزهای مهمانان</span>
+            </label>
+          `;
+        } else if (cat.includes("کیک") || cat.includes("شیرینی")) {
+          container.innerHTML = `
+            <label class="flex items-center gap-2 cursor-pointer p-1.5 hover:bg-white rounded-lg">
+              <input type="checkbox" value="کیک چندطبقه فوندانت/خامه" checked class="rounded text-primary focus:ring-primary w-4 h-4">
+              <span>کیک چندطبقه فوندانت/خامه</span>
+            </label>
+            <label class="flex items-center gap-2 cursor-pointer p-1.5 hover:bg-white rounded-lg">
+              <input type="checkbox" value="مینی‌کیک و کندی‌بار پذیرایی" checked class="rounded text-primary focus:ring-primary w-4 h-4">
+              <span>مینی‌کیک و کندی‌بار پذیرایی</span>
+            </label>
+            <label class="flex items-center gap-2 cursor-pointer p-1.5 hover:bg-white rounded-lg">
+              <input type="checkbox" value="شیرینی مخصوص پذیرایی عروسی" class="rounded text-primary focus:ring-primary w-4 h-4">
+              <span>شیرینی مخصوص پذیرایی عروسی</span>
+            </label>
+            <label class="flex items-center gap-2 cursor-pointer p-1.5 hover:bg-white rounded-lg">
+              <input type="checkbox" value="گیفت و یادبود خوراکی مهمانان" class="rounded text-primary focus:ring-primary w-4 h-4">
+              <span>گیفت و یادبود خوراکی مهمانان</span>
+            </label>
+          `;
+        } else if (cat.includes("مزون") || cat.includes("لباس")) {
+          container.innerHTML = `
+            <label class="flex items-center gap-2 cursor-pointer p-1.5 hover:bg-white rounded-lg">
+              <input type="checkbox" value="دوخت و اجاره لباس عروس VIP" checked class="rounded text-primary focus:ring-primary w-4 h-4">
+              <span>دوخت و اجاره لباس عروس VIP</span>
+            </label>
+            <label class="flex items-center gap-2 cursor-pointer p-1.5 hover:bg-white rounded-lg">
+              <input type="checkbox" value="تور و تاج عروس" checked class="rounded text-primary focus:ring-primary w-4 h-4">
+              <span>تور و تاج عروس</span>
+            </label>
+            <label class="flex items-center gap-2 cursor-pointer p-1.5 hover:bg-white rounded-lg">
+              <input type="checkbox" value="کت و شلوار دامادی" class="rounded text-primary focus:ring-primary w-4 h-4">
+              <span>کت و شلوار دامادی</span>
+            </label>
+            <label class="flex items-center gap-2 cursor-pointer p-1.5 hover:bg-white rounded-lg">
+              <input type="checkbox" value="اکسسوری و جواهرات" class="rounded text-primary focus:ring-primary w-4 h-4">
+              <span>اکسسوری و جواهرات</span>
             </label>
           `;
         } else {
@@ -5492,8 +5595,11 @@
       const phone = document.getElementById('inquiry-phone').value.trim();
       const date = document.getElementById('inquiry-date').value.trim() || '۱۴۰۳/۰۶/۱۵';
       const guests = parseInt(document.getElementById('inquiry-guests').value) || 200;
-      const budget = document.getElementById('inquiry-budget-range').value;
+      const budgetRange = document.getElementById('inquiry-budget-range').value;
+      const customBudget = (document.getElementById('inquiry-budget-custom') ? document.getElementById('inquiry-budget-custom').value.trim() : '');
       const note = document.getElementById('inquiry-note').value.trim();
+
+      const finalBudgetStr = customBudget ? `${budgetRange} (بودجه پیشنهادی: ${customBudget})` : budgetRange;
 
       const checkedServices = [];
       document.querySelectorAll('#inquiry-services-checklist input[type="checkbox"]:checked').forEach(cb => {
@@ -5531,7 +5637,7 @@
             date,
             guests,
             services: checkedServices,
-            budget,
+            budget: finalBudgetStr,
             note
           },
           messages: []
@@ -5545,12 +5651,12 @@
           date,
           guests,
           services: checkedServices,
-          budget,
+          budget: finalBudgetStr,
           note
         };
       }
 
-      const inquirySummaryText = `ارسال استعلام قیمت سریع:\n• تاریخ مراسم: ${date}\n• تعداد مهمانان: ${guests} نفر\n• خدمات درخواستی: ${checkedServices.join('، ')}\n• محدوده بودجه: ${budget}\n• توضیحات: ${note || '-'}`;
+      const inquirySummaryText = `ارسال استعلام قیمت سریع:\n• دسته بندی: ${vendor.category}\n• تاریخ مراسم: ${date}\n• تعداد مهمانان: ${guests} نفر\n• خدمات درخواستی: ${checkedServices.join('، ')}\n• بودجه: ${finalBudgetStr}\n• توضیحات: ${note || '-'}`;
 
       thread.messages.push({
         id: "msg-" + Date.now(),
