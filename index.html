@@ -914,7 +914,7 @@
 
         <div class="flex items-center gap-3">
           <label class="flex items-center gap-2 text-xs font-bold text-graphite bg-bgCustom px-3.5 py-2 rounded-xl border border-accent cursor-pointer">
-            <input type="checkbox" id="sms-toggle" checked onchange="alert('تنظیمات دریافت پیامک فوری مشتری به روزرسانی شد.')" class="rounded text-primary focus:ring-primary w-4 h-4">
+            <input type="checkbox" id="sms-toggle" checked onchange="showToast('تنظیمات دریافت پیامک فوری مشتری به روزرسانی شد.', 'info')" class="rounded text-primary focus:ring-primary w-4 h-4">
             <span>دریافت پیامک فوری مشتری جدید</span>
           </label>
         </div>
@@ -2317,7 +2317,7 @@
           <!-- INPUT ACTION BAR -->
           <div class="p-4 border-t border-accent bg-white shrink-0 space-y-2">
             <form onsubmit="handleSendChatMessage(event)" class="flex items-center gap-2">
-              <button type="button" onclick="alert('شبیه‌سازی آپلود فایل / تصویر نمونه‌کار')" class="p-2.5 rounded-xl border border-accent hover:border-primary text-secondary hover:text-primary transition-colors shrink-0" title="پیوست تصویر">
+              <button type="button" onclick="showToast('شبیه‌سازی آپلود فایل / تصویر نمونه‌کار', 'info')" class="p-2.5 rounded-xl border border-accent hover:border-primary text-secondary hover:text-primary transition-colors shrink-0" title="پیوست تصویر">
                 <i data-lucide="paperclip" class="w-4 h-4"></i>
               </button>
 
@@ -2633,7 +2633,7 @@
         این QR Code را دانلود کنید و روی کارت چاپی کاغذ قرار دهید تا مهمانان با اسکن آن وارد لندینگ پیج اختصاصی شما شوند.
       </p>
 
-      <button onclick="alert('فایل تصویر QR Code با موفقیت دانلود شد.'); closeQrModal();" class="w-full bg-primary hover:bg-emerald-900 text-white py-2.5 rounded-xl text-xs font-bold shadow-md transition-colors flex items-center justify-center gap-2">
+      <button onclick="showToast('فایل تصویر QR Code با موفقیت دانلود شد.', 'success'); closeQrModal();" class="w-full bg-primary hover:bg-emerald-900 text-white py-2.5 rounded-xl text-xs font-bold shadow-md transition-colors flex items-center justify-center gap-2">
         <i data-lucide="download" class="w-4 h-4"></i>
         <span>دانلود تصویر کیفیت بالا (PNG)</span>
       </button>
@@ -3625,7 +3625,7 @@
       if (confirm("آیا از حذف این مهمان اطمینان دارید؟")) {
         guestListState = guestListState.filter(g => g.id !== id);
         renderGuestsAndGifts();
-        showGlobalToast("مهمان از لیست حذف گردید.");
+        showToast("مهمان از لیست حذف گردید.", 'danger');
       }
     }
 
@@ -3637,7 +3637,7 @@
       else g.status = "CONFIRMED";
 
       renderGuestsAndGifts();
-      showGlobalToast("وضعیت RSVP مهمان به روز شد.");
+      showToast("وضعیت RSVP مهمان به روز شد.", 'info');
     }
 
     function openGiftModal() {
@@ -3674,12 +3674,12 @@
       if (confirm("آیا از حذف این رکورد هدیه اطمینان دارید؟")) {
         giftLedgerState = giftLedgerState.filter(g => g.id !== id);
         renderGuestsAndGifts();
-        showGlobalToast("رکورد هدیه حذف گردید.");
+        showToast("رکورد هدیه حذف گردید.", 'danger');
       }
     }
 
     function exportGuestsExcel() {
-      showGlobalToast("خروجی کامل لیست مهمانان و هدایا در قالب Excel آماده گردید.");
+      showToast("خروجی کامل لیست مهمانان و هدایا در قالب Excel آماده گردید.", 'info');
     }
 
     // TAB SWITCHING FUNCTION
@@ -3953,7 +3953,7 @@
             <span>اعمال این استایل روی دایرکتوری و چک‌لیست</span>
           </button>
 
-          <button onclick="alert('کارت تحلیل خلاصه استایل با موفقیت جهت دانلود یا پرینت آماده شد.');" class="bg-bgCustom border border-accent hover:border-primary text-graphite font-bold py-3 px-4 rounded-2xl text-xs shadow-xs transition-all flex items-center justify-center gap-2">
+          <button onclick="showToast('کارت تحلیل خلاصه استایل با موفقیت جهت دانلود یا پرینت آماده شد.', 'info');" class="bg-bgCustom border border-accent hover:border-primary text-graphite font-bold py-3 px-4 rounded-2xl text-xs shadow-xs transition-all flex items-center justify-center gap-2">
             <i data-lucide="download" class="w-4 h-4 text-primary"></i>
             <span>دانلود کارت تحلیل استایل</span>
           </button>
@@ -3972,16 +3972,16 @@
       switchTab('home');
       const vendorSection = document.getElementById('vendor-grid');
       if (vendorSection) vendorSection.scrollIntoView({ behavior: 'smooth' });
-      alert('استایل انتخابی شما روی دایرکتوری تامین‌کنندگان و پیشنهادات چک‌لیست اعمال گردید.');
+      showToast('استایل انتخابی شما روی دایرکتوری تامین‌کنندگان و پیشنهادات چک‌لیست اعمال گردید.', 'success');
     }
 
     function copyQuizResultLink() {
       const link = 'https://aroosito.com/quizzes/result?id=' + (quizState.currentQuiz ? quizState.currentQuiz.id : 'style');
       if (navigator.clipboard) {
         navigator.clipboard.writeText(link);
-        alert('لینک خلاصه تحلیل استایل برای اشتراک‌گذاری کپی شد:\n' + link);
+        showToast('لینک خلاصه تحلیل استایل برای اشتراک‌گذاری کپی شد', 'info');
       } else {
-        alert('لینک تحلیل استایل:\n' + link);
+        showToast('لینک تحلیل استایل: ' + link, 'info');
       }
     }
 
@@ -4688,7 +4688,7 @@
       document.getElementById('vp-instagram').innerText = insta;
       document.getElementById('vd-header-name').innerText = "کسب و کار: " + name;
 
-      alert('اطلاعات پروفایل عمومی کسب‌وکار شما با موفقیت به روزرسانی شد.');
+      showToast('اطلاعات پروفایل عمومی کسب‌وکار شما با موفقیت به روزرسانی شد.', 'success');
     }
 
     // CALENDAR & INQUIRIES & DIRECTORY
@@ -4790,7 +4790,7 @@
         label.innerText = `استان ${selectedProvince} 📍`;
       }
       closeLocationModal();
-      showToastNotification(`📍 موقعیت مکانی شما روی استان ${selectedProvince} تنظیم گردید`);
+      showToast(`📍 موقعیت مکانی شما روی استان ${selectedProvince} تنظیم گردید`, 'info');
     }
 
     function selectLocationCity(cityName, districtKey) {
@@ -4800,12 +4800,12 @@
       }
       filterByYazdDistrict(districtKey || 'all');
       closeLocationModal();
-      showToastNotification(`📍 موقعیت مکانی فعال: استان یزد`);
+      showToast(`📍 موقعیت مکانی فعال: استان یزد`, 'info');
     }
 
     function requestCityNotify(regionName) {
       closeLocationModal();
-      showToastNotification(`🔔 درخواست اطلاع‌رسانی برای توسعه ${regionName} با موفقیت ثبت گردید`);
+      showToast(`🔔 درخواست اطلاع‌رسانی برای توسعه ${regionName} با موفقیت ثبت گردید`, 'info');
     }
 
     function filterByYazdDistrict(districtKey) {
@@ -4871,6 +4871,11 @@
       if (task) {
         task.completed = !task.completed;
         renderChecklistTimeline();
+        if (task.completed) {
+          showToast(`تاسک «${task.title}» به انجام‌شده تغییر یافت.`, 'success');
+        } else {
+          showToast(`تاسک «${task.title}» به حالت معوقه بازگشت.`, 'info');
+        }
       }
     }
 
@@ -5350,7 +5355,7 @@
           </div>
           <p class="text-xs text-graphite/80">${inq.details}</p>
           <div class="pt-2 flex gap-2">
-            <button onclick="alert('پیش‌فاکتور ارسال شد.')" class="bg-primary text-white px-3 py-1.5 rounded-lg text-xs font-bold">ارسال پیشنهاد قیمت</button>
+            <button onclick="showToast('پیش‌فاکتور ارسال شد.', 'success')" class="bg-primary text-white px-3 py-1.5 rounded-lg text-xs font-bold">ارسال پیشنهاد قیمت</button>
           </div>
         `;
         container.appendChild(card);
@@ -5561,7 +5566,7 @@
       renderInquiries();
       closeInquiryModal();
 
-      alert('استعلام قیمت با موفقیت برای تامین‌کننده ارسال شد. در حال انتقال به صفحه گفت‌وگوها...');
+      showToast('استعلام قیمت با موفقیت برای تامین‌کننده ارسال شد. در حال انتقال به صفحه گفت‌وگوها...', 'success');
       switchTab('messages');
     }
 
@@ -5601,14 +5606,14 @@
 
     function sendSmsBroadcast() {
       const text = document.getElementById('sms-text').value.trim();
-      if (!text) return alert('لطفا متن پیامک را وارد کنید.');
+      if (!text) return showToast('لطفا متن پیامک را وارد کنید.', 'warning');
       const history = document.getElementById('sms-history');
       const item = document.createElement('div');
       item.className = "p-2 bg-white rounded-lg border border-accent/60";
       item.innerHTML = `<span class="text-primary font-bold">ارسال شد:</span> ${text}`;
       history.prepend(item);
       document.getElementById('sms-text').value = '';
-      alert('پیامک انبوه ارسال شد.');
+      showToast('پیامک انبوه با موفقیت ارسال شد.', 'success');
     }
 
     // ==========================================
@@ -5753,7 +5758,7 @@
       const title = titleInput.value.trim();
       const price = parseInt(priceInput.value) || 0;
 
-      if (!title) return alert('لطفاً عنوان خدمت اختصاصی را وارد نمایید.');
+      if (!title) return showToast('لطفاً عنوان خدمت اختصاصی را وارد نمایید.', 'warning');
 
       const customId = 'custom-' + Date.now();
       bwState.services.push({
@@ -5783,7 +5788,7 @@
       // Validate inputs before advancing
       if (direction > 0 && bwState.currentStep === 1) {
         if (!bwState.targetBudget || bwState.targetBudget < 10000000) {
-          alert('لطفاً سقف بودجه معتبر وارد نمایید (حداقل ۱۰ میلیون تومان).');
+          showToast('لطفاً سقف بودجه معتبر وارد نمایید (حداقل ۱۰ میلیون تومان).', 'warning');
           return;
         }
         bwState.city = document.getElementById('bw-city-input').value.trim() || 'تهران';
@@ -5792,7 +5797,7 @@
       if (direction > 0 && bwState.currentStep === 4) {
         const activeCount = bwState.services.filter(s => s.checked).length;
         if (activeCount === 0) {
-          alert('لطفاً حداقل یک خدمت را جهت تخصیص بودجه فعال/تیک بزنید.');
+          showToast('لطفاً حداقل یک خدمت را جهت تخصیص بودجه فعال/تیک بزنید.', 'warning');
           return;
         }
       }
@@ -7994,15 +7999,15 @@
       document.getElementById('guest-rsvp-name').value = '';
       document.getElementById('guest-rsvp-note').value = '';
 
-      alert('پاسخ شما با موفقیت ثبت شد. با تشکر از اعلام حضور شما!');
+      showToast('پاسخ شما با موفقیت ثبت شد. با تشکر از اعلام حضور شما!', 'success');
     }
 
     function copyBankCardNumber() {
       if (navigator.clipboard && invitationState.bankCardNumber) {
         navigator.clipboard.writeText(invitationState.bankCardNumber);
-        alert('شماره کارت با موفقیت در حافظه کپی شد: ' + invitationState.bankCardNumber);
+        showToast('شماره کارت با موفقیت در حافظه کپی شد: ' + invitationState.bankCardNumber, 'info');
       } else {
-        alert('شماره کارت: ' + invitationState.bankCardNumber);
+        showToast('شماره کارت: ' + invitationState.bankCardNumber, 'info');
       }
     }
 
@@ -8010,9 +8015,9 @@
       const link = 'https://aroosito.com/invitation/ali-and-sara';
       if (navigator.clipboard) {
         navigator.clipboard.writeText(link);
-        alert('لینک اختصاصی کارت دعوت کپی شد:\n' + link);
+        showToast('لینک اختصاصی کارت دعوت کپی شد', 'info');
       } else {
-        alert('لینک کارت دعوت:\n' + link);
+        showToast('لینک کارت دعوت: ' + link, 'info');
       }
     }
 
@@ -8350,7 +8355,7 @@
                 </div>
 
                 <div class="flex gap-2 pt-1">
-                  <button onclick="alert('پیش‌فاکتور رزرو نهایی گردید و بیعانه به صندوق امن عروسی تو منتقل شد.')" class="flex-1 bg-primary hover:bg-emerald-900 text-white py-2 rounded-xl text-xs font-bold transition-all shadow-xs">
+                  <button onclick="showToast('پیش‌فاکتور رزرو نهایی گردید و بیعانه به صندوق امن عروسی تو منتقل شد.', 'success')" class="flex-1 bg-primary hover:bg-emerald-900 text-white py-2 rounded-xl text-xs font-bold transition-all shadow-xs">
                     پرداخت بیعانه & رزرو قطعی
                   </button>
                 </div>
@@ -8628,10 +8633,10 @@
       const idx = inspirationState.bookmarkedIds.indexOf(itemId);
       if (idx > -1) {
         inspirationState.bookmarkedIds.splice(idx, 1);
-        showToastNotification('از مودبورد شما حذف گردید');
+        showToast('از مودبورد شما حذف گردید', 'danger');
       } else {
         inspirationState.bookmarkedIds.push(itemId);
-        showToastNotification('❤️ به مودبورد اختصاصی شما اضافه شد');
+        showToast('❤️ به مودبورد اختصاصی شما اضافه شد', 'success');
       }
 
       updateMoodboardBadge();
@@ -8806,38 +8811,90 @@
       lucide.createIcons();
     }
 
-    function showToastNotification(message) {
-      let toast = document.getElementById('global-toast-notification');
-      if (!toast) {
-        toast = document.createElement('div');
-        toast.id = 'global-toast-notification';
-        toast.className = 'fixed bottom-6 right-6 z-50 bg-graphite text-white px-5 py-3 rounded-2xl shadow-2xl text-xs font-bold flex items-center gap-2 transition-all duration-300 opacity-0 transform translate-y-4 pointer-events-none border border-white/20';
-        document.body.appendChild(toast);
+    function showToast(message, type = 'success', duration = 3000) {
+      let container = document.getElementById('toast-container');
+      if (!container) {
+        container = document.createElement('div');
+        container.id = 'toast-container';
+        container.className = 'fixed bottom-6 left-6 z-[100] flex flex-col gap-2.5 max-w-sm w-full pointer-events-none px-4 md:px-0';
+        document.body.appendChild(container);
       }
-      toast.innerHTML = `<i data-lucide="check-circle-2" class="w-4 h-4 text-emerald-400"></i><span>${message}</span>`;
-      lucide.createIcons();
 
-      toast.classList.remove('opacity-0', 'translate-y-4', 'pointer-events-none');
-      toast.classList.add('opacity-100', 'translate-y-0');
+      const toast = document.createElement('div');
+
+      let typeClasses = 'bg-primary border-emerald-400/30';
+      let iconName = 'check-circle-2';
+
+      if (type === 'info') {
+        typeClasses = 'bg-slate-700 border-slate-500/30';
+        iconName = 'info';
+      } else if (type === 'warning') {
+        typeClasses = 'bg-amber-600 border-amber-400/30';
+        iconName = 'alert-triangle';
+      } else if (type === 'danger') {
+        typeClasses = 'bg-rose-600 border-rose-400/30';
+        iconName = 'x-circle';
+      }
+
+      toast.className = `pointer-events-auto shadow-2xl rounded-2xl px-4 py-3 flex items-center justify-between gap-3 text-xs font-bold text-white transition-all duration-300 transform translate-y-4 opacity-0 border ${typeClasses}`;
+      toast.innerHTML = `
+        <div class="flex items-center gap-2.5">
+          <i data-lucide="${iconName}" class="w-4 h-4 shrink-0 text-white"></i>
+          <span>${message}</span>
+        </div>
+        <button onclick="dismissToast(this.parentElement)" class="text-white/80 hover:text-white p-1 rounded-lg hover:bg-white/10 transition-colors shrink-0">
+          <i data-lucide="x" class="w-3.5 h-3.5"></i>
+        </button>
+      `;
+
+      container.appendChild(toast);
+      if (window.lucide) lucide.createIcons();
+
+      requestAnimationFrame(() => {
+        toast.classList.remove('translate-y-4', 'opacity-0');
+        toast.classList.add('translate-y-0', 'opacity-100');
+      });
+
+      const timer = setTimeout(() => {
+        dismissToast(toast);
+      }, duration);
+
+      toast.dataset.timer = timer;
+    }
+
+    function dismissToast(toast) {
+      if (!toast || toast.classList.contains('dismissing')) return;
+      toast.classList.add('dismissing');
+      if (toast.dataset.timer) clearTimeout(parseInt(toast.dataset.timer));
+
+      toast.classList.remove('translate-y-0', 'opacity-100');
+      toast.classList.add('-translate-y-2', 'opacity-0');
 
       setTimeout(() => {
-        toast.classList.remove('opacity-100', 'translate-y-0');
-        toast.classList.add('opacity-0', 'translate-y-4', 'pointer-events-none');
-      }, 2500);
+        if (toast.parentElement) toast.remove();
+      }, 300);
+    }
+
+    function showToastNotification(message, type = 'success', duration = 3000) {
+      showToast(message, type, duration);
+    }
+
+    function showGlobalToast(message, type = 'success', duration = 3000) {
+      showToast(message, type, duration);
     }
 
     function shareMoodboardLink() {
       const link = 'https://aroosito.com/moodboard/shared-couple-102';
       if (navigator.clipboard) {
         navigator.clipboard.writeText(link);
-        showToastNotification('🔗 لینک مودبورد شخصی کپی شد');
+        showToast('🔗 لینک مودبورد شخصی کپی شد', 'info');
       } else {
-        alert('لینک مودبورد شما:\n' + link);
+        showToast('لینک مودبورد شما: ' + link, 'info');
       }
     }
 
     function exportMoodboardPdf() {
-      alert('فایل خلاصه مودبورد شما آماده دانلود گردید. (دانلود PDF شبیه‌سازی شد)');
+      showToast('فایل خلاصه مودبورد شما آماده دانلود گردید.', 'info');
     }
   </script>
 </body>
