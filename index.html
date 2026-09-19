@@ -95,6 +95,9 @@
         <button onclick="switchTab('vendor-dash')" id="demo-tab-vendor-dash" class="demo-tab-btn px-3.5 py-1.5 rounded-lg text-xs font-bold transition-all bg-white/10 hover:bg-white/20 text-slate-200">
           <i data-lucide="layout-dashboard" class="w-3.5 h-3.5 inline ml-1"></i>پنل تامین‌کننده (Vendor Dashboard)
         </button>
+        <button onclick="switchTab('guests')" id="demo-tab-guests" class="demo-tab-btn px-3.5 py-1.5 rounded-lg text-xs font-bold transition-all bg-white/10 hover:bg-white/20 text-slate-200">
+          <i data-lucide="users" class="w-3.5 h-3.5 inline ml-1"></i>مدیریت مهمانان & هدایا
+        </button>
         <button onclick="switchTab('invitation')" id="demo-tab-invitation" class="demo-tab-btn px-3.5 py-1.5 rounded-lg text-xs font-bold transition-all bg-white/10 hover:bg-white/20 text-slate-200">
           کارت دعوت & RSVP
         </button>
@@ -138,6 +141,10 @@
             </button>
             <button onclick="switchTab('planner')" class="px-3 py-2 rounded-lg text-xs xl:text-sm font-semibold transition-colors text-graphite hover:text-primary hover:bg-slate-50">
               <span>برنامه‌ریزی و چک‌لیست‌ها</span>
+            </button>
+            <button onclick="switchTab('guests')" class="px-3 py-2 rounded-lg text-xs xl:text-sm font-semibold transition-colors text-graphite hover:text-primary hover:bg-slate-50 flex items-center gap-1">
+              <i data-lucide="users" class="w-4 h-4 text-primary"></i>
+              <span>مهمانان و هدایا</span>
             </button>
             <button onclick="switchTab('invitation')" class="px-3 py-2 rounded-lg text-xs xl:text-sm font-semibold transition-colors text-graphite hover:text-primary hover:bg-slate-50">
               <span>کارت دعوت دیجیتال</span>
@@ -1054,7 +1061,211 @@
     <!-- ========================================== -->
     <!-- VIEW 5: DIGITAL INVITATION & RSVP MODULE   -->
     <!-- ========================================== -->
-    <div id="tab-invitation" class="tab-content hidden space-y-8">
+
+  <!-- ========================================== -->
+  <!-- TAB: GUEST LIST & CASH GIFT MANAGEMENT     -->
+  <!-- ========================================== -->
+  <div id="tab-guests" class="tab-content hidden space-y-8">
+    <!-- Banner / Header -->
+    <div class="bg-white border border-accent rounded-3xl p-6 md:p-8 shadow-xs flex flex-col md:flex-row items-start md:items-center justify-between gap-6">
+      <div class="space-y-2">
+        <div class="inline-flex items-center gap-2 px-3 py-1 bg-emerald-50 text-primary border border-emerald-200 rounded-full text-xs font-bold">
+          <i data-lucide="users" class="w-3.5 h-3.5"></i>
+          <span>مدیریت جامع مهمانان و شاباش</span>
+        </div>
+        <h1 class="text-2xl md:text-3xl font-black text-graphite">مدیریت مهمانان و صندوق هدایای جشن</h1>
+        <p class="text-xs md:text-sm text-secondary font-medium">سازماندهی دعوت‌نامه‌ها، پیگیری پاسخ‌های RSVP، شماره میزها و ثبت شفاف تمامی هدایای نقدی و شاباش‌ها</p>
+      </div>
+
+      <div class="flex items-center gap-2 w-full md:w-auto">
+        <button onclick="openGuestModal()" class="flex-1 md:flex-initial bg-primary hover:bg-emerald-900 text-white px-4 py-2.5 rounded-xl text-xs font-bold transition-all flex items-center justify-center gap-1.5 shadow-xs">
+          <i data-lucide="user-plus" class="w-4 h-4"></i>
+          <span>افزودن مهمان جدید</span>
+        </button>
+        <button onclick="openGiftModal()" class="flex-1 md:flex-initial bg-bgCustom hover:bg-slate-100 border border-accent text-graphite px-4 py-2.5 rounded-xl text-xs font-bold transition-all flex items-center justify-center gap-1.5 shadow-xs">
+          <i data-lucide="gift" class="w-4 h-4 text-primary"></i>
+          <span>ثبت هدایای دریافتی</span>
+        </button>
+      </div>
+    </div>
+
+    <!-- 1. KPI SUMMARY DASHBOARD -->
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+      <!-- Total Guests -->
+      <div class="bg-white border border-accent rounded-2xl p-5 shadow-xs flex items-center justify-between">
+        <div class="space-y-1">
+          <span class="text-xs font-bold text-secondary">کل مهمانان دعوت‌شده</span>
+          <div class="text-2xl font-black text-graphite" id="kpi-total-guests">0 نفر</div>
+          <span class="text-[11px] text-slate-500 font-medium" id="kpi-total-breakdown">0 اصل + 0 همراه</span>
+        </div>
+        <div class="w-12 h-12 rounded-2xl bg-emerald-50 text-primary border border-emerald-100 flex items-center justify-center">
+          <i data-lucide="users" class="w-6 h-6"></i>
+        </div>
+      </div>
+
+      <!-- Confirmed Guests -->
+      <div class="bg-white border border-accent rounded-2xl p-5 shadow-xs flex items-center justify-between">
+        <div class="space-y-1">
+          <span class="text-xs font-bold text-secondary">تأییدشده‌ها (RSVP)</span>
+          <div class="text-2xl font-black text-emerald-700" id="kpi-confirmed-guests">0 نفر</div>
+          <span class="text-[11px] text-emerald-600 font-medium" id="kpi-confirmed-percent">0٪ از کل مدعوین</span>
+        </div>
+        <div class="w-12 h-12 rounded-2xl bg-emerald-100 text-emerald-700 flex items-center justify-center">
+          <i data-lucide="user-check" class="w-6 h-6"></i>
+        </div>
+      </div>
+
+      <!-- Declined Guests -->
+      <div class="bg-white border border-accent rounded-2xl p-5 shadow-xs flex items-center justify-between">
+        <div class="space-y-1">
+          <span class="text-xs font-bold text-secondary">عذرخواهی کرده‌ها</span>
+          <div class="text-2xl font-black text-rose-600" id="kpi-declined-guests">0 نفر</div>
+          <span class="text-[11px] text-rose-500 font-medium" id="kpi-pending-guests">0 نفر در انتظار پاسخ</span>
+        </div>
+        <div class="w-12 h-12 rounded-2xl bg-rose-50 text-rose-600 border border-rose-100 flex items-center justify-center">
+          <i data-lucide="user-x" class="w-6 h-6"></i>
+        </div>
+      </div>
+
+      <!-- Total Cash Gifts -->
+      <div class="bg-white border border-accent rounded-2xl p-5 shadow-xs flex items-center justify-between">
+        <div class="space-y-1">
+          <span class="text-xs font-bold text-secondary">مجموع شاباش و هدایا</span>
+          <div class="text-xl font-black text-primary" id="kpi-total-gifts">0 تومان</div>
+          <span class="text-[11px] text-slate-500 font-medium" id="kpi-gift-count">0 فقره هدایای ثبت‌شده</span>
+        </div>
+        <div class="w-12 h-12 rounded-2xl bg-amber-50 text-amber-600 border border-amber-100 flex items-center justify-center">
+          <i data-lucide="coins" class="w-6 h-6"></i>
+        </div>
+      </div>
+    </div>
+
+    <!-- MAIN SUB-TAB TOGGLE & TOOLBAR -->
+    <div class="bg-white border border-accent rounded-3xl p-6 shadow-xs space-y-6">
+      <div class="flex flex-col sm:flex-row items-center justify-between gap-4 border-b border-accent pb-4">
+        <!-- SubTab Switcher -->
+        <div class="flex items-center gap-2 bg-bgCustom p-1 rounded-2xl border border-accent w-full sm:w-auto">
+          <button id="guest-subtab-list" onclick="switchGuestSubTab('list')" class="flex-1 sm:flex-none px-5 py-2.5 rounded-xl text-xs font-bold transition-all bg-primary text-white shadow-xs flex items-center justify-center gap-2">
+            <i data-lucide="list" class="w-4 h-4"></i>
+            <span>لیست کامل مهمانان</span>
+          </button>
+          <button id="guest-subtab-gifts" onclick="switchGuestSubTab('gifts')" class="flex-1 sm:flex-none px-5 py-2.5 rounded-xl text-xs font-bold transition-all text-secondary hover:text-graphite flex items-center justify-center gap-2">
+            <i data-lucide="gift" class="w-4 h-4"></i>
+            <span>صندوق شاباش و هدایا</span>
+          </button>
+        </div>
+
+        <!-- Quick actions -->
+        <div class="flex items-center gap-2 w-full sm:w-auto justify-end">
+          <button onclick="exportGuestsExcel()" class="bg-slate-100 hover:bg-slate-200 text-graphite px-3.5 py-2 rounded-xl text-xs font-bold transition-colors flex items-center gap-1.5 border border-accent">
+            <i data-lucide="download" class="w-3.5 h-3.5 text-primary"></i>
+            <span>خروجی اکسل / چاپ</span>
+          </button>
+        </div>
+      </div>
+
+      <!-- SECTION 1: GUEST LIST TABLE WORKSPACE -->
+      <div id="guest-view-list" class="space-y-4">
+        <!-- Filter Bar -->
+        <div class="grid grid-cols-1 md:grid-cols-4 gap-3">
+          <!-- Search -->
+          <div class="relative md:col-span-2">
+            <i data-lucide="search" class="w-4 h-4 text-secondary absolute right-3 top-3"></i>
+            <input type="text" id="guest-search-input" oninput="renderGuestsTable()" placeholder="جستجوی نام مهمان، تلفن یا شماره میز..." class="w-full bg-bgCustom border border-accent rounded-xl pr-9 pl-3 py-2.5 text-xs font-medium focus:outline-none focus:border-primary">
+          </div>
+
+          <!-- Category Side Filter -->
+          <div>
+            <select id="guest-filter-side" onchange="renderGuestsTable()" class="w-full bg-bgCustom border border-accent rounded-xl p-2.5 text-xs font-bold text-graphite focus:outline-none focus:border-primary">
+              <option value="ALL">همه دسته‌بندی‌ها (عروس/داماد/دوستان)</option>
+              <option value="فامیل عروس">فامیل عروس</option>
+              <option value="فامیل داماد">فامیل داماد</option>
+              <option value="دوستان مشترک">دوستان مشترک</option>
+              <option value="همکاران">همکاران و سایر</option>
+            </select>
+          </div>
+
+          <!-- RSVP Status Filter -->
+          <div>
+            <select id="guest-filter-status" onchange="renderGuestsTable()" class="w-full bg-bgCustom border border-accent rounded-xl p-2.5 text-xs font-bold text-graphite focus:outline-none focus:border-primary">
+              <option value="ALL">همه وضعیت‌ها ([همه])</option>
+              <option value="CONFIRMED">تایید شده</option>
+              <option value="DECLINED">عذرخواهی کرده</option>
+              <option value="PENDING">در انتظار پاسخ</option>
+            </select>
+          </div>
+        </div>
+
+        <!-- Guest Table -->
+        <div class="overflow-x-auto border border-accent rounded-2xl">
+          <table class="w-full text-right text-xs">
+            <thead class="bg-bgCustom text-secondary border-b border-accent font-bold">
+              <tr>
+                <th class="p-3.5">نام مهمان & گروه</th>
+                <th class="p-3.5">شماره تماس & واتساپ</th>
+                <th class="p-3.5 text-center">تعداد همراهان</th>
+                <th class="p-3.5 text-center">شماره میز / زون</th>
+                <th class="p-3.5 text-center">وضعیت RSVP</th>
+                <th class="p-3.5 text-center">عملیات</th>
+              </tr>
+            </thead>
+            <tbody id="guests-table-body" class="divide-y divide-accent font-medium text-graphite">
+              <!-- Rendered via JS -->
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- SECTION 2: CASH GIFTS WORKSPACE -->
+      <div id="guest-view-gifts" class="hidden space-y-4">
+        <!-- Gift Ledger Summary Banner -->
+        <div class="bg-emerald-50/50 border border-emerald-200 rounded-2xl p-4 flex flex-col sm:flex-row items-center justify-between gap-4">
+          <div class="flex items-center gap-3">
+            <div class="w-10 h-10 rounded-xl bg-primary text-white flex items-center justify-center font-bold">
+              <i data-lucide="shield-check" class="w-5 h-5"></i>
+            </div>
+            <div>
+              <h4 class="text-xs font-bold text-graphite">صندوق آنلاین هدایا و شاباش عروسی</h4>
+              <p class="text-[11px] text-secondary">ثبت دقیق و مانیتورینگ تمامی واریزی‌های آنلاین کارت دعوت و هدایای دریافتی سالن</p>
+            </div>
+          </div>
+          <button onclick="openGiftModal()" class="bg-primary hover:bg-emerald-900 text-white px-4 py-2 rounded-xl text-xs font-bold transition-all shadow-xs flex items-center gap-1.5">
+            <i data-lucide="plus" class="w-4 h-4"></i>
+            <span>ثبت هدیه جدید</span>
+          </button>
+        </div>
+
+        <!-- Gift Table -->
+        <div class="overflow-x-auto border border-accent rounded-2xl">
+          <table class="w-full text-right text-xs">
+            <thead class="bg-bgCustom text-secondary border-b border-accent font-bold">
+              <tr>
+                <th class="p-3.5">نام اهداکننده</th>
+                <th class="p-3.5">نوع هدیه</th>
+                <th class="p-3.5">مبلغ / ارزش هدیه</th>
+                <th class="p-3.5">نحوه دریافت / روش پرداخت</th>
+                <th class="p-3.5">توضیحات & یادداشت</th>
+                <th class="p-3.5 text-center">عملیات</th>
+              </tr>
+            </thead>
+            <tbody id="gifts-table-body" class="divide-y divide-accent font-medium text-graphite">
+              <!-- Rendered via JS -->
+            </tbody>
+            <tfoot class="bg-slate-50 border-t border-accent font-bold text-graphite">
+              <tr>
+                <td colspan="2" class="p-3.5 text-left">مجموع کل شاباش و هدایا:</td>
+                <td id="gift-total-sum-footer" class="p-3.5 text-primary text-sm font-black">0 تومان</td>
+                <td colspan="3"></td>
+              </tr>
+            </tfoot>
+          </table>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <div id="tab-invitation" class="tab-content hidden space-y-8">
 
       <!-- TOP HEADER BAR & LINK SHARING ACTIONS -->
       <div class="bg-white border border-accent rounded-3xl p-6 shadow-xs flex flex-col lg:flex-row items-start lg:items-center justify-between gap-4">
@@ -2433,6 +2644,136 @@
   <!-- ========================================== -->
   <!-- MODAL: VENDOR ONBOARDING REQUEST POPUP    -->
   <!-- ========================================== -->
+
+  <!-- ========================================== -->
+  <!-- MODAL: ADD / EDIT GUEST                    -->
+  <!-- ========================================== -->
+  <div id="guest-modal" class="fixed inset-0 z-50 bg-black/60 backdrop-blur-xs flex items-center justify-center p-4 hidden">
+    <div class="bg-white border border-accent rounded-3xl max-w-lg w-full p-6 shadow-2xl space-y-4 relative">
+      <button onclick="closeGuestModal()" class="absolute top-4 left-4 text-secondary hover:text-graphite">
+        <i data-lucide="x" class="w-6 h-6"></i>
+      </button>
+
+      <div class="border-b border-accent pb-3">
+        <span class="text-xs font-bold text-primary">مدیریت لیست مهمانان</span>
+        <h3 id="guest-modal-title" class="text-xl font-bold text-graphite mt-0.5">افزودن مهمان جدید</h3>
+      </div>
+
+      <form id="guest-form" onsubmit="handleGuestFormSubmit(event)" class="space-y-4 text-xs font-bold text-graphite">
+        <input type="hidden" id="guest-edit-id" value="">
+
+        <div>
+          <label class="block mb-1">نام و نام خانوادگی مهمان:</label>
+          <input type="text" id="guest-modal-name" required placeholder="مثلا: مهندس آرش رضایی" class="w-full bg-bgCustom border border-accent rounded-xl p-2.5 text-xs font-medium focus:outline-none focus:border-primary">
+        </div>
+
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+          <div>
+            <label class="block mb-1">دسته / نسبت مهمان:</label>
+            <select id="guest-modal-side" required class="w-full bg-bgCustom border border-accent rounded-xl p-2.5 text-xs font-medium focus:outline-none focus:border-primary">
+              <option value="فامیل عروس">فامیل عروس</option>
+              <option value="فامیل داماد">فامیل داماد</option>
+              <option value="دوستان مشترک">دوستان مشترک</option>
+              <option value="همکاران">همکاران و سایر</option>
+            </select>
+          </div>
+
+          <div>
+            <label class="block mb-1">شماره تلفن همراه:</label>
+            <input type="tel" id="guest-modal-phone" required placeholder="09123456789" class="w-full bg-bgCustom border border-accent rounded-xl p-2.5 text-xs font-medium focus:outline-none focus:border-primary">
+          </div>
+        </div>
+
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+          <div>
+            <label class="block mb-1">تعداد همراهان (غیر از خودش):</label>
+            <input type="number" id="guest-modal-companions" min="0" max="10" value="1" required class="w-full bg-bgCustom border border-accent rounded-xl p-2.5 text-xs font-medium focus:outline-none focus:border-primary">
+          </div>
+
+          <div>
+            <label class="block mb-1">شماره میز / زون نشستن:</label>
+            <input type="text" id="guest-modal-table" placeholder="مثلا: میز VIP ۱ یا زون A" class="w-full bg-bgCustom border border-accent rounded-xl p-2.5 text-xs font-medium focus:outline-none focus:border-primary">
+          </div>
+        </div>
+
+        <div>
+          <label class="block mb-1">وضعیت پاسخ‌دهی (RSVP):</label>
+          <select id="guest-modal-status" required class="w-full bg-bgCustom border border-accent rounded-xl p-2.5 text-xs font-medium focus:outline-none focus:border-primary">
+            <option value="CONFIRMED">تایید شده (حضور دارد)</option>
+            <option value="PENDING">در انتظار پاسخ</option>
+            <option value="DECLINED">عذرخواهی کرده (شرکت نمی‌کند)</option>
+          </select>
+        </div>
+
+        <div class="pt-2 flex items-center justify-end gap-2 border-t border-accent">
+          <button type="button" onclick="closeGuestModal()" class="px-4 py-2.5 rounded-xl border border-accent text-secondary hover:text-graphite font-bold">انصراف</button>
+          <button type="submit" class="px-5 py-2.5 rounded-xl bg-primary text-white hover:bg-emerald-900 font-bold shadow-xs">ذخیره اطلاعات</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- ========================================== -->
+  <!-- MODAL: ADD / EDIT CASH GIFT               -->
+  <!-- ========================================== -->
+  <div id="gift-modal" class="fixed inset-0 z-50 bg-black/60 backdrop-blur-xs flex items-center justify-center p-4 hidden">
+    <div class="bg-white border border-accent rounded-3xl max-w-lg w-full p-6 shadow-2xl space-y-4 relative">
+      <button onclick="closeGiftModal()" class="absolute top-4 left-4 text-secondary hover:text-graphite">
+        <i data-lucide="x" class="w-6 h-6"></i>
+      </button>
+
+      <div class="border-b border-accent pb-3">
+        <span class="text-xs font-bold text-primary">صندوق شاباش و هدایا</span>
+        <h3 id="gift-modal-title" class="text-xl font-bold text-graphite mt-0.5">ثبت هدیه یا شاباش جدید</h3>
+      </div>
+
+      <form id="gift-form" onsubmit="handleGiftFormSubmit(event)" class="space-y-4 text-xs font-bold text-graphite">
+        <input type="hidden" id="gift-edit-id" value="">
+
+        <div>
+          <label class="block mb-1">نام اهداکننده (انتخاب از لیست یا جدید):</label>
+          <input type="text" id="gift-modal-name" required placeholder="مثلا: عمو رضا و خانواده" class="w-full bg-bgCustom border border-accent rounded-xl p-2.5 text-xs font-medium focus:outline-none focus:border-primary">
+        </div>
+
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+          <div>
+            <label class="block mb-1">نوع هدیه:</label>
+            <select id="gift-modal-type" required class="w-full bg-bgCustom border border-accent rounded-xl p-2.5 text-xs font-medium focus:outline-none focus:border-primary">
+              <option value="نقدی">وجه نقدی (تومان)</option>
+              <option value="سکه طلا">سکه / طلا</option>
+              <option value="کارت هدیه">کارت هدیه بانکی</option>
+              <option value="هدایای غیرنقدی">هدایای غیرنقدی (کالا)</option>
+            </select>
+          </div>
+
+          <div>
+            <label class="block mb-1">مبلغ / ارزش هدیه (تومان):</label>
+            <input type="number" id="gift-modal-amount" min="0" step="100000" placeholder="10000000" required class="w-full bg-bgCustom border border-accent rounded-xl p-2.5 text-xs font-medium focus:outline-none focus:border-primary">
+          </div>
+        </div>
+
+        <div>
+          <label class="block mb-1">نحوه دریافت / روش پرداخت:</label>
+          <select id="gift-modal-method" required class="w-full bg-bgCustom border border-accent rounded-xl p-2.5 text-xs font-medium focus:outline-none focus:border-primary">
+            <option value="کارت به کارت / پاکت نقدی">کارت به کارت / پاکت نقدی سالن</option>
+            <option value="واریز آنلاین کارت دعوت">واریز آنلاین از طریق کارت دعوت</option>
+            <option value="تحویل حضوری در سالن">تحویل حضوری در جشن</option>
+          </select>
+        </div>
+
+        <div>
+          <label class="block mb-1">توضیحات و یادداشت تشکر:</label>
+          <textarea id="gift-modal-notes" rows="2" placeholder="مثلا: ۱ تمام سکه بهار آزادی با یادداشت صمیمانه..." class="w-full bg-bgCustom border border-accent rounded-xl p-2.5 text-xs font-medium focus:outline-none focus:border-primary"></textarea>
+        </div>
+
+        <div class="pt-2 flex items-center justify-end gap-2 border-t border-accent">
+          <button type="button" onclick="closeGiftModal()" class="px-4 py-2.5 rounded-xl border border-accent text-secondary hover:text-graphite font-bold">انصراف</button>
+          <button type="submit" class="px-5 py-2.5 rounded-xl bg-primary text-white hover:bg-emerald-900 font-bold shadow-xs">ثبت و ذخیره هدیه</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
   <div id="vendor-onboarding-modal" class="fixed inset-0 z-50 bg-black/60 backdrop-blur-xs flex items-center justify-center p-4 hidden">
     <div class="bg-white border border-accent rounded-3xl max-w-xl w-full p-6 shadow-2xl space-y-4 relative">
       <button onclick="toggleVendorModalStatic(false)" class="absolute top-4 left-4 text-secondary hover:text-graphite">
@@ -2888,9 +3229,314 @@
       }
     }
 
+
+    // ==========================================
+    // GUEST LIST & CASH GIFT STATE & LOGIC
+    // ==========================================
+    let guestListState = [
+      { id: "g-1", name: "دکتر حمیدرضا احمدی", side: "فامیل عروس", phone: "09121112233", companions: 2, table: "میز VIP ۱", status: "CONFIRMED" },
+      { id: "g-2", name: "مهندس سارا نوری", side: "دوستان مشترک", phone: "09123334455", companions: 1, table: "میز ۴", status: "CONFIRMED" },
+      { id: "g-3", name: "حاج محمود کریمی", side: "فامیل داماد", phone: "09125556677", companions: 3, table: "میز VIP ۲", status: "PENDING" },
+      { id: "g-4", name: "استاد علی اکبر علوی", side: "همکاران", phone: "09127778899", companions: 1, table: "میز ۷", status: "DECLINED" },
+      { id: "g-5", name: "مریم و نیما حسینی", side: "فامیل عروس", phone: "09128889900", companions: 2, table: "میز ۲", status: "CONFIRMED" }
+    ];
+
+    let giftLedgerState = [
+      { id: "gift-1", guestName: "دکتر حمیدرضا احمدی", type: "نقدی", amount: 15000000, method: "کارت به کارت / پاکت نقدی", notes: "پاکت طلاکوب با یادداشت آرزوی خوشبختی" },
+      { id: "gift-2", guestName: "مهندس سارا نوری", type: "واریز آنلاین کارت دعوت", amount: 10000000, method: "واریز آنلاین کارت دعوت", notes: "پرداخت مستقیم از درگاه درگاه آنلاین" },
+      { id: "gift-3", guestName: "حاج محمود کریمی", type: "سکه طلا", amount: 35000000, method: "تحویل حضوری در سالن", notes: "یک عدد سکه کامل بهار آزادی" }
+    ];
+
+    function renderGuestsAndGifts() {
+      renderGuestsKPIs();
+      renderGuestsTable();
+      renderGiftsTable();
+    }
+
+    function renderGuestsKPIs() {
+      const totalGuestsCount = guestListState.reduce((acc, g) => acc + 1 + (parseInt(g.companions) || 0), 0);
+      const totalPrimary = guestListState.length;
+      const totalCompanions = guestListState.reduce((acc, g) => acc + (parseInt(g.companions) || 0), 0);
+
+      const confirmedGuestsList = guestListState.filter(g => g.status === "CONFIRMED");
+      const confirmedTotalCount = confirmedGuestsList.reduce((acc, g) => acc + 1 + (parseInt(g.companions) || 0), 0);
+      const confirmedPercent = totalGuestsCount > 0 ? Math.round((confirmedTotalCount / totalGuestsCount) * 100) : 0;
+
+      const declinedCount = guestListState.filter(g => g.status === "DECLINED").reduce((acc, g) => acc + 1 + (parseInt(g.companions) || 0), 0);
+      const pendingCount = guestListState.filter(g => g.status === "PENDING").reduce((acc, g) => acc + 1 + (parseInt(g.companions) || 0), 0);
+
+      const totalGiftsSum = giftLedgerState.reduce((acc, g) => acc + (parseInt(g.amount) || 0), 0);
+
+      const kpiTotalEl = document.getElementById("kpi-total-guests");
+      if (kpiTotalEl) kpiTotalEl.innerText = totalGuestsCount + " نفر";
+
+      const kpiBreakdownEl = document.getElementById("kpi-total-breakdown");
+      if (kpiBreakdownEl) kpiBreakdownEl.innerText = totalPrimary + " اصل + " + totalCompanions + " همراه";
+
+      const kpiConfEl = document.getElementById("kpi-confirmed-guests");
+      if (kpiConfEl) kpiConfEl.innerText = confirmedTotalCount + " نفر";
+
+      const kpiConfPctEl = document.getElementById("kpi-confirmed-percent");
+      if (kpiConfPctEl) kpiConfPctEl.innerText = confirmedPercent + "٪ از کل مدعوین";
+
+      const kpiDecEl = document.getElementById("kpi-declined-guests");
+      if (kpiDecEl) kpiDecEl.innerText = declinedCount + " نفر";
+
+      const kpiPendEl = document.getElementById("kpi-pending-guests");
+      if (kpiPendEl) kpiPendEl.innerText = pendingCount + " نفر در انتظار پاسخ";
+
+      const kpiGiftsEl = document.getElementById("kpi-total-gifts");
+      if (kpiGiftsEl) kpiGiftsEl.innerText = totalGiftsSum.toLocaleString("fa-IR") + " تومان";
+
+      const kpiGiftCntEl = document.getElementById("kpi-gift-count");
+      if (kpiGiftCntEl) kpiGiftCntEl.innerText = giftLedgerState.length + " فقره هدایای ثبت‌شده";
+    }
+
+    function switchGuestSubTab(sub) {
+      const btnList = document.getElementById("guest-subtab-list");
+      const btnGifts = document.getElementById("guest-subtab-gifts");
+      const viewList = document.getElementById("guest-view-list");
+      const viewGifts = document.getElementById("guest-view-gifts");
+
+      if (sub === "list") {
+        btnList.className = "flex-1 sm:flex-none px-5 py-2.5 rounded-xl text-xs font-bold transition-all bg-primary text-white shadow-xs flex items-center justify-center gap-2";
+        btnGifts.className = "flex-1 sm:flex-none px-5 py-2.5 rounded-xl text-xs font-bold transition-all text-secondary hover:text-graphite flex items-center justify-center gap-2";
+        viewList.classList.remove("hidden");
+        viewGifts.classList.add("hidden");
+      } else {
+        btnGifts.className = "flex-1 sm:flex-none px-5 py-2.5 rounded-xl text-xs font-bold transition-all bg-primary text-white shadow-xs flex items-center justify-center gap-2";
+        btnList.className = "flex-1 sm:flex-none px-5 py-2.5 rounded-xl text-xs font-bold transition-all text-secondary hover:text-graphite flex items-center justify-center gap-2";
+        viewGifts.classList.remove("hidden");
+        viewList.classList.add("hidden");
+      }
+    }
+
+    function renderGuestsTable() {
+      const tbody = document.getElementById("guests-table-body");
+      if (!tbody) return;
+
+      const searchVal = (document.getElementById("guest-search-input")?.value || "").toLowerCase().trim();
+      const sideVal = document.getElementById("guest-filter-side")?.value || "ALL";
+      const statusVal = document.getElementById("guest-filter-status")?.value || "ALL";
+
+      const filtered = guestListState.filter(g => {
+        const matchesSearch = !searchVal || g.name.toLowerCase().includes(searchVal) || g.phone.includes(searchVal) || (g.table && g.table.toLowerCase().includes(searchVal));
+        const matchesSide = sideVal === "ALL" || g.side === sideVal;
+        const matchesStatus = statusVal === "ALL" || g.status === statusVal;
+        return matchesSearch && matchesSide && matchesStatus;
+      });
+
+      if (filtered.length === 0) {
+        tbody.innerHTML = '<tr><td colspan="6" class="p-8 text-center text-secondary font-bold">هیچ مهمانی با این مشخصات یافت نشد.</td></tr>';
+        return;
+      }
+
+      tbody.innerHTML = filtered.map(g => {
+        let statusBadge = "";
+        if (g.status === "CONFIRMED") {
+          statusBadge = '<span class="inline-flex items-center gap-1 px-2.5 py-1 rounded-full bg-emerald-100 text-emerald-800 text-[11px] font-bold"><i data-lucide="check" class="w-3 h-3"></i> تایید شده</span>';
+        } else if (g.status === "DECLINED") {
+          statusBadge = '<span class="inline-flex items-center gap-1 px-2.5 py-1 rounded-full bg-rose-100 text-rose-800 text-[11px] font-bold"><i data-lucide="x" class="w-3 h-3"></i> عذرخواهی کرده</span>';
+        } else {
+          statusBadge = '<span class="inline-flex items-center gap-1 px-2.5 py-1 rounded-full bg-amber-100 text-amber-800 text-[11px] font-bold"><i data-lucide="clock" class="w-3 h-3"></i> در انتظار</span>';
+        }
+
+        const waMessage = encodeURIComponent("سلام " + g.name + " عزیز، کارت دعوت دیجیتال عروسی ما آماده است. خوشحال می‌شویم با کلیک روی لینک زیر حضور گرم خود را اعلام فرمایید:");
+        const waLink = "https://wa.me/" + g.phone.replace(/^0/, "98") + "?text=" + waMessage;
+
+        return `
+          <tr class="hover:bg-slate-50/80 transition-colors">
+            <td class="p-3.5">
+              <div class="font-bold text-graphite">${g.name}</div>
+              <span class="inline-block mt-0.5 text-[10px] bg-slate-100 text-secondary border border-accent px-2 py-0.5 rounded-md">${g.side}</span>
+            </td>
+            <td class="p-3.5">
+              <div class="text-xs text-graphite font-mono">${g.phone}</div>
+              <a href="${waLink}" target="_blank" class="inline-flex items-center gap-1 text-[11px] text-emerald-700 hover:text-emerald-900 font-bold mt-0.5">
+                <i data-lucide="send" class="w-3 h-3"></i> ارسال کارت در واتساپ
+              </a>
+            </td>
+            <td class="p-3.5 text-center font-bold">
+              + ${g.companions} همراه
+            </td>
+            <td class="p-3.5 text-center">
+              <span class="bg-emerald-50 text-primary border border-emerald-200 px-2.5 py-1 rounded-lg text-xs font-bold">${g.table || "تعیین نشده"}</span>
+            </td>
+            <td class="p-3.5 text-center">
+              ${statusBadge}
+            </td>
+            <td class="p-3.5 text-center">
+              <div class="flex items-center justify-center gap-1.5">
+                <button onclick="toggleGuestRsvp('${g.id}')" title="تغییر سریع وضعیت RSVP" class="p-1.5 rounded-lg bg-bgCustom hover:bg-slate-200 border border-accent text-primary">
+                  <i data-lucide="refresh-cw" class="w-3.5 h-3.5"></i>
+                </button>
+                <button onclick="editGuest('${g.id}')" title="ویرایش مهمان" class="p-1.5 rounded-lg bg-bgCustom hover:bg-slate-200 border border-accent text-graphite">
+                  <i data-lucide="edit-3" class="w-3.5 h-3.5"></i>
+                </button>
+                <button onclick="deleteGuest('${g.id}')" title="حذف مهمان" class="p-1.5 rounded-lg bg-rose-50 hover:bg-rose-100 border border-rose-200 text-rose-600">
+                  <i data-lucide="trash-2" class="w-3.5 h-3.5"></i>
+                </button>
+              </div>
+            </td>
+          </tr>
+        `;
+      }).join("");
+
+      if (window.lucide) window.lucide.createIcons();
+    }
+
+    function renderGiftsTable() {
+      const tbody = document.getElementById("gifts-table-body");
+      if (!tbody) return;
+
+      if (giftLedgerState.length === 0) {
+        tbody.innerHTML = '<tr><td colspan="6" class="p-8 text-center text-secondary font-bold">هیچ هدایای ثبت‌شده‌ای موجود نیست.</td></tr>';
+        return;
+      }
+
+      tbody.innerHTML = giftLedgerState.map(g => `
+        <tr class="hover:bg-slate-50/80 transition-colors">
+          <td class="p-3.5 font-bold text-graphite">${g.guestName}</td>
+          <td class="p-3.5">
+            <span class="px-2.5 py-1 bg-amber-50 text-amber-800 border border-amber-200 rounded-lg text-xs font-bold">${g.type}</span>
+          </td>
+          <td class="p-3.5 font-black text-primary">${(parseInt(g.amount) || 0).toLocaleString("fa-IR")} تومان</td>
+          <td class="p-3.5 text-secondary font-medium">${g.method}</td>
+          <td class="p-3.5 text-xs text-graphite">${g.notes || "-"}</td>
+          <td class="p-3.5 text-center">
+            <button onclick="deleteGift('${g.id}')" class="p-1.5 rounded-lg bg-rose-50 hover:bg-rose-100 border border-rose-200 text-rose-600">
+              <i data-lucide="trash-2" class="w-3.5 h-3.5"></i>
+            </button>
+          </td>
+        </tr>
+      `).join("");
+
+      const totalSum = giftLedgerState.reduce((acc, g) => acc + (parseInt(g.amount) || 0), 0);
+      const footerSum = document.getElementById("gift-total-sum-footer");
+      if (footerSum) footerSum.innerText = totalSum.toLocaleString("fa-IR") + " تومان";
+
+      if (window.lucide) window.lucide.createIcons();
+    }
+
+    function openGuestModal() {
+      document.getElementById("guest-form").reset();
+      document.getElementById("guest-edit-id").value = "";
+      document.getElementById("guest-modal-title").innerText = "افزودن مهمان جدید";
+      document.getElementById("guest-modal").classList.remove("hidden");
+    }
+
+    function closeGuestModal() {
+      document.getElementById("guest-modal").classList.add("hidden");
+    }
+
+    function handleGuestFormSubmit(e) {
+      e.preventDefault();
+      const editId = document.getElementById("guest-edit-id").value;
+      const name = document.getElementById("guest-modal-name").value.trim();
+      const side = document.getElementById("guest-modal-side").value;
+      const phone = document.getElementById("guest-modal-phone").value.trim();
+      const companions = parseInt(document.getElementById("guest-modal-companions").value) || 0;
+      const table = document.getElementById("guest-modal-table").value.trim();
+      const status = document.getElementById("guest-modal-status").value;
+
+      if (editId) {
+        const idx = guestListState.findIndex(g => g.id === editId);
+        if (idx !== -1) {
+          guestListState[idx] = { ...guestListState[idx], name, side, phone, companions, table, status };
+        }
+      } else {
+        const newGuest = {
+          id: "g-" + Date.now(),
+          name, side, phone, companions, table, status
+        };
+        guestListState.unshift(newGuest);
+      }
+
+      closeGuestModal();
+      renderGuestsAndGifts();
+      showGlobalToast("اطلاعات مهمان با موفقیت بروزرسانی شد.");
+    }
+
+    function editGuest(id) {
+      const g = guestListState.find(item => item.id === id);
+      if (!g) return;
+      document.getElementById("guest-edit-id").value = g.id;
+      document.getElementById("guest-modal-name").value = g.name;
+      document.getElementById("guest-modal-side").value = g.side;
+      document.getElementById("guest-modal-phone").value = g.phone;
+      document.getElementById("guest-modal-companions").value = g.companions;
+      document.getElementById("guest-modal-table").value = g.table || "";
+      document.getElementById("guest-modal-status").value = g.status;
+
+      document.getElementById("guest-modal-title").innerText = "ویرایش مشخصات مهمان";
+      document.getElementById("guest-modal").classList.remove("hidden");
+    }
+
+    function deleteGuest(id) {
+      if (confirm("آیا از حذف این مهمان اطمینان دارید؟")) {
+        guestListState = guestListState.filter(g => g.id !== id);
+        renderGuestsAndGifts();
+        showGlobalToast("مهمان از لیست حذف گردید.");
+      }
+    }
+
+    function toggleGuestRsvp(id) {
+      const g = guestListState.find(item => item.id === id);
+      if (!g) return;
+      if (g.status === "CONFIRMED") g.status = "DECLINED";
+      else if (g.status === "DECLINED") g.status = "PENDING";
+      else g.status = "CONFIRMED";
+
+      renderGuestsAndGifts();
+      showGlobalToast("وضعیت RSVP مهمان به روز شد.");
+    }
+
+    function openGiftModal() {
+      document.getElementById("gift-form").reset();
+      document.getElementById("gift-edit-id").value = "";
+      document.getElementById("gift-modal-title").innerText = "ثبت هدیه یا شاباش جدید";
+      document.getElementById("gift-modal").classList.remove("hidden");
+    }
+
+    function closeGiftModal() {
+      document.getElementById("gift-modal").classList.add("hidden");
+    }
+
+    function handleGiftFormSubmit(e) {
+      e.preventDefault();
+      const guestName = document.getElementById("gift-modal-name").value.trim();
+      const type = document.getElementById("gift-modal-type").value;
+      const amount = parseInt(document.getElementById("gift-modal-amount").value) || 0;
+      const method = document.getElementById("gift-modal-method").value;
+      const notes = document.getElementById("gift-modal-notes").value.trim();
+
+      const newGift = {
+        id: "gift-" + Date.now(),
+        guestName, type, amount, method, notes
+      };
+
+      giftLedgerState.unshift(newGift);
+      closeGiftModal();
+      renderGuestsAndGifts();
+      showGlobalToast("هدیه با موفقیت در صندوق هدایا ثبت شد.");
+    }
+
+    function deleteGift(id) {
+      if (confirm("آیا از حذف این رکورد هدیه اطمینان دارید؟")) {
+        giftLedgerState = giftLedgerState.filter(g => g.id !== id);
+        renderGuestsAndGifts();
+        showGlobalToast("رکورد هدیه حذف گردید.");
+      }
+    }
+
+    function exportGuestsExcel() {
+      showGlobalToast("خروجی کامل لیست مهمانان و هدایا در قالب Excel آماده گردید.");
+    }
+
     // TAB SWITCHING FUNCTION
     function switchTab(tabId) {
       document.querySelectorAll('.tab-content').forEach(el => el.classList.add('hidden'));
+      if (tabId === 'guests') renderGuestsAndGifts();
       const target = document.getElementById('tab-' + tabId);
       if (target) target.classList.remove('hidden');
 
@@ -4725,11 +5371,31 @@
       document.getElementById('rsvp-modal').classList.add('hidden');
     }
 
+
     function handleRsvpSubmit(e) {
       e.preventDefault();
+      const rsvpName = document.getElementById('rsvp-name')?.value.trim();
+      if (rsvpName) {
+        const existing = guestListState.find(g => g.name === rsvpName);
+        if (existing) {
+          existing.status = "CONFIRMED";
+        } else {
+          guestListState.unshift({
+            id: "g-" + Date.now(),
+            name: rsvpName,
+            side: "دوستان مشترک",
+            phone: "09120000000",
+            companions: 1,
+            table: "میز اختصاصی",
+            status: "CONFIRMED"
+          });
+        }
+        renderGuestsAndGifts();
+      }
       closeRsvpModal();
-      alert('پاسخ RSVP شما ثبت شد.');
+      showGlobalToast("پاسخ RSVP شما با موفقیت ثبت و به سیستم مدیریت مهمانان اضافه شد.");
     }
+
 
     function sendSmsBroadcast() {
       const text = document.getElementById('sms-text').value.trim();
