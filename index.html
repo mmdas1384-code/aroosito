@@ -101,6 +101,9 @@
         <button onclick="switchTab('quizzes')" id="demo-tab-quizzes" class="demo-tab-btn px-3.5 py-1.5 rounded-lg text-xs font-bold transition-all bg-white/10 hover:bg-white/20 text-slate-200">
           <i data-lucide="help-circle" class="w-3.5 h-3.5 inline ml-1"></i>تست‌های استایل & روانشناسی
         </button>
+        <button onclick="switchTab('messages')" id="demo-tab-messages" class="demo-tab-btn px-3.5 py-1.5 rounded-lg text-xs font-bold transition-all bg-white/10 hover:bg-white/20 text-slate-200">
+          <i data-lucide="message-square" class="w-3.5 h-3.5 inline ml-1"></i>گفت‌وگوها (Messages)
+        </button>
         <button onclick="switchTab('tools')" id="demo-tab-tools" class="demo-tab-btn px-3.5 py-1.5 rounded-lg text-xs font-bold transition-all bg-white/10 hover:bg-white/20 text-slate-200">
           بودجه AI
         </button>
@@ -138,6 +141,10 @@
             </button>
             <button onclick="switchTab('quizzes')" class="px-3 py-2 rounded-lg text-xs xl:text-sm font-semibold transition-colors text-graphite hover:text-primary hover:bg-slate-50">
               <span>تست‌های روانشناسی & استایل</span>
+            </button>
+            <button onclick="switchTab('messages')" class="px-3 py-2 rounded-lg text-xs xl:text-sm font-semibold transition-colors text-graphite hover:text-primary hover:bg-slate-50 flex items-center gap-1">
+              <span>گفت‌وگوها</span>
+              <span id="nav-chat-unread-badge" class="bg-primary text-white text-[10px] font-bold px-1.5 py-0.2 rounded-full">1</span>
             </button>
             <button onclick="switchTab('tools')" class="px-3 py-2 rounded-lg text-xs xl:text-sm font-semibold transition-colors text-graphite hover:text-primary hover:bg-slate-50">
               <span>دستیار بودجه AI</span>
@@ -1897,6 +1904,102 @@
       </section>
     </div>
 
+    <!-- ========================================== -->
+    <!-- VIEW 9: MESSAGES & DIRECT CHAT SYSTEM VIEW -->
+    <!-- ========================================== -->
+    <div id="tab-messages" class="tab-content hidden space-y-8">
+
+      <!-- HEADER BANNER -->
+      <div class="bg-white border border-accent rounded-3xl p-6 shadow-xs flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
+        <div class="space-y-1">
+          <div class="inline-flex items-center gap-1.5 bg-primary/10 text-primary text-xs font-bold px-3 py-1 rounded-full">
+            <i data-lucide="message-square" class="w-3.5 h-3.5"></i>
+            <span>مرکز گفت‌وگوها و پیام‌های مستقیم پلتفرم</span>
+          </div>
+          <h2 class="text-2xl font-black text-graphite flex items-center gap-2">
+            <span>گفت‌وگوها و استعلام‌های قیمت</span>
+          </h2>
+          <p class="text-xs text-secondary font-medium">ارتباط مستقیم زوج‌ها با تأمین‌کنندگان خدمات عروسی، دریافت پیش‌فاکتور و پاسخ به سؤالات</p>
+        </div>
+
+        <div class="flex items-center gap-3">
+          <button onclick="switchTab('home')" class="bg-bgCustom hover:bg-slate-100 text-graphite border border-accent px-4 py-2.5 rounded-xl text-xs font-bold transition-all flex items-center gap-1.5 shadow-xs">
+            <i data-lucide="store" class="w-4 h-4 text-primary"></i>
+            <span>جستجوی تامین‌کننده جدید</span>
+          </button>
+        </div>
+      </div>
+
+      <!-- SPLIT-SCREEN CHAT CONTAINER -->
+      <div class="bg-white border border-accent rounded-3xl overflow-hidden shadow-md grid grid-cols-1 lg:grid-cols-12 min-h-[600px] h-[720px]">
+
+        <!-- LEFT SIDEBAR: THREADS LIST (lg:col-span-4) -->
+        <div class="lg:col-span-4 border-l border-accent flex flex-col bg-bgCustom">
+
+          <!-- Search Header in Sidebar -->
+          <div class="p-4 border-b border-accent bg-white space-y-3">
+            <div class="flex items-center justify-between">
+              <h3 class="text-sm font-bold text-graphite flex items-center gap-2">
+                <i data-lucide="message-circle" class="w-4 h-4 text-primary"></i>
+                <span>لیست گفت‌وگوها</span>
+              </h3>
+              <span id="chat-total-threads-count" class="text-[11px] font-bold bg-primary/10 text-primary px-2.5 py-0.5 rounded-full">۳ گفتگو</span>
+            </div>
+
+            <div class="relative">
+              <input type="text" id="chat-thread-search" oninput="filterChatThreads()" placeholder="جستجو در گفتگوها..." class="w-full bg-bgCustom border border-accent rounded-xl py-2 px-3 pl-8 text-xs font-medium focus:outline-none focus:border-primary">
+              <i data-lucide="search" class="w-4 h-4 text-secondary absolute left-2.5 top-2.5"></i>
+            </div>
+          </div>
+
+          <!-- Thread List Scroll Container -->
+          <div id="chat-threads-list-container" class="flex-1 overflow-y-auto custom-scrollbar divide-y divide-accent/60">
+            <!-- Populated dynamically via JS -->
+          </div>
+
+        </div>
+
+        <!-- RIGHT MAIN PANEL: ACTIVE CONVERSATION THREAD (lg:col-span-8) -->
+        <div id="chat-main-thread-panel" class="lg:col-span-8 flex flex-col bg-white min-h-0">
+
+          <!-- ACTIVE THREAD TOP BAR -->
+          <div id="chat-active-header" class="p-4 border-b border-accent bg-white flex items-center justify-between gap-4 shrink-0 shadow-xs">
+            <!-- Populated dynamically via JS -->
+          </div>
+
+          <!-- STATUS BADGE / INQUIRY SUMMARY CARD -->
+          <div id="chat-active-status-bar" class="bg-primary/5 border-b border-primary/20 px-5 py-3 text-xs font-bold text-graphite flex flex-wrap items-center justify-between gap-3 shrink-0">
+            <!-- Populated dynamically via JS -->
+          </div>
+
+          <!-- MESSAGES STREAM CONTAINER -->
+          <div id="chat-messages-stream-container" class="flex-1 overflow-y-auto p-5 space-y-4 custom-scrollbar bg-[#FDFBFC]">
+            <!-- Messages rendered via JS -->
+          </div>
+
+          <!-- INPUT ACTION BAR -->
+          <div class="p-4 border-t border-accent bg-white shrink-0 space-y-2">
+            <form onsubmit="handleSendChatMessage(event)" class="flex items-center gap-2">
+              <button type="button" onclick="alert('شبیه‌سازی آپلود فایل / تصویر نمونه‌کار')" class="p-2.5 rounded-xl border border-accent hover:border-primary text-secondary hover:text-primary transition-colors shrink-0" title="پیوست تصویر">
+                <i data-lucide="paperclip" class="w-4 h-4"></i>
+              </button>
+
+              <input type="text" id="chat-message-input" required placeholder="پیام خود را بنویسید..." class="flex-1 bg-bgCustom border border-accent rounded-xl px-4 py-3 text-xs font-medium text-graphite focus:outline-none focus:border-primary">
+
+              <button type="submit" class="bg-primary hover:bg-emerald-900 text-white font-bold px-5 py-3 rounded-xl text-xs transition-all flex items-center gap-1.5 shadow-md shrink-0">
+                <span>ارسال</span>
+                <i data-lucide="send" class="w-4 h-4"></i>
+              </button>
+            </form>
+            <span class="block text-[10px] text-secondary font-medium">پاسخ‌های تأمین‌کننده به صورت زنده با شبیه‌سازی هوشمند پاسخ داده می‌شوند.</span>
+          </div>
+
+        </div>
+
+      </div>
+
+    </div>
+
   </main>
 
   <!-- ========================================== -->
@@ -2294,33 +2397,91 @@
   <!-- ========================================== -->
   <!-- MODAL: DIRECT PRICE INQUIRY POPUP          -->
   <!-- ========================================== -->
-  <div id="inquiry-modal" class="fixed inset-0 z-50 bg-black/50 backdrop-blur-xs flex items-center justify-center p-4 hidden">
-    <div class="bg-white border border-accent rounded-3xl max-w-lg w-full p-6 shadow-2xl space-y-4 relative">
-      <button onclick="closeInquiryModal()" class="absolute top-4 left-4 text-secondary hover:text-graphite">
+  <div id="inquiry-modal" class="fixed inset-0 z-50 bg-black/60 backdrop-blur-xs flex items-center justify-center p-4 hidden">
+    <div class="bg-white border border-accent rounded-3xl max-w-xl w-full p-6 sm:p-8 shadow-2xl space-y-5 relative max-h-[90vh] overflow-y-auto custom-scrollbar">
+      <button onclick="closeInquiryModal()" class="absolute top-5 left-5 text-secondary hover:text-graphite transition-colors">
         <i data-lucide="x" class="w-6 h-6"></i>
       </button>
 
-      <div class="border-b border-accent pb-3">
-        <span class="text-xs font-bold text-primary">استعلام قیمت آنلاین و مستقیم</span>
-        <h3 id="modal-vendor-name" class="text-xl font-bold text-graphite mt-0.5">درخواست استعلام قیمت</h3>
+      <div class="border-b border-accent pb-4">
+        <div class="inline-flex items-center gap-1.5 bg-primary/10 text-primary text-xs font-bold px-3 py-1 rounded-full mb-1">
+          <i data-lucide="message-square-quote" class="w-3.5 h-3.5"></i>
+          <span>استعلام قیمت آنلاین و مستقیم</span>
+        </div>
+        <h3 id="modal-vendor-name" class="text-xl font-bold text-graphite">درخواست استعلام قیمت از تامین‌کننده</h3>
+        <p class="text-xs text-secondary mt-0.5">پس از ارسال، استعلام شما در پنل پیام‌ها ثبت شده و پیش‌فاکتور برای شما صادر می‌گردد.</p>
       </div>
 
-      <form id="inquiry-form" onsubmit="handleInquirySubmit(event)" class="space-y-3">
+      <form id="inquiry-form" onsubmit="handleInquirySubmit(event)" class="space-y-4 text-xs font-bold text-graphite">
         <input type="hidden" id="inquiry-vendor-id" value="">
 
-        <div>
-          <label class="block text-xs font-bold text-graphite mb-1">نام و نام خانوادگی:</label>
-          <input type="text" required id="inquiry-name" class="w-full bg-bgCustom border border-accent rounded-xl p-2.5 text-xs font-medium focus:outline-none focus:border-primary">
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+          <div>
+            <label class="block mb-1">نام و نام خانوادگی شما *</label>
+            <input type="text" required id="inquiry-name" value="علی و سارا" class="w-full bg-bgCustom border border-accent rounded-xl p-2.5 text-xs font-medium focus:outline-none focus:border-primary">
+          </div>
+
+          <div>
+            <label class="block mb-1">شماره تماس (جهت دریافت پیامک/پیش‌فاکتور) *</label>
+            <input type="tel" required id="inquiry-phone" value="09121234567" placeholder="۰۹۱۲..." class="w-full bg-bgCustom border border-accent rounded-xl p-2.5 text-xs font-medium focus:outline-none focus:border-primary dir-ltr">
+          </div>
         </div>
 
-        <div>
-          <label class="block text-xs font-bold text-graphite mb-1">شماره تماس (جهت دریافت پیش‌فاکتور/پیامک):</label>
-          <input type="tel" required id="inquiry-phone" placeholder="۰۹۱۲..." class="w-full bg-bgCustom border border-accent rounded-xl p-2.5 text-xs font-medium focus:outline-none focus:border-primary" dir="ltr">
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+          <div>
+            <label class="block mb-1">تاریخ تقریبی مراسم (شمسی) *</label>
+            <input type="text" required id="inquiry-date" value="۱۴۰۳/۰۶/۱۵" placeholder="مثلاً: ۱۴۰۳/۰۶/۱۵" class="w-full bg-bgCustom border border-accent rounded-xl p-2.5 text-xs font-medium focus:outline-none focus:border-primary">
+          </div>
+
+          <div>
+            <label class="block mb-1">تعداد تقریبی مهمانان *</label>
+            <input type="number" required id="inquiry-guests" value="250" min="10" max="2000" class="w-full bg-bgCustom border border-accent rounded-xl p-2.5 text-xs font-medium focus:outline-none focus:border-primary">
+          </div>
         </div>
 
-        <button type="submit" class="w-full bg-primary hover:bg-primary-hover text-white font-bold py-3 rounded-xl text-sm transition-colors shadow-md flex items-center justify-center gap-2">
+        <!-- Service Checklist based on offerings -->
+        <div class="space-y-2">
+          <label class="block">خدمات مورد نظر شما (چک‌لیست):</label>
+          <div id="inquiry-services-checklist" class="grid grid-cols-1 sm:grid-cols-2 gap-2 p-3 bg-bgCustom border border-accent rounded-2xl">
+            <label class="flex items-center gap-2 cursor-pointer p-1.5 hover:bg-white rounded-lg">
+              <input type="checkbox" value="منوی شام VIP / سلف سرویس" checked class="rounded text-primary focus:ring-primary w-4 h-4">
+              <span>منوی شام VIP / سلف سرویس</span>
+            </label>
+            <label class="flex items-center gap-2 cursor-pointer p-1.5 hover:bg-white rounded-lg">
+              <input type="checkbox" value="ورودی باغ و سالن اصلی" checked class="rounded text-primary focus:ring-primary w-4 h-4">
+              <span>ورودی باغ و سالن اصلی</span>
+            </label>
+            <label class="flex items-center gap-2 cursor-pointer p-1.5 hover:bg-white rounded-lg">
+              <input type="checkbox" value="شمع‌آرایی & آتش‌بازی" checked class="rounded text-primary focus:ring-primary w-4 h-4">
+              <span>شمع‌آرایی & آتش‌بازی</span>
+            </label>
+            <label class="flex items-center gap-2 cursor-pointer p-1.5 hover:bg-white rounded-lg">
+              <input type="checkbox" value="سفره عقد اختصاصی" class="rounded text-primary focus:ring-primary w-4 h-4">
+              <span>سفره عقد اختصاصی</span>
+            </label>
+          </div>
+        </div>
+
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+          <div>
+            <label class="block mb-1">محدوده بودجه مد نظر:</label>
+            <select id="inquiry-budget-range" class="w-full bg-bgCustom border border-accent rounded-xl p-2.5 text-xs font-semibold focus:outline-none focus:border-primary cursor-pointer">
+              <option value="زیر ۵۰ میلیون تومان">زیر ۵۰ میلیون تومان</option>
+              <option value="۵۰ تا ۱۰۰ میلیون تومان">۵۰ تا ۱۰۰ میلیون تومان</option>
+              <option value="۱۰۰ تا ۱۵۰ میلیون تومان" selected>۱۰۰ تا ۱۵۰ میلیون تومان</option>
+              <option value="بالای ۱۵۰ میلیون تومان">بالای ۱۵۰ میلیون تومان (VIP)</option>
+            </select>
+          </div>
+
+          <div>
+            <label class="block mb-1">توضیحات و پیام اختصاصی برای تامین‌کننده:</label>
+            <input type="text" id="inquiry-note" value="سلام، درخواست استعلام قیمت و دریافت پیش‌فاکتور منوی VIP را دارم." class="w-full bg-bgCustom border border-accent rounded-xl p-2.5 text-xs font-medium focus:outline-none focus:border-primary">
+          </div>
+        </div>
+
+        <button type="submit" class="w-full bg-primary hover:bg-emerald-900 text-white font-bold py-3.5 rounded-2xl text-xs transition-all shadow-md flex items-center justify-center gap-2 mt-2">
           <i data-lucide="send" class="w-4 h-4"></i>
-          <span>ثبت و ارسال استعلام قیمت</span>
+          <span>ارسال فوری استعلام قیمت و ورود به گفت‌وگو</span>
         </button>
       </form>
     </div>
@@ -2478,6 +2639,132 @@
     let inquiries = [
       { id: 101, name: "امیرحسین رضایی", phone: "09121112233", date: "۱۴۰۳/۰۵/۲۰", guests: 250, details: "استعلام منوی دیس پرس همراه با ورودی و شمع‌آرایی" }
     ];
+
+    // CHAT & MESSAGING SYSTEM STATE
+    let chatState = {
+      activeThreadId: "thread-1",
+      threads: [
+        {
+          id: "thread-1",
+          vendorId: 1,
+          vendorName: "باغ تالار تشریفاتی زمرد",
+          vendorCategory: "تالار و باغ تشریفات",
+          vendorLogo: "https://images.unsplash.com/photo-1519167758481-83f550bb49b3?auto=format&fit=crop&w=400&q=80",
+          verified: true,
+          phone: "۰۲۱-۴۴۵۵۶۶۷۷",
+          statusBadge: "quote_sent", // pending_quote, quote_sent, finalized
+          statusText: "پیش‌فاکتور صادر شد",
+          unreadCount: 0,
+          lastMessage: "سلام، پیش‌فاکتور منوی VIP با تخفیف ویژه پلتفرم عروسی تو برای شما تنظیم و صادر شد.",
+          lastTime: "۱۰:۴۵",
+          inquiryData: {
+            date: "۱۴۰۳/۰۶/۱۵",
+            guests: 250,
+            services: ["منوی شام VIP", "ورودی مجلل باغ", "شمع‌آرایی & آتش‌بازی"],
+            budget: "۱۲۰ تا ۱۵۰ میلیون تومان",
+            note: "سلام، درخواست استعلام قیمت برای ۲۵۰ نفر مهمان در تاریخ ۱۵ شهریور را دارم."
+          },
+          messages: [
+            {
+              id: "msg-101",
+              sender: "user",
+              text: "سلام و احترام، درخواست استعلام قیمت منوی VIP برای مراسم عروسی در تاریخ ۱۵ شهریور ۱۴۰۳ با ۲۵۰ نفر مهمان را دارم.",
+              time: "۱۰:۳۰",
+              isInquirySummary: true
+            },
+            {
+              id: "msg-102",
+              sender: "vendor",
+              text: "سلام و تبریک فراوان بابت پیوندتان! بله، تاریخ ۱۵ شهریور خالي می‌باشد. ظرفیت تالار زمرد تا ۷۰۰ نفر است.",
+              time: "۱۰:۳۸"
+            },
+            {
+              id: "msg-103",
+              sender: "vendor",
+              text: "سلام، پیش‌فاکتور منوی VIP با تخفیف ویژه پلتفرم عروسی تو برای شما تنظیم و صادر شد.",
+              time: "۱۰:۴۵",
+              hasQuoteCard: true,
+              quoteDetails: {
+                title: "پیش‌فاکتور رسمی منوی VIP زمرد",
+                amount: "۱۲۵,۰۰۰,۰۰۰ تومان",
+                servicesIncluded: ["منوی سلف‌سرویس ۳ رنگ", "ورودی مجلل باغ", "شمع‌آرایی کامل میزها", "تست رایگان برای ۴ نفر"]
+              }
+            }
+          ]
+        },
+        {
+          id: "thread-2",
+          vendorId: 2,
+          vendorName: "آتلیه تخصصی نور و تصویر",
+          vendorCategory: "آتلیه و عکاسی",
+          vendorLogo: "https://images.unsplash.com/photo-1537633552985-df8429e8048b?auto=format&fit=crop&w=400&q=80",
+          verified: true,
+          phone: "۰۲۱-۲۲۳۳۴۴۵۵",
+          statusBadge: "pending_quote",
+          statusText: "در انتظار پاسخ استعلام",
+          unreadCount: 1,
+          lastMessage: "درخواست استعلام پکیج فرمالیته و روز عروسی ارسال گردید.",
+          lastTime: "دیروز",
+          inquiryData: {
+            date: "۱۴۰۳/۰۶/۱۴",
+            guests: 200,
+            services: ["فیلمبرداری ۲ دوربین 4K", "عکاسی فرمالیته شمال", "آلبوم ایتالیایی 80x40"],
+            budget: "۴۰ تا ۵۰ میلیون تومان",
+            note: "درخواست استعلام پکیج کامل عکاسی روز عروسی و کلیپ فرمالیته."
+          },
+          messages: [
+            {
+              id: "msg-201",
+              sender: "user",
+              text: "سلام، درخواست استعلام پکیج فرمالیته شمال و تصویربرداری روز عروسی با ۲ دوربین 4K را دارم.",
+              time: "دیروز ۱۶:۲۰",
+              isInquirySummary: true
+            },
+            {
+              id: "msg-202",
+              sender: "vendor",
+              text: "درخواست استعلام شما دریافت شد. مدیر آتلیه به زودی پکیج و نمونه کارهای اختصاصی را برای شما ارسال خواهد کرد.",
+              time: "دیروز ۱۶:۲۲"
+            }
+          ]
+        },
+        {
+          id: "thread-3",
+          vendorId: 4,
+          vendorName: "مزون عروس لوسیا",
+          vendorCategory: "مزون و لباس عروس",
+          vendorLogo: "https://images.unsplash.com/photo-1594552072238-b8a33785b261?auto=format&fit=crop&w=400&q=80",
+          verified: true,
+          phone: "۰۲۱-۸۸۹۹۷۷۶۶",
+          statusBadge: "finalized",
+          statusText: "رزرو نهایی شد",
+          unreadCount: 0,
+          lastMessage: "وقت پرو اول شما برای روز سه‌شنبه ساعت ۱۶:۰۰ هماهنگ شد.",
+          lastTime: "۳ روز قبل",
+          inquiryData: {
+            date: "۱۴۰۳/۰۶/۱۰",
+            guests: 0,
+            services: ["دوخت اختصاصی لباس عروس A-line", "تاج و تور فرانسه"],
+            budget: "۳۰ میلیون تومان",
+            note: "هماهنگی وقت پرو و دوخت سفارش اختصاصی"
+          },
+          messages: [
+            {
+              id: "msg-301",
+              sender: "user",
+              text: "سلام، بیعانه سفارش دوخت لباس عروس واریز شد. جهت هماهنگی وقت پرو پیام دادم.",
+              time: "۳ روز قبل"
+            },
+            {
+              id: "msg-302",
+              sender: "vendor",
+              text: "وقت پرو اول شما برای روز سه‌شنبه ساعت ۱۶:۰۰ هماهنگ شد. منتظر حضور گرمتان هستیم!",
+              time: "۳ روز قبل"
+            }
+          ]
+        }
+      ]
+    };
 
     let bookedDates = [5, 12, 19, 26];
 
@@ -4164,8 +4451,79 @@
     }
 
     function openInquiryModal(vendorId, vendorName) {
-      document.getElementById('inquiry-vendor-id').value = vendorId;
-      document.getElementById('modal-vendor-name').innerText = vendorName;
+      let vId = vendorId;
+      if (typeof vendorId === 'string' && !isNaN(parseInt(vendorId))) {
+        vId = parseInt(vendorId);
+      }
+      const vendor = vendors.find(v => v.id === vId) || vendors[0];
+      const targetName = vendorName || (vendor ? vendor.name : "تامین‌کننده");
+
+      document.getElementById('inquiry-vendor-id').value = vendor ? vendor.id : 1;
+      document.getElementById('modal-vendor-name').innerText = targetName;
+
+      // Update checkboxes dynamically according to vendor category if available
+      const container = document.getElementById('inquiry-services-checklist');
+      if (container) {
+        if (vendor && vendor.category.includes("آتلیه")) {
+          container.innerHTML = `
+            <label class="flex items-center gap-2 cursor-pointer p-1.5 hover:bg-white rounded-lg">
+              <input type="checkbox" value="عکاسی و فیلمبرداری روز عروسی" checked class="rounded text-primary focus:ring-primary w-4 h-4">
+              <span>عکاسی و فیلمبرداری روز عروسی</span>
+            </label>
+            <label class="flex items-center gap-2 cursor-pointer p-1.5 hover:bg-white rounded-lg">
+              <input type="checkbox" value="کلیپ فرمالیته شمال / کویر" checked class="rounded text-primary focus:ring-primary w-4 h-4">
+              <span>کلیپ فرمالیته شمال / کویر</span>
+            </label>
+            <label class="flex items-center gap-2 cursor-pointer p-1.5 hover:bg-white rounded-lg">
+              <input type="checkbox" value="آلبوم ایتالیایی 80x40" checked class="rounded text-primary focus:ring-primary w-4 h-4">
+              <span>آلبوم ایتالیایی 80x40</span>
+            </label>
+            <label class="flex items-center gap-2 cursor-pointer p-1.5 hover:bg-white rounded-lg">
+              <input type="checkbox" value="تصویربرداری هلی‌شات & کرین" class="rounded text-primary focus:ring-primary w-4 h-4">
+              <span>تصویربرداری هلی‌شات & کرین</span>
+            </label>
+          `;
+        } else if (vendor && vendor.category.includes("سالن زیبایی")) {
+          container.innerHTML = `
+            <label class="flex items-center gap-2 cursor-pointer p-1.5 hover:bg-white rounded-lg">
+              <input type="checkbox" value="میکاپ و گریم اختصاصی عروس" checked class="rounded text-primary focus:ring-primary w-4 h-4">
+              <span>میکاپ و گریم اختصاصی عروس</span>
+            </label>
+            <label class="flex items-center gap-2 cursor-pointer p-1.5 hover:bg-white rounded-lg">
+              <input type="checkbox" value="شینیون و استایل مو" checked class="rounded text-primary focus:ring-primary w-4 h-4">
+              <span>شینیون و استایل مو</span>
+            </label>
+            <label class="flex items-center gap-2 cursor-pointer p-1.5 hover:bg-white rounded-lg">
+              <input type="checkbox" value="خدمات ناخن و پاکسازی پوست" class="rounded text-primary focus:ring-primary w-4 h-4">
+              <span>خدمات ناخن و پاکسازی پوست</span>
+            </label>
+            <label class="flex items-center gap-2 cursor-pointer p-1.5 hover:bg-white rounded-lg">
+              <input type="checkbox" value="میکاپ همراهان" class="rounded text-primary focus:ring-primary w-4 h-4">
+              <span>میکاپ همراهان</span>
+            </label>
+          `;
+        } else {
+          container.innerHTML = `
+            <label class="flex items-center gap-2 cursor-pointer p-1.5 hover:bg-white rounded-lg">
+              <input type="checkbox" value="منوی شام VIP / سلف سرویس" checked class="rounded text-primary focus:ring-primary w-4 h-4">
+              <span>منوی شام VIP / سلف سرویس</span>
+            </label>
+            <label class="flex items-center gap-2 cursor-pointer p-1.5 hover:bg-white rounded-lg">
+              <input type="checkbox" value="ورودی باغ و سالن اصلی" checked class="rounded text-primary focus:ring-primary w-4 h-4">
+              <span>ورودی باغ و سالن اصلی</span>
+            </label>
+            <label class="flex items-center gap-2 cursor-pointer p-1.5 hover:bg-white rounded-lg">
+              <input type="checkbox" value="شمع‌آرایی & آتش‌بازی" checked class="rounded text-primary focus:ring-primary w-4 h-4">
+              <span>شمع‌آرایی & آتش‌بازی</span>
+            </label>
+            <label class="flex items-center gap-2 cursor-pointer p-1.5 hover:bg-white rounded-lg">
+              <input type="checkbox" value="سفره عقد اختصاصی" class="rounded text-primary focus:ring-primary w-4 h-4">
+              <span>سفره عقد اختصاصی</span>
+            </label>
+          `;
+        }
+      }
+
       document.getElementById('inquiry-modal').classList.remove('hidden');
     }
 
@@ -4175,14 +4533,88 @@
 
     function handleInquirySubmit(e) {
       e.preventDefault();
-      const name = document.getElementById('inquiry-name').value;
-      const phone = document.getElementById('inquiry-phone').value;
+      const vendorIdVal = parseInt(document.getElementById('inquiry-vendor-id').value) || 1;
+      const vendor = vendors.find(v => v.id === vendorIdVal) || vendors[0];
+      const name = document.getElementById('inquiry-name').value.trim();
+      const phone = document.getElementById('inquiry-phone').value.trim();
+      const date = document.getElementById('inquiry-date').value.trim() || '۱۴۰۳/۰۶/۱۵';
+      const guests = parseInt(document.getElementById('inquiry-guests').value) || 200;
+      const budget = document.getElementById('inquiry-budget-range').value;
+      const note = document.getElementById('inquiry-note').value.trim();
 
-      inquiries.push({ id: Date.now(), name, phone, date: '۱۴۰۳/۰۶/۰۱', guests: 200, details: 'درخواست پیش فاکتور' });
+      const checkedServices = [];
+      document.querySelectorAll('#inquiry-services-checklist input[type="checkbox"]:checked').forEach(cb => {
+        checkedServices.push(cb.value);
+      });
+
+      inquiries.push({
+        id: Date.now(),
+        name,
+        phone,
+        date,
+        guests,
+        details: `استعلام ${vendor.name} - ${checkedServices.join('، ')}`
+      });
+
+      // Find or create active thread in chatState
+      let thread = chatState.threads.find(t => t.vendorId === vendor.id);
+      const currentTimeStr = new Date().toLocaleTimeString('fa-IR', { hour: '2-digit', minute: '2-digit' });
+
+      if (!thread) {
+        thread = {
+          id: "thread-" + Date.now(),
+          vendorId: vendor.id,
+          vendorName: vendor.name,
+          vendorCategory: vendor.category,
+          vendorLogo: vendor.image,
+          verified: vendor.verified,
+          phone: "۰۲۱-۴۴۵۵۶۶۷۷",
+          statusBadge: "pending_quote",
+          statusText: "در انتظار پاسخ استعلام",
+          unreadCount: 0,
+          lastMessage: `درخواست استعلام جدید برای ${date} ارسال گردید.`,
+          lastTime: currentTimeStr,
+          inquiryData: {
+            date,
+            guests,
+            services: checkedServices,
+            budget,
+            note
+          },
+          messages: []
+        };
+        chatState.threads.unshift(thread);
+      } else {
+        thread.statusBadge = "pending_quote";
+        thread.statusText = "در انتظار پاسخ استعلام";
+        thread.lastTime = currentTimeStr;
+        thread.inquiryData = {
+          date,
+          guests,
+          services: checkedServices,
+          budget,
+          note
+        };
+      }
+
+      const inquirySummaryText = `ارسال استعلام قیمت سریع:\n• تاریخ مراسم: ${date}\n• تعداد مهمانان: ${guests} نفر\n• خدمات درخواستی: ${checkedServices.join('، ')}\n• محدوده بودجه: ${budget}\n• توضیحات: ${note || '-'}`;
+
+      thread.messages.push({
+        id: "msg-" + Date.now(),
+        sender: "user",
+        text: inquirySummaryText,
+        time: currentTimeStr,
+        isInquirySummary: true
+      });
+
+      thread.lastMessage = `استعلام قیمت ارسال گردید (${date})`;
+      chatState.activeThreadId = thread.id;
+
       renderInquiries();
       closeInquiryModal();
-      document.getElementById('inquiry-form').reset();
-      alert('استعلام قیمت با موفقیت ثبت گردید.');
+
+      alert('استعلام قیمت با موفقیت برای تامین‌کننده ارسال شد. در حال انتقال به صفحه گفت‌وگوها...');
+      switchTab('messages');
     }
 
     function openRsvpModal() {
@@ -6688,6 +7120,348 @@
       lucide.createIcons();
     }
 
+    // ==========================================
+    // CHAT & DIRECT MESSAGING RENDER LOGIC
+    // ==========================================
+    function renderChatThreadsList() {
+      const container = document.getElementById('chat-threads-list-container');
+      const countBadge = document.getElementById('chat-total-threads-count');
+      const navBadge = document.getElementById('nav-chat-unread-badge');
+      if (!container) return;
+
+      container.innerHTML = '';
+      const threads = chatState.threads;
+
+      if (countBadge) countBadge.innerText = `${threads.length} گفتگو`;
+
+      let totalUnread = 0;
+      threads.forEach(t => {
+        totalUnread += (t.unreadCount || 0);
+      });
+
+      if (navBadge) {
+        if (totalUnread > 0) {
+          navBadge.innerText = totalUnread;
+          navBadge.classList.remove('hidden');
+        } else {
+          navBadge.classList.add('hidden');
+        }
+      }
+
+      if (threads.length === 0) {
+        container.innerHTML = `<div class="p-6 text-center text-secondary text-xs font-medium">هیچ گفت‌وگویی یافت نشد.</div>`;
+        return;
+      }
+
+      threads.forEach(t => {
+        const isActive = t.id === chatState.activeThreadId;
+        const item = document.createElement('div');
+        item.onclick = () => selectChatThread(t.id);
+        item.className = `p-4 cursor-pointer transition-all flex items-start gap-3 relative ${
+          isActive ? 'bg-primary/10 border-r-4 border-primary shadow-xs' : 'hover:bg-slate-100 bg-white'
+        }`;
+
+        let badgeBg = "bg-blue-100 text-blue-800 border-blue-200";
+        if (t.statusBadge === "quote_sent") badgeBg = "bg-emerald-100 text-emerald-800 border-emerald-200";
+        if (t.statusBadge === "finalized") badgeBg = "bg-purple-100 text-purple-800 border-purple-200";
+
+        item.innerHTML = `
+          <div class="relative shrink-0">
+            <div class="w-12 h-12 rounded-2xl overflow-hidden border border-accent bg-white">
+              <img src="${t.vendorLogo}" alt="${t.vendorName}" class="w-full h-full object-cover">
+            </div>
+            ${t.unreadCount > 0 ? `
+              <span class="absolute -top-1 -right-1 bg-rose-500 text-white text-[10px] font-bold w-5 h-5 rounded-full flex items-center justify-center border-2 border-white shadow-xs">
+                ${t.unreadCount}
+              </span>
+            ` : ''}
+          </div>
+
+          <div class="flex-1 min-w-0 space-y-1">
+            <div class="flex justify-between items-center">
+              <h4 class="text-xs font-bold text-graphite truncate">${t.vendorName}</h4>
+              <span class="text-[10px] text-secondary font-medium shrink-0 ml-1">${t.lastTime}</span>
+            </div>
+
+            <p class="text-[11px] text-secondary truncate font-medium">${t.lastMessage}</p>
+
+            <div class="flex items-center gap-2 pt-0.5">
+              <span class="text-[9px] font-bold px-2 py-0.5 rounded-full border ${badgeBg}">
+                ${t.statusText}
+              </span>
+            </div>
+          </div>
+        `;
+
+        container.appendChild(item);
+      });
+
+      lucide.createIcons();
+    }
+
+    function selectChatThread(threadId) {
+      chatState.activeThreadId = threadId;
+      const thread = chatState.threads.find(t => t.id === threadId);
+      if (thread) {
+        thread.unreadCount = 0;
+      }
+      renderChatThreadsList();
+      renderChatActiveThread();
+    }
+
+    function filterChatThreads() {
+      const query = document.getElementById('chat-thread-search')?.value.trim().toLowerCase() || '';
+      const container = document.getElementById('chat-threads-list-container');
+      if (!container) return;
+
+      const filtered = chatState.threads.filter(t =>
+        t.vendorName.toLowerCase().includes(query) ||
+        t.vendorCategory.toLowerCase().includes(query) ||
+        t.lastMessage.toLowerCase().includes(query)
+      );
+
+      container.innerHTML = '';
+      if (filtered.length === 0) {
+        container.innerHTML = `<div class="p-6 text-center text-secondary text-xs font-medium">نتیجه‌ای یافت نشد.</div>`;
+        return;
+      }
+
+      filtered.forEach(t => {
+        const isActive = t.id === chatState.activeThreadId;
+        const item = document.createElement('div');
+        item.onclick = () => selectChatThread(t.id);
+        item.className = `p-4 cursor-pointer transition-all flex items-start gap-3 relative ${
+          isActive ? 'bg-primary/10 border-r-4 border-primary shadow-xs' : 'hover:bg-slate-100 bg-white'
+        }`;
+
+        let badgeBg = "bg-blue-100 text-blue-800 border-blue-200";
+        if (t.statusBadge === "quote_sent") badgeBg = "bg-emerald-100 text-emerald-800 border-emerald-200";
+        if (t.statusBadge === "finalized") badgeBg = "bg-purple-100 text-purple-800 border-purple-200";
+
+        item.innerHTML = `
+          <div class="relative shrink-0">
+            <div class="w-12 h-12 rounded-2xl overflow-hidden border border-accent bg-white">
+              <img src="${t.vendorLogo}" alt="${t.vendorName}" class="w-full h-full object-cover">
+            </div>
+          </div>
+
+          <div class="flex-1 min-w-0 space-y-1">
+            <div class="flex justify-between items-center">
+              <h4 class="text-xs font-bold text-graphite truncate">${t.vendorName}</h4>
+              <span class="text-[10px] text-secondary font-medium shrink-0 ml-1">${t.lastTime}</span>
+            </div>
+
+            <p class="text-[11px] text-secondary truncate font-medium">${t.lastMessage}</p>
+
+            <div class="flex items-center gap-2 pt-0.5">
+              <span class="text-[9px] font-bold px-2 py-0.5 rounded-full border ${badgeBg}">
+                ${t.statusText}
+              </span>
+            </div>
+          </div>
+        `;
+
+        container.appendChild(item);
+      });
+
+      lucide.createIcons();
+    }
+
+    function renderChatActiveThread() {
+      const activeThread = chatState.threads.find(t => t.id === chatState.activeThreadId) || chatState.threads[0];
+      if (!activeThread) return;
+
+      // 1. Top Bar Header
+      const header = document.getElementById('chat-active-header');
+      if (header) {
+        header.innerHTML = `
+          <div class="flex items-center gap-3">
+            <div class="w-12 h-12 rounded-2xl overflow-hidden border border-accent bg-white shrink-0">
+              <img src="${activeThread.vendorLogo}" alt="${activeThread.vendorName}" class="w-full h-full object-cover">
+            </div>
+            <div>
+              <div class="flex items-center gap-2">
+                <h3 class="text-base font-bold text-graphite">${activeThread.vendorName}</h3>
+                ${activeThread.verified ? `
+                  <span class="bg-primary text-white text-[10px] font-bold px-2 py-0.5 rounded-full flex items-center gap-0.5">
+                    <i data-lucide="shield-check" class="w-3 h-3"></i>
+                    <span>تاییدیه رسمی</span>
+                  </span>
+                ` : ''}
+              </div>
+              <span class="text-xs text-secondary font-medium">${activeThread.vendorCategory} • آنلاین</span>
+            </div>
+          </div>
+
+          <div class="flex items-center gap-2">
+            <a href="tel:${activeThread.phone}" class="bg-primary/10 hover:bg-primary/20 text-primary border border-primary/20 px-3.5 py-2 rounded-xl text-xs font-bold transition-all flex items-center gap-1.5">
+              <i data-lucide="phone" class="w-4 h-4"></i>
+              <span class="hidden sm:inline">تماس مستقیم: ${activeThread.phone}</span>
+            </a>
+            <button onclick="switchTab('vendor-profile')" class="bg-bgCustom hover:bg-slate-100 text-graphite border border-accent px-3 py-2 rounded-xl text-xs font-bold transition-colors">
+              مشاهده پروفایل
+            </button>
+          </div>
+        `;
+      }
+
+      // 2. Status Bar & Inquiry Card
+      const statusBar = document.getElementById('chat-active-status-bar');
+      if (statusBar && activeThread.inquiryData) {
+        let statusBadgeHTML = `<span class="bg-amber-100 text-amber-800 border border-amber-200 px-3 py-1 rounded-full text-xs font-bold">در انتظار پاسخ تامین‌کننده</span>`;
+        if (activeThread.statusBadge === 'quote_sent') {
+          statusBadgeHTML = `<span class="bg-emerald-100 text-emerald-800 border border-emerald-200 px-3 py-1 rounded-full text-xs font-bold">پیش‌فاکتور صادر شد</span>`;
+        } else if (activeThread.statusBadge === 'finalized') {
+          statusBadgeHTML = `<span class="bg-purple-100 text-purple-800 border border-purple-200 px-3 py-1 rounded-full text-xs font-bold">رزرو نهایی شد</span>`;
+        }
+
+        const inq = activeThread.inquiryData;
+        statusBar.innerHTML = `
+          <div class="flex items-center gap-2 flex-wrap">
+            <span class="text-primary font-black">اطلاعات استعلام قیمت ثبت شده:</span>
+            <span class="bg-white px-2.5 py-1 rounded-lg border border-accent">تاریخ: ${inq.date}</span>
+            <span class="bg-white px-2.5 py-1 rounded-lg border border-accent">مهمانان: ${inq.guests} نفر</span>
+            <span class="bg-white px-2.5 py-1 rounded-lg border border-accent">خدمات: ${inq.services ? inq.services.join('، ') : 'ارائه شده'}</span>
+          </div>
+          <div>
+            ${statusBadgeHTML}
+          </div>
+        `;
+      }
+
+      // 3. Message Stream
+      const streamContainer = document.getElementById('chat-messages-stream-container');
+      if (streamContainer) {
+        streamContainer.innerHTML = '';
+
+        activeThread.messages.forEach(msg => {
+          const isUser = msg.sender === 'user';
+          const msgBox = document.createElement('div');
+          msgBox.className = `flex flex-col ${isUser ? 'items-start' : 'items-end'}`;
+
+          let content = '';
+
+          if (msg.isInquirySummary) {
+            content = `
+              <div class="max-w-md bg-primary text-white p-4 rounded-3xl rounded-tr-xs shadow-sm space-y-2 text-xs font-medium leading-relaxed">
+                <div class="font-bold border-b border-white/20 pb-1.5 flex items-center gap-1.5">
+                  <i data-lucide="send" class="w-3.5 h-3.5"></i>
+                  <span>خلاصه استعلام قیمت ارسال شده</span>
+                </div>
+                <div class="whitespace-pre-line">${msg.text}</div>
+                <span class="block text-[10px] text-emerald-200 text-left dir-ltr mt-1">${msg.time}</span>
+              </div>
+            `;
+          } else if (msg.hasQuoteCard && msg.quoteDetails) {
+            const q = msg.quoteDetails;
+            content = `
+              <div class="max-w-md bg-white border-2 border-emerald-500 p-4 rounded-3xl rounded-tl-xs shadow-md space-y-3 text-xs font-bold text-graphite">
+                <div class="flex justify-between items-center border-b border-accent pb-2">
+                  <span class="text-primary flex items-center gap-1">
+                    <i data-lucide="file-text" class="w-4 h-4"></i>
+                    <span>${q.title}</span>
+                  </span>
+                  <span class="bg-emerald-100 text-emerald-800 text-[10px] font-bold px-2 py-0.5 rounded-full">رسمی</span>
+                </div>
+
+                <div class="space-y-1">
+                  <span class="text-secondary text-[11px]">خدمات شامل شده:</span>
+                  <ul class="list-disc list-inside text-[11px] font-medium text-graphite space-y-0.5">
+                    ${q.servicesIncluded.map(s => `<li>${s}</li>`).join('')}
+                  </ul>
+                </div>
+
+                <div class="p-3 bg-primary/5 rounded-xl border border-primary/20 flex justify-between items-center">
+                  <span class="text-secondary text-[11px]">مبلغ کل پیش‌فاکتور:</span>
+                  <span class="text-sm font-black text-primary">${q.amount}</span>
+                </div>
+
+                <div class="flex gap-2 pt-1">
+                  <button onclick="alert('پیش‌فاکتور رزرو نهایی گردید و بیعانه به صندوق امن عروسی تو منتقل شد.')" class="flex-1 bg-primary hover:bg-emerald-900 text-white py-2 rounded-xl text-xs font-bold transition-all shadow-xs">
+                    پرداخت بیعانه & رزرو قطعی
+                  </button>
+                </div>
+                <span class="block text-[10px] text-secondary text-left dir-ltr">${msg.time}</span>
+              </div>
+            `;
+          } else if (isUser) {
+            content = `
+              <div class="max-w-md bg-primary text-white p-3.5 rounded-2xl rounded-tr-xs shadow-xs text-xs font-medium leading-relaxed">
+                <div>${msg.text}</div>
+                <span class="block text-[10px] text-emerald-200 text-left dir-ltr mt-1">${msg.time}</span>
+              </div>
+            `;
+          } else {
+            content = `
+              <div class="max-w-md bg-[#F4F6F8] border border-slate-200 text-graphite p-3.5 rounded-2xl rounded-tl-xs shadow-xs text-xs font-medium leading-relaxed">
+                <div>${msg.text}</div>
+                <span class="block text-[10px] text-secondary text-left dir-ltr mt-1">${msg.time}</span>
+              </div>
+            `;
+          }
+
+          msgBox.innerHTML = content;
+          streamContainer.appendChild(msgBox);
+        });
+
+        // Auto-scroll to bottom of stream
+        streamContainer.scrollTop = streamContainer.scrollHeight;
+      }
+
+      lucide.createIcons();
+    }
+
+    function handleSendChatMessage(e) {
+      e.preventDefault();
+      const input = document.getElementById('chat-message-input');
+      const text = input ? input.value.trim() : '';
+      if (!text) return;
+
+      const activeThread = chatState.threads.find(t => t.id === chatState.activeThreadId);
+      if (!activeThread) return;
+
+      const timeStr = new Date().toLocaleTimeString('fa-IR', { hour: '2-digit', minute: '2-digit' });
+
+      // Append user message
+      activeThread.messages.push({
+        id: "msg-" + Date.now(),
+        sender: "user",
+        text: text,
+        time: timeStr
+      });
+
+      activeThread.lastMessage = text;
+      activeThread.lastTime = timeStr;
+
+      input.value = '';
+      renderChatActiveThread();
+      renderChatThreadsList();
+
+      // Trigger simulated vendor response after 1 second delay
+      setTimeout(() => {
+        const autoReplyTimeStr = new Date().toLocaleTimeString('fa-IR', { hour: '2-digit', minute: '2-digit' });
+        const sampleReplies = [
+          "پیام شما دریافت شد. همکاران تشریفات ما به زودی جزئیات بیشتر را برای شما ارسال خواهند کرد.",
+          "با تشکر از پیام شما، منوی پیشنهادی و شرایط رزرو سالن برای شما ارسال شد.",
+          "جهت هماهنگی بازدید حضوری از باغ تالار، می‌توانید روزهای پنجشنبه و جمعه تشریف بیاورید."
+        ];
+        const randomReply = sampleReplies[Math.floor(Math.random() * sampleReplies.length)];
+
+        activeThread.messages.push({
+          id: "msg-" + (Date.now() + 1),
+          sender: "vendor",
+          text: randomReply,
+          time: autoReplyTimeStr
+        });
+
+        activeThread.lastMessage = randomReply;
+        activeThread.lastTime = autoReplyTimeStr;
+
+        renderChatActiveThread();
+        renderChatThreadsList();
+      }, 1000);
+    }
+
     window.addEventListener('DOMContentLoaded', () => {
       renderCategoryCards();
       renderVendors(vendors);
@@ -6710,6 +7484,10 @@
 
       // Initialize Quiz Hub
       renderQuizCatalogCards();
+
+      // Initialize Messages & Chat System
+      renderChatThreadsList();
+      renderChatActiveThread();
     });
   </script>
 </body>
