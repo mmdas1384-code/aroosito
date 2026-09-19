@@ -107,6 +107,9 @@
         <button onclick="switchTab('tools')" id="demo-tab-tools" class="demo-tab-btn px-3.5 py-1.5 rounded-lg text-xs font-bold transition-all bg-white/10 hover:bg-white/20 text-slate-200">
           بودجه AI
         </button>
+        <button onclick="switchTab('inspiration')" id="demo-tab-inspiration" class="demo-tab-btn px-3.5 py-1.5 rounded-lg text-xs font-bold transition-all bg-white/10 hover:bg-white/20 text-slate-200">
+          <i data-lucide="sparkles" class="w-3.5 h-3.5 inline ml-1"></i>ایده‌ها & مجله (Moodboard)
+        </button>
       </div>
     </div>
   </div>
@@ -145,6 +148,10 @@
             <button onclick="switchTab('messages')" class="px-3 py-2 rounded-lg text-xs xl:text-sm font-semibold transition-colors text-graphite hover:text-primary hover:bg-slate-50 flex items-center gap-1">
               <span>گفت‌وگوها</span>
               <span id="nav-chat-unread-badge" class="bg-primary text-white text-[10px] font-bold px-1.5 py-0.2 rounded-full">1</span>
+            </button>
+            <button onclick="switchTab('inspiration')" class="px-3 py-2 rounded-lg text-xs xl:text-sm font-semibold transition-colors text-graphite hover:text-primary hover:bg-slate-50 flex items-center gap-1">
+              <i data-lucide="sparkles" class="w-4 h-4 text-primary"></i>
+              <span>ایده‌ها و مجله</span>
             </button>
             <button onclick="switchTab('tools')" class="px-3 py-2 rounded-lg text-xs xl:text-sm font-semibold transition-colors text-graphite hover:text-primary hover:bg-slate-50">
               <span>دستیار بودجه AI</span>
@@ -775,6 +782,99 @@
               </div>
             </div>
           </div>
+        </div>
+
+      </div>
+
+    </div>
+
+    <!-- ========================================== -->
+    <!-- VIEW 10: INSPIRATION GALLERY & MOODBOARD HUB -->
+    <!-- ========================================== -->
+    <div id="tab-inspiration" class="tab-content hidden space-y-8">
+
+      <!-- TOP HEADER BANNER & SUB-TAB SWITCHER -->
+      <div class="bg-white border border-accent rounded-3xl p-6 sm:p-8 shadow-xs flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
+        <div class="space-y-1">
+          <div class="inline-flex items-center gap-1.5 bg-primary/10 text-primary text-xs font-bold px-3 py-1 rounded-full">
+            <i data-lucide="sparkles" class="w-3.5 h-3.5"></i>
+            <span>ژورنال بصری و ایده‌پردازی اختصاصی عروسی</span>
+          </div>
+          <h2 class="text-2xl sm:text-3xl font-black text-graphite flex items-center gap-2">
+            <span>مجله ایده‌ها & مودبورد شخصی</span>
+          </h2>
+          <p class="text-xs text-secondary font-medium">مجموعه‌ای از برترین ایده‌های بین‌المللی لباس، دکوراسیون، ژست‌های عکاسی و تشریفات مجالس</p>
+        </div>
+
+        <div class="flex items-center gap-2 bg-bgCustom p-1.5 border border-accent rounded-2xl text-xs font-bold shadow-xs">
+          <button id="insp-subtab-gallery" onclick="switchInspirationSubTab('gallery')" class="px-4 py-2.5 rounded-xl transition-all bg-primary text-white shadow-xs flex items-center gap-1.5">
+            <i data-lucide="grid" class="w-4 h-4"></i>
+            <span>مجله و ایده‌ها</span>
+          </button>
+          <button id="insp-subtab-moodboard" onclick="switchInspirationSubTab('moodboard')" class="px-4 py-2.5 rounded-xl transition-all text-secondary hover:text-graphite flex items-center gap-1.5">
+            <i data-lucide="heart" class="w-4 h-4 text-rose-500 fill-rose-500"></i>
+            <span>مودبورد من</span>
+            <span id="moodboard-badge-count" class="bg-primary text-white text-[10px] font-bold px-2 py-0.5 rounded-full">3</span>
+          </button>
+        </div>
+      </div>
+
+      <!-- SUB-PANEL 1: GALLERY VIEW -->
+      <div id="insp-panel-gallery" class="space-y-6">
+
+        <!-- CATEGORIES & SEARCH TOOLBAR -->
+        <div class="bg-white border border-accent rounded-3xl p-4 sm:p-6 shadow-xs space-y-4">
+          <div class="flex flex-col md:flex-row md:items-center justify-between gap-4">
+
+            <!-- Scrollable Category Filter Pills -->
+            <div id="insp-category-pills" class="flex items-center gap-2 overflow-x-auto custom-scrollbar pb-2 md:pb-0 text-xs font-bold">
+              <!-- Rendered via JS -->
+            </div>
+
+            <!-- Search Bar -->
+            <div class="relative min-w-[220px]">
+              <input type="text" id="insp-search-input" oninput="filterInspirationItems()" placeholder="جستجو در ایده‌ها..." class="w-full bg-bgCustom border border-accent rounded-xl py-2 px-3 pl-8 text-xs font-medium focus:outline-none focus:border-primary">
+              <i data-lucide="search" class="w-4 h-4 text-secondary absolute left-2.5 top-2.5"></i>
+            </div>
+
+          </div>
+        </div>
+
+        <!-- PINTEREST-STYLE MASONRY GRID -->
+        <div id="insp-gallery-grid" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+          <!-- Rendered via JS -->
+        </div>
+
+      </div>
+
+      <!-- SUB-PANEL 2: PERSONAL MOODBOARD VIEW -->
+      <div id="insp-panel-moodboard" class="hidden space-y-6">
+
+        <!-- MOODBOARD TOOLBAR -->
+        <div class="bg-white border border-accent rounded-3xl p-6 shadow-xs flex flex-col sm:flex-row justify-between sm:items-center gap-4">
+          <div>
+            <h3 class="text-lg font-bold text-graphite flex items-center gap-2">
+              <i data-lucide="heart" class="w-5 h-5 text-rose-500 fill-rose-500"></i>
+              <span>تابلو ایده‌های ذخیره‌شده شما (Personal Moodboard)</span>
+            </h3>
+            <p id="moodboard-summary-text" class="text-xs text-secondary mt-0.5">۳ ایده منتخب برای ارائه به همسر، طراح تشریفات یا آتلیه</p>
+          </div>
+
+          <div class="flex items-center gap-2.5">
+            <button onclick="shareMoodboardLink()" class="bg-primary hover:bg-emerald-900 text-white font-bold text-xs px-4 py-2.5 rounded-xl shadow-xs transition-all flex items-center gap-1.5">
+              <i data-lucide="share-2" class="w-4 h-4"></i>
+              <span>اشتراک‌گذاری مودبورد</span>
+            </button>
+            <button onclick="exportMoodboardPdf()" class="bg-bgCustom hover:bg-slate-100 text-graphite border border-accent font-bold text-xs px-4 py-2.5 rounded-xl shadow-xs transition-all flex items-center gap-1.5">
+              <i data-lucide="download" class="w-4 h-4 text-primary"></i>
+              <span>دانلود خروجی PDF</span>
+            </button>
+          </div>
+        </div>
+
+        <!-- MOODBOARD ITEMS GRID -->
+        <div id="insp-moodboard-grid" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+          <!-- Rendered via JS -->
         </div>
 
       </div>
@@ -7488,7 +7588,384 @@
       // Initialize Messages & Chat System
       renderChatThreadsList();
       renderChatActiveThread();
+
+      // Initialize Inspiration & Moodboard
+      renderInspirationCategoryPills();
+      renderInspirationGalleryGrid();
     });
+
+    // ==========================================
+    // INSPIRATION GALLERY & MOODBOARD HUB LOGIC
+    // ==========================================
+    let inspirationState = {
+      activeSubTab: 'gallery', // 'gallery' | 'moodboard'
+      selectedCategory: 'all',
+      bookmarkedIds: [1, 4, 7],
+      categories: [
+        { key: 'all', title: 'همه ایده‌ها', icon: 'grid', categoryMatch: 'all' },
+        { key: 'dress', title: 'لباس و تور عروس', icon: 'shirt', categoryMatch: 'مزون و لباس عروس' },
+        { key: 'suit', title: 'کت‌وشلوار و اکسسوری', icon: 'user', categoryMatch: 'کت و شلوار و آرایشگاه داماد' },
+        { key: 'decor', title: 'گل‌آرایی و دکور تالار', icon: 'flower-2', categoryMatch: 'گل‌آرایی و ماشین عروس' },
+        { key: 'poses', title: 'ژست‌های عکاسی و فرمالیته', icon: 'camera', categoryMatch: 'آتلیه و عکاسی' },
+        { key: 'cake', title: 'کیک و تشریفات', icon: 'cake', categoryMatch: 'کترینگ و تشریفات پذیرایی' },
+        { key: 'rings', title: 'حلقه و سرویس طلا', icon: 'gem', categoryMatch: 'طلا، جواهر و حلقه ازدواج' }
+      ],
+      items: [
+        {
+          id: 1,
+          title: 'لباس عروس پرنسسی با دانتل ایتالیایی و آستین تور',
+          categoryKey: 'dress',
+          categoryName: 'لباس و تور عروس',
+          vendorCategoryMatch: 'مزون و لباس عروس',
+          image: 'https://images.unsplash.com/photo-1594552072238-b8a33785b261?auto=format&fit=crop&w=800&q=80',
+          viewsCount: '۴.۲ هزار'
+        },
+        {
+          id: 2,
+          title: 'گل‌آرایی ورودی باغ عمارت با ارکیده سفید و شمع‌دان کریستال',
+          categoryKey: 'decor',
+          categoryName: 'گل‌آرایی و دکور تالار',
+          vendorCategoryMatch: 'گل‌آرایی و ماشین عروس',
+          image: 'https://images.unsplash.com/photo-1519167758481-83f550bb49b3?auto=format&fit=crop&w=800&q=80',
+          viewsCount: '۶.۸ هزار'
+        },
+        {
+          id: 3,
+          title: 'ژست عکس فرمالیته کویر با رمل‌های طلایی هنگام غروب',
+          categoryKey: 'poses',
+          categoryName: 'ژست‌های عکاسی و فرمالیته',
+          vendorCategoryMatch: 'آتلیه و عکاسی',
+          image: 'https://images.unsplash.com/photo-1509316975850-ff9c5deb0cd9?auto=format&fit=crop&w=800&q=80',
+          viewsCount: '۸.۱ هزار'
+        },
+        {
+          id: 4,
+          title: 'تاکسیدو زغالی مشکی با یقه آرشال ساتن و پاپیون رسمی',
+          categoryKey: 'suit',
+          categoryName: 'کت‌وشلوار و اکسسوری',
+          vendorCategoryMatch: 'کت و شلوار و آرایشگاه داماد',
+          image: 'https://images.unsplash.com/photo-1507679799987-c73779587ccf?auto=format&fit=crop&w=800&q=80',
+          viewsCount: '۳.۵ هزار'
+        },
+        {
+          id: 5,
+          title: 'کیک عروسی ۴ طبقه مینی‌مال با تزئین گل‌های طبیعی نود',
+          categoryKey: 'cake',
+          categoryName: 'کیک و تشریفات',
+          vendorCategoryMatch: 'کترینگ و تشریفات پذیرایی',
+          image: 'https://images.unsplash.com/photo-1535141192574-5d4897c13136?auto=format&fit=crop&w=800&q=80',
+          viewsCount: '۵.۳ هزار'
+        },
+        {
+          id: 6,
+          title: 'حلقه ازدواج برلیان پلاتینیوم با طراحی ست جفت',
+          categoryKey: 'rings',
+          categoryName: 'حلقه و سرویس طلا',
+          vendorCategoryMatch: 'طلا، جواهر و حلقه ازدواج',
+          image: 'https://images.unsplash.com/photo-1605100804763-247f67b3557e?auto=format&fit=crop&w=800&q=80',
+          viewsCount: '۹.۴ هزار'
+        },
+        {
+          id: 7,
+          title: 'لباس عروس ساتن مستقیم با یقه قایقی و دنباله ۲ متری',
+          categoryKey: 'dress',
+          categoryName: 'لباس و تور عروس',
+          vendorCategoryMatch: 'مزون و لباس عروس',
+          image: 'https://images.unsplash.com/photo-1537633552985-df8429e8048b?auto=format&fit=crop&w=800&q=80',
+          viewsCount: '۷.۶ هزار'
+        },
+        {
+          id: 8,
+          title: 'طراحی جایگاه عروس و داماد سبک بوهو با طاق پامپاس و چوب',
+          categoryKey: 'decor',
+          categoryName: 'گل‌آرایی و دکور تالار',
+          vendorCategoryMatch: 'گل‌آرایی و ماشین عروس',
+          image: 'https://images.unsplash.com/photo-1465495976277-4387d4b0b4c6?auto=format&fit=crop&w=800&q=80',
+          viewsCount: '۶.۱ هزار'
+        },
+        {
+          id: 9,
+          title: 'عکاسی احساسی دو نفره دریا با انعکاس آب و پرتو خورشید',
+          categoryKey: 'poses',
+          categoryName: 'ژست‌های عکاسی و فرمالیته',
+          vendorCategoryMatch: 'آتلیه و عکاسی',
+          image: 'https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=800&q=80',
+          viewsCount: '۱۰.۲ هزار'
+        }
+      ]
+    };
+
+    function switchInspirationSubTab(subTab) {
+      inspirationState.activeSubTab = subTab;
+      const btnGallery = document.getElementById('insp-subtab-gallery');
+      const btnMoodboard = document.getElementById('insp-subtab-moodboard');
+      const panelGallery = document.getElementById('insp-panel-gallery');
+      const panelMoodboard = document.getElementById('insp-panel-moodboard');
+
+      if (subTab === 'gallery') {
+        if (btnGallery) btnGallery.className = "px-4 py-2.5 rounded-xl transition-all bg-primary text-white shadow-xs flex items-center gap-1.5";
+        if (btnMoodboard) btnMoodboard.className = "px-4 py-2.5 rounded-xl transition-all text-secondary hover:text-graphite flex items-center gap-1.5";
+        if (panelGallery) panelGallery.classList.remove('hidden');
+        if (panelMoodboard) panelMoodboard.classList.add('hidden');
+        renderInspirationCategoryPills();
+        renderInspirationGalleryGrid();
+      } else {
+        if (btnMoodboard) btnMoodboard.className = "px-4 py-2.5 rounded-xl transition-all bg-primary text-white shadow-xs flex items-center gap-1.5";
+        if (btnGallery) btnGallery.className = "px-4 py-2.5 rounded-xl transition-all text-secondary hover:text-graphite flex items-center gap-1.5";
+        if (panelMoodboard) panelMoodboard.classList.remove('hidden');
+        if (panelGallery) panelGallery.classList.add('hidden');
+        renderMoodboardGrid();
+      }
+    }
+
+    function renderInspirationCategoryPills() {
+      const container = document.getElementById('insp-category-pills');
+      if (!container) return;
+      container.innerHTML = '';
+
+      inspirationState.categories.forEach(cat => {
+        const isSelected = inspirationState.selectedCategory === cat.key;
+        const btn = document.createElement('button');
+        btn.onclick = () => filterInspirationByCategory(cat.key);
+        btn.className = `px-3.5 py-2 rounded-xl transition-all flex items-center gap-1.5 shrink-0 ${
+          isSelected ? 'bg-primary text-white shadow-xs' : 'bg-bgCustom border border-accent hover:border-primary text-graphite'
+        }`;
+        btn.innerHTML = `
+          <i data-lucide="${cat.icon}" class="w-4 h-4"></i>
+          <span>${cat.title}</span>
+        `;
+        container.appendChild(btn);
+      });
+
+      lucide.createIcons();
+    }
+
+    function filterInspirationByCategory(catKey) {
+      inspirationState.selectedCategory = catKey;
+      renderInspirationCategoryPills();
+      renderInspirationGalleryGrid();
+    }
+
+    function filterInspirationItems() {
+      renderInspirationGalleryGrid();
+    }
+
+    function toggleBookmarkMoodboard(itemId, e) {
+      if (e) e.stopPropagation();
+      const idx = inspirationState.bookmarkedIds.indexOf(itemId);
+      if (idx > -1) {
+        inspirationState.bookmarkedIds.splice(idx, 1);
+        showToastNotification('از مودبورد شما حذف گردید');
+      } else {
+        inspirationState.bookmarkedIds.push(itemId);
+        showToastNotification('❤️ به مودبورد اختصاصی شما اضافه شد');
+      }
+
+      updateMoodboardBadge();
+      if (inspirationState.activeSubTab === 'gallery') {
+        renderInspirationGalleryGrid();
+      } else {
+        renderMoodboardGrid();
+      }
+    }
+
+    function updateMoodboardBadge() {
+      const badge = document.getElementById('moodboard-badge-count');
+      if (badge) badge.innerText = inspirationState.bookmarkedIds.length;
+      const summaryText = document.getElementById('moodboard-summary-text');
+      if (summaryText) summaryText.innerText = `${inspirationState.bookmarkedIds.length} ایده منتخب برای ارائه به همسر، طراح تشریفات یا آتلیه`;
+    }
+
+    function filterDirectoryByVendorCategory(vendorCategory) {
+      switchTab('home');
+      const select = document.getElementById('category-filter');
+      if (select) {
+        select.value = vendorCategory;
+        filterVendors();
+      }
+      const vendorSection = document.getElementById('vendor-grid');
+      if (vendorSection) {
+        vendorSection.scrollIntoView({ behavior: 'smooth' });
+      }
+    }
+
+    function renderInspirationGalleryGrid() {
+      const grid = document.getElementById('insp-gallery-grid');
+      if (!grid) return;
+      grid.innerHTML = '';
+
+      const query = document.getElementById('insp-search-input')?.value.trim().toLowerCase() || '';
+
+      let items = inspirationState.items;
+      if (inspirationState.selectedCategory !== 'all') {
+        items = items.filter(i => i.categoryKey === inspirationState.selectedCategory);
+      }
+      if (query) {
+        items = items.filter(i => i.title.toLowerCase().includes(query) || i.categoryName.toLowerCase().includes(query));
+      }
+
+      if (items.length === 0) {
+        grid.innerHTML = `<div class="col-span-full p-8 text-center text-secondary text-xs font-bold bg-white rounded-3xl border border-accent">هیچ ایده‌ای متناسب با جستجوی شما پیدا نشد.</div>`;
+        return;
+      }
+
+      items.forEach(item => {
+        const isBookmarked = inspirationState.bookmarkedIds.includes(item.id);
+        const card = document.createElement('div');
+        card.className = "bg-white border border-accent rounded-3xl overflow-hidden shadow-xs hover:shadow-lg transition-all group flex flex-col justify-between";
+
+        card.innerHTML = `
+          <div>
+            <div class="relative aspect-4/5 overflow-hidden bg-slate-900 cursor-pointer">
+              <img src="${item.image}" alt="${item.title}" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
+              <div class="absolute inset-0 bg-gradient-to-t from-graphite/80 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity flex flex-col justify-between p-4">
+                <div class="flex justify-between items-center">
+                  <span class="bg-white/90 backdrop-blur-xs text-graphite text-[10px] font-bold px-2.5 py-1 rounded-full shadow-xs">
+                    ${item.categoryName}
+                  </span>
+                  <button onclick="toggleBookmarkMoodboard(${item.id}, event)" class="w-9 h-9 rounded-full bg-white/90 hover:bg-white text-rose-500 flex items-center justify-center shadow-md transition-transform active:scale-95" title="ذخیره در مودبورد">
+                    <i data-lucide="heart" class="w-5 h-5 ${isBookmarked ? 'fill-rose-500 text-rose-500' : 'text-slate-600'}"></i>
+                  </button>
+                </div>
+
+                <button onclick="filterDirectoryByVendorCategory('${item.vendorCategoryMatch}')" class="w-full bg-primary hover:bg-emerald-900 text-white font-bold text-xs py-2.5 rounded-xl shadow-lg transition-all flex items-center justify-center gap-1.5">
+                  <i data-lucide="search" class="w-3.5 h-3.5"></i>
+                  <span>مشاهده تامین‌کنندگان مرتبط</span>
+                </button>
+              </div>
+
+              <!-- Top Overlay Badges (Always visible) -->
+              <div class="absolute top-3 right-3 group-hover:opacity-0 transition-opacity">
+                <span class="bg-graphite/70 text-white text-[10px] font-bold px-2.5 py-1 rounded-full backdrop-blur-xs">
+                  ${item.categoryName}
+                </span>
+              </div>
+              <div class="absolute top-3 left-3 group-hover:opacity-0 transition-opacity">
+                <span class="bg-black/40 text-white text-[10px] font-bold px-2 py-0.5 rounded-full backdrop-blur-xs flex items-center gap-1">
+                  <i data-lucide="eye" class="w-3 h-3 text-emerald-400"></i>
+                  <span>${item.viewsCount}</span>
+                </span>
+              </div>
+            </div>
+
+            <div class="p-4 space-y-2">
+              <h4 class="text-xs font-bold text-graphite line-clamp-2 leading-relaxed">${item.title}</h4>
+            </div>
+          </div>
+
+          <div class="px-4 pb-4 pt-1 flex items-center justify-between border-t border-accent/60">
+            <button onclick="toggleBookmarkMoodboard(${item.id}, event)" class="text-xs font-bold flex items-center gap-1.5 ${isBookmarked ? 'text-rose-600' : 'text-secondary hover:text-rose-600'} transition-colors">
+              <i data-lucide="heart" class="w-4 h-4 ${isBookmarked ? 'fill-rose-600' : ''}"></i>
+              <span>${isBookmarked ? 'ذخیره شده در مودبورد' : 'ذخیره در مودبورد'}</span>
+            </button>
+
+            <button onclick="filterDirectoryByVendorCategory('${item.vendorCategoryMatch}')" class="text-[11px] font-bold text-primary hover:underline flex items-center gap-1">
+              <span>تامین‌کننده</span>
+              <i data-lucide="chevron-left" class="w-3.5 h-3.5"></i>
+            </button>
+          </div>
+        `;
+        grid.appendChild(card);
+      });
+
+      lucide.createIcons();
+    }
+
+    function renderMoodboardGrid() {
+      const grid = document.getElementById('insp-moodboard-grid');
+      if (!grid) return;
+      grid.innerHTML = '';
+
+      updateMoodboardBadge();
+
+      const savedItems = inspirationState.items.filter(i => inspirationState.bookmarkedIds.includes(i.id));
+
+      if (savedItems.length === 0) {
+        grid.innerHTML = `
+          <div class="col-span-full p-12 text-center bg-white border border-accent rounded-3xl space-y-4">
+            <div class="w-16 h-16 rounded-full bg-rose-50 text-rose-500 mx-auto flex items-center justify-center">
+              <i data-lucide="heart" class="w-8 h-8"></i>
+            </div>
+            <div class="space-y-1">
+              <h4 class="text-base font-bold text-graphite">مودبورد شما هنوز خالی است</h4>
+              <p class="text-xs text-secondary">روی آیکون قلب در مجله ایده‌ها کلیک کنید تا ایده‌های محبوبتان اینجا قرار گیرند.</p>
+            </div>
+            <button onclick="switchInspirationSubTab('gallery')" class="bg-primary text-white font-bold text-xs px-6 py-2.5 rounded-xl shadow-xs transition-colors inline-flex items-center gap-1.5">
+              <span>ورود به مجله ایده‌ها</span>
+              <i data-lucide="arrow-left" class="w-4 h-4"></i>
+            </button>
+          </div>
+        `;
+        lucide.createIcons();
+        return;
+      }
+
+      savedItems.forEach(item => {
+        const card = document.createElement('div');
+        card.className = "bg-white border border-accent rounded-3xl overflow-hidden shadow-xs hover:shadow-md transition-all flex flex-col justify-between";
+        card.innerHTML = `
+          <div>
+            <div class="relative aspect-4/5 overflow-hidden bg-slate-900">
+              <img src="${item.image}" alt="${item.title}" class="w-full h-full object-cover">
+              <button onclick="toggleBookmarkMoodboard(${item.id}, event)" class="absolute top-3 left-3 bg-white/90 text-rose-600 hover:bg-white p-2 rounded-full shadow-md text-xs font-bold transition-transform active:scale-95" title="حذف از مودبورد">
+                <i data-lucide="trash-2" class="w-4 h-4"></i>
+              </button>
+            </div>
+
+            <div class="p-4 space-y-2">
+              <span class="inline-block bg-primary/10 text-primary text-[10px] font-bold px-2.5 py-0.5 rounded-full">
+                ${item.categoryName}
+              </span>
+              <h4 class="text-xs font-bold text-graphite line-clamp-2 leading-relaxed">${item.title}</h4>
+            </div>
+          </div>
+
+          <div class="p-4 pt-0 space-y-2">
+            <button onclick="filterDirectoryByVendorCategory('${item.vendorCategoryMatch}')" class="w-full bg-primary/10 hover:bg-primary/20 text-primary font-bold text-xs py-2 rounded-xl transition-colors flex items-center justify-center gap-1.5">
+              <i data-lucide="store" class="w-3.5 h-3.5"></i>
+              <span>جستجوی تامین‌کننده مرتبط</span>
+            </button>
+          </div>
+        `;
+        grid.appendChild(card);
+      });
+
+      lucide.createIcons();
+    }
+
+    function showToastNotification(message) {
+      let toast = document.getElementById('global-toast-notification');
+      if (!toast) {
+        toast = document.createElement('div');
+        toast.id = 'global-toast-notification';
+        toast.className = 'fixed bottom-6 right-6 z-50 bg-graphite text-white px-5 py-3 rounded-2xl shadow-2xl text-xs font-bold flex items-center gap-2 transition-all duration-300 opacity-0 transform translate-y-4 pointer-events-none border border-white/20';
+        document.body.appendChild(toast);
+      }
+      toast.innerHTML = `<i data-lucide="check-circle-2" class="w-4 h-4 text-emerald-400"></i><span>${message}</span>`;
+      lucide.createIcons();
+
+      toast.classList.remove('opacity-0', 'translate-y-4', 'pointer-events-none');
+      toast.classList.add('opacity-100', 'translate-y-0');
+
+      setTimeout(() => {
+        toast.classList.remove('opacity-100', 'translate-y-0');
+        toast.classList.add('opacity-0', 'translate-y-4', 'pointer-events-none');
+      }, 2500);
+    }
+
+    function shareMoodboardLink() {
+      const link = 'https://aroosito.com/moodboard/shared-couple-102';
+      if (navigator.clipboard) {
+        navigator.clipboard.writeText(link);
+        showToastNotification('🔗 لینک مودبورد شخصی کپی شد');
+      } else {
+        alert('لینک مودبورد شما:\n' + link);
+      }
+    }
+
+    function exportMoodboardPdf() {
+      alert('فایل خلاصه مودبورد شما آماده دانلود گردید. (دانلود PDF شبیه‌سازی شد)');
+    }
   </script>
 </body>
 </html>
