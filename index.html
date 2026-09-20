@@ -2503,9 +2503,17 @@
           <!-- INPUT ACTION BAR -->
           <div class="p-4 border-t border-accent bg-white shrink-0 space-y-2">
             <form onsubmit="handleSendChatMessage(event)" class="flex items-center gap-2">
-              <button type="button" onclick="showToast('شبیه‌سازی آپلود فایل / تصویر نمونه‌کار', 'info')" class="p-2.5 rounded-xl border border-accent hover:border-primary text-secondary hover:text-primary transition-colors shrink-0" title="پیوست تصویر">
-                <i data-lucide="paperclip" class="w-4 h-4"></i>
-              </button>
+              <div class="flex items-center gap-1 shrink-0">
+                <button type="button" onclick="showToast('شبیه‌سازی پیوست تصویر نمونه‌کار یا پروانه کسب', 'info')" class="p-2.5 rounded-xl border border-accent hover:border-primary text-secondary hover:text-primary transition-colors" title="پیوست تصویر">
+                  <i data-lucide="image" class="w-4 h-4"></i>
+                </button>
+                <button type="button" onclick="showToast('شبیه‌سازی ارسال فایل PDF قرارداد', 'info')" class="p-2.5 rounded-xl border border-accent hover:border-primary text-secondary hover:text-primary transition-colors" title="پیوست قرارداد PDF">
+                  <i data-lucide="file-text" class="w-4 h-4"></i>
+                </button>
+                <button type="button" onclick="showToast('شبیه‌سازی ضبط پیام صوتی (Voice Note)', 'info')" class="p-2.5 rounded-xl border border-accent hover:border-primary text-secondary hover:text-primary transition-colors" title="ارسال ویس">
+                  <i data-lucide="mic" class="w-4 h-4"></i>
+                </button>
+              </div>
 
               <input type="text" id="chat-message-input" required placeholder="پیام خود را بنویسید..." class="flex-1 bg-bgCustom border border-accent rounded-xl px-4 py-3 text-xs font-medium text-graphite focus:outline-none focus:border-primary">
 
@@ -2514,7 +2522,13 @@
                 <i data-lucide="send" class="w-4 h-4"></i>
               </button>
             </form>
-            <span class="block text-[10px] text-secondary font-medium">پاسخ‌های تأمین‌کننده به صورت زنده با شبیه‌سازی هوشمند پاسخ داده می‌شوند.</span>
+            <div class="flex justify-between items-center text-[10px] text-secondary font-medium">
+              <span>ارتباط امن و مستقیم • پاسخ‌های سریع تامین‌کننده</span>
+              <span class="flex items-center gap-1 text-emerald-700 font-bold">
+                <i data-lucide="check-check" class="w-3.5 h-3.5"></i>
+                <span>پایان‌به‌پایان رمزنگاری شده</span>
+              </span>
+            </div>
           </div>
 
         </div>
@@ -2524,6 +2538,110 @@
     </div>
 
   </main>
+
+  <!-- ========================================== -->
+  <!-- MODAL: DRAFT & ISSUE PRE-INVOICE (VENDOR)  -->
+  <!-- ========================================== -->
+  <div id="modal-create-preinvoice" class="fixed inset-0 z-50 bg-black/60 backdrop-blur-xs flex items-center justify-center p-4 hidden">
+    <div class="bg-white border border-accent rounded-3xl max-w-xl w-full p-6 shadow-2xl space-y-4 relative max-h-[90vh] overflow-y-auto custom-scrollbar">
+      <button onclick="closePreInvoiceModal()" class="absolute top-4 left-4 text-secondary hover:text-graphite">
+        <i data-lucide="x" class="w-6 h-6"></i>
+      </button>
+
+      <div class="border-b border-accent pb-3">
+        <span class="text-xs font-bold text-primary">صدور پیش‌فاکتور تعاملی (Interactive Quote)</span>
+        <h3 class="text-lg font-bold text-graphite mt-0.5">تنظیم و ارسال پیش‌فاکتور رسمی برای زوجین</h3>
+      </div>
+
+      <form onsubmit="handleIssuePreInvoiceSubmit(event)" class="space-y-4 text-xs font-bold text-graphite">
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+          <div>
+            <label class="block mb-1">عنوان پیش‌فاکتور *</label>
+            <input type="text" id="pi-title" required value="پیش‌فاکتور منوی VIP و خدمات اختصاصی" class="w-full bg-bgCustom border border-accent rounded-xl p-2.5 text-xs font-medium focus:outline-none focus:border-primary">
+          </div>
+          <div>
+            <label class="block mb-1">شماره فاکتور *</label>
+            <input type="text" id="pi-number" required value="INV-1403-8821" class="w-full bg-bgCustom border border-accent rounded-xl p-2.5 text-xs font-medium focus:outline-none focus:border-primary dir-ltr">
+          </div>
+        </div>
+
+        <!-- Itemized Items List -->
+        <div class="space-y-2 border-t border-b border-accent py-3">
+          <div class="flex justify-between items-center">
+            <span class="text-xs font-bold text-graphite">اقلام و خدمات شامل‌شده:</span>
+            <button type="button" onclick="addPreInvoiceLineItem()" class="text-xs text-primary font-bold hover:underline flex items-center gap-1">
+              <i data-lucide="plus" class="w-3.5 h-3.5"></i>
+              <span>افزودن خدمت</span>
+            </button>
+          </div>
+          <div id="pi-items-container" class="space-y-2">
+            <!-- Dynamic line items -->
+            <div class="flex items-center gap-2">
+              <input type="text" value="منوی سلف‌سرویس ۳ رنگ VIP (۲۵۰ نفر)" class="pi-item-name flex-1 bg-bgCustom border border-accent rounded-xl p-2 text-xs font-medium">
+              <input type="number" value="110000000" class="pi-item-price w-32 bg-bgCustom border border-accent rounded-xl p-2 text-xs font-medium dir-ltr" placeholder="قیمت (تومان)">
+            </div>
+            <div class="flex items-center gap-2">
+              <input type="text" value="هزینه ایاب و ذهاب و دیزاین ورودی یزد" class="pi-item-name flex-1 bg-bgCustom border border-accent rounded-xl p-2 text-xs font-medium">
+              <input type="number" value="15000000" class="pi-item-price w-32 bg-bgCustom border border-accent rounded-xl p-2 text-xs font-medium dir-ltr" placeholder="قیمت (تومان)">
+            </div>
+          </div>
+        </div>
+
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+          <div>
+            <label class="block mb-1">مبلغ بیعانه مورد نیاز (تومان) *</label>
+            <input type="number" id="pi-deposit" required value="35000000" class="w-full bg-bgCustom border border-accent rounded-xl p-2.5 text-xs font-medium focus:outline-none focus:border-primary dir-ltr">
+          </div>
+          <div>
+            <label class="block mb-1">مهلت اعتبار پیش‌فاکتور *</label>
+            <select id="pi-validity" class="w-full bg-bgCustom border border-accent rounded-xl p-2.5 text-xs font-semibold focus:outline-none focus:border-primary">
+              <option value="3">۳ روز (۷۲ ساعت)</option>
+              <option value="7" selected>۷ روز</option>
+              <option value="14">۱۴ روز</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="pt-3 flex gap-3 border-t border-accent">
+          <button type="button" onclick="closePreInvoiceModal()" class="flex-1 border border-accent text-secondary hover:text-graphite py-2.5 rounded-xl text-xs font-bold transition-colors">
+            انصراف
+          </button>
+          <button type="submit" class="flex-1 bg-primary hover:bg-emerald-900 text-white py-2.5 rounded-xl text-xs font-bold shadow-xs transition-colors flex items-center justify-center gap-1.5">
+            <i data-lucide="send" class="w-4 h-4"></i>
+            <span>صدور و ارسال به چت</span>
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- ========================================== -->
+  <!-- MODAL: PRE-INVOICE REVISION REQUEST        -->
+  <!-- ========================================== -->
+  <div id="modal-preinvoice-revision" class="fixed inset-0 z-50 bg-black/60 backdrop-blur-xs flex items-center justify-center p-4 hidden">
+    <div class="bg-white border border-accent rounded-3xl max-w-md w-full p-6 shadow-2xl space-y-4 relative">
+      <button onclick="closeRevisionModal()" class="absolute top-4 left-4 text-secondary hover:text-graphite">
+        <i data-lucide="x" class="w-6 h-6"></i>
+      </button>
+
+      <div class="border-b border-accent pb-3">
+        <h3 class="text-lg font-bold text-graphite">درخواست تغییرات در پیش‌فاکتور</h3>
+        <p class="text-xs text-secondary mt-0.5">توضیحات و موارد پیشنهادی خود را برای تأمین‌کننده ارسال کنید.</p>
+      </div>
+
+      <form onsubmit="handleSubmitPreInvoiceRevision(event)" class="space-y-4 text-xs font-bold text-graphite">
+        <div>
+          <label class="block mb-1.5">یادداشت و درخواست تغییرات:</label>
+          <textarea id="pi-revision-note" rows="4" required placeholder="مثلاً: لطفاً هزینه ورودی را بررسی نموده یا منوی دسر را تعدیل فرمایید..." class="w-full bg-bgCustom border border-accent rounded-xl p-3 text-xs font-medium focus:outline-none focus:border-primary"></textarea>
+        </div>
+
+        <div class="flex gap-3 pt-2 border-t border-accent">
+          <button type="button" onclick="closeRevisionModal()" class="flex-1 border border-accent text-secondary py-2.5 rounded-xl font-bold">انصراف</button>
+          <button type="submit" class="flex-1 bg-amber-600 hover:bg-amber-700 text-white py-2.5 rounded-xl font-bold transition-colors">ارسال درخواست اصلاح</button>
+        </div>
+      </form>
+    </div>
+  </div>
 
   <!-- ========================================== -->
   <!-- MODAL: ATTACH VENDOR TO TASK MODAL        -->
@@ -8969,13 +9087,14 @@
           </div>
 
           <div class="flex items-center gap-2">
-            <a href="tel:${activeThread.phone}" class="bg-primary/10 hover:bg-primary/20 text-primary border border-primary/20 px-3.5 py-2 rounded-xl text-xs font-bold transition-all flex items-center gap-1.5">
-              <i data-lucide="phone" class="w-4 h-4"></i>
-              <span class="hidden sm:inline">تماس مستقیم: ${activeThread.phone}</span>
-            </a>
-            <button onclick="switchTab('vendor-profile')" class="bg-bgCustom hover:bg-slate-100 text-graphite border border-accent px-3 py-2 rounded-xl text-xs font-bold transition-colors">
-              مشاهده پروفایل
+            <button onclick="openPreInvoiceModal()" class="bg-primary hover:bg-emerald-900 text-white px-3.5 py-2 rounded-xl text-xs font-bold transition-all flex items-center gap-1.5 shadow-xs shrink-0 cursor-pointer">
+              <i data-lucide="file-plus" class="w-4 h-4"></i>
+              <span>صدور / مشاهده پیش‌فاکتور</span>
             </button>
+            <a href="tel:${activeThread.phone}" class="bg-primary/10 hover:bg-primary/20 text-primary border border-primary/20 px-3 py-2 rounded-xl text-xs font-bold transition-all flex items-center gap-1.5">
+              <i data-lucide="phone" class="w-4 h-4"></i>
+              <span class="hidden sm:inline">تماس: ${activeThread.phone}</span>
+            </a>
           </div>
         `;
       }
@@ -9029,34 +9148,88 @@
             `;
           } else if (msg.hasQuoteCard && msg.quoteDetails) {
             const q = msg.quoteDetails;
+            let statusBadge = `<span class="bg-amber-100 text-amber-800 border border-amber-200 text-[10px] font-bold px-2.5 py-0.5 rounded-full">در انتظار بررسی</span>`;
+            if (q.status === 'accepted') {
+              statusBadge = `<span class="bg-emerald-100 text-emerald-800 border border-emerald-200 text-[10px] font-bold px-2.5 py-0.5 rounded-full">تاییدشده & بیعانه پرداخت شد</span>`;
+            } else if (q.status === 'revision_requested') {
+              statusBadge = `<span class="bg-rose-100 text-rose-800 border border-rose-200 text-[10px] font-bold px-2.5 py-0.5 rounded-full">درخواست تغییرات</span>`;
+            }
+
+            let lineItemsHtml = '';
+            if (q.items && q.items.length > 0) {
+              q.items.forEach(it => {
+                lineItemsHtml += `
+                  <div class="flex justify-between items-center text-[11px] border-b border-accent/40 pb-1">
+                    <span class="text-graphite font-medium">• ${it.name}</span>
+                    <span class="text-primary font-bold">${Number(it.price).toLocaleString('fa-IR')} تومان</span>
+                  </div>
+                `;
+              });
+            } else if (q.servicesIncluded) {
+              q.servicesIncluded.forEach(s => {
+                lineItemsHtml += `<div class="text-[11px] font-medium text-graphite">• ${s}</div>`;
+              });
+            }
+
             content = `
-              <div class="max-w-md bg-white border-2 border-emerald-500 p-4 rounded-3xl rounded-tl-xs shadow-md space-y-3 text-xs font-bold text-graphite">
+              <div class="max-w-md w-full bg-white border-2 border-primary/40 p-4 rounded-3xl rounded-tl-xs shadow-lg space-y-3.5 text-xs font-bold text-graphite">
                 <div class="flex justify-between items-center border-b border-accent pb-2">
-                  <span class="text-primary flex items-center gap-1">
-                    <i data-lucide="file-text" class="w-4 h-4"></i>
-                    <span>${q.title}</span>
-                  </span>
-                  <span class="bg-emerald-100 text-emerald-800 text-[10px] font-bold px-2 py-0.5 rounded-full">رسمی</span>
+                  <div class="flex items-center gap-1.5 text-primary">
+                    <i data-lucide="file-check-2" class="w-4 h-4"></i>
+                    <span class="font-black">${q.title}</span>
+                  </div>
+                  ${statusBadge}
                 </div>
 
-                <div class="space-y-1">
-                  <span class="text-secondary text-[11px]">خدمات شامل شده:</span>
-                  <ul class="list-disc list-inside text-[11px] font-medium text-graphite space-y-0.5">
-                    ${q.servicesIncluded.map(s => `<li>${s}</li>`).join('')}
-                  </ul>
+                <div class="grid grid-cols-2 gap-2 text-[10px] bg-bgCustom p-2 rounded-xl border border-accent">
+                  <div>
+                    <span class="text-secondary block">شماره فاکتور:</span>
+                    <span class="font-mono text-graphite font-bold">${q.invoiceNumber || 'INV-1403-8821'}</span>
+                  </div>
+                  <div>
+                    <span class="text-secondary block">اعتبار تا:</span>
+                    <span class="text-rose-600 font-bold">${q.validityDays || 7} روز آینده</span>
+                  </div>
                 </div>
 
-                <div class="p-3 bg-primary/5 rounded-xl border border-primary/20 flex justify-between items-center">
-                  <span class="text-secondary text-[11px]">مبلغ کل پیش‌فاکتور:</span>
-                  <span class="text-sm font-black text-primary">${q.amount}</span>
+                <div class="space-y-1.5">
+                  <span class="text-secondary text-[11px] block">ریز خدمات و صورت‌حساب:</span>
+                  <div class="space-y-1">
+                    ${lineItemsHtml}
+                  </div>
                 </div>
 
-                <div class="flex gap-2 pt-1">
-                  <button onclick="showToast('پیش‌فاکتور رزرو نهایی گردید و بیعانه به صندوق امن عروسی تو منتقل شد.', 'success')" class="flex-1 bg-primary hover:bg-emerald-900 text-white py-2 rounded-xl text-xs font-bold transition-all shadow-xs">
-                    پرداخت بیعانه & رزرو قطعی
+                <div class="p-3 bg-emerald-50 rounded-xl border border-emerald-200 space-y-1.5">
+                  <div class="flex justify-between text-xs">
+                    <span class="text-secondary">مبلغ کل فاکتور:</span>
+                    <span class="font-black text-graphite">${q.amount}</span>
+                  </div>
+                  <div class="flex justify-between text-xs text-primary font-black border-t border-emerald-200/60 pt-1">
+                    <span>مبلغ بیعانه (پیش‌پرداخت):</span>
+                    <span>${q.depositAmount || '۳۵,۰۰۰,۰۰۰ تومان'}</span>
+                  </div>
+                </div>
+
+                <div class="flex flex-col gap-2 pt-1">
+                  <div class="flex gap-2">
+                    <button onclick="acceptPreInvoiceAndPayDeposit('${activeThread.id}', '${msg.id}')" class="flex-1 bg-primary hover:bg-emerald-900 text-white py-2.5 rounded-xl text-xs font-bold transition-all shadow-xs flex items-center justify-center gap-1">
+                      <i data-lucide="check-circle-2" class="w-3.5 h-3.5"></i>
+                      <span>تایید & پرداخت بیعانه</span>
+                    </button>
+                    <button onclick="openRevisionModal('${activeThread.id}', '${msg.id}')" class="bg-amber-50 hover:bg-amber-100 text-amber-800 border border-amber-200 px-3 py-2.5 rounded-xl text-xs font-bold transition-all">
+                      اصلاحات
+                    </button>
+                  </div>
+                  <button onclick="window.print()" class="w-full bg-slate-50 hover:bg-slate-100 text-secondary border border-accent py-1.5 rounded-xl text-[11px] font-bold flex items-center justify-center gap-1">
+                    <i data-lucide="printer" class="w-3.5 h-3.5"></i>
+                    <span>چاپ / خروجی رسمی PDF</span>
                   </button>
                 </div>
-                <span class="block text-[10px] text-secondary text-left dir-ltr">${msg.time}</span>
+
+                <div class="flex justify-between items-center text-[10px] text-secondary border-t border-accent/60 pt-2">
+                  <span>تضمین امانت‌داری صندوق درگاه امن</span>
+                  <span class="font-mono dir-ltr">${msg.time}</span>
+                </div>
               </div>
             `;
           } else if (isUser) {
@@ -9085,6 +9258,193 @@
 
       lucide.createIcons();
     }
+
+
+    // CHAT STATE LOCALSTORAGE SYNC & PRE-INVOICE ACTIONS
+    function saveChatStateToStorage() {
+      try {
+        localStorage.setItem('aroosi_chat_state', JSON.stringify(chatState));
+      } catch (e) {
+        console.error('Failed to save chatState to localStorage:', e);
+      }
+    }
+
+    function loadChatStateFromStorage() {
+      try {
+        const stored = localStorage.getItem('aroosi_chat_state');
+        if (stored) {
+          const parsed = JSON.parse(stored);
+          if (parsed && Array.isArray(parsed.threads) && parsed.threads.length > 0) {
+            chatState = parsed;
+          }
+        }
+      } catch (e) {
+        console.error('Failed to load chatState from localStorage:', e);
+      }
+    }
+
+    function openPreInvoiceModal() {
+      const modal = document.getElementById('modal-create-preinvoice');
+      if (modal) modal.classList.remove('hidden');
+    }
+
+    function closePreInvoiceModal() {
+      const modal = document.getElementById('modal-create-preinvoice');
+      if (modal) modal.classList.add('hidden');
+    }
+
+    function addPreInvoiceLineItem() {
+      const container = document.getElementById('pi-items-container');
+      if (!container) return;
+      const row = document.createElement('div');
+      row.className = "flex items-center gap-2";
+      row.innerHTML = `
+        <input type="text" placeholder="عنوان خدمت یا آیتم..." class="pi-item-name flex-1 bg-bgCustom border border-accent rounded-xl p-2 text-xs font-medium">
+        <input type="number" placeholder="قیمت (تومان)" class="pi-item-price w-32 bg-bgCustom border border-accent rounded-xl p-2 text-xs font-medium dir-ltr">
+      `;
+      container.appendChild(row);
+    }
+
+    function handleIssuePreInvoiceSubmit(e) {
+      e.preventDefault();
+      const activeThread = chatState.threads.find(t => t.id === chatState.activeThreadId);
+      if (!activeThread) return;
+
+      const title = document.getElementById('pi-title').value.trim();
+      const invoiceNumber = document.getElementById('pi-number').value.trim();
+      const depositVal = Number(document.getElementById('pi-deposit').value) || 0;
+      const validityDays = document.getElementById('pi-validity').value;
+
+      const itemNames = document.querySelectorAll('.pi-item-name');
+      const itemPrices = document.querySelectorAll('.pi-item-price');
+
+      let items = [];
+      let totalSum = 0;
+
+      itemNames.forEach((el, idx) => {
+        const name = el.value.trim();
+        const price = Number(itemPrices[idx]?.value) || 0;
+        if (name) {
+          items.push({ name, price });
+          totalSum += price;
+        }
+      });
+
+      if (items.length === 0) {
+        showToast('لطفاً حداقل یک خدمت یا آیتم به پیش‌فاکتور اضافه کنید.', 'warning');
+        return;
+      }
+
+      const timeStr = new Date().toLocaleTimeString('fa-IR', { hour: '2-digit', minute: '2-digit' });
+      const formattedTotal = totalSum.toLocaleString('fa-IR') + " تومان";
+      const formattedDeposit = depositVal.toLocaleString('fa-IR') + " تومان";
+
+      const quoteMsg = {
+        id: "msg-" + Date.now(),
+        sender: "vendor",
+        text: `پیش‌فاکتور جدید با عنوان "${title}" صادر گردید.`,
+        time: timeStr,
+        hasQuoteCard: true,
+        quoteDetails: {
+          title,
+          invoiceNumber,
+          amount: formattedTotal,
+          depositAmount: formattedDeposit,
+          validityDays,
+          items,
+          status: 'pending'
+        }
+      };
+
+      activeThread.messages.push(quoteMsg);
+      activeThread.lastMessage = `پیش‌فاکتور جدید صادر شد (${formattedTotal})`;
+      activeThread.lastTime = timeStr;
+      activeThread.statusBadge = "quote_sent";
+      activeThread.statusText = "پیش‌فاکتور صادر شد";
+
+      closePreInvoiceModal();
+      saveChatStateToStorage();
+      renderChatActiveThread();
+      renderChatThreadsList();
+      showToast('پیش‌فاکتور تعاملی با موفقیت به چت صادر شد.', 'success');
+    }
+
+    let activeRevisionTarget = { threadId: null, msgId: null };
+
+    function openRevisionModal(threadId, msgId) {
+      activeRevisionTarget = { threadId, msgId };
+      const modal = document.getElementById('modal-preinvoice-revision');
+      if (modal) modal.classList.remove('hidden');
+    }
+
+    function closeRevisionModal() {
+      const modal = document.getElementById('modal-preinvoice-revision');
+      if (modal) modal.classList.add('hidden');
+    }
+
+    function handleSubmitPreInvoiceRevision(e) {
+      e.preventDefault();
+      const note = document.getElementById('pi-revision-note').value.trim();
+      if (!note) return;
+
+      const thread = chatState.threads.find(t => t.id === activeRevisionTarget.threadId) || chatState.threads[0];
+      if (!thread) return;
+
+      const msg = thread.messages.find(m => m.id === activeRevisionTarget.msgId);
+      if (msg && msg.quoteDetails) {
+        msg.quoteDetails.status = 'revision_requested';
+      }
+
+      const timeStr = new Date().toLocaleTimeString('fa-IR', { hour: '2-digit', minute: '2-digit' });
+
+      thread.messages.push({
+        id: "msg-" + Date.now(),
+        sender: "user",
+        text: `درخواست اصلاحات در پیش‌فاکتور: ${note}`,
+        time: timeStr
+      });
+
+      thread.lastMessage = `درخواست اصلاح پیش‌فاکتور: ${note}`;
+      thread.lastTime = timeStr;
+
+      closeRevisionModal();
+      document.getElementById('pi-revision-note').value = '';
+      saveChatStateToStorage();
+      renderChatActiveThread();
+      renderChatThreadsList();
+      showToast('درخواست تغییرات و اصلاح پیش‌فاکتور برای تامین‌کننده ارسال گردید.', 'info');
+    }
+
+    function acceptPreInvoiceAndPayDeposit(threadId, msgId) {
+      const thread = chatState.threads.find(t => t.id === threadId) || chatState.threads[0];
+      if (!thread) return;
+
+      const msg = thread.messages.find(m => m.id === msgId);
+      if (msg && msg.quoteDetails) {
+        msg.quoteDetails.status = 'accepted';
+      }
+
+      thread.statusBadge = "finalized";
+      thread.statusText = "رزرو نهایی شد";
+
+      const timeStr = new Date().toLocaleTimeString('fa-IR', { hour: '2-digit', minute: '2-digit' });
+
+      thread.messages.push({
+        id: "msg-" + Date.now(),
+        sender: "user",
+        text: "پیش‌فاکتور توسط زوجین تایید شد و مبلغ بیعانه به درگاه صندوق امن واریز گردید.",
+        time: timeStr
+      });
+
+      thread.lastMessage = "پیش‌فاکتور تایید شد و بیعانه واریز گردید.";
+      thread.lastTime = timeStr;
+
+      saveChatStateToStorage();
+      renderChatActiveThread();
+      renderChatThreadsList();
+      showToast('پیش‌فاکتور تایید شد و بیعانه با موفقیت پرداخت گردید!', 'success');
+    }
+
 
     function handleSendChatMessage(e) {
       e.preventDefault();
@@ -9139,6 +9499,7 @@
 
     window.addEventListener('DOMContentLoaded', () => {
       loadCategoryGroupsFromStorage();
+      loadChatStateFromStorage();
       renderCategoryCards();
       filterVendors();
       renderPortfolioUI();
