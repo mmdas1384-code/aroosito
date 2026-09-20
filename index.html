@@ -335,27 +335,27 @@
       </section></section>
 
       <!-- CATEGORY SHOWCASE GRID SECTION -->
-      <section class="bg-white border border-accent rounded-3xl p-4 sm:p-5 py-4 my-2 shadow-xs space-y-4">
+      <section class="bg-white border border-accent rounded-3xl p-4 sm:p-5 py-4 my-2 shadow-xs space-y-5">
         <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 border-b border-accent pb-3">
           <div>
             <h2 class="text-lg sm:text-xl font-bold text-graphite flex items-center gap-2">
-              <i data-lucide="grid" class="w-5 h-5 text-primary"></i>
-              <span>دسته‌بندی‌های خدمات عروسی</span>
+              <i data-lucide="layers" class="w-5 h-5 text-primary"></i>
+              <span>دسته‌بندی جامع خدمات و تشریفات عروسی</span>
             </h2>
-            <p class="text-[11px] sm:text-xs text-secondary mt-0.5">دسترسی سریع به برترین تأمین‌کنندگان و مشاغل تشریفات مجالس</p>
+            <p class="text-[11px] sm:text-xs text-secondary mt-0.5">دسترسی هوشمند به تمامی رسته‌های شغلی و خدمات تخصصی ازدواج بر اساس گروه</p>
           </div>
 
           <div class="flex items-center gap-2">
             <button id="toggle-categories-btn" onclick="toggleCategoriesExpand()" class="text-xs font-bold text-primary bg-primary/10 hover:bg-primary/20 border border-primary/20 px-3 py-1.5 rounded-xl transition-all flex items-center gap-1.5">
-              <span id="toggle-categories-text">مشاهده بیشتر</span>
+              <span id="toggle-categories-text">نمایش تمام زیرگروه‌ها</span>
               <i id="toggle-categories-icon" data-lucide="chevron-down" class="w-4 h-4"></i>
             </button>
           </div>
         </div>
 
-        <!-- Dynamic Category Cards Grid -->
-        <div id="category-cards-grid" class="grid grid-cols-3 sm:grid-cols-4 lg:grid-cols-6 gap-2.5">
-          <!-- Populated dynamically via JS -->
+        <!-- Hierarchical Categories Container -->
+        <div id="category-hierarchical-container" class="space-y-4">
+          <!-- Populated dynamically via renderCategoryCards() -->
         </div>
       </section>
 
@@ -4669,42 +4669,132 @@
       renderVendorPackages();
     }
 
-    // CATEGORY CARDS SHOWCASE (LANDING PAGE)
+    // HIERARCHICAL WEDDING SERVICE CATEGORIES SHOWCASE
     let categoriesExpanded = false;
 
+    const categoryGroups = [
+      {
+        id: "group-venue",
+        title: "مکان، تشریفات و پذیرایی",
+        badge: "تالار، خدمات غذا و پذیرایی",
+        icon: "building",
+        subcategories: [
+          { title: "تالار و باغ تالار عروسی", icon: "building", tag: "تالار" },
+          { title: "تشریفات عروسی", icon: "crown", tag: "تشریفات" },
+          { title: "کیک و شیرینی‌فروشی", icon: "cake", tag: "شیرینی" },
+          { title: "فینگرفود", icon: "utensils-crossed", tag: "پذیرایی" },
+          { title: "گل و گل‌آرایی", icon: "flower-2", tag: "گل‌آرایی" }
+        ]
+      },
+      {
+        id: "group-media",
+        title: "ثبت لحظات و موسیقی",
+        badge: "عکاسی، فیلمبرداری و موزیک",
+        icon: "camera",
+        subcategories: [
+          { title: "آتلیه عکاسی و فیلمبرداری", icon: "camera", tag: "عکاسی" },
+          { title: "موزیک", icon: "music", tag: "موسیقی" },
+          { title: "آتلیه کودک", icon: "baby", tag: "کودک" },
+          { title: "سالن تولد", icon: "party-popper", tag: "جشن" }
+        ]
+      },
+      {
+        id: "group-beauty",
+        title: "زیبایی و استایل زوجین",
+        badge: "آرایشگاه، مزون و پوشاک",
+        icon: "sparkles",
+        subcategories: [
+          { title: "سالن زیبایی و آرایشگاه عروس", icon: "sparkles", tag: "عروس" },
+          { title: "مزون لباس عروس", icon: "shirt", tag: "لباس" },
+          { title: "کت و شلوار داماد", icon: "user-check", tag: "داماد" },
+          { title: "آرایشگاه داماد", icon: "scissors", tag: "پیرایش" },
+          { title: "مانتو عقد", icon: "shirt", tag: "عقد" },
+          { title: "لباس شب و نامزدی", icon: "shirt", tag: "نامزدی" }
+        ]
+      },
+      {
+        id: "group-jewelry",
+        title: "طلا، خرید و خدمات جانبی",
+        badge: "طلا، خودرو و خدمات مسافرتی",
+        icon: "gem",
+        subcategories: [
+          { title: "طلافروشی و جواهرفروشی", icon: "gem", tag: "جواهرات" },
+          { title: "اجاره ماشین عروس", icon: "car", tag: "خودرو" },
+          { title: "اکسسوری جشن عروسی", icon: "gem", tag: "اکسسوری" },
+          { title: "تور ماه عسل", icon: "plane", tag: "سفر" },
+          { title: "آینه و شمعدان", icon: "sparkles", tag: "دکور" }
+        ]
+      },
+      {
+        id: "group-legal",
+        title: "تشریفات قانونی، عقد و مشاوره",
+        badge: "دفتر ثبت، مشاوره و سفره عقد",
+        icon: "landmark",
+        subcategories: [
+          { title: "دفتر ازدواج و سالن عقد", icon: "landmark", tag: "دفتر عقد" },
+          { title: "سفره عقد", icon: "utensils", tag: "سفره" },
+          { title: "آزمایشگاه ازدواج", icon: "flask-conical", tag: "آزمایش" },
+          { title: "مشاوره ازدواج", icon: "heart-handshake", tag: "مشاوره" },
+          { title: "بادکنک‌آرایی و دکوراسیون", icon: "party-popper", tag: "دیزاین" }
+        ]
+      }
+    ];
+
     function renderCategoryCards() {
-      const grid = document.getElementById('category-cards-grid');
-      if (!grid) return;
-      grid.innerHTML = '';
+      const container = document.getElementById('category-hierarchical-container') || document.getElementById('category-cards-grid');
+      if (!container) return;
+      container.innerHTML = '';
 
-      const activeCategories = categories.filter(c => c.active);
-      const displayCategories = categoriesExpanded ? activeCategories : activeCategories.slice(0, 12);
+      categoryGroups.forEach((group) => {
+        const groupBlock = document.createElement('div');
+        groupBlock.className = "bg-bgCustom border border-accent/80 rounded-2xl p-3.5 sm:p-4 transition-all hover:border-primary/40 hover:shadow-xs";
 
-      displayCategories.forEach(cat => {
-        const card = document.createElement('a');
-        card.href = "#";
-        card.onclick = (e) => {
-          e.preventDefault();
-          filterVendorsByCategoryTitle(cat.title);
-        };
-        card.className = "bg-bgCustom border border-accent rounded-xl p-2 sm:p-2.5 flex flex-col items-center justify-center text-center gap-1.5 transition-all duration-200 hover:-translate-y-0.5 hover:border-primary hover:shadow-xs group cursor-pointer";
-        card.innerHTML = `
-          <div class="w-8 h-8 sm:w-9 sm:h-9 rounded-lg bg-primary/10 text-primary flex items-center justify-center transition-colors group-hover:bg-primary group-hover:text-white shrink-0">
-            <i data-lucide="${cat.icon || 'grid'}" class="w-4 h-4 sm:w-5 sm:h-5"></i>
+        const visibleSubs = categoriesExpanded ? group.subcategories : group.subcategories.slice(0, 4);
+
+        let subHtml = '';
+        visibleSubs.forEach(sub => {
+          subHtml += `
+            <button type="button" onclick="filterVendorsByCategoryTitle('${sub.title}')" class="flex items-center gap-2 bg-white border border-accent hover:border-primary hover:bg-primary/5 px-2.5 py-1.5 rounded-xl transition-all text-right group cursor-pointer">
+              <div class="w-7 h-7 rounded-lg bg-primary/10 text-primary flex items-center justify-center shrink-0 group-hover:bg-primary group-hover:text-white transition-colors">
+                <i data-lucide="${sub.icon}" class="w-3.5 h-3.5"></i>
+              </div>
+              <div class="min-w-0">
+                <span class="text-xs font-bold text-graphite group-hover:text-primary transition-colors block truncate">${sub.title}</span>
+                <span class="text-[10px] text-secondary font-medium block">${sub.tag}</span>
+              </div>
+            </button>
+          `;
+        });
+
+        groupBlock.innerHTML = `
+          <div class="flex items-center justify-between border-b border-accent/60 pb-2.5 mb-3">
+            <div class="flex items-center gap-2">
+              <div class="w-8 h-8 rounded-xl bg-primary text-white flex items-center justify-center shadow-xs shrink-0">
+                <i data-lucide="${group.icon}" class="w-4 h-4"></i>
+              </div>
+              <div>
+                <h3 class="text-xs sm:text-sm font-bold text-graphite">${group.title}</h3>
+                <span class="text-[10px] text-secondary hidden sm:block">${group.badge}</span>
+              </div>
+            </div>
+            <span class="text-[10px] sm:text-xs font-bold text-primary bg-primary/10 px-2 py-0.5 rounded-md">${group.subcategories.length} زیرگروه</span>
           </div>
-          <span class="text-[11px] sm:text-xs font-bold text-graphite group-hover:text-primary transition-colors leading-tight truncate w-full" title="${cat.title}">${cat.title}</span>
+          <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-2">
+            ${subHtml}
+          </div>
         `;
-        grid.appendChild(card);
+
+        container.appendChild(groupBlock);
       });
 
       const btnText = document.getElementById('toggle-categories-text');
       const btnIcon = document.getElementById('toggle-categories-icon');
       if (btnText && btnIcon) {
         if (categoriesExpanded) {
-          btnText.innerText = 'مشاهده کمتر';
+          btnText.innerText = 'نمایش خلاصه‌تر زیرگروه‌ها';
           btnIcon.setAttribute('data-lucide', 'chevron-up');
         } else {
-          btnText.innerText = 'مشاهده بیشتر';
+          btnText.innerText = 'نمایش تمام زیرگروه‌ها';
           btnIcon.setAttribute('data-lucide', 'chevron-down');
         }
       }
