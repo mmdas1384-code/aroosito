@@ -721,11 +721,121 @@
       <div class="bg-white border border-accent rounded-3xl p-6 shadow-xs flex justify-between items-center">
         <div>
           <span class="text-xs font-bold text-secondary">پنل مدیریت ارشد پلتفرم عروسی تو (Super Admin)</span>
-          <h2 class="text-2xl font-bold text-graphite">مدیریت دسته‌بندی‌ها، اعتبارسنجی و پیامک</h2>
+          <h2 class="text-2xl font-bold text-graphite">مدیریت دسته‌بندی‌ها، توسعه منطقه‌ای، اعتبارسنجی و مالی</h2>
         </div>
         <span class="bg-primary/10 text-primary font-bold text-xs px-4 py-2 rounded-xl border border-primary/20">
           دسترسی مدیر ارشد
         </span>
+      </div>
+
+      <!-- SUPER ADMIN REGIONAL INTELLIGENCE & PLATFORM KPIS -->
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+        <div class="bg-white border border-accent rounded-2xl p-5 shadow-xs flex items-center justify-between">
+          <div class="space-y-1">
+            <span class="text-xs font-bold text-secondary">کل کسب‌وکارهای استان یزد</span>
+            <div class="text-2xl font-black text-graphite">۱,۲۸۰ مجموعه</div>
+            <span class="text-[11px] text-emerald-600 font-medium">یزد، تفت، میبد & اردکان</span>
+          </div>
+          <div class="w-12 h-12 rounded-2xl bg-amber-50 text-amber-700 border border-amber-100 flex items-center justify-center">
+            <i data-lucide="building-2" class="w-6 h-6"></i>
+          </div>
+        </div>
+
+        <div class="bg-white border border-accent rounded-2xl p-5 shadow-xs flex items-center justify-between">
+          <div class="space-y-1">
+            <span class="text-xs font-bold text-secondary">استعلام‌های فعال ماه جاری</span>
+            <div class="text-2xl font-black text-primary">۳,۴۵۰ استعلام</div>
+            <span class="text-[11px] text-emerald-600 font-medium">↑ ۲۴٪ افزایش نسبت به ماه قبل</span>
+          </div>
+          <div class="w-12 h-12 rounded-2xl bg-emerald-50 text-primary border border-emerald-100 flex items-center justify-center">
+            <i data-lucide="message-square-quote" class="w-6 h-6"></i>
+          </div>
+        </div>
+
+        <div class="bg-white border border-accent rounded-2xl p-5 shadow-xs flex items-center justify-between">
+          <div class="space-y-1">
+            <span class="text-xs font-bold text-secondary">تاییدیه رسمی صادر شده</span>
+            <div class="text-2xl font-black text-emerald-700">۴۸۶ نشان فعال</div>
+            <span class="text-[11px] text-slate-500 font-medium">احراز هویت و بررسی اصناف</span>
+          </div>
+          <div class="w-12 h-12 rounded-2xl bg-emerald-100 text-emerald-800 flex items-center justify-center">
+            <i data-lucide="shield-check" class="w-6 h-6"></i>
+          </div>
+        </div>
+
+        <div class="bg-white border border-accent rounded-2xl p-5 shadow-xs flex items-center justify-between">
+          <div class="space-y-1">
+            <span class="text-xs font-bold text-secondary">درآمد اشتراک‌ها & کارمزد</span>
+            <div class="text-2xl font-black text-graphite">۲۴۵,۰۰۰,۰۰۰ تومان</div>
+            <span class="text-[11px] text-primary font-medium">ماه جاری (کمیسیون پلتفرم)</span>
+          </div>
+          <div class="w-12 h-12 rounded-2xl bg-blue-50 text-blue-700 border border-blue-100 flex items-center justify-center">
+            <i data-lucide="coins" class="w-6 h-6"></i>
+          </div>
+        </div>
+      </div>
+
+      <!-- REGIONAL EXPANSION MANAGEMENT (یزد، تفت، میبد، اردکان) -->
+      <div class="bg-white border border-accent rounded-3xl p-6 shadow-xs space-y-4">
+        <div class="flex flex-col sm:flex-row justify-between sm:items-center gap-4 border-b border-accent pb-4">
+          <div>
+            <h3 class="text-lg font-bold text-graphite flex items-center gap-2">
+              <i data-lucide="map-pin" class="w-5 h-5 text-primary"></i>
+              <span>مدیریت توسعه منطقه‌ای استان یزد (Regional Expansion Control)</span>
+            </h3>
+            <p class="text-xs text-secondary mt-0.5">مدیریت فعالیت پلتفرم در شهرستان‌ها و زون‌های شهری استان یزد</p>
+          </div>
+          <button onclick="showToast('منطقه جدید با موفقیت به زون‌های استان یزد افزوده گردید.', 'success')" class="bg-primary text-white font-bold text-xs px-4 py-2 rounded-xl hover:bg-emerald-900 transition-colors flex items-center gap-1.5">
+            <i data-lucide="plus" class="w-4 h-4"></i>
+            <span>افزودن زون شهری جدید</span>
+          </button>
+        </div>
+
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+          <div class="p-4 bg-bgCustom border border-accent rounded-2xl space-y-2">
+            <div class="flex justify-between items-center">
+              <span class="font-bold text-xs text-graphite">شهر یزد (صفائیه، کاشانی، آزادشهر)</span>
+              <span class="bg-emerald-100 text-emerald-800 text-[10px] font-bold px-2 py-0.5 rounded-full">فعال</span>
+            </div>
+            <div class="text-[11px] text-secondary space-y-1">
+              <div class="flex justify-between"><span>تأمین‌کنندگان:</span> <span class="font-bold text-graphite">۸۲۰ مجموعه</span></div>
+              <div class="flex justify-between"><span>سهم بازار:</span> <span class="font-bold text-primary">۶۴٪</span></div>
+            </div>
+          </div>
+
+          <div class="p-4 bg-bgCustom border border-accent rounded-2xl space-y-2">
+            <div class="flex justify-between items-center">
+              <span class="font-bold text-xs text-graphite">شهرستان تفت (باغ‌شهر)</span>
+              <span class="bg-emerald-100 text-emerald-800 text-[10px] font-bold px-2 py-0.5 rounded-full">فعال</span>
+            </div>
+            <div class="text-[11px] text-secondary space-y-1">
+              <div class="flex justify-between"><span>تأمین‌کنندگان:</span> <span class="font-bold text-graphite">۲۱۰ مجموعه</span></div>
+              <div class="flex justify-between"><span>سهم بازار:</span> <span class="font-bold text-primary">۱۶٪</span></div>
+            </div>
+          </div>
+
+          <div class="p-4 bg-bgCustom border border-accent rounded-2xl space-y-2">
+            <div class="flex justify-between items-center">
+              <span class="font-bold text-xs text-graphite">شهرستان میبد</span>
+              <span class="bg-emerald-100 text-emerald-800 text-[10px] font-bold px-2 py-0.5 rounded-full">فعال</span>
+            </div>
+            <div class="text-[11px] text-secondary space-y-1">
+              <div class="flex justify-between"><span>تأمین‌کنندگان:</span> <span class="font-bold text-graphite">۱۵۰ مجموعه</span></div>
+              <div class="flex justify-between"><span>سهم بازار:</span> <span class="font-bold text-primary">۱۲٪</span></div>
+            </div>
+          </div>
+
+          <div class="p-4 bg-bgCustom border border-accent rounded-2xl space-y-2">
+            <div class="flex justify-between items-center">
+              <span class="font-bold text-xs text-graphite">شهرستان اردکان</span>
+              <span class="bg-emerald-100 text-emerald-800 text-[10px] font-bold px-2 py-0.5 rounded-full">فعال</span>
+            </div>
+            <div class="text-[11px] text-secondary space-y-1">
+              <div class="flex justify-between"><span>تأمین‌کنندگان:</span> <span class="font-bold text-graphite">۱۰۰ مجموعه</span></div>
+              <div class="flex justify-between"><span>سهم بازار:</span> <span class="font-bold text-primary">۸٪</span></div>
+            </div>
+          </div>
+        </div>
       </div>
 
       <!-- Dynamic Category Editor (مدیریت دسته‌ها) -->
@@ -811,6 +921,54 @@
               <!-- Populated via JS -->
             </tbody>
           </table>
+        </div>
+      </div>
+
+      <!-- SUPER ADMIN MONETIZATION & SUBSCRIPTION ENGINE -->
+      <div class="bg-white border border-accent rounded-3xl p-6 shadow-xs space-y-6">
+        <div class="flex flex-col sm:flex-row justify-between sm:items-center gap-4 border-b border-accent pb-4">
+          <div>
+            <h3 class="text-lg font-bold text-graphite flex items-center gap-2">
+              <i data-lucide="credit-card" class="w-5 h-5 text-primary"></i>
+              <span>موتور مالی، اشتراک‌ها و پورسانت رزروها (Monetization & Subscriptions Engine)</span>
+            </h3>
+            <p class="text-xs text-secondary mt-0.5">مدیریت پلن‌های عضویت ویژه تامین‌کنندگان و کارمزد تراکنش‌های پلتفرم</p>
+          </div>
+          <button onclick="showToast('تعرفه‌ها و نرخ کارمزد پلن‌های پلتفرم به روزرسانی شد.', 'info')" class="bg-primary text-white font-bold text-xs px-4 py-2 rounded-xl hover:bg-emerald-900 transition-colors">
+            بروزرسانی تعرفه‌ها
+          </button>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+          <div class="p-5 bg-bgCustom border border-accent rounded-2xl space-y-3 relative">
+            <span class="text-xs font-bold text-secondary">پلن برنز (پایه)</span>
+            <div class="text-xl font-black text-graphite">رایگان</div>
+            <ul class="text-xs text-secondary space-y-1.5 list-disc list-inside">
+              <li>نمایش عمومی در دایرکتوری</li>
+              <li>استعلام قیمت پایه</li>
+              <li>کارمزد رزرو: ۵٪</li>
+            </ul>
+          </div>
+
+          <div class="p-5 bg-emerald-50/50 border-2 border-primary rounded-2xl space-y-3 relative shadow-xs">
+            <span class="text-xs font-bold text-primary">پلن نقره‌ای (ویژه یزد)</span>
+            <div class="text-xl font-black text-primary">۱,۵۰۰,۰۰۰ تومان <span class="text-xs text-secondary font-normal">/ ماهانه</span></div>
+            <ul class="text-xs text-graphite space-y-1.5 list-disc list-inside font-semibold">
+              <li>اولویت در نتايج جستجوی استان یزد</li>
+              <li>نشان "تاییدیه رسمی اعتبار"</li>
+              <li>کارمزد رزرو: ۳٪</li>
+            </ul>
+          </div>
+
+          <div class="p-5 bg-amber-50/50 border-2 border-amber-400 rounded-2xl space-y-3 relative shadow-xs">
+            <span class="text-xs font-bold text-amber-900">پلن طلایی (VIP)</span>
+            <div class="text-xl font-black text-amber-900">۳,۲۰۰,۰۰۰ تومان <span class="text-xs text-amber-800 font-normal">/ ماهانه</span></div>
+            <ul class="text-xs text-amber-950 space-y-1.5 list-disc list-inside font-bold">
+              <li>نمایش در صفحه اصلی و بنر ویژه</li>
+              <li>پیش‌فاکتور تعاملی نامحدود + پیامک رایگان</li>
+              <li>کارمزد رزرو: ۱.۵٪</li>
+            </ul>
+          </div>
         </div>
       </div>
 
@@ -964,6 +1122,11 @@
         </div>
 
         <div class="flex items-center gap-3">
+          <button onclick="openVendorPreinvoiceBuilderModal()" class="bg-primary hover:bg-emerald-900 text-white font-bold text-xs px-4 py-2.5 rounded-xl shadow-xs transition-colors flex items-center gap-2">
+            <i data-lucide="file-plus" class="w-4 h-4"></i>
+            <span>صدور پیش‌فاکتور تعاملی جدید</span>
+          </button>
+
           <label class="flex items-center gap-2 text-xs font-bold text-graphite bg-bgCustom px-3.5 py-2 rounded-xl border border-accent cursor-pointer">
             <input type="checkbox" id="sms-toggle" checked onchange="showToast('تنظیمات دریافت پیامک فوری مشتری به روزرسانی شد.', 'info')" class="rounded text-primary focus:ring-primary w-4 h-4">
             <span>دریافت پیامک فوری مشتری جدید</span>
@@ -971,6 +1134,96 @@
         </div>
       </div>
 
+      <!-- VENDOR BUSINESS ANALYTICS KPIS -->
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+        <div class="bg-white border border-accent rounded-2xl p-5 shadow-xs flex items-center justify-between">
+          <div class="space-y-1">
+            <span class="text-xs font-bold text-secondary">بازدید کل پروفایل (یزد)</span>
+            <div class="text-2xl font-black text-graphite">۳,۴۸۰ بازدید</div>
+            <span class="text-[11px] text-emerald-600 font-medium">↑ ۱۸٪ رشد نسبت به ماه گذشته</span>
+          </div>
+          <div class="w-12 h-12 rounded-2xl bg-emerald-50 text-primary border border-emerald-100 flex items-center justify-center">
+            <i data-lucide="eye" class="w-6 h-6"></i>
+          </div>
+        </div>
+
+        <div class="bg-white border border-accent rounded-2xl p-5 shadow-xs flex items-center justify-between">
+          <div class="space-y-1">
+            <span class="text-xs font-bold text-secondary">استعلام‌های دریافتی</span>
+            <div class="text-2xl font-black text-graphite">۴۲ استعلام</div>
+            <span class="text-[11px] text-primary font-medium">۸ استعلام جدید امروز</span>
+          </div>
+          <div class="w-12 h-12 rounded-2xl bg-blue-50 text-blue-700 border border-blue-100 flex items-center justify-center">
+            <i data-lucide="message-square-quote" class="w-6 h-6"></i>
+          </div>
+        </div>
+
+        <div class="bg-white border border-accent rounded-2xl p-5 shadow-xs flex items-center justify-between">
+          <div class="space-y-1">
+            <span class="text-xs font-bold text-secondary">نرخ تایید پیش‌فاکتور</span>
+            <div class="text-2xl font-black text-emerald-700">۷۶٪ تایید</div>
+            <span class="text-[11px] text-slate-500 font-medium">۳۲ رزرو نهایی ثبت‌شده</span>
+          </div>
+          <div class="w-12 h-12 rounded-2xl bg-emerald-100 text-emerald-800 flex items-center justify-center">
+            <i data-lucide="file-check-2" class="w-6 h-6"></i>
+          </div>
+        </div>
+
+        <div class="bg-white border border-accent rounded-2xl p-5 shadow-xs flex items-center justify-between">
+          <div class="space-y-1">
+            <span class="text-xs font-bold text-secondary">امتیاز و رضایت مشتریان</span>
+            <div class="text-2xl font-black text-amber-600 flex items-center gap-1">
+              <span>۴.۹</span>
+              <i data-lucide="star" class="w-5 h-5 fill-amber-500 text-amber-500"></i>
+            </div>
+            <span class="text-[11px] text-slate-500 font-medium">از مجموع ۴۸ نظر زوجین</span>
+          </div>
+          <div class="w-12 h-12 rounded-2xl bg-amber-50 text-amber-600 border border-amber-100 flex items-center justify-center">
+            <i data-lucide="award" class="w-6 h-6"></i>
+          </div>
+        </div>
+      </div>
+
+
+      <!-- Vendor Verification & Badge Request Form -->
+      <section class="bg-white border border-accent rounded-3xl p-6 shadow-xs space-y-4">
+        <div class="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 border-b border-accent pb-4">
+          <div>
+            <span class="text-xs font-bold text-amber-800 bg-amber-50 px-2.5 py-0.5 rounded-full border border-amber-200">احراز هویت و نماد اعتماد</span>
+            <h3 class="text-lg font-bold text-graphite flex items-center gap-2 mt-1">
+              <i data-lucide="shield-check" class="w-5 h-5 text-primary"></i>
+              <span>درخواست و مدیریت "تاییدیه رسمی اعتبار" (Vendor Verification & Badge Request)</span>
+            </h3>
+          </div>
+          <span class="bg-primary/10 text-primary text-xs font-bold px-3 py-1.5 rounded-xl border border-primary/20">
+            وضعیت: تایید شده ✅
+          </span>
+        </div>
+
+        <form onsubmit="handleVendorBadgeRequestSubmit(event)" class="grid grid-cols-1 md:grid-cols-2 gap-4 text-xs font-bold text-graphite">
+          <div>
+            <label class="block mb-1">شماره پروانه کسب / ثبت شرکت:</label>
+            <input type="text" id="vd-badge-license" value="۹۸۷۶۵۴۳۲۱-اصناف" class="w-full bg-bgCustom border border-accent rounded-xl p-2.5 text-xs font-medium focus:outline-none focus:border-primary">
+          </div>
+
+          <div>
+            <label class="block mb-1">کد ملی / شناسه ملی مدیریت:</label>
+            <input type="text" id="vd-badge-nationalid" value="۰۰۱۲۳۴۵۶۷۸" class="w-full bg-bgCustom border border-accent rounded-xl p-2.5 text-xs font-medium focus:outline-none focus:border-primary">
+          </div>
+
+          <div class="md:col-span-2">
+            <label class="block mb-1">آپلود مدارک رسمی (تصویر جواز کسب / سند ملک یا اجاره‌نامه):</label>
+            <input type="file" id="vd-badge-doc-file" accept="image/*,.pdf" class="w-full bg-bgCustom border border-accent rounded-xl p-2 text-xs font-medium focus:outline-none cursor-pointer">
+          </div>
+
+          <div class="md:col-span-2 flex justify-end">
+            <button type="submit" class="bg-primary hover:bg-emerald-900 text-white font-bold px-6 py-2.5 rounded-xl text-xs shadow-xs transition-colors flex items-center gap-1.5">
+              <i data-lucide="send" class="w-4 h-4"></i>
+              <span>ارسال درخواست ارتقا و اعطای نشان تاییدیه رسمی</span>
+            </button>
+          </div>
+        </form>
+      </section>
 
       <!-- Profile Avatar / Logo Management -->
       <section class="bg-white border border-accent rounded-3xl p-6 shadow-xs space-y-4">
@@ -1068,6 +1321,95 @@
         </div>
       </section>
 
+
+      <!-- INTERACTIVE PRE-INVOICE BUILDER MODAL FOR VENDOR -->
+      <div id="vendor-preinvoice-builder-modal" class="fixed inset-0 bg-graphite/60 backdrop-blur-xs z-50 flex items-center justify-center p-4 hidden">
+        <div class="bg-white border border-accent rounded-3xl p-6 max-w-xl w-full shadow-2xl space-y-6 max-h-[90vh] overflow-y-auto custom-scrollbar">
+          <div class="flex justify-between items-center border-b border-accent pb-4">
+            <div>
+              <span class="text-xs font-bold text-secondary">ابزار صدور فاکتور آنلاین</span>
+              <h3 class="text-lg font-bold text-graphite flex items-center gap-2">
+                <i data-lucide="file-plus" class="w-5 h-5 text-primary"></i>
+                <span>سازنده پیش‌فاکتور تعاملی (Interactive Pre-invoice Builder)</span>
+              </h3>
+            </div>
+            <button onclick="closeVendorPreinvoiceBuilderModal()" class="text-secondary hover:text-graphite">
+              <i data-lucide="x" class="w-5 h-5"></i>
+            </button>
+          </div>
+
+          <form onsubmit="handleVendorCreatePreinvoice(event)" class="space-y-4 text-xs font-bold text-graphite">
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+              <div>
+                <label class="block mb-1">انتخاب گفت‌وگو / زوجین:</label>
+                <select id="vpb-select-thread" class="w-full bg-bgCustom border border-accent rounded-xl p-2.5 text-xs font-semibold focus:outline-none focus:border-primary">
+                  <option value="chat-1">علی & سارا (استعلام تالار زمرد)</option>
+                  <option value="chat-2">رضا & مریم (عکاسی کویر)</option>
+                  <option value="chat-3">امیر & مهسا (منوی کترینگ)</option>
+                </select>
+              </div>
+
+              <div>
+                <label class="block mb-1">عنوان پیش‌فاکتور:</label>
+                <input type="text" id="vpb-input-title" value="پیش‌فاکتور رسمی خدمات تشریفات و باغ‌تالار" class="w-full bg-bgCustom border border-accent rounded-xl p-2.5 text-xs font-medium focus:outline-none focus:border-primary">
+              </div>
+            </div>
+
+            <!-- Itemized Items Builder List -->
+            <div class="space-y-3">
+              <div class="flex justify-between items-center">
+                <label class="text-xs font-bold text-graphite">ریز خدمات و هزینه‌ها (Itemized Items):</label>
+                <button type="button" onclick="addPreinvoiceBuilderRow()" class="text-primary hover:underline text-xs font-bold flex items-center gap-1">
+                  <i data-lucide="plus" class="w-3.5 h-3.5"></i>
+                  <span>افزودن ردیف</span>
+                </button>
+              </div>
+
+              <div id="vpb-items-rows-container" class="space-y-2">
+                <!-- Row 1 -->
+                <div class="flex items-center gap-2 vpb-item-row">
+                  <input type="text" placeholder="عنوان خدمت (مثلاً: منوی شام سلف‌سرویس ۲۵۰ نفر)" value="منوی شام سلف‌سرویس VIP (۲۵۰ نفر)" class="flex-1 bg-bgCustom border border-accent rounded-xl p-2.5 text-xs font-medium vpb-item-name">
+                  <input type="text" placeholder="مبلغ (مثلاً: ۹۵,۰۰۰,۰۰۰ تومان)" value="۹۵,۰۰۰,۰۰۰ تومان" class="w-36 bg-bgCustom border border-accent rounded-xl p-2.5 text-xs font-medium vpb-item-price">
+                  <button type="button" onclick="this.parentElement.remove()" class="p-2 text-rose-500 hover:bg-rose-50 rounded-lg">
+                    <i data-lucide="trash-2" class="w-4 h-4"></i>
+                  </button>
+                </div>
+                <!-- Row 2 -->
+                <div class="flex items-center gap-2 vpb-item-row">
+                  <input type="text" placeholder="عنوان خدمت" value="سرو شیرینی‌های سنتی یزد (حاج خلیفه)" class="flex-1 bg-bgCustom border border-accent rounded-xl p-2.5 text-xs font-medium vpb-item-name">
+                  <input type="text" placeholder="مبلغ" value="۱۲,۰۰۰,۰۰۰ تومان" class="w-36 bg-bgCustom border border-accent rounded-xl p-2.5 text-xs font-medium vpb-item-price">
+                  <button type="button" onclick="this.parentElement.remove()" class="p-2 text-rose-500 hover:bg-rose-50 rounded-lg">
+                    <i data-lucide="trash-2" class="w-4 h-4"></i>
+                  </button>
+                </div>
+              </div>
+            </div>
+
+            <!-- Total Sum & Disclosures -->
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 pt-2">
+              <div>
+                <label class="block mb-1">مبلغ مجموع کل (تومان):</label>
+                <input type="text" id="vpb-input-total" value="۱۱۵,۰۰۰,۰۰۰ تومان" class="w-full bg-bgCustom border border-accent rounded-xl p-2.5 text-xs font-bold text-primary focus:outline-none focus:border-primary">
+              </div>
+
+              <div>
+                <label class="block mb-1">مهلت اعتبار پیش‌فاکتور:</label>
+                <input type="text" id="vpb-input-expiry" value="۷ روز کاری" class="w-full bg-bgCustom border border-accent rounded-xl p-2.5 text-xs font-medium focus:outline-none focus:border-primary">
+              </div>
+            </div>
+
+            <div class="flex gap-2 pt-4">
+              <button type="button" onclick="closeVendorPreinvoiceBuilderModal()" class="flex-1 bg-bgCustom border border-accent text-graphite py-2.5 rounded-xl text-xs font-bold hover:bg-slate-100">
+                انصراف
+              </button>
+              <button type="submit" class="flex-1 bg-primary hover:bg-emerald-900 text-white font-bold py-2.5 rounded-xl text-xs shadow-md transition-all flex items-center justify-center gap-1.5">
+                <i data-lucide="send" class="w-4 h-4"></i>
+                <span>صدور و ارسال به چت زوجین</span>
+              </button>
+            </div>
+          </form>
+        </div>
+      </div>
 
       <!-- Portfolio & Service Packages Manager -->
       <section class="bg-white border border-accent rounded-3xl p-6 shadow-xs space-y-6">
@@ -3651,10 +3993,13 @@
 
       if (role === 'couple') {
         switchTab('home');
+        showToast('نقش کاربری به: زوج (Couple) تغییر یافت.', 'info');
       } else if (role === 'vendor') {
         switchTab('vendor-dash');
+        showToast('نقش کاربری به: پنل اختصاصی تامین‌کننده (Vendor) تغییر یافت.', 'info');
       } else if (role === 'admin') {
         switchTab('admin');
+        showToast('نقش کاربری به: پنل مدیریت ارشد پلتفرم (Super Admin) تغییر یافت.', 'info');
       }
     }
 
@@ -9045,6 +9390,87 @@ function calculateAndRenderBwResults() {
       lucide.createIcons();
     }
 
+
+    function openVendorPreinvoiceBuilderModal() {
+      const modal = document.getElementById('vendor-preinvoice-builder-modal');
+      if (modal) modal.classList.remove('hidden');
+    }
+
+    function closeVendorPreinvoiceBuilderModal() {
+      const modal = document.getElementById('vendor-preinvoice-builder-modal');
+      if (modal) modal.classList.add('hidden');
+    }
+
+    function addPreinvoiceBuilderRow() {
+      const container = document.getElementById('vpb-items-rows-container');
+      if (!container) return;
+      const row = document.createElement('div');
+      row.className = "flex items-center gap-2 vpb-item-row";
+      row.innerHTML = `
+        <input type="text" placeholder="عنوان خدمت یا کالا" class="flex-1 bg-bgCustom border border-accent rounded-xl p-2.5 text-xs font-medium vpb-item-name">
+        <input type="text" placeholder="مبلغ (تومان)" class="w-36 bg-bgCustom border border-accent rounded-xl p-2.5 text-xs font-medium vpb-item-price">
+        <button type="button" onclick="this.parentElement.remove()" class="p-2 text-rose-500 hover:bg-rose-50 rounded-lg">
+          <i data-lucide="trash-2" class="w-4 h-4"></i>
+        </button>
+      `;
+      container.appendChild(row);
+      lucide.createIcons();
+    }
+
+    function handleVendorCreatePreinvoice(e) {
+      e.preventDefault();
+      const threadId = document.getElementById('vpb-select-thread')?.value || 'chat-1';
+      const title = document.getElementById('vpb-input-title')?.value.trim() || 'پیش‌فاکتور تعاملی رسمی';
+      const totalSum = document.getElementById('vpb-input-total')?.value.trim() || '۱۱۵,۰۰۰,۰۰۰ تومان';
+
+      const rows = document.querySelectorAll('.vpb-item-row');
+      const items = [];
+      rows.forEach(r => {
+        const name = r.querySelector('.vpb-item-name')?.value.trim();
+        const price = r.querySelector('.vpb-item-price')?.value.trim();
+        if (name && price) {
+          items.push({ name, price });
+        }
+      });
+
+      const thread = chatState.threads.find(t => t.id === threadId) || chatState.threads[0];
+      if (thread) {
+        const timeStr = new Date().toLocaleTimeString('fa-IR', { hour: '2-digit', minute: '2-digit' });
+        thread.messages.push({
+          id: "msg-" + Date.now(),
+          sender: "vendor",
+          hasQuoteCard: true,
+          quoteDetails: {
+            id: "quote-" + Date.now(),
+            title: title,
+            amount: totalSum,
+            isApproved: false,
+            items: items.length > 0 ? items : undefined
+          },
+          time: timeStr
+        });
+        thread.statusBadge = "quote_sent";
+        thread.statusText = "پیش‌فاکتور جدید صادر شد";
+        thread.lastMessage = `پیش‌فاکتور جدید (${totalSum}) صادر شد`;
+        thread.lastTime = timeStr;
+      }
+
+      closeVendorPreinvoiceBuilderModal();
+      renderChatThreadsList();
+      renderChatActiveThread();
+      showToast('پیش‌فاکتور تعاملی جدید با موفقیت صادر و به چت زوجین ارسال گردید!', 'success');
+    }
+
+    function handleVendorBadgeRequestSubmit(e) {
+      e.preventDefault();
+      const license = document.getElementById('vd-badge-license')?.value.trim();
+      const nationalId = document.getElementById('vd-badge-nationalid')?.value.trim();
+      if (!license || !nationalId) {
+        showToast('لطفاً شماره پروانه کسب و کد ملی مدیریت را وارد نمایید.', 'warning');
+        return;
+      }
+      showToast('درخواست ارتقا و اعطای "تاییدیه رسمی اعتبار" با موفقیت ثبت شد و برای مدیریت ارشد ارسال گردید.', 'success');
+    }
 
     function approvePreinvoice(quoteId) {
       const activeThread = chatState.threads.find(t => t.id === chatState.activeThreadId);
