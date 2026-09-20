@@ -1208,33 +1208,60 @@
       <section class="bg-white border border-accent rounded-3xl p-6 shadow-xs space-y-4">
         <h3 class="text-lg font-bold text-graphite border-b border-accent pb-3 flex items-center gap-2">
           <i data-lucide="edit-3" class="w-5 h-5 text-primary"></i>
-          <span>ویرایش اطلاعات و پروفایل عمومی کسب‌وکار (Profile Editor)</span>
+          <span>ویرایش اطلاعات و پروفایل عمومی کسب‌وکار در یزد (Profile & Contact Editor)</span>
         </h3>
 
-        <form onsubmit="handleVendorProfileUpdate(event)" class="grid grid-cols-1 md:grid-cols-2 gap-4 text-xs font-bold text-graphite">
+        <form onsubmit="handleVendorProfileUpdate(event)" class="grid grid-cols-1 md:grid-cols-3 gap-4 text-xs font-bold text-graphite">
           <div>
-            <label class="block mb-1">نام برند / کسب‌وکار:</label>
-            <input type="text" id="vd-edit-name" value="باغ تالار تشریفاتی زمرد" class="w-full bg-bgCustom border border-accent rounded-xl p-2.5 text-xs font-medium focus:outline-none focus:border-primary">
+            <label class="block mb-1">نام برند / کسب‌وکار *</label>
+            <input type="text" id="vd-edit-name" value="استودیو و آتلیه تخصصی کویر یزد" class="w-full bg-bgCustom border border-accent rounded-xl p-2.5 text-xs font-medium focus:outline-none focus:border-primary">
           </div>
 
           <div>
-            <label class="block mb-1">ساعات کاری و بازدید:</label>
-            <input type="text" id="vd-edit-hours" value="همه روزه از ۱۰:۰۰ الی ۲۱:۰۰" class="w-full bg-bgCustom border border-accent rounded-xl p-2.5 text-xs font-medium focus:outline-none focus:border-primary">
+            <label class="block mb-1">موبایل مدیریت / واتس‌اپ *</label>
+            <input type="tel" id="vd-edit-phone" value="۰۹۱۲۳۴۵۶۷۸۹" class="w-full bg-bgCustom border border-accent rounded-xl p-2.5 text-xs font-medium focus:outline-none focus:border-primary dir-ltr">
           </div>
 
           <div>
-            <label class="block mb-1">آدرس کامل:</label>
-            <input type="text" id="vd-edit-address" value="تهران، احمدآباد مستوفی، خیابان صنوبر، پلاک ۴۵" class="w-full bg-bgCustom border border-accent rounded-xl p-2.5 text-xs font-medium focus:outline-none focus:border-primary">
+            <label class="block mb-1">تلفن ثابت یزد *</label>
+            <input type="tel" id="vd-edit-landline" value="۰۳۵-۳۸۲۵۲۲۲۲" class="w-full bg-bgCustom border border-accent rounded-xl p-2.5 text-xs font-medium focus:outline-none focus:border-primary dir-ltr">
           </div>
 
           <div>
-            <label class="block mb-1">لینک اینستاگرام:</label>
-            <input type="text" id="vd-edit-insta" value="@zomorrod_hall" class="w-full bg-bgCustom border border-accent rounded-xl p-2.5 text-xs font-medium focus:outline-none focus:border-primary dir-ltr">
+            <label class="block mb-1">منطقه / محله در یزد *</label>
+            <select id="vd-edit-district" class="w-full bg-bgCustom border border-accent rounded-xl p-2.5 text-xs font-semibold focus:outline-none focus:border-primary">
+              <option value="صفائیه & اطلسی" selected>صفائیه & میدان اطلسی</option>
+              <option value="بلوار جمهوری">بلوار جمهوری</option>
+              <option value="خیابان کاشانی & ملاصدرا">خیابان کاشانی & ملاصدرا</option>
+              <option value="بافت تاریخی & آزادشهر">بافت تاریخی & آزادشهر</option>
+              <option value="میدان امیرچقماق & بازار">میدان امیرچقماق & بازار</option>
+            </select>
           </div>
 
-          <div class="md:col-span-2 flex justify-end">
-            <button type="submit" class="bg-primary hover:bg-emerald-900 text-white font-bold px-6 py-2.5 rounded-xl text-xs shadow-xs transition-colors">
-              ذخیره تغییرات پروفایل
+          <div>
+            <label class="block mb-1">ساعات کاری و پذیرش حضوری *</label>
+            <input type="text" id="vd-edit-hours" value="شنبه تا پنجشنبه ۹:۰۰ الی ۲۰:۰۰" class="w-full bg-bgCustom border border-accent rounded-xl p-2.5 text-xs font-medium focus:outline-none focus:border-primary">
+          </div>
+
+          <div>
+            <label class="block mb-1">شناسه اینستاگرام *</label>
+            <input type="text" id="vd-edit-insta" value="@kavir_studio_yazd" class="w-full bg-bgCustom border border-accent rounded-xl p-2.5 text-xs font-medium focus:outline-none focus:border-primary dir-ltr">
+          </div>
+
+          <div class="md:col-span-2">
+            <label class="block mb-1">آدرس کامل فیزیکی در یزد *</label>
+            <input type="text" id="vd-edit-address" value="یزد، میدان اطلسی، مجتمع آریا، طبقه ۳" class="w-full bg-bgCustom border border-accent rounded-xl p-2.5 text-xs font-medium focus:outline-none focus:border-primary">
+          </div>
+
+          <div>
+            <label class="block mb-1">لینک مسیریابی بلد / نشان / گوگل‌مپ:</label>
+            <input type="text" id="vd-edit-maplink" value="https://nishan.ir/maps" class="w-full bg-bgCustom border border-accent rounded-xl p-2.5 text-xs font-medium focus:outline-none focus:border-primary dir-ltr">
+          </div>
+
+          <div class="md:col-span-3 flex justify-end pt-2 border-t border-accent">
+            <button type="submit" class="bg-primary hover:bg-emerald-900 text-white font-bold px-6 py-2.5 rounded-xl text-xs shadow-xs transition-colors flex items-center gap-1.5">
+              <i data-lucide="check-circle-2" class="w-4 h-4"></i>
+              <span>ذخیره تغییرات پروفایل کسب‌وکار</span>
             </button>
           </div>
         </form>
@@ -3857,9 +3884,30 @@
         district: "صفائیه & اطلسی",
         city: "یزد (صفائیه)",
         rating: 4.9,
+        reviewCount: 42,
         verified: true,
         priceRange: "از ۹۵,۰۰۰,۰۰۰ تومان",
-        image: "https://images.unsplash.com/photo-1519167758481-83f550bb49b3?auto=format&fit=crop&w=800&q=80"
+        image: "https://images.unsplash.com/photo-1519167758481-83f550bb49b3?auto=format&fit=crop&w=800&q=80",
+        phone: "۰۳۵-۳۸۲۴۰۰۰۰",
+        landline: "۰۳۵-۳۸۲۴۱۱۱۱",
+        address: "یزد، صفائیه، خیابان دانشگاه، نرسیده به میدان اطلسی",
+        instagram: "@moshir_palace_yazd",
+        hours: "همه روزه از ۱۰:۰۰ الی ۲۱:۰۰",
+        portfolio: [
+          { url: "https://images.unsplash.com/photo-1519167758481-83f550bb49b3?auto=format&fit=crop&w=600&q=80", tag: "دکور ورودی باغ" },
+          { url: "https://images.unsplash.com/photo-1519741497674-611481863552?auto=format&fit=crop&w=600&q=80", tag: "سالن اصلی مجلل" },
+          { url: "https://images.unsplash.com/photo-1511285560929-80b456fea0bc?auto=format&fit=crop&w=600&q=80", tag: "سفره عقد سنتی" },
+          { url: "https://images.unsplash.com/photo-1465495976277-4387d4b0b4c6?auto=format&fit=crop&w=600&q=80", tag: "گل‌آرایی و شمع" }
+        ],
+        packages: [
+          { name: "برنزی (پایه)", price: "۶۵,۰۰۰,۰۰۰ تومان", items: ["منوی شام ۲ رنگ سلف‌سرویس", "ورودی باغ تالار", "سیستم سیستم صوتی"] },
+          { name: "نقره‌ای (VIP)", price: "۹۵,۰۰۰,۰۰۰ تومان", items: ["منوی شام ۳ رنگ با کترینگ یزدی", "شمع‌آرایی کامل", "تست غذا برای ۴ نفر"] },
+          { name: "طلایی (Luxury)", price: "۱۴۰,۰۰۰,۰۰۰ تومان", items: ["تمام امکانات نقره‌ای + سفره عقد", "آتش‌بازی ورودی", "اقامت سوئیت عروس"] }
+        ],
+        reviews: [
+          { author: "رضا و مریم", text: "کیفیت غذا و میزبانی مشیرالممالک بی‌نظیر بود.", stars: "★★★★★", date: "اردیبهشت ۱۴۰۳" },
+          { author: "محمد و سارا", text: "فضای باغ سنتی بسیار شیک و عکس‌ها رویایی شدند.", stars: "★★★★★", date: "فروردین ۱۴۰۳" }
+        ]
       },
       {
         id: 2,
@@ -3870,9 +3918,28 @@
         district: "صفائیه & اطلسی",
         city: "یزد (میدان اطلسی)",
         rating: 4.8,
+        reviewCount: 38,
         verified: true,
         priceRange: "از ۲۸,۰۰۰,۰۰۰ تومان",
-        image: "https://images.unsplash.com/photo-1537633552985-df8429e8048b?auto=format&fit=crop&w=800&q=80"
+        image: "https://images.unsplash.com/photo-1537633552985-df8429e8048b?auto=format&fit=crop&w=800&q=80",
+        phone: "۰۹۱۲۳۴۵۶۷۸۹",
+        landline: "۰۳۵-۳۸۲۵۲۲۲۲",
+        address: "یزد، میدان اطلسی، مجتمع آریا، طبقه ۳",
+        instagram: "@kavir_studio_yazd",
+        hours: "شنبه تا پنجشنبه ۹:۰۰ الی ۲۰:۰۰",
+        portfolio: [
+          { url: "https://images.unsplash.com/photo-1537633552985-df8429e8048b?auto=format&fit=crop&w=600&q=80", tag: "فرمالیته کویر بافق" },
+          { url: "https://images.unsplash.com/photo-1509316975850-ff9c5deb0cd9?auto=format&fit=crop&w=600&q=80", tag: "عکاسی غروب کویر" },
+          { url: "https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=600&q=80", tag: "کلیپ احساسی دو نفره" },
+          { url: "https://images.unsplash.com/photo-1519167758481-83f550bb49b3?auto=format&fit=crop&w=600&q=80", tag: "عکاسی عمارت و باغ" }
+        ],
+        packages: [
+          { name: "پکیج اقتصادی عکاسی", price: "۲۸,۰۰۰,۰۰۰ تومان", items: ["عکاسی و فیلمبرداری روز مراسم", "آلبوم ایتالیایی 60x30", "تحویل فایل مادر"] },
+          { name: "پکیج کامل فرمالیته کویر", price: "۴۵,۰۰۰,۰۰۰ تومان", items: ["کلیپ فرمالیته کویر با هلی‌شات", "مجوز رسمی عکاسی کویر", "۲ عدد آلبوم دیجیتال"] }
+        ],
+        reviews: [
+          { author: "علی و مهسا", text: "کلیپ کویر بافق فوق‌العاده شد، مجوز رسمی کویر کار رو راحت کرد.", stars: "★★★★★", date: "خرداد ۱۴۰۳" }
+        ]
       },
       {
         id: 3,
@@ -3883,9 +3950,27 @@
         district: "بلوار جمهوری",
         city: "یزد (بلوار جمهوری)",
         rating: 4.9,
+        reviewCount: 29,
         verified: true,
         priceRange: "از ۱۱۰,۰۰۰,۰۰۰ تومان",
-        image: "https://images.unsplash.com/photo-1519741497674-611481863552?auto=format&fit=crop&w=800&q=80"
+        image: "https://images.unsplash.com/photo-1519741497674-611481863552?auto=format&fit=crop&w=800&q=80",
+        phone: "۰۳۵-۳۵۲۶۳۳۳۳",
+        landline: "۰۳۵-۳۵۲۶۴۴۴۴",
+        address: "یزد، بلوار جمهوری، جنب سرپرستی بانک ملی",
+        instagram: "@ghasr_palace_yazd",
+        hours: "همه روزه ۱۰:۰۰ الی ۲۲:۰۰",
+        portfolio: [
+          { url: "https://images.unsplash.com/photo-1519741497674-611481863552?auto=format&fit=crop&w=600&q=80", tag: "دیزاین کریستال" },
+          { url: "https://images.unsplash.com/photo-1520854221256-17451cc331bf?auto=format&fit=crop&w=600&q=80", tag: "جایگاه عروس داماد" },
+          { url: "https://images.unsplash.com/photo-1519167758481-83f550bb49b3?auto=format&fit=crop&w=600&q=80", tag: "ورودی شب" },
+          { url: "https://images.unsplash.com/photo-1465495976277-4387d4b0b4c6?auto=format&fit=crop&w=600&q=80", tag: "شمع‌آرایی تالار" }
+        ],
+        packages: [
+          { name: "پکیج تشریفات قصر", price: "۱۱۰,۰۰۰,۰۰۰ تومان", items: ["منوی شام سلف سرویس کامل", "ورودی و سفره عقد", "نورپردازی حرفه‌ای"] }
+        ],
+        reviews: [
+          { author: "حسین و الهام", text: "تالار بسیار شیک و تیم تشریفات بسیار منظم بودند.", stars: "★★★★★", date: "اردیبهشت ۱۴۰۳" }
+        ]
       },
       {
         id: 4,
@@ -3896,9 +3981,27 @@
         district: "خیابان کاشانی & ملاصدرا",
         city: "یزد (خیابان کاشانی)",
         rating: 4.7,
+        reviewCount: 31,
         verified: true,
         priceRange: "از ۱۵,۰۰۰,۰۰۰ تومان",
-        image: "https://images.unsplash.com/photo-1487412720507-e7ab37603c6f?auto=format&fit=crop&w=800&q=80"
+        image: "https://images.unsplash.com/photo-1487412720507-e7ab37603c6f?auto=format&fit=crop&w=800&q=80",
+        phone: "۰۳۵-۳۶۲۷۵۵۵۵",
+        landline: "۰۳۵-۳۶۲۷۶۶۶۶",
+        address: "یزد، خیابان کاشانی، پلاک ۱۲۰",
+        instagram: "@banoo_beauty_yazd",
+        hours: "شنبه تا چهارشنبه ۹:۰۰ الی ۱۹:۰۰",
+        portfolio: [
+          { url: "https://images.unsplash.com/photo-1487412720507-e7ab37603c6f?auto=format&fit=crop&w=600&q=80", tag: "میکاپ تخصصی عروس" },
+          { url: "https://images.unsplash.com/photo-1594552072238-b8a33785b261?auto=format&fit=crop&w=600&q=80", tag: "شینیون کلاسیک" },
+          { url: "https://images.unsplash.com/photo-1522337360788-8b13dee7a37e?auto=format&fit=crop&w=600&q=80", tag: "ناخن و پاکسازی" },
+          { url: "https://images.unsplash.com/photo-1560066984-138dadb4c035?auto=format&fit=crop&w=600&q=80", tag: "تاج و گریم" }
+        ],
+        packages: [
+          { name: "پکیج VIP عروس", price: "۱۸,۰۰۰,۰۰۰ تومان", items: ["میکاپ و شینیون لایت", "پاکسازی پوست و ناخن", "تاج و تور اختصاصی"] }
+        ],
+        reviews: [
+          { author: "زهرا نوری", text: "میکاپ خیلی ماندگار و طبیعی بود، عالی بودید.", stars: "★★★★★", date: "خرداد ۱۴۰۳" }
+        ]
       },
       {
         id: 5,
@@ -3909,9 +4012,27 @@
         district: "بلوار دانشگاه",
         city: "یزد (بلوار دانشگاه)",
         rating: 4.9,
+        reviewCount: 25,
         verified: true,
         priceRange: "از ۲۲,۰۰۰,۰۰۰ تومان",
-        image: "https://images.unsplash.com/photo-1594552072238-b8a33785b261?auto=format&fit=crop&w=800&q=80"
+        image: "https://images.unsplash.com/photo-1594552072238-b8a33785b261?auto=format&fit=crop&w=800&q=80",
+        phone: "۰۳۵-۳۸۲۶۷۷۷۷",
+        landline: "۰۳۵-۳۸۲۶۸۸۸۸",
+        address: "یزد، بلوار دانشگاه، مجتمع تجاری اطلس",
+        instagram: "@termeh_mezon_yazd",
+        hours: "شنبه تا پنجشنبه ۱۰:۰۰ الی ۲۱:۰۰",
+        portfolio: [
+          { url: "https://images.unsplash.com/photo-1594552072238-b8a33785b261?auto=format&fit=crop&w=600&q=80", tag: "لباس عروس دانتل" },
+          { url: "https://images.unsplash.com/photo-1537633552985-df8429e8048b?auto=format&fit=crop&w=600&q=80", tag: "لباس پرنسسی" },
+          { url: "https://images.unsplash.com/photo-1519741497674-611481863552?auto=format&fit=crop&w=600&q=80", tag: "تور و تور سر" },
+          { url: "https://images.unsplash.com/photo-1487412720507-e7ab37603c6f?auto=format&fit=crop&w=600&q=80", tag: "شنل و اکسسوری" }
+        ],
+        packages: [
+          { name: "دوخت و دوخت سفارشی", price: "۲۲,۰۰۰,۰۰۰ تومان", items: ["دوخت اختصاصی با پارچه ایتالیایی", "پرو نامحدود", "تور و شنل هدایا"] }
+        ],
+        reviews: [
+          { author: "نرگس کریمی", text: "لباس دقیقاً طبق سایز و مدلی که خواستم آماده شد.", stars: "★★★★★", date: "اردیبهشت ۱۴۰۳" }
+        ]
       },
       {
         id: 6,
@@ -3922,9 +4043,27 @@
         district: "بافت تاریخی & آزادشهر",
         city: "یزد (بافت تاریخی)",
         rating: 4.8,
+        reviewCount: 20,
         verified: true,
         priceRange: "از ۸۰,۰۰۰,۰۰۰ تومان",
-        image: "https://images.unsplash.com/photo-1520854221256-17451cc331bf?auto=format&fit=crop&w=800&q=80"
+        image: "https://images.unsplash.com/photo-1520854221256-17451cc331bf?auto=format&fit=crop&w=800&q=80",
+        phone: "۰۳۵-۳۶۲۱۹۹۹۹",
+        landline: "۰۳۵-۳۶۲۱۸۸۸۸",
+        address: "یزد، بافت تاریخی، خیابان مسجد جامع",
+        instagram: "@badgir_mansion_yazd",
+        hours: "همه روزه ۱۰:۰۰ الی ۲۱:۰۰",
+        portfolio: [
+          { url: "https://images.unsplash.com/photo-1520854221256-17451cc331bf?auto=format&fit=crop&w=600&q=80", tag: "عمارت بوم‌گردی سنتی" },
+          { url: "https://images.unsplash.com/photo-1519167758481-83f550bb49b3?auto=format&fit=crop&w=600&q=80", tag: "حیاط با بادگیر" },
+          { url: "https://images.unsplash.com/photo-1511285560929-80b456fea0bc?auto=format&fit=crop&w=600&q=80", tag: "پذیرایی سنتی" },
+          { url: "https://images.unsplash.com/photo-1465495976277-4387d4b0b4c6?auto=format&fit=crop&w=600&q=80", tag: "عکس‌های شب" }
+        ],
+        packages: [
+          { name: "پکیج عروسی سنتی", price: "۸۰,۰۰۰,۰۰۰ تومان", items: ["پذیرایی با شیرینی حاج خلیفه", "منوی شام دیزی و غذای یزدی", "فضای حیاط با بادگیر"] }
+        ],
+        reviews: [
+          { author: "سعید و فاطمه", text: "مهمان‌های غیر یزدی ما عاشق فضای بادگیر شدند.", stars: "★★★★★", date: "اسفند ۱۴۰۲" }
+        ]
       },
       {
         id: 7,
@@ -3935,9 +4074,27 @@
         district: "میدان امیرچقماق",
         city: "یزد (امیرچقماق)",
         rating: 4.6,
+        reviewCount: 55,
         verified: false,
-        priceRange: "از ۱۲,۰۰۰,۰۰۰ تومان",
-        image: "https://images.unsplash.com/photo-1535141192574-5d4897c13136?auto=format&fit=crop&w=800&q=80"
+        priceRange: "از ۱۱۲,۰۰۰,۰۰۰ تومان",
+        image: "https://images.unsplash.com/photo-1535141192574-5d4897c13136?auto=format&fit=crop&w=800&q=80",
+        phone: "۰۳۵-۳۶۲۲۱۱۱۱",
+        landline: "۰۳۵-۳۶۲۲۲۲۲۲",
+        address: "یزد، ضلع شمالی میدان امیرچقماق",
+        instagram: "@hajkhalifa_yazd",
+        hours: "همه روزه ۸:۰۰ الی ۲۲:۰۰",
+        portfolio: [
+          { url: "https://images.unsplash.com/photo-1535141192574-5d4897c13136?auto=format&fit=crop&w=600&q=80", tag: "باقلوا و قطاب یزدی" },
+          { url: "https://images.unsplash.com/photo-1519741497674-611481863552?auto=format&fit=crop&w=600&q=80", tag: "کیک عروسی ۴ طبقه" },
+          { url: "https://images.unsplash.com/photo-1511285560929-80b456fea0bc?auto=format&fit=crop&w=600&q=80", tag: "فینگرفود پذیرایی" },
+          { url: "https://images.unsplash.com/photo-1520854221256-17451cc331bf?auto=format&fit=crop&w=600&q=80", tag: "بسته‌بندی مجلل" }
+        ],
+        packages: [
+          { name: "سفارش پذیرایی عروسی (کیلوگرم)", price: "۱۲,۰۰۰,۰۰۰ تومان", items: ["قطاب، باقلوا، حاجی‌بادام و کیک یزدی اصل", "بسته‌بندی کادویی مجلل"] }
+        ],
+        reviews: [
+          { author: "امیر کاظمی", text: "شیرینی‌ها تازه و اصیل حاج خلیفه برای تمام مهمان‌ها لذت‌بخش بود.", stars: "★★★★★", date: "خرداد ۱۴۰۳" }
+        ]
       },
       {
         id: 8,
@@ -3948,9 +4105,27 @@
         district: "بازار خان",
         city: "یزد (بازار خان)",
         rating: 4.5,
+        reviewCount: 18,
         verified: false,
         priceRange: "از ۳۵,۰۰۰,۰۰۰ تومان",
-        image: "https://images.unsplash.com/photo-1605100804763-247f67b3557e?auto=format&fit=crop&w=800&q=80"
+        image: "https://images.unsplash.com/photo-1605100804763-247f67b3557e?auto=format&fit=crop&w=800&q=80",
+        phone: "۰۳۵-۳۶۲۳۳۳۳۳",
+        landline: "۰۳۵-۳۶۲۳۴۴۴۴",
+        address: "یزد، بازار خان، تیمچه طلادوزان، پلاک ۴",
+        instagram: "@khatam_gold_yazd",
+        hours: "شنبه تا چهارشنبه ۹:۳۰ الی ۲۰:۳۰",
+        portfolio: [
+          { url: "https://images.unsplash.com/photo-1605100804763-247f67b3557e?auto=format&fit=crop&w=600&q=80", tag: "حلقه ست برلیان" },
+          { url: "https://images.unsplash.com/photo-1535141192574-5d4897c13136?auto=format&fit=crop&w=600&q=80", tag: "سرویس طلا عروس" },
+          { url: "https://images.unsplash.com/photo-1519741497674-611481863552?auto=format&fit=crop&w=600&q=80", tag: "دستبند و تک‌پوش" },
+          { url: "https://images.unsplash.com/photo-1511285560929-80b456fea0bc?auto=format&fit=crop&w=600&q=80", tag: "پلاک و مدال ازدواج" }
+        ],
+        packages: [
+          { name: "ست حلقه و سرویس ازدواج", price: "۳۵,۰۰۰,۰۰۰ تومان", items: ["طلا ۱۸ عیار با فاکتور رسمی اتحادیه یزد", "سایز و حکاکی رایگان"] }
+        ],
+        reviews: [
+          { author: "پیمان احمدی", text: "منصفانه و با حاشیه سود مناسب در بازار خان یزد.", stars: "★★★★☆", date: "اردیبهشت ۱۴۰۳" }
+        ]
       }
     ];
 
@@ -6642,6 +6817,81 @@
       if (catEl) catEl.innerText = vendor.category;
       if (districtEl) districtEl.innerText = vendor.city || vendor.district || "یزد";
       if (bottomPriceEl) bottomPriceEl.innerText = `شروع قیمت از ${vendor.priceRange}`;
+
+      // 1. Populate Portfolio Tab
+      const portfolioContainer = document.querySelector('#vdm-subpanel-portfolio .grid');
+      if (portfolioContainer) {
+        const portList = vendor.portfolio || [
+          { url: vendor.image, tag: vendor.category }
+        ];
+        let portHtml = '';
+        portList.forEach(p => {
+          portHtml += `
+            <div class="relative group h-36 rounded-2xl overflow-hidden border border-accent bg-slate-100 cursor-pointer" onclick="showToast('مشاهده تصویر ${p.tag || ''} در سایز بزرگ', 'info')">
+              <img src="${p.url}" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300">
+              <span class="absolute bottom-2 right-2 bg-black/60 text-white text-[10px] px-2 py-0.5 rounded-md font-bold">${p.tag || 'نمونه‌کار'}</span>
+            </div>
+          `;
+        });
+        portfolioContainer.innerHTML = portHtml;
+      }
+
+      // 2. Populate Packages Tab
+      const packagesContainer = document.querySelector('#vdm-subpanel-packages .grid');
+      if (packagesContainer) {
+        const pkgList = vendor.packages || [
+          { name: "پکیج اختصاصی", price: vendor.priceRange, items: ["ارائه خدمات کامل با کیفیت تضمینی", "مشاوره و پشتیبانی حضوری"] }
+        ];
+        let pkgHtml = '';
+        pkgList.forEach((pkg, idx) => {
+          const isFeatured = idx === 1;
+          pkgHtml += `
+            <div class="${isFeatured ? 'bg-emerald-50/60 border-2 border-primary shadow-xs' : 'bg-bgCustom border border-accent'} rounded-2xl p-4 space-y-3 relative">
+              ${isFeatured ? '<span class="absolute -top-3 right-4 bg-primary text-white text-[10px] font-bold px-2.5 py-0.5 rounded-full">محبوب‌ترین</span>' : ''}
+              <div class="border-b border-accent pb-2">
+                <span class="text-graphite font-bold block">${pkg.name}</span>
+                <span class="text-lg font-black text-primary">${pkg.price}</span>
+              </div>
+              <ul class="space-y-1.5 text-[11px] font-medium text-graphite">
+                ${pkg.items.map(it => `<li class="flex items-center gap-1.5"><i data-lucide="check" class="w-3.5 h-3.5 text-primary"></i><span>${it}</span></li>`).join('')}
+              </ul>
+            </div>
+          `;
+        });
+        packagesContainer.innerHTML = pkgHtml;
+      }
+
+      // 3. Populate Reviews Tab
+      const reviewsContainer = document.getElementById('vdm-subpanel-reviews');
+      if (reviewsContainer) {
+        const revList = vendor.reviews || [
+          { author: "زوج رضایت‌مند", text: "از خدمات و پاسخگویی منظم مجموعه کمال تشکر را داریم.", stars: "★★★★★", date: "۱۴۰۳" }
+        ];
+        let revHtml = '';
+        revList.forEach(r => {
+          revHtml += `
+            <div class="p-3 bg-bgCustom rounded-2xl border border-accent space-y-1 text-xs font-bold text-graphite">
+              <div class="flex justify-between items-center">
+                <span>${r.author} (${r.date})</span>
+                <span class="text-amber-500">${r.stars}</span>
+              </div>
+              <p class="text-secondary font-medium mt-1">${r.text}</p>
+            </div>
+          `;
+        });
+        reviewsContainer.innerHTML = revHtml;
+      }
+
+      // 4. Populate Contact Tab
+      const phoneEl = document.getElementById('vdm-contact-phone');
+      const addressEl = document.getElementById('vdm-contact-address');
+      const hoursEl = document.getElementById('vdm-contact-hours');
+      const instaEl = document.getElementById('vdm-contact-insta');
+
+      if (phoneEl) phoneEl.innerText = vendor.phone || "۰۳۵-۳۸۲۴۰۰۰۰";
+      if (addressEl) addressEl.innerText = vendor.address || `یزد، ${vendor.district || 'مرکز شهر'}`;
+      if (hoursEl) hoursEl.innerText = vendor.hours || "همه روزه از ۱۰:۰۰ الی ۲۱:۰۰";
+      if (instaEl) instaEl.innerText = vendor.instagram || "@yazd_wedding_studio";
 
       if (chatBtn) {
         chatBtn.onclick = () => {
