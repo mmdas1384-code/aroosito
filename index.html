@@ -311,12 +311,27 @@
           <!-- Saved Vendors Counter -->
           <div class="bg-bgCustom border border-accent rounded-2xl p-5 space-y-3 flex flex-col justify-between">
             <div>
-              <span class="text-xs font-bold text-secondary block mb-1">تأمین‌کنندگان نشان‌شده</span>
-              <span class="text-2xl font-black text-graphite">۴ مجموعه معتبر</span>
+              <span class="text-xs font-bold text-secondary block mb-1">تأمین‌کنندگان نشان‌شده (Favorites)</span>
+              <span id="couple-favorite-count-badge" class="text-2xl font-black text-primary">۰ مجموعه</span>
             </div>
-            <span class="text-[11px] text-emerald-700 font-bold bg-emerald-50 border border-emerald-200 px-2.5 py-1 rounded-lg block">
-              ✓ تاییدیه رسمی اعتبار
-            </span>
+            <button onclick="document.getElementById('couple-favorites-section')?.scrollIntoView({ behavior: 'smooth' })" class="text-xs font-bold text-primary hover:underline text-right block">
+              مشاهده لیست منتخبین ↓
+            </button>
+          </div>
+        </div>
+
+        <!-- MY FAVORITE VENDORS CARDS SECTION (تأمین‌کنندگان منتخب من) -->
+        <div id="couple-favorites-section" class="border-t border-accent/60 pt-5 space-y-3">
+          <div class="flex items-center justify-between">
+            <h3 class="text-base font-bold text-graphite flex items-center gap-2">
+              <i data-lucide="heart" class="w-4.5 h-4.5 text-rose-500 fill-rose-500"></i>
+              <span>تأمین‌کنندگان منتخب من (My Favorite Vendors)</span>
+            </h3>
+            <span class="text-xs text-secondary">ذخیره‌شده در مرورگر جهت دسترسی سریع</span>
+          </div>
+
+          <div id="couple-favorites-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+            <!-- Populated dynamically via renderFavoriteVendorsList() -->
           </div>
         </div>
       </section>
@@ -974,6 +989,51 @@
             <div id="sms-history" class="space-y-2 text-xs font-medium text-graphite max-h-48 overflow-y-auto">
               <div class="p-2 bg-white rounded-lg border border-accent/60">
                 <span class="text-primary font-bold">ارسال شد:</span> یادآوری تکمیل مدارک رسمی به تامین‌کنندگان جدید
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- SUB-TAB 5: CONTACT & ADDRESS -->
+        <div id="vdm-subpanel-contact" class="hidden space-y-4 text-xs font-bold text-graphite">
+          <div class="p-4 bg-bgCustom rounded-2xl border border-accent space-y-3">
+            <div class="flex items-center gap-3 border-b border-accent pb-2.5">
+              <div class="w-8 h-8 rounded-xl bg-primary/10 text-primary flex items-center justify-center shrink-0">
+                <i data-lucide="phone" class="w-4 h-4"></i>
+              </div>
+              <div>
+                <span class="text-secondary block text-[11px]">شماره تماس رزرو و هماهنگی:</span>
+                <span id="vdm-contact-phone" class="text-sm font-black text-primary dir-ltr">۰۳۵-۳۸۲۴۰۰۰۰</span>
+              </div>
+            </div>
+
+            <div class="flex items-center gap-3 border-b border-accent pb-2.5">
+              <div class="w-8 h-8 rounded-xl bg-primary/10 text-primary flex items-center justify-center shrink-0">
+                <i data-lucide="map-pin" class="w-4 h-4"></i>
+              </div>
+              <div>
+                <span class="text-secondary block text-[11px]">آدرس کامل در استان یزد:</span>
+                <span id="vdm-contact-address" class="text-graphite font-bold">یزد، صفائیه، خیابان دانشگاه، نرسیده به میدان اطلسی</span>
+              </div>
+            </div>
+
+            <div class="flex items-center gap-3 border-b border-accent pb-2.5">
+              <div class="w-8 h-8 rounded-xl bg-primary/10 text-primary flex items-center justify-center shrink-0">
+                <i data-lucide="clock" class="w-4 h-4"></i>
+              </div>
+              <div>
+                <span class="text-secondary block text-[11px]">ساعات کاری و پذیرش حضوری:</span>
+                <span id="vdm-contact-hours" class="text-graphite font-bold">همه روزه (حتی روزهای تعطیل) از ساعت ۱۰:۰۰ الی ۲۱:۰۰</span>
+              </div>
+            </div>
+
+            <div class="flex items-center gap-3">
+              <div class="w-8 h-8 rounded-xl bg-primary/10 text-primary flex items-center justify-center shrink-0">
+                <i data-lucide="instagram" class="w-4 h-4"></i>
+              </div>
+              <div>
+                <span class="text-secondary block text-[11px]">صفحه رسمی اینستاگرام:</span>
+                <span id="vdm-contact-insta" class="text-primary font-bold dir-ltr">@yazd_wedding_studio</span>
               </div>
             </div>
           </div>
@@ -2579,15 +2639,15 @@
         </div>
       </div>
 
-      <!-- Tab Buttons Navigation inside Modal -->
+      <!-- Tab Buttons Navigation inside Modal (5 Distinct Tabs) -->
       <div class="bg-bgCustom border-b border-accent px-4 py-2.5 flex items-center gap-2 overflow-x-auto custom-scrollbar shrink-0 text-xs font-bold text-graphite">
         <button onclick="switchVdmSubTab('portfolio')" id="vdm-tab-btn-portfolio" class="px-4 py-2 rounded-xl bg-primary text-white shadow-2xs transition-all flex items-center gap-1.5 shrink-0">
           <i data-lucide="image" class="w-4 h-4"></i>
-          <span>🖼️ نمونه‌کارها</span>
+          <span>📸 نمونه‌کارها</span>
         </button>
         <button onclick="switchVdmSubTab('packages')" id="vdm-tab-btn-packages" class="px-4 py-2 rounded-xl bg-white border border-accent text-secondary hover:text-graphite transition-all flex items-center gap-1.5 shrink-0">
-          <i data-lucide="package" class="w-4 h-4"></i>
-          <span>📋 پکیج‌ها و تعرفه‌ها</span>
+          <i data-lucide="gem" class="w-4 h-4"></i>
+          <span>💎 پکیج‌ها و تعرفه‌ها</span>
         </button>
         <button onclick="switchVdmSubTab('calendar')" id="vdm-tab-btn-calendar" class="px-4 py-2 rounded-xl bg-white border border-accent text-secondary hover:text-graphite transition-all flex items-center gap-1.5 shrink-0">
           <i data-lucide="calendar" class="w-4 h-4"></i>
@@ -2595,7 +2655,11 @@
         </button>
         <button onclick="switchVdmSubTab('reviews')" id="vdm-tab-btn-reviews" class="px-4 py-2 rounded-xl bg-white border border-accent text-secondary hover:text-graphite transition-all flex items-center gap-1.5 shrink-0">
           <i data-lucide="star" class="w-4 h-4"></i>
-          <span>💬 نظرات زوجین (۴۲)</span>
+          <span>💬 نظرات و امتیازات</span>
+        </button>
+        <button onclick="switchVdmSubTab('contact')" id="vdm-tab-btn-contact" class="px-4 py-2 rounded-xl bg-white border border-accent text-secondary hover:text-graphite transition-all flex items-center gap-1.5 shrink-0">
+          <i data-lucide="map-pin" class="w-4 h-4"></i>
+          <span>📍 اطلاعات تماس و آدرس</span>
         </button>
       </div>
 
@@ -5605,6 +5669,109 @@
     }
 
 
+    // FAVORITE / BOOKMARK SYSTEM STATE & LOGIC
+    let favoriteVendorIds = [1, 2, 4];
+
+    function loadFavoritesFromStorage() {
+      try {
+        const stored = localStorage.getItem('aroosi_favorite_vendor_ids');
+        if (stored) {
+          const parsed = JSON.parse(stored);
+          if (Array.isArray(parsed)) {
+            favoriteVendorIds = parsed;
+          }
+        }
+      } catch (err) {
+        console.error('Failed to load favorites from localStorage:', err);
+      }
+    }
+
+    function saveFavoritesToStorage() {
+      try {
+        localStorage.setItem('aroosi_favorite_vendor_ids', JSON.stringify(favoriteVendorIds));
+      } catch (err) {
+        console.error('Failed to save favorites to localStorage:', err);
+      }
+    }
+
+    function toggleFavoriteVendor(vendorId, event) {
+      if (event) event.stopPropagation();
+      let vId = vendorId;
+      if (typeof vendorId === 'string' && !isNaN(parseInt(vendorId))) {
+        vId = parseInt(vendorId);
+      }
+
+      const index = favoriteVendorIds.indexOf(vId);
+      const vendor = vendors.find(v => v.id === vId);
+      const vendorName = vendor ? vendor.name : 'تأمین‌کننده';
+
+      if (index > -1) {
+        favoriteVendorIds.splice(index, 1);
+        showToast(`«${vendorName}» از لیست نشان‌شده‌ها حذف شد.`, 'info');
+      } else {
+        favoriteVendorIds.push(vId);
+        showToast(`«${vendorName}» به لیست نشان‌شده‌های شما اضافه شد ❤️`, 'success');
+      }
+
+      saveFavoritesToStorage();
+      filterVendors();
+      renderFavoriteVendorsList();
+    }
+
+    function renderFavoriteVendorsList() {
+      const container = document.getElementById('couple-favorites-grid');
+      const badge = document.getElementById('couple-favorite-count-badge');
+      if (badge) {
+        badge.innerText = `${favoriteVendorIds.length} مجموعه`;
+      }
+
+      if (!container) return;
+      container.innerHTML = '';
+
+      const favVendors = vendors.filter(v => favoriteVendorIds.includes(v.id));
+
+      if (favVendors.length === 0) {
+        container.innerHTML = `
+          <div class="col-span-full p-6 text-center text-secondary text-xs font-bold bg-bgCustom rounded-2xl border border-accent">
+            هنوز هیچ تأمین‌کننده‌ای به لیست نشان‌شده‌های خود اضافه نکرده‌اید. روی آیکون قلب ❤️ کارت‌ها کلیک کنید.
+          </div>
+        `;
+        return;
+      }
+
+      favVendors.forEach(v => {
+        const card = document.createElement('div');
+        card.className = "bg-white border border-accent rounded-2xl overflow-hidden shadow-2xs p-3 space-y-2.5 relative flex flex-col justify-between";
+        card.innerHTML = `
+          <div class="space-y-2">
+            <div class="relative h-28 rounded-xl overflow-hidden bg-slate-100">
+              <img src="${v.image}" alt="${v.name}" class="w-full h-full object-cover">
+              <button type="button" onclick="toggleFavoriteVendor(${v.id}, event)" class="absolute top-2 left-2 w-7 h-7 rounded-lg bg-white/90 text-rose-500 flex items-center justify-center shadow-xs" title="حذف از نشان‌شده‌ها">
+                <i data-lucide="x" class="w-4 h-4"></i>
+              </button>
+            </div>
+            <div>
+              <span class="text-[10px] font-bold text-primary bg-primary/10 px-2 py-0.5 rounded-md inline-block mb-1">${v.category}</span>
+              <h4 class="text-xs font-bold text-graphite truncate">${v.name}</h4>
+              <span class="text-[11px] text-secondary font-medium block mt-0.5">${v.priceRange}</span>
+            </div>
+          </div>
+
+          <div class="flex gap-1.5 pt-1">
+            <button onclick="openVendorDetailModal(${v.id})" class="flex-1 bg-bgCustom hover:bg-slate-100 text-graphite border border-accent text-[11px] font-bold py-1.5 rounded-lg">
+              اطلاعات
+            </button>
+            <button onclick="openInquiryModal(${v.id}, '${v.name}')" class="flex-1 bg-primary text-white text-[11px] font-bold py-1.5 rounded-lg shadow-2xs">
+              چت & استعلام
+            </button>
+          </div>
+        `;
+        container.appendChild(card);
+      });
+
+      lucide.createIcons();
+    }
+
     // VENDOR PROFILE EDIT FORM (VENDOR DASHBOARD)
     function handleVendorProfileUpdate(e) {
       e.preventDefault();
@@ -5664,6 +5831,7 @@
         const localTag = v.district || "استان یزد";
         const ratingVal = v.rating || 4.8;
         const reviewCount = v.reviewCount || 34;
+        const isFav = favoriteVendorIds.includes(v.id);
 
         card.innerHTML = `
           <div>
@@ -5684,10 +5852,15 @@
                 `}
               </div>
 
-              <div class="absolute top-3 left-3 bg-white/90 backdrop-blur-md text-amber-600 text-xs font-black px-2.5 py-1 rounded-xl shadow-xs flex items-center gap-1">
-                <i data-lucide="star" class="w-3.5 h-3.5 fill-amber-400 text-amber-400"></i>
-                <span>${ratingVal}</span>
-                <span class="text-[10px] text-secondary font-normal">(${reviewCount})</span>
+              <div class="absolute top-3 left-3 flex items-center gap-2">
+                <button type="button" onclick="toggleFavoriteVendor(${v.id}, event)" class="w-8 h-8 rounded-xl bg-white/90 backdrop-blur-md flex items-center justify-center text-rose-500 shadow-sm transition-transform active:scale-95 hover:bg-white cursor-pointer" title="افزودن به نشان‌شده‌ها">
+                  <i data-lucide="heart" class="w-4 h-4 ${isFav ? 'fill-rose-500 text-rose-500' : 'text-rose-500'}"></i>
+                </button>
+                <div class="bg-white/90 backdrop-blur-md text-amber-600 text-xs font-black px-2.5 py-1 rounded-xl shadow-xs flex items-center gap-1">
+                  <i data-lucide="star" class="w-3.5 h-3.5 fill-amber-400 text-amber-400"></i>
+                  <span>${ratingVal}</span>
+                  <span class="text-[10px] text-secondary font-normal">(${reviewCount})</span>
+                </div>
               </div>
 
               <div class="absolute bottom-3 right-3 left-3 flex justify-between items-center text-white text-xs">
@@ -5720,8 +5893,8 @@
 
           <div class="p-5 pt-0 flex gap-2">
             <button onclick="openVendorDetailModal(${v.id})" class="flex-1 bg-white hover:bg-slate-50 border border-accent text-graphite hover:border-primary py-2.5 rounded-xl text-xs font-bold transition-all shadow-2xs flex items-center justify-center gap-1">
-              <i data-lucide="eye" class="w-3.5 h-3.5 text-primary"></i>
-              <span>مشاهده نمونه‌کارها</span>
+              <i data-lucide="info" class="w-3.5 h-3.5 text-primary"></i>
+              <span>نمونه‌کارها و اطلاعات</span>
             </button>
             <button onclick="openInquiryModal(${v.id}, '${v.name}')" class="flex-1 bg-primary hover:bg-emerald-900 text-white py-2.5 rounded-xl text-xs font-bold transition-all shadow-xs flex items-center justify-center gap-1">
               <i data-lucide="message-square" class="w-3.5 h-3.5"></i>
@@ -6419,7 +6592,7 @@
     }
 
     function switchVdmSubTab(subTab) {
-      const subTabs = ['portfolio', 'packages', 'calendar', 'reviews'];
+      const subTabs = ['portfolio', 'packages', 'calendar', 'reviews', 'contact'];
       subTabs.forEach(t => {
         const btn = document.getElementById('vdm-tab-btn-' + t);
         const panel = document.getElementById('vdm-subpanel-' + t);
@@ -9784,6 +9957,8 @@
     window.addEventListener('DOMContentLoaded', () => {
       loadCategoryGroupsFromStorage();
       loadChatStateFromStorage();
+      loadFavoritesFromStorage();
+      renderFavoriteVendorsList();
       renderCategoryCards();
       filterVendors();
       renderPortfolioUI();
