@@ -372,7 +372,7 @@
 
           <div class="flex items-center gap-2">
             <label class="flex items-center gap-2 cursor-pointer text-xs font-bold text-graphite bg-white px-3 py-2 rounded-xl border border-accent shadow-xs">
-              <input type="checkbox" id="verified-only" onchange="filterVendors()" class="rounded text-primary focus:ring-primary w-4 h-4">
+              <input type="checkbox" id="verified-only" checked onchange="filterVendors()" class="rounded text-primary focus:ring-primary w-4 h-4">
               <span>فقط دارای تاییدیه رسمی</span>
             </label>
           </div>
@@ -3257,7 +3257,7 @@
       {
         id: 1,
         name: "هتل باغ و تشریفات مشیرالممالک یزد",
-        category: "تالار و باغ تشریفات",
+        category: "تالار و باغ تالار عروسی",
         province: "یزد",
         cityName: "یزد",
         district: "صفائیه & اطلسی",
@@ -3270,7 +3270,7 @@
       {
         id: 2,
         name: "استودیو و آتلیه تخصصی کویر یزد",
-        category: "آتلیه و عکاسی",
+        category: "آتلیه عکاسی و فیلمبرداری",
         province: "یزد",
         cityName: "یزد",
         district: "صفائیه & اطلسی",
@@ -3283,7 +3283,7 @@
       {
         id: 3,
         name: "عمارت و تالار تشریفات قصر یزد",
-        category: "تالار و باغ تشریفات",
+        category: "تالار و باغ تالار عروسی",
         province: "یزد",
         cityName: "یزد",
         district: "بلوار جمهوری",
@@ -3296,7 +3296,7 @@
       {
         id: 4,
         name: "سالن زیبایی VIP بانو یزد",
-        category: "سالن زیبایی",
+        category: "سالن زیبایی و آرایشگاه عروس",
         province: "یزد",
         cityName: "یزد",
         district: "خیابان کاشانی & ملاصدرا",
@@ -3309,7 +3309,7 @@
       {
         id: 5,
         name: "مزون عروس ترمه & اسلیمی یزد",
-        category: "مزون و لباس عروس",
+        category: "مزون لباس عروس",
         province: "یزد",
         cityName: "یزد",
         district: "بلوار دانشگاه",
@@ -3322,7 +3322,7 @@
       {
         id: 6,
         name: "عمارت تشریفاتی بادگیر یزد",
-        category: "تالار و باغ تشریفات",
+        category: "تالار و باغ تالار عروسی",
         province: "یزد",
         cityName: "یزد",
         district: "بافت تاریخی & آزادشهر",
@@ -3331,6 +3331,32 @@
         verified: true,
         priceRange: "از ۸۰,۰۰۰,۰۰۰ تومان",
         image: "https://images.unsplash.com/photo-1520854221256-17451cc331bf?auto=format&fit=crop&w=800&q=80"
+      },
+      {
+        id: 7,
+        name: "کترینگ و فینگرفود سنتی شیرینی حاج خلیفه یزد",
+        category: "کیک و شیرینی‌فروشی",
+        province: "یزد",
+        cityName: "یزد",
+        district: "میدان امیرچقماق",
+        city: "یزد (امیرچقماق)",
+        rating: 4.6,
+        verified: false,
+        priceRange: "از ۱۲,۰۰۰,۰۰۰ تومان",
+        image: "https://images.unsplash.com/photo-1535141192574-5d4897c13136?auto=format&fit=crop&w=800&q=80"
+      },
+      {
+        id: 8,
+        name: "گالری طلا و جواهرات خاتم یزد",
+        category: "طلافروشی و جواهرفروشی",
+        province: "یزد",
+        cityName: "یزد",
+        district: "بازار خان",
+        city: "یزد (بازار خان)",
+        rating: 4.5,
+        verified: false,
+        priceRange: "از ۳۵,۰۰۰,۰۰۰ تومان",
+        image: "https://images.unsplash.com/photo-1605100804763-247f67b3557e?auto=format&fit=crop&w=800&q=80"
       }
     ];
 
@@ -4810,6 +4836,8 @@
     function filterVendorsByCategoryTitle(title) {
       const searchInput = document.getElementById('search-input');
       if (searchInput) searchInput.value = title;
+      const verifiedCheckbox = document.getElementById('verified-only');
+      if (verifiedCheckbox) verifiedCheckbox.checked = false;
       filterVendors();
       const vendorSection = document.getElementById('vendor-grid');
       if (vendorSection) vendorSection.scrollIntoView({ behavior: 'smooth' });
@@ -8804,7 +8832,7 @@
 
     window.addEventListener('DOMContentLoaded', () => {
       renderCategoryCards();
-      renderVendors(vendors);
+      filterVendors();
       renderPortfolioUI();
       renderVendorPackages();
       renderAdminCategories();
