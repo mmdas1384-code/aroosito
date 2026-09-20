@@ -246,6 +246,81 @@
     <!-- ========================================== -->
     <div id="tab-home" class="tab-content space-y-12">
 
+      <!-- COUPLE PLANNING DASHBOARD OVERVIEW (پنل اختصاصی برنامه‌ریزی زوجین) -->
+      <section class="bg-white border border-accent rounded-3xl p-6 sm:p-8 shadow-xs space-y-6">
+        <div class="flex flex-col sm:flex-row justify-between sm:items-center gap-4 border-b border-accent pb-4">
+          <div>
+            <div class="inline-flex items-center gap-1.5 bg-rose-50 text-rose-700 text-xs font-bold px-3 py-1 rounded-full mb-1 border border-rose-200">
+              <i data-lucide="heart" class="w-3.5 h-3.5 fill-rose-500"></i>
+              <span>پنل اختصاصی زوجین: علی & سارا</span>
+            </div>
+            <h2 class="text-2xl font-bold text-graphite">خلاصه وضعیت برنامه‌ریزی و بوک‌مارک‌های عروسی در یزد</h2>
+          </div>
+
+          <div class="flex items-center gap-2">
+            <button onclick="switchTab('planner')" class="bg-primary hover:bg-emerald-900 text-white font-bold px-4 py-2 rounded-xl text-xs shadow-xs transition-all flex items-center gap-1.5">
+              <i data-lucide="check-square" class="w-4 h-4"></i>
+              <span>چک‌لیست ۱۲ ماهه</span>
+            </button>
+            <button onclick="switchTab('messages')" class="bg-bgCustom hover:bg-slate-100 text-graphite border border-accent font-bold px-4 py-2 rounded-xl text-xs transition-all flex items-center gap-1.5">
+              <i data-lucide="message-square" class="w-4 h-4 text-primary"></i>
+              <span>پیش‌فاکتورها و چت</span>
+            </button>
+          </div>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-4 gap-6">
+          <!-- Countdown Circle Card -->
+          <div class="bg-gradient-to-br from-emerald-50/80 via-white to-amber-50/50 border border-primary/20 rounded-2xl p-5 flex flex-col items-center justify-center text-center space-y-2 shadow-2xs">
+            <div class="relative w-20 h-20 rounded-full border-4 border-primary/20 flex items-center justify-center bg-white shadow-xs">
+              <span class="text-2xl font-black text-primary">۱۳۵</span>
+            </div>
+            <span class="text-xs font-bold text-graphite">روز مانده تا شب عروسی</span>
+            <span class="text-[11px] text-secondary font-medium">تاریخ هدف: ۱۵ مهر ۱۴۰۳</span>
+          </div>
+
+          <!-- Budget Expense Progress -->
+          <div class="bg-bgCustom border border-accent rounded-2xl p-5 space-y-3 flex flex-col justify-between">
+            <div>
+              <span class="text-xs font-bold text-secondary block mb-1">بودجه کل تخصیص‌یافته</span>
+              <span class="text-2xl font-black text-graphite">۳۵۰,۰۰۰,۰۰۰ <span class="text-xs font-normal text-secondary">تومان</span></span>
+            </div>
+            <div class="space-y-1.5">
+              <div class="flex justify-between text-xs font-bold">
+                <span class="text-emerald-700">پرداخت‌شده: ۱۸۰,۰۰۰,۰۰۰</span>
+                <span class="text-secondary">۵۱٪</span>
+              </div>
+              <div class="w-full bg-slate-200 h-2.5 rounded-full overflow-hidden">
+                <div class="bg-primary h-full rounded-full" style="width: 51%;"></div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Active Pre-Invoices Card -->
+          <div class="bg-bgCustom border border-accent rounded-2xl p-5 space-y-3 flex flex-col justify-between">
+            <div>
+              <span class="text-xs font-bold text-secondary block mb-1">پیش‌فاکتورهای دریافت شده</span>
+              <span class="text-2xl font-black text-primary">۲ پیش‌فاکتور <span class="text-xs font-bold text-amber-700 bg-amber-100 px-2 py-0.5 rounded-md">در انتظار تایید</span></span>
+            </div>
+            <button onclick="switchTab('messages')" class="text-xs font-bold text-primary hover:underline flex items-center gap-1">
+              <span>مشاهده جزئیات پیش‌فاکتور در چت</span>
+              <i data-lucide="arrow-left" class="w-3.5 h-3.5"></i>
+            </button>
+          </div>
+
+          <!-- Saved Vendors Counter -->
+          <div class="bg-bgCustom border border-accent rounded-2xl p-5 space-y-3 flex flex-col justify-between">
+            <div>
+              <span class="text-xs font-bold text-secondary block mb-1">تأمین‌کنندگان نشان‌شده</span>
+              <span class="text-2xl font-black text-graphite">۴ مجموعه معتبر</span>
+            </div>
+            <span class="text-[11px] text-emerald-700 font-bold bg-emerald-50 border border-emerald-200 px-2.5 py-1 rounded-lg block">
+              ✓ تاییدیه رسمی اعتبار
+            </span>
+          </div>
+        </div>
+      </section>
+
       <!-- HERO SECTION -->
       <section class="relative bg-white border border-accent rounded-3xl p-8 lg:p-12 shadow-xs overflow-hidden">
         <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
@@ -714,36 +789,85 @@
     <!-- ========================================== -->
     <div id="tab-admin" class="tab-content hidden space-y-8">
 
-
-      <!-- Super Admin Hero Logo Branding Control -->
-      <div class="bg-white border border-accent rounded-3xl p-6 shadow-xs space-y-4">
-        <div class="flex items-center justify-between border-b border-accent pb-4">
-          <div class="flex items-center gap-3">
-            <div class="w-10 h-10 rounded-xl bg-amber-50 text-amber-700 flex items-center justify-center">
-              <i data-lucide="image" class="w-5 h-5"></i>
+      <!-- Header & System Analytics Overview KPI Cards -->
+      <div class="bg-white border border-accent rounded-3xl p-6 sm:p-8 shadow-xs space-y-6">
+        <div class="flex flex-col sm:flex-row justify-between sm:items-center gap-4 border-b border-accent pb-4">
+          <div>
+            <div class="inline-flex items-center gap-1.5 bg-primary/10 text-primary text-xs font-bold px-3 py-1 rounded-full mb-1">
+              <i data-lucide="shield-check" class="w-3.5 h-3.5"></i>
+              <span>پنل اختصاصی مدیریت ارشد پلتفرم (Super Admin Dashboard)</span>
             </div>
-            <div>
-              <h3 class="text-base font-bold text-graphite">مدیریت لوگوی صفحه اصلی (Site Hero Logo)</h3>
-              <p class="text-xs text-secondary">تغییر آدرس تصویر لوگوی اصلی پلتفرم در بخش Hero</p>
+            <h2 class="text-2xl font-bold text-graphite">نظارت بر عملکرد استان یزد، اعتبارسنجی و تنظیمات پلتفرم</h2>
+          </div>
+          <span class="bg-emerald-100 text-emerald-800 font-bold text-xs px-4 py-2 rounded-xl border border-emerald-200 shrink-0">
+            وضعیت سیستم: فعال و آنلاین
+          </span>
+        </div>
+
+        <!-- 5 Key Operational Analytics KPI Cards -->
+        <div class="grid grid-cols-2 md:grid-cols-5 gap-4">
+          <div class="bg-bgCustom border border-accent rounded-2xl p-4 space-y-1">
+            <span class="text-xs font-bold text-secondary block">کل زوجین ثبت‌شده</span>
+            <span class="text-2xl font-black text-primary">۱۵,۴۲۰</span>
+            <span class="text-[10px] text-emerald-600 font-bold block">↑ ۱۲٪ ماه اخیر</span>
+          </div>
+          <div class="bg-bgCustom border border-accent rounded-2xl p-4 space-y-1">
+            <span class="text-xs font-bold text-secondary block">تأمین‌کنندگان معتبر</span>
+            <span class="text-2xl font-black text-graphite">۱,۲40</span>
+            <span class="text-[10px] text-primary font-bold block">دارای پروانه کسب</span>
+          </div>
+          <div class="bg-bgCustom border border-accent rounded-2xl p-4 space-y-1">
+            <span class="text-xs font-bold text-secondary block">درخواست‌های معلق</span>
+            <span class="text-2xl font-black text-amber-600">۱۸</span>
+            <span class="text-[10px] text-amber-700 font-bold block">نیازمند بررسی مدارک</span>
+          </div>
+          <div class="bg-bgCustom border border-accent rounded-2xl p-4 space-y-1">
+            <span class="text-xs font-bold text-secondary block">پیش‌فاکتورهای صادر شده</span>
+            <span class="text-2xl font-black text-graphite">۳,۸۵۰</span>
+            <span class="text-[10px] text-emerald-600 font-bold block">در چت آنلاین</span>
+          </div>
+          <div class="bg-bgCustom border border-accent rounded-2xl p-4 space-y-1 col-span-2 md:col-span-1">
+            <span class="text-xs font-bold text-secondary block">حجم معاملات (GMV)</span>
+            <span class="text-xl font-black text-primary">۴۸.۵ میلیارد</span>
+            <span class="text-[10px] text-secondary font-medium block">تومان / یزد</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Platform Settings & Site Branding Panel -->
+      <div class="bg-white border border-accent rounded-3xl p-6 shadow-xs space-y-4">
+        <div class="border-b border-accent pb-3 flex items-center justify-between">
+          <h3 class="text-base font-bold text-graphite flex items-center gap-2">
+            <i data-lucide="settings" class="w-5 h-5 text-primary"></i>
+            <span>تنظیمات عمومی پلتفرم و بنرهای اطلاع‌رسانی (Platform Settings)</span>
+          </h3>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-4 text-xs font-bold text-graphite">
+          <div class="space-y-1.5">
+            <label class="block">آدرس لوگوی اصلی پلتفرم (Site Hero Logo):</label>
+            <div class="flex gap-2">
+              <input id="admin-hero-logo-url-input" type="text" value="https://images.unsplash.com/photo-1519167758481-83f550bb49b3?auto=format&fit=crop&w=600&q=80" class="w-full bg-slate-50 border border-accent rounded-xl px-3 py-2 text-xs font-medium focus:outline-none focus:border-primary dir-ltr">
+              <button onclick="handleUpdateHeroLogo()" class="bg-primary hover:bg-emerald-900 text-white px-3 py-2 rounded-xl text-xs font-bold transition-all shrink-0">ذخیره</button>
+            </div>
+          </div>
+
+          <div class="space-y-1.5">
+            <label class="block">نرخ کارمزد خدمات رزرو آنلاین یزد (%):</label>
+            <div class="flex gap-2">
+              <input type="number" id="admin-commission-rate" value="2.5" class="w-full bg-slate-50 border border-accent rounded-xl px-3 py-2 text-xs font-medium focus:outline-none focus:border-primary">
+              <button onclick="showToast('نرخ کارمزد پلتفرم با موفقیت بروزرسانی شد', 'success')" class="bg-primary hover:bg-emerald-900 text-white px-3 py-2 rounded-xl text-xs font-bold transition-all shrink-0">ثبت</button>
+            </div>
+          </div>
+
+          <div class="space-y-1.5">
+            <label class="block">متن بنر اطلاعیه عمومی بالای سایت:</label>
+            <div class="flex gap-2">
+              <input type="text" id="admin-banner-text" value="جشنواره تخفیف‌های ویژه خدمات عروسی استان یزد - پاییز ۱۴۰۳" class="w-full bg-slate-50 border border-accent rounded-xl px-3 py-2 text-xs font-medium focus:outline-none focus:border-primary">
+              <button onclick="showToast('متن بنر اطلاع‌رسانی بروزرسانی شد', 'success')" class="bg-primary hover:bg-emerald-900 text-white px-3 py-2 rounded-xl text-xs font-bold transition-all shrink-0">انتشار</button>
             </div>
           </div>
         </div>
-        <div class="flex flex-col sm:flex-row items-center gap-3">
-          <input id="admin-hero-logo-url-input" type="text" placeholder="آدرس تصویر لوگو (URL)" value="https://images.unsplash.com/photo-1519167758481-83f550bb49b3?auto=format&fit=crop&w=600&q=80" class="flex-1 w-full bg-slate-50 border border-accent rounded-xl px-4 py-2.5 text-xs font-medium focus:outline-none focus:border-primary">
-          <button onclick="handleUpdateHeroLogo()" class="w-full sm:w-auto bg-primary hover:bg-emerald-900 text-white px-5 py-2.5 rounded-xl text-xs font-bold transition-all shrink-0 flex items-center justify-center gap-2 shadow-xs cursor-pointer">
-            <i data-lucide="check" class="w-4 h-4"></i>
-            <span>بروزرسانی لوگو</span>
-          </button>
-        </div>
-      </div>
-<div class="bg-white border border-accent rounded-3xl p-6 shadow-xs flex justify-between items-center">
-        <div>
-          <span class="text-xs font-bold text-secondary">پنل مدیریت ارشد پلتفرم عروسی تو (Super Admin)</span>
-          <h2 class="text-2xl font-bold text-graphite">مدیریت دسته‌بندی‌ها، اعتبارسنجی و پیامک</h2>
-        </div>
-        <span class="bg-primary/10 text-primary font-bold text-xs px-4 py-2 rounded-xl border border-primary/20">
-          دسترسی مدیر ارشد
-        </span>
       </div>
 
       <!-- Dynamic Parent & Sub-Category Editor (مدیریت کامل دسته‌بندی‌ها و زیرگروه‌ها) -->
@@ -957,22 +1081,27 @@
     <!-- ========================================== -->
     <div id="tab-vendor-dash" class="tab-content hidden space-y-8">
 
-      <div class="bg-white border border-accent rounded-3xl p-6 shadow-xs flex flex-col sm:flex-row justify-between sm:items-center gap-4">
-        <div>
-          <span class="text-xs font-bold text-secondary">پنل مدیریت اختصاصی تامین‌کنندگان</span>
-          <h2 id="vd-header-name" class="text-2xl font-bold text-graphite flex items-center gap-2">
-            <span>کسب و کار: باغ تالار تشریفاتی زمرد</span>
-            <span class="inline-flex items-center gap-1 text-xs bg-primary text-white px-2.5 py-0.5 rounded-full font-semibold">
-              <i data-lucide="shield-check" class="w-3.5 h-3.5"></i>
-              <span>تاییدیه رسمی</span>
-            </span>
-          </h2>
+      <!-- Dynamic Application & Verification Status Banner -->
+      <div id="vd-status-banner" class="bg-emerald-50 border border-emerald-200 rounded-3xl p-6 shadow-xs flex flex-col sm:flex-row justify-between sm:items-center gap-4">
+        <div class="flex items-center gap-3.5">
+          <div class="w-12 h-12 rounded-2xl bg-primary text-white flex items-center justify-center shrink-0 shadow-sm">
+            <i data-lucide="shield-check" class="w-6 h-6"></i>
+          </div>
+          <div>
+            <span class="text-xs font-bold text-emerald-800 bg-emerald-100 px-2.5 py-0.5 rounded-md inline-block mb-1">کسب‌وکار معتبر و تایید شده</span>
+            <h2 id="vd-header-name" class="text-xl sm:text-2xl font-black text-graphite">استودیو و آتلیه تخصصی کویر یزد</h2>
+            <p class="text-xs text-secondary mt-0.5">دارای مجوز رسمی عکاسی کویر & تاییدیه رسمی کیفیت عروسی تو</p>
+          </div>
         </div>
 
-        <div class="flex items-center gap-3">
-          <label class="flex items-center gap-2 text-xs font-bold text-graphite bg-bgCustom px-3.5 py-2 rounded-xl border border-accent cursor-pointer">
+        <div class="flex items-center gap-3 shrink-0">
+          <button onclick="toggleVendorVerificationRequestModal(true)" class="bg-white hover:bg-emerald-100 text-primary border border-primary/30 px-4 py-2.5 rounded-xl text-xs font-bold transition-all flex items-center gap-2 shadow-2xs">
+            <i data-lucide="award" class="w-4 h-4"></i>
+            <span>درخواست نشان تخصصی کویر / VIP</span>
+          </button>
+          <label class="flex items-center gap-2 text-xs font-bold text-graphite bg-white px-3.5 py-2.5 rounded-xl border border-accent cursor-pointer">
             <input type="checkbox" id="sms-toggle" checked onchange="showToast('تنظیمات دریافت پیامک فوری مشتری به روزرسانی شد.', 'info')" class="rounded text-primary focus:ring-primary w-4 h-4">
-            <span>دریافت پیامک فوری مشتری جدید</span>
+            <span>پیامک مشتری</span>
           </label>
         </div>
       </div>
