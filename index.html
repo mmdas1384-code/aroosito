@@ -353,8 +353,8 @@
           </div>
         </div>
 
-        <!-- Hierarchical Categories Container -->
-        <div id="category-hierarchical-container" class="space-y-4">
+        <!-- Hierarchical Categories Container (Side-by-side Multi-column Grid) -->
+        <div id="category-hierarchical-container" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-6">
           <!-- Populated dynamically via renderCategoryCards() -->
         </div>
       </section>
@@ -746,38 +746,26 @@
         </span>
       </div>
 
-      <!-- Dynamic Category Editor (مدیریت دسته‌ها) -->
+      <!-- Dynamic Parent & Sub-Category Editor (مدیریت کامل دسته‌بندی‌ها و زیرگروه‌ها) -->
       <div class="bg-white border border-accent rounded-3xl p-6 shadow-xs space-y-6">
         <div class="flex flex-col sm:flex-row justify-between sm:items-center gap-4 border-b border-accent pb-4">
           <div>
             <h3 class="text-lg font-bold text-graphite flex items-center gap-2">
               <i data-lucide="layers" class="w-5 h-5 text-primary"></i>
-              <span>ویرایشگر پویا دسته‌بندی‌های شغلی (Dynamic Category Editor)</span>
+              <span>ویرایشگر پویا دسته‌های اصلی و زیرگروه‌ها (Category & Sub-Category CRUD)</span>
             </h3>
-            <p class="text-xs text-secondary mt-0.5">افزودن، ویرایش، حذف دسته‌ها و تخصیص آیکون Lucide</p>
+            <p class="text-xs text-secondary mt-0.5">افزودن، ویرایش، حذف دسته‌های اصلی و مدیریت پیل‌های زیرگروه به همراه همگام‌سازی لحظه‌ای</p>
           </div>
 
-          <button onclick="toggleCategoryModal(true)" class="bg-primary text-white px-4 py-2 rounded-xl text-xs font-bold hover:bg-emerald-900 transition-colors flex items-center gap-1.5">
+          <button onclick="openParentCategoryModal()" class="bg-primary text-white px-4 py-2 rounded-xl text-xs font-bold hover:bg-emerald-900 transition-colors flex items-center gap-1.5">
             <i data-lucide="plus" class="w-4 h-4"></i>
-            <span>افزودن دسته‌بندی جدید</span>
+            <span>افزودن دسته اصلی جدید</span>
           </button>
         </div>
 
-        <div class="overflow-x-auto">
-          <table class="w-full text-right text-xs">
-            <thead class="bg-bgCustom text-secondary border-b border-accent font-bold">
-              <tr>
-                <th class="p-3">عنوان دسته</th>
-                <th class="p-3">نام آیکون (Lucide)</th>
-                <th class="p-3">تعداد کسب‌وکارها</th>
-                <th class="p-3">وضعیت فعال</th>
-                <th class="p-3 text-center">عملیات</th>
-              </tr>
-            </thead>
-            <tbody id="admin-category-table" class="divide-y divide-accent/60 font-medium">
-              <!-- Populated via JS -->
-            </tbody>
-          </table>
+        <!-- Parent Category & Nested Sub-categories Hierarchy Management View -->
+        <div id="admin-category-groups-list" class="space-y-4">
+          <!-- Populated dynamically via JS -->
         </div>
       </div>
 
@@ -2518,39 +2506,74 @@
   </div>
 
   <!-- ========================================== -->
-  <!-- MODAL: DYNAMIC CATEGORY EDITOR MODAL       -->
+  <!-- MODAL: PARENT CATEGORY MODAL (ADD / EDIT)  -->
   <!-- ========================================== -->
-  <div id="category-modal" class="fixed inset-0 z-50 bg-black/60 backdrop-blur-xs flex items-center justify-center p-4 hidden">
+  <div id="parent-cat-modal" class="fixed inset-0 z-50 bg-black/60 backdrop-blur-xs flex items-center justify-center p-4 hidden">
     <div class="bg-white border border-accent rounded-3xl max-w-md w-full p-6 shadow-2xl space-y-4 relative">
-      <button onclick="toggleCategoryModal(false)" class="absolute top-4 left-4 text-secondary hover:text-graphite">
+      <button onclick="closeParentCatModal()" class="absolute top-4 left-4 text-secondary hover:text-graphite">
         <i data-lucide="x" class="w-6 h-6"></i>
       </button>
 
       <div class="border-b border-accent pb-3">
-        <h3 id="cat-modal-title" class="text-lg font-bold text-graphite">افزودن دسته‌بندی شغلی جدید</h3>
+        <h3 id="parent-cat-modal-title" class="text-lg font-bold text-graphite">افزودن دسته اصلی جدید</h3>
       </div>
 
-      <form onsubmit="handleSaveCategory(event)" class="space-y-4 text-xs font-bold text-graphite">
-        <input type="hidden" id="cat-edit-id" value="">
+      <form onsubmit="handleSaveParentCategory(event)" class="space-y-4 text-xs font-bold text-graphite">
+        <input type="hidden" id="parent-cat-edit-id" value="">
 
         <div>
-          <label class="block mb-1">عنوان دسته شغلی *</label>
-          <input type="text" id="cat-title" required placeholder="مثلاً: تشریفات و تشریفات مجالس" class="w-full bg-bgCustom border border-accent rounded-xl p-2.5 text-xs font-medium focus:outline-none focus:border-primary">
+          <label class="block mb-1">عنوان دسته اصلی *</label>
+          <input type="text" id="parent-cat-title" required placeholder="مثلاً: تشریفات قانونی، عقد و مشاوره" class="w-full bg-bgCustom border border-accent rounded-xl p-2.5 text-xs font-medium focus:outline-none focus:border-primary">
+        </div>
+
+        <div>
+          <label class="block mb-1">زیرعنوان / توضیحات *</label>
+          <input type="text" id="parent-cat-badge" placeholder="مثلاً: دفتر ثبت، مشاوره و سفره عقد" class="w-full bg-bgCustom border border-accent rounded-xl p-2.5 text-xs font-medium focus:outline-none focus:border-primary">
         </div>
 
         <div>
           <label class="block mb-1">نام آیکون Lucide *</label>
-          <input type="text" id="cat-icon" required placeholder="مثلاً: building, camera, sparkles..." class="w-full bg-bgCustom border border-accent rounded-xl p-2.5 text-xs font-medium focus:outline-none focus:border-primary dir-ltr">
-        </div>
-
-        <div class="flex items-center gap-2 pt-2">
-          <input type="checkbox" id="cat-active" checked class="rounded text-primary focus:ring-primary w-4 h-4 cursor-pointer">
-          <label for="cat-active" class="cursor-pointer text-xs font-bold text-graphite">وضعیت دسته: فعال باشد</label>
+          <input type="text" id="parent-cat-icon" required placeholder="مثلاً: building, camera, sparkles..." class="w-full bg-bgCustom border border-accent rounded-xl p-2.5 text-xs font-medium focus:outline-none focus:border-primary dir-ltr">
         </div>
 
         <div class="flex justify-end gap-3 pt-3 border-t border-accent">
-          <button type="button" onclick="toggleCategoryModal(false)" class="px-4 py-2 rounded-xl border border-accent text-secondary font-bold">انصراف</button>
-          <button type="submit" class="px-5 py-2 rounded-xl bg-primary hover:bg-emerald-900 text-white font-bold shadow-xs">ذخیره دسته‌بندی</button>
+          <button type="button" onclick="closeParentCatModal()" class="px-4 py-2 rounded-xl border border-accent text-secondary font-bold">انصراف</button>
+          <button type="submit" class="px-5 py-2 rounded-xl bg-primary hover:bg-emerald-900 text-white font-bold shadow-xs">ذخیره دسته اصلی</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- ========================================== -->
+  <!-- MODAL: SUB-CATEGORY MODAL (ADD / EDIT)     -->
+  <!-- ========================================== -->
+  <div id="sub-cat-modal" class="fixed inset-0 z-50 bg-black/60 backdrop-blur-xs flex items-center justify-center p-4 hidden">
+    <div class="bg-white border border-accent rounded-3xl max-w-md w-full p-6 shadow-2xl space-y-4 relative">
+      <button onclick="closeSubCatModal()" class="absolute top-4 left-4 text-secondary hover:text-graphite">
+        <i data-lucide="x" class="w-6 h-6"></i>
+      </button>
+
+      <div class="border-b border-accent pb-3">
+        <h3 id="sub-cat-modal-title" class="text-lg font-bold text-graphite">افزودن زیرگروه جدید</h3>
+      </div>
+
+      <form onsubmit="handleSaveSubCategory(event)" class="space-y-4 text-xs font-bold text-graphite">
+        <input type="hidden" id="sub-cat-parent-id" value="">
+        <input type="hidden" id="sub-cat-index" value="">
+
+        <div>
+          <label class="block mb-1">عنوان زیرگروه *</label>
+          <input type="text" id="sub-cat-title" required placeholder="مثلاً: تالار و باغ تالار عروسی" class="w-full bg-bgCustom border border-accent rounded-xl p-2.5 text-xs font-medium focus:outline-none focus:border-primary">
+        </div>
+
+        <div>
+          <label class="block mb-1">نام آیکون Lucide *</label>
+          <input type="text" id="sub-cat-icon" required placeholder="مثلاً: building, crown, cake..." class="w-full bg-bgCustom border border-accent rounded-xl p-2.5 text-xs font-medium focus:outline-none focus:border-primary dir-ltr">
+        </div>
+
+        <div class="flex justify-end gap-3 pt-3 border-t border-accent">
+          <button type="button" onclick="closeSubCatModal()" class="px-4 py-2 rounded-xl border border-accent text-secondary font-bold">انصراف</button>
+          <button type="submit" class="px-5 py-2 rounded-xl bg-primary hover:bg-emerald-900 text-white font-bold shadow-xs">ذخیره زیرگروه</button>
         </div>
       </form>
     </div>
@@ -4773,40 +4796,37 @@
 
       categoryGroups.forEach((group) => {
         const groupBlock = document.createElement('div');
-        groupBlock.className = "bg-bgCustom border border-accent/80 rounded-2xl p-3.5 sm:p-4 transition-all hover:border-primary/40 hover:shadow-xs";
+        groupBlock.className = "bg-bgCustom border border-accent/80 rounded-2xl p-4 transition-all hover:border-primary/40 hover:shadow-xs flex flex-col justify-between";
 
-        const visibleSubs = categoriesExpanded ? group.subcategories : group.subcategories.slice(0, 4);
+        const visibleSubs = categoriesExpanded ? group.subcategories : group.subcategories.slice(0, 6);
 
         let subHtml = '';
         visibleSubs.forEach(sub => {
           subHtml += `
-            <button type="button" onclick="filterVendorsByCategoryTitle('${sub.title}')" class="flex items-center gap-2 bg-white border border-accent hover:border-primary hover:bg-primary/5 px-2.5 py-1.5 rounded-xl transition-all text-right group cursor-pointer">
-              <div class="w-7 h-7 rounded-lg bg-primary/10 text-primary flex items-center justify-center shrink-0 group-hover:bg-primary group-hover:text-white transition-colors">
-                <i data-lucide="${sub.icon}" class="w-3.5 h-3.5"></i>
-              </div>
-              <div class="min-w-0">
-                <span class="text-xs font-bold text-graphite group-hover:text-primary transition-colors block truncate">${sub.title}</span>
-                <span class="text-[10px] text-secondary font-medium block">${sub.tag}</span>
-              </div>
+            <button type="button" onclick="filterVendorsByCategoryTitle('${sub.title}')" class="inline-flex items-center gap-1.5 text-xs font-semibold text-graphite px-3 py-1.5 rounded-lg border border-accent/80 bg-gray-50 hover:bg-rose-50 hover:border-primary/50 hover:text-primary transition-all cursor-pointer shadow-2xs">
+              <i data-lucide="${sub.icon || 'tag'}" class="w-3.5 h-3.5 text-primary"></i>
+              <span>${sub.title}</span>
             </button>
           `;
         });
 
         groupBlock.innerHTML = `
-          <div class="flex items-center justify-between border-b border-accent/60 pb-2.5 mb-3">
-            <div class="flex items-center gap-2">
-              <div class="w-8 h-8 rounded-xl bg-primary text-white flex items-center justify-center shadow-xs shrink-0">
-                <i data-lucide="${group.icon}" class="w-4 h-4"></i>
+          <div>
+            <div class="flex items-center justify-between border-b border-accent/60 pb-3 mb-3">
+              <div class="flex items-center gap-2.5">
+                <div class="w-9 h-9 rounded-xl bg-primary text-white flex items-center justify-center shadow-xs shrink-0">
+                  <i data-lucide="${group.icon}" class="w-4.5 h-4.5"></i>
+                </div>
+                <div>
+                  <h3 class="text-sm font-bold text-graphite">${group.title}</h3>
+                  <span class="text-[11px] text-secondary font-medium block">${group.badge || ''}</span>
+                </div>
               </div>
-              <div>
-                <h3 class="text-xs sm:text-sm font-bold text-graphite">${group.title}</h3>
-                <span class="text-[10px] text-secondary hidden sm:block">${group.badge}</span>
-              </div>
+              <span class="text-[11px] font-bold text-primary bg-primary/10 px-2.5 py-1 rounded-lg shrink-0">${group.subcategories.length} زیرگروه</span>
             </div>
-            <span class="text-[10px] sm:text-xs font-bold text-primary bg-primary/10 px-2 py-0.5 rounded-md">${group.subcategories.length} زیرگروه</span>
-          </div>
-          <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-2">
-            ${subHtml}
+            <div class="flex flex-wrap gap-2 pt-1">
+              ${subHtml}
+            </div>
           </div>
         `;
 
@@ -4843,85 +4863,243 @@
       if (vendorSection) vendorSection.scrollIntoView({ behavior: 'smooth' });
     }
 
-    // SUPER ADMIN CATEGORY EDITOR
-    function renderAdminCategories() {
-      const tbody = document.getElementById('admin-category-table');
-      if (!tbody) return;
-      tbody.innerHTML = '';
-
-      categories.forEach(cat => {
-        const tr = document.createElement('tr');
-        tr.className = "hover:bg-slate-50";
-        tr.innerHTML = `
-          <td class="p-3 font-bold text-graphite">${cat.title}</td>
-          <td class="p-3 text-secondary font-mono dir-ltr">${cat.icon}</td>
-          <td class="p-3">${cat.count} مجموعه</td>
-          <td class="p-3">
-            <span class="px-2.5 py-1 rounded-full text-[11px] font-bold ${cat.active ? 'bg-emerald-100 text-emerald-800' : 'bg-slate-100 text-slate-600'}">
-              ${cat.active ? 'فعال' : 'غیرفعال'}
-            </span>
-          </td>
-          <td class="p-3 text-center space-x-2 space-x-reverse">
-            <button onclick="editCategory('${cat.id}')" class="text-primary hover:underline font-bold">ویرایش</button>
-            <button onclick="deleteCategory('${cat.id}')" class="text-rose-600 hover:underline font-bold">حذف</button>
-          </td>
-        `;
-        tbody.appendChild(tr);
-      });
-    }
-
-    function toggleCategoryModal(show) {
-      const modal = document.getElementById('category-modal');
-      if (modal) {
-        if (show) modal.classList.remove('hidden');
-        else modal.classList.add('hidden');
+    // SUPER ADMIN CATEGORY & SUB-CATEGORY CRUD ENGINE
+    function saveCategoryGroupsToStorage() {
+      try {
+        localStorage.setItem('aroosi_category_groups', JSON.stringify(categoryGroups));
+      } catch (err) {
+        console.error('Failed to save categories to localStorage:', err);
       }
     }
 
-    function editCategory(id) {
-      const cat = categories.find(c => c.id === id);
-      if (cat) {
-        document.getElementById('cat-edit-id').value = cat.id;
-        document.getElementById('cat-title').value = cat.title;
-        document.getElementById('cat-icon').value = cat.icon;
-        document.getElementById('cat-active').checked = cat.active;
-        document.getElementById('cat-modal-title').innerText = "ویرایش دسته‌بندی شغلی";
-        toggleCategoryModal(true);
+    function loadCategoryGroupsFromStorage() {
+      try {
+        const stored = localStorage.getItem('aroosi_category_groups');
+        if (stored) {
+          const parsed = JSON.parse(stored);
+          if (Array.isArray(parsed) && parsed.length > 0) {
+            categoryGroups = parsed;
+          }
+        }
+      } catch (err) {
+        console.error('Failed to load categories from localStorage:', err);
       }
     }
 
-    function deleteCategory(id) {
-      categories = categories.filter(c => c.id !== id);
-      renderAdminCategories();
+    function syncCategoryStateAndRender() {
+      saveCategoryGroupsToStorage();
       renderCategoryCards();
+      renderAdminCategories();
     }
 
-    function handleSaveCategory(e) {
+    function renderAdminCategories() {
+      const container = document.getElementById('admin-category-groups-list');
+      if (!container) return;
+      container.innerHTML = '';
+
+      categoryGroups.forEach((group) => {
+        const card = document.createElement('div');
+        card.className = "bg-bgCustom border border-accent rounded-2xl p-4 space-y-3";
+
+        let subPillsHtml = '';
+        group.subcategories.forEach((sub, idx) => {
+          subPillsHtml += `
+            <div class="inline-flex items-center gap-1.5 bg-white border border-accent rounded-lg px-2.5 py-1 text-xs font-medium text-graphite shadow-2xs">
+              <i data-lucide="${sub.icon || 'tag'}" class="w-3 h-3 text-primary"></i>
+              <span>${sub.title}</span>
+              <button type="button" onclick="openSubCategoryModal('${group.id}', ${idx})" class="text-primary hover:text-emerald-900 ml-1 font-bold">
+                <i data-lucide="edit-2" class="w-3 h-3"></i>
+              </button>
+              <button type="button" onclick="deleteSubCategory('${group.id}', ${idx})" class="text-rose-500 hover:text-rose-700 font-bold">
+                <i data-lucide="trash-2" class="w-3 h-3"></i>
+              </button>
+            </div>
+          `;
+        });
+
+        card.innerHTML = `
+          <div class="flex flex-col sm:flex-row justify-between sm:items-center gap-3 border-b border-accent/60 pb-3">
+            <div class="flex items-center gap-3">
+              <div class="w-8 h-8 rounded-xl bg-primary text-white flex items-center justify-center shrink-0">
+                <i data-lucide="${group.icon}" class="w-4 h-4"></i>
+              </div>
+              <div>
+                <h4 class="text-sm font-bold text-graphite">${group.title}</h4>
+                <span class="text-[11px] text-secondary">${group.badge || 'بدون زیرعنوان'}</span>
+              </div>
+            </div>
+            <div class="flex items-center gap-2">
+              <button type="button" onclick="openSubCategoryModal('${group.id}')" class="bg-primary/10 text-primary border border-primary/20 hover:bg-primary/20 px-3 py-1.5 rounded-xl text-xs font-bold transition-all flex items-center gap-1">
+                <i data-lucide="plus" class="w-3.5 h-3.5"></i>
+                <span>افزودن زیرگروه</span>
+              </button>
+              <button type="button" onclick="openParentCategoryModal('${group.id}')" class="bg-white border border-accent hover:border-primary px-3 py-1.5 rounded-xl text-xs font-bold text-graphite transition-all">
+                ویرایش دسته
+              </button>
+              <button type="button" onclick="deleteParentCategory('${group.id}')" class="bg-rose-50 border border-rose-200 hover:bg-rose-100 text-rose-600 px-3 py-1.5 rounded-xl text-xs font-bold transition-all">
+                حذف دسته
+              </button>
+            </div>
+          </div>
+          <div class="flex flex-wrap gap-2 pt-1">
+            ${subPillsHtml || '<span class="text-xs text-secondary italic">هیچ زیرگروهی ثبت نشده است.</span>'}
+          </div>
+        `;
+
+        container.appendChild(card);
+      });
+
+      lucide.createIcons();
+    }
+
+    // PARENT CATEGORY MODAL HANDLERS
+    function openParentCategoryModal(id = null) {
+      const modal = document.getElementById('parent-cat-modal');
+      const titleInput = document.getElementById('parent-cat-title');
+      const badgeInput = document.getElementById('parent-cat-badge');
+      const iconInput = document.getElementById('parent-cat-icon');
+      const editIdInput = document.getElementById('parent-cat-edit-id');
+      const modalTitle = document.getElementById('parent-cat-modal-title');
+
+      if (!modal) return;
+
+      if (id) {
+        const group = categoryGroups.find(g => g.id === id);
+        if (group) {
+          editIdInput.value = group.id;
+          titleInput.value = group.title;
+          badgeInput.value = group.badge || '';
+          iconInput.value = group.icon;
+          modalTitle.innerText = "ویرایش دسته اصلی";
+        }
+      } else {
+        editIdInput.value = '';
+        titleInput.value = '';
+        badgeInput.value = '';
+        iconInput.value = 'building';
+        modalTitle.innerText = "افزودن دسته اصلی جدید";
+      }
+
+      modal.classList.remove('hidden');
+    }
+
+    function closeParentCatModal() {
+      const modal = document.getElementById('parent-cat-modal');
+      if (modal) modal.classList.add('hidden');
+    }
+
+    function handleSaveParentCategory(e) {
       e.preventDefault();
-      const editId = document.getElementById('cat-edit-id').value;
-      const title = document.getElementById('cat-title').value.trim();
-      const icon = document.getElementById('cat-icon').value.trim();
-      const active = document.getElementById('cat-active').checked;
+      const editId = document.getElementById('parent-cat-edit-id').value;
+      const title = document.getElementById('parent-cat-title').value.trim();
+      const badge = document.getElementById('parent-cat-badge').value.trim();
+      const icon = document.getElementById('parent-cat-icon').value.trim();
 
       if (!title || !icon) return;
 
       if (editId) {
-        const cat = categories.find(c => c.id === editId);
-        if (cat) {
-          cat.title = title;
-          cat.icon = icon;
-          cat.active = active;
+        const group = categoryGroups.find(g => g.id === editId);
+        if (group) {
+          group.title = title;
+          group.badge = badge;
+          group.icon = icon;
         }
       } else {
-        categories.push({ id: 'cat-' + Date.now(), title, icon, count: 0, active });
+        categoryGroups.push({
+          id: 'group-' + Date.now(),
+          title,
+          badge,
+          icon,
+          subcategories: []
+        });
       }
 
-      renderAdminCategories();
-      renderCategoryCards();
-      toggleCategoryModal(false);
-      document.getElementById('cat-edit-id').value = '';
-      document.getElementById('cat-title').value = '';
-      document.getElementById('cat-icon').value = '';
+      closeParentCatModal();
+      syncCategoryStateAndRender();
+      showToast('دسته اصلی با موفقیت ذخیره شد', 'success');
+    }
+
+    function deleteParentCategory(id) {
+      if (!confirm('آیا از حذف این دسته اصلی و تمامی زیرگروه‌های آن اطمینان دارید؟')) return;
+      categoryGroups = categoryGroups.filter(g => g.id !== id);
+      syncCategoryStateAndRender();
+      showToast('دسته اصلی با موفقیت حذف شد', 'info');
+    }
+
+    // SUB-CATEGORY MODAL HANDLERS
+    function openSubCategoryModal(parentId, subIdx = null) {
+      const modal = document.getElementById('sub-cat-modal');
+      const parentIdInput = document.getElementById('sub-cat-parent-id');
+      const indexInput = document.getElementById('sub-cat-index');
+      const titleInput = document.getElementById('sub-cat-title');
+      const iconInput = document.getElementById('sub-cat-icon');
+      const modalTitle = document.getElementById('sub-cat-modal-title');
+
+      if (!modal) return;
+
+      parentIdInput.value = parentId;
+
+      const group = categoryGroups.find(g => g.id === parentId);
+      if (!group) return;
+
+      if (subIdx !== null && subIdx !== undefined && group.subcategories[subIdx]) {
+        const sub = group.subcategories[subIdx];
+        indexInput.value = subIdx;
+        titleInput.value = sub.title;
+        iconInput.value = sub.icon || 'tag';
+        modalTitle.innerText = "ویرایش زیرگروه";
+      } else {
+        indexInput.value = '';
+        titleInput.value = '';
+        iconInput.value = 'tag';
+        modalTitle.innerText = "افزودن زیرگروه جدید";
+      }
+
+      modal.classList.remove('hidden');
+    }
+
+    function closeSubCatModal() {
+      const modal = document.getElementById('sub-cat-modal');
+      if (modal) modal.classList.add('hidden');
+    }
+
+    function handleSaveSubCategory(e) {
+      e.preventDefault();
+      const parentId = document.getElementById('sub-cat-parent-id').value;
+      const subIdxStr = document.getElementById('sub-cat-index').value;
+      const title = document.getElementById('sub-cat-title').value.trim();
+      const icon = document.getElementById('sub-cat-icon').value.trim();
+
+      if (!parentId || !title) return;
+
+      const group = categoryGroups.find(g => g.id === parentId);
+      if (!group) return;
+
+      if (subIdxStr !== '') {
+        const idx = parseInt(subIdxStr, 10);
+        if (group.subcategories[idx]) {
+          group.subcategories[idx].title = title;
+          group.subcategories[idx].icon = icon;
+        }
+      } else {
+        group.subcategories.push({
+          title,
+          icon,
+          tag: title.substring(0, 8)
+        });
+      }
+
+      closeSubCatModal();
+      syncCategoryStateAndRender();
+      showToast('زیرگروه با موفقیت ذخیره شد', 'success');
+    }
+
+    function deleteSubCategory(parentId, subIdx) {
+      const group = categoryGroups.find(g => g.id === parentId);
+      if (!group || !group.subcategories[subIdx]) return;
+      group.subcategories.splice(subIdx, 1);
+      syncCategoryStateAndRender();
+      showToast('زیرگروه با موفقیت حذف شد', 'info');
     }
 
 
@@ -8831,6 +9009,7 @@
     }
 
     window.addEventListener('DOMContentLoaded', () => {
+      loadCategoryGroupsFromStorage();
       renderCategoryCards();
       filterVendors();
       renderPortfolioUI();
