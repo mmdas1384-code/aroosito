@@ -2545,6 +2545,15 @@
         <!-- RIGHT MAIN PANEL: ACTIVE CONVERSATION THREAD (lg:col-span-8) -->
         <div id="chat-main-thread-panel" class="lg:col-span-8 flex flex-col bg-white min-h-0">
 
+          <!-- Trust & Safety Sticky Notice Banner -->
+          <div class="bg-amber-50 border-b border-amber-200 px-4 py-2 text-[11px] font-bold text-amber-900 flex items-center justify-between gap-2 shrink-0">
+            <div class="flex items-center gap-1.5">
+              <i data-lucide="shield-alert" class="w-4 h-4 text-amber-600 shrink-0"></i>
+              <span>عروسی تو بستری برای ارتباط و دریافت پیش‌فاکتور است. نهایی‌سازی قرارداد و پرداخت بیعانه پس از مراجعه حضوری انجام می‌شود.</span>
+            </div>
+            <span class="bg-white/80 px-2 py-0.5 rounded-md border border-amber-300/60 text-[10px] shrink-0">امنیت معامله</span>
+          </div>
+
           <!-- ACTIVE THREAD TOP BAR -->
           <div id="chat-active-header" class="p-4 border-b border-accent bg-white flex items-center justify-between gap-4 shrink-0 shadow-xs">
             <!-- Populated dynamically via JS -->
@@ -2865,6 +2874,55 @@
           <button type="submit" class="flex-1 bg-primary hover:bg-emerald-900 text-white py-2.5 rounded-xl text-xs font-bold shadow-xs transition-colors flex items-center justify-center gap-1.5">
             <i data-lucide="send" class="w-4 h-4"></i>
             <span>صدور و ارسال به چت</span>
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- ========================================== -->
+  <!-- MODAL: APPOINTMENT SCHEDULER (IN-PERSON)   -->
+  <!-- ========================================== -->
+  <div id="modal-schedule-appointment" class="fixed inset-0 z-50 bg-black/60 backdrop-blur-xs flex items-center justify-center p-4 hidden">
+    <div class="bg-white border border-accent rounded-3xl max-w-md w-full p-6 shadow-2xl space-y-4 relative">
+      <button onclick="closeAppointmentModal()" class="absolute top-4 left-4 text-secondary hover:text-graphite">
+        <i data-lucide="x" class="w-6 h-6"></i>
+      </button>
+
+      <div class="border-b border-accent pb-3">
+        <span class="text-xs font-bold text-primary">ثبت زمان مراجعه و جلسه حضوری در یزد</span>
+        <h3 class="text-lg font-bold text-graphite mt-0.5">رزرو نهایی قرارداد و تست حضوری</h3>
+      </div>
+
+      <form onsubmit="handleScheduleAppointmentSubmit(event)" class="space-y-4 text-xs font-bold text-graphite">
+        <div>
+          <label class="block mb-1">تاریخ پیشنهادی مراجعه حضوری (شمسی) *</label>
+          <input type="text" id="appt-date" required value="۱۴۰۳/۰۴/۲۵" placeholder="مثلاً: ۱۴۰۳/۰۴/۲۵" class="w-full bg-bgCustom border border-accent rounded-xl p-2.5 text-xs font-medium focus:outline-none focus:border-primary">
+        </div>
+
+        <div>
+          <label class="block mb-1">ساعت ترجیحی جلسه *</label>
+          <select id="appt-time" class="w-full bg-bgCustom border border-accent rounded-xl p-2.5 text-xs font-semibold focus:outline-none focus:border-primary">
+            <option value="۱۰:۳۰ صبح">۱۰:۳۰ صبح</option>
+            <option value="۱۷:۰۰ عصر" selected>۱۷:۰۰ عصر</option>
+            <option value="۱۹:۳۰ عصر">۱۹:۳۰ عصر</option>
+          </select>
+        </div>
+
+        <div>
+          <label class="block mb-1">یادداشت برای تأمین‌کننده (اختیاری):</label>
+          <textarea id="appt-note" rows="3" placeholder="مثلاً: برای تست نمونه شیرینی یزدی و بازدید از سالن اصلی تشریف می‌آوریم..." class="w-full bg-bgCustom border border-accent rounded-xl p-2.5 text-xs font-medium focus:outline-none focus:border-primary"></textarea>
+        </div>
+
+        <div class="p-3 bg-amber-50 rounded-xl border border-amber-200/70 text-[11px] text-amber-900 font-medium">
+          💡 نهایی‌سازی فاکتور و پرداخت هرگونه بیعانه مستقیماً پس از بازدید حضوری انجام خواهد شد.
+        </div>
+
+        <div class="flex gap-3 pt-2 border-t border-accent">
+          <button type="button" onclick="closeAppointmentModal()" class="flex-1 border border-accent text-secondary py-2.5 rounded-xl font-bold">انصراف</button>
+          <button type="submit" class="flex-1 bg-primary hover:bg-emerald-900 text-white py-2.5 rounded-xl font-bold transition-all shadow-xs flex items-center justify-center gap-1">
+            <i data-lucide="calendar-check" class="w-4 h-4"></i>
+            <span>تایید اولیه & ثبت زمان جلسه</span>
           </button>
         </div>
       </form>
@@ -3565,13 +3623,23 @@
 
         <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
           <div>
-            <label class="block mb-1">تاریخ تقریبی مراسم (شمسی) *</label>
+            <label id="inquiry-date-label" class="block mb-1">تاریخ تقریبی مراسم / مراجعه (شمسی) *</label>
             <input type="text" required id="inquiry-date" value="۱۴۰۳/۰۶/۱۵" placeholder="مثلاً: ۱۴۰۳/۰۶/۱۵" class="w-full bg-bgCustom border border-accent rounded-xl p-2.5 text-xs font-medium focus:outline-none focus:border-primary">
           </div>
 
-          <div>
+          <!-- Dynamic Guest Count / Package Specifics -->
+          <div id="inquiry-guests-container">
             <label class="block mb-1">تعداد تقریبی مهمانان *</label>
-            <input type="number" required id="inquiry-guests" value="250" min="10" max="2000" class="w-full bg-bgCustom border border-accent rounded-xl p-2.5 text-xs font-medium focus:outline-none focus:border-primary">
+            <input type="number" id="inquiry-guests" value="250" min="1" max="2000" class="w-full bg-bgCustom border border-accent rounded-xl p-2.5 text-xs font-medium focus:outline-none focus:border-primary">
+          </div>
+
+          <div id="inquiry-nonvenue-container" class="hidden">
+            <label class="block mb-1">نوع پکیج / نیاز اختصاصی *</label>
+            <select id="inquiry-package-type" class="w-full bg-bgCustom border border-accent rounded-xl p-2.5 text-xs font-semibold focus:outline-none focus:border-primary">
+              <option value="فرمالیته کویر یزد">پکیج اختصاصی فرمالیته کویر یزد</option>
+              <option value="مراسم اصلی عروسی">خدمات کامل روز عروسی</option>
+              <option value="پرو و مشاوره اختصاصی">مشاوره حضوری و تست پکیج</option>
+            </select>
           </div>
         </div>
 
@@ -6621,6 +6689,20 @@
       document.getElementById('inquiry-vendor-id').value = vendor ? vendor.id : 1;
       document.getElementById('modal-vendor-name').innerText = targetName;
 
+      // Dynamic Category Field Toggling (Guest count for venues vs package for others)
+      const guestsContainer = document.getElementById('inquiry-guests-container');
+      const nonVenueContainer = document.getElementById('inquiry-nonvenue-container');
+      const cat = vendor ? (vendor.category || '') : '';
+      const isVenue = cat.includes("تالار") || cat.includes("باغ") || cat.includes("سالن عقد") || cat.includes("پذیرایی");
+
+      if (isVenue) {
+        if (guestsContainer) guestsContainer.classList.remove('hidden');
+        if (nonVenueContainer) nonVenueContainer.classList.add('hidden');
+      } else {
+        if (guestsContainer) guestsContainer.classList.add('hidden');
+        if (nonVenueContainer) nonVenueContainer.classList.remove('hidden');
+      }
+
       // Clear custom budget field on open
       const customBudgetInp = document.getElementById('inquiry-budget-custom');
       if (customBudgetInp) customBudgetInp.value = '';
@@ -6628,7 +6710,6 @@
       // Update checkboxes dynamically according to vendor category if available
       const container = document.getElementById('inquiry-services-checklist');
       if (container && vendor) {
-        const cat = vendor.category || '';
         if (cat.includes("آتلیه") || cat.includes("عکاسی") || cat.includes("فیلمبرداری")) {
           container.innerHTML = `
             <label class="flex items-center gap-2 cursor-pointer p-1.5 hover:bg-white rounded-lg">
@@ -9606,8 +9687,10 @@
           } else if (msg.hasQuoteCard && msg.quoteDetails) {
             const q = msg.quoteDetails;
             let statusBadge = `<span class="bg-amber-100 text-amber-800 border border-amber-200 text-[10px] font-bold px-2.5 py-0.5 rounded-full">در انتظار بررسی</span>`;
-            if (q.status === 'accepted') {
-              statusBadge = `<span class="bg-emerald-100 text-emerald-800 border border-emerald-200 text-[10px] font-bold px-2.5 py-0.5 rounded-full">تاییدشده & بیعانه پرداخت شد</span>`;
+            if (q.status === 'accepted' || q.status === 'appointment_scheduled') {
+              statusBadge = `<span class="bg-emerald-100 text-emerald-800 border border-emerald-200 text-[10px] font-bold px-2.5 py-0.5 rounded-full">تایید اولیه و رزرو جلسه حضوری</span>`;
+            } else if (q.status === 'finalized_in_person') {
+              statusBadge = `<span class="bg-purple-100 text-purple-800 border border-purple-200 text-[10px] font-bold px-2.5 py-0.5 rounded-full">نهایی‌شده حضوری</span>`;
             } else if (q.status === 'revision_requested') {
               statusBadge = `<span class="bg-rose-100 text-rose-800 border border-rose-200 text-[10px] font-bold px-2.5 py-0.5 rounded-full">درخواست تغییرات</span>`;
             }
@@ -9669,9 +9752,9 @@
 
                 <div class="flex flex-col gap-2 pt-1">
                   <div class="flex gap-2">
-                    <button onclick="acceptPreInvoiceAndPayDeposit('${activeThread.id}', '${msg.id}')" class="flex-1 bg-primary hover:bg-emerald-900 text-white py-2.5 rounded-xl text-xs font-bold transition-all shadow-xs flex items-center justify-center gap-1">
-                      <i data-lucide="check-circle-2" class="w-3.5 h-3.5"></i>
-                      <span>تایید & پرداخت بیعانه</span>
+                    <button onclick="openAppointmentModal('${activeThread.id}', '${msg.id}')" class="flex-1 bg-primary hover:bg-emerald-900 text-white py-2.5 rounded-xl text-xs font-bold transition-all shadow-xs flex items-center justify-center gap-1">
+                      <i data-lucide="calendar" class="w-3.5 h-3.5"></i>
+                      <span>تایید اولیه & رزرو جلسه حضوری</span>
                     </button>
                     <button onclick="openRevisionModal('${activeThread.id}', '${msg.id}')" class="bg-amber-50 hover:bg-amber-100 text-amber-800 border border-amber-200 px-3 py-2.5 rounded-xl text-xs font-bold transition-all">
                       اصلاحات
@@ -9684,7 +9767,7 @@
                 </div>
 
                 <div class="flex justify-between items-center text-[10px] text-secondary border-t border-accent/60 pt-2">
-                  <span>تضمین امانت‌داری صندوق درگاه امن</span>
+                  <span>نهایی‌سازی قرارداد و پرداخت بیعانه پس از مراجعه حضوری انجام می‌شود</span>
                   <span class="font-mono dir-ltr">${msg.time}</span>
                 </div>
               </div>
@@ -9870,6 +9953,58 @@
       renderChatActiveThread();
       renderChatThreadsList();
       showToast('درخواست تغییرات و اصلاح پیش‌فاکتور برای تامین‌کننده ارسال گردید.', 'info');
+    }
+
+
+    let activeAppointmentTarget = { threadId: null, msgId: null };
+
+    function openAppointmentModal(threadId, msgId) {
+      activeAppointmentTarget = { threadId, msgId };
+      const modal = document.getElementById('modal-schedule-appointment');
+      if (modal) modal.classList.remove('hidden');
+    }
+
+    function closeAppointmentModal() {
+      const modal = document.getElementById('modal-schedule-appointment');
+      if (modal) modal.classList.add('hidden');
+    }
+
+    function handleScheduleAppointmentSubmit(e) {
+      e.preventDefault();
+      const date = document.getElementById('appt-date').value.trim();
+      const time = document.getElementById('appt-time').value;
+      const note = document.getElementById('appt-note').value.trim();
+
+      if (!date) return;
+
+      const thread = chatState.threads.find(t => t.id === activeAppointmentTarget.threadId) || chatState.threads[0];
+      if (!thread) return;
+
+      const msg = thread.messages.find(m => m.id === activeAppointmentTarget.msgId);
+      if (msg && msg.quoteDetails) {
+        msg.quoteDetails.status = 'accepted';
+      }
+
+      thread.statusBadge = "finalized";
+      thread.statusText = "تایید اولیه و رزرو جلسه حضوری";
+
+      const timeStr = new Date().toLocaleTimeString('fa-IR', { hour: '2-digit', minute: '2-digit' });
+
+      thread.messages.push({
+        id: "msg-" + Date.now(),
+        sender: "user",
+        text: `پیش‌فاکتور تایید اولیه شد. زمان جلسه حضوری پیشنهاد شد: تاریخ ${date} ساعت ${time}${note ? ` (یادداشت: ${note})` : ''}`,
+        time: timeStr
+      });
+
+      thread.lastMessage = `جلسه حضوری ثبت شد: ${date} - ${time}`;
+      thread.lastTime = timeStr;
+
+      closeAppointmentModal();
+      saveChatStateToStorage();
+      renderChatActiveThread();
+      renderChatThreadsList();
+      showToast('زمان جلسه حضوری با موفقیت ثبت شد و پیام به تامین‌کننده ارسال گردید.', 'success');
     }
 
     function acceptPreInvoiceAndPayDeposit(threadId, msgId) {
