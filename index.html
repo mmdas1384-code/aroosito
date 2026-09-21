@@ -69,6 +69,15 @@
       border-radius: 4px;
     }
   </style>
+<style>
+    @keyframes marquee-vertical {
+      0% { transform: translateY(0%); }
+      100% { transform: translateY(-50%); }
+    }
+    .animate-marquee-vertical {
+      animation: marquee-vertical 12s linear infinite;
+    }
+    </style>
 </head>
 <body class="min-h-full flex flex-col antialiased selection:bg-primary selection:text-white">
 
@@ -320,7 +329,7 @@
         </div>
 
         <!-- Header Smart Search & Location/Price Filters -->
-        <div class="hidden xl:flex items-center gap-2 bg-bgCustom border border-accent rounded-2xl p-1.5 shadow-2xs relative max-w-xl flex-1 mx-4">
+        <div class="hidden lg:flex items-center gap-2 bg-bgCustom border border-accent rounded-2xl p-1.5 shadow-2xs relative flex-1 max-w-2xl mx-6">
           <div class="relative flex-1 flex items-center">
             <i data-lucide="search" class="w-4 h-4 text-secondary absolute right-3 pointer-events-none"></i>
             <input id="header-search-input" type="text" oninput="handleHeaderSearchInput()" onfocus="handleHeaderSearchFocus()" placeholder="جستجوی سریع خدمات، تالار، آتلیه..." class="w-full bg-white border border-accent/70 rounded-xl pr-9 pl-3 py-1.5 text-xs font-medium focus:outline-none focus:border-primary text-graphite placeholder:text-secondary">
@@ -352,12 +361,7 @@
 
         <!-- Left Side Header: Location Picker & 3-Way Role Switcher Control & Primary Action CTA -->
         <div class="flex items-center gap-3">
-          <!-- Location Picker Button -->
-          <button onclick="openLocationModal()" id="header-location-btn" class="bg-amber-50 hover:bg-amber-100 text-amber-900 border border-amber-200 px-3 py-1.5 rounded-2xl text-xs font-bold transition-all flex items-center gap-1.5 shadow-xs">
-            <i data-lucide="map-pin" class="w-3.5 h-3.5 text-amber-700"></i>
-            <span id="header-location-label">استان یزد 📍</span>
-            <i data-lucide="chevron-down" class="w-3 h-3 text-amber-600"></i>
-          </button>
+
 
           <!-- 3-Way Role Switcher Segmented Control -->
           <div class="bg-bgCustom border border-accent rounded-2xl p-1 flex items-center gap-1 text-xs font-bold shadow-xs">
@@ -392,90 +396,173 @@
     <div id="tab-home" class="tab-content space-y-12">
 
       <!-- HERO SECTION -->
-      <section class="relative bg-white border border-accent rounded-3xl p-8 lg:p-12 shadow-xs overflow-hidden">
-        <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
+      <section class="relative bg-white border border-accent rounded-3xl p-6 lg:p-8 shadow-xs overflow-hidden">
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-stretch">
 
-          <div class="lg:col-span-7 space-y-6">
-            <div class="inline-flex items-center gap-2 bg-primary/10 text-primary border border-primary/20 px-3.5 py-1.5 rounded-full text-xs font-bold">
-              <i data-lucide="sparkles" class="w-4 h-4"></i>
-              <span>پلتفرم تخصصی و هوشمند برنامه‌ریزی عروسی</span>
+          <!-- Left Column: Compact Squared Hero Intro (Duplicate Inner Search Removed) -->
+          <div class="lg:col-span-7 bg-slate-50/70 border border-accent/80 rounded-3xl p-6 sm:p-8 flex flex-col justify-between space-y-6 shadow-2xs relative overflow-hidden">
+            <div class="space-y-4">
+              <div class="inline-flex items-center gap-2 bg-primary/10 text-primary border border-primary/20 px-3.5 py-1.5 rounded-full text-xs font-bold">
+                <i data-lucide="sparkles" class="w-4 h-4"></i>
+                <span>پلتفرم تخصصی و هوشمند برنامه‌ریزی عروسی</span>
+              </div>
+
+              <h1 class="text-2xl sm:text-3xl lg:text-4xl font-black text-graphite leading-snug">
+                برنامه‌ریزی رویایی‌ترین شب زندگی با <span class="text-primary underline decoration-accent underline-offset-8">عروسی تو</span>
+              </h1>
+
+              <p class="text-xs sm:text-sm text-graphite/80 leading-relaxed max-w-xl">
+                بهترین باغ تالارها، آتلیه‌ها، سالن‌های زیبایی و خدمات مجالس را با تضمین قیمت، تاییدیه رسمی اعتبار و استعلام آنلاین رزرو کنید.
+              </p>
             </div>
 
-            <h1 class="text-3xl sm:text-4xl lg:text-5xl font-black text-graphite leading-tight">
-              برنامه‌ریزی رویایی‌ترین شب زندگی با <span class="text-primary underline decoration-accent underline-offset-8">عروسی تو</span>
-            </h1>
-
-            <p class="text-base sm:text-lg text-graphite/80 leading-relaxed max-w-2xl">
-              بهترین باغ تالارها، آتلیه‌ها، سالن‌های زیبایی و خدمات مجالس را با تضمین قیمت، تاییدیه رسمی اعتبار و استعلام آنلاین رزرو کنید.
-            </p>
-
-            <!-- Search Bar -->
-            <div class="bg-bgCustom border-2 border-accent rounded-2xl p-2.5 flex flex-col sm:flex-row items-center gap-2 shadow-sm focus-within:border-primary transition-all">
-              <div class="flex items-center gap-2 px-3 w-full sm:w-auto flex-1">
-                <i data-lucide="search" class="w-5 h-5 text-secondary shrink-0"></i>
-                <input id="search-input" type="text" oninput="filterVendors()" placeholder="جستجوی نام کسب و کار، تالار یا حوزه فعالیت..." class="w-full bg-transparent border-none text-sm font-medium focus:outline-none text-graphite placeholder:text-secondary">
+            <!-- Stats Bar -->
+            <div class="grid grid-cols-3 gap-3 pt-4 border-t border-accent/80 text-center">
+              <div class="bg-white p-3 rounded-2xl border border-accent/60 shadow-2xs">
+                <p class="text-base sm:text-lg font-black text-primary">+۱,۲۰۰</p>
+                <p class="text-[10px] sm:text-xs text-secondary font-medium">کسب‌وکار معتبر</p>
               </div>
-
-              <div class="flex items-center gap-2 w-full sm:w-auto">
-                <select id="category-filter" onchange="filterVendors()" class="bg-white border border-accent rounded-xl px-3 py-2 text-xs font-semibold text-graphite focus:outline-none cursor-pointer max-w-[180px] sm:max-w-none truncate">
-                  <option value="all">همه دسته‌بندی‌ها</option>
-                  <option value="باغ و تالار پذیرایی">باغ و تالار پذیرایی</option>
-                  <option value="آتلیه و استودیو عکاسی/فیلم‌برداری">آتلیه و استودیو عکاسی/فیلم‌برداری</option>
-                  <option value="سالن‌های زیبایی و آرایشگاه عروس">سالن‌های زیبایی و آرایشگاه عروس</option>
-                  <option value="مزون لباس عروس و داماد">مزون لباس عروس و داماد</option>
-                  <option value="تشریفات و گل‌آرایی">تشریفات و گل‌آرایی</option>
-                  <option value="موسیقی، دی‌جی و گروه ارکستر">موسیقی، دی‌جی و گروه ارکستر</option>
-
-                  <option value="طلا، جواهر و حلقه ازدواج">طلا، جواهر و حلقه ازدواج</option>
-                  <option value="کیک، شیرینی و دسر">کیک، شیرینی و دسر</option>
-                  <option value="اجاره خودروی تشریفاتی">اجاره خودروی تشریفاتی</option>
-                  <option value="کارت دعوت و خدمات چاپ">کارت دعوت و خدمات چاپ</option>
-                </select>
-
-                <button onclick="filterVendors()" class="w-full sm:w-auto bg-primary text-white px-6 py-2.5 rounded-xl text-sm font-bold hover:bg-primary-hover transition-colors shrink-0">
-                  جستجو
-                </button>
+              <div class="bg-white p-3 rounded-2xl border border-accent/60 shadow-2xs">
+                <p class="text-base sm:text-lg font-black text-primary">+۱۵,۰۰۰</p>
+                <p class="text-[10px] sm:text-xs text-secondary font-medium">زوج موفق</p>
               </div>
-            </div>
-
-            <!-- Stats Badge -->
-            <div class="pt-4 grid grid-cols-3 gap-4 border-t border-accent/60">
-              <div>
-                <span class="block text-2xl font-black text-primary">+۱,۲۰۰</span>
-                <span class="text-xs text-secondary font-medium">کسب و کار معتبر</span>
-              </div>
-              <div>
-                <span class="block text-2xl font-black text-primary">+۱۵,۰۰۰</span>
-                <span class="text-xs text-secondary font-medium">زوج موفق</span>
-              </div>
-              <div>
-                <span class="block text-2xl font-black text-primary">۹۸٪</span>
-                <span class="text-xs text-secondary font-medium">رضایتمندی</span>
+              <div class="bg-white p-3 rounded-2xl border border-accent/60 shadow-2xs">
+                <p class="text-base sm:text-lg font-black text-primary">۹۸٪</p>
+                <p class="text-[10px] sm:text-xs text-secondary font-medium">رضایتمندی</p>
               </div>
             </div>
           </div>
 
-          <!-- Hero Dynamic Site Logo Container -->
-          <div class="lg:col-span-5 relative flex flex-col items-center justify-center p-8 bg-gradient-to-br from-emerald-50/60 via-white to-amber-50/40 rounded-3xl border-2 border-dashed border-primary/20 shadow-lg min-h-[320px]">
-            <div class="text-center space-y-4 pb-4">
-              <div class="w-32 h-32 sm:w-36 sm:h-36 mx-auto rounded-3xl bg-white p-3 shadow-xl border-2 border-accent flex items-center justify-center transition-all transform hover:scale-105 overflow-hidden">
-                <img id="site-hero-logo" src="https://images.unsplash.com/photo-1519167758481-83f550bb49b3?auto=format&fit=crop&w=600&q=80" alt="لوگوی رسمی عروسی تو" class="w-full h-full object-cover rounded-2xl">
+          <!-- Right Column: Vertical Auto-Scrolling Top Vendors Marquee -->
+          <div class="lg:col-span-5 bg-gradient-to-b from-slate-50 to-amber-50/30 border border-accent/80 rounded-3xl p-5 flex flex-col shadow-2xs relative">
+            <div class="flex items-center justify-between pb-3 border-b border-accent/80 mb-3">
+              <div class="flex items-center gap-2">
+                <span class="w-2.5 h-2.5 rounded-full bg-emerald-500 animate-pulse"></span>
+                <h3 class="text-xs sm:text-sm font-black text-graphite">ویترین تامین‌کنندگان برتر استان یزد (VIP Showcase)</h3>
               </div>
-              <div class="space-y-1">
-                <h3 class="text-xl sm:text-2xl font-black text-primary tracking-tight">عروسی تو</h3>
-                <p class="text-xs text-secondary font-semibold">پلتفرم جامع و معتبر خدمات مجالس استان یزد</p>
-              </div>
+              <span class="text-[10px] text-secondary font-medium bg-white px-2 py-0.5 rounded-full border border-accent">توقف حرکت با نگه داشتن موس ⏸</span>
             </div>
-            <div class="absolute -bottom-4 -right-4 bg-white p-3.5 rounded-2xl shadow-lg border border-accent flex items-center gap-3 z-10">
-              <div class="w-10 h-10 rounded-xl bg-primary/10 flex items-center justify-center text-primary shrink-0">
-                <i data-lucide="shield-check" class="w-6 h-6"></i>
-              </div>
-              <div>
-                <span class="block text-xs font-bold text-graphite">تاییدیه رسمی اعتبار</span>
-                <span class="text-[11px] text-secondary font-medium">احراز هویت کامل توسط عروسی تو</span>
+
+            <!-- Vertical Scrolling Wrapper -->
+            <div class="relative h-[280px] overflow-hidden group">
+              <div class="animate-marquee-vertical flex flex-col gap-3 group-hover:[animation-play-state:paused]">
+                <!-- Item 1 -->
+                <div onclick="openVendorDetailModal(1)" class="bg-white border border-accent/80 hover:border-primary p-3 rounded-2xl shadow-2xs hover:shadow-md transition-all flex items-center justify-between cursor-pointer">
+                  <div class="flex items-center gap-3">
+                    <img src="https://images.unsplash.com/photo-1519167758481-83f550bb49b3?auto=format&fit=crop&w=120&q=80" alt="هتل باغ و تشریفات مشیرالممالک" class="w-12 h-12 rounded-xl object-cover border border-accent/50">
+                    <div>
+                      <span class="text-[10px] font-bold text-amber-700 bg-amber-50 px-2 py-0.5 rounded-md">تالار و باغ تالار</span>
+                      <h4 class="text-xs font-bold text-graphite hover:text-primary transition-colors mt-0.5">هتل باغ و تشریفات مشیرالممالک یزد</h4>
+                      <div class="flex items-center gap-2 text-[10px] text-secondary mt-0.5">
+                        <span>صفائیه، یزد</span>
+                        <span>•</span>
+                        <span class="text-amber-500 font-bold">⭐ ۴.۹ (۴۲ نظر)</span>
+                      </div>
+                    </div>
+                  </div>
+                  <button class="bg-primary/10 hover:bg-primary hover:text-white text-primary text-[11px] font-bold px-2.5 py-1.5 rounded-xl transition-all shrink-0">
+                    مشاهده نمونه‌کار
+                  </button>
+                </div>
+
+                <!-- Item 2 -->
+                <div onclick="openVendorDetailModal(2)" class="bg-white border border-accent/80 hover:border-primary p-3 rounded-2xl shadow-2xs hover:shadow-md transition-all flex items-center justify-between cursor-pointer">
+                  <div class="flex items-center gap-3">
+                    <img src="https://images.unsplash.com/photo-1537633552985-df8429e8048b?auto=format&fit=crop&w=120&q=80" alt="استودیو و آتلیه تخصصی کویر یزد" class="w-12 h-12 rounded-xl object-cover border border-accent/50">
+                    <div>
+                      <span class="text-[10px] font-bold text-sky-700 bg-sky-50 px-2 py-0.5 rounded-md">آتلیه عکاسی</span>
+                      <h4 class="text-xs font-bold text-graphite hover:text-primary transition-colors mt-0.5">استودیو و آتلیه تخصصی کویر یزد</h4>
+                      <div class="flex items-center gap-2 text-[10px] text-secondary mt-0.5">
+                        <span>میدان اطلسی</span>
+                        <span>•</span>
+                        <span class="text-amber-500 font-bold">⭐ ۴.۸ (۳۸ نظر)</span>
+                      </div>
+                    </div>
+                  </div>
+                  <button class="bg-primary/10 hover:bg-primary hover:text-white text-primary text-[11px] font-bold px-2.5 py-1.5 rounded-xl transition-all shrink-0">
+                    مشاهده نمونه‌کار
+                  </button>
+                </div>
+
+                <!-- Item 3 -->
+                <div onclick="openVendorDetailModal(3)" class="bg-white border border-accent/80 hover:border-primary p-3 rounded-2xl shadow-2xs hover:shadow-md transition-all flex items-center justify-between cursor-pointer">
+                  <div class="flex items-center gap-3">
+                    <img src="https://images.unsplash.com/photo-1560066984-138dadb4c035?auto=format&fit=crop&w=120&q=80" alt="عمارت و تالار تشریفات قصر یزد" class="w-12 h-12 rounded-xl object-cover border border-accent/50">
+                    <div>
+                      <span class="text-[10px] font-bold text-emerald-700 bg-emerald-50 px-2 py-0.5 rounded-md">تشریفات و عمارت</span>
+                      <h4 class="text-xs font-bold text-graphite hover:text-primary transition-colors mt-0.5">عمارت و تالار تشریفات قصر یزد</h4>
+                      <div class="flex items-center gap-2 text-[10px] text-secondary mt-0.5">
+                        <span>بلوار جمهوری</span>
+                        <span>•</span>
+                        <span class="text-amber-500 font-bold">⭐ ۴.۹ (۲۹ نظر)</span>
+                      </div>
+                    </div>
+                  </div>
+                  <button class="bg-primary/10 hover:bg-primary hover:text-white text-primary text-[11px] font-bold px-2.5 py-1.5 rounded-xl transition-all shrink-0">
+                    مشاهده نمونه‌کار
+                  </button>
+                </div>
+
+                <!-- Item 4 -->
+                <div onclick="openVendorDetailModal(4)" class="bg-white border border-accent/80 hover:border-primary p-3 rounded-2xl shadow-2xs hover:shadow-md transition-all flex items-center justify-between cursor-pointer">
+                  <div class="flex items-center gap-3">
+                    <img src="https://images.unsplash.com/photo-1487412720507-e7ab37603c6f?auto=format&fit=crop&w=120&q=80" alt="سالن زیبایی عروس رویال یزد" class="w-12 h-12 rounded-xl object-cover border border-accent/50">
+                    <div>
+                      <span class="text-[10px] font-bold text-purple-700 bg-purple-50 px-2 py-0.5 rounded-md">سالن زیبایی عروس</span>
+                      <h4 class="text-xs font-bold text-graphite hover:text-primary transition-colors mt-0.5">سالن زیبایی تخصصی رویال یزد</h4>
+                      <div class="flex items-center gap-2 text-[10px] text-secondary mt-0.5">
+                        <span>خیابان کاشانی</span>
+                        <span>•</span>
+                        <span class="text-amber-500 font-bold">⭐ ۴.۹ (۵۱ نظر)</span>
+                      </div>
+                    </div>
+                  </div>
+                  <button class="bg-primary/10 hover:bg-primary hover:text-white text-primary text-[11px] font-bold px-2.5 py-1.5 rounded-xl transition-all shrink-0">
+                    مشاهده نمونه‌کار
+                  </button>
+                </div>
+
+                <!-- Duplicate items for seamless continuous marquee loop -->
+                <div onclick="openVendorDetailModal(1)" class="bg-white border border-accent/80 hover:border-primary p-3 rounded-2xl shadow-2xs hover:shadow-md transition-all flex items-center justify-between cursor-pointer">
+                  <div class="flex items-center gap-3">
+                    <img src="https://images.unsplash.com/photo-1519167758481-83f550bb49b3?auto=format&fit=crop&w=120&q=80" alt="هتل باغ و تشریفات مشیرالممالک" class="w-12 h-12 rounded-xl object-cover border border-accent/50">
+                    <div>
+                      <span class="text-[10px] font-bold text-amber-700 bg-amber-50 px-2 py-0.5 rounded-md">تالار و باغ تالار</span>
+                      <h4 class="text-xs font-bold text-graphite hover:text-primary transition-colors mt-0.5">هتل باغ و تشریفات مشیرالممالک یزد</h4>
+                      <div class="flex items-center gap-2 text-[10px] text-secondary mt-0.5">
+                        <span>صفائیه، یزد</span>
+                        <span>•</span>
+                        <span class="text-amber-500 font-bold">⭐ ۴.۹ (۴۲ نظر)</span>
+                      </div>
+                    </div>
+                  </div>
+                  <button class="bg-primary/10 hover:bg-primary hover:text-white text-primary text-[11px] font-bold px-2.5 py-1.5 rounded-xl transition-all shrink-0">
+                    مشاهده نمونه‌کار
+                  </button>
+                </div>
+
+                <div onclick="openVendorDetailModal(2)" class="bg-white border border-accent/80 hover:border-primary p-3 rounded-2xl shadow-2xs hover:shadow-md transition-all flex items-center justify-between cursor-pointer">
+                  <div class="flex items-center gap-3">
+                    <img src="https://images.unsplash.com/photo-1537633552985-df8429e8048b?auto=format&fit=crop&w=120&q=80" alt="استودیو و آتلیه تخصصی کویر یزد" class="w-12 h-12 rounded-xl object-cover border border-accent/50">
+                    <div>
+                      <span class="text-[10px] font-bold text-sky-700 bg-sky-50 px-2 py-0.5 rounded-md">آتلیه عکاسی</span>
+                      <h4 class="text-xs font-bold text-graphite hover:text-primary transition-colors mt-0.5">استودیو و آتلیه تخصصی کویر یزد</h4>
+                      <div class="flex items-center gap-2 text-[10px] text-secondary mt-0.5">
+                        <span>میدان اطلسی</span>
+                        <span>•</span>
+                        <span class="text-amber-500 font-bold">⭐ ۴.۸ (۳۸ نظر)</span>
+                      </div>
+                    </div>
+                  </div>
+                  <button class="bg-primary/10 hover:bg-primary hover:text-white text-primary text-[11px] font-bold px-2.5 py-1.5 rounded-xl transition-all shrink-0">
+                    مشاهده نمونه‌کار
+                  </button>
+                </div>
+
               </div>
             </div>
           </div>
+
         </div>
       </section></section>
 
