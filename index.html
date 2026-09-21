@@ -142,10 +142,123 @@
               <span>صفحه اصلی</span>
             </button>
 
-            <button onclick="switchTab('home')" class="px-3 py-2 rounded-lg text-xs xl:text-sm font-semibold transition-colors text-graphite hover:text-primary hover:bg-slate-50 flex items-center gap-1.5">
-              <i data-lucide="grid" class="w-4 h-4 text-primary"></i>
-              <span>دسته‌بندی‌ها</span>
-            </button>
+            <!-- Consolidated "دسته‌بندی‌ها" Mega Column Menu -->
+            <div class="relative group">
+              <button id="nav-mega-cat-btn" class="px-3 py-2 rounded-lg text-xs xl:text-sm font-semibold transition-colors text-graphite hover:text-primary hover:bg-slate-50 flex items-center gap-1.5 cursor-pointer">
+                <i data-lucide="grid" class="w-4 h-4 text-primary"></i>
+                <span>دسته‌بندی‌ها</span>
+                <i data-lucide="chevron-down" class="w-3.5 h-3.5 text-secondary group-hover:rotate-180 transition-transform"></i>
+              </button>
+
+              <!-- Mega Column Dropdown Menu -->
+              <div id="mega-category-menu" class="absolute right-0 mt-1 w-[720px] bg-white border border-accent rounded-3xl shadow-2xl opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 z-50 p-6">
+                <div class="flex justify-between items-center border-b border-accent pb-3 mb-4">
+                  <div class="flex items-center gap-2 text-primary font-bold text-sm">
+                    <i data-lucide="layers" class="w-4 h-4"></i>
+                    <span>دسته‌بندی کامل خدمات و تشریفات مجالس</span>
+                  </div>
+                  <span class="text-[11px] text-secondary font-medium">انتخاب سریع زیرگروه جهت فیلتر دایرکتوری</span>
+                </div>
+
+                <div class="grid grid-cols-3 gap-6 text-right">
+                  <!-- Column 1: مکان و تشریفات پذیرایی -->
+                  <div class="space-y-3">
+                    <div class="font-black text-xs text-graphite flex items-center gap-1.5 border-b border-accent/60 pb-1.5 text-emeraldHeader">
+                      <i data-lucide="building" class="w-4 h-4 text-primary"></i>
+                      <span>۱. مکان و تشریفات</span>
+                    </div>
+                    <div class="flex flex-col gap-1.5">
+                      <button onclick="filterVendorsFromMega('تالار و باغ تالار عروسی')" class="text-right text-xs font-medium text-graphite hover:text-primary hover:bg-slate-50 p-1.5 rounded-lg transition-colors flex items-center gap-1.5">
+                        <span class="w-1.5 h-1.5 rounded-full bg-primary inline-block"></span>
+                        <span>باغ و تالار پذیرایی</span>
+                      </button>
+                      <button onclick="filterVendorsFromMega('کترینگ و تشریفات پذیرایی')" class="text-right text-xs font-medium text-graphite hover:text-primary hover:bg-slate-50 p-1.5 rounded-lg transition-colors flex items-center gap-1.5">
+                        <span class="w-1.5 h-1.5 rounded-full bg-primary inline-block"></span>
+                        <span>کترینگ و غذای عروسی</span>
+                      </button>
+                      <button onclick="filterVendorsFromMega('کیک و شیرینی عروسی')" class="text-right text-xs font-medium text-graphite hover:text-primary hover:bg-slate-50 p-1.5 rounded-lg transition-colors flex items-center gap-1.5">
+                        <span class="w-1.5 h-1.5 rounded-full bg-primary inline-block"></span>
+                        <span>کیک و شیرینی سنتی یزد</span>
+                      </button>
+                      <button onclick="filterVendorsFromMega('گل‌آرایی و ماشین عروس')" class="text-right text-xs font-medium text-graphite hover:text-primary hover:bg-slate-50 p-1.5 rounded-lg transition-colors flex items-center gap-1.5">
+                        <span class="w-1.5 h-1.5 rounded-full bg-primary inline-block"></span>
+                        <span>گل‌آرایی و ماشین عروس</span>
+                      </button>
+                    </div>
+                  </div>
+
+                  <!-- Column 2: آتلیه، فیلم و موسیقی -->
+                  <div class="space-y-3">
+                    <div class="font-black text-xs text-graphite flex items-center gap-1.5 border-b border-accent/60 pb-1.5 text-emeraldHeader">
+                      <i data-lucide="camera" class="w-4 h-4 text-primary"></i>
+                      <span>۲. آتلیه و موزیک</span>
+                    </div>
+                    <div class="flex flex-col gap-1.5">
+                      <button onclick="filterVendorsFromMega('آتلیه عکاسی و فیلمبرداری')" class="text-right text-xs font-medium text-graphite hover:text-primary hover:bg-slate-50 p-1.5 rounded-lg transition-colors flex items-center gap-1.5">
+                        <span class="w-1.5 h-1.5 rounded-full bg-primary inline-block"></span>
+                        <span>آتلیه عکاسی و فرمالیته</span>
+                      </button>
+                      <button onclick="filterVendorsFromMega('موسیقی و دی‌جی')" class="text-right text-xs font-medium text-graphite hover:text-primary hover:bg-slate-50 p-1.5 rounded-lg transition-colors flex items-center gap-1.5">
+                        <span class="w-1.5 h-1.5 rounded-full bg-primary inline-block"></span>
+                        <span>دی‌جی و ارکستر زنده</span>
+                      </button>
+                      <button onclick="filterVendorsFromMega('نورپردازی و سیستم صوتی')" class="text-right text-xs font-medium text-graphite hover:text-primary hover:bg-slate-50 p-1.5 rounded-lg transition-colors flex items-center gap-1.5">
+                        <span class="w-1.5 h-1.5 rounded-full bg-primary inline-block"></span>
+                        <span>نورپردازی و استیج</span>
+                      </button>
+                    </div>
+
+                    <div class="font-black text-xs text-graphite flex items-center gap-1.5 border-b border-accent/60 pb-1.5 text-emeraldHeader pt-2">
+                      <i data-lucide="landmark" class="w-4 h-4 text-primary"></i>
+                      <span>۵. تشریفات قانونی</span>
+                    </div>
+                    <div class="flex flex-col gap-1.5">
+                      <button onclick="filterVendorsFromMega('دفتر ازدواج و سالن عقد')" class="text-right text-xs font-medium text-graphite hover:text-primary hover:bg-slate-50 p-1.5 rounded-lg transition-colors flex items-center gap-1.5">
+                        <span class="w-1.5 h-1.5 rounded-full bg-primary inline-block"></span>
+                        <span>دفتر ثبت ازدواج & سالن عقد</span>
+                      </button>
+                    </div>
+                  </div>
+
+                  <!-- Column 3: زیبایی، استایل و طلا -->
+                  <div class="space-y-3">
+                    <div class="font-black text-xs text-graphite flex items-center gap-1.5 border-b border-accent/60 pb-1.5 text-emeraldHeader">
+                      <i data-lucide="sparkles" class="w-4 h-4 text-primary"></i>
+                      <span>۳. زیبایی و استایل</span>
+                    </div>
+                    <div class="flex flex-col gap-1.5">
+                      <button onclick="filterVendorsFromMega('سالن زیبایی و آرایشگاه عروس')" class="text-right text-xs font-medium text-graphite hover:text-primary hover:bg-slate-50 p-1.5 rounded-lg transition-colors flex items-center gap-1.5">
+                        <span class="w-1.5 h-1.5 rounded-full bg-primary inline-block"></span>
+                        <span>سالن زیبایی عروس</span>
+                      </button>
+                      <button onclick="filterVendorsFromMega('مزون لباس عروس')" class="text-right text-xs font-medium text-graphite hover:text-primary hover:bg-slate-50 p-1.5 rounded-lg transition-colors flex items-center gap-1.5">
+                        <span class="w-1.5 h-1.5 rounded-full bg-primary inline-block"></span>
+                        <span>مزون لباس عروس و عقد</span>
+                      </button>
+                      <button onclick="filterVendorsFromMega('کت و شلوار داماد')" class="text-right text-xs font-medium text-graphite hover:text-primary hover:bg-slate-50 p-1.5 rounded-lg transition-colors flex items-center gap-1.5">
+                        <span class="w-1.5 h-1.5 rounded-full bg-primary inline-block"></span>
+                        <span>کت و شلوار & پیرایش داماد</span>
+                      </button>
+                    </div>
+
+                    <div class="font-black text-xs text-graphite flex items-center gap-1.5 border-b border-accent/60 pb-1.5 text-emeraldHeader pt-2">
+                      <i data-lucide="gem" class="w-4 h-4 text-primary"></i>
+                      <span>۴. طلا و خرید</span>
+                    </div>
+                    <div class="flex flex-col gap-1.5">
+                      <button onclick="filterVendorsFromMega('طلافروشی و جواهرفروشی')" class="text-right text-xs font-medium text-graphite hover:text-primary hover:bg-slate-50 p-1.5 rounded-lg transition-colors flex items-center gap-1.5">
+                        <span class="w-1.5 h-1.5 rounded-full bg-primary inline-block"></span>
+                        <span>طلا، جواهر و حلقه ازدواج</span>
+                      </button>
+                      <button onclick="filterVendorsFromMega('اجاره ماشین عروس')" class="text-right text-xs font-medium text-graphite hover:text-primary hover:bg-slate-50 p-1.5 rounded-lg transition-colors flex items-center gap-1.5">
+                        <span class="w-1.5 h-1.5 rounded-full bg-primary inline-block"></span>
+                        <span>اجاره خودرو تشریفاتی</span>
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
 
             <!-- Dropdown 1: ابزارهای برنامه‌ریزی -->
             <div class="relative group">
@@ -204,6 +317,37 @@
               </div>
             </div>
           </nav>
+        </div>
+
+        <!-- Header Smart Search & Location/Price Filters -->
+        <div class="hidden xl:flex items-center gap-2 bg-bgCustom border border-accent rounded-2xl p-1.5 shadow-2xs relative max-w-xl flex-1 mx-4">
+          <div class="relative flex-1 flex items-center">
+            <i data-lucide="search" class="w-4 h-4 text-secondary absolute right-3 pointer-events-none"></i>
+            <input id="header-search-input" type="text" oninput="handleHeaderSearchInput()" onfocus="handleHeaderSearchFocus()" placeholder="جستجوی سریع خدمات، تالار، آتلیه..." class="w-full bg-white border border-accent/70 rounded-xl pr-9 pl-3 py-1.5 text-xs font-medium focus:outline-none focus:border-primary text-graphite placeholder:text-secondary">
+            <!-- Smart Search Suggestions Dropdown -->
+            <div id="search-suggestions-dropdown" class="hidden absolute top-full right-0 left-0 mt-2 bg-white border border-accent rounded-2xl shadow-xl z-50 overflow-hidden max-h-64 overflow-y-auto">
+              <!-- Rendered dynamically -->
+            </div>
+          </div>
+
+          <!-- City/Region Dropdown -->
+          <select id="header-city-select" onchange="filterVendors()" class="bg-white border border-accent/70 rounded-xl px-2.5 py-1.5 text-xs font-bold text-graphite focus:outline-none cursor-pointer max-w-[110px]">
+            <option value="استان یزد" selected>استان یزد 📍</option>
+            <option value="میبد">میبد</option>
+            <option value="اردکان">اردکان</option>
+            <option value="تفت">تفت</option>
+            <option value="اصفهان">اصفهان</option>
+            <option value="شیراز">شیراز</option>
+            <option value="سایر">سایر</option>
+          </select>
+
+          <!-- Price Range Filter Dropdown -->
+          <select id="header-price-select" onchange="filterVendors()" class="bg-white border border-accent/70 rounded-xl px-2.5 py-1.5 text-xs font-bold text-graphite focus:outline-none cursor-pointer max-w-[120px]">
+            <option value="all" selected>همه قیمت‌ها</option>
+            <option value="economic">اقتصادی 💰</option>
+            <option value="mid">متوسط 💰💰</option>
+            <option value="luxury">لوکس 💰💰💰</option>
+          </select>
         </div>
 
         <!-- Left Side Header: Location Picker & 3-Way Role Switcher Control & Primary Action CTA -->
@@ -371,11 +515,29 @@
             <p class="text-xs text-secondary mt-1">امکان مشاهده پروفایل عمومی، نمونه‌کارها و استعلام قیمت مستقیم</p>
           </div>
 
-          <div class="flex items-center gap-2">
+          <div class="flex items-center gap-2 flex-wrap">
             <label class="flex items-center gap-2 cursor-pointer text-xs font-bold text-graphite bg-white px-3 py-2 rounded-xl border border-accent shadow-xs">
               <input type="checkbox" id="verified-only" checked onchange="filterVendors()" class="rounded text-primary focus:ring-primary w-4 h-4">
               <span>فقط دارای تاییدیه رسمی</span>
             </label>
+          </div>
+        </div>
+
+        <!-- Dedicated Sorting Bar (مرتب‌سازی نتایج) -->
+        <div id="vendor-sorting-bar" class="bg-white border border-accent rounded-2xl p-3 shadow-2xs flex flex-col sm:flex-row sm:items-center justify-between gap-3 text-xs font-bold text-graphite">
+          <div class="flex items-center gap-2">
+            <i data-lucide="arrow-up-down" class="w-4 h-4 text-primary"></i>
+            <span>مرتب‌سازی نتایج نتایج تامین‌کنندگان:</span>
+          </div>
+
+          <div class="flex items-center gap-2">
+            <label for="vendor-sort-select" class="text-secondary shrink-0">ترتیب نمایش:</label>
+            <select id="vendor-sort-select" onchange="filterVendors()" class="bg-bgCustom border border-accent rounded-xl px-3 py-1.5 text-xs font-bold text-graphite focus:outline-none focus:border-primary cursor-pointer">
+              <option value="popular" selected>محبوب‌ترین (امتیاز بالا) ⭐</option>
+              <option value="newest">جدیدترین 🆕</option>
+              <option value="price-asc">ارزان‌ترین (کمترین قیمت) 📈</option>
+              <option value="price-desc">گران‌ترین (بیشترین قیمت) 📉</option>
+            </select>
           </div>
         </div>
 
@@ -5606,6 +5768,11 @@
       if (vendorSection) vendorSection.scrollIntoView({ behavior: 'smooth' });
     }
 
+    function filterVendorsFromMega(title) {
+      switchTab('home');
+      filterVendorsByCategoryTitle(title);
+    }
+
     // SUPER ADMIN CATEGORY & SUB-CATEGORY CRUD ENGINE
     function saveCategoryGroupsToStorage() {
       try {
@@ -6197,12 +6364,129 @@
       filterVendors();
     }
 
-    function filterVendors() {
-      const search = document.getElementById('search-input').value.trim().toLowerCase();
-      const cat = document.getElementById('category-filter').value;
-      const verifiedOnly = document.getElementById('verified-only').checked;
+    function handleHeaderSearchFocus() {
+      handleHeaderSearchInput();
+    }
 
-      const filtered = vendors.filter(v => {
+    function handleHeaderSearchInput() {
+      const input = document.getElementById('header-search-input');
+      const dropdown = document.getElementById('search-suggestions-dropdown');
+      if (!input || !dropdown) return;
+
+      const query = input.value.trim().toLowerCase();
+      if (!query) {
+        dropdown.classList.add('hidden');
+        dropdown.innerHTML = '';
+        return;
+      }
+
+      // Sync with main search input
+      const mainSearch = document.getElementById('search-input');
+      if (mainSearch) {
+        mainSearch.value = query;
+      }
+
+      // Match vendors and subcategories
+      const matchedVendors = vendors.filter(v =>
+        v.name.toLowerCase().includes(query) || v.category.toLowerCase().includes(query)
+      ).slice(0, 4);
+
+      let subCatMatches = [];
+      categoryGroups.forEach(g => {
+        const subList = g.subcategories || g.subCategories || [];
+        subList.forEach(sub => {
+          const matchTitle = sub.title && sub.title.toLowerCase().includes(query);
+          const matchTag = sub.tag && sub.tag.toLowerCase().includes(query);
+          if (matchTitle || matchTag) {
+            subCatMatches.push(sub);
+          }
+        });
+      });
+      subCatMatches = subCatMatches.slice(0, 3);
+
+      if (matchedVendors.length === 0 && subCatMatches.length === 0) {
+        dropdown.innerHTML = `<div class="p-3 text-xs text-secondary font-medium text-center">هیچ نتیجه‌ای یافت نشد.</div>`;
+      } else {
+        let html = '';
+        if (subCatMatches.length > 0) {
+          html += `<div class="p-2 bg-slate-50 border-b border-accent text-[11px] font-bold text-secondary">دسته‌بندی‌های مرتبط:</div>`;
+          subCatMatches.forEach(sub => {
+            html += `
+              <div onclick="selectSearchSuggestion('${sub.title}', 'sub');" class="p-2.5 hover:bg-primary/10 cursor-pointer flex items-center gap-2 text-xs font-bold text-graphite border-b border-accent/40">
+                <i data-lucide="tag" class="w-3.5 h-3.5 text-primary shrink-0"></i>
+                <span>${sub.title}</span>
+              </div>
+            `;
+          });
+        }
+
+        if (matchedVendors.length > 0) {
+          html += `<div class="p-2 bg-slate-50 border-b border-accent text-[11px] font-bold text-secondary">تأمین‌کنندگان:</div>`;
+          matchedVendors.forEach(v => {
+            html += `
+              <div onclick="selectSearchSuggestion('${v.name}', 'vendor');" class="p-2.5 hover:bg-primary/10 cursor-pointer flex items-center justify-between text-xs font-bold text-graphite border-b border-accent/40">
+                <div class="flex items-center gap-2">
+                  <i data-lucide="store" class="w-3.5 h-3.5 text-primary shrink-0"></i>
+                  <span>${v.name}</span>
+                </div>
+                <span class="text-[10px] text-secondary font-normal">${v.category}</span>
+              </div>
+            `;
+          });
+        }
+        dropdown.innerHTML = html;
+        if (window.lucide) lucide.createIcons();
+      }
+
+      dropdown.classList.remove('hidden');
+      filterVendors();
+    }
+
+    function selectSearchSuggestion(value, type) {
+      const input = document.getElementById('header-search-input');
+      const dropdown = document.getElementById('search-suggestions-dropdown');
+      if (input) input.value = value;
+      if (dropdown) dropdown.classList.add('hidden');
+
+      if (type === 'sub') {
+        filterVendorsByCategoryTitle(value);
+      } else {
+        const mainSearch = document.getElementById('search-input');
+        if (mainSearch) mainSearch.value = value;
+        filterVendors();
+      }
+    }
+
+    // Close suggestions dropdown when clicking outside
+    document.addEventListener('click', (e) => {
+      const dropdown = document.getElementById('search-suggestions-dropdown');
+      const input = document.getElementById('header-search-input');
+      if (dropdown && input && !dropdown.contains(e.target) && !input.contains(e.target)) {
+        dropdown.classList.add('hidden');
+      }
+    });
+
+    function filterVendors() {
+      const searchInput = document.getElementById('search-input');
+      const headerSearchInput = document.getElementById('header-search-input');
+
+      let search = '';
+      if (headerSearchInput && headerSearchInput.value.trim() !== '') {
+        search = headerSearchInput.value.trim().toLowerCase();
+      } else if (searchInput) {
+        search = searchInput.value.trim().toLowerCase();
+      }
+
+      const cat = document.getElementById('category-filter') ? document.getElementById('category-filter').value : 'all';
+      const verifiedOnly = document.getElementById('verified-only') ? document.getElementById('verified-only').checked : false;
+
+      const citySelect = document.getElementById('header-city-select');
+      const selectedCity = citySelect ? citySelect.value : 'استان یزد';
+
+      const priceSelect = document.getElementById('header-price-select');
+      const selectedPriceRange = priceSelect ? priceSelect.value : 'all';
+
+      let filtered = vendors.filter(v => {
         const matchesSearch = v.name.toLowerCase().includes(search) ||
                               v.category.toLowerCase().includes(search) ||
                               (v.district && v.district.toLowerCase().includes(search)) ||
@@ -6210,7 +6494,48 @@
         const matchesCat = cat === 'all' || v.category === cat;
         const matchesVerified = !verifiedOnly || v.verified;
         const matchesDistrict = selectedYazdDistrict === 'all' || v.district === selectedYazdDistrict;
-        return matchesSearch && matchesCat && matchesVerified && matchesDistrict;
+
+        let matchesCity = true;
+        if (selectedCity && selectedCity !== 'استان یزد' && selectedCity !== 'سایر') {
+          matchesCity = (v.cityName && v.cityName.includes(selectedCity)) || (v.province && v.province.includes(selectedCity)) || (v.city && v.city.includes(selectedCity));
+        }
+
+        let matchesPrice = true;
+        if (selectedPriceRange !== 'all') {
+          const rawPrice = parseInt((v.priceRange || '').replace(/[^\d]/g, ''), 10) || 0;
+          if (selectedPriceRange === 'economic') {
+            matchesPrice = rawPrice <= 35000000;
+          } else if (selectedPriceRange === 'mid') {
+            matchesPrice = rawPrice > 35000000 && rawPrice <= 80000000;
+          } else if (selectedPriceRange === 'luxury') {
+            matchesPrice = rawPrice > 80000000;
+          }
+        }
+
+        return matchesSearch && matchesCat && matchesVerified && matchesDistrict && matchesCity && matchesPrice;
+      });
+
+      // Apply dynamic sorting
+      const sortSelect = document.getElementById('vendor-sort-select');
+      const sortMode = sortSelect ? sortSelect.value : 'popular';
+
+      filtered.sort((a, b) => {
+        const priceA = parseInt((a.priceRange || '').replace(/[^\d]/g, ''), 10) || 0;
+        const priceB = parseInt((b.priceRange || '').replace(/[^\d]/g, ''), 10) || 0;
+
+        if (sortMode === 'popular') {
+          if ((b.rating || 0) !== (a.rating || 0)) {
+            return (b.rating || 0) - (a.rating || 0);
+          }
+          return (b.reviewCount || 0) - (a.reviewCount || 0);
+        } else if (sortMode === 'newest') {
+          return (b.id || 0) - (a.id || 0);
+        } else if (sortMode === 'price-asc') {
+          return priceA - priceB;
+        } else if (sortMode === 'price-desc') {
+          return priceB - priceA;
+        }
+        return 0;
       });
 
       renderVendors(filtered);
