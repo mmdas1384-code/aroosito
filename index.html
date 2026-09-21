@@ -246,96 +246,6 @@
     <!-- ========================================== -->
     <div id="tab-home" class="tab-content space-y-12">
 
-      <!-- COUPLE PLANNING DASHBOARD OVERVIEW (پنل اختصاصی برنامه‌ریزی زوجین) -->
-      <section class="bg-white border border-accent rounded-3xl p-6 sm:p-8 shadow-xs space-y-6">
-        <div class="flex flex-col sm:flex-row justify-between sm:items-center gap-4 border-b border-accent pb-4">
-          <div>
-            <div class="inline-flex items-center gap-1.5 bg-rose-50 text-rose-700 text-xs font-bold px-3 py-1 rounded-full mb-1 border border-rose-200">
-              <i data-lucide="heart" class="w-3.5 h-3.5 fill-rose-500"></i>
-              <span>پنل اختصاصی زوجین: علی & سارا</span>
-            </div>
-            <h2 class="text-2xl font-bold text-graphite">خلاصه وضعیت برنامه‌ریزی و بوک‌مارک‌های عروسی در یزد</h2>
-          </div>
-
-          <div class="flex items-center gap-2">
-            <button onclick="switchTab('planner')" class="bg-primary hover:bg-emerald-900 text-white font-bold px-4 py-2 rounded-xl text-xs shadow-xs transition-all flex items-center gap-1.5">
-              <i data-lucide="check-square" class="w-4 h-4"></i>
-              <span>چک‌لیست ۱۲ ماهه</span>
-            </button>
-            <button onclick="switchTab('messages')" class="bg-bgCustom hover:bg-slate-100 text-graphite border border-accent font-bold px-4 py-2 rounded-xl text-xs transition-all flex items-center gap-1.5">
-              <i data-lucide="message-square" class="w-4 h-4 text-primary"></i>
-              <span>پیش‌فاکتورها و چت</span>
-            </button>
-          </div>
-        </div>
-
-        <div class="grid grid-cols-1 md:grid-cols-4 gap-6">
-          <!-- Countdown Circle Card -->
-          <div class="bg-gradient-to-br from-emerald-50/80 via-white to-amber-50/50 border border-primary/20 rounded-2xl p-5 flex flex-col items-center justify-center text-center space-y-2 shadow-2xs">
-            <div class="relative w-20 h-20 rounded-full border-4 border-primary/20 flex items-center justify-center bg-white shadow-xs">
-              <span class="text-2xl font-black text-primary">۱۳۵</span>
-            </div>
-            <span class="text-xs font-bold text-graphite">روز مانده تا شب عروسی</span>
-            <span class="text-[11px] text-secondary font-medium">تاریخ هدف: ۱۵ مهر ۱۴۰۳</span>
-          </div>
-
-          <!-- Budget Expense Progress -->
-          <div class="bg-bgCustom border border-accent rounded-2xl p-5 space-y-3 flex flex-col justify-between">
-            <div>
-              <span class="text-xs font-bold text-secondary block mb-1">بودجه کل تخصیص‌یافته</span>
-              <span class="text-2xl font-black text-graphite">۳۵۰,۰۰۰,۰۰۰ <span class="text-xs font-normal text-secondary">تومان</span></span>
-            </div>
-            <div class="space-y-1.5">
-              <div class="flex justify-between text-xs font-bold">
-                <span class="text-emerald-700">پرداخت‌شده: ۱۸۰,۰۰۰,۰۰۰</span>
-                <span class="text-secondary">۵۱٪</span>
-              </div>
-              <div class="w-full bg-slate-200 h-2.5 rounded-full overflow-hidden">
-                <div class="bg-primary h-full rounded-full" style="width: 51%;"></div>
-              </div>
-            </div>
-          </div>
-
-          <!-- Active Pre-Invoices Card -->
-          <div class="bg-bgCustom border border-accent rounded-2xl p-5 space-y-3 flex flex-col justify-between">
-            <div>
-              <span class="text-xs font-bold text-secondary block mb-1">پیش‌فاکتورهای دریافت شده</span>
-              <span class="text-2xl font-black text-primary">۲ پیش‌فاکتور <span class="text-xs font-bold text-amber-700 bg-amber-100 px-2 py-0.5 rounded-md">در انتظار تایید</span></span>
-            </div>
-            <button onclick="switchTab('messages')" class="text-xs font-bold text-primary hover:underline flex items-center gap-1">
-              <span>مشاهده جزئیات پیش‌فاکتور در چت</span>
-              <i data-lucide="arrow-left" class="w-3.5 h-3.5"></i>
-            </button>
-          </div>
-
-          <!-- Saved Vendors Counter -->
-          <div class="bg-bgCustom border border-accent rounded-2xl p-5 space-y-3 flex flex-col justify-between">
-            <div>
-              <span class="text-xs font-bold text-secondary block mb-1">تأمین‌کنندگان نشان‌شده (Favorites)</span>
-              <span id="couple-favorite-count-badge" class="text-2xl font-black text-primary">۰ مجموعه</span>
-            </div>
-            <button onclick="document.getElementById('couple-favorites-section')?.scrollIntoView({ behavior: 'smooth' })" class="text-xs font-bold text-primary hover:underline text-right block">
-              مشاهده لیست منتخبین ↓
-            </button>
-          </div>
-        </div>
-
-        <!-- MY FAVORITE VENDORS CARDS SECTION (تأمین‌کنندگان منتخب من) -->
-        <div id="couple-favorites-section" class="border-t border-accent/60 pt-5 space-y-3">
-          <div class="flex items-center justify-between">
-            <h3 class="text-base font-bold text-graphite flex items-center gap-2">
-              <i data-lucide="heart" class="w-4.5 h-4.5 text-rose-500 fill-rose-500"></i>
-              <span>تأمین‌کنندگان منتخب من (My Favorite Vendors)</span>
-            </h3>
-            <span class="text-xs text-secondary">ذخیره‌شده در مرورگر جهت دسترسی سریع</span>
-          </div>
-
-          <div id="couple-favorites-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
-            <!-- Populated dynamically via renderFavoriteVendorsList() -->
-          </div>
-        </div>
-      </section>
-
       <!-- HERO SECTION -->
       <section class="relative bg-white border border-accent rounded-3xl p-8 lg:p-12 shadow-xs overflow-hidden">
         <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
@@ -495,7 +405,7 @@
         <div class="flex items-center gap-3 flex-wrap">
           <span class="bg-primary/10 text-primary border border-primary/20 text-xs font-bold px-3.5 py-2 rounded-xl flex items-center gap-1.5">
             <i data-lucide="calendar-heart" class="w-4 h-4 text-primary"></i>
-            <span id="planner-countdown-badge">۱۸۵ روز تا مراسم عروسی شما</span>
+            <span id="planner-countdown-badge">۱۳۵ روز تا مراسم عروسی شما</span>
           </span>
 
           <button onclick="switchTab('home')" class="bg-bgCustom hover:bg-slate-100 text-graphite border border-accent px-4 py-2 rounded-xl text-xs font-bold transition-all flex items-center gap-1.5 shadow-xs">
@@ -504,6 +414,92 @@
           </button>
         </div>
       </div>
+
+      <!-- COUPLE PLANNING DASHBOARD OVERVIEW (خلاصه وضعیت برنامه‌ریزی و بوک‌مارک‌های عروسی) -->
+      <section class="bg-white border border-accent rounded-3xl p-6 sm:p-8 shadow-xs space-y-6">
+        <div class="flex flex-col sm:flex-row justify-between sm:items-center gap-4 border-b border-accent pb-4">
+          <div>
+            <div class="inline-flex items-center gap-1.5 bg-rose-50 text-rose-700 text-xs font-bold px-3 py-1 rounded-full mb-1 border border-rose-200">
+              <i data-lucide="heart" class="w-3.5 h-3.5 fill-rose-500"></i>
+              <span>پنل اختصاصی برنامه‌ریزی زوجین: علی & سارا</span>
+            </div>
+            <h2 class="text-xl sm:text-2xl font-bold text-graphite">خلاصه وضعیت برنامه‌ریزی و بوک‌مارک‌های عروسی در یزد</h2>
+          </div>
+
+          <div class="flex items-center gap-2">
+            <button onclick="switchTab('messages')" class="bg-primary hover:bg-emerald-900 text-white font-bold px-4 py-2 rounded-xl text-xs shadow-xs transition-all flex items-center gap-1.5">
+              <i data-lucide="message-square" class="w-4 h-4"></i>
+              <span>پیش‌فاکتورها و چت</span>
+            </button>
+          </div>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-4 gap-6">
+          <!-- Countdown Circle Card -->
+          <div class="bg-gradient-to-br from-emerald-50/80 via-white to-amber-50/50 border border-primary/20 rounded-2xl p-5 flex flex-col items-center justify-center text-center space-y-2 shadow-2xs">
+            <div class="relative w-20 h-20 rounded-full border-4 border-primary/20 flex items-center justify-center bg-white shadow-xs">
+              <span class="text-2xl font-black text-primary">۱۳۵</span>
+            </div>
+            <span class="text-xs font-bold text-graphite">روز مانده تا شب عروسی</span>
+            <span class="text-[11px] text-secondary font-medium">تاریخ هدف: ۱۵ مهر ۱۴۰۳</span>
+          </div>
+
+          <!-- Budget Expense Progress -->
+          <div class="bg-bgCustom border border-accent rounded-2xl p-5 space-y-3 flex flex-col justify-between">
+            <div>
+              <span class="text-xs font-bold text-secondary block mb-1">بودجه کل تخصیص‌یافته</span>
+              <span class="text-2xl font-black text-graphite">۳۵۰,۰۰۰,۰۰۰ <span class="text-xs font-normal text-secondary">تومان</span></span>
+            </div>
+            <div class="space-y-1.5">
+              <div class="flex justify-between text-xs font-bold">
+                <span class="text-emerald-700">پرداخت‌شده: ۱۸۰,۰۰۰,۰۰۰</span>
+                <span class="text-secondary">۵۱٪</span>
+              </div>
+              <div class="w-full bg-slate-200 h-2.5 rounded-full overflow-hidden">
+                <div class="bg-primary h-full rounded-full" style="width: 51%;"></div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Active Pre-Invoices Card -->
+          <div class="bg-bgCustom border border-accent rounded-2xl p-5 space-y-3 flex flex-col justify-between">
+            <div>
+              <span class="text-xs font-bold text-secondary block mb-1">پیش‌فاکتورهای دریافت شده</span>
+              <span class="text-2xl font-black text-primary">۲ پیش‌فاکتور <span class="text-xs font-bold text-amber-700 bg-amber-100 px-2 py-0.5 rounded-md">در انتظار تایید</span></span>
+            </div>
+            <button onclick="switchTab('messages')" class="text-xs font-bold text-primary hover:underline flex items-center gap-1">
+              <span>مشاهده جزئیات پیش‌فاکتور در چت</span>
+              <i data-lucide="arrow-left" class="w-3.5 h-3.5"></i>
+            </button>
+          </div>
+
+          <!-- Saved Vendors Counter -->
+          <div class="bg-bgCustom border border-accent rounded-2xl p-5 space-y-3 flex flex-col justify-between">
+            <div>
+              <span class="text-xs font-bold text-secondary block mb-1">تأمین‌کنندگان نشان‌شده (Favorites)</span>
+              <span id="couple-favorite-count-badge" class="text-2xl font-black text-primary">۰ مجموعه</span>
+            </div>
+            <button onclick="document.getElementById('couple-favorites-section')?.scrollIntoView({ behavior: 'smooth' })" class="text-xs font-bold text-primary hover:underline text-right block">
+              مشاهده لیست منتخبین ↓
+            </button>
+          </div>
+        </div>
+
+        <!-- MY FAVORITE VENDORS CARDS SECTION (تأمین‌کنندگان منتخب من) -->
+        <div id="couple-favorites-section" class="border-t border-accent/60 pt-5 space-y-3">
+          <div class="flex items-center justify-between">
+            <h3 class="text-base font-bold text-graphite flex items-center gap-2">
+              <i data-lucide="heart" class="w-4.5 h-4.5 text-rose-500 fill-rose-500"></i>
+              <span>تأمین‌کنندگان منتخب من (My Favorite Vendors)</span>
+            </h3>
+            <span class="text-xs text-secondary">ذخیره‌شده در مرورگر جهت دسترسی سریع</span>
+          </div>
+
+          <div id="couple-favorites-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+            <!-- Populated dynamically via renderFavoriteVendorsList() -->
+          </div>
+        </div>
+      </section>
 
       <!-- PLANNER SUB-TABS TOOLBAR -->
       <div class="flex bg-white border border-accent rounded-2xl p-1.5 text-xs sm:text-sm font-bold shadow-xs flex-wrap sm:flex-nowrap gap-1">
