@@ -33,17 +33,18 @@
           },
           colors: {
             primary: {
-              DEFAULT: '#2E533F',
-              hover: '#223E2F',
-              light: '#EBF2EE'
+              DEFAULT: '#D4AF37',
+              hover: '#B89628',
+              light: '#FBF6E2'
             },
+            emeraldHeader: '#1B3B2B',
             secondary: {
-              DEFAULT: '#8D99AE',
-              hover: '#738096'
+              DEFAULT: '#607268',
+              hover: '#4A5B52'
             },
-            bgCustom: '#FDFBFC',
-            accent: '#BDCFE0',
-            graphite: '#212529',
+            bgCustom: '#F5EFEB',
+            accent: '#E0D8C8',
+            graphite: '#111E16',
           }
         }
       }
@@ -53,18 +54,18 @@
   <style>
     body {
       font-family: 'Vazirmatn', sans-serif;
-      background-color: #FDFBFC;
-      color: #212529;
+      background-color: #FBF9F5;
+      color: #111E16;
     }
     .custom-scrollbar::-webkit-scrollbar {
       width: 6px;
       height: 6px;
     }
     .custom-scrollbar::-webkit-scrollbar-track {
-      background: #FDFBFC;
+      background: #F5EFEB;
     }
     .custom-scrollbar::-webkit-scrollbar-thumb {
-      background: #BDCFE0;
+      background: #E0D8C8;
       border-radius: 4px;
     }
   </style>
@@ -1603,7 +1604,7 @@
             <div class="grid grid-cols-2 sm:grid-cols-3 gap-3">
               <!-- Theme 1: Emerald & Gold -->
               <div onclick="setInvTheme('emerald-gold')" id="inv-theme-emerald-gold" class="inv-theme-card p-3.5 rounded-2xl border-2 border-primary bg-emerald-50/50 cursor-pointer transition-all space-y-2">
-                <div class="h-10 rounded-xl bg-gradient-to-r from-[#1C3A27] via-[#2E533F] to-[#1C3A27] border border-amber-300 flex items-center justify-center text-amber-200 text-xs font-bold shadow-inner">
+                <div class="h-10 rounded-xl bg-gradient-to-r from-[#1C3A27] via-[#1B3B2B] to-[#1C3A27] border border-amber-300 flex items-center justify-center text-amber-200 text-xs font-bold shadow-inner">
                   🌿 زمرد و طلا
                 </div>
                 <div class="flex justify-between items-center text-[11px] font-bold text-graphite">
@@ -1951,7 +1952,7 @@
             </div>
 
             <!-- ENVELOPE OPENING ANIMATION OVERLAY -->
-            <div id="inv-envelope-overlay" class="absolute inset-0 z-40 bg-gradient-to-b from-[#2E533F] via-[#223E2F] to-[#172b21] flex flex-col items-center justify-center p-6 text-center text-white transition-all duration-700 space-y-6">
+            <div id="inv-envelope-overlay" class="absolute inset-0 z-40 bg-gradient-to-b from-[#1B3B2B] via-[#223E2F] to-[#172b21] flex flex-col items-center justify-center p-6 text-center text-white transition-all duration-700 space-y-6">
               <div class="w-20 h-20 rounded-full bg-amber-400/20 border-2 border-amber-300 flex items-center justify-center text-amber-200 shadow-xl animate-pulse">
                 <i data-lucide="mail-open" class="w-10 h-10"></i>
               </div>
@@ -2588,7 +2589,7 @@
           </div>
 
           <!-- MESSAGES STREAM CONTAINER -->
-          <div id="chat-messages-stream-container" class="flex-1 overflow-y-auto p-5 space-y-4 custom-scrollbar bg-[#FDFBFC]">
+          <div id="chat-messages-stream-container" class="flex-1 overflow-y-auto p-5 space-y-4 custom-scrollbar bg-[#F5EFEB]">
             <!-- Messages rendered via JS -->
           </div>
 
@@ -3289,19 +3290,19 @@
         <!-- SVG QR Code Representation -->
         <svg class="w-48 h-48 mx-auto" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
           <rect width="100" height="100" fill="white"/>
-          <path d="M10 10H40V40H10V10ZM15 15V35H35V15H15Z" fill="#2E533F"/>
-          <path d="M20 20H30V30H20V20Z" fill="#2E533F"/>
-          <path d="M60 10H90V40H60V10ZM65 15V35H85V15H65Z" fill="#2E533F"/>
-          <path d="M70 20H80V30H70V20Z" fill="#2E533F"/>
-          <path d="M10 60H40V90H10V60ZM15 65V85H35V65H15Z" fill="#2E533F"/>
-          <path d="M20 70H30V80H20V70Z" fill="#2E533F"/>
-          <rect x="50" y="50" width="10" height="10" fill="#2E533F"/>
-          <rect x="70" y="50" width="10" height="10" fill="#2E533F"/>
-          <rect x="60" y="60" width="10" height="10" fill="#2E533F"/>
-          <rect x="80" y="60" width="10" height="10" fill="#2E533F"/>
-          <rect x="50" y="70" width="10" height="10" fill="#2E533F"/>
-          <rect x="70" y="70" width="10" height="10" fill="#2E533F"/>
-          <rect x="60" y="80" width="20" height="10" fill="#2E533F"/>
+          <path d="M10 10H40V40H10V10ZM15 15V35H35V15H15Z" fill="#1B3B2B"/>
+          <path d="M20 20H30V30H20V20Z" fill="#1B3B2B"/>
+          <path d="M60 10H90V40H60V10ZM65 15V35H85V15H65Z" fill="#1B3B2B"/>
+          <path d="M70 20H80V30H70V20Z" fill="#1B3B2B"/>
+          <path d="M10 60H40V90H10V60ZM15 65V85H35V65H15Z" fill="#1B3B2B"/>
+          <path d="M20 70H30V80H20V70Z" fill="#1B3B2B"/>
+          <rect x="50" y="50" width="10" height="10" fill="#1B3B2B"/>
+          <rect x="70" y="50" width="10" height="10" fill="#1B3B2B"/>
+          <rect x="60" y="60" width="10" height="10" fill="#1B3B2B"/>
+          <rect x="80" y="60" width="10" height="10" fill="#1B3B2B"/>
+          <rect x="50" y="70" width="10" height="10" fill="#1B3B2B"/>
+          <rect x="70" y="70" width="10" height="10" fill="#1B3B2B"/>
+          <rect x="60" y="80" width="20" height="10" fill="#1B3B2B"/>
         </svg>
       </div>
 
@@ -4759,7 +4760,7 @@
 
         const palettes = {
           boho: [
-            { name: "سبز زیتونی", hex: "#2E533F" },
+            { name: "سبز زیتونی", hex: "#1B3B2B" },
             { name: "تراکوتا گرم", hex: "#D4A373" },
             { name: "کرم خاکی", hex: "#E9D8A6" },
             { name: "عاجی روشن", hex: "#FAEDCD" }
@@ -4771,10 +4772,10 @@
             { name: "سفید کریستالی", hex: "#FFFFFF" }
           ],
           modern: [
-            { name: "مشکی گرافیت", hex: "#212529" },
+            { name: "مشکی گرافیت", hex: "#111E16" },
             { name: "خاکستری فولادی", hex: "#8D99AE" },
-            { name: "پلاتینیوم", hex: "#BDCFE0" },
-            { name: "سفید یخچالی", hex: "#FDFBFC" }
+            { name: "پلاتینیوم", hex: "#E0D8C8" },
+            { name: "سفید یخچالی", hex: "#F5EFEB" }
           ],
           classic: [
             { name: "سرمه‌ای سلطنتی", hex: "#1A2E40" },
@@ -9510,7 +9511,7 @@
 
       if (cardInner) {
         if (invitationState.theme === 'emerald-gold') {
-          cardInner.className = "p-6 space-y-6 flex-1 transition-all text-center bg-gradient-to-b from-[#1C3A27] via-[#2E533F] to-[#1C3A27] text-amber-100 border-2 border-amber-300/40 shadow-2xl rounded-3xl";
+          cardInner.className = "p-6 space-y-6 flex-1 transition-all text-center bg-gradient-to-b from-[#1C3A27] via-[#1B3B2B] to-[#1C3A27] text-amber-100 border-2 border-amber-300/40 shadow-2xl rounded-3xl";
           if (themeEmblem) themeEmblem.className = "w-14 h-14 rounded-full mx-auto flex items-center justify-center border-2 border-amber-300 bg-amber-400/20 text-amber-200 text-xl font-black shadow-lg backdrop-blur-sm";
           if (themeTagline) themeTagline.className = "text-xs font-bold block tracking-widest text-amber-300 uppercase";
         } else if (invitationState.theme === 'dark-minimal') {
