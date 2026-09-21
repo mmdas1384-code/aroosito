@@ -590,22 +590,22 @@
         <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 border-b border-accent pb-3">
           <div>
             <h2 class="text-lg sm:text-xl font-bold text-graphite flex items-center gap-2">
-              <i data-lucide="layers" class="w-5 h-5 text-primary"></i>
-              <span>دسته‌بندی جامع خدمات و تشریفات عروسی</span>
+              <i data-lucide="layers" class="w-5 h-5 text-[#1B3B2B]"></i>
+              <span class="text-[#1B3B2B]">دسته‌بندی جامع خدمات و تشریفات عروسی</span>
             </h2>
-            <p class="text-[11px] sm:text-xs text-secondary mt-0.5">دسترسی هوشمند به تمامی رسته‌های شغلی و خدمات تخصصی ازدواج بر اساس گروه</p>
+            <p class="text-[11px] sm:text-xs text-secondary mt-0.5">انتخاب رسته اصلی جهت باز کردن کشوی اختصاصی زیرگروه‌ها و استعلام قیمت</p>
           </div>
 
           <div class="flex items-center gap-2">
-            <button id="toggle-categories-btn" onclick="toggleCategoriesExpand()" class="text-xs font-bold text-primary bg-primary/10 hover:bg-primary/20 border border-primary/20 px-3 py-1.5 rounded-xl transition-all flex items-center gap-1.5">
-              <span id="toggle-categories-text">نمایش تمام زیرگروه‌ها</span>
-              <i id="toggle-categories-icon" data-lucide="chevron-down" class="w-4 h-4"></i>
-            </button>
+            <span class="text-xs font-extrabold text-[#1B3B2B] bg-[#F5EFEB] border border-[#1B3B2B]/20 px-3 py-1.5 rounded-xl flex items-center gap-1.5">
+              <i data-lucide="sparkles" class="w-4 h-4 text-[#D4AF37]"></i>
+              <span>۵ رسته اصلی خدمات</span>
+            </span>
           </div>
         </div>
 
-        <!-- Hierarchical Categories Container (Side-by-side Multi-column Grid) -->
-        <div id="category-hierarchical-container" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-6">
+        <!-- Static 5-Card Fixed-Height Category Grid -->
+        <div id="category-hierarchical-container" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 gap-5">
           <!-- Populated dynamically via renderCategoryCards() -->
         </div>
       </section>
@@ -6018,71 +6018,116 @@
       container.innerHTML = '';
 
       categoryGroups.forEach((group) => {
-        const isExpanded = categoriesExpanded || expandedCategoryIds.has(group.id);
+        // Calculate total vendors across subcategories
+        let totalGroupVendors = 0;
+        group.subcategories.forEach(sub => {
+          const matchCount = vendors.filter(v => v.category.includes(sub.tag) || v.category.includes(sub.title) || sub.title.includes(v.category)).length;
+          totalGroupVendors += matchCount;
+        });
+        if (totalGroupVendors === 0) totalGroupVendors = vendors.length;
 
-        const groupBlock = document.createElement('div');
-        groupBlock.onclick = () => toggleCategoryAccordion(group.id);
-        groupBlock.className = `bg-bgCustom border rounded-3xl p-5 transition-all cursor-pointer shadow-2xs flex flex-col justify-between ${
-          isExpanded ? 'border-primary ring-2 ring-primary/20 bg-white shadow-md' : 'border-accent/80 hover:border-primary/60 hover:bg-white'
-        }`;
+        const card = document.createElement('div');
+        card.onclick = () => openSubCategoryDrawer(group.id);
+        card.className = "bg-[#F5EFEB] border-2 border-[#1B3B2B]/30 hover:border-[#D4AF37] hover:shadow-xl hover:-translate-y-1 transition-all duration-200 cursor-pointer p-5 rounded-3xl flex flex-col justify-between h-56 text-right relative overflow-hidden group shadow-xs";
 
-        let subHtml = '';
-        if (isExpanded) {
-          subHtml = `<div class="flex flex-wrap gap-2 pt-4 border-t border-accent/60 mt-3 animate-fadeIn">`;
-          group.subcategories.forEach(sub => {
-            subHtml += `
-              <button type="button" onclick="event.stopPropagation(); filterVendorsByCategoryTitle('${sub.title}')" class="inline-flex items-center gap-1.5 text-xs font-semibold text-graphite px-3 py-2 rounded-xl border border-accent/80 bg-white hover:bg-primary hover:text-white hover:border-primary transition-all cursor-pointer shadow-2xs group">
-                <i data-lucide="${sub.icon || 'tag'}" class="w-3.5 h-3.5 text-primary group-hover:text-white transition-colors"></i>
-                <span>${sub.title}</span>
-              </button>
-            `;
-          });
-          subHtml += `</div>`;
-        }
-
-        groupBlock.innerHTML = `
+        card.innerHTML = `
           <div>
-            <div class="flex items-center justify-between">
-              <div class="flex items-center gap-3">
-                <div class="w-11 h-11 rounded-2xl bg-emeraldHeader text-primary border border-primary/30 flex items-center justify-center shadow-xs shrink-0">
-                  <i data-lucide="${group.icon}" class="w-5 h-5"></i>
-                </div>
-                <div>
-                  <h3 class="text-sm font-black text-graphite">${group.title}</h3>
-                  <span class="text-[11px] text-secondary font-medium block mt-0.5">${group.badge || ''}</span>
-                </div>
+            <!-- Top Header: Icon & Counter Badge -->
+            <div class="flex items-center justify-between mb-3">
+              <div class="w-12 h-12 rounded-2xl bg-[#1B3B2B] text-[#D4AF37] flex items-center justify-center shadow-md transition-transform group-hover:scale-105">
+                <i data-lucide="${group.icon || 'grid'}" class="w-6 h-6"></i>
               </div>
-
-              <div class="flex items-center gap-2">
-                <span class="text-[11px] font-bold text-primary bg-primary/10 px-2.5 py-1 rounded-full shrink-0 border border-primary/20">
-                  ${group.subcategories.length} زیرگروه
-                </span>
-                <div class="w-8 h-8 rounded-full bg-slate-100 flex items-center justify-center text-secondary shrink-0 transition-transform ${isExpanded ? 'rotate-180 bg-primary/10 text-primary' : ''}">
-                  <i data-lucide="chevron-down" class="w-4 h-4"></i>
-                </div>
-              </div>
+              <span class="bg-[#1B3B2B]/10 text-[#1B3B2B] text-[11px] font-extrabold px-2.5 py-1 rounded-full border border-[#1B3B2B]/20">
+                ${group.subcategories.length} زیرگروه
+              </span>
             </div>
 
-            ${subHtml}
+            <!-- Title & Subtitle -->
+            <h3 class="font-black text-base text-[#1B3B2B] group-hover:text-[#1B3B2B] transition-colors leading-snug">
+              ${group.title}
+            </h3>
+            <p class="text-[11px] text-secondary mt-1 line-clamp-1 font-medium">
+              ${group.badge || 'خدمات و تشریفات اختصاصی'}
+            </p>
+          </div>
+
+          <!-- Bottom CTA Action -->
+          <div class="pt-3 border-t border-[#1B3B2B]/15 flex items-center justify-between text-xs font-bold text-[#1B3B2B]">
+            <span class="flex items-center gap-1 group-hover:text-[#1B3B2B] transition-colors">
+              <span>مشاهده زیرگروه‌ها</span>
+              <span class="text-sm font-black transition-transform group-hover:-translate-x-1">←</span>
+            </span>
+            <span class="text-[10px] font-extrabold text-[#D4AF37] bg-[#1B3B2B] px-2 py-0.5 rounded-md">
+              ${totalGroupVendors}+ کسب‌وکار
+            </span>
           </div>
         `;
 
-        container.appendChild(groupBlock);
+        container.appendChild(card);
       });
 
-      const btnText = document.getElementById('toggle-categories-text');
-      const btnIcon = document.getElementById('toggle-categories-icon');
-      if (btnText && btnIcon) {
-        if (categoriesExpanded) {
-          btnText.innerText = 'بستن همه زیرگروه‌ها';
-          btnIcon.setAttribute('data-lucide', 'chevron-up');
-        } else {
-          btnText.innerText = 'باز کردن همه زیرگروه‌ها';
-          btnIcon.setAttribute('data-lucide', 'chevron-down');
-        }
+      if (typeof lucide !== 'undefined') {
+        lucide.createIcons();
       }
+    }
 
-      lucide.createIcons();
+    function openSubCategoryDrawer(groupId) {
+      const group = categoryGroups.find(g => g.id === groupId);
+      if (!group) return;
+
+      const modal = document.getElementById('sub-category-drawer-modal');
+      const iconEl = document.getElementById('drawer-header-icon');
+      const titleEl = document.getElementById('drawer-header-title');
+      const badgeEl = document.getElementById('drawer-header-badge');
+      const gridEl = document.getElementById('drawer-subcategories-grid');
+
+      if (!modal || !gridEl) return;
+
+      if (iconEl) iconEl.innerHTML = `<i data-lucide="${group.icon || 'grid'}" class="w-6 h-6"></i>`;
+      if (titleEl) titleEl.innerText = group.title;
+      if (badgeEl) badgeEl.innerText = `${group.subcategories.length} زیرگروه تخصصی`;
+
+      gridEl.innerHTML = '';
+      group.subcategories.forEach(sub => {
+        const vendorCount = vendors.filter(v => v.category.includes(sub.tag) || v.category.includes(sub.title) || sub.title.includes(v.category)).length || 3;
+
+        const subCard = document.createElement('div');
+        subCard.onclick = () => {
+          filterVendorsByCategoryTitle(sub.title);
+          closeSubCategoryDrawer();
+        };
+        subCard.className = "bg-[#F5EFEB] border border-[#1B3B2B]/20 hover:border-[#D4AF37] hover:bg-white p-4 rounded-2xl cursor-pointer transition-all flex items-center justify-between gap-3 shadow-2xs group hover:shadow-md";
+
+        subCard.innerHTML = `
+          <div class="flex items-center gap-3">
+            <div class="w-10 h-10 rounded-xl bg-[#1B3B2B] text-[#D4AF37] flex items-center justify-center shrink-0 shadow-xs group-hover:scale-105 transition-transform">
+              <i data-lucide="${sub.icon || 'tag'}" class="w-5 h-5"></i>
+            </div>
+            <div>
+              <div class="font-bold text-xs sm:text-sm text-[#1B3B2B] group-hover:text-primary transition-colors">${sub.title}</div>
+              <div class="text-[11px] text-secondary mt-0.5 font-medium">${vendorCount} تأمین‌کننده فعال در یزد</div>
+            </div>
+          </div>
+          <div class="w-7 h-7 rounded-lg bg-[#1B3B2B]/10 text-[#1B3B2B] flex items-center justify-center group-hover:bg-[#1B3B2B] group-hover:text-[#D4AF37] transition-colors shrink-0">
+            <i data-lucide="chevron-left" class="w-4 h-4"></i>
+          </div>
+        `;
+
+        gridEl.appendChild(subCard);
+      });
+
+      modal.classList.remove('hidden');
+      document.body.style.overflow = 'hidden';
+
+      if (typeof lucide !== 'undefined') {
+        lucide.createIcons();
+      }
+    }
+
+    function closeSubCategoryDrawer() {
+      const modal = document.getElementById('sub-category-drawer-modal');
+      if (modal) modal.classList.add('hidden');
+      document.body.style.overflow = '';
     }
 
     function toggleCategoriesExpand() {
@@ -11778,5 +11823,48 @@
   }
 
 </script>
+
+  <!-- FLOATING SUB-CATEGORY DRAWER / MODAL -->
+  <div id="sub-category-drawer-modal" class="hidden fixed inset-0 bg-black/60 backdrop-blur-xs z-50 flex items-center justify-center p-4 transition-all animate-fadeIn">
+    <div class="bg-white rounded-3xl shadow-2xl max-w-2xl w-full overflow-hidden border border-[#D4AF37]/40 flex flex-col max-h-[85vh] animate-scaleUp">
+
+      <!-- Drawer Header (Emerald Forest #1B3B2B & Rich Gold #D4AF37) -->
+      <div class="bg-[#1B3B2B] text-white p-5 sm:p-6 flex items-center justify-between border-b border-[#D4AF37]/30 shrink-0">
+        <div class="flex items-center gap-3">
+          <div id="drawer-header-icon" class="w-12 h-12 rounded-2xl bg-[#D4AF37] text-[#1B3B2B] flex items-center justify-center shadow-md">
+            <i data-lucide="layers" class="w-6 h-6"></i>
+          </div>
+          <div>
+            <div class="flex items-center gap-2">
+              <h3 id="drawer-header-title" class="text-lg sm:text-xl font-black text-[#D4AF37]">عنوان رسته اصلی</h3>
+              <span id="drawer-header-badge" class="bg-white/10 text-amber-200 text-[10px] font-extrabold px-2.5 py-0.5 rounded-full border border-[#D4AF37]/30">زیرگروه‌ها</span>
+            </div>
+            <p id="drawer-header-desc" class="text-xs text-slate-200 mt-0.5 font-medium">جهت مشاهده و فیلتر سریع تأمین‌کنندگان، زیرگروه موردنظر را انتخاب کنید.</p>
+          </div>
+        </div>
+
+        <button onclick="closeSubCategoryDrawer()" class="w-10 h-10 rounded-xl bg-white/10 hover:bg-white/20 text-white flex items-center justify-center transition-colors cursor-pointer shrink-0">
+          <i data-lucide="x" class="w-5 h-5"></i>
+        </button>
+      </div>
+
+      <!-- Drawer Body: Grid of Sub-Category Cards -->
+      <div id="drawer-subcategories-grid" class="p-5 sm:p-6 overflow-y-auto grid grid-cols-1 sm:grid-cols-2 gap-3.5 max-h-[60vh] bg-slate-50/50">
+        <!-- Dynamically populated via openSubCategoryDrawer() -->
+      </div>
+
+      <!-- Drawer Footer -->
+      <div class="p-4 bg-white border-t border-accent/60 flex items-center justify-between text-xs text-secondary shrink-0">
+        <div class="flex items-center gap-1.5 font-medium">
+          <i data-lucide="shield-check" class="w-4 h-4 text-[#1B3B2B]"></i>
+          <span>تضمین قیمت و تایید صلاحیت کسب‌وکارها در استان یزد</span>
+        </div>
+        <button onclick="closeSubCategoryDrawer()" class="px-4 py-2 bg-slate-100 hover:bg-slate-200 text-graphite rounded-xl font-bold transition-colors">
+          بستن
+        </button>
+      </div>
+
+    </div>
+  </div>
 </body>
 </html>
