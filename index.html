@@ -77,6 +77,41 @@
     .animate-marquee-vertical {
       animation: marquee-vertical 12s linear infinite;
     }
+
+    /* 1. Eliminate any white strip or empty element directly below header */
+    header + *, nav + *, #search-suggestions-dropdown:empty, .mega-menu-container {
+        background-color: transparent !important;
+    }
+
+    header + div:empty,
+    nav + div:empty,
+    #search-suggestions-dropdown:empty,
+    .header-dropdown:not(.active),
+    .mega-menu-container:not(.active) {
+        display: none !important;
+        height: 0 !important;
+        min-height: 0 !important;
+        padding: 0 !important;
+        margin: 0 !important;
+        border: none !important;
+        opacity: 0 !important;
+        visibility: hidden !important;
+    }
+
+    /* 2. Flush hero directly against sticky header */
+    #hero, section:first-of-type, .hero-section {
+        margin-top: 0 !important;
+        padding-top: 0 !important;
+    }
+
+    /* 3. Strict display control for Directory Separation */
+    #home-view.hidden, #tab-home.hidden {
+        display: none !important;
+    }
+
+    #directory-view.hidden, #vendors-directory-view.hidden {
+        display: none !important;
+    }
     </style>
 </head>
 <body class="min-h-full flex flex-col antialiased bg-[#FBF9F5] text-graphite selection:bg-primary selection:text-white">
