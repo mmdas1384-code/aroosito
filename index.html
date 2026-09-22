@@ -218,14 +218,14 @@
               <i data-lucide="chevron-down" class="w-3.5 h-3.5 text-amber-200/70 group-hover:rotate-180 transition-transform"></i>
             </button>
 
-            <!-- Mega Column Dropdown Menu -->
-            <div id="mega-category-menu" class="absolute right-0 mt-2 w-[720px] bg-white text-graphite border border-accent rounded-3xl shadow-2xl opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 z-50 p-6">
-              <div class="flex justify-between items-center border-b border-accent pb-3 mb-4">
-                <div class="flex items-center gap-2 text-primary font-bold text-sm">
-                  <i data-lucide="layers" class="w-4 h-4"></i>
+            <!-- Consolidated Mega Column Dropdown Menu -->
+            <div id="mega-category-menu" class="absolute right-0 mt-2 w-[720px] bg-[#FBF9F5] text-graphite border-2 border-[#D4AF37]/80 rounded-3xl shadow-2xl opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 pointer-events-none group-hover:pointer-events-auto z-50 p-6">
+              <div class="flex justify-between items-center border-b border-[#D4AF37]/30 pb-3 mb-4">
+                <div class="flex items-center gap-2 text-[#1B3B2B] font-black text-sm">
+                  <i data-lucide="layers" class="w-4 h-4 text-[#D4AF37]"></i>
                   <span>دسته‌بندی کامل خدمات و تشریفات مجالس</span>
                 </div>
-                <span class="text-[11px] text-secondary font-medium">انتخاب سریع زیرگروه جهت فیلتر دایرکتوری</span>
+                <span class="text-[11px] text-secondary font-bold bg-[#1B3B2B]/5 px-2.5 py-1 rounded-lg">انتخاب سریع جهت فیلتر دایرکتوری</span>
               </div>
 
               <div class="grid grid-cols-3 gap-6 text-right">
@@ -335,21 +335,21 @@
               <span>ابزارهای برنامه‌ریزی</span>
               <i data-lucide="chevron-down" class="w-3.5 h-3.5 text-amber-200/70 group-hover:rotate-180 transition-transform"></i>
             </button>
-            <div class="absolute right-0 mt-2 w-60 bg-white text-graphite border border-accent rounded-2xl shadow-xl opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 z-50 p-2 space-y-1">
-              <button onclick="switchTab('tools')" class="w-full text-right px-3 py-2 text-xs font-semibold rounded-xl hover:bg-slate-50 hover:text-primary flex items-center gap-2.5 transition-colors">
-                <i data-lucide="calculator" class="w-4 h-4 text-primary shrink-0"></i>
+            <div class="absolute right-0 mt-2 w-64 bg-[#FBF9F5] text-graphite border-2 border-[#D4AF37]/80 rounded-2xl shadow-2xl opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 pointer-events-none group-hover:pointer-events-auto z-50 p-2 space-y-1">
+              <button onclick="switchTab('tools')" class="w-full text-right px-3 py-2 text-xs font-bold rounded-xl hover:bg-[#1B3B2B]/10 hover:text-[#1B3B2B] flex items-center gap-2.5 transition-colors cursor-pointer">
+                <i data-lucide="calculator" class="w-4 h-4 text-[#D4AF37] shrink-0"></i>
                 <span>بودجه‌ریز AI</span>
               </button>
-              <button onclick="switchTab('planner')" class="w-full text-right px-3 py-2 text-xs font-semibold rounded-xl hover:bg-slate-50 hover:text-primary flex items-center gap-2.5 transition-colors">
-                <i data-lucide="check-square" class="w-4 h-4 text-primary shrink-0"></i>
+              <button onclick="switchTab('planner')" class="w-full text-right px-3 py-2 text-xs font-bold rounded-xl hover:bg-[#1B3B2B]/10 hover:text-[#1B3B2B] flex items-center gap-2.5 transition-colors cursor-pointer">
+                <i data-lucide="check-square" class="w-4 h-4 text-[#D4AF37] shrink-0"></i>
                 <span>چک‌لیست ۱۲ ماهه</span>
               </button>
-              <button onclick="switchTab('guests')" class="w-full text-right px-3 py-2 text-xs font-semibold rounded-xl hover:bg-slate-50 hover:text-primary flex items-center gap-2.5 transition-colors">
-                <i data-lucide="users" class="w-4 h-4 text-primary shrink-0"></i>
+              <button onclick="switchTab('guests')" class="w-full text-right px-3 py-2 text-xs font-bold rounded-xl hover:bg-[#1B3B2B]/10 hover:text-[#1B3B2B] flex items-center gap-2.5 transition-colors cursor-pointer">
+                <i data-lucide="users" class="w-4 h-4 text-[#D4AF37] shrink-0"></i>
                 <span>مدیریت مهمانان & RSVP</span>
               </button>
-              <button onclick="switchTab('invitation')" class="w-full text-right px-3 py-2 text-xs font-semibold rounded-xl hover:bg-slate-50 hover:text-primary flex items-center gap-2.5 transition-colors">
-                <i data-lucide="mail" class="w-4 h-4 text-primary shrink-0"></i>
+              <button onclick="switchTab('invitation')" class="w-full text-right px-3 py-2 text-xs font-bold rounded-xl hover:bg-[#1B3B2B]/10 hover:text-[#1B3B2B] flex items-center gap-2.5 transition-colors cursor-pointer">
+                <i data-lucide="mail" class="w-4 h-4 text-[#D4AF37] shrink-0"></i>
                 <span>کارت دعوت دیجیتال</span>
               </button>
             </div>
@@ -373,17 +373,17 @@
               <span>خدمات & ایده‌ها</span>
               <i data-lucide="chevron-down" class="w-3.5 h-3.5 text-amber-200/70 group-hover:rotate-180 transition-transform"></i>
             </button>
-            <div class="absolute right-0 mt-2 w-60 bg-white text-graphite border border-accent rounded-2xl shadow-xl opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 z-50 p-2 space-y-1">
-              <button onclick="switchTab('inspiration')" class="w-full text-right px-3 py-2 text-xs font-semibold rounded-xl hover:bg-slate-50 hover:text-primary flex items-center gap-2.5 transition-colors">
-                <i data-lucide="sparkles" class="w-4 h-4 text-primary shrink-0"></i>
+            <div class="absolute right-0 mt-2 w-64 bg-[#FBF9F5] text-graphite border-2 border-[#D4AF37]/80 rounded-2xl shadow-2xl opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 pointer-events-none group-hover:pointer-events-auto z-50 p-2 space-y-1">
+              <button onclick="switchTab('inspiration')" class="w-full text-right px-3 py-2 text-xs font-bold rounded-xl hover:bg-[#1B3B2B]/10 hover:text-[#1B3B2B] flex items-center gap-2.5 transition-colors cursor-pointer">
+                <i data-lucide="sparkles" class="w-4 h-4 text-[#D4AF37] shrink-0"></i>
                 <span>ایده‌ها & مجله</span>
               </button>
-              <button onclick="switchTab('quizzes')" class="w-full text-right px-3 py-2 text-xs font-semibold rounded-xl hover:bg-slate-50 hover:text-primary flex items-center gap-2.5 transition-colors">
-                <i data-lucide="help-circle" class="w-4 h-4 text-primary shrink-0"></i>
+              <button onclick="switchTab('quizzes')" class="w-full text-right px-3 py-2 text-xs font-bold rounded-xl hover:bg-[#1B3B2B]/10 hover:text-[#1B3B2B] flex items-center gap-2.5 transition-colors cursor-pointer">
+                <i data-lucide="help-circle" class="w-4 h-4 text-[#D4AF37] shrink-0"></i>
                 <span>تست‌های استایل & روانشناسی</span>
               </button>
-              <button onclick="openInquiryModal('کلی', 'استعلام قیمت آنلاین')" class="w-full text-right px-3 py-2 text-xs font-semibold rounded-xl hover:bg-slate-50 hover:text-primary flex items-center gap-2.5 transition-colors">
-                <i data-lucide="file-text" class="w-4 h-4 text-primary shrink-0"></i>
+              <button onclick="openInquiryModal('کلی', 'استعلام قیمت آنلاین')" class="w-full text-right px-3 py-2 text-xs font-bold rounded-xl hover:bg-[#1B3B2B]/10 hover:text-[#1B3B2B] flex items-center gap-2.5 transition-colors cursor-pointer">
+                <i data-lucide="file-text" class="w-4 h-4 text-[#D4AF37] shrink-0"></i>
                 <span>استعلام قیمت آنلاین</span>
               </button>
             </div>
