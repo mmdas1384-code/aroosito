@@ -612,12 +612,24 @@
 
       <!-- DEDICATED VENDOR DIRECTORY SECTION -->
       <section id="vendor-directory-section" class="space-y-6 pt-4 scroll-mt-24">
+        <!-- Section Navigation Breadcrumb & Back to Home Button -->
+        <div class="flex items-center justify-between gap-3 bg-[#1B3B2B] text-white p-3.5 px-5 rounded-2xl border border-[#D4AF37]/50 shadow-md">
+          <div class="flex items-center gap-2 text-xs sm:text-sm font-bold">
+            <i data-lucide="building" class="w-4 h-4 text-[#D4AF37]"></i>
+            <span>خانه / دایرکتوری جامع تامین‌کنندگان عروسی استان یزد</span>
+          </div>
+          <button type="button" onclick="switchTab('home'); window.scrollTo({top: 0, behavior: 'smooth'});" class="bg-[#D4AF37] hover:bg-amber-400 text-[#1B3B2B] text-xs font-extrabold px-3.5 py-1.5 rounded-xl transition-all shadow-xs flex items-center gap-1.5 cursor-pointer">
+            <i data-lucide="arrow-right" class="w-3.5 h-3.5"></i>
+            <span>بازگشت به صفحه اصلی</span>
+          </button>
+        </div>
+
         <!-- Section Title Header & Verified Checkbox -->
         <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-accent pb-4">
           <div>
             <h2 class="text-2xl font-bold text-graphite flex items-center gap-2">
-              <i data-lucide="building" class="w-6 h-6 text-primary"></i>
-              <span>دایرکتوری جامع تامین‌کنندگان عروسی یزد</span>
+              <i data-lucide="building-2" class="w-6 h-6 text-primary"></i>
+              <span>دایرکتوری و رزرو آنلاین کسب‌وکارهای معتبر یزد</span>
             </h2>
             <p class="text-xs text-secondary mt-1">جستجو، فیلتر چندگانه دسته‌بندی، مشاهده نمونه‌کارها و استعلام قیمت آنلاین</p>
           </div>
