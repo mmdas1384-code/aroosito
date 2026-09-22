@@ -79,7 +79,7 @@
     }
     </style>
 </head>
-<body class="min-h-full flex flex-col antialiased selection:bg-primary selection:text-white">
+<body class="min-h-full flex flex-col antialiased bg-[#FBF9F5] text-graphite selection:bg-primary selection:text-white">
 
   <!-- TOP DEMO VIEW SWITCHER BAR -->
   <div class="bg-graphite text-white sticky top-0 z-50 border-b border-white/10 px-4 py-2.5 shadow-md">
@@ -154,7 +154,7 @@
             <input id="header-search-input" type="text" oninput="handleHeaderSearchInput()" onfocus="handleHeaderSearchFocus()" placeholder="جستجوی سریع خدمات، تالار، آتلیه، مزون یا عکاسی..." class="w-full bg-transparent text-white placeholder-slate-300 border-none pr-10 pl-3 py-2 text-sm sm:text-base font-medium focus:outline-none">
 
             <!-- SMART SEARCH LIVE SUGGESTIONS DROPDOWN -->
-            <div id="search-suggestions-dropdown" class="hidden absolute top-full right-0 left-0 mt-3 bg-white text-graphite border border-[#D4AF37]/50 rounded-2xl shadow-2xl z-50 overflow-hidden max-h-80 overflow-y-auto divide-y divide-accent/60">
+            <div id="search-suggestions-dropdown" class="hidden absolute top-full right-0 left-0 mt-2 bg-[#FBF9F5] text-graphite border-2 border-[#D4AF37]/80 rounded-2xl shadow-2xl z-50 overflow-hidden max-h-80 overflow-y-auto divide-y divide-accent/60">
               <!-- Dynamically populated via JS -->
             </div>
           </div>
@@ -218,14 +218,14 @@
               <i data-lucide="chevron-down" class="w-3.5 h-3.5 text-amber-200/70 group-hover:rotate-180 transition-transform"></i>
             </button>
 
-            <!-- Mega Column Dropdown Menu -->
-            <div id="mega-category-menu" class="absolute right-0 mt-2 w-[720px] bg-white text-graphite border border-accent rounded-3xl shadow-2xl opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 z-50 p-6">
-              <div class="flex justify-between items-center border-b border-accent pb-3 mb-4">
-                <div class="flex items-center gap-2 text-primary font-bold text-sm">
-                  <i data-lucide="layers" class="w-4 h-4"></i>
+            <!-- Consolidated Mega Column Dropdown Menu -->
+            <div id="mega-category-menu" class="absolute right-0 mt-2 w-[720px] bg-[#FBF9F5] text-graphite border-2 border-[#D4AF37]/80 rounded-3xl shadow-2xl opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 pointer-events-none group-hover:pointer-events-auto z-50 p-6">
+              <div class="flex justify-between items-center border-b border-[#D4AF37]/30 pb-3 mb-4">
+                <div class="flex items-center gap-2 text-[#1B3B2B] font-black text-sm">
+                  <i data-lucide="layers" class="w-4 h-4 text-[#D4AF37]"></i>
                   <span>دسته‌بندی کامل خدمات و تشریفات مجالس</span>
                 </div>
-                <span class="text-[11px] text-secondary font-medium">انتخاب سریع زیرگروه جهت فیلتر دایرکتوری</span>
+                <span class="text-[11px] text-secondary font-bold bg-[#1B3B2B]/5 px-2.5 py-1 rounded-lg">انتخاب سریع جهت فیلتر دایرکتوری</span>
               </div>
 
               <div class="grid grid-cols-3 gap-6 text-right">
@@ -335,21 +335,21 @@
               <span>ابزارهای برنامه‌ریزی</span>
               <i data-lucide="chevron-down" class="w-3.5 h-3.5 text-amber-200/70 group-hover:rotate-180 transition-transform"></i>
             </button>
-            <div class="absolute right-0 mt-2 w-60 bg-white text-graphite border border-accent rounded-2xl shadow-xl opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 z-50 p-2 space-y-1">
-              <button onclick="switchTab('tools')" class="w-full text-right px-3 py-2 text-xs font-semibold rounded-xl hover:bg-slate-50 hover:text-primary flex items-center gap-2.5 transition-colors">
-                <i data-lucide="calculator" class="w-4 h-4 text-primary shrink-0"></i>
+            <div class="absolute right-0 mt-2 w-64 bg-[#FBF9F5] text-graphite border-2 border-[#D4AF37]/80 rounded-2xl shadow-2xl opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 pointer-events-none group-hover:pointer-events-auto z-50 p-2 space-y-1">
+              <button onclick="switchTab('tools')" class="w-full text-right px-3 py-2 text-xs font-bold rounded-xl hover:bg-[#1B3B2B]/10 hover:text-[#1B3B2B] flex items-center gap-2.5 transition-colors cursor-pointer">
+                <i data-lucide="calculator" class="w-4 h-4 text-[#D4AF37] shrink-0"></i>
                 <span>بودجه‌ریز AI</span>
               </button>
-              <button onclick="switchTab('planner')" class="w-full text-right px-3 py-2 text-xs font-semibold rounded-xl hover:bg-slate-50 hover:text-primary flex items-center gap-2.5 transition-colors">
-                <i data-lucide="check-square" class="w-4 h-4 text-primary shrink-0"></i>
+              <button onclick="switchTab('planner')" class="w-full text-right px-3 py-2 text-xs font-bold rounded-xl hover:bg-[#1B3B2B]/10 hover:text-[#1B3B2B] flex items-center gap-2.5 transition-colors cursor-pointer">
+                <i data-lucide="check-square" class="w-4 h-4 text-[#D4AF37] shrink-0"></i>
                 <span>چک‌لیست ۱۲ ماهه</span>
               </button>
-              <button onclick="switchTab('guests')" class="w-full text-right px-3 py-2 text-xs font-semibold rounded-xl hover:bg-slate-50 hover:text-primary flex items-center gap-2.5 transition-colors">
-                <i data-lucide="users" class="w-4 h-4 text-primary shrink-0"></i>
+              <button onclick="switchTab('guests')" class="w-full text-right px-3 py-2 text-xs font-bold rounded-xl hover:bg-[#1B3B2B]/10 hover:text-[#1B3B2B] flex items-center gap-2.5 transition-colors cursor-pointer">
+                <i data-lucide="users" class="w-4 h-4 text-[#D4AF37] shrink-0"></i>
                 <span>مدیریت مهمانان & RSVP</span>
               </button>
-              <button onclick="switchTab('invitation')" class="w-full text-right px-3 py-2 text-xs font-semibold rounded-xl hover:bg-slate-50 hover:text-primary flex items-center gap-2.5 transition-colors">
-                <i data-lucide="mail" class="w-4 h-4 text-primary shrink-0"></i>
+              <button onclick="switchTab('invitation')" class="w-full text-right px-3 py-2 text-xs font-bold rounded-xl hover:bg-[#1B3B2B]/10 hover:text-[#1B3B2B] flex items-center gap-2.5 transition-colors cursor-pointer">
+                <i data-lucide="mail" class="w-4 h-4 text-[#D4AF37] shrink-0"></i>
                 <span>کارت دعوت دیجیتال</span>
               </button>
             </div>
@@ -373,17 +373,17 @@
               <span>خدمات & ایده‌ها</span>
               <i data-lucide="chevron-down" class="w-3.5 h-3.5 text-amber-200/70 group-hover:rotate-180 transition-transform"></i>
             </button>
-            <div class="absolute right-0 mt-2 w-60 bg-white text-graphite border border-accent rounded-2xl shadow-xl opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 z-50 p-2 space-y-1">
-              <button onclick="switchTab('inspiration')" class="w-full text-right px-3 py-2 text-xs font-semibold rounded-xl hover:bg-slate-50 hover:text-primary flex items-center gap-2.5 transition-colors">
-                <i data-lucide="sparkles" class="w-4 h-4 text-primary shrink-0"></i>
+            <div class="absolute right-0 mt-2 w-64 bg-[#FBF9F5] text-graphite border-2 border-[#D4AF37]/80 rounded-2xl shadow-2xl opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 pointer-events-none group-hover:pointer-events-auto z-50 p-2 space-y-1">
+              <button onclick="switchTab('inspiration')" class="w-full text-right px-3 py-2 text-xs font-bold rounded-xl hover:bg-[#1B3B2B]/10 hover:text-[#1B3B2B] flex items-center gap-2.5 transition-colors cursor-pointer">
+                <i data-lucide="sparkles" class="w-4 h-4 text-[#D4AF37] shrink-0"></i>
                 <span>ایده‌ها & مجله</span>
               </button>
-              <button onclick="switchTab('quizzes')" class="w-full text-right px-3 py-2 text-xs font-semibold rounded-xl hover:bg-slate-50 hover:text-primary flex items-center gap-2.5 transition-colors">
-                <i data-lucide="help-circle" class="w-4 h-4 text-primary shrink-0"></i>
+              <button onclick="switchTab('quizzes')" class="w-full text-right px-3 py-2 text-xs font-bold rounded-xl hover:bg-[#1B3B2B]/10 hover:text-[#1B3B2B] flex items-center gap-2.5 transition-colors cursor-pointer">
+                <i data-lucide="help-circle" class="w-4 h-4 text-[#D4AF37] shrink-0"></i>
                 <span>تست‌های استایل & روانشناسی</span>
               </button>
-              <button onclick="openInquiryModal('کلی', 'استعلام قیمت آنلاین')" class="w-full text-right px-3 py-2 text-xs font-semibold rounded-xl hover:bg-slate-50 hover:text-primary flex items-center gap-2.5 transition-colors">
-                <i data-lucide="file-text" class="w-4 h-4 text-primary shrink-0"></i>
+              <button onclick="openInquiryModal('کلی', 'استعلام قیمت آنلاین')" class="w-full text-right px-3 py-2 text-xs font-bold rounded-xl hover:bg-[#1B3B2B]/10 hover:text-[#1B3B2B] flex items-center gap-2.5 transition-colors cursor-pointer">
+                <i data-lucide="file-text" class="w-4 h-4 text-[#D4AF37] shrink-0"></i>
                 <span>استعلام قیمت آنلاین</span>
               </button>
             </div>
@@ -407,7 +407,7 @@
   </header>
 
   <!-- MAIN CONTENT CONTAINER -->
-  <main class="flex-1 max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-8 space-y-12">
+  <main class="flex-1 max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 pt-5 pb-12 space-y-10">
 
     <!-- ========================================== -->
     <!-- VIEW 1: MAIN LANDING PAGE VIEW            -->
@@ -583,7 +583,7 @@
           </div>
 
         </div>
-      </section></section>
+      </section>
 
       <!-- CATEGORY SHOWCASE GRID SECTION -->
       <section class="bg-white border border-accent rounded-3xl p-4 sm:p-5 py-4 my-2 shadow-xs space-y-5">
@@ -610,40 +610,85 @@
         </div>
       </section>
 
-      <!-- VENDOR DIRECTORY GRID SECTION -->
-      <section class="space-y-6">
+      <!-- DEDICATED VENDOR DIRECTORY SECTION -->
+      <section id="vendor-directory-section" class="space-y-6 pt-4 scroll-mt-24">
+        <!-- Section Navigation Breadcrumb & Back to Home Button -->
+        <div class="flex items-center justify-between gap-3 bg-[#1B3B2B] text-white p-3.5 px-5 rounded-2xl border border-[#D4AF37]/50 shadow-md">
+          <div class="flex items-center gap-2 text-xs sm:text-sm font-bold">
+            <i data-lucide="building" class="w-4 h-4 text-[#D4AF37]"></i>
+            <span>خانه / دایرکتوری جامع تامین‌کنندگان عروسی استان یزد</span>
+          </div>
+          <button type="button" onclick="switchTab('home'); window.scrollTo({top: 0, behavior: 'smooth'});" class="bg-[#D4AF37] hover:bg-amber-400 text-[#1B3B2B] text-xs font-extrabold px-3.5 py-1.5 rounded-xl transition-all shadow-xs flex items-center gap-1.5 cursor-pointer">
+            <i data-lucide="arrow-right" class="w-3.5 h-3.5"></i>
+            <span>بازگشت به صفحه اصلی</span>
+          </button>
+        </div>
+
+        <!-- Section Title Header & Verified Checkbox -->
         <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-accent pb-4">
           <div>
             <h2 class="text-2xl font-bold text-graphite flex items-center gap-2">
-              <i data-lucide="building" class="w-6 h-6 text-primary"></i>
-              <span>دسته بندی و تامین‌کنندگان برتر</span>
+              <i data-lucide="building-2" class="w-6 h-6 text-primary"></i>
+              <span>دایرکتوری و رزرو آنلاین کسب‌وکارهای معتبر یزد</span>
             </h2>
-            <p class="text-xs text-secondary mt-1">امکان مشاهده پروفایل عمومی، نمونه‌کارها و استعلام قیمت مستقیم</p>
+            <p class="text-xs text-secondary mt-1">جستجو، فیلتر چندگانه دسته‌بندی، مشاهده نمونه‌کارها و استعلام قیمت آنلاین</p>
           </div>
 
           <div class="flex items-center gap-2 flex-wrap">
-            <label class="flex items-center gap-2 cursor-pointer text-xs font-bold text-graphite bg-white px-3 py-2 rounded-xl border border-accent shadow-xs">
+            <label class="flex items-center gap-2 cursor-pointer text-xs font-bold text-graphite bg-white px-3 py-2 rounded-xl border border-accent shadow-xs hover:border-primary transition-colors">
               <input type="checkbox" id="verified-only" checked onchange="filterVendors()" class="rounded text-primary focus:ring-primary w-4 h-4">
               <span>فقط دارای تاییدیه رسمی</span>
             </label>
           </div>
         </div>
 
-        <!-- Dedicated Sorting Bar (مرتب‌سازی نتایج) -->
-        <div id="vendor-sorting-bar" class="bg-white border border-accent rounded-2xl p-3 shadow-2xs flex flex-col sm:flex-row sm:items-center justify-between gap-3 text-xs font-bold text-graphite">
-          <div class="flex items-center gap-2">
-            <i data-lucide="arrow-up-down" class="w-4 h-4 text-primary"></i>
-            <span>مرتب‌سازی نتایج نتایج تامین‌کنندگان:</span>
+        <!-- Multi-Category Selection Bar & All Categories Toggle -->
+        <div class="bg-white border border-accent rounded-2xl p-4 shadow-2xs space-y-3">
+          <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2 border-b border-accent/60 pb-2.5">
+            <div class="flex items-center gap-2 text-xs font-bold text-[#1B3B2B]">
+              <i data-lucide="filter" class="w-4 h-4 text-[#D4AF37]"></i>
+              <span>فیلتر دسته‌بندی‌ها (انتخاب چندگانه):</span>
+            </div>
+            <!-- All Categories Toggle Button -->
+            <button type="button" id="btn-all-categories" onclick="resetCategoryFilters()" class="text-xs font-extrabold px-3 py-1.5 rounded-xl border transition-all flex items-center gap-1.5 shadow-2xs cursor-pointer bg-[#1B3B2B] text-white border-[#1B3B2B]">
+              <i data-lucide="layers" class="w-3.5 h-3.5 text-[#D4AF37]"></i>
+              <span>همه دسته‌بندی‌ها (نمایش همه تامین‌کنندگان)</span>
+            </button>
           </div>
 
-          <div class="flex items-center gap-2">
-            <label for="vendor-sort-select" class="text-secondary shrink-0">ترتیب نمایش:</label>
-            <select id="vendor-sort-select" onchange="filterVendors()" class="bg-bgCustom border border-accent rounded-xl px-3 py-1.5 text-xs font-bold text-graphite focus:outline-none focus:border-primary cursor-pointer">
-              <option value="popular" selected>محبوب‌ترین (امتیاز بالا) ⭐</option>
-              <option value="newest">جدیدترین 🆕</option>
-              <option value="price-asc">ارزان‌ترین (کمترین قیمت) 📈</option>
-              <option value="price-desc">گران‌ترین (بیشترین قیمت) 📉</option>
-            </select>
+          <!-- Category Filter Pills Grid -->
+          <div id="category-filter-pills" class="flex flex-wrap gap-2 pt-1">
+            <!-- Rendered dynamically via renderCategoryFilterPills() -->
+          </div>
+        </div>
+
+        <!-- Filter Status Header & Sorting Bar -->
+        <div id="vendor-filter-status-bar" class="bg-gradient-to-r from-[#1B3B2B]/5 via-white to-amber-50/40 border border-accent rounded-2xl p-3.5 shadow-2xs flex flex-col md:flex-row md:items-center justify-between gap-3 text-xs font-bold text-graphite">
+          <div class="flex items-center gap-2 flex-wrap">
+            <span class="text-secondary font-medium flex items-center gap-1">
+              <i data-lucide="sliders-horizontal" class="w-4 h-4 text-primary"></i>
+              <span>دسته‌بندی‌های فعال:</span>
+            </span>
+            <div id="active-categories-badges" class="flex items-center gap-1.5 flex-wrap">
+              <span class="bg-[#1B3B2B] text-white text-[11px] font-bold px-2.5 py-1 rounded-lg">همه دسته‌بندی‌ها</span>
+            </div>
+          </div>
+
+          <div class="flex items-center gap-3 shrink-0">
+            <span id="vendor-count-badge" class="bg-primary/10 text-primary border border-primary/30 text-xs font-extrabold px-3 py-1 rounded-xl flex items-center gap-1">
+              <i data-lucide="check-circle-2" class="w-3.5 h-3.5"></i>
+              <span>نمایش ۸ تامین‌کننده معتبر</span>
+            </span>
+
+            <div class="flex items-center gap-1.5 border-r border-accent pr-3">
+              <label for="vendor-sort-select" class="text-secondary shrink-0 font-medium">ترتیب:</label>
+              <select id="vendor-sort-select" onchange="filterVendors()" class="bg-white border border-accent rounded-xl px-2.5 py-1 text-xs font-bold text-graphite focus:outline-none focus:border-primary cursor-pointer shadow-2xs">
+                <option value="popular" selected>محبوب‌ترین (امتیاز بالا) ⭐</option>
+                <option value="newest">جدیدترین 🆕</option>
+                <option value="price-asc">ارزان‌ترین (کمترین قیمت) 📈</option>
+                <option value="price-desc">گران‌ترین (بیشترین قیمت) 📉</option>
+              </select>
+            </div>
           </div>
         </div>
 
@@ -4332,6 +4377,7 @@
 
     let selectedProvince = 'یزد';
     let selectedYazdDistrict = 'all';
+    let activeCategoryFilters = new Set();
 
     let vendors = [
       {
@@ -6140,13 +6186,78 @@
       renderCategoryCards();
     }
 
-    function filterVendorsByCategoryTitle(title) {
+    function renderCategoryFilterPills() {
+      const pillsContainer = document.getElementById('category-filter-pills');
+      if (!pillsContainer) return;
+
+      pillsContainer.innerHTML = '';
+
+      // Extract all unique categories from vendors array
+      const allVendorCategories = Array.from(new Set(vendors.map(v => v.category))).filter(Boolean);
+
+      allVendorCategories.forEach(catTitle => {
+        const isSelected = activeCategoryFilters.has(catTitle);
+        const matchCount = vendors.filter(v => v.category === catTitle).length;
+
+        const btn = document.createElement('button');
+        btn.type = 'button';
+        btn.onclick = () => toggleCategoryFilterPill(catTitle);
+        btn.className = `px-3 py-1.5 rounded-xl text-xs font-bold transition-all flex items-center gap-1.5 cursor-pointer border ${
+          isSelected
+            ? 'bg-[#1B3B2B] text-white border-[#1B3B2B] shadow-xs'
+            : 'bg-bgCustom text-graphite border-accent hover:border-primary hover:bg-white'
+        }`;
+
+        btn.innerHTML = `
+          <span>${catTitle}</span>
+          <span class="${isSelected ? 'bg-white/20 text-white' : 'bg-accent/60 text-secondary'} text-[10px] font-black px-1.5 py-0.2 rounded-md">
+            ${matchCount}
+          </span>
+          ${isSelected ? '<i data-lucide="check" class="w-3 h-3 text-[#D4AF37]"></i>' : ''}
+        `;
+
+        pillsContainer.appendChild(btn);
+      });
+
+      if (typeof lucide !== 'undefined') {
+        lucide.createIcons();
+      }
+    }
+
+    function toggleCategoryFilterPill(catTitle) {
+      if (activeCategoryFilters.has(catTitle)) {
+        activeCategoryFilters.delete(catTitle);
+      } else {
+        activeCategoryFilters.add(catTitle);
+      }
+      renderCategoryFilterPills();
+      filterVendors();
+    }
+
+    function resetCategoryFilters() {
+      activeCategoryFilters.clear();
       const searchInput = document.getElementById('search-input');
-      if (searchInput) searchInput.value = title;
+      const headerSearch = document.getElementById('header-search-input');
+      if (searchInput) searchInput.value = '';
+      if (headerSearch) headerSearch.value = '';
+
+      renderCategoryFilterPills();
+      filterVendors();
+      showToast('⚡ فیلتر دسته‌بندی‌ها بازنشانی شد و تمامی تامین‌کنندگان نمایش داده شدند', 'info');
+    }
+
+    function filterVendorsByCategoryTitle(title) {
+      if (title) {
+        activeCategoryFilters.clear();
+        activeCategoryFilters.add(title);
+      }
       const verifiedCheckbox = document.getElementById('verified-only');
       if (verifiedCheckbox) verifiedCheckbox.checked = false;
+
+      renderCategoryFilterPills();
       filterVendors();
-      const vendorSection = document.getElementById('vendor-grid');
+
+      const vendorSection = document.getElementById('vendor-directory-section') || document.getElementById('vendor-grid');
       if (vendorSection) vendorSection.scrollIntoView({ behavior: 'smooth' });
     }
 
@@ -6948,7 +7059,20 @@
                               v.category.toLowerCase().includes(search) ||
                               (v.district && v.district.toLowerCase().includes(search)) ||
                               (v.city && v.city.toLowerCase().includes(search));
-        const matchesCat = cat === 'all' || v.category === cat;
+
+        let matchesCat = true;
+        if (activeCategoryFilters.size > 0) {
+          matchesCat = false;
+          for (const selectedCat of activeCategoryFilters) {
+            if (v.category === selectedCat || v.category.includes(selectedCat) || selectedCat.includes(v.category)) {
+              matchesCat = true;
+              break;
+            }
+          }
+        } else if (cat !== 'all') {
+          matchesCat = v.category === cat;
+        }
+
         const matchesVerified = !verifiedOnly || v.verified;
         const matchesDistrict = selectedYazdDistrict === 'all' || v.district === selectedYazdDistrict;
 
@@ -6994,6 +7118,38 @@
         }
         return 0;
       });
+
+      // Update Filter Status Header badges and count badge
+      const activeBadgesContainer = document.getElementById('active-categories-badges');
+      if (activeBadgesContainer) {
+        if (activeCategoryFilters.size === 0) {
+          activeBadgesContainer.innerHTML = `<span class="bg-[#1B3B2B] text-white text-[11px] font-bold px-2.5 py-1 rounded-lg">همه دسته‌بندی‌ها</span>`;
+        } else {
+          activeBadgesContainer.innerHTML = Array.from(activeCategoryFilters).map(catName => `
+            <span class="bg-[#1B3B2B] text-white text-[11px] font-bold px-2.5 py-1 rounded-lg flex items-center gap-1">
+              <span>${catName}</span>
+              <button type="button" onclick="toggleCategoryFilterPill('${catName}')" class="hover:text-rose-400 text-slate-300 mr-0.5 cursor-pointer">✕</button>
+            </span>
+          `).join('');
+        }
+      }
+
+      const countBadge = document.getElementById('vendor-count-badge');
+      if (countBadge) {
+        countBadge.innerHTML = `
+          <i data-lucide="check-circle-2" class="w-3.5 h-3.5"></i>
+          <span>نمایش ${filtered.length} تامین‌کننده معتبر</span>
+        `;
+      }
+
+      const allCatBtn = document.getElementById('btn-all-categories');
+      if (allCatBtn) {
+        if (activeCategoryFilters.size === 0) {
+          allCatBtn.className = "text-xs font-extrabold px-3 py-1.5 rounded-xl border transition-all flex items-center gap-1.5 shadow-2xs cursor-pointer bg-[#1B3B2B] text-white border-[#1B3B2B]";
+        } else {
+          allCatBtn.className = "text-xs font-bold px-3 py-1.5 rounded-xl border transition-all flex items-center gap-1.5 shadow-2xs cursor-pointer bg-bgCustom text-graphite border-accent hover:border-primary hover:bg-white";
+        }
+      }
 
       renderVendors(filtered);
     }
@@ -11205,6 +11361,7 @@
       loadFavoritesFromStorage();
       renderFavoriteVendorsList();
       renderCategoryCards();
+      renderCategoryFilterPills();
       filterVendors();
       renderPortfolioUI();
       renderVendorPackages();
