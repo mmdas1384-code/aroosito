@@ -72,6 +72,22 @@ header, nav, .header-container, .navbar {
     background-color: #1B3B2B !important; /* Emerald Forest background */
 }
 
+/* Vendor Detail Full-Screen Modal Overlay */
+#vendor-detail-modal {
+  position: fixed !important;
+  top: 0 !important;
+  left: 0 !important;
+  width: 100% !important;
+  height: 100vh !important;
+  z-index: 999999 !important;
+  background-color: rgba(0, 0, 0, 0.75) !important;
+  backdrop-filter: blur(4px) !important;
+}
+
+#vendor-detail-modal.active {
+  display: flex !important;
+}
+
 /* Auth Modal Positioning & Overlay */
 #auth-modal {
   position: fixed !important;

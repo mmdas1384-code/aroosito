@@ -3436,104 +3436,56 @@
       const vendor = vendors.find(v => v.id === vId) || vendors[0];
       if (!vendor) return;
 
-      // Smoothly navigate to vendor profile view
-      switchTab('vendor-profile');
-      window.scrollTo({ top: 0, behavior: 'smooth' });
-
-      // Update hero cover, logo & header fields
-      const coverEl = document.getElementById('vp-cover');
-      const logoEl = document.getElementById('vp-logo');
-      const nameEl = document.getElementById('vp-name');
-      const catEl = document.getElementById('vp-category');
-      const ratingEl = document.getElementById('vp-rating');
-      const phoneEl = document.getElementById('vp-phone');
-      const addressEl = document.getElementById('vp-address');
-      const instaEl = document.getElementById('vp-instagram');
-      const hoursEl = document.getElementById('vp-hours');
-
-      if (coverEl) coverEl.src = vendor.image || "https://images.unsplash.com/photo-1519167758481-83f550bb49b3?auto=format&fit=crop&w=1600&q=80";
-      if (logoEl) logoEl.src = vendor.image || "https://images.unsplash.com/photo-1519167758481-83f550bb49b3?auto=format&fit=crop&w=400&q=80";
-      if (nameEl) nameEl.innerText = vendor.name;
-      if (catEl) catEl.innerText = vendor.category;
-      if (ratingEl) ratingEl.innerHTML = `<i data-lucide="star" class="w-4 h-4 fill-yellow-300"></i> ${vendor.rating || 4.9} (${vendor.reviewCount || 48} نظر)`;
-      if (phoneEl) phoneEl.innerText = vendor.phone || "۰۳۵-۳۸۲۴۰۰۰۰";
-      if (addressEl) addressEl.innerText = `${vendor.city || 'یزد'}، ${vendor.district || 'صفائیه'}`;
-      if (instaEl) {
-        instaEl.innerText = vendor.instagram || "@yazd_wedding_studio";
-        instaEl.href = `https://instagram.com/${(vendor.instagram || "@yazd_wedding_studio").replace('@', '')}`;
-      }
-      if (hoursEl) hoursEl.innerText = vendor.hours || "همه روزه از ۱۰:۰۰ الی ۲۱:۰۰";
-
-      // Populate gallery grid
-      const galleryGrid = document.getElementById('vp-gallery-grid');
-      if (galleryGrid) {
-        const images = vendor.portfolioImages || [
-          "https://images.unsplash.com/photo-1519167758481-83f550bb49b3?auto=format&fit=crop&w=800&q=80",
-          "https://images.unsplash.com/photo-1537633552985-df8429e8048b?auto=format&fit=crop&w=800&q=80",
-          "https://images.unsplash.com/photo-1560066984-138dadb4c035?auto=format&fit=crop&w=800&q=80",
-          "https://images.unsplash.com/photo-1487412720507-e7ab37603c6f?auto=format&fit=crop&w=800&q=80"
-        ];
-        galleryGrid.innerHTML = images.map((img, idx) => `
-          <div class="relative h-40 rounded-2xl overflow-hidden border border-accent bg-slate-100 group cursor-pointer">
-            <img src="${img}" alt="${vendor.name}" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300">
-            <div class="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center text-white text-xs font-bold">
-              <span>بزرگنمایی تصویر ${idx + 1}</span>
-            </div>
-          </div>
-        `).join('');
-      }
-
-      // Populate packages
-      const packagesContainer = document.getElementById('vp-packages-container');
-      if (packagesContainer) {
-        const pkgs = vendor.packages || [
-          { name: "پکیج برنز / اقتصادی", price: "۴۵,۰۰۰,۰۰۰ تومان", features: ["سرو ۱ مدل غذا", "سالادبار کلاسیک", "نورپردازی پایه", "سیستم صوتی"] },
-          { name: "پکیج نقره‌ای / محبوب", price: "۸۵,۰۰۰,۰۰۰ تومان", features: ["سرو ۳ مدل غذا & کباب", "سالادبار و دسر اختصاصی", "نورپردازی حرفه‌ای", "استیج رقص"] },
-          { name: "پکیج طلایی / VIP", price: "۱۳۵,۰۰۰,۰۰۰ تومان", features: ["سلف‌سرویس کامل ۵ مدل غذا", "بار آبمیوه طبیعی & باریستا", "کیک عروسی اختصاصی", "دی‌جی & نورپردازی سینمایی"] }
-        ];
-
-        packagesContainer.innerHTML = pkgs.map(p => `
-          <div class="bg-bgCustom border border-accent rounded-2xl p-5 space-y-4 hover:border-primary transition-all flex flex-col justify-between">
-            <div class="space-y-2">
-              <h3 class="text-sm font-black text-graphite">${p.name}</h3>
-              <p class="text-base font-black text-primary">${p.price}</p>
-              <ul class="space-y-1.5 text-xs text-secondary font-medium pt-2 border-t border-accent/60">
-                ${p.features.map(f => `<li class="flex items-center gap-1.5"><i data-lucide="check" class="w-3.5 h-3.5 text-emerald-600"></i><span>${f}</span></li>`).join('')}
-              </ul>
-            </div>
-            <button onclick="openInquiryModal(${vendor.id}, '${vendor.name}')" class="w-full bg-primary hover:bg-emerald-900 text-white font-bold py-2.5 rounded-xl text-xs transition-colors cursor-pointer">
-              درخواست استعلام قیمت & وقت بازدید
-            </button>
-          </div>
-        `).join('');
-      }
-
-      // Also support legacy modal opening if element exists
       const modal = document.getElementById('vendor-detail-modal');
-      if (modal && !modal.classList.contains('hidden')) {
+      if (modal) {
         modal.classList.remove('hidden');
-
-        const titleEl = document.getElementById('vdm-title');
-        const coverEl = document.getElementById('vdm-cover');
-        const avatarEl = document.getElementById('vdm-avatar');
-        const catEl = document.getElementById('vdm-category');
-        const districtEl = document.getElementById('vdm-district');
-        const bottomPriceEl = document.getElementById('vdm-bottom-price');
-
-        if (titleEl) titleEl.innerText = vendor.name;
-        if (coverEl) coverEl.src = vendor.image;
-        if (avatarEl) avatarEl.src = vendor.image;
-        if (catEl) catEl.innerText = vendor.category;
-        if (districtEl) districtEl.innerText = vendor.city || vendor.district || "یزد";
-        if (bottomPriceEl) bottomPriceEl.innerText = `شروع قیمت از ${vendor.priceRange}`;
+        modal.classList.add('active');
+        document.body.style.overflow = 'hidden';
       }
 
+      const titleEl = document.getElementById('vdm-title');
+      const coverEl = document.getElementById('vdm-cover');
+      const avatarEl = document.getElementById('vdm-avatar');
+      const catEl = document.getElementById('vdm-category');
+      const districtEl = document.getElementById('vdm-district');
+      const bottomPriceEl = document.getElementById('vdm-bottom-price');
+
+      if (titleEl) titleEl.innerText = vendor.name;
+      if (coverEl) coverEl.src = vendor.image || "https://images.unsplash.com/photo-1519167758481-83f550bb49b3?auto=format&fit=crop&w=1200&q=80";
+      if (avatarEl) avatarEl.src = vendor.image || "https://images.unsplash.com/photo-1519167758481-83f550bb49b3?auto=format&fit=crop&w=400&q=80";
+      if (catEl) catEl.innerText = vendor.category;
+      if (districtEl) districtEl.innerText = `${vendor.city || 'یزد'}، ${vendor.district || 'صفائیه'}`;
+      if (bottomPriceEl) bottomPriceEl.innerText = `شروع قیمت از ${vendor.priceRange}`;
+
+      // Render Capability Tags Badges in Modal
+      const tagsContainer = document.getElementById('vdm-capability-tags');
+      if (tagsContainer) {
+        const tags = vendor.capabilityTags || ["مجوز رسمی عکاسی کویر", "تجهیزات هلی‌شات & نور کویر", "سرو شیرینی‌های سنتی یزد (حاج خلیفه)", "فضای باز & سالن سرپوشیده"];
+        tagsContainer.innerHTML = tags.map(t => `<span class="bg-amber-100 text-amber-900 border border-amber-300 text-[10px] font-bold px-2.5 py-1 rounded-full flex items-center gap-1"><i data-lucide="check-circle" class="w-3 h-3 text-amber-600"></i>${t}</span>`).join('');
+      }
+
+      // Populate Contact Tab
+      const phoneEl = document.getElementById('vdm-contact-phone');
+      const addressEl = document.getElementById('vdm-contact-address');
+      const hoursEl = document.getElementById('vdm-contact-hours');
+      const instaEl = document.getElementById('vdm-contact-insta');
+
+      if (phoneEl) phoneEl.innerText = vendor.phone || "۰۳۵-۳۸۲۴۰۰۰۰";
+      if (addressEl) addressEl.innerText = vendor.address || `یزد، ${vendor.district || 'صفائیه'}`;
+      if (hoursEl) hoursEl.innerText = vendor.hours || "همه روزه از ۱۰:۰۰ الی ۲۱:۰۰";
+      if (instaEl) instaEl.innerText = vendor.instagram || "@yazd_wedding_studio";
+
+      switchVdmSubTab('portfolio');
       lucide.createIcons();
     }
 
     function closeVendorDetailModal() {
       const modal = document.getElementById('vendor-detail-modal');
-      if (modal) modal.classList.add('hidden');
+      if (modal) {
+        modal.classList.add('hidden');
+        modal.classList.remove('active');
+        document.body.style.overflow = '';
+      }
     }
 
     function switchVdmSubTab(subTab) {
