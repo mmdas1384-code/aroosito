@@ -18,18 +18,37 @@ body {
 /* Global Layout Rules & Zero-Gap Below Header */
 header {
   margin-bottom: 0 !important;
+  padding: 0 !important;
 }
 
-header + div:empty,
-nav + div:empty,
-#search-suggestions-dropdown:empty,
-.mega-menu-container:empty,
-.header-dropdown:not(.active) {
-    display: none !important;
-    height: 0 !important;
-    padding: 0 !important;
-    margin: 0 !important;
-    border: none !important;
+/* Default hidden state - no height or layout footprint */
+.mega-menu-container,
+.header-dropdown,
+#search-suggestions-dropdown {
+    display: none;
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+    transition: opacity 0.25s ease, visibility 0.25s ease;
+}
+
+/* Show dropdown on parent hover or active class */
+.has-dropdown:hover .mega-menu-container,
+.has-dropdown:hover .header-dropdown,
+.header-dropdown.active,
+.mega-menu-container.active,
+#search-suggestions-dropdown.active {
+    display: block !important;
+    opacity: 1 !important;
+    visibility: visible !important;
+    pointer-events: auto !important;
+    position: absolute !important;
+    top: 100% !important;
+    left: 0;
+    right: 0;
+    z-index: 1000 !important;
+    background-color: #1B3B2B !important; /* Emerald Forest */
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15) !important;
 }
 
 #hero, .hero-section {

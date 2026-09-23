@@ -819,12 +819,26 @@
     // TAB SWITCHING FUNCTION
     function switchTab(tabId) {
       document.querySelectorAll('.tab-content').forEach(el => el.classList.add('hidden'));
-      if (tabId === 'guests') renderGuestsAndGifts();
-      if (tabId === 'directory') {
+
+      const homeView = document.getElementById('home-view');
+      const directoryView = document.getElementById('directory-view');
+
+      if (tabId === 'home') {
+        if (homeView) homeView.classList.remove('hidden');
+        if (directoryView) directoryView.classList.add('hidden');
+      } else if (tabId === 'directory') {
+        if (homeView) homeView.classList.add('hidden');
+        if (directoryView) directoryView.classList.remove('hidden');
         if (typeof renderSidebarCategoryCheckboxes === 'function') renderSidebarCategoryCheckboxes();
         if (typeof renderMultiCategoryPills === 'function') renderMultiCategoryPills();
         if (typeof filterVendors === 'function') filterVendors();
+      } else {
+        if (homeView) homeView.classList.add('hidden');
+        if (directoryView) directoryView.classList.add('hidden');
       }
+
+      if (tabId === 'guests') renderGuestsAndGifts();
+
       const target = document.getElementById('tab-' + tabId);
       if (target) target.classList.remove('hidden');
 
