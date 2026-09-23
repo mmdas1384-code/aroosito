@@ -3475,8 +3475,8 @@
       if (hoursEl) hoursEl.innerText = vendor.hours || "همه روزه از ۱۰:۰۰ الی ۲۱:۰۰";
       if (instaEl) instaEl.innerText = vendor.instagram || "@yazd_wedding_studio";
 
-      switchVdmSubTab('portfolio');
-      lucide.createIcons();
+      switchModalTab(0);
+      if (typeof lucide !== 'undefined' && lucide.createIcons) lucide.createIcons();
     }
 
     function closeVendorDetailModal() {
@@ -3492,22 +3492,39 @@
       closeVendorDetailModal();
     }
 
-    function switchVdmSubTab(subTab) {
-      const subTabs = ['portfolio', 'packages', 'reviews', 'contact'];
-      subTabs.forEach(t => {
-        const btn = document.getElementById('vdm-tab-btn-' + t);
-        const panel = document.getElementById('vdm-subpanel-' + t);
-        if (btn) {
-          if (t === subTab) {
-            btn.className = "vtab-btn active cursor-pointer";
-            if (panel) panel.classList.remove('hidden');
-          } else {
-            btn.className = "vtab-btn cursor-pointer";
-            if (panel) panel.classList.add('hidden');
-          }
+    function switchModalTab(tabIndex) {
+      const modal = document.getElementById('vendor-detail-modal');
+      if (!modal) return;
+
+      const tabs = modal.querySelectorAll('.vtab-btn');
+      const contents = modal.querySelectorAll('.vtab-pane');
+
+      tabs.forEach((tab, index) => {
+        if (index === tabIndex) {
+          tab.classList.add('active');
+        } else {
+          tab.classList.remove('active');
         }
       });
-      lucide.createIcons();
+
+      contents.forEach((content, index) => {
+        if (index === tabIndex) {
+          content.style.display = 'block';
+          content.classList.add('active');
+        } else {
+          content.style.display = 'none';
+          content.classList.remove('active');
+        }
+      });
+
+      if (typeof lucide !== 'undefined' && lucide.createIcons) lucide.createIcons();
+    }
+
+    function switchVdmSubTab(subTab) {
+      const map = { 'portfolio': 0, 'packages': 1, 'reviews': 2, 'contact': 3 };
+      if (typeof map[subTab] !== 'undefined') {
+        switchModalTab(map[subTab]);
+      }
     }
 
 
