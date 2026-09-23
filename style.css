@@ -113,7 +113,7 @@ header, nav, .header-container, .navbar {
     position: absolute !important;
     top: 15px !important;
     left: 15px !important;
-    z-index: 50 !important;
+    z-index: 9999 !important;
     background: #1B3B2B !important;
     color: #D4AF37 !important;
     border: 1px solid #D4AF37 !important;
@@ -130,6 +130,7 @@ header, nav, .header-container, .navbar {
 /* Hero Banner */
 .clean-vmodal-hero {
     position: relative !important;
+    z-index: 1 !important;
     width: 100% !important;
     height: 260px !important;
     overflow: hidden !important;
@@ -282,12 +283,7 @@ header, nav, .header-container, .navbar {
 }
 
 /* Elevate Modals & Backdrops Layer */
-.modal,
-.modal-overlay,
-.popup-container,
-.modal-backdrop,
-div[class*="modal"],
-div[id*="modal"] {
+.popup-container {
     z-index: 999999 !important;
     position: fixed !important;
 }

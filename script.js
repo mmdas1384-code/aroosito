@@ -3488,6 +3488,10 @@
       }
     }
 
+    function closeVendorModal() {
+      closeVendorDetailModal();
+    }
+
     function switchVdmSubTab(subTab) {
       const subTabs = ['portfolio', 'packages', 'reviews', 'contact'];
       subTabs.forEach(t => {
