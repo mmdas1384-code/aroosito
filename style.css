@@ -72,6 +72,18 @@ header, nav, .header-container, .navbar {
     background-color: #1B3B2B !important; /* Emerald Forest background */
 }
 
+/* Auth Modal Positioning & Overlay */
+#auth-modal {
+  position: fixed !important;
+  inset: 0 !important;
+  z-index: 999999 !important;
+  background-color: rgba(0, 0, 0, 0.6) !important;
+}
+
+#auth-modal.active {
+  display: flex !important;
+}
+
 /* Elevate Modals & Backdrops Layer */
 .modal,
 .modal-overlay,

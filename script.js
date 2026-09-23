@@ -7082,6 +7082,74 @@
       priceOutput.innerHTML = `${totalEstimated.toLocaleString('fa-IR')} <span class="text-xs font-medium text-white">تومان</span>`;
     }
 
+    function openAuthModal(defaultTab = 'couple') {
+      const modal = document.getElementById('auth-modal');
+      if (modal) {
+        modal.classList.remove('hidden');
+        modal.classList.add('active');
+      }
+      switchAuthTab(defaultTab);
+    }
+
+    function closeAuthModal() {
+      const modal = document.getElementById('auth-modal');
+      if (modal) {
+        modal.classList.add('hidden');
+        modal.classList.remove('active');
+      }
+    }
+
+    function switchAuthTab(tab) {
+      const coupleTab = document.getElementById('auth-tab-couple');
+      const vendorTab = document.getElementById('auth-tab-vendor');
+      const coupleForm = document.getElementById('auth-form-couple');
+      const vendorForm = document.getElementById('auth-form-vendor');
+
+      if (tab === 'couple') {
+        if (coupleTab) coupleTab.className = "flex-1 py-2.5 rounded-xl transition-all bg-[#1B3B2B] text-white shadow-xs text-center cursor-pointer";
+        if (vendorTab) vendorTab.className = "flex-1 py-2.5 rounded-xl transition-all text-secondary hover:text-graphite text-center cursor-pointer";
+        if (coupleForm) coupleForm.classList.remove('hidden');
+        if (vendorForm) vendorForm.classList.add('hidden');
+      } else {
+        if (vendorTab) vendorTab.className = "flex-1 py-2.5 rounded-xl transition-all bg-[#1B3B2B] text-white shadow-xs text-center cursor-pointer";
+        if (coupleTab) coupleTab.className = "flex-1 py-2.5 rounded-xl transition-all text-secondary hover:text-graphite text-center cursor-pointer";
+        if (vendorForm) vendorForm.classList.remove('hidden');
+        if (coupleForm) coupleForm.classList.add('hidden');
+      }
+    }
+
+    function handleCoupleAuthSubmit(e) {
+      e.preventDefault();
+      closeAuthModal();
+      switchRole('couple');
+      showToast('ورود موفقیت‌آمیز! خوش آمدید.', 'success');
+    }
+
+    function handleVendorAuthSubmit(e) {
+      e.preventDefault();
+      closeAuthModal();
+      switchRole('vendor');
+      showToast('ورود به پنل تامین‌کنندگان با موفقیت انجام شد.', 'success');
+    }
+
+    function toggleAccountMenu() {
+      const menu = document.getElementById('account-dropdown-menu');
+      if (menu) menu.classList.toggle('active');
+    }
+
+    document.addEventListener('click', (e) => {
+      const dropdown = document.querySelector('.user-account-dropdown');
+      const menu = document.getElementById('account-dropdown-menu');
+      if (dropdown && menu && !dropdown.contains(e.target)) {
+        menu.classList.remove('active');
+      }
+
+      const authModal = document.getElementById('auth-modal');
+      if (authModal && e.target === authModal) {
+        closeAuthModal();
+      }
+    });
+
     window.addEventListener('DOMContentLoaded', () => {
       calculateHomeBudgetPreview();
       loadCategoryGroupsFromStorage();
