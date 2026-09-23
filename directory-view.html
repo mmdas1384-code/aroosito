@@ -6,7 +6,7 @@
     <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-accent pb-4">
       <div class="space-y-1">
         <nav class="flex items-center gap-2 text-xs text-secondary font-bold mb-1">
-          <button onclick="switchTab('home')" class="hover:text-primary transition-colors">خانه</button>
+          <button onclick="switchTab('home')" class="hover:text-primary transition-colors cursor-pointer">خانه</button>
           <span>/</span>
           <span class="text-graphite">دایرکتوری جامع تامین‌کنندگان یزد</span>
         </nav>
@@ -20,6 +20,21 @@
       <button onclick="switchTab('home')" class="bg-bgCustom hover:bg-slate-100 text-graphite border border-accent px-4 py-2.5 rounded-2xl text-xs font-bold transition-all flex items-center gap-2 shadow-xs shrink-0 cursor-pointer">
         <i data-lucide="arrow-right" class="w-4 h-4 text-primary"></i>
         <span>بازگشت به صفحه اصلی</span>
+      </button>
+    </div>
+
+    <!-- Active Filter Chips Container -->
+    <div class="flex items-center justify-between gap-3 pt-2 text-xs font-bold flex-wrap">
+      <div class="flex items-center gap-2 flex-wrap" id="active-category-chips">
+        <span class="text-secondary">فیلترهای فعال:</span>
+        <div id="active-category-pills" class="flex items-center gap-1.5 flex-wrap">
+          <!-- Dynamic Category Pills rendered by renderMultiCategoryPills() -->
+        </div>
+      </div>
+
+      <button onclick="resetAllCategoryFilters()" class="text-xs font-bold text-rose-600 hover:text-rose-800 transition-colors flex items-center gap-1 cursor-pointer">
+        <i data-lucide="rotate-ccw" class="w-3.5 h-3.5"></i>
+        <span>پاک کردن همه فیلترها</span>
       </button>
     </div>
   </div>
@@ -87,35 +102,31 @@
     <!-- MAIN DIRECTORY CONTENT (col-span-12 lg:col-span-9) -->
     <div class="lg:col-span-9 space-y-6">
 
-      <!-- Active Filter Status Header -->
-      <div class="bg-white border border-accent rounded-2xl p-4 shadow-2xs flex flex-col sm:flex-row sm:items-center justify-between gap-3">
-        <div class="flex items-center gap-2 flex-wrap" id="active-category-pills">
-          <!-- Dynamic Category Pills rendered by renderMultiCategoryPills() -->
+      <!-- Dedicated Sorting Bar & Instant Search Box -->
+      <div id="vendor-sorting-bar" class="bg-white border border-accent rounded-2xl p-4 shadow-2xs flex flex-col sm:flex-row sm:items-center justify-between gap-4 text-xs font-bold text-graphite">
+        <!-- Instant Search Box -->
+        <div class="relative flex-1 max-w-md">
+          <i data-lucide="search" class="w-4 h-4 text-primary absolute right-3 top-2.5"></i>
+          <input type="text" id="directory-instant-search" oninput="filterVendors()" placeholder="جستجوی نام تالار، آتلیه یا مزون..." class="w-full bg-bgCustom border border-accent rounded-xl pr-9 pl-3 py-2 text-xs font-medium focus:outline-none focus:border-primary">
         </div>
 
-        <div class="flex items-center gap-2 shrink-0">
-          <span class="text-xs font-bold text-secondary">نتایج یافت شده:</span>
-          <span id="directory-vendor-count-badge" class="bg-primary/10 text-primary border border-primary/20 text-xs font-black px-2.5 py-1 rounded-xl">
-            ۰ تامین‌کننده
-          </span>
-        </div>
-      </div>
+        <div class="flex items-center gap-4 shrink-0 flex-wrap sm:flex-nowrap justify-between sm:justify-end">
+          <div class="flex items-center gap-2">
+            <span class="text-secondary">نتایج:</span>
+            <span id="directory-vendor-count-badge" class="bg-primary/10 text-primary border border-primary/20 text-xs font-black px-2.5 py-1 rounded-xl">
+              ۰ تامین‌کننده
+            </span>
+          </div>
 
-      <!-- Dedicated Sorting Bar -->
-      <div id="vendor-sorting-bar" class="bg-white border border-accent rounded-2xl p-3 shadow-2xs flex flex-col sm:flex-row sm:items-center justify-between gap-3 text-xs font-bold text-graphite">
-        <div class="flex items-center gap-2">
-          <i data-lucide="arrow-up-down" class="w-4 h-4 text-primary"></i>
-          <span>مرتب‌سازی نتایج تامین‌کنندگان:</span>
-        </div>
-
-        <div class="flex items-center gap-2">
-          <label for="vendor-sort-select" class="text-secondary shrink-0">ترتیب نمایش:</label>
-          <select id="vendor-sort-select" onchange="filterVendors()" class="bg-bgCustom border border-accent rounded-xl px-3 py-1.5 text-xs font-bold text-graphite focus:outline-none focus:border-primary cursor-pointer">
-            <option value="popular" selected>محبوب‌ترین (امتیاز بالا) ⭐</option>
-            <option value="newest">جدیدترین 🆕</option>
-            <option value="price-asc">ارزان‌ترین (کمترین قیمت) 📈</option>
-            <option value="price-desc">گران‌ترین (بیشترین قیمت) 📉</option>
-          </select>
+          <div class="flex items-center gap-2">
+            <label for="vendor-sort-select" class="text-secondary shrink-0">ترتیب:</label>
+            <select id="vendor-sort-select" onchange="filterVendors()" class="bg-bgCustom border border-accent rounded-xl px-3 py-1.5 text-xs font-bold text-graphite focus:outline-none focus:border-primary cursor-pointer">
+              <option value="popular" selected>محبوب‌ترین (امتیاز بالا) ⭐</option>
+              <option value="newest">جدیدترین 🆕</option>
+              <option value="price-asc">ارزان‌ترین (کمترین قیمت) 📈</option>
+              <option value="price-desc">گران‌ترین (بیشترین قیمت) 📉</option>
+            </select>
+          </div>
         </div>
       </div>
 

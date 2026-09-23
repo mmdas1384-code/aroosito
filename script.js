@@ -2745,11 +2745,14 @@
     }
 
     function filterVendors() {
+      const instantSearchInput = document.getElementById('directory-instant-search');
       const searchInput = document.getElementById('search-input');
       const headerSearchInput = document.getElementById('header-search-input');
 
       let search = '';
-      if (headerSearchInput && headerSearchInput.value.trim() !== '') {
+      if (instantSearchInput && instantSearchInput.value.trim() !== '') {
+        search = instantSearchInput.value.trim().toLowerCase();
+      } else if (headerSearchInput && headerSearchInput.value.trim() !== '') {
         search = headerSearchInput.value.trim().toLowerCase();
       } else if (searchInput) {
         search = searchInput.value.trim().toLowerCase();
