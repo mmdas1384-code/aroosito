@@ -21,10 +21,10 @@ header {
   padding: 0 !important;
 }
 
-header, nav, .header-container {
+header, nav, .header-container, .navbar {
     overflow: visible !important;
     position: relative !important;
-    z-index: 99999 !important;
+    z-index: 1000 !important;
 }
 
 /* Default hidden state - no height or layout footprint */
@@ -55,20 +55,32 @@ header, nav, .header-container {
     position: absolute !important;
     top: 100% !important;
     right: 0 !important;
-    z-index: 999999 !important; /* Force top-most layer */
+    z-index: 1001 !important;
     background-color: #1B3B2B !important; /* Emerald Forest */
     box-shadow: 0 15px 35px rgba(0, 0, 0, 0.4) !important;
 }
 
 .dropdown-menu,
 .mega-menu-container,
-.header-dropdown {
+.header-dropdown,
+.account-menu {
     position: absolute !important;
     top: 100% !important;
     right: 0 !important;
-    z-index: 999999 !important; /* Force top-most layer */
+    z-index: 1001 !important;
     box-shadow: 0 15px 35px rgba(0, 0, 0, 0.4) !important;
     background-color: #1B3B2B !important; /* Emerald Forest background */
+}
+
+/* Elevate Modals & Backdrops Layer */
+.modal,
+.modal-overlay,
+.popup-container,
+.modal-backdrop,
+div[class*="modal"],
+div[id*="modal"] {
+    z-index: 999999 !important;
+    position: fixed !important;
 }
 
 #hero, .hero-section, main {
@@ -132,18 +144,6 @@ main#directory-view {
 .account-btn:hover {
   background-color: rgba(255, 255, 255, 0.2);
   border-color: #D4AF37;
-}
-
-.account-menu {
-  position: absolute !important;
-  top: 100% !important;
-  right: 0 !important;
-  min-width: 220px;
-  background-color: #1B3B2B !important;
-  border: 1px solid #D4AF37 !important;
-  border-radius: 1rem;
-  box-shadow: 0 15px 35px rgba(0, 0, 0, 0.3) !important;
-  z-index: 999999 !important;
 }
 
 .account-menu .dropdown-item {
