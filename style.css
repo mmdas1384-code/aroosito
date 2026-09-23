@@ -177,6 +177,21 @@ main#directory-view {
   margin: 0.25rem 0;
 }
 
+/* VIP Showcase Smooth Scroll & Clean Aesthetics */
+#vip-showcase-container,
+.vip-showcase-container {
+  scroll-behavior: smooth;
+  overflow-y: auto;
+  overflow-x: auto;
+  scrollbar-width: none; /* Hide scrollbar for Firefox */
+  -ms-overflow-style: none; /* Hide scrollbar for IE/Edge */
+}
+
+#vip-showcase-container::-webkit-scrollbar,
+.vip-showcase-container::-webkit-scrollbar {
+  display: none; /* Hide scrollbar for Webkit */
+}
+
 /* VIP Vendor Cards & Showcase Styling */
 .vip-vendor-card {
   transition: all 0.3s ease-in-out;

@@ -7177,8 +7177,38 @@
       });
     }
 
+    function initVipShowcaseAutoScroll() {
+      const container = document.getElementById('vip-showcase-container') || document.querySelector('.vip-showcase-container');
+      if (!container) return;
+
+      let scrollInterval = null;
+      let isPaused = false;
+
+      function startScroll() {
+        if (scrollInterval) clearInterval(scrollInterval);
+        scrollInterval = setInterval(() => {
+          if (isPaused) return;
+
+          const maxScroll = container.scrollHeight - container.clientHeight;
+          if (container.scrollTop >= maxScroll - 10) {
+            container.scrollTo({ top: 0, behavior: 'smooth' });
+          } else {
+            container.scrollBy({ top: 120, behavior: 'smooth' });
+          }
+        }, 3500);
+      }
+
+      container.addEventListener('mouseenter', () => { isPaused = true; });
+      container.addEventListener('mouseleave', () => { isPaused = false; });
+      container.addEventListener('touchstart', () => { isPaused = true; });
+      container.addEventListener('touchend', () => { isPaused = false; });
+
+      startScroll();
+    }
+
     window.addEventListener('DOMContentLoaded', () => {
       calculateHomeBudgetPreview();
+      initVipShowcaseAutoScroll();
       loadCategoryGroupsFromStorage();
       loadChatStateFromStorage();
       loadFavoritesFromStorage();
