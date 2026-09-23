@@ -177,6 +177,16 @@ main#directory-view {
   margin: 0.25rem 0;
 }
 
+/* VIP Vendor Cards & Showcase Styling */
+.vip-vendor-card {
+  transition: all 0.3s ease-in-out;
+}
+
+.vip-vendor-card:hover {
+  border-color: #D4AF37 !important;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15) !important;
+}
+
 /* Isolated Directory View Styles */
 .directory-sidebar {
   background-color: #ffffff;

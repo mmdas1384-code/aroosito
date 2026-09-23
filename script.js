@@ -7150,6 +7150,30 @@
       }
     });
 
+    function filterVipShowcase(categoryKey) {
+      const tabs = ['all', 'hall', 'studio', 'beauty'];
+      tabs.forEach(t => {
+        const btn = document.getElementById('vip-tab-' + t);
+        if (btn) {
+          if (t === categoryKey) {
+            btn.className = "vip-tab-btn px-3 py-1 rounded-xl bg-[#1B3B2B] text-[#D4AF37] transition-all shrink-0 cursor-pointer shadow-xs font-bold";
+          } else {
+            btn.className = "vip-tab-btn px-3 py-1 rounded-xl bg-white border border-accent hover:border-[#D4AF37] text-graphite transition-all shrink-0 cursor-pointer font-bold";
+          }
+        }
+      });
+
+      const cards = document.querySelectorAll('.vip-vendor-card');
+      cards.forEach(card => {
+        const cat = card.getAttribute('data-vip-cat');
+        if (categoryKey === 'all' || cat === categoryKey) {
+          card.classList.remove('hidden');
+        } else {
+          card.classList.add('hidden');
+        }
+      });
+    }
+
     window.addEventListener('DOMContentLoaded', () => {
       calculateHomeBudgetPreview();
       loadCategoryGroupsFromStorage();
