@@ -72,57 +72,94 @@ header, nav, .header-container, .navbar {
     background-color: #1B3B2B !important; /* Emerald Forest background */
 }
 
-/* Vendor Detail Modal Overlay & Container Fix */
-#vendor-detail-modal,
+/* Vendor Detail Modal Clean Overlay & Grid Design */
 .vendor-modal-overlay {
     position: fixed !important;
-    top: 0 !important;
-    left: 0 !important;
-    width: 100vw !important;
-    height: 100vh !important;
-    background: rgba(0, 0, 0, 0.7) !important;
+    top: 0 !important; left: 0 !important; width: 100vw !important; height: 100vh !important;
+    background: rgba(0, 0, 0, 0.75) !important;
+    backdrop-filter: blur(6px) !important;
     z-index: 999999 !important;
-    overflow-y: auto !important; /* Enable full scroll */
-    padding: 20px 0 !important;
     display: flex !important;
     justify-content: center !important;
     align-items: flex-start !important;
+    overflow-y: auto !important;
+    padding: 40px 15px !important;
 }
 
-#vendor-detail-modal.hidden {
+.vendor-modal-overlay.hidden {
     display: none !important;
 }
 
-#vendor-detail-modal .modal-content,
-#vendor-detail-modal .vendor-modal-content,
-.vendor-modal-card,
-.vendor-detail-modal-container {
-    width: 90% !important;
-    max-width: 1100px !important;
-    height: auto !important; /* Allow natural expansion */
-    max-height: none !important;
-    overflow: visible !important;
-    margin: auto !important;
-    position: relative !important;
+.vendor-modal-card {
     background: #FBF9F5 !important;
+    width: 100% !important;
+    max-width: 1000px !important;
     border-radius: 16px !important;
-    border: 1px solid rgba(212, 175, 55, 0.3) !important;
-    box-shadow: 0 20px 50px rgba(0,0,0,0.3) !important;
-    padding: 2rem !important;
-    box-sizing: border-box !important;
+    position: relative !important;
     direction: rtl !important;
+    box-shadow: 0 20px 40px rgba(0,0,0,0.3) !important;
+    overflow: hidden !important;
+    border: 1px solid rgba(212, 175, 55, 0.3) !important;
 }
 
-.vendor-modal-body {
+.modal-close-btn {
+    position: absolute !important;
+    top: 15px !important; left: 15px !important;
+    background: #1B3B2B !important; color: #D4AF37 !important;
+    border: none !important; border-radius: 50% !important;
+    width: 36px !important; height: 36px !important;
+    font-size: 18px !important; cursor: pointer !important;
+    z-index: 20 !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+}
+
+.modal-tabs-bar {
+    display: flex !important;
+    gap: 10px !important;
+    background: #1B3B2B !important;
+    padding: 10px 20px !important;
+    overflow-x: auto !important;
+}
+
+.tab-link {
+    background: transparent !important;
+    color: #fff !important; border: none !important;
+    padding: 8px 16px !important; cursor: pointer !important;
+    border-radius: 6px !important; font-family: inherit !important;
+    font-size: 12px !important;
+    font-weight: 600 !important;
+    transition: all 0.2s ease !important;
+}
+
+.tab-link.active {
+    background: #D4AF37 !important;
+    color: #1B3B2B !important; font-weight: bold !important;
+}
+
+.modal-body-grid {
     display: grid !important;
-    grid-template-columns: 2fr 1fr !important; /* Main content left/center, sidebar right */
-    gap: 2rem !important;
+    grid-template-columns: 2fr 1fr !important;
+    gap: 20px !important;
+    padding: 20px !important;
 }
 
-@media (max-width: 992px) {
-    .vendor-modal-body {
+@media (max-width: 768px) {
+    .modal-body-grid {
         grid-template-columns: 1fr !important;
     }
+}
+
+.modal-action-sidebar {
+    background: #fff !important;
+    padding: 20px !important;
+    border-radius: 12px !important;
+    border: 1px solid #D4AF37 !important;
+    display: flex !important;
+    flex-direction: column !important;
+    gap: 12px !important;
+    height: fit-content !important;
 }
 
 /* Auth Modal Positioning & Overlay */

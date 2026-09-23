@@ -3375,250 +3375,107 @@
   </main>
 
   <!-- ========================================== -->
+  <!-- ========================================== -->
   <!-- MODAL: FULL COMPREHENSIVE VENDOR DETAIL    -->
   <!-- ========================================== -->
   <div id="vendor-detail-modal" class="vendor-modal-overlay hidden">
-    <div class="vendor-modal-content relative flex flex-col justify-between">
+    <div class="vendor-modal-card">
+      <button class="modal-close-btn" onclick="closeVendorDetailModal()">✕</button>
 
-      <!-- Top Sticky Modal Header with Close Button -->
-      <div class="relative h-48 sm:h-64 bg-slate-800 shrink-0 sticky top-0 z-20">
-        <img id="vdm-cover" src="https://images.unsplash.com/photo-1519167758481-83f550bb49b3?auto=format&fit=crop&w=1200&q=80" alt="کاور" class="w-full h-full object-cover opacity-85">
-        <div class="absolute inset-0 bg-gradient-to-t from-graphite/90 via-graphite/40 to-transparent"></div>
-
-        <button onclick="closeVendorDetailModal()" class="absolute top-4 left-4 bg-black/60 text-white p-2.5 rounded-full hover:bg-black/80 transition-colors z-30 cursor-pointer shadow-lg">
-          <i data-lucide="x" class="w-5 h-5"></i>
-        </button>
-
-        <div class="absolute bottom-4 right-4 left-4 flex items-end justify-between gap-4 text-white">
-          <div class="flex items-end gap-3.5">
-            <div class="w-20 h-20 sm:w-24 sm:h-24 rounded-2xl border-2 border-white bg-white overflow-hidden shadow-lg shrink-0">
-              <img id="vdm-avatar" src="https://images.unsplash.com/photo-1519167758481-83f550bb49b3?auto=format&fit=crop&w=400&q=80" alt="لوگو" class="w-full h-full object-cover">
+      <!-- Modal Header -->
+      <div class="modal-header-section">
+        <div class="vendor-hero-img relative h-48 sm:h-64 overflow-hidden bg-slate-900">
+          <img id="vdm-cover" src="https://images.unsplash.com/photo-1519167758481-83f550bb49b3?auto=format&fit=crop&w=1200&q=80" alt="Vendor Banner" class="w-full h-full object-cover">
+          <div class="absolute inset-0 bg-gradient-to-t from-graphite/90 via-graphite/30 to-transparent"></div>
+        </div>
+        <div class="p-5 bg-[#1B3B2B] text-white flex items-center justify-between flex-wrap gap-3 border-b border-[#D4AF37]/30">
+          <div>
+            <div class="flex items-center gap-2 flex-wrap">
+              <h2 id="vdm-title" class="text-xl sm:text-2xl font-black text-[#D4AF37]">هتل باغ و تشریفات مشیرالممالک یزد</h2>
+              <span id="vdm-verified-badge" class="bg-[#D4AF37] text-[#1B3B2B] text-[10px] font-bold px-2.5 py-0.5 rounded-full flex items-center gap-1 shadow-sm">
+                <i data-lucide="shield-check" class="w-3.5 h-3.5"></i>
+                <span>تأییدشده عروسی‌تو</span>
+              </span>
             </div>
-            <div class="space-y-1">
-              <div class="flex items-center gap-2 flex-wrap">
-                <h2 id="vdm-title" class="text-lg sm:text-2xl font-black text-white">هتل باغ و تشریفات مشیرالممالک یزد</h2>
-                <span id="vdm-verified-badge" class="bg-primary text-white text-[10px] font-bold px-2.5 py-0.5 rounded-full flex items-center gap-1 shadow-sm">
-                  <i data-lucide="shield-check" class="w-3.5 h-3.5"></i>
-                  <span>تاییدیه رسمی</span>
-                </span>
-              </div>
-              <div class="text-xs text-slate-200 font-medium flex items-center gap-3 flex-wrap">
-                <span id="vdm-category" class="bg-white/20 px-2 py-0.5 rounded-md">تالار و باغ تالار</span>
-                <span class="flex items-center gap-1 text-yellow-300 font-bold">
-                  <i data-lucide="star" class="w-3.5 h-3.5 fill-yellow-300"></i> ۴.۹ (۴۲ نظر زوجین)
-                </span>
-                <span id="vdm-district" class="text-slate-300 font-normal">صفائیه & اطلسی یزد</span>
-              </div>
-              <div id="vdm-capability-tags" class="flex flex-wrap gap-1.5 pt-1">
-                <!-- Capability tags rendered dynamically -->
-              </div>
-              </div>
-            </div>
+            <p id="vdm-location-text" class="location-tag text-xs text-amber-200 mt-1 font-semibold">📍 <span id="vdm-district">یزد، صفائیه</span> | ⭐️ <span id="vdm-rating-text">۴.۹ (۲۷ نظر)</span></p>
+          </div>
+          <div id="vdm-capability-tags" class="flex flex-wrap gap-1.5">
+            <!-- Capability tags rendered dynamically -->
           </div>
         </div>
       </div>
 
-      <!-- Tab Buttons Navigation inside Modal (5 Distinct Tabs) -->
-      <div class="bg-bgCustom border-b border-accent px-4 py-2.5 flex items-center gap-2 overflow-x-auto custom-scrollbar shrink-0 text-xs font-bold text-graphite">
-        <button onclick="switchVdmSubTab('portfolio')" id="vdm-tab-btn-portfolio" class="px-4 py-2 rounded-xl bg-primary text-white shadow-2xs transition-all flex items-center gap-1.5 shrink-0">
-          <i data-lucide="image" class="w-4 h-4"></i>
-          <span>📸 نمونه‌کارها</span>
-        </button>
-        <button onclick="switchVdmSubTab('packages')" id="vdm-tab-btn-packages" class="px-4 py-2 rounded-xl bg-white border border-accent text-secondary hover:text-graphite transition-all flex items-center gap-1.5 shrink-0">
-          <i data-lucide="gem" class="w-4 h-4"></i>
-          <span>💎 پکیج‌ها و تعرفه‌ها</span>
-        </button>
-        <button onclick="switchVdmSubTab('calendar')" id="vdm-tab-btn-calendar" class="px-4 py-2 rounded-xl bg-white border border-accent text-secondary hover:text-graphite transition-all flex items-center gap-1.5 shrink-0">
-          <i data-lucide="calendar" class="w-4 h-4"></i>
-          <span>📅 تقویم روزهای آزاد</span>
-        </button>
-        <button onclick="switchVdmSubTab('reviews')" id="vdm-tab-btn-reviews" class="px-4 py-2 rounded-xl bg-white border border-accent text-secondary hover:text-graphite transition-all flex items-center gap-1.5 shrink-0">
-          <i data-lucide="star" class="w-4 h-4"></i>
-          <span>💬 نظرات و امتیازات</span>
-        </button>
-        <button onclick="switchVdmSubTab('contact')" id="vdm-tab-btn-contact" class="px-4 py-2 rounded-xl bg-white border border-accent text-secondary hover:text-graphite transition-all flex items-center gap-1.5 shrink-0">
-          <i data-lucide="map-pin" class="w-4 h-4"></i>
-          <span>📍 اطلاعات تماس و آدرس</span>
-        </button>
+      <!-- Modal Tabs Bar -->
+      <div class="modal-tabs-bar">
+        <button onclick="switchVdmSubTab('portfolio')" id="vdm-tab-btn-portfolio" class="tab-link active">درباره & نمونه‌کارها</button>
+        <button onclick="switchVdmSubTab('packages')" id="vdm-tab-btn-packages" class="tab-link">پکیج‌ها & قیمت‌ها</button>
+        <button onclick="switchVdmSubTab('reviews')" id="vdm-tab-btn-reviews" class="tab-link">نظرات زوج‌ها</button>
+        <button onclick="switchVdmSubTab('contact')" id="vdm-tab-btn-contact" class="tab-link">اطلاعات تماس و آدرس</button>
       </div>
 
-      <!-- Scrollable Tab Content View -->
-      <div class="p-5 overflow-y-auto custom-scrollbar flex-1 space-y-4">
-
-        <!-- SUB-TAB 1: PORTFOLIO GALLERY -->
-        <div id="vdm-subpanel-portfolio" class="space-y-3">
-          <div class="flex items-center justify-between">
-            <span class="text-xs font-bold text-secondary">آلبوم عکس‌ها و ایده‌های اجرا شده در یزد:</span>
-            <span class="text-[11px] text-primary font-bold">۹ تصویر نمونه‌کار کیفیت بالا</span>
-          </div>
-
-          <div class="grid grid-cols-2 sm:grid-cols-3 gap-3">
-            <div class="relative group h-36 rounded-2xl overflow-hidden border border-accent bg-slate-100 cursor-pointer" onclick="showToast('مشاهده تصویر نمونه‌کار در سایز بزرگ', 'info')">
-              <img src="https://images.unsplash.com/photo-1519167758481-83f550bb49b3?auto=format&fit=crop&w=600&q=80" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300">
-              <span class="absolute bottom-2 right-2 bg-black/60 text-white text-[10px] px-2 py-0.5 rounded-md font-bold">دکور ورودی</span>
+      <!-- Modal Grid Content -->
+      <div class="modal-body-grid">
+        <div class="modal-main-details space-y-4">
+          <!-- SUB-TAB 1: PORTFOLIO GALLERY -->
+          <div id="vdm-subpanel-portfolio" class="tab-content space-y-3">
+            <div class="flex items-center justify-between text-xs font-bold text-graphite border-b border-accent pb-2">
+              <span>آلبوم عکس‌ها و ایده‌های اجرا شده در یزد:</span>
+              <span class="text-primary">نمونه‌کارهای تاییدشده</span>
             </div>
-            <div class="relative group h-36 rounded-2xl overflow-hidden border border-accent bg-slate-100 cursor-pointer" onclick="showToast('مشاهده تصویر نمونه‌کار در سایز بزرگ', 'info')">
-              <img src="https://images.unsplash.com/photo-1519741497674-611481863552?auto=format&fit=crop&w=600&q=80" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300">
-              <span class="absolute bottom-2 right-2 bg-black/60 text-white text-[10px] px-2 py-0.5 rounded-md font-bold">سالن اصلی</span>
-            </div>
-            <div class="relative group h-36 rounded-2xl overflow-hidden border border-accent bg-slate-100 cursor-pointer" onclick="showToast('مشاهده تصویر نمونه‌کار در سایز بزرگ', 'info')">
-              <img src="https://images.unsplash.com/photo-1537633552985-df8429e8048b?auto=format&fit=crop&w=600&q=80" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300">
-              <span class="absolute bottom-2 right-2 bg-black/60 text-white text-[10px] px-2 py-0.5 rounded-md font-bold">فرمالیته کویر</span>
-            </div>
-          </div>
-        </div>
-
-        <!-- SUB-TAB 2: 3-TIER PACKAGE COMPARISON TABLE -->
-        <div id="vdm-subpanel-packages" class="hidden space-y-5">
-          <div class="flex justify-between items-center border-b border-accent pb-2">
-            <span class="text-xs font-bold text-graphite flex items-center gap-1.5">
-              <i data-lucide="gem" class="w-4 h-4 text-primary"></i>
-              <span>جدول مقایسه ۳ سطح پکیج‌های اختصاصی (برنز / نقره‌ای / طلایی):</span>
-            </span>
-            <span class="text-[11px] text-primary font-bold">تضمین نرخ بازار استان یزد</span>
-          </div>
-
-          <div class="grid grid-cols-1 md:grid-cols-3 gap-4 text-xs font-bold text-graphite">
-            <div class="bg-bgCustom border border-accent rounded-2xl p-4 space-y-3">
-              <div class="border-b border-accent pb-2">
-                <span class="text-amber-800 font-bold block">پکیج برنزی (Standard)</span>
-                <span class="text-lg font-black text-primary">۴۵,۰۰۰,۰۰۰ تومان</span>
+            <div class="grid grid-cols-2 sm:grid-cols-3 gap-3" id="vdm-portfolio-grid">
+              <div class="relative group h-36 rounded-2xl overflow-hidden border border-accent bg-slate-100 cursor-pointer">
+                <img src="https://images.unsplash.com/photo-1519167758481-83f550bb49b3?auto=format&fit=crop&w=600&q=80" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300">
               </div>
-              <ul class="space-y-1.5 text-[11px] font-medium text-graphite">
-                <li class="flex items-center gap-1.5"><i data-lucide="check" class="w-3.5 h-3.5 text-primary"></i><span>منوی شام سلف‌سرویس استاندارد</span></li>
-                <li class="flex items-center gap-1.5"><i data-lucide="check" class="w-3.5 h-3.5 text-primary"></i><span>ورودی سالن یا باغ</span></li>
-                <li class="flex items-center gap-1.5"><i data-lucide="check" class="w-3.5 h-3.5 text-primary"></i><span>نورپردازی پایه</span></li>
-              </ul>
-            </div>
-
-            <div class="bg-emerald-50/80 border-2 border-primary rounded-2xl p-4 space-y-3 relative shadow-xs">
-              <span class="absolute -top-3 right-4 bg-primary text-white text-[10px] font-bold px-2.5 py-0.5 rounded-full">محبوب‌ترین (انتخاب اول زوجین)</span>
-              <div class="border-b border-primary/20 pb-2">
-                <span class="text-primary font-black block">پکیج نقره‌ای (Silver VIP)</span>
-                <span class="text-lg font-black text-primary">۷۵,۰۰۰,۰۰۰ تومان</span>
+              <div class="relative group h-36 rounded-2xl overflow-hidden border border-accent bg-slate-100 cursor-pointer">
+                <img src="https://images.unsplash.com/photo-1519741497674-611481863552?auto=format&fit=crop&w=600&q=80" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300">
               </div>
-              <ul class="space-y-1.5 text-[11px] font-medium text-graphite">
-                <li class="flex items-center gap-1.5"><i data-lucide="check" class="w-3.5 h-3.5 text-primary"></i><span>منوی شام کامل + کترینگ شیرینی سنتی یزد (حاج خلیفه)</span></li>
-                <li class="flex items-center gap-1.5"><i data-lucide="check" class="w-3.5 h-3.5 text-primary"></i><span>شمع‌آرایی کامل و ورودی آتش‌بازی</span></li>
-                <li class="flex items-center gap-1.5"><i data-lucide="check" class="w-3.5 h-3.5 text-primary"></i><span>تست رایگان غذا برای ۴ نفر</span></li>
-              </ul>
-            </div>
-
-            <div class="bg-bgCustom border border-accent rounded-2xl p-4 space-y-3">
-              <div class="border-b border-accent pb-2">
-                <span class="text-amber-600 font-bold block">پکیج طلایی (Luxury Gold)</span>
-                <span class="text-lg font-black text-primary">۱۲۰,۰۰۰,۰۰۰ تومان</span>
+              <div class="relative group h-36 rounded-2xl overflow-hidden border border-accent bg-slate-100 cursor-pointer">
+                <img src="https://images.unsplash.com/photo-1537633552985-df8429e8048b?auto=format&fit=crop&w=600&q=80" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300">
               </div>
-              <ul class="space-y-1.5 text-[11px] font-medium text-graphite">
-                <li class="flex items-center gap-1.5"><i data-lucide="check" class="w-3.5 h-3.5 text-primary"></i><span>تمام خدمات نقره‌ای + سفره عقد سنتی اختصاصی</span></li>
-                <li class="flex items-center gap-1.5"><i data-lucide="check" class="w-3.5 h-3.5 text-primary"></i><span>تجهیزات هلی‌شات & نور کویر</span></li>
-                <li class="flex items-center gap-1.5"><i data-lucide="check" class="w-3.5 h-3.5 text-primary"></i><span>اقامت رایگان سوئیت عروس داماد</span></li>
-              </ul>
             </div>
           </div>
 
-          <!-- Package Feature Matrix Table -->
-          <div class="overflow-x-auto border border-accent rounded-2xl">
-            <table class="w-full text-right text-xs">
-              <thead class="bg-bgCustom text-secondary border-b border-accent font-bold">
-                <tr>
-                  <th class="p-3">ویژگی‌ها & امکانات</th>
-                  <th class="p-3 text-center">برنزی</th>
-                  <th class="p-3 text-center text-primary">نقره‌ای (VIP)</th>
-                  <th class="p-3 text-center text-amber-600">طلایی (Luxury)</th>
-                </tr>
-              </thead>
-              <tbody class="divide-y divide-accent font-medium text-graphite">
-                <tr>
-                  <td class="p-3 font-bold">پذیرایی شیرینی سنتی یزد (حاج خلیفه)</td>
-                  <td class="p-3 text-center text-secondary">اختیاری</td>
-                  <td class="p-3 text-center text-emerald-700 font-bold">✔ رایگان (شامل)</td>
-                  <td class="p-3 text-center text-emerald-700 font-bold">✔ رایگان (VIP)</td>
-                </tr>
-                <tr>
-                  <td class="p-3 font-bold">فرمالیته و تجهیزات هلی‌شات کویر</td>
-                  <td class="p-3 text-center text-rose-500">❌</td>
-                  <td class="p-3 text-center text-secondary">با ۵۰٪ تخفیف</td>
-                  <td class="p-3 text-center text-emerald-700 font-bold">✔ رایگان (شامل)</td>
-                </tr>
-                <tr>
-                  <td class="p-3 font-bold">فضای باز & سالن سرپوشیده</td>
-                  <td class="p-3 text-center text-emerald-700 font-bold">✔</td>
-                  <td class="p-3 text-center text-emerald-700 font-bold">✔</td>
-                  <td class="p-3 text-center text-emerald-700 font-bold">✔ اختصاصی کامل</td>
-                </tr>
-              </tbody>
-            </table>
-          </div>
-        </div>
-
-        <!-- SUB-TAB 3: INTERACTIVE AVAILABILITY CALENDAR PREVIEW -->
-        <div id="vdm-subpanel-calendar" class="hidden space-y-4">
-          <div class="flex flex-col sm:flex-row justify-between sm:items-center gap-2 border-b border-accent pb-2 text-xs">
-            <span class="font-bold text-graphite flex items-center gap-1.5">
-              <i data-lucide="calendar" class="w-4 h-4 text-primary"></i>
-              <span>تقویم تعاملی تقاضا و روزهای آزاد (اردیبهشت و خرداد ۱۴۰۳):</span>
-            </span>
-            <div class="flex items-center gap-3 text-[11px] font-bold">
-              <span class="flex items-center gap-1"><span class="w-3 h-3 rounded-md bg-emerald-500 inline-block"></span> آزاد (جهت رزرو کلیک کنید)</span>
-              <span class="flex items-center gap-1"><span class="w-3 h-3 rounded-md bg-rose-500 inline-block"></span> پر / رزرو شده</span>
+          <!-- SUB-TAB 2: PACKAGES -->
+          <div id="vdm-subpanel-packages" class="tab-content hidden space-y-3">
+            <div id="vdm-packages-list-container" class="space-y-3">
+              <!-- Rendered dynamically via JS -->
             </div>
           </div>
 
-          <div id="vdm-interactive-calendar-grid" class="grid grid-cols-7 gap-1.5 text-center text-xs font-bold">
-            <!-- Days rendered dynamically or via static grid -->
-            <button onclick="handleSelectCalendarDay(1, true)" class="p-2.5 bg-emerald-50 border border-emerald-300 text-emerald-900 rounded-xl hover:bg-emerald-100 transition-colors">۱ اردیبهشت<br><span class="text-[10px] text-emerald-700">آزاد</span></button>
-            <button onclick="handleSelectCalendarDay(2, true)" class="p-2.5 bg-emerald-50 border border-emerald-300 text-emerald-900 rounded-xl hover:bg-emerald-100 transition-colors">۲ اردیبهشت<br><span class="text-[10px] text-emerald-700">آزاد</span></button>
-            <button onclick="handleSelectCalendarDay(3, false)" class="p-2.5 bg-rose-50 border border-rose-200 text-rose-800 rounded-xl cursor-not-allowed">۳ اردیبهشت<br><span class="text-[10px] text-rose-600">رزرو شد</span></button>
-            <button onclick="handleSelectCalendarDay(4, true)" class="p-2.5 bg-emerald-50 border border-emerald-300 text-emerald-900 rounded-xl hover:bg-emerald-100 transition-colors">۴ اردیبهشت<br><span class="text-[10px] text-emerald-700">آزاد</span></button>
-            <button onclick="handleSelectCalendarDay(5, false)" class="p-2.5 bg-rose-50 border border-rose-200 text-rose-800 rounded-xl cursor-not-allowed">۵ اردیبهشت<br><span class="text-[10px] text-rose-600">رزرو شد</span></button>
-            <button onclick="handleSelectCalendarDay(6, true)" class="p-2.5 bg-emerald-50 border border-emerald-300 text-emerald-900 rounded-xl hover:bg-emerald-100 transition-colors">۶ اردیبهشت<br><span class="text-[10px] text-emerald-700">آزاد</span></button>
-            <button onclick="handleSelectCalendarDay(7, true)" class="p-2.5 bg-emerald-50 border border-emerald-300 text-emerald-900 rounded-xl hover:bg-emerald-100 transition-colors">۷ اردیبهشت<br><span class="text-[10px] text-emerald-700">آزاد</span></button>
-            <button onclick="handleSelectCalendarDay(8, true)" class="p-2.5 bg-emerald-50 border border-emerald-300 text-emerald-900 rounded-xl hover:bg-emerald-100 transition-colors">۸ اردیبهشت<br><span class="text-[10px] text-emerald-700">آزاد</span></button>
-            <button onclick="handleSelectCalendarDay(9, false)" class="p-2.5 bg-rose-50 border border-rose-200 text-rose-800 rounded-xl cursor-not-allowed">۹ اردیبهشت<br><span class="text-[10px] text-rose-600">رزرو شد</span></button>
-            <button onclick="handleSelectCalendarDay(10, true)" class="p-2.5 bg-emerald-50 border border-emerald-300 text-emerald-900 rounded-xl hover:bg-emerald-100 transition-colors">۱۰ اردیبهشت<br><span class="text-[10px] text-emerald-700">آزاد</span></button>
-            <button onclick="handleSelectCalendarDay(11, true)" class="p-2.5 bg-emerald-50 border border-emerald-300 text-emerald-900 rounded-xl hover:bg-emerald-100 transition-colors">۱۱ اردیبهشت<br><span class="text-[10px] text-emerald-700">آزاد</span></button>
-            <button onclick="handleSelectCalendarDay(12, false)" class="p-2.5 bg-rose-50 border border-rose-200 text-rose-800 rounded-xl cursor-not-allowed">۱۲ اردیبهشت<br><span class="text-[10px] text-rose-600">رزرو شد</span></button>
-            <button onclick="handleSelectCalendarDay(13, true)" class="p-2.5 bg-emerald-50 border border-emerald-300 text-emerald-900 rounded-xl hover:bg-emerald-100 transition-colors">۱۳ اردیبهشت<br><span class="text-[10px] text-emerald-700">آزاد</span></button>
-            <button onclick="handleSelectCalendarDay(14, true)" class="p-2.5 bg-emerald-50 border border-emerald-300 text-emerald-900 rounded-xl hover:bg-emerald-100 transition-colors">۱۴ اردیبهشت<br><span class="text-[10px] text-emerald-700">آزاد</span></button>
-          </div>
-        </div>
-
-        <!-- SUB-TAB 4: REVIEWS -->
-        <div id="vdm-subpanel-reviews" class="hidden space-y-3">
-          <div class="p-3 bg-bgCustom rounded-2xl border border-accent space-y-1 text-xs">
-            <div class="flex justify-between font-bold text-graphite">
-              <span>رضا و مریم (مراسم اردیبهشت ۱۴۰۳)</span>
-              <span class="text-amber-500">★★★★★</span>
+          <!-- SUB-TAB 3: REVIEWS -->
+          <div id="vdm-subpanel-reviews" class="tab-content hidden space-y-3">
+            <div id="vdm-reviews-list-container" class="space-y-3">
+              <!-- Rendered dynamically via JS -->
             </div>
-            <p class="text-secondary font-medium">کیفیت غذا و پذیرایی فوق‌العاده بود. برخورد مدیریت بسیار محترمانه و منظم بود.</p>
           </div>
-          <div class="p-3 bg-bgCustom rounded-2xl border border-accent space-y-1 text-xs">
-            <div class="flex justify-between font-bold text-graphite">
-              <span>امیرحسین و نسرین</span>
-              <span class="text-amber-500">★★★★★</span>
+
+          <!-- SUB-TAB 4: CONTACT & MAP -->
+          <div id="vdm-subpanel-contact" class="tab-content hidden space-y-4 text-xs font-bold text-graphite">
+            <div class="p-4 bg-bgCustom rounded-2xl border border-accent space-y-3">
+              <p class="flex items-center gap-2"><i data-lucide="phone" class="w-4 h-4 text-primary"></i> <span>تلفن تماس:</span> <span id="vdm-contact-phone" class="dir-ltr text-primary">۰۳۵-۳۸۲۴۰۰۰۰</span></p>
+              <p class="flex items-center gap-2"><i data-lucide="map-pin" class="w-4 h-4 text-primary"></i> <span>آدرس یزد:</span> <span id="vdm-contact-address">یزد، صفائیه</span></p>
+              <p class="flex items-center gap-2"><i data-lucide="clock" class="w-4 h-4 text-primary"></i> <span>ساعات کاری:</span> <span id="vdm-contact-hours">همه روزه ۱۰:۰۰ الی ۲۱:۰۰</span></p>
+              <p class="flex items-center gap-2"><i data-lucide="instagram" class="w-4 h-4 text-primary"></i> <span>اینستاگرام:</span> <span id="vdm-contact-insta" class="dir-ltr text-primary">@yazd_wedding_studio</span></p>
             </div>
-            <p class="text-secondary font-medium">دیزاین سفره عقد و گل‌آرایی بسیار شیک و مطابق با عکس‌های آلبوم انجام شده بود.</p>
           </div>
         </div>
 
-      </div>
-
-      <!-- Sticky Floating Bottom CTA Action Bar -->
-      <div class="bg-white border-t border-accent p-4 flex items-center justify-between gap-4 shrink-0 shadow-lg">
-        <div>
-          <span class="text-[10px] text-secondary font-bold block">استعلام مستقیم از تامین‌کننده</span>
-          <span id="vdm-bottom-price" class="text-xs sm:text-sm font-black text-primary">شروع قیمت از ۴۵,۰۰۰,۰۰۰ تومان</span>
-        </div>
-
-        <div class="flex items-center gap-2">
-          <button id="vdm-chat-btn" class="bg-primary hover:bg-emerald-900 text-white font-bold px-5 py-2.5 rounded-xl text-xs transition-all shadow-md flex items-center gap-1.5 cursor-pointer">
-            <i data-lucide="message-square-quote" class="w-4 h-4"></i>
+        <!-- Sticky Sidebar Action Box -->
+        <div class="modal-action-sidebar">
+          <div class="price-box text-center space-y-1 p-3 bg-bgCustom rounded-xl border border-accent">
+            <span class="text-xs text-secondary font-medium block">شروع قیمت پکیج‌ها از:</span>
+            <strong id="vdm-bottom-price" class="text-lg font-black text-primary block">۱۵,۰۰۰,۰۰۰ تومان</strong>
+          </div>
+          <button id="vdm-chat-btn" class="btn-primary-gold w-full bg-[#D4AF37] hover:bg-amber-400 text-[#1B3B2B] font-black py-3 rounded-xl text-xs transition-all shadow-md cursor-pointer flex items-center justify-center gap-1.5">
+            <i data-lucide="message-square" class="w-4 h-4"></i>
             <span>چت و استعلام آنلاین قیمت</span>
+          </button>
+          <button onclick="window.location.href='tel:03538240000'" class="btn-secondary-outline w-full bg-[#1B3B2B] hover:bg-emerald-900 text-white font-bold py-3 rounded-xl text-xs transition-all shadow-sm cursor-pointer flex items-center justify-center gap-1.5">
+            <i data-lucide="phone" class="w-4 h-4 text-[#D4AF37]"></i>
+            <span>تماس مستقیم / واتس‌اپ</span>
           </button>
         </div>
       </div>
-
     </div>
   </div>
 

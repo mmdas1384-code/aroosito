@@ -3493,13 +3493,13 @@
       subTabs.forEach(t => {
         const btn = document.getElementById('vdm-tab-btn-' + t);
         const panel = document.getElementById('vdm-subpanel-' + t);
-        if (btn && panel) {
+        if (btn) {
           if (t === subTab) {
-            btn.className = "px-4 py-2 rounded-xl bg-primary text-white shadow-2xs transition-all flex items-center gap-1.5 shrink-0";
-            panel.classList.remove('hidden');
+            btn.className = "tab-link active px-4 py-2 rounded-xl transition-all shrink-0 cursor-pointer";
+            if (panel) panel.classList.remove('hidden');
           } else {
-            btn.className = "px-4 py-2 rounded-xl bg-white border border-accent text-secondary hover:text-graphite transition-all flex items-center gap-1.5 shrink-0";
-            panel.classList.add('hidden');
+            btn.className = "tab-link px-4 py-2 rounded-xl transition-all shrink-0 cursor-pointer";
+            if (panel) panel.classList.add('hidden');
           }
         }
       });
