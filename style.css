@@ -115,6 +115,56 @@ main#directory-view {
   scrollbar-width: none;
 }
 
+/* User Account Profile Dropdown Styling */
+.user-account-dropdown {
+  position: relative;
+}
+
+.account-btn {
+  background-color: rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(212, 175, 55, 0.4);
+  color: #ffffff;
+  border-radius: 1rem;
+  padding: 0.5rem 0.75rem;
+  transition: all 0.2s ease-in-out;
+}
+
+.account-btn:hover {
+  background-color: rgba(255, 255, 255, 0.2);
+  border-color: #D4AF37;
+}
+
+.account-menu {
+  position: absolute !important;
+  top: 100% !important;
+  right: 0 !important;
+  min-width: 220px;
+  background-color: #1B3B2B !important;
+  border: 1px solid #D4AF37 !important;
+  border-radius: 1rem;
+  box-shadow: 0 15px 35px rgba(0, 0, 0, 0.3) !important;
+  z-index: 999999 !important;
+}
+
+.account-menu .dropdown-item {
+  display: block;
+  padding: 0.5rem 0.75rem;
+  color: #ffffff;
+  border-radius: 0.75rem;
+  transition: background-color 0.2s ease, color 0.2s ease;
+  text-decoration: none;
+}
+
+.account-menu .dropdown-item:hover {
+  background-color: rgba(255, 255, 255, 0.1);
+  color: #D4AF37;
+}
+
+.account-menu .dropdown-divider {
+  border-top: 1px solid rgba(212, 175, 55, 0.3);
+  margin: 0.25rem 0;
+}
+
 /* Isolated Directory View Styles */
 .directory-sidebar {
   background-color: #ffffff;
