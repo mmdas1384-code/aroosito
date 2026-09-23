@@ -3489,16 +3489,16 @@
     }
 
     function switchVdmSubTab(subTab) {
-      const subTabs = ['portfolio', 'packages', 'calendar', 'reviews', 'contact'];
+      const subTabs = ['portfolio', 'packages', 'reviews', 'contact'];
       subTabs.forEach(t => {
         const btn = document.getElementById('vdm-tab-btn-' + t);
         const panel = document.getElementById('vdm-subpanel-' + t);
         if (btn) {
           if (t === subTab) {
-            btn.className = "tab-link active px-4 py-2 rounded-xl transition-all shrink-0 cursor-pointer";
+            btn.className = "vtab-btn active cursor-pointer";
             if (panel) panel.classList.remove('hidden');
           } else {
-            btn.className = "tab-link px-4 py-2 rounded-xl transition-all shrink-0 cursor-pointer";
+            btn.className = "vtab-btn cursor-pointer";
             if (panel) panel.classList.add('hidden');
           }
         }

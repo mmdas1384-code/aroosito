@@ -3375,108 +3375,85 @@
   </main>
 
   <!-- ========================================== -->
-  <!-- ========================================== -->
   <!-- MODAL: FULL COMPREHENSIVE VENDOR DETAIL    -->
   <!-- ========================================== -->
-  <div id="vendor-detail-modal" class="vendor-modal-overlay hidden">
-    <div class="vendor-modal-card">
-      <button class="modal-close-btn" onclick="closeVendorDetailModal()">✕</button>
+  <div id="vendor-detail-modal" class="clean-vmodal-overlay hidden">
+    <div class="clean-vmodal-card">
+      <!-- Close Button -->
+      <button class="clean-vmodal-close" onclick="closeVendorDetailModal()">✕</button>
 
-      <!-- Modal Header -->
-      <div class="modal-header-section">
-        <div class="vendor-hero-img relative h-48 sm:h-64 overflow-hidden bg-slate-900">
-          <img id="vdm-cover" src="https://images.unsplash.com/photo-1519167758481-83f550bb49b3?auto=format&fit=crop&w=1200&q=80" alt="Vendor Banner" class="w-full h-full object-cover">
-          <div class="absolute inset-0 bg-gradient-to-t from-graphite/90 via-graphite/30 to-transparent"></div>
-        </div>
-        <div class="p-5 bg-[#1B3B2B] text-white flex items-center justify-between flex-wrap gap-3 border-b border-[#D4AF37]/30">
-          <div>
-            <div class="flex items-center gap-2 flex-wrap">
-              <h2 id="vdm-title" class="text-xl sm:text-2xl font-black text-[#D4AF37]">هتل باغ و تشریفات مشیرالممالک یزد</h2>
-              <span id="vdm-verified-badge" class="bg-[#D4AF37] text-[#1B3B2B] text-[10px] font-bold px-2.5 py-0.5 rounded-full flex items-center gap-1 shadow-sm">
-                <i data-lucide="shield-check" class="w-3.5 h-3.5"></i>
-                <span>تأییدشده عروسی‌تو</span>
-              </span>
-            </div>
-            <p id="vdm-location-text" class="location-tag text-xs text-amber-200 mt-1 font-semibold">📍 <span id="vdm-district">یزد، صفائیه</span> | ⭐️ <span id="vdm-rating-text">۴.۹ (۲۷ نظر)</span></p>
-          </div>
-          <div id="vdm-capability-tags" class="flex flex-wrap gap-1.5">
-            <!-- Capability tags rendered dynamically -->
-          </div>
+      <!-- 1. Hero Cover Banner -->
+      <div class="clean-vmodal-hero">
+        <img id="vdm-cover" src="https://images.unsplash.com/photo-1519167758481-83f550bb49b3?auto=format&fit=crop&w=1200&q=80" alt="Vendor Banner" class="vmodal-banner-img">
+        <div class="clean-vmodal-hero-info">
+          <span id="vdm-verified-badge" class="vmodal-badge-gold">تأییدشده اختصاصی</span>
+          <h2 id="vdm-title">هتل باغ و تشریفات مشیرالممالک یزد</h2>
+          <p id="vdm-location-text">📍 <span id="vdm-district">یزد، صفائیه</span> | ⭐️ <span id="vdm-rating-text">۴.۹ (۲۷ نظر)</span></p>
         </div>
       </div>
 
-      <!-- Modal Tabs Bar -->
-      <div class="modal-tabs-bar">
-        <button onclick="switchVdmSubTab('portfolio')" id="vdm-tab-btn-portfolio" class="tab-link active">درباره & نمونه‌کارها</button>
-        <button onclick="switchVdmSubTab('packages')" id="vdm-tab-btn-packages" class="tab-link">پکیج‌ها & قیمت‌ها</button>
-        <button onclick="switchVdmSubTab('reviews')" id="vdm-tab-btn-reviews" class="tab-link">نظرات زوج‌ها</button>
-        <button onclick="switchVdmSubTab('contact')" id="vdm-tab-btn-contact" class="tab-link">اطلاعات تماس و آدرس</button>
+      <!-- 2. Navigation Tabs Bar -->
+      <div class="clean-vmodal-tabs">
+        <button onclick="switchVdmSubTab('portfolio')" id="vdm-tab-btn-portfolio" class="vtab-btn active">درباره و امکانات</button>
+        <button onclick="switchVdmSubTab('packages')" id="vdm-tab-btn-packages" class="vtab-btn">پکیج‌ها & قیمت‌ها</button>
+        <button onclick="switchVdmSubTab('reviews')" id="vdm-tab-btn-reviews" class="vtab-btn">نظرات زوج‌ها</button>
+        <button onclick="switchVdmSubTab('contact')" id="vdm-tab-btn-contact" class="vtab-btn">اطلاعات تماس و آدرس</button>
       </div>
 
-      <!-- Modal Grid Content -->
-      <div class="modal-body-grid">
-        <div class="modal-main-details space-y-4">
-          <!-- SUB-TAB 1: PORTFOLIO GALLERY -->
-          <div id="vdm-subpanel-portfolio" class="tab-content space-y-3">
-            <div class="flex items-center justify-between text-xs font-bold text-graphite border-b border-accent pb-2">
-              <span>آلبوم عکس‌ها و ایده‌های اجرا شده در یزد:</span>
-              <span class="text-primary">نمونه‌کارهای تاییدشده</span>
-            </div>
-            <div class="grid grid-cols-2 sm:grid-cols-3 gap-3" id="vdm-portfolio-grid">
-              <div class="relative group h-36 rounded-2xl overflow-hidden border border-accent bg-slate-100 cursor-pointer">
-                <img src="https://images.unsplash.com/photo-1519167758481-83f550bb49b3?auto=format&fit=crop&w=600&q=80" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300">
-              </div>
-              <div class="relative group h-36 rounded-2xl overflow-hidden border border-accent bg-slate-100 cursor-pointer">
-                <img src="https://images.unsplash.com/photo-1519741497674-611481863552?auto=format&fit=crop&w=600&q=80" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300">
-              </div>
-              <div class="relative group h-36 rounded-2xl overflow-hidden border border-accent bg-slate-100 cursor-pointer">
-                <img src="https://images.unsplash.com/photo-1537633552985-df8429e8048b?auto=format&fit=crop&w=600&q=80" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300">
-              </div>
+      <!-- 3. Two-Column Body Grid -->
+      <div class="clean-vmodal-body">
+        <!-- Right/Main Content Column -->
+        <div class="clean-vmodal-main-content">
+          <div id="vdm-subpanel-portfolio" class="vtab-content-panel space-y-3">
+            <h3>درباره مجموعه و امکانات</h3>
+            <p>هتل باغ مشیرالممالک یزد اولین هتل موزه باغ ایرانی با فضایی کاملاً سنتی و امکانات مدرن، پذیرای مجلل‌ترین جشن‌های عقد و عروسی شماست.</p>
+            <ul class="vmodal-amenities-list">
+              <li>✅ ظرفیت تا ۸۰۰ نفر مهمان</li>
+              <li>✅ پارکینگ اختصاصی سرپوشیده</li>
+              <li>✅ نورپردازی و سیستم صوتی حرفه‌ای</li>
+              <li>✅ سفره عقد اختصاصی در فضای باغ</li>
+            </ul>
+            <div id="vdm-portfolio-grid" class="grid grid-cols-2 sm:grid-cols-3 gap-3 pt-3">
+              <!-- Rendered dynamically -->
             </div>
           </div>
 
-          <!-- SUB-TAB 2: PACKAGES -->
-          <div id="vdm-subpanel-packages" class="tab-content hidden space-y-3">
+          <div id="vdm-subpanel-packages" class="vtab-content-panel hidden space-y-3">
+            <h3>پکیج‌ها و خدمات</h3>
             <div id="vdm-packages-list-container" class="space-y-3">
-              <!-- Rendered dynamically via JS -->
+              <!-- Rendered dynamically -->
             </div>
           </div>
 
-          <!-- SUB-TAB 3: REVIEWS -->
-          <div id="vdm-subpanel-reviews" class="tab-content hidden space-y-3">
+          <div id="vdm-subpanel-reviews" class="vtab-content-panel hidden space-y-3">
+            <h3>نظرات و تجربیات واقعی زوجین</h3>
             <div id="vdm-reviews-list-container" class="space-y-3">
-              <!-- Rendered dynamically via JS -->
+              <!-- Rendered dynamically -->
             </div>
           </div>
 
-          <!-- SUB-TAB 4: CONTACT & MAP -->
-          <div id="vdm-subpanel-contact" class="tab-content hidden space-y-4 text-xs font-bold text-graphite">
-            <div class="p-4 bg-bgCustom rounded-2xl border border-accent space-y-3">
-              <p class="flex items-center gap-2"><i data-lucide="phone" class="w-4 h-4 text-primary"></i> <span>تلفن تماس:</span> <span id="vdm-contact-phone" class="dir-ltr text-primary">۰۳۵-۳۸۲۴۰۰۰۰</span></p>
-              <p class="flex items-center gap-2"><i data-lucide="map-pin" class="w-4 h-4 text-primary"></i> <span>آدرس یزد:</span> <span id="vdm-contact-address">یزد، صفائیه</span></p>
-              <p class="flex items-center gap-2"><i data-lucide="clock" class="w-4 h-4 text-primary"></i> <span>ساعات کاری:</span> <span id="vdm-contact-hours">همه روزه ۱۰:۰۰ الی ۲۱:۰۰</span></p>
-              <p class="flex items-center gap-2"><i data-lucide="instagram" class="w-4 h-4 text-primary"></i> <span>اینستاگرام:</span> <span id="vdm-contact-insta" class="dir-ltr text-primary">@yazd_wedding_studio</span></p>
+          <div id="vdm-subpanel-contact" class="vtab-content-panel hidden space-y-3 text-xs font-bold">
+            <h3>اطلاعات تماس و آدرس</h3>
+            <div class="p-4 bg-white rounded-2xl border border-accent space-y-2">
+              <p>تلفن تماس: <span id="vdm-contact-phone" class="text-primary dir-ltr">۰۳۵-۳۸۲۴۰۰۰۰</span></p>
+              <p>آدرس: <span id="vdm-contact-address">یزد، صفائیه</span></p>
+              <p>ساعات کاری: <span id="vdm-contact-hours">همه روزه ۱۰:۰۰ الی ۲۱:۰۰</span></p>
             </div>
           </div>
         </div>
 
-        <!-- Sticky Sidebar Action Box -->
-        <div class="modal-action-sidebar">
-          <div class="price-box text-center space-y-1 p-3 bg-bgCustom rounded-xl border border-accent">
-            <span class="text-xs text-secondary font-medium block">شروع قیمت پکیج‌ها از:</span>
-            <strong id="vdm-bottom-price" class="text-lg font-black text-primary block">۱۵,۰۰۰,۰۰۰ تومان</strong>
+        <!-- Left Sidebar Action Card -->
+        <div class="clean-vmodal-sidebar">
+          <div class="vmodal-price-box">
+            <small>شروع قیمت پکیج‌ها از:</small>
+            <div id="vdm-bottom-price" class="price-amount">۲۵,۰۰۰,۰۰۰ تومان</div>
           </div>
-          <button id="vdm-chat-btn" class="btn-primary-gold w-full bg-[#D4AF37] hover:bg-amber-400 text-[#1B3B2B] font-black py-3 rounded-xl text-xs transition-all shadow-md cursor-pointer flex items-center justify-center gap-1.5">
-            <i data-lucide="message-square" class="w-4 h-4"></i>
-            <span>چت و استعلام آنلاین قیمت</span>
-          </button>
-          <button onclick="window.location.href='tel:03538240000'" class="btn-secondary-outline w-full bg-[#1B3B2B] hover:bg-emerald-900 text-white font-bold py-3 rounded-xl text-xs transition-all shadow-sm cursor-pointer flex items-center justify-center gap-1.5">
-            <i data-lucide="phone" class="w-4 h-4 text-[#D4AF37]"></i>
-            <span>تماس مستقیم / واتس‌اپ</span>
-          </button>
+          <button id="vdm-chat-btn" class="vmodal-btn-primary cursor-pointer">💬 چت و استعلام آنلاین قیمت</button>
+          <button onclick="window.location.href='tel:03538240000'" class="vmodal-btn-secondary cursor-pointer">📞 تماس مستقیم / واتس‌اپ</button>
         </div>
       </div>
     </div>
+  </div>
   </div>
 
   <!-- ========================================== -->

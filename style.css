@@ -72,15 +72,15 @@ header, nav, .header-container, .navbar {
     background-color: #1B3B2B !important; /* Emerald Forest background */
 }
 
-/* --- VENDOR DETAIL MODAL OVERLAY --- */
-.vendor-modal-overlay {
+/* Clean Modal Overlay Container */
+.clean-vmodal-overlay {
     position: fixed !important;
     top: 0 !important;
     left: 0 !important;
     width: 100vw !important;
     height: 100vh !important;
-    background: rgba(15, 23, 20, 0.8) !important;
-    backdrop-filter: blur(8px) !important;
+    background: rgba(15, 23, 20, 0.85) !important;
+    backdrop-filter: blur(10px) !important;
     z-index: 999999 !important;
     display: flex !important;
     justify-content: center !important;
@@ -90,41 +90,35 @@ header, nav, .header-container, .navbar {
     box-sizing: border-box !important;
 }
 
-.vendor-modal-overlay.hidden {
+.clean-vmodal-overlay.hidden {
     display: none !important;
 }
 
-/* --- MAIN MODAL CONTAINER --- */
-.vendor-modal-card {
+/* Modal Inner Main Card */
+.clean-vmodal-card {
     background: #FBF9F5 !important;
     width: 100% !important;
-    max-width: 1050px !important;
-    border-radius: 16px !important;
+    max-width: 1000px !important;
+    border-radius: 20px !important;
     position: relative !important;
     direction: rtl !important;
-    box-shadow: 0 25px 50px rgba(0, 0, 0, 0.4) !important;
-    border: 1px solid rgba(212, 175, 55, 0.3) !important;
+    box-shadow: 0 25px 50px rgba(0, 0, 0, 0.5) !important;
+    border: 1px solid rgba(212, 175, 55, 0.4) !important;
     overflow: hidden !important;
-    display: block !important;
+    margin: auto !important;
 }
 
-/* --- RESET ABSOLUTE POSITIONS INSIDE MODAL --- */
-.vendor-modal-card * {
-    position: static !important; /* Forces all elements back into normal block flow */
-}
-
-/* Re-apply absolute ONLY for close button */
-.vendor-modal-card .modal-close-btn,
-.vendor-modal-card .close-modal-icon {
+/* Close Button */
+.clean-vmodal-close {
     position: absolute !important;
     top: 15px !important;
     left: 15px !important;
-    z-index: 100 !important;
+    z-index: 50 !important;
     background: #1B3B2B !important;
     color: #D4AF37 !important;
-    border: none !important;
-    width: 38px !important;
-    height: 38px !important;
+    border: 1px solid #D4AF37 !important;
+    width: 40px !important;
+    height: 40px !important;
     border-radius: 50% !important;
     cursor: pointer !important;
     font-size: 20px !important;
@@ -133,68 +127,105 @@ header, nav, .header-container, .navbar {
     justify-content: center !important;
 }
 
-/* --- BANNER / HERO IMAGE --- */
-.modal-header-section {
-    width: 100% !important;
-    height: 280px !important;
+/* Hero Banner */
+.clean-vmodal-hero {
     position: relative !important;
+    width: 100% !important;
+    height: 260px !important;
     overflow: hidden !important;
 }
 
-.modal-header-section img {
+.vmodal-banner-img {
     width: 100% !important;
     height: 100% !important;
     object-fit: cover !important;
 }
 
-/* --- TABS BAR --- */
-.modal-tabs-bar {
+.clean-vmodal-hero-info {
+    position: absolute !important;
+    bottom: 0 !important;
+    left: 0 !important;
+    right: 0 !important;
+    padding: 20px !important;
+    background: linear-gradient(transparent, rgba(15, 23, 20, 0.9)) !important;
+    color: #FBF9F5 !important;
+}
+
+.clean-vmodal-hero-info h2 {
+    margin: 5px 0 !important;
+    font-size: 22px !important;
+    color: #FFFFFF !important;
+}
+
+.vmodal-badge-gold {
+    background: #D4AF37 !important;
+    color: #1B3B2B !important;
+    padding: 3px 10px !important;
+    border-radius: 6px !important;
+    font-size: 12px !important;
+    font-weight: bold !important;
+}
+
+/* Tabs Bar */
+.clean-vmodal-tabs {
     display: flex !important;
-    gap: 10px !important;
+    gap: 8px !important;
     background: #1B3B2B !important;
     padding: 12px 20px !important;
     border-bottom: 2px solid #D4AF37 !important;
-    flex-wrap: wrap !important;
 }
 
-.modal-tabs-bar button,
-.modal-tabs-bar .tab-link {
+.vtab-btn {
     background: transparent !important;
     color: #FBF9F5 !important;
     border: none !important;
-    padding: 8px 18px !important;
+    padding: 8px 16px !important;
     border-radius: 8px !important;
     cursor: pointer !important;
+    font-family: inherit !important;
     font-size: 14px !important;
-    font-weight: 600 !important;
 }
 
-.modal-tabs-bar button.active,
-.modal-tabs-bar .tab-link.active {
+.vtab-btn.active {
     background: #D4AF37 !important;
     color: #1B3B2B !important;
-    font-weight: 700 !important;
+    font-weight: bold !important;
 }
 
-/* --- MAIN GRID LAYOUT (DETAILS + SIDEBAR) --- */
-.modal-body-grid {
+/* Two Column Body Grid */
+.clean-vmodal-body {
     display: grid !important;
     grid-template-columns: 2fr 1fr !important;
-    gap: 25px !important;
+    gap: 20px !important;
     padding: 25px !important;
 }
 
-@media (max-width: 850px) {
-    .modal-body-grid {
+@media (max-width: 800px) {
+    .clean-vmodal-body {
         grid-template-columns: 1fr !important;
     }
 }
 
-/* --- ACTION SIDEBAR CARD --- */
-.modal-action-sidebar {
+.clean-vmodal-main-content {
+    color: #2C3E50 !important;
+    line-height: 1.8 !important;
+}
+
+.vmodal-amenities-list {
+    list-style: none !important;
+    padding: 0 !important;
+    margin-top: 15px !important;
+}
+
+.vmodal-amenities-list li {
+    margin-bottom: 8px !important;
+}
+
+/* Sidebar Action Card */
+.clean-vmodal-sidebar {
     background: #FFFFFF !important;
-    border: 1px solid rgba(212, 175, 55, 0.4) !important;
-    border-radius: 12px !important;
+    border: 1px solid rgba(212, 175, 55, 0.5) !important;
+    border-radius: 14px !important;
     padding: 20px !important;
     display: flex !important;
     flex-direction: column !important;
@@ -203,7 +234,20 @@ header, nav, .header-container, .navbar {
     height: fit-content !important;
 }
 
-.modal-action-sidebar .btn-primary-gold {
+.vmodal-price-box {
+    text-align: center !important;
+    padding-bottom: 10px !important;
+    border-bottom: 1px solid #EEE !important;
+}
+
+.price-amount {
+    font-size: 20px !important;
+    font-weight: bold !important;
+    color: #1B3B2B !important;
+    margin-top: 5px !important;
+}
+
+.vmodal-btn-primary {
     background: #D4AF37 !important;
     color: #1B3B2B !important;
     border: none !important;
@@ -211,10 +255,10 @@ header, nav, .header-container, .navbar {
     border-radius: 8px !important;
     font-weight: bold !important;
     cursor: pointer !important;
-    text-align: center !important;
+    font-family: inherit !important;
 }
 
-.modal-action-sidebar .btn-secondary-outline {
+.vmodal-btn-secondary {
     background: transparent !important;
     color: #1B3B2B !important;
     border: 1px solid #1B3B2B !important;
@@ -222,7 +266,7 @@ header, nav, .header-container, .navbar {
     border-radius: 8px !important;
     font-weight: bold !important;
     cursor: pointer !important;
-    text-align: center !important;
+    font-family: inherit !important;
 }
 
 /* Auth Modal Positioning & Overlay */
