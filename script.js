@@ -7041,7 +7041,49 @@
       }, 1000);
     }
 
+    let homeBudgetTier = 'mid';
+
+    function setHomeBudgetTier(tier) {
+      homeBudgetTier = tier;
+      ['economic', 'mid', 'luxury'].forEach(t => {
+        const btn = document.getElementById('home-tier-' + t);
+        if (btn) {
+          if (t === tier) {
+            btn.className = "home-tier-btn bg-[#D4AF37] text-[#1B3B2B] border border-[#D4AF37] py-2.5 px-3 rounded-2xl text-xs font-black text-center transition-all shadow-md cursor-pointer";
+          } else {
+            btn.className = "home-tier-btn bg-white/10 hover:bg-white/20 border border-[#D4AF37]/40 py-2.5 px-3 rounded-2xl text-xs font-bold text-center transition-all cursor-pointer";
+          }
+        }
+      });
+      calculateHomeBudgetPreview();
+    }
+
+    function calculateHomeBudgetPreview() {
+      const slider = document.getElementById('home-guest-count-slider');
+      const label = document.getElementById('home-guest-count-label');
+      const priceOutput = document.getElementById('home-budget-estimated-price');
+      if (!slider || !priceOutput) return;
+
+      const count = parseInt(slider.value) || 250;
+      if (label) label.innerText = `${count} نفر`;
+
+      let costPerGuest = 1200000;
+      let baseFixedCost = 50000000;
+
+      if (homeBudgetTier === 'economic') {
+        costPerGuest = 750000;
+        baseFixedCost = 30000000;
+      } else if (homeBudgetTier === 'luxury') {
+        costPerGuest = 2500000;
+        baseFixedCost = 120000000;
+      }
+
+      const totalEstimated = baseFixedCost + (count * costPerGuest);
+      priceOutput.innerHTML = `${totalEstimated.toLocaleString('fa-IR')} <span class="text-xs font-medium text-white">تومان</span>`;
+    }
+
     window.addEventListener('DOMContentLoaded', () => {
+      calculateHomeBudgetPreview();
       loadCategoryGroupsFromStorage();
       loadChatStateFromStorage();
       loadFavoritesFromStorage();
