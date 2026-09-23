@@ -3377,15 +3377,15 @@
   <!-- ========================================== -->
   <!-- MODAL: FULL COMPREHENSIVE VENDOR DETAIL    -->
   <!-- ========================================== -->
-  <div id="vendor-detail-modal" class="fixed inset-0 z-50 bg-black/70 backdrop-blur-xs flex items-center justify-center p-2 sm:p-4 hidden">
-    <div class="bg-white border border-accent rounded-3xl max-w-4xl w-full shadow-2xl overflow-hidden relative max-h-[92vh] flex flex-col justify-between">
+  <div id="vendor-detail-modal" class="vendor-modal-overlay hidden">
+    <div class="vendor-modal-content relative flex flex-col justify-between">
 
       <!-- Top Sticky Modal Header with Close Button -->
-      <div class="relative h-48 sm:h-64 bg-slate-800 shrink-0">
+      <div class="relative h-48 sm:h-64 bg-slate-800 shrink-0 sticky top-0 z-20">
         <img id="vdm-cover" src="https://images.unsplash.com/photo-1519167758481-83f550bb49b3?auto=format&fit=crop&w=1200&q=80" alt="کاور" class="w-full h-full object-cover opacity-85">
         <div class="absolute inset-0 bg-gradient-to-t from-graphite/90 via-graphite/40 to-transparent"></div>
 
-        <button onclick="closeVendorDetailModal()" class="absolute top-4 left-4 bg-black/50 text-white p-2 rounded-full hover:bg-black/70 transition-colors z-10">
+        <button onclick="closeVendorDetailModal()" class="absolute top-4 left-4 bg-black/60 text-white p-2.5 rounded-full hover:bg-black/80 transition-colors z-30 cursor-pointer shadow-lg">
           <i data-lucide="x" class="w-5 h-5"></i>
         </button>
 
