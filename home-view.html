@@ -193,6 +193,40 @@
       </div>
     </div>
 
+    <!-- Categories Grid -->
+    <div class="categories-grid">
+      <div class="category-card" onclick="filterDirectoryByVendorCategory('تالار و باغ تالار عروسی')">
+        <div class="cat-icon">🏰</div>
+        <h3>تالارها & باغ تالارها</h3>
+        <p>تالار عروسی، باغ مجلل، سالن عقد</p>
+      </div>
+      <div class="category-card" onclick="filterDirectoryByVendorCategory('آتلیه عکاسی و فیلمبرداری')">
+        <div class="cat-icon">📸</div>
+        <h3>آتلیه & استودیو فیلمبرداری</h3>
+        <p>عکاسی، تصویربرداری هوایی، فرمالیته</p>
+      </div>
+      <div class="category-card" onclick="filterDirectoryByVendorCategory('مزون لباس عروس')">
+        <div class="cat-icon">👗</div>
+        <h3>مزون عروس & داماد</h3>
+        <p>لباس عروس، کت و شلوار، اکسسوری</p>
+      </div>
+      <div class="category-card" onclick="filterDirectoryByVendorCategory('سالن زیبایی و آرایشگاه عروس')">
+        <div class="cat-icon">💄</div>
+        <h3>سالن زیبایی & آرایشگاه</h3>
+        <p>میکاپ VIP عروس، خدمات پکیج داماد</p>
+      </div>
+      <div class="category-card" onclick="filterDirectoryByVendorCategory('تشریفات عروسی')">
+        <div class="cat-icon">💐</div>
+        <h3>تشریفات & گل‌آرایی</h3>
+        <p>دیزاین ورودی، ماشین عروس، گل‌کاری</p>
+      </div>
+      <div class="category-card" onclick="filterDirectoryByVendorCategory('موزیک')">
+        <div class="cat-icon">🎵</div>
+        <h3>موسیقی & دی‌جی</h3>
+        <p>ارکستر زنده، نورپردازی، سیستم صوتی</p>
+      </div>
+    </div>
+
     <!-- Static 5-Card Fixed-Height Category Grid -->
     <div id="category-hierarchical-container" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 gap-5">
       <!-- Populated dynamically via renderCategoryCards() -->
@@ -208,6 +242,22 @@
           <span>ابزارهای هوشمند برنامه‌ریزی عروسی</span>
         </div>
         <h2 class="text-xl sm:text-2xl font-bold text-graphite">میان‌برهای سریع مدیریت مراسم و دعوت مهمانان</h2>
+      </div>
+    </div>
+
+    <!-- Shortcuts Grid -->
+    <div class="shortcuts-grid">
+      <div class="shortcut-card" onclick="switchTab('invitation')">
+        <span class="icon">💌</span>
+        <h4>کارت دعوت آنلاین & RSVP</h4>
+      </div>
+      <div class="shortcut-card" onclick="switchTab('tools')">
+        <span class="icon">📊</span>
+        <h4>برنامه‌ریز بودجه & چک‌لیست</h4>
+      </div>
+      <div class="shortcut-card" onclick="switchTab('guests')">
+        <span class="icon">🎁</span>
+        <h4>مدیریت مهمانان & هدایا</h4>
       </div>
     </div>
 

@@ -441,3 +441,45 @@ main#directory-view {
   border-color: #D4AF37 !important;
   box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15) !important;
 }
+
+/* Category & Shortcut Grids Styling */
+.categories-grid, .shortcuts-grid {
+    display: grid !important;
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)) !important;
+    gap: 20px !important;
+    margin-top: 20px !important;
+    direction: rtl !important;
+}
+
+.category-card, .shortcut-card {
+    background: #FFFFFF !important;
+    border: 1px solid rgba(212, 175, 55, 0.3) !important;
+    border-radius: 14px !important;
+    padding: 20px !important;
+    text-align: center !important;
+    cursor: pointer !important;
+    transition: all 0.3s ease !important;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.03) !important;
+}
+
+.category-card:hover, .shortcut-card:hover {
+    transform: translateY(-5px) !important;
+    border-color: #D4AF37 !important;
+    box-shadow: 0 10px 25px rgba(212, 175, 55, 0.2) !important;
+}
+
+.cat-icon {
+    font-size: 32px !important;
+    margin-bottom: 10px !important;
+}
+
+.category-card h3 {
+    font-size: 16px !important;
+    color: #1B3B2B !important;
+    margin-bottom: 5px !important;
+}
+
+.category-card p {
+    font-size: 12px !important;
+    color: #76837B !important;
+}
