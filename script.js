@@ -7997,32 +7997,41 @@ if (document.readyState === "loading") {
     }
 
     function initVipShowcaseAutoScroll() {
-      const container = document.getElementById('vip-showcase-container') || document.querySelector('.vip-showcase-container');
-      if (!container) return;
+      const slider = document.getElementById('vip-showcase-container') || document.querySelector('.vip-showcase-container');
+      if (!slider) return;
 
-      let scrollInterval = null;
-      let isPaused = false;
+      let autoScrollInterval = null;
+      const scrollStep = 320; // Width of one card + gap
+      const scrollIntervalTime = 3000; // 3 seconds per slide
 
-      function startScroll() {
-        if (scrollInterval) clearInterval(scrollInterval);
-        scrollInterval = setInterval(() => {
-          if (isPaused) return;
+      function startAutoScroll() {
+        stopAutoScroll(); // Clear any existing timer first
+        autoScrollInterval = setInterval(() => {
+          // Check if reached the end of the scroll container
+          const maxScrollLeft = slider.scrollWidth - slider.clientWidth;
 
-          const maxScroll = container.scrollHeight - container.clientHeight;
-          if (container.scrollTop >= maxScroll - 10) {
-            container.scrollTo({ top: 0, behavior: 'smooth' });
+          // Handle RTL/LTR direction gracefully
+          if (Math.abs(slider.scrollLeft) >= maxScrollLeft - 10) {
+            slider.scrollTo({ left: 0, behavior: 'smooth' });
           } else {
-            container.scrollBy({ top: 120, behavior: 'smooth' });
+            slider.scrollBy({ left: -scrollStep, behavior: 'smooth' });
           }
-        }, 3500);
+        }, scrollIntervalTime);
       }
 
-      container.addEventListener('mouseenter', () => { isPaused = true; });
-      container.addEventListener('mouseleave', () => { isPaused = false; });
-      container.addEventListener('touchstart', () => { isPaused = true; });
-      container.addEventListener('touchend', () => { isPaused = false; });
+      function stopAutoScroll() {
+        if (autoScrollInterval) {
+          clearInterval(autoScrollInterval);
+        }
+      }
 
-      startScroll();
+      // Pause on hover so users can click on vendor cards comfortably
+      slider.addEventListener('mouseenter', stopAutoScroll);
+      slider.addEventListener('mouseleave', startAutoScroll);
+      slider.addEventListener('touchstart', stopAutoScroll, { passive: true });
+      slider.addEventListener('touchend', startAutoScroll, { passive: true });
+
+      startAutoScroll();
     }
 
     window.addEventListener('DOMContentLoaded', () => {
