@@ -3760,12 +3760,27 @@
               <span>شینیون و استایل مو</span>
             </label>
             <label class="flex items-center gap-2 cursor-pointer p-1.5 hover:bg-white rounded-lg">
-              <input type="checkbox" value="خدمات ناخن و پاکسازی پوست" class="rounded text-primary focus:ring-primary w-4 h-4">
-              <span>خدمات ناخن و پاکسازی پوست</span>
+              <input type="checkbox" value="درخواست تست گریم قبلی" class="rounded text-primary focus:ring-primary w-4 h-4">
+              <span>درخواست تست گریم قبلی</span>
             </label>
             <label class="flex items-center gap-2 cursor-pointer p-1.5 hover:bg-white rounded-lg">
               <input type="checkbox" value="میکاپ همراهان" class="rounded text-primary focus:ring-primary w-4 h-4">
               <span>میکاپ همراهان</span>
+            </label>
+          `;
+        } else if (cat.includes("موزیک") || cat.includes("دی‌جی") || cat.includes("موسیقی")) {
+          container.innerHTML = `
+            <label class="flex items-center gap-2 cursor-pointer p-1.5 hover:bg-white rounded-lg">
+              <input type="checkbox" value="بند زنده و ارکستر کامل" checked class="rounded text-primary focus:ring-primary w-4 h-4">
+              <span>بند زنده و ارکستر کامل</span>
+            </label>
+            <label class="flex items-center gap-2 cursor-pointer p-1.5 hover:bg-white rounded-lg">
+              <input type="checkbox" value="دی‌جی حرفه‌ای و پرکاشن" checked class="rounded text-primary focus:ring-primary w-4 h-4">
+              <span>دی‌جی حرفه‌ای و پرکاشن</span>
+            </label>
+            <label class="flex items-center gap-2 cursor-pointer p-1.5 hover:bg-white rounded-lg">
+              <input type="checkbox" value="تجهیزات سیستم صوت VIP & استیج LED" class="rounded text-primary focus:ring-primary w-4 h-4">
+              <span>تجهیزات سیستم صوت VIP & استیج LED</span>
             </label>
           `;
         } else if (cat.includes("گل") || cat.includes("ماشین")) {
@@ -6803,6 +6818,43 @@
                 <span class="block text-[10px] text-emerald-200 text-left dir-ltr mt-1">${msg.time}</span>
               </div>
             `;
+          } else if (msg.hasAppointmentCard && msg.appointmentDetails) {
+            const appt = msg.appointmentDetails;
+            content = `
+              <div class="max-w-md w-full bg-white border-2 border-emerald-500/60 p-4 rounded-3xl rounded-tl-xs shadow-lg space-y-3 text-xs font-bold text-graphite">
+                <div class="flex justify-between items-center border-b border-accent pb-2">
+                  <div class="flex items-center gap-1.5 text-emerald-800 font-black">
+                    <i data-lucide="calendar-check" class="w-4.5 h-4.5 text-emerald-600"></i>
+                    <span>${appt.title || 'کارت تایید وقت بازدید و مشاوره حضوری'}</span>
+                  </div>
+                  <span class="bg-emerald-100 text-emerald-800 text-[10px] font-bold px-2.5 py-0.5 rounded-full">وقت رزرو شد</span>
+                </div>
+
+                <div class="space-y-2 bg-emerald-50/70 p-3 rounded-2xl border border-emerald-200/80">
+                  <div class="flex justify-between text-xs">
+                    <span class="text-secondary font-medium">📅 تاریخ بازدید:</span>
+                    <span class="font-black text-graphite">${appt.date}</span>
+                  </div>
+                  <div class="flex justify-between text-xs">
+                    <span class="text-secondary font-medium">⏰ ساعت:</span>
+                    <span class="font-black text-graphite">${appt.time}</span>
+                  </div>
+                  <div class="flex justify-between text-xs">
+                    <span class="text-secondary font-medium">👤 مسئول هماهنگی:</span>
+                    <span class="font-bold text-graphite">${appt.contactPerson || 'مدیریت تشریفات'}</span>
+                  </div>
+                  <div class="pt-1.5 border-t border-emerald-200/60 text-[11px]">
+                    <span class="text-secondary font-medium block">📍 آدرس دقیق:</span>
+                    <span class="font-bold text-graphite leading-relaxed block mt-0.5">${appt.address}</span>
+                  </div>
+                </div>
+
+                <button onclick="confirmAppointmentScheduleCard('${msg.id}')" class="w-full bg-emerald-600 hover:bg-emerald-700 text-white font-bold py-2.5 rounded-xl text-xs shadow-xs transition-colors flex items-center justify-center gap-1.5 cursor-pointer">
+                  <i data-lucide="check-circle" class="w-4 h-4"></i>
+                  <span>تایید و ثبت در یادآور من</span>
+                </button>
+              </div>
+            `;
           } else if (msg.hasQuoteCard && msg.quoteDetails) {
             const q = msg.quoteDetails;
             let statusBadge = `<span class="bg-amber-100 text-amber-800 border border-amber-200 text-[10px] font-bold px-2.5 py-0.5 rounded-full">در انتظار بررسی</span>`;
@@ -6842,7 +6894,7 @@
 
                 <div class="grid grid-cols-2 gap-2 text-[10px] bg-bgCustom p-2 rounded-xl border border-accent">
                   <div>
-                    <span class="text-secondary block">شماره فاکتور:</span>
+                    <span class="text-secondary block">شماره پیش‌فاکتور:</span>
                     <span class="font-mono text-graphite font-bold">${q.invoiceNumber || 'INV-1403-8821'}</span>
                   </div>
                   <div>
@@ -6852,7 +6904,7 @@
                 </div>
 
                 <div class="space-y-1.5">
-                  <span class="text-secondary text-[11px] block">ریز خدمات و صورت‌حساب:</span>
+                  <span class="text-secondary text-[11px] block">ریز خدمات و برآورد اولیه:</span>
                   <div class="space-y-1">
                     ${lineItemsHtml}
                   </div>
@@ -6860,34 +6912,26 @@
 
                 <div class="p-3 bg-emerald-50 rounded-xl border border-emerald-200 space-y-1.5">
                   <div class="flex justify-between text-xs">
-                    <span class="text-secondary">مبلغ کل فاکتور:</span>
+                    <span class="text-secondary">برآورد کل هزینه:</span>
                     <span class="font-black text-graphite">${q.amount}</span>
-                  </div>
-                  <div class="flex justify-between text-xs text-primary font-black border-t border-emerald-200/60 pt-1">
-                    <span>مبلغ بیعانه (پیش‌پرداخت):</span>
-                    <span>${q.depositAmount || '۳۵,۰۰۰,۰۰۰ تومان'}</span>
                   </div>
                 </div>
 
                 <div class="flex flex-col gap-2 pt-1">
                   <div class="flex gap-2">
-                    <button onclick="acceptPreInvoiceAndPayDeposit('${activeThread.id}', '${msg.id}')" class="flex-1 bg-primary hover:bg-emerald-900 text-white py-2.5 rounded-xl text-xs font-bold transition-all shadow-xs flex items-center justify-center gap-1 cursor-pointer">
-                      <i data-lucide="check-circle-2" class="w-3.5 h-3.5"></i>
-                      <span>تایید پیش‌فاکتور</span>
+                    <button onclick="openAppointmentModal('${activeThread.id}', '${msg.id}')" class="flex-1 bg-primary hover:bg-emerald-900 text-white py-2.5 rounded-xl text-xs font-bold transition-all shadow-xs flex items-center justify-center gap-1 cursor-pointer">
+                      <i data-lucide="calendar" class="w-3.5 h-3.5"></i>
+                      <span>درخواست هماهنگی وقت بازدید حضوری</span>
                     </button>
                     <button onclick="openRevisionModal('${activeThread.id}', '${msg.id}')" class="bg-amber-50 hover:bg-amber-100 text-amber-800 border border-amber-200 px-3.5 py-2.5 rounded-xl text-xs font-bold transition-all flex items-center gap-1 cursor-pointer">
                       <i data-lucide="edit-3" class="w-3.5 h-3.5"></i>
                       <span>درخواست تغییرات</span>
                     </button>
                   </div>
-                  <button onclick="window.print()" class="w-full bg-slate-50 hover:bg-slate-100 text-secondary border border-accent py-1.5 rounded-xl text-[11px] font-bold flex items-center justify-center gap-1">
-                    <i data-lucide="printer" class="w-3.5 h-3.5"></i>
-                    <span>چاپ / خروجی رسمی PDF</span>
-                  </button>
                 </div>
 
                 <div class="flex justify-between items-center text-[10px] text-secondary border-t border-accent/60 pt-2">
-                  <span>نهایی‌سازی قرارداد و پرداخت بیعانه پس از مراجعه حضوری انجام می‌شود</span>
+                  <span>این برآورد صرفاً جهت اطلاع است و هیچ‌گونه الزام یا پرداخت آنلاین ندارد.</span>
                   <span class="font-mono dir-ltr">${msg.time}</span>
                 </div>
               </div>
@@ -7027,6 +7071,10 @@
       renderChatActiveThread();
       renderChatThreadsList();
       showToast('پیش‌فاکتور تعاملی با موفقیت به چت صادر شد.', 'success');
+    }
+
+    function confirmAppointmentScheduleCard(msgId) {
+      showToast('وقت بازدید و مشاوره حضوری تایید شد و به تقویم/یادآور شما اضافه گردید.', 'success');
     }
 
     let activeRevisionTarget = { threadId: null, msgId: null };
