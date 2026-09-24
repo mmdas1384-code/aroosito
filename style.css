@@ -442,8 +442,106 @@ main#directory-view {
   box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15) !important;
 }
 
-/* Category & Shortcut Grids Styling */
-.categories-grid, .shortcuts-grid {
+/* Main Category Cards Grid Styling */
+.main-categories-grid {
+    display: grid !important;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)) !important;
+    gap: 16px !important;
+    margin-top: 20px !important;
+    direction: rtl !important;
+}
+
+.luxury-cat-card {
+    background: #FFFFFF !important;
+    border: 1px solid #E2E8F0 !important;
+    border-radius: 16px !important;
+    padding: 16px !important;
+    display: flex !important;
+    flex-direction: column !important;
+    justify-content: space-between !important;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.03) !important;
+    transition: all 0.3s ease !important;
+    position: relative !important;
+    cursor: pointer !important;
+}
+
+.luxury-cat-card:hover {
+    border-color: #D4AF37 !important;
+    transform: translateY(-3px) !important;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.06) !important;
+}
+
+.cat-card-header {
+    display: flex !important;
+    justify-content: flex-start !important;
+}
+
+.subgroup-badge {
+    background: #F1F5F9 !important;
+    color: #475569 !important;
+    font-size: 11px !important;
+    padding: 3px 10px !important;
+    border-radius: 12px !important;
+    font-weight: 600 !important;
+}
+
+.cat-card-body {
+    text-align: center !important;
+    margin: 15px 0 !important;
+}
+
+.cat-icon-wrapper {
+    width: 48px !important;
+    height: 48px !important;
+    background: #1B3B2B !important;
+    color: #D4AF37 !important;
+    border-radius: 12px !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    margin: 0 auto 10px auto !important;
+    font-size: 22px !important;
+}
+
+.cat-title {
+    font-size: 15px !important;
+    font-weight: bold !important;
+    color: #1E293B !important;
+    margin-bottom: 6px !important;
+}
+
+.cat-desc {
+    font-size: 12px !important;
+    color: #64748B !important;
+    margin: 0 !important;
+}
+
+.cat-card-footer {
+    display: flex !important;
+    align-items: center !important;
+    justify-content: space-between !important;
+    border-top: 1px solid #F1F5F9 !important;
+    padding-top: 12px !important;
+    font-size: 11px !important;
+}
+
+.vendors-count-badge {
+    background: #F8FAFC !important;
+    color: #64748B !important;
+    padding: 3px 8px !important;
+    border-radius: 6px !important;
+    border: 1px solid #E2E8F0 !important;
+    font-weight: 600 !important;
+}
+
+.view-subgroups-link {
+    color: #1B3B2B !important;
+    text-decoration: none !important;
+    font-weight: bold !important;
+}
+
+/* Shortcuts Grid Styling */
+.shortcuts-grid {
     display: grid !important;
     grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)) !important;
     gap: 20px !important;
@@ -451,7 +549,7 @@ main#directory-view {
     direction: rtl !important;
 }
 
-.category-card, .shortcut-card {
+.shortcut-card {
     background: #FFFFFF !important;
     border: 1px solid rgba(212, 175, 55, 0.3) !important;
     border-radius: 14px !important;
@@ -462,24 +560,8 @@ main#directory-view {
     box-shadow: 0 4px 15px rgba(0, 0, 0, 0.03) !important;
 }
 
-.category-card:hover, .shortcut-card:hover {
+.shortcut-card:hover {
     transform: translateY(-5px) !important;
     border-color: #D4AF37 !important;
     box-shadow: 0 10px 25px rgba(212, 175, 55, 0.2) !important;
-}
-
-.cat-icon {
-    font-size: 32px !important;
-    margin-bottom: 10px !important;
-}
-
-.category-card h3 {
-    font-size: 16px !important;
-    color: #1B3B2B !important;
-    margin-bottom: 5px !important;
-}
-
-.category-card p {
-    font-size: 12px !important;
-    color: #76837B !important;
 }

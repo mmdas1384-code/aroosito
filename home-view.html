@@ -193,43 +193,99 @@
       </div>
     </div>
 
-    <!-- Categories Grid -->
-    <div class="categories-grid">
-      <div class="category-card" onclick="filterDirectoryByVendorCategory('تالار و باغ تالار عروسی')">
-        <div class="cat-icon">🏰</div>
-        <h3>تالارها & باغ تالارها</h3>
-        <p>تالار عروسی، باغ مجلل، سالن عقد</p>
-      </div>
-      <div class="category-card" onclick="filterDirectoryByVendorCategory('آتلیه عکاسی و فیلمبرداری')">
-        <div class="cat-icon">📸</div>
-        <h3>آتلیه & استودیو فیلمبرداری</h3>
-        <p>عکاسی، تصویربرداری هوایی، فرمالیته</p>
-      </div>
-      <div class="category-card" onclick="filterDirectoryByVendorCategory('مزون لباس عروس')">
-        <div class="cat-icon">👗</div>
-        <h3>مزون عروس & داماد</h3>
-        <p>لباس عروس، کت و شلوار، اکسسوری</p>
-      </div>
-      <div class="category-card" onclick="filterDirectoryByVendorCategory('سالن زیبایی و آرایشگاه عروس')">
-        <div class="cat-icon">💄</div>
-        <h3>سالن زیبایی & آرایشگاه</h3>
-        <p>میکاپ VIP عروس، خدمات پکیج داماد</p>
-      </div>
-      <div class="category-card" onclick="filterDirectoryByVendorCategory('تشریفات عروسی')">
-        <div class="cat-icon">💐</div>
-        <h3>تشریفات & گل‌آرایی</h3>
-        <p>دیزاین ورودی، ماشین عروس، گل‌کاری</p>
-      </div>
-      <div class="category-card" onclick="filterDirectoryByVendorCategory('موزیک')">
-        <div class="cat-icon">🎵</div>
-        <h3>موسیقی & دی‌جی</h3>
-        <p>ارکستر زنده، نورپردازی، سیستم صوتی</p>
-      </div>
-    </div>
+    <!-- Main Categories Grid -->
+    <div class="main-categories-grid">
 
-    <!-- Static 5-Card Fixed-Height Category Grid -->
-    <div id="category-hierarchical-container" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 gap-5">
-      <!-- Populated dynamically via renderCategoryCards() -->
+      <!-- Card 1 -->
+      <div class="luxury-cat-card" onclick="openSubCategoryDrawer(0)">
+        <div class="cat-card-header">
+          <span class="subgroup-badge">۵ زیرگروه</span>
+        </div>
+        <div class="cat-card-body">
+          <div class="cat-icon-wrapper">
+            <div class="cat-svg-icon">🏛️</div>
+          </div>
+          <h3 class="cat-title">تشریفات قانونی، عقد و مشاوره</h3>
+          <p class="cat-desc">دفتر ازدواج، مشاوره و سفره عقد</p>
+        </div>
+        <div class="cat-card-footer">
+          <span class="vendors-count-badge">+۵ کسب‌وکار</span>
+          <a href="#" onclick="event.stopPropagation(); openSubCategoryDrawer(0); return false;" class="view-subgroups-link">مشاهده زیرگروه‌ها ←</a>
+        </div>
+      </div>
+
+      <!-- Card 2 -->
+      <div class="luxury-cat-card" onclick="openSubCategoryDrawer(3)">
+        <div class="cat-card-header">
+          <span class="subgroup-badge">۵ زیرگروه</span>
+        </div>
+        <div class="cat-card-body">
+          <div class="cat-icon-wrapper">
+            <div class="cat-svg-icon">💎</div>
+          </div>
+          <h3 class="cat-title">طلا، خرید و خدمات جانبی</h3>
+          <p class="cat-desc">حلقه، طلا و خدمات مسافرتی</p>
+        </div>
+        <div class="cat-card-footer">
+          <span class="vendors-count-badge">+۱۰ کسب‌وکار</span>
+          <a href="#" onclick="event.stopPropagation(); openSubCategoryDrawer(3); return false;" class="view-subgroups-link">مشاهده زیرگروه‌ها ←</a>
+        </div>
+      </div>
+
+      <!-- Card 3 -->
+      <div class="luxury-cat-card" onclick="openSubCategoryDrawer(2)">
+        <div class="cat-card-header">
+          <span class="subgroup-badge">۶ زیرگروه</span>
+        </div>
+        <div class="cat-card-body">
+          <div class="cat-icon-wrapper">
+            <div class="cat-svg-icon">✨</div>
+          </div>
+          <h3 class="cat-title">زیبایی و استایل زوجین</h3>
+          <p class="cat-desc">آرایشگاه زنانه، مزون و پوشاک</p>
+        </div>
+        <div class="cat-card-footer">
+          <span class="vendors-count-badge">+۱۵ کسب‌وکار</span>
+          <a href="#" onclick="event.stopPropagation(); openSubCategoryDrawer(2); return false;" class="view-subgroups-link">مشاهده زیرگروه‌ها ←</a>
+        </div>
+      </div>
+
+      <!-- Card 4 -->
+      <div class="luxury-cat-card" onclick="openSubCategoryDrawer(1)">
+        <div class="cat-card-header">
+          <span class="subgroup-badge">۹ زیرگروه</span>
+        </div>
+        <div class="cat-card-body">
+          <div class="cat-icon-wrapper">
+            <div class="cat-svg-icon">📷</div>
+          </div>
+          <h3 class="cat-title">ثبت لحظات و موسیقی</h3>
+          <p class="cat-desc">عکاسی، فیلمبرداری و موزیک</p>
+        </div>
+        <div class="cat-card-footer">
+          <span class="vendors-count-badge">+۱۲ کسب‌وکار</span>
+          <a href="#" onclick="event.stopPropagation(); openSubCategoryDrawer(1); return false;" class="view-subgroups-link">مشاهده زیرگروه‌ها ←</a>
+        </div>
+      </div>
+
+      <!-- Card 5 -->
+      <div class="luxury-cat-card" onclick="openSubCategoryDrawer(0)">
+        <div class="cat-card-header">
+          <span class="subgroup-badge">۶ زیرگروه</span>
+        </div>
+        <div class="cat-card-body">
+          <div class="cat-icon-wrapper">
+            <div class="cat-svg-icon">🏢</div>
+          </div>
+          <h3 class="cat-title">مکان، تشریفات و پذیرایی</h3>
+          <p class="cat-desc">تالار، خدمات غذا و پذیرایی</p>
+        </div>
+        <div class="cat-card-footer">
+          <span class="vendors-count-badge">+۴ کسب‌وکار</span>
+          <a href="#" onclick="event.stopPropagation(); openSubCategoryDrawer(0); return false;" class="view-subgroups-link">مشاهده زیرگروه‌ها ←</a>
+        </div>
+      </div>
+
     </div>
   </section>
 
