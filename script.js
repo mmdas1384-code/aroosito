@@ -8637,6 +8637,33 @@ if (document.readyState === "loading") {
     }
 
   // Super Admin Hero Logo update function
+const subgroupData = {
+  1: ["دفتر رسمی ازدواج و طلاق", "سفره عقد و دیزاین مراسم", "مشاوره خانواده و زوج‌درمانی", "خدمات حقوقی و ثبت قرارداد"],
+  2: ["گالری طلا و جواهرات عروس", "حلقه ازدواج و پشت‌حلقه", "خدمات مسافرتی و تور ماه عسل", "اجاره خودرو لوکس"],
+  3: ["سالن زیبایی و میکاپ VIP", "آرایشگاه و گریم داماد", "مزون لباس عروس و شب", "پوشاک و کت‌وشلوار داماد", "تاج و اکسسوری"],
+  4: ["استودیو و آتلیه عکاسی", "فیلمبرداری و تصویربرداری هوایی", "ساخت تیزر و کلیپ فرمالیته", "گروه موسیقی و دی‌جی زنده"],
+  5: ["تالار عروسی و باغ‌تالار", "عمارت اختصاصی و هتل", "کترینگ و خدمات غذا", "تشریفات و گل‌آرایی ورودی"]
+};
+
+function openSubgroupsModal(catId, catTitle) {
+  const modal = document.getElementById('subgroups-modal');
+  const titleElem = document.getElementById('subgroups-title');
+  const listElem = document.getElementById('subgroups-list');
+
+  if (!modal || !titleElem || !listElem) return;
+
+  titleElem.innerText = `زیرگروه‌های ${catTitle}`;
+  const subgroups = subgroupData[catId] || [];
+  listElem.innerHTML = subgroups.map(sub => `
+    <div class="subgroup-item">
+      <span class="text-xs font-bold text-graphite">📌 ${sub}</span>
+      <button onclick="switchTab('directory'); document.getElementById('subgroups-modal').classList.add('hidden');" class="btn-sub-view cursor-pointer">مشاهده کسب‌وکارها</button>
+    </div>
+  `).join('');
+
+  modal.classList.remove('hidden');
+}
+
   function handleUpdateHeroLogo() {
     const input = document.getElementById('admin-hero-logo-url-input');
     const logoImg = document.getElementById('site-hero-logo');

@@ -4414,8 +4414,17 @@
       </div>
     </div>
   </footer>
+  <!-- SUBGROUPS MODAL OVERLAY -->
+  <div id="subgroups-modal" class="subgroups-overlay hidden">
+    <div class="subgroups-card relative">
+      <button onclick="document.getElementById('subgroups-modal').classList.add('hidden')" class="close-btn absolute top-3 left-3 w-8 h-8 rounded-full bg-slate-200 hover:bg-slate-300 text-graphite font-bold flex items-center justify-center cursor-pointer transition-colors">✕</button>
+      <h3 id="subgroups-title" class="text-base font-bold text-[#1B3B2B] border-b border-accent pb-3 mb-3"></h3>
+      <div id="subgroups-list" class="subgroups-grid space-y-2"></div>
+    </div>
+  </div>
+
   <!-- FLOATING SUB-CATEGORY DRAWER / MODAL -->
-  <div id="sub-category-drawer-modal" class="hidden fixed inset-0 bg-black/60 backdrop-blur-xs z-50 flex items-center justify-center p-4 transition-all animate-fadeIn">
+  <div id="sub-category-drawer-modal" class="hidden fixed inset-0 bg-black/60 backdrop-blur-xs z-50 items-center justify-center p-4 transition-all animate-fadeIn">
     <div class="bg-white rounded-3xl shadow-2xl max-w-2xl w-full overflow-hidden border border-[#D4AF37]/40 flex flex-col max-h-[85vh] animate-scaleUp">
 
       <!-- Drawer Header (Emerald Forest #1B3B2B & Rich Gold #D4AF37) -->
