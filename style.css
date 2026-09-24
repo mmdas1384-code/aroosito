@@ -425,6 +425,7 @@ main#directory-view {
   scroll-behavior: smooth !important;
   scrollbar-width: none !important; /* Firefox */
   -ms-overflow-style: none !important; /* IE and Edge */
+  gap: 15px !important;
 }
 
 #vip-showcase-container::-webkit-scrollbar,
@@ -432,13 +433,30 @@ main#directory-view {
   display: none !important; /* Chrome, Safari, Opera */
 }
 
+.pill-btn {
+  border-radius: 20px !important;
+  font-size: 11px !important;
+  cursor: pointer !important;
+  transition: all 0.2s ease !important;
+}
+
+.pill-btn.active, .pill-btn:hover {
+  background: #1B3B2B !important;
+  color: #D4AF37 !important;
+  font-weight: bold !important;
+}
+
 /* VIP Vendor Cards & Showcase Styling */
 .vip-vendor-card {
-  transition: all 0.3s ease-in-out;
+  min-width: 280px !important;
+  max-width: 320px !important;
+  flex-shrink: 0 !important;
+  transition: transform 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease !important;
 }
 
 .vip-vendor-card:hover {
   border-color: #D4AF37 !important;
+  transform: translateY(-4px) !important;
   box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15) !important;
 }
 

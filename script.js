@@ -43,32 +43,32 @@ const HOME_VIEW_HTML = `<!-- HOMEPAGE CONTENT MODULE (home-view.html) -->
 
       <!-- Right Column: Interactive VIP Vendors Showcase -->
       <div class="lg:col-span-5 bg-gradient-to-b from-slate-50 to-amber-50/30 border border-accent/80 rounded-3xl p-5 flex flex-col shadow-2xs relative space-y-3">
-        <div class="flex items-center justify-between border-b border-accent/80 pb-2">
+        <div class="flex items-center justify-between border-b border-accent/80 pb-2 flex-wrap gap-2">
           <div class="flex items-center gap-2">
-            <span class="w-2.5 h-2.5 rounded-full bg-emerald-500 animate-pulse"></span>
+            <span class="text-[10px] text-amber-800 font-bold bg-amber-100 px-2 py-0.5 rounded-full border border-amber-300">⭐ VIP</span>
             <h3 class="text-xs sm:text-sm font-black text-graphite">ویترین تامین‌کنندگان برتر استان یزد (VIP Showcase)</h3>
           </div>
-          <span class="text-[10px] text-amber-800 font-bold bg-amber-100 px-2 py-0.5 rounded-full border border-amber-300">VIP ⭐</span>
+          <span class="text-[10px] text-slate-600 font-bold bg-slate-100 px-2 py-0.5 rounded-full border border-slate-200">🛡️ تضمین اصالت & قیمت یزد</span>
         </div>
 
         <!-- Tabbed Category Quick Filter -->
         <div class="flex items-center gap-1.5 overflow-x-auto no-scrollbar pb-1 text-[11px] font-bold">
-          <button type="button" onclick="filterVipShowcase('all')" id="vip-tab-all" class="vip-tab-btn px-3 py-1 rounded-xl bg-[#1B3B2B] text-[#D4AF37] transition-all shrink-0 cursor-pointer shadow-xs">
+          <button type="button" onclick="filterVipShowcase('all')" id="vip-tab-all" class="vip-tab-btn pill-btn px-3 py-1 rounded-xl bg-[#1B3B2B] text-[#D4AF37] transition-all shrink-0 cursor-pointer shadow-xs">
             همه برترین‌ها
           </button>
-          <button type="button" onclick="filterVipShowcase('hall')" id="vip-tab-hall" class="vip-tab-btn px-3 py-1 rounded-xl bg-white border border-accent hover:border-[#D4AF37] text-graphite transition-all shrink-0 cursor-pointer">
+          <button type="button" onclick="filterVipShowcase('hall')" id="vip-tab-hall" class="vip-tab-btn pill-btn px-3 py-1 rounded-xl bg-white border border-accent hover:border-[#D4AF37] text-graphite transition-all shrink-0 cursor-pointer">
             تالار و باغ‌سرا
           </button>
-          <button type="button" onclick="filterVipShowcase('studio')" id="vip-tab-studio" class="vip-tab-btn px-3 py-1 rounded-xl bg-white border border-accent hover:border-[#D4AF37] text-graphite transition-all shrink-0 cursor-pointer">
+          <button type="button" onclick="filterVipShowcase('studio')" id="vip-tab-studio" class="vip-tab-btn pill-btn px-3 py-1 rounded-xl bg-white border border-accent hover:border-[#D4AF37] text-graphite transition-all shrink-0 cursor-pointer">
             آتلیه و عکاسی
           </button>
-          <button type="button" onclick="filterVipShowcase('beauty')" id="vip-tab-beauty" class="vip-tab-btn px-3 py-1 rounded-xl bg-white border border-accent hover:border-[#D4AF37] text-graphite transition-all shrink-0 cursor-pointer">
+          <button type="button" onclick="filterVipShowcase('beauty')" id="vip-tab-beauty" class="vip-tab-btn pill-btn px-3 py-1 rounded-xl bg-white border border-accent hover:border-[#D4AF37] text-graphite transition-all shrink-0 cursor-pointer">
             سالن زیبایی
           </button>
         </div>
 
-        <!-- Vertical Scrolling / Carousel Grid Wrapper -->
-        <div id="vip-showcase-container" class="relative max-h-[300px] overflow-y-auto vip-showcase-container space-y-3 p-1">
+        <!-- Horizontal Auto-Scrolling Carousel Grid Wrapper -->
+        <div id="vip-showcase-container" class="relative overflow-x-auto vip-showcase-container flex gap-3 p-1">
           <!-- Item 1 (Venue) -->
           <div data-vip-cat="hall" class="vip-vendor-card bg-white border border-accent/80 hover:border-[#D4AF37] p-3 rounded-2xl shadow-2xs hover:shadow-lg transition-all flex flex-col gap-2.5 group relative overflow-hidden">
             <div class="relative h-28 rounded-xl overflow-hidden bg-slate-900">
@@ -8001,22 +8001,22 @@ if (document.readyState === "loading") {
       if (!slider) return;
 
       let autoScrollInterval = null;
-      const scrollStep = 320; // Width of one card + gap
       const scrollIntervalTime = 3000; // 3 seconds per slide
 
-      function startAutoScroll() {
-        stopAutoScroll(); // Clear any existing timer first
-        autoScrollInterval = setInterval(() => {
-          // Check if reached the end of the scroll container
-          const maxScrollLeft = slider.scrollWidth - slider.clientWidth;
+      function autoScroll() {
+        const cardWidth = slider.querySelector('.vip-vendor-card')?.offsetWidth + 15 || 320;
+        const maxScroll = slider.scrollWidth - slider.clientWidth;
 
-          // Handle RTL/LTR direction gracefully
-          if (Math.abs(slider.scrollLeft) >= maxScrollLeft - 10) {
-            slider.scrollTo({ left: 0, behavior: 'smooth' });
-          } else {
-            slider.scrollBy({ left: -scrollStep, behavior: 'smooth' });
-          }
-        }, scrollIntervalTime);
+        if (Math.abs(slider.scrollLeft) >= maxScroll - 10) {
+          slider.scrollTo({ left: 0, behavior: 'smooth' });
+        } else {
+          slider.scrollBy({ left: -cardWidth, behavior: 'smooth' });
+        }
+      }
+
+      function startAutoScroll() {
+        stopAutoScroll();
+        autoScrollInterval = setInterval(autoScroll, scrollIntervalTime);
       }
 
       function stopAutoScroll() {
