@@ -3821,15 +3821,24 @@
         submittedAt: new Date().toISOString()
       };
 
-      console.log('Inquiry JSON Payload for /api/inquiries/submit:', inquiryPayload);
+      console.log('Inquiry JSON Payload for /api/inquiries:', inquiryPayload);
+
+      // Save inquiry to localStorage DB fallback
+      try {
+        const storedInquiries = JSON.parse(localStorage.getItem('aroosi_inquiries_db') || '[]');
+        storedInquiries.unshift(inquiryPayload);
+        localStorage.setItem('aroosi_inquiries_db', JSON.stringify(storedInquiries));
+      } catch (e) {
+        console.error('Failed to save inquiry to localStorage DB:', e);
+      }
 
       try {
         if (typeof fetch === 'function') {
-          fetch('/api/inquiries/submit', {
+          fetch('/api/inquiries', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify(inquiryPayload)
-          }).catch(err => console.log('Mock environment API submit catch:', err));
+          }).catch(err => console.log('API submit fallback catch:', err));
         }
       } catch (err) {
         console.log('Static client environment submit:', err);
