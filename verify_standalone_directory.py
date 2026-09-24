@@ -22,7 +22,7 @@ async def run():
         print(f"Home visible: {home_visible}, Directory visible default: {directory_visible}")
 
         # 2. Click "دایرکتوری جامع تامین‌کنندگان"
-        await page.click("text=دایرکتوری جامع تامین‌کنندگان")
+        await page.click("button:has-text('دایرکتوری جامع تامین‌کنندگان')")
         await page.wait_for_timeout(1000)
 
         dir_visible_after = await page.is_visible("#tab-directory")
