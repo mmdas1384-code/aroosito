@@ -3348,21 +3348,72 @@
       if (!container) return;
       container.innerHTML = '';
 
-      inquiries.forEach(inq => {
-        const card = document.createElement('div');
-        card.className = "p-4 bg-bgCustom rounded-2xl border border-accent space-y-2";
-        card.innerHTML = `
-          <div class="flex justify-between items-center text-xs">
-            <span class="font-bold text-graphite">${inq.name} (${inq.phone})</span>
-            <span class="text-secondary font-medium">تاریخ: ${inq.date} | ${inq.guests} مهمان</span>
+      if (inquiries.length === 0) {
+        container.innerHTML = `
+          <div class="p-6 text-center text-secondary text-xs font-bold bg-bgCustom rounded-2xl border border-accent">
+            هنوز هیچ استعلامی ثبت نشده است.
           </div>
-          <p class="text-xs text-graphite/80">${inq.details}</p>
-          <div class="pt-2 flex gap-2">
-            <button onclick="showToast('پیش‌فاکتور ارسال شد.', 'success')" class="bg-primary text-white px-3 py-1.5 rounded-lg text-xs font-bold">ارسال پیشنهاد قیمت</button>
+        `;
+        return;
+      }
+
+      inquiries.forEach((inq, idx) => {
+        const card = document.createElement('div');
+        card.className = "p-4 bg-bgCustom rounded-2xl border border-accent space-y-2.5";
+        const currentStatus = inq.status || 'pending';
+
+        card.innerHTML = `
+          <div class="flex flex-col sm:flex-row justify-between sm:items-center gap-2 text-xs">
+            <div class="flex items-center gap-2">
+              <span class="font-bold text-graphite text-sm">${inq.name} (${inq.phone})</span>
+              <span class="text-[10px] font-bold px-2 py-0.5 rounded-full ${
+                currentStatus === 'booked' ? 'bg-emerald-100 text-emerald-800' :
+                currentStatus === 'replied' ? 'bg-blue-100 text-blue-800' :
+                currentStatus === 'cancelled' ? 'bg-rose-100 text-rose-800' : 'bg-amber-100 text-amber-800'
+              }">
+                ${currentStatus === 'booked' ? 'نهایی / رزرو شده' : currentStatus === 'replied' ? 'پاسخ داده شده' : currentStatus === 'cancelled' ? 'لغو شده' : 'در انتظار پاسخ'}
+              </span>
+            </div>
+            <span class="text-secondary font-medium">تاریخ مراسم: ${inq.date} | ${inq.guests || 200} مهمان</span>
+          </div>
+
+          <p class="text-xs text-graphite/90 bg-white p-2.5 rounded-xl border border-accent/60">${inq.details}</p>
+
+          <div class="pt-1 flex flex-wrap items-center justify-between gap-2 border-t border-accent/60 text-xs">
+            <div class="flex items-center gap-2">
+              <label class="text-secondary font-bold text-[11px]">تغییر وضعیت لید:</label>
+              <select onchange="updateInquiryStatus(${idx}, this.value)" class="bg-white border border-accent rounded-lg px-2 py-1 text-xs font-bold text-graphite focus:outline-none">
+                <option value="pending" ${currentStatus === 'pending' ? 'selected' : ''}>در انتظار پاسخ</option>
+                <option value="replied" ${currentStatus === 'replied' ? 'selected' : ''}>پاسخ داده شده</option>
+                <option value="booked" ${currentStatus === 'booked' ? 'selected' : ''}>رزرو نهایی شد</option>
+                <option value="cancelled" ${currentStatus === 'cancelled' ? 'selected' : ''}>لغو شد</option>
+              </select>
+            </div>
+
+            <div class="flex items-center gap-1.5">
+              <button onclick="openPreInvoiceModal()" class="bg-primary hover:bg-emerald-900 text-white px-3 py-1.5 rounded-lg text-xs font-bold transition-colors cursor-pointer">
+                صدور پیش‌فاکتور
+              </button>
+              <button onclick="exportInquiriesCsv()" class="bg-white border border-accent hover:border-primary text-graphite px-2.5 py-1.5 rounded-lg text-xs font-bold transition-colors cursor-pointer">
+                خروجی CSV
+              </button>
+            </div>
           </div>
         `;
         container.appendChild(card);
       });
+    }
+
+    function updateInquiryStatus(index, newStatus) {
+      if (inquiries[index]) {
+        inquiries[index].status = newStatus;
+        showToast('وضعیت لید مشتری به روزرسانی شد.', 'success');
+        renderInquiries();
+      }
+    }
+
+    function exportInquiriesCsv() {
+      showToast('خروجی کامل لیدها و استعلام‌ها در قالب CSV آماده دانلود گردید.', 'info');
     }
 
     function runAiAllocation() {
@@ -3614,6 +3665,20 @@
       showToast('گالری تصاویر فیلتر شد.', 'info');
     }
 
+    function toggleModalFaq(id) {
+      const el = document.getElementById(id);
+      const icon = document.getElementById(id + '-icon');
+      if (el) {
+        if (el.classList.contains('hidden')) {
+          el.classList.remove('hidden');
+          if (icon) icon.innerText = '➖';
+        } else {
+          el.classList.add('hidden');
+          if (icon) icon.innerText = '＋';
+        }
+      }
+    }
+
     function toggleAddReviewForm() {
       const form = document.getElementById('vdm-add-review-form');
       if (form) form.classList.toggle('hidden');
@@ -3821,7 +3886,7 @@
         submittedAt: new Date().toISOString()
       };
 
-      console.log('Inquiry JSON Payload for /api/inquiries:', inquiryPayload);
+      console.log('Inquiry JSON Payload for /api/inquiries/submit:', inquiryPayload);
 
       // Save inquiry to localStorage DB fallback
       try {
@@ -3834,7 +3899,7 @@
 
       try {
         if (typeof fetch === 'function') {
-          fetch('/api/inquiries', {
+          fetch('/api/inquiries/submit', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify(inquiryPayload)

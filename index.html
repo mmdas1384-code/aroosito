@@ -1763,6 +1763,68 @@
         </div>
       </div>
 
+      <!-- Vendor Analytics & Conversion Metrics KPI Section -->
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+        <div class="bg-white border border-accent rounded-3xl p-5 shadow-xs space-y-1">
+          <div class="flex justify-between items-center text-xs text-secondary font-bold">
+            <span>بازدید کل پروفایل:</span>
+            <span class="text-emerald-700 bg-emerald-50 px-2 py-0.5 rounded-md">↑ ۱۴٪</span>
+          </div>
+          <p id="vd-kpi-views" class="text-2xl font-black text-graphite">۳,۸۵۰ <span class="text-xs font-normal text-secondary">بازدید</span></p>
+        </div>
+
+        <div class="bg-white border border-accent rounded-3xl p-5 shadow-xs space-y-1">
+          <div class="flex justify-between items-center text-xs text-secondary font-bold">
+            <span>نرخ تبدیل به لید (Conversion):</span>
+            <span class="text-primary bg-primary/10 px-2 py-0.5 rounded-md">عالی</span>
+          </div>
+          <p id="vd-kpi-conversion" class="text-2xl font-black text-primary">۴.۲٪ <span class="text-xs font-normal text-secondary">استعلام</span></p>
+        </div>
+
+        <div class="bg-white border border-accent rounded-3xl p-5 shadow-xs space-y-1">
+          <div class="flex justify-between items-center text-xs text-secondary font-bold">
+            <span>لیدها / استعلام‌ها:</span>
+            <span class="text-amber-700 bg-amber-50 px-2 py-0.5 rounded-md">جدید</span>
+          </div>
+          <p id="vd-kpi-leads" class="text-2xl font-black text-graphite">۱۶۲ <span class="text-xs font-normal text-secondary">درخواست</span></p>
+        </div>
+
+        <div class="bg-white border border-accent rounded-3xl p-5 shadow-xs space-y-1">
+          <div class="flex justify-between items-center text-xs text-secondary font-bold">
+            <span>نشان‌های افتخار کسب‌شده:</span>
+            <span class="text-emerald-700 font-bold">VIP ⭐</span>
+          </div>
+          <div class="flex items-center gap-1 pt-1 text-[11px] font-bold">
+            <span class="bg-amber-100 text-amber-900 border border-amber-300 px-2 py-0.5 rounded-full">برتر یزد</span>
+            <span class="bg-emerald-100 text-emerald-900 border border-emerald-300 px-2 py-0.5 rounded-full">پاسخگوی سریع</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- AI Quick Responder Configuration Box -->
+      <div class="bg-white border border-accent rounded-3xl p-6 shadow-xs space-y-4">
+        <div class="flex flex-col sm:flex-row justify-between sm:items-center gap-3 border-b border-accent pb-3">
+          <div>
+            <h3 class="text-base font-bold text-graphite flex items-center gap-2">
+              <i data-lucide="bot" class="w-5 h-5 text-primary"></i>
+              <span>پاسخگوی خودکار AI و هوشمند بیرون از ساعات کاری (AI Quick Responder)</span>
+            </h3>
+            <p class="text-xs text-secondary mt-0.5">ارسال خودکار کاتالوگ و جدول قیمت به لیدها خارج از زمان کاری</p>
+          </div>
+
+          <label class="flex items-center gap-2 text-xs font-bold text-graphite bg-bgCustom px-3.5 py-2 rounded-xl border border-accent cursor-pointer shrink-0">
+            <input type="checkbox" id="ai-responder-toggle" checked onchange="showToast('وضعیت پاسخگوی خودکار AI به روزرسانی شد.', 'success')" class="rounded text-primary focus:ring-primary w-4 h-4">
+            <span>پاسخگوی خودکار فعال</span>
+          </label>
+        </div>
+
+        <div class="space-y-2 text-xs font-bold text-graphite">
+          <label class="block text-secondary">متن پیام خودکار ارسالی به زوج‌ها هنگام ثبت استعلام جدید:</label>
+          <textarea id="ai-responder-text" rows="2" class="w-full bg-bgCustom border border-accent rounded-xl p-3 text-xs font-medium focus:outline-none focus:border-primary">سلام و تبریک فراوان بابت پیوندتان! درخواست استعلام شما دریافت شد. کاتالوگ پکیج‌های کامل و تخفیف ویژه پلتفرم عروسی تو به زودی برای شما ارسال می‌گردد.</textarea>
+          <button type="button" onclick="showToast('متن پاسخگوی خودکار با موفقیت ثبت گردید.', 'success')" class="bg-primary hover:bg-emerald-900 text-white font-bold px-4 py-2 rounded-xl text-xs transition-colors">ذخیره پیام خودکار</button>
+        </div>
+      </div>
+
 
       <!-- Profile Avatar / Logo Management -->
       <section class="bg-white border border-accent rounded-3xl p-6 shadow-xs space-y-4">
@@ -3485,6 +3547,46 @@
               <span class="bg-amber-100 text-amber-900 border border-amber-300 text-[10px] font-bold px-2.5 py-1 rounded-full flex items-center gap-1">
                 ✅ فضای باز & سالن سرپوشیده مجلل
               </span>
+            </div>
+          </div>
+
+          <!-- FAQ Accordion & Cancellation/Payment Policies -->
+          <div class="mt-5 space-y-3">
+            <h4 class="text-sm font-bold text-[#1B3B2B] border-r-4 border-[#D4AF37] pr-2">سوالات متداول & قوانین کنسلی و پرداخت</h4>
+
+            <div class="space-y-2 text-xs">
+              <!-- FAQ Item 1 -->
+              <div class="border border-gray-200 rounded-xl overflow-hidden bg-white">
+                <button type="button" onclick="toggleModalFaq('mfaq-1')" class="w-full text-right p-3 font-bold text-[#1B3B2B] flex justify-between items-center bg-gray-50/80 hover:bg-gray-100 transition-colors">
+                  <span>❓ نحوه پرداخت بیعانه و تسویه حساب نهایی چگونه است؟</span>
+                  <span id="mfaq-1-icon" class="text-xs font-black">＋</span>
+                </button>
+                <div id="mfaq-1" class="hidden p-3 text-gray-700 leading-relaxed border-t border-gray-100 bg-white">
+                  ۳۰٪ مبلغ کل فاکتور هنگام رزرو به عنوان بیعانه دریافت می‌گردد و مابقی طی ۲ قسط تا ۷۲ ساعت قبل از برگزاری جشن تسویه می‌شود.
+                </div>
+              </div>
+
+              <!-- FAQ Item 2 -->
+              <div class="border border-gray-200 rounded-xl overflow-hidden bg-white">
+                <button type="button" onclick="toggleModalFaq('mfaq-2')" class="w-full text-right p-3 font-bold text-[#1B3B2B] flex justify-between items-center bg-gray-50/80 hover:bg-gray-100 transition-colors">
+                  <span>❓ شرایط کنسلی یا تغییر تاریخ مراسم به چه صورت است؟</span>
+                  <span id="mfaq-2-icon" class="text-xs font-black">＋</span>
+                </button>
+                <div id="mfaq-2" class="hidden p-3 text-gray-700 leading-relaxed border-t border-gray-100 bg-white">
+                  در صورت انصراف تا ۳۰ روز قبل از مراسم، ۸۰٪ بیعانه عودت داده می‌شود. تغییر تاریخ تا ۶۰ روز قبل بدون هیچ‌گونه جریمه امکان‌پذیر است.
+                </div>
+              </div>
+
+              <!-- FAQ Item 3 -->
+              <div class="border border-gray-200 rounded-xl overflow-hidden bg-white">
+                <button type="button" onclick="toggleModalFaq('mfaq-3')" class="w-full text-right p-3 font-bold text-[#1B3B2B] flex justify-between items-center bg-gray-50/80 hover:bg-gray-100 transition-colors">
+                  <span>❓ آیا ورود گروه موزیک و عکاس اختصاصی زوجین مجاز است؟</span>
+                  <span id="mfaq-3-icon" class="text-xs font-black">＋</span>
+                </button>
+                <div id="mfaq-3" class="hidden p-3 text-gray-700 leading-relaxed border-t border-gray-100 bg-white">
+                  بله، ورود کادر عکاسی و گروه موزیک با هماهنگی قبلی و رعایت قوانین تالار کاملاً بلامانع می‌باشد.
+                </div>
+              </div>
             </div>
           </div>
         </div>
