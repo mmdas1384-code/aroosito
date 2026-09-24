@@ -3445,6 +3445,7 @@
 
       const titleEl = document.getElementById('vdm-title');
       const coverEl = document.getElementById('vdm-cover');
+      const avatarEl = document.getElementById('vdm-avatar');
       const catEl = document.getElementById('vdm-category');
       const districtEl = document.getElementById('vdm-district');
       const bottomPriceEl = document.getElementById('vdm-bottom-price');
@@ -3453,6 +3454,7 @@
 
       if (titleEl) titleEl.innerText = vendor.name;
       if (coverEl) coverEl.src = vendor.image || "https://images.unsplash.com/photo-1519167758481-83f550bb49b3?auto=format&fit=crop&w=1200&q=80";
+      if (avatarEl) avatarEl.src = vendor.image || "https://images.unsplash.com/photo-1519167758481-83f550bb49b3?auto=format&fit=crop&w=400&q=80";
       if (catEl) catEl.innerText = vendor.category;
       if (districtEl) districtEl.innerText = `📍 ${vendor.province || 'استان یزد'}، ${vendor.district || 'صفائیه'}`;
       if (bottomPriceEl) bottomPriceEl.innerText = vendor.priceRange || "۶۵,۰۰۰,۰۰۰ تومان";
@@ -3505,6 +3507,7 @@
       if (hoursEl) hoursEl.innerText = vendor.hours || "همه روزه از ۱۰:۰۰ الی ۲۱:۰۰";
       if (instaEl) instaEl.innerText = vendor.instagram || "@yazd_wedding_studio";
 
+      renderModalAvailabilityCalendar('اردیبهشت');
       switchModalTab(0);
       if (typeof lucide !== 'undefined' && lucide.createIcons) lucide.createIcons();
     }
@@ -3551,10 +3554,52 @@
     }
 
     function switchVdmSubTab(subTab) {
-      const map = { 'about': 0, 'portfolio': 1, 'packages': 2, 'reviews': 3, 'contact': 4 };
+      const map = { 'about': 0, 'portfolio': 1, 'packages': 2, 'calendar': 3, 'reviews': 4, 'contact': 5 };
       if (typeof map[subTab] !== 'undefined') {
         switchModalTab(map[subTab]);
       }
+    }
+
+    function renderModalAvailabilityCalendar(monthName) {
+      const pills = document.querySelectorAll('.vcal-month-pill');
+      pills.forEach(pill => {
+        if (pill.innerText.includes(monthName)) {
+          pill.className = "vcal-month-pill active px-3 py-1.5 rounded-xl bg-[#1B3B2B] text-white transition-all cursor-pointer";
+        } else {
+          pill.className = "vcal-month-pill px-3 py-1.5 rounded-xl bg-white border border-gray-200 text-gray-700 hover:border-[#D4AF37] transition-all cursor-pointer";
+        }
+      });
+
+      const grid = document.getElementById('vdm-calendar-days-grid');
+      if (!grid) return;
+
+      const bookedDays = [4, 8, 12, 19, 25, 26];
+      const pendingDays = [2, 15, 21];
+
+      let html = '';
+      for (let day = 1; day <= 30; day++) {
+        let bgClass = "bg-emerald-50 hover:bg-emerald-100 text-emerald-900 border-emerald-300";
+        let statusBadge = "آزاد";
+
+        if (bookedDays.includes(day)) {
+          bgClass = "bg-rose-50 text-rose-900 border-rose-300 opacity-90";
+          statusBadge = "رزرو شده";
+        } else if (pendingDays.includes(day)) {
+          bgClass = "bg-amber-50 text-amber-900 border-amber-300";
+          statusBadge = "استعلام";
+        }
+
+        html += `
+          <div onclick="openInquiryModal(1, 'استعلام رزرو تاریخ ${day} ${monthName}')" class="p-2 sm:p-2.5 rounded-xl border flex flex-col justify-between items-center h-16 sm:h-20 transition-all cursor-pointer shadow-2xs ${bgClass}">
+            <span class="text-xs sm:text-sm font-black">${day}</span>
+            <span class="text-[9px] sm:text-[10px] font-extrabold px-1.5 py-0.5 rounded-md ${
+              bookedDays.includes(day) ? 'bg-rose-200 text-rose-900' : pendingDays.includes(day) ? 'bg-amber-200 text-amber-900' : 'bg-emerald-200 text-emerald-900'
+            }">${statusBadge}</span>
+          </div>
+        `;
+      }
+
+      grid.innerHTML = html;
     }
 
     function filterModalGallery(category) {

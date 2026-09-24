@@ -244,17 +244,28 @@ header, nav, .header-container, .navbar {
     margin-bottom: 8px !important;
 }
 
-/* Luxury Sidebar Action Card */
+/* Luxury Glassmorphism Sidebar Action Card */
 .clean-vmodal-sidebar {
-    background: linear-gradient(145deg, #FFFFFF, #F5EFEB) !important;
-    border: 1px solid rgba(212, 175, 55, 0.6) !important;
-    border-radius: 18px !important;
+    background: rgba(255, 255, 255, 0.92) !important;
+    backdrop-filter: blur(12px) !important;
+    -webkit-backdrop-filter: blur(12px) !important;
+    border: 1.5px solid rgba(212, 175, 55, 0.6) !important;
+    border-radius: 22px !important;
     padding: 22px !important;
     display: flex !important;
     flex-direction: column !important;
     gap: 14px !important;
-    box-shadow: 0 10px 30px rgba(27, 59, 43, 0.08) !important;
+    box-shadow: 0 15px 35px rgba(27, 59, 43, 0.12) !important;
     height: fit-content !important;
+}
+
+/* Calendar Month Pills in Modal */
+.vcal-month-pill.active {
+    background: #1B3B2B !important;
+    color: #D4AF37 !important;
+    border-color: #D4AF37 !important;
+    font-weight: bold !important;
+    box-shadow: 0 2px 8px rgba(27, 59, 43, 0.2) !important;
 }
 
 .vmodal-price-box {

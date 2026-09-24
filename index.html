@@ -3381,30 +3381,38 @@
   <div class="clean-vmodal-card">
     <button class="clean-vmodal-close" onclick="closeVendorDetailModal()">✕</button>
 
-    <!-- Hero Banner Header -->
+    <!-- Extended Luxury Hero Banner Header -->
     <div class="clean-vmodal-hero">
       <img id="vdm-cover" src="https://images.unsplash.com/photo-1519167758481-83f550bb49b3?auto=format&fit=crop&w=1200&q=80" alt="Vendor Banner" class="vmodal-banner-img">
-      <div class="clean-vmodal-hero-info">
-        <div class="flex items-center gap-2 mb-1">
-          <span class="vmodal-badge-gold">تاییدیه رسمی عروسی تو ⭐️</span>
-          <span id="vdm-category" class="bg-black/40 backdrop-blur-md text-white text-[10px] font-bold px-2.5 py-0.5 rounded-full border border-white/20">تالار و باغ تشریفات</span>
+
+      <!-- High-Res Corner Avatar Logo Badge -->
+      <div class="vmodal-avatar-badge border-4 border-white shadow-xl rounded-2xl overflow-hidden bg-white w-20 h-20 sm:w-24 sm:h-24 absolute top-4 right-6 z-10 hidden sm:block">
+        <img id="vdm-avatar" src="https://images.unsplash.com/photo-1519167758481-83f550bb49b3?auto=format&fit=crop&w=400&q=80" alt="Vendor Avatar" class="w-full h-full object-cover">
+      </div>
+
+      <div class="clean-vmodal-hero-info sm:pr-32">
+        <div class="flex items-center gap-2 mb-1.5 flex-wrap">
+          <span class="vmodal-badge-gold shadow-xs">تاییدیه رسمی عروسی تو ⭐️</span>
+          <span id="vdm-category" class="bg-black/50 backdrop-blur-md text-white text-[10px] font-bold px-3 py-0.5 rounded-full border border-white/20">تالار و باغ تشریفات</span>
+          <span class="bg-emerald-600/90 text-white text-[10px] font-bold px-2.5 py-0.5 rounded-full backdrop-blur-md">آماده رزرو سال ۱۴۰۳/۱۴۰۴</span>
         </div>
-        <h2 id="vdm-title">هتل باغ و تشریفات مشیرالممالک یزد</h2>
-        <div class="flex items-center gap-3 text-xs text-gray-200 mt-1">
+        <h2 id="vdm-title" class="text-xl sm:text-2xl font-black text-white">هتل باغ و تشریفات مشیرالممالک یزد</h2>
+        <div class="flex items-center gap-3 text-xs text-gray-200 mt-1 flex-wrap">
           <span id="vdm-district">📍 استان یزد، صفائیه</span>
           <span>•</span>
-          <span class="text-amber-300 font-bold">⭐️ ۴.۹ (۲۷ نظر)</span>
+          <span class="text-amber-300 font-bold flex items-center gap-1">⭐️ ۴.۹ <span class="text-[10px] text-gray-300 font-normal">(۲۷ تجربه ثبت‌شده)</span></span>
         </div>
       </div>
     </div>
 
-    <!-- 5-Tab Navigation Bar -->
+    <!-- Modern Capsule 6-Tab Navigation Bar -->
     <div class="clean-vmodal-tabs">
       <button class="vtab-btn active" onclick="switchModalTab(0)">درباره & امکانات</button>
       <button class="vtab-btn" onclick="switchModalTab(1)">گالری نمونه‌کارها</button>
       <button class="vtab-btn" onclick="switchModalTab(2)">پکیج‌ها & قیمت‌ها</button>
-      <button class="vtab-btn" onclick="switchModalTab(3)">نظرات زوج‌ها (۲۷)</button>
-      <button class="vtab-btn" onclick="switchModalTab(4)">اطلاعات تماس & آدرس</button>
+      <button class="vtab-btn" onclick="switchModalTab(3)">تقویم رزرو & روزهای آزاد 📅</button>
+      <button class="vtab-btn" onclick="switchModalTab(4)">نظرات زوج‌ها (۲۷)</button>
+      <button class="vtab-btn" onclick="switchModalTab(5)">اطلاعات تماس & آدرس</button>
     </div>
 
     <!-- Main Content Body Grid -->
@@ -3587,8 +3595,64 @@
           </div>
         </div>
 
-        <!-- TAB 3: نظرات زوج‌ها (Reviews & Ratings) -->
+        <!-- TAB 3: تقویم رزرو & روزهای آزاد (NEW Availability Calendar Component) -->
         <div id="vtab-pane-3" class="vtab-pane" style="display: none;">
+          <div class="flex flex-col sm:flex-row justify-between sm:items-center gap-3 mb-4 border-b border-gray-200 pb-3">
+            <div>
+              <h3 class="text-lg font-bold text-[#1B3B2B] flex items-center gap-2">
+                <span>تقویم رزرو آنلاین & روزهای آزاد</span>
+              </h3>
+              <p class="text-xs text-gray-600 mt-0.5">مشاهده ظرفیت خالی سالن و استعلام آنلاین تاریخ برگزاری مراسم</p>
+            </div>
+
+            <!-- Month Quick Filter Selector -->
+            <div class="flex items-center gap-1.5 overflow-x-auto text-xs font-bold shrink-0">
+              <button onclick="renderModalAvailabilityCalendar('اردیبهشت')" class="vcal-month-pill active px-3 py-1.5 rounded-xl bg-[#1B3B2B] text-white transition-all cursor-pointer">اردیبهشت ۱۴۰۳</button>
+              <button onclick="renderModalAvailabilityCalendar('خرداد')" class="vcal-month-pill px-3 py-1.5 rounded-xl bg-white border border-gray-200 text-gray-700 hover:border-[#D4AF37] transition-all cursor-pointer">خرداد ۱۴۰۳</button>
+              <button onclick="renderModalAvailabilityCalendar('تیر')" class="vcal-month-pill px-3 py-1.5 rounded-xl bg-white border border-gray-200 text-gray-700 hover:border-[#D4AF37] transition-all cursor-pointer">تیر ۱۴۰۳</button>
+            </div>
+          </div>
+
+          <!-- Status Indicators Legend -->
+          <div class="flex items-center gap-4 text-xs font-bold mb-4 bg-amber-50/70 p-3 rounded-2xl border border-amber-200/80 flex-wrap">
+            <span class="flex items-center gap-1.5 text-emerald-800">
+              <span class="w-3.5 h-3.5 rounded-full bg-emerald-500 inline-block shadow-2xs"></span>
+              <span>روز آزاد (آماده رزرو)</span>
+            </span>
+            <span class="flex items-center gap-1.5 text-rose-800">
+              <span class="w-3.5 h-3.5 rounded-full bg-rose-500 inline-block shadow-2xs"></span>
+              <span>رزرو شده (پر)</span>
+            </span>
+            <span class="flex items-center gap-1.5 text-amber-800">
+              <span class="w-3.5 h-3.5 rounded-full bg-[#D4AF37] inline-block shadow-2xs"></span>
+              <span>در حال استعلام / رزرو موقت</span>
+            </span>
+          </div>
+
+          <!-- 30-Day Monthly Calendar Grid Layout -->
+          <div class="p-4 bg-white border border-[#D4AF37]/40 rounded-2xl space-y-3">
+            <div class="grid grid-cols-7 gap-1.5 text-center text-xs font-extrabold text-[#1B3B2B] border-b border-gray-100 pb-2">
+              <span>ش</span><span>۱ش</span><span>۲ش</span><span>۳ش</span><span>۴ش</span><span>۵ش</span><span>جمعه</span>
+            </div>
+            <div id="vdm-calendar-days-grid" class="grid grid-cols-7 gap-2 text-center text-xs font-bold">
+              <!-- Rendered dynamically via JS -->
+            </div>
+          </div>
+
+          <!-- Reservation CTA Banner -->
+          <div class="mt-4 p-3.5 bg-gradient-to-r from-[#1B3B2B] to-[#234A37] text-white rounded-2xl flex flex-col sm:flex-row items-center justify-between gap-3">
+            <div class="text-xs">
+              <strong class="block text-sm text-[#D4AF37]">تاریخ مورد نظرتان را پیدا کردید؟</strong>
+              <span class="text-gray-200">جهت رزرو اختصاصی و قفل کردن قیمت با مدیریت تماس بگیرید.</span>
+            </div>
+            <button onclick="openInquiryModal(1, 'رزرو اختصاصی تاریخ مراسم')" class="bg-[#D4AF37] hover:bg-amber-400 text-[#1B3B2B] font-black text-xs px-5 py-2.5 rounded-xl transition-all shadow-md cursor-pointer shrink-0">
+              درخواست رزرو اختصاصی این تاریخ 🗓️
+            </button>
+          </div>
+        </div>
+
+        <!-- TAB 4: نظرات زوج‌ها (Reviews & Ratings) -->
+        <div id="vtab-pane-4" class="vtab-pane" style="display: none;">
           <div class="grid grid-cols-1 sm:grid-cols-3 gap-3 mb-4">
             <!-- Overall Box -->
             <div class="p-4 bg-gradient-to-br from-amber-50 to-orange-50/40 border border-amber-200 rounded-2xl flex flex-col justify-between text-center">
@@ -3687,8 +3751,8 @@
           </div>
         </div>
 
-        <!-- TAB 4: اطلاعات تماس & آدرس (Contact Info & Map) -->
-        <div id="vtab-pane-4" class="vtab-pane" style="display: none;">
+        <!-- TAB 5: اطلاعات تماس & آدرس (Contact Info & Map) -->
+        <div id="vtab-pane-5" class="vtab-pane" style="display: none;">
           <h3 class="text-lg font-bold text-[#1B3B2B] mb-2">اطلاعات تماس، آدرس & مسیریابی</h3>
 
           <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 mb-4 text-xs">
