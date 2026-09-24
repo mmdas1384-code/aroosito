@@ -3625,7 +3625,7 @@
     }
 
 
-    function openInquiryModal(vendorId, vendorName) {
+    function openInquiryModal(vendorId, vendorName, packageTitle, packagePrice) {
       let vId = vendorId;
       if (typeof vendorId === 'string' && !isNaN(parseInt(vendorId))) {
         vId = parseInt(vendorId);
@@ -3650,9 +3650,17 @@
         if (nonVenueContainer) nonVenueContainer.classList.remove('hidden');
       }
 
-      // Clear custom budget field on open
+      // Pre-fill Package Details into Note & Budget fields if package requested
+      const noteInput = document.getElementById('inquiry-note');
       const customBudgetInp = document.getElementById('inquiry-budget-custom');
-      if (customBudgetInp) customBudgetInp.value = '';
+
+      if (packageTitle) {
+        if (noteInput) noteInput.value = `استعلام پکیج انتخابی: ${packageTitle} (${packagePrice || ''})`;
+        if (customBudgetInp) customBudgetInp.value = packagePrice || '';
+      } else {
+        if (noteInput) noteInput.value = 'سلام، درخواست استعلام قیمت و دریافت پیش‌فاکتور را دارم.';
+        if (customBudgetInp) customBudgetInp.value = '';
+      }
 
       // Update checkboxes dynamically according to vendor category if available
       const container = document.getElementById('inquiry-services-checklist');
@@ -3799,6 +3807,33 @@
       document.querySelectorAll('#inquiry-services-checklist input[type="checkbox"]:checked').forEach(cb => {
         checkedServices.push(cb.value);
       });
+
+      const inquiryPayload = {
+        vendorId: vendor.id,
+        vendorName: vendor.name,
+        userName: name,
+        userPhone: phone,
+        eventDate: date,
+        guestCount: guests,
+        budget: finalBudgetStr,
+        services: checkedServices,
+        note: note,
+        submittedAt: new Date().toISOString()
+      };
+
+      console.log('Inquiry JSON Payload for /api/inquiries/submit:', inquiryPayload);
+
+      try {
+        if (typeof fetch === 'function') {
+          fetch('/api/inquiries/submit', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(inquiryPayload)
+          }).catch(err => console.log('Mock environment API submit catch:', err));
+        }
+      } catch (err) {
+        console.log('Static client environment submit:', err);
+      }
 
       inquiries.push({
         id: Date.now(),
