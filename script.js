@@ -3445,23 +3445,53 @@
 
       const titleEl = document.getElementById('vdm-title');
       const coverEl = document.getElementById('vdm-cover');
-      const avatarEl = document.getElementById('vdm-avatar');
       const catEl = document.getElementById('vdm-category');
       const districtEl = document.getElementById('vdm-district');
       const bottomPriceEl = document.getElementById('vdm-bottom-price');
+      const chatBtn = document.getElementById('vdm-chat-btn');
+      const favBtn = document.getElementById('vdm-fav-btn');
 
       if (titleEl) titleEl.innerText = vendor.name;
       if (coverEl) coverEl.src = vendor.image || "https://images.unsplash.com/photo-1519167758481-83f550bb49b3?auto=format&fit=crop&w=1200&q=80";
-      if (avatarEl) avatarEl.src = vendor.image || "https://images.unsplash.com/photo-1519167758481-83f550bb49b3?auto=format&fit=crop&w=400&q=80";
       if (catEl) catEl.innerText = vendor.category;
-      if (districtEl) districtEl.innerText = `${vendor.city || 'یزد'}، ${vendor.district || 'صفائیه'}`;
-      if (bottomPriceEl) bottomPriceEl.innerText = `شروع قیمت از ${vendor.priceRange}`;
+      if (districtEl) districtEl.innerText = `📍 ${vendor.province || 'استان یزد'}، ${vendor.district || 'صفائیه'}`;
+      if (bottomPriceEl) bottomPriceEl.innerText = vendor.priceRange || "۶۵,۰۰۰,۰۰۰ تومان";
+
+      if (chatBtn) {
+        chatBtn.onclick = function() {
+          closeVendorDetailModal();
+          openInquiryModal(vendor.id, vendor.name);
+        };
+      }
+
+      if (favBtn) {
+        favBtn.onclick = function(e) {
+          toggleFavoriteVendor(vendor.id, e);
+        };
+      }
 
       // Render Capability Tags Badges in Modal
       const tagsContainer = document.getElementById('vdm-capability-tags');
       if (tagsContainer) {
         const tags = vendor.capabilityTags || ["مجوز رسمی عکاسی کویر", "تجهیزات هلی‌شات & نور کویر", "سرو شیرینی‌های سنتی یزد (حاج خلیفه)", "فضای باز & سالن سرپوشیده"];
-        tagsContainer.innerHTML = tags.map(t => `<span class="bg-amber-100 text-amber-900 border border-amber-300 text-[10px] font-bold px-2.5 py-1 rounded-full flex items-center gap-1"><i data-lucide="check-circle" class="w-3 h-3 text-amber-600"></i>${t}</span>`).join('');
+        tagsContainer.innerHTML = tags.map(t => `<span class="bg-amber-100 text-amber-900 border border-amber-300 text-[10px] font-bold px-2.5 py-1 rounded-full flex items-center gap-1">✅ ${t}</span>`).join('');
+      }
+
+      // Populate Portfolio Gallery Grid
+      const galleryGrid = document.getElementById('vdm-gallery-grid');
+      if (galleryGrid) {
+        const portfolio = vendor.portfolio || [
+          { url: vendor.image, tag: "نمونه‌کار اصلی" },
+          { url: "https://images.unsplash.com/photo-1519741497674-611481863552?auto=format&fit=crop&w=600&q=80", tag: "سالن و دکور" },
+          { url: "https://images.unsplash.com/photo-1511285560929-80b456fea0bc?auto=format&fit=crop&w=600&q=80", tag: "سفره عقد" }
+        ];
+        galleryGrid.innerHTML = portfolio.map(item => `
+          <div class="aspect-4/3 rounded-xl overflow-hidden bg-slate-100 border border-gray-200 relative group cursor-pointer" onclick="openLightbox('${item.url}')">
+            <img src="${item.url}" alt="${item.tag || 'نمونه کار'}" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300">
+            <div class="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center text-white text-xs font-bold">🔍 بزرگ‌نمایی</div>
+            <span class="absolute top-2 right-2 bg-black/60 text-white text-[9px] font-bold px-2 py-0.5 rounded-md backdrop-blur-xs">${item.tag || 'تصویر'}</span>
+          </div>
+        `).join('');
       }
 
       // Populate Contact Tab
@@ -3521,10 +3551,32 @@
     }
 
     function switchVdmSubTab(subTab) {
-      const map = { 'portfolio': 0, 'packages': 1, 'reviews': 2, 'contact': 3 };
+      const map = { 'about': 0, 'portfolio': 1, 'packages': 2, 'reviews': 3, 'contact': 4 };
       if (typeof map[subTab] !== 'undefined') {
         switchModalTab(map[subTab]);
       }
+    }
+
+    function filterModalGallery(category) {
+      const pills = document.querySelectorAll('.mgall-pill');
+      pills.forEach(pill => {
+        if (pill.innerText.includes(category) || (category === 'all' && pill.innerText.includes('همه'))) {
+          pill.className = "mgall-pill active px-3 py-1.5 rounded-xl bg-[#1B3B2B] text-white transition-all cursor-pointer";
+        } else {
+          pill.className = "mgall-pill px-3 py-1.5 rounded-xl bg-white border border-gray-200 hover:border-[#D4AF37] text-gray-700 transition-all cursor-pointer";
+        }
+      });
+      showToast('گالری تصاویر فیلتر شد.', 'info');
+    }
+
+    function toggleAddReviewForm() {
+      const form = document.getElementById('vdm-add-review-form');
+      if (form) form.classList.toggle('hidden');
+    }
+
+    function submitNewReview() {
+      toggleAddReviewForm();
+      showToast('دیدگاه شما با موفقیت ثبت شد و پس از بررسی منتشر می‌گردد.', 'success');
     }
 
 

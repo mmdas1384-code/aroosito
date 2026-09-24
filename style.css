@@ -207,6 +207,14 @@ header, nav, .header-container, .navbar {
     box-shadow: 0 4px 12px rgba(212, 175, 55, 0.4) !important;
 }
 
+/* Gallery Filter Pills in Modal */
+.mgall-pill.active {
+    background: #1B3B2B !important;
+    color: #D4AF37 !important;
+    border-color: #D4AF37 !important;
+    font-weight: bold !important;
+}
+
 /* Two Column Body Grid */
 .clean-vmodal-body {
     display: grid !important;
