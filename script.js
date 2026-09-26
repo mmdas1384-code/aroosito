@@ -369,121 +369,113 @@ const HOME_VIEW_HTML = `<!-- HOMEPAGE CONTENT MODULE (home-view.html) -->
     </div>
   </section>
 
-  <!-- 2. WHY CHOOSE US / TRUST BADGES (4 Cards) -->
-  <section class="space-y-6">
-    <div class="text-center space-y-2 max-w-xl mx-auto">
-      <h2 class="text-xl sm:text-2xl font-black text-graphite">چرا زوج‌های یزدی "عروسی تو" را انتخاب می‌کنند؟</h2>
-      <p class="text-xs text-secondary font-medium">پلتفرمی امن و هوشمند جهت تجربه‌ای بی‌دغدغه در برنامه‌ریزی رویایی‌ترین جشن زندگی</p>
-    </div>
-
-    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
-      <div class="bg-white border border-accent rounded-3xl p-6 shadow-xs hover:shadow-md transition-all space-y-3 text-center group border-t-4 border-t-[#D4AF37]">
-        <div class="w-14 h-14 rounded-2xl bg-[#1B3B2B] text-[#D4AF37] mx-auto flex items-center justify-center font-bold shadow-md group-hover:scale-105 transition-transform">
-          <i data-lucide="shield-check" class="w-7 h-7"></i>
-        </div>
-        <h3 class="text-sm font-bold text-graphite">کسب‌وکارهای تاییدشده یزد</h3>
-        <p class="text-xs text-secondary leading-relaxed">استعلام جواز کسب، بررسی سوابق و اصالت سنجی کامل تمامی تامین‌کنندگان استان یزد</p>
+  <!-- 1. SECTION: WHY CHOOSE US -->
+  <section class="why-choose-us-section rounded-3xl p-8 sm:p-10 shadow-xs border border-accent bg-[#FAF9F6] text-center dir-rtl" style="background: #FAF9F6; direction: rtl;">
+    <div class="max-w-6xl mx-auto space-y-8">
+      <div class="space-y-2">
+        <h2 class="text-2xl sm:text-3xl font-black text-graphite" style="font-size: 26px; font-weight: 800; color: #1E293B; margin-bottom: 8px;">چرا زوج‌های یزدی "عروسی تو" را انتخاب می‌کنند؟</h2>
+        <p class="text-xs sm:text-sm text-secondary font-medium" style="color: #64748B; font-size: 14px; margin-bottom: 40px;">پلتفرمی امن و هوشمند جهت تجربه‌ای بی‌دغدغه در برنامه‌ریزی رویایی‌ترین جشن زندگی</p>
       </div>
 
-      <div class="bg-white border border-accent rounded-3xl p-6 shadow-xs hover:shadow-md transition-all space-y-3 text-center group border-t-4 border-t-[#D4AF37]">
-        <div class="w-14 h-14 rounded-2xl bg-[#1B3B2B] text-[#D4AF37] mx-auto flex items-center justify-center font-bold shadow-md group-hover:scale-105 transition-transform">
-          <i data-lucide="coins" class="w-7 h-7"></i>
-        </div>
-        <h3 class="text-sm font-bold text-graphite">تضمین بهترین قیمت</h3>
-        <p class="text-xs text-secondary leading-relaxed">ارائه پکیج‌های شفاف قیمتی بدون هزینه پنهان و تضمین قیمت عادلانه در بازار یزد</p>
-      </div>
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 24px;">
 
-      <div class="bg-white border border-accent rounded-3xl p-6 shadow-xs hover:shadow-md transition-all space-y-3 text-center group border-t-4 border-t-[#D4AF37]">
-        <div class="w-14 h-14 rounded-2xl bg-[#1B3B2B] text-[#D4AF37] mx-auto flex items-center justify-center font-bold shadow-md group-hover:scale-105 transition-transform">
-          <i data-lucide="sparkles" class="w-7 h-7"></i>
+        <!-- Feature 1 -->
+        <div class="bg-white border border-accent rounded-2xl p-6 shadow-xs text-center hover:shadow-md transition-all space-y-3" style="background: #FFFFFF; border-radius: 16px; padding: 24px; box-shadow: 0 4px 20px rgba(0,0,0,0.04); border: 1px solid #E2E8F0; text-align: center;">
+          <div class="w-12 h-12 rounded-2xl bg-[#1B3B2B] text-[#D4AF37] flex items-center justify-center font-bold text-2xl mx-auto mb-4" style="width: 50px; height: 50px; background: #1B3B2B; color: #D4AF37; border-radius: 12px; display: flex; align-items: center; justify-content: center; font-size: 22px; margin: 0 auto 16px;">🛡️</div>
+          <h3 class="text-base font-bold text-graphite" style="font-size: 16px; font-weight: 700; color: #1E293B; margin-bottom: 8px;">کسب‌وکارهای تاییدشده یزد</h3>
+          <p class="text-xs text-secondary leading-relaxed" style="font-size: 13px; color: #64748B; line-height: 1.6; margin: 0;">استعلام جواز کسب، بررسی سوابق و اصالت‌سنجی کامل تمامی تامین‌کنندگان استان یزد</p>
         </div>
-        <h3 class="text-sm font-bold text-graphite">ابزارهای هوشمند AI</h3>
-        <p class="text-xs text-secondary leading-relaxed">چک‌لیست ۱۲ ماهه، بودجه‌ریز تخصصی شیرینی یزدی و کارت دعوت دیجیتال با RSVP</p>
-      </div>
 
-      <div class="bg-white border border-accent rounded-3xl p-6 shadow-xs hover:shadow-md transition-all space-y-3 text-center group border-t-4 border-t-[#D4AF37]">
-        <div class="w-14 h-14 rounded-2xl bg-[#1B3B2B] text-[#D4AF37] mx-auto flex items-center justify-center font-bold shadow-md group-hover:scale-105 transition-transform">
-          <i data-lucide="headset" class="w-7 h-7"></i>
+        <!-- Feature 2 -->
+        <div class="bg-white border border-accent rounded-2xl p-6 shadow-xs text-center hover:shadow-md transition-all space-y-3" style="background: #FFFFFF; border-radius: 16px; padding: 24px; box-shadow: 0 4px 20px rgba(0,0,0,0.04); border: 1px solid #E2E8F0; text-align: center;">
+          <div class="w-12 h-12 rounded-2xl bg-[#1B3B2B] text-[#D4AF37] flex items-center justify-center font-bold text-2xl mx-auto mb-4" style="width: 50px; height: 50px; background: #1B3B2B; color: #D4AF37; border-radius: 12px; display: flex; align-items: center; justify-content: center; font-size: 22px; margin: 0 auto 16px;">🏷️</div>
+          <h3 class="text-base font-bold text-graphite" style="font-size: 16px; font-weight: 700; color: #1E293B; margin-bottom: 8px;">تضمین بهترین قیمت</h3>
+          <p class="text-xs text-secondary leading-relaxed" style="font-size: 13px; color: #64748B; line-height: 1.6; margin: 0;">ارائه پکیج‌های شفاف، قیمت بدون هزینه پنهان و تضمین قیمت عادلانه در بازار یزد</p>
         </div>
-        <h3 class="text-sm font-bold text-graphite">پشتیبانی اختصاصی</h3>
-        <p class="text-xs text-secondary leading-relaxed">مشاوره تلفنی و آنلاین گام‌به‌گام از اولین روز برنامه‌ریزی تا شب برگزاری مراسم</p>
+
+        <!-- Feature 3 -->
+        <div class="bg-white border border-accent rounded-2xl p-6 shadow-xs text-center hover:shadow-md transition-all space-y-3" style="background: #FFFFFF; border-radius: 16px; padding: 24px; box-shadow: 0 4px 20px rgba(0,0,0,0.04); border: 1px solid #E2E8F0; text-align: center;">
+          <div class="w-12 h-12 rounded-2xl bg-[#1B3B2B] text-[#D4AF37] flex items-center justify-center font-bold text-2xl mx-auto mb-4" style="width: 50px; height: 50px; background: #1B3B2B; color: #D4AF37; border-radius: 12px; display: flex; align-items: center; justify-content: center; font-size: 22px; margin: 0 auto 16px;">🤖</div>
+          <h3 class="text-base font-bold text-graphite" style="font-size: 16px; font-weight: 700; color: #1E293B; margin-bottom: 8px;">ابزارهای هوشمند AI</h3>
+          <p class="text-xs text-secondary leading-relaxed" style="font-size: 13px; color: #64748B; line-height: 1.6; margin: 0;">چک‌لیست ۱۲ ماهه، بودجه‌ریز تخصصی شربتی یزدی و کارت دعوت دیجیتال با RSVP</p>
+        </div>
+
+        <!-- Feature 4 -->
+        <div class="bg-white border border-accent rounded-2xl p-6 shadow-xs text-center hover:shadow-md transition-all space-y-3" style="background: #FFFFFF; border-radius: 16px; padding: 24px; box-shadow: 0 4px 20px rgba(0,0,0,0.04); border: 1px solid #E2E8F0; text-align: center;">
+          <div class="w-12 h-12 rounded-2xl bg-[#1B3B2B] text-[#D4AF37] flex items-center justify-center font-bold text-2xl mx-auto mb-4" style="width: 50px; height: 50px; background: #1B3B2B; color: #D4AF37; border-radius: 12px; display: flex; align-items: center; justify-content: center; font-size: 22px; margin: 0 auto 16px;">🎧</div>
+          <h3 class="text-base font-bold text-graphite" style="font-size: 16px; font-weight: 700; color: #1E293B; margin-bottom: 8px;">پشتیبانی اختصاصی</h3>
+          <p class="text-xs text-secondary leading-relaxed" style="font-size: 13px; color: #64748B; line-height: 1.6; margin: 0;">مشاوره تلفنی و آنلاین گام‌به‌گام در برنامه‌ریزی تا شب برگزاری مراسم</p>
+        </div>
+
       </div>
     </div>
   </section>
 
-  <!-- 3. REAL YAZDI WEDDINGS SHOWCASE -->
-  <section class="bg-white border border-accent rounded-3xl p-6 sm:p-8 shadow-xs space-y-6">
-    <div class="flex flex-col sm:flex-row justify-between sm:items-center gap-4 border-b border-accent pb-4">
+  <!-- 2. SECTION: REAL WEDDINGS GALLERY -->
+  <section class="real-weddings-section rounded-3xl p-8 sm:p-10 shadow-xs border border-accent bg-white dir-rtl" style="padding: 60px 20px; background: #FFFFFF; direction: rtl;">
+    <div class="max-w-6xl mx-auto space-y-8" style="max-w: 1200px; margin: 0 auto;">
+      <div class="flex flex-col sm:flex-row justify-between sm:items-center gap-4 border-b border-accent pb-4" style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 30px;">
+        <div>
+          <span class="text-rose-600 font-bold text-xs" style="color: #E11D48; font-size: 13px; font-weight: 700;">❤️ داستان‌های واقعی پیوند عشاق یزد</span>
+          <h2 class="text-xl sm:text-2xl font-black text-graphite mt-1" style="font-size: 24px; font-weight: 800; color: #1E293B; margin-top: 4px;">گالری و روایت عروسی‌های واقعی استان یزد</h2>
+        </div>
+        <a href="#" onclick="switchTab('inspiration'); return false;" class="bg-primary text-graphite font-bold text-xs px-4 py-2.5 rounded-xl hover:bg-amber-400 transition-colors shadow-xs" style="background: #D4AF37; color: #1E293B; padding: 8px 16px; border-radius: 8px; text-decoration: none; font-size: 13px; font-weight: 700;">مشاهده مجله ایده‌ها & مودبورد ←</a>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-6" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 20px;">
+
+        <!-- Card 1 -->
+        <div class="border border-accent rounded-2xl overflow-hidden bg-white shadow-xs hover:shadow-md transition-all" style="border-radius: 16px; overflow: hidden; border: 1px solid #E2E8F0; background: #FFFFFF;">
+          <div style="position: relative; height: 200px; background: #CBD5E1;">
+            <span style="position: absolute; top: 12px; right: 12px; background: rgba(0,0,0,0.6); color: #FFF; padding: 4px 10px; border-radius: 20px; font-size: 11px;">صفائیه یزد</span>
+            <img src="https://images.unsplash.com/photo-1519741497674-611481863552?w=500" alt="عروسی" style="width:100%; height:100%; object-fit:cover;">
+          </div>
+          <div style="padding: 16px;">
+            <h3 style="font-size: 15px; font-weight: 700; color: #1E293B; margin: 0 0 6px 0;">جشن عروسی زمردین: امیر & مریم</h3>
+            <p style="font-size: 12px; color: #64748B; margin: 0;">مراسم باشکوه در باغ تالار مشیرالممالک با تم زمردی و گل‌آرایی مگنولیا</p>
+          </div>
+        </div>
+
+        <!-- Card 2 -->
+        <div class="border border-accent rounded-2xl overflow-hidden bg-white shadow-xs hover:shadow-md transition-all" style="border-radius: 16px; overflow: hidden; border: 1px solid #E2E8F0; background: #FFFFFF;">
+          <div style="position: relative; height: 200px; background: #CBD5E1;">
+            <span style="position: absolute; top: 12px; right: 12px; background: rgba(0,0,0,0.6); color: #FFF; padding: 4px 10px; border-radius: 20px; font-size: 11px;">کویر سندباد یزد</span>
+            <img src="https://images.unsplash.com/photo-1511285560929-80b456fea0bc?w=500" alt="فرمالیته" style="width:100%; height:100%; object-fit:cover;">
+          </div>
+          <div style="padding: 16px;">
+            <h3 style="font-size: 15px; font-weight: 700; color: #1E293B; margin: 0 0 6px 0;">فرمالیته طلایی کویر: رضا & سارا</h3>
+            <p style="font-size: 12px; color: #64748B; margin: 0;">عکاسی فرمالیته روی رمل‌های طلایی کویر یزد توسط استودیو تخصصی کویر</p>
+          </div>
+        </div>
+
+        <!-- Card 3 -->
+        <div class="border border-accent rounded-2xl overflow-hidden bg-white shadow-xs hover:shadow-md transition-all" style="border-radius: 16px; overflow: hidden; border: 1px solid #E2E8F0; background: #FFFFFF;">
+          <div style="position: relative; height: 200px; background: #CBD5E1;">
+            <span style="position: absolute; top: 12px; right: 12px; background: rgba(0,0,0,0.6); color: #FFF; padding: 4px 10px; border-radius: 20px; font-size: 11px;">بافت تاریخی یزد</span>
+            <img src="https://images.unsplash.com/photo-1583939003579-730e3918a45a?w=500" alt="عقد سنتی" style="width:100%; height:100%; object-fit:cover;">
+          </div>
+          <div style="padding: 16px;">
+            <h3 style="font-size: 15px; font-weight: 700; color: #1E293B; margin: 0 0 6px 0;">عقد سنتی در خانه تاریخی: مهدی & زهرا</h3>
+            <p style="font-size: 12px; color: #64748B; margin: 0;">سفره عقد اسلیمی و پذیرایی اصیل با شیرینی سنتی حاج خلیفه رهبر</p>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- 3. SECTION: VENDOR CTA BANNER -->
+  <section class="vendor-cta-banner rounded-3xl p-8 sm:p-10 shadow-xl border border-[#D4AF37]/50 text-white dir-rtl" style="background: linear-gradient(135deg, #0F172A 0%, #1E293B 100%); padding: 50px 20px; color: #FFFFFF; direction: rtl; text-align: right;">
+    <div style="max-width: 1200px; margin: 0 auto; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 20px;">
       <div>
-        <div class="inline-flex items-center gap-1.5 bg-rose-50 text-rose-700 text-xs font-bold px-3 py-1 rounded-full mb-1 border border-rose-200">
-          <i data-lucide="heart" class="w-3.5 h-3.5 fill-rose-500"></i>
-          <span>داستان‌های واقعی پیوند عشاق یزد</span>
-        </div>
-        <h2 class="text-xl sm:text-2xl font-bold text-graphite">گالری و روایت عروسی‌های واقعی استان یزد</h2>
+        <span style="color: #94A3B8; font-size: 12px;">🏢 ویژه صاحب‌امتیازان تالار، آتلیه، سالن زیبایی و خدمات مجالس یزد</span>
+        <h2 style="font-size: 24px; font-weight: 800; color: #FFFFFF; margin: 8px 0;">کسب‌وکار عروسی خود را به ۱۵,۰۰۰+ زوج یزدی معرفی کنید</h2>
+        <p style="color: #94A3B8; font-size: 13px; margin: 0;">با ثبت‌نام در پلتفرم عروسی تو، دریافت نشان تاییدیه رسمی و مدیریت استعلام‌های آنلاین رزرو، درآمد خود را افزایش دهید.</p>
       </div>
-
-      <button onclick="switchTab('inspiration')" class="bg-primary hover:bg-emerald-900 text-white font-bold text-xs px-4 py-2.5 rounded-xl shadow-xs transition-all flex items-center gap-1.5 cursor-pointer">
-        <span>مشاهده مجله ایده‌ها & مودبورد</span>
-        <i data-lucide="arrow-left" class="w-4 h-4"></i>
-      </button>
-    </div>
-
-    <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-      <div onclick="switchTab('inspiration')" class="bg-bgCustom border border-accent rounded-2xl overflow-hidden shadow-2xs hover:shadow-md transition-all cursor-pointer group">
-        <div class="h-48 overflow-hidden relative">
-          <img src="https://images.unsplash.com/photo-1519741497674-611481863552?auto=format&fit=crop&w=800&q=80" alt="عروسی امیر & مریم" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
-          <span class="absolute top-3 right-3 bg-[#1B3B2B] text-[#D4AF37] text-[10px] font-bold px-2.5 py-1 rounded-full">صفائیه یزد</span>
-        </div>
-        <div class="p-4 space-y-2">
-          <h3 class="text-sm font-bold text-graphite group-hover:text-primary transition-colors">جشن عروسی زمردین: امیر & مریم</h3>
-          <p class="text-xs text-secondary leading-relaxed">مراسم باشکوه در باغ تالار مشیرالممالک با تم زمردی و گل‌آرایی مگنولیا</p>
-        </div>
+      <div style="display: flex; gap: 12px; flex-wrap: wrap;">
+        <a href="#" onclick="toggleVendorModalStatic(true); return false;" style="background: #D4AF37; color: #1E293B; padding: 12px 24px; border-radius: 10px; font-weight: 700; text-decoration: none; font-size: 14px;">➕ ثبت‌نام رایگان کسب‌وکار</a>
+        <a href="#" onclick="switchRole('vendor'); return false;" style="background: rgba(255,255,255,0.1); color: #FFFFFF; border: 1px solid rgba(255,255,255,0.2); padding: 12px 24px; border-radius: 10px; font-weight: 600; text-decoration: none; font-size: 14px;">🏢 ورود به پنل تامین‌کننده</a>
       </div>
-
-      <div onclick="switchTab('inspiration')" class="bg-bgCustom border border-accent rounded-2xl overflow-hidden shadow-2xs hover:shadow-md transition-all cursor-pointer group">
-        <div class="h-48 overflow-hidden relative">
-          <img src="https://images.unsplash.com/photo-1509316975850-ff9c5deb0cd9?auto=format&fit=crop&w=800&q=80" alt="فرمالیته کویر: رضا & سارا" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
-          <span class="absolute top-3 right-3 bg-[#1B3B2B] text-[#D4AF37] text-[10px] font-bold px-2.5 py-1 rounded-full">کویر سندباد یزد</span>
-        </div>
-        <div class="p-4 space-y-2">
-          <h3 class="text-sm font-bold text-graphite group-hover:text-primary transition-colors">فرمالیته طلایی کویر: رضا & سارا</h3>
-          <p class="text-xs text-secondary leading-relaxed">عکاسی فرمالیته روی رمل‌های طلایی کویر یزد توسط استودیو تخصصی کویر</p>
-        </div>
-      </div>
-
-      <div onclick="switchTab('inspiration')" class="bg-bgCustom border border-accent rounded-2xl overflow-hidden shadow-2xs hover:shadow-md transition-all cursor-pointer group">
-        <div class="h-48 overflow-hidden relative">
-          <img src="https://images.unsplash.com/photo-1511285560929-80b456fea0bc?auto=format&fit=crop&w=800&q=80" alt="عقد سنتی: مهدی & زهرا" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
-          <span class="absolute top-3 right-3 bg-[#1B3B2B] text-[#D4AF37] text-[10px] font-bold px-2.5 py-1 rounded-full">بافت تاریخی یزد</span>
-        </div>
-        <div class="p-4 space-y-2">
-          <h3 class="text-sm font-bold text-graphite group-hover:text-primary transition-colors">عقد سنتی در خانه تاریخی: مهدی & زهرا</h3>
-          <p class="text-xs text-secondary leading-relaxed">سفره عقد اسلیمی و پذیرایی اصیل با شیرینی سنتی حاج خلیفه رهبر</p>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- 4. VENDOR ONBOARDING BANNER (CTA) -->
-  <section class="bg-gradient-to-r from-[#1B3B2B] via-[#2D5A3D] to-[#1B3B2B] border border-[#D4AF37]/50 rounded-3xl p-8 text-white shadow-xl flex flex-col md:flex-row items-center justify-between gap-6 relative overflow-hidden">
-    <div class="space-y-3 max-w-xl text-center md:text-right">
-      <div class="inline-flex items-center gap-2 bg-[#D4AF37]/20 text-[#D4AF37] border border-[#D4AF37]/40 px-3.5 py-1 rounded-full text-xs font-bold">
-        <i data-lucide="building-2" class="w-4 h-4"></i>
-        <span>ویژه صاحب‌امتیازان تالار، آتلیه، سالن زیبایی و خدمات مجالس یزد</span>
-      </div>
-      <h2 class="text-2xl sm:text-3xl font-black text-[#D4AF37] leading-snug">کسب‌وکار عروسی خود را به ۱۵,۰۰۰+ زوج یزدی معرفی کنید</h2>
-      <p class="text-xs sm:text-sm text-slate-200 leading-relaxed font-medium">با ثبت‌نام در پلتفرم عروسی تو، دریافت نشان تاییدیه رسمی و مدیریت استعلام‌های آنلاین رزرو، درآمد خود را افزایش دهید.</p>
-    </div>
-
-    <div class="flex flex-col sm:flex-row items-center gap-3 shrink-0 w-full md:w-auto">
-      <button onclick="toggleVendorModalStatic(true)" class="w-full sm:w-auto bg-[#D4AF37] hover:bg-amber-400 text-[#1B3B2B] font-black text-sm px-6 py-3.5 rounded-2xl shadow-lg transition-all flex items-center justify-center gap-2 transform hover:-translate-y-0.5 cursor-pointer">
-        <i data-lucide="plus-circle" class="w-5 h-5"></i>
-        <span>ثبت‌نام رایگان کسب‌وکار</span>
-      </button>
-      <button onclick="switchRole('vendor')" class="w-full sm:w-auto bg-white/10 hover:bg-white/20 text-white border border-[#D4AF37]/40 font-bold text-sm px-5 py-3.5 rounded-2xl transition-all flex items-center justify-center gap-2 cursor-pointer">
-        <i data-lucide="layout-dashboard" class="w-5 h-5 text-[#D4AF37]"></i>
-        <span>ورود به پنل تامین‌کننده</span>
-      </button>
     </div>
   </section>
 
