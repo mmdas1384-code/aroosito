@@ -1,7 +1,7 @@
 <!-- HOMEPAGE CONTENT MODULE (home-view.html) -->
 <div id="tab-home" class="tab-content space-y-12">
 
-  <!-- HERO SECTION -->
+  <!-- 2. HERO SECTION ("برنامه‌ریزی رویایی‌ترین شب زندگی با عروسی تو") -->
   <section id="hero" class="relative bg-white border border-accent rounded-3xl p-6 lg:p-8 shadow-xs overflow-hidden hero-section">
     <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-stretch">
 
@@ -174,7 +174,7 @@
     </div>
   </section>
 
-  <!-- CATEGORY SHOWCASE GRID SECTION -->
+  <!-- 4. MAIN CATEGORIES GRID ("دسته‌بندی جامع خدمات و تشریفات عروسی") -->
   <section class="main-categories-section">
     <div class="categories-header">
       <div class="categories-title-wrapper">
@@ -270,112 +270,164 @@
     </div>
   </section>
 
-  <!-- 1. SECTION: WHY CHOOSE US -->
-  <section class="why-choose-us-section rounded-3xl p-8 sm:p-10 shadow-xs border border-accent bg-[#FAF9F6] text-center dir-rtl" style="background: #FAF9F6; direction: rtl;">
-    <div class="max-w-6xl mx-auto space-y-8">
-      <div class="space-y-2">
-        <h2 class="text-2xl sm:text-3xl font-black text-graphite" style="font-size: 26px; font-weight: 800; color: #1E293B; margin-bottom: 8px;">چرا زوج‌های یزدی "عروسی تو" را انتخاب می‌کنند؟</h2>
-        <p class="text-xs sm:text-sm text-secondary font-medium" style="color: #64748B; font-size: 14px; margin-bottom: 40px;">پلتفرمی امن و هوشمند جهت تجربه‌ای بی‌دغدغه در برنامه‌ریزی رویایی‌ترین جشن زندگی</p>
-      </div>
-
-      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 24px;">
-
-        <!-- Feature 1 -->
-        <div class="bg-white border border-accent rounded-2xl p-6 shadow-xs text-center hover:shadow-md transition-all space-y-3" style="background: #FFFFFF; border-radius: 16px; padding: 24px; box-shadow: 0 4px 20px rgba(0,0,0,0.04); border: 1px solid #E2E8F0; text-align: center;">
-          <div class="w-12 h-12 rounded-2xl bg-[#1B3B2B] text-[#D4AF37] flex items-center justify-center font-bold text-2xl mx-auto mb-4" style="width: 50px; height: 50px; background: #1B3B2B; color: #D4AF37; border-radius: 12px; display: flex; align-items: center; justify-content: center; font-size: 22px; margin: 0 auto 16px;">🛡️</div>
-          <h3 class="text-base font-bold text-graphite" style="font-size: 16px; font-weight: 700; color: #1E293B; margin-bottom: 8px;">کسب‌وکارهای تاییدشده یزد</h3>
-          <p class="text-xs text-secondary leading-relaxed" style="font-size: 13px; color: #64748B; line-height: 1.6; margin: 0;">استعلام جواز کسب، بررسی سوابق و اصالت‌سنجی کامل تمامی تامین‌کنندگان استان یزد</p>
+  <!-- 5. QUICK TOOLS SHORTCUTS ("میان‌برهای سریع مدیریت مراسم و دعوت مهمانان") -->
+  <section class="quick-tools-section">
+    <div class="container text-center">
+      <span class="sub-title">🛠️ ابزارهای هوشمند برنامه‌ریزی عروسی</span>
+      <h2>میان‌برهای سریع مدیریت مراسم و دعوت مهمانان</h2>
+      <div class="tools-grid-4">
+        <div class="tool-card" onclick="switchTab('planner')">
+          <div class="tool-icon">📋</div>
+          <h3>چک‌لیست ۱۲ ماهه</h3>
+          <p>مدیریت گام‌به‌گام کارهای ضروری از ۱۲ ماه قبل تا شب مراسم</p>
         </div>
-
-        <!-- Feature 2 -->
-        <div class="bg-white border border-accent rounded-2xl p-6 shadow-xs text-center hover:shadow-md transition-all space-y-3" style="background: #FFFFFF; border-radius: 16px; padding: 24px; box-shadow: 0 4px 20px rgba(0,0,0,0.04); border: 1px solid #E2E8F0; text-align: center;">
-          <div class="w-12 h-12 rounded-2xl bg-[#1B3B2B] text-[#D4AF37] flex items-center justify-center font-bold text-2xl mx-auto mb-4" style="width: 50px; height: 50px; background: #1B3B2B; color: #D4AF37; border-radius: 12px; display: flex; align-items: center; justify-content: center; font-size: 22px; margin: 0 auto 16px;">🏷️</div>
-          <h3 class="text-base font-bold text-graphite" style="font-size: 16px; font-weight: 700; color: #1E293B; margin-bottom: 8px;">تضمین بهترین قیمت</h3>
-          <p class="text-xs text-secondary leading-relaxed" style="font-size: 13px; color: #64748B; line-height: 1.6; margin: 0;">ارائه پکیج‌های شفاف، قیمت بدون هزینه پنهان و تضمین قیمت عادلانه در بازار یزد</p>
+        <div class="tool-card" onclick="switchTab('tools')">
+          <div class="tool-icon">📊</div>
+          <h3>مدیریت بودجه AI</h3>
+          <p>محاسبه هوشمند هزینه‌ها و شیرینی‌پزی مبتنی بر یزد</p>
         </div>
-
-        <!-- Feature 3 -->
-        <div class="bg-white border border-accent rounded-2xl p-6 shadow-xs text-center hover:shadow-md transition-all space-y-3" style="background: #FFFFFF; border-radius: 16px; padding: 24px; box-shadow: 0 4px 20px rgba(0,0,0,0.04); border: 1px solid #E2E8F0; text-align: center;">
-          <div class="w-12 h-12 rounded-2xl bg-[#1B3B2B] text-[#D4AF37] flex items-center justify-center font-bold text-2xl mx-auto mb-4" style="width: 50px; height: 50px; background: #1B3B2B; color: #D4AF37; border-radius: 12px; display: flex; align-items: center; justify-content: center; font-size: 22px; margin: 0 auto 16px;">🤖</div>
-          <h3 class="text-base font-bold text-graphite" style="font-size: 16px; font-weight: 700; color: #1E293B; margin-bottom: 8px;">ابزارهای هوشمند AI</h3>
-          <p class="text-xs text-secondary leading-relaxed" style="font-size: 13px; color: #64748B; line-height: 1.6; margin: 0;">چک‌لیست ۱۲ ماهه، بودجه‌ریز تخصصی شربتی یزدی و کارت دعوت دیجیتال با RSVP</p>
+        <div class="tool-card" onclick="switchTab('guests')">
+          <div class="tool-icon">👥</div>
+          <h3>مدیریت مهمانان & RSVP</h3>
+          <p>پیگیری وضعیت حضور مدعوین و ثبت هدایای نقدی</p>
         </div>
-
-        <!-- Feature 4 -->
-        <div class="bg-white border border-accent rounded-2xl p-6 shadow-xs text-center hover:shadow-md transition-all space-y-3" style="background: #FFFFFF; border-radius: 16px; padding: 24px; box-shadow: 0 4px 20px rgba(0,0,0,0.04); border: 1px solid #E2E8F0; text-align: center;">
-          <div class="w-12 h-12 rounded-2xl bg-[#1B3B2B] text-[#D4AF37] flex items-center justify-center font-bold text-2xl mx-auto mb-4" style="width: 50px; height: 50px; background: #1B3B2B; color: #D4AF37; border-radius: 12px; display: flex; align-items: center; justify-content: center; font-size: 22px; margin: 0 auto 16px;">🎧</div>
-          <h3 class="text-base font-bold text-graphite" style="font-size: 16px; font-weight: 700; color: #1E293B; margin-bottom: 8px;">پشتیبانی اختصاصی</h3>
-          <p class="text-xs text-secondary leading-relaxed" style="font-size: 13px; color: #64748B; line-height: 1.6; margin: 0;">مشاوره تلفنی و آنلاین گام‌به‌گام در برنامه‌ریزی تا شب برگزاری مراسم</p>
+        <div class="tool-card" onclick="switchTab('invitation')">
+          <div class="tool-icon">✉️</div>
+          <h3>کارت دعوت دیجیتال</h3>
+          <p>ارسال کارت آنلاین با آدرس نقشه، منوی غذا و موزیک</p>
         </div>
-
       </div>
     </div>
   </section>
 
-  <!-- 2. SECTION: REAL WEDDINGS GALLERY -->
-  <section class="real-weddings-section rounded-3xl p-8 sm:p-10 shadow-xs border border-accent bg-white dir-rtl" style="padding: 60px 20px; background: #FFFFFF; direction: rtl;">
-    <div class="max-w-6xl mx-auto space-y-8" style="max-w: 1200px; margin: 0 auto;">
-      <div class="flex flex-col sm:flex-row justify-between sm:items-center gap-4 border-b border-accent pb-4" style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 30px;">
-        <div>
-          <span class="text-rose-600 font-bold text-xs" style="color: #E11D48; font-size: 13px; font-weight: 700;">❤️ داستان‌های واقعی پیوند عشاق یزد</span>
-          <h2 class="text-xl sm:text-2xl font-black text-graphite mt-1" style="font-size: 24px; font-weight: 800; color: #1E293B; margin-top: 4px;">گالری و روایت عروسی‌های واقعی استان یزد</h2>
+  <!-- 6. BUDGET CALCULATOR BANNER ("محاسبه تخمینی بودجه عروسی در استان یزد") -->
+  <section class="budget-calculator-section">
+    <div class="dark-calc-card">
+      <div class="calc-top-row">
+        <a href="#" onclick="switchTab('tools'); return false;" class="btn-gold-sm">ورود به بودجه‌ریز کامل AI ←</a>
+        <div class="calc-title-box">
+          <span class="calc-badge">📊 پیش‌بینی هوشمند هزینه مراسم</span>
+          <h3>محاسبه تخمینی بودجه عروسی در استان یزد</h3>
         </div>
-        <a href="#" onclick="switchTab('inspiration'); return false;" class="bg-primary text-graphite font-bold text-xs px-4 py-2.5 rounded-xl hover:bg-amber-400 transition-colors shadow-xs" style="background: #D4AF37; color: #1E293B; padding: 8px 16px; border-radius: 8px; text-decoration: none; font-size: 13px; font-weight: 700;">مشاهده مجله ایده‌ها & مودبورد ←</a>
       </div>
 
-      <div class="grid grid-cols-1 md:grid-cols-3 gap-6" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 20px;">
-
-        <!-- Card 1 -->
-        <div class="border border-accent rounded-2xl overflow-hidden bg-white shadow-xs hover:shadow-md transition-all" style="border-radius: 16px; overflow: hidden; border: 1px solid #E2E8F0; background: #FFFFFF;">
-          <div style="position: relative; height: 200px; background: #CBD5E1;">
-            <span style="position: absolute; top: 12px; right: 12px; background: rgba(0,0,0,0.6); color: #FFF; padding: 4px 10px; border-radius: 20px; font-size: 11px;">صفائیه یزد</span>
-            <img src="https://images.unsplash.com/photo-1519741497674-611481863552?w=500" alt="عروسی" style="width:100%; height:100%; object-fit:cover;">
-          </div>
-          <div style="padding: 16px;">
-            <h3 style="font-size: 15px; font-weight: 700; color: #1E293B; margin: 0 0 6px 0;">جشن عروسی زمردین: امیر & مریم</h3>
-            <p style="font-size: 12px; color: #64748B; margin: 0;">مراسم باشکوه در باغ تالار مشیرالممالک با تم زمردی و گل‌آرایی مگنولیا</p>
-          </div>
+      <div class="calc-main-content">
+        <div class="calc-result-box">
+          <span>برآورد کل هزینه‌های اصلی مراسم:</span>
+          <h2>۳۵۰,۰۰۰,۰۰۰ تومان</h2>
+          <small>شامل ورودی تالار، شام، آتلیه، آرایشگاه، مزون لباس و شیرینی‌سرای یزد</small>
         </div>
 
-        <!-- Card 2 -->
-        <div class="border border-accent rounded-2xl overflow-hidden bg-white shadow-xs hover:shadow-md transition-all" style="border-radius: 16px; overflow: hidden; border: 1px solid #E2E8F0; background: #FFFFFF;">
-          <div style="position: relative; height: 200px; background: #CBD5E1;">
-            <span style="position: absolute; top: 12px; right: 12px; background: rgba(0,0,0,0.6); color: #FFF; padding: 4px 10px; border-radius: 20px; font-size: 11px;">کویر سندباد یزد</span>
-            <img src="https://images.unsplash.com/photo-1511285560929-80b456fea0bc?w=500" alt="فرمالیته" style="width:100%; height:100%; object-fit:cover;">
+        <div class="calc-controls-box">
+          <div class="slider-row">
+            <span class="val-tag">250 نفر</span>
+            <label>تعداد مهمانان تخمینی:</label>
           </div>
-          <div style="padding: 16px;">
-            <h3 style="font-size: 15px; font-weight: 700; color: #1E293B; margin: 0 0 6px 0;">فرمالیته طلایی کویر: رضا & سارا</h3>
-            <p style="font-size: 12px; color: #64748B; margin: 0;">عکاسی فرمالیته روی رمل‌های طلایی کویر یزد توسط استودیو تخصصی کویر</p>
+          <input type="range" min="50" max="1000" value="250" class="custom-range-slider">
+
+          <div class="style-row">
+            <label>سطح تشریفات و خدمات:</label>
+            <div class="style-btns">
+              <button class="s-btn">لوکس / VIP 💎</button>
+              <button class="s-btn active">متوسط ⭐️⭐️</button>
+              <button class="s-btn">اقتصادی 🌸</button>
+            </div>
           </div>
         </div>
-
-        <!-- Card 3 -->
-        <div class="border border-accent rounded-2xl overflow-hidden bg-white shadow-xs hover:shadow-md transition-all" style="border-radius: 16px; overflow: hidden; border: 1px solid #E2E8F0; background: #FFFFFF;">
-          <div style="position: relative; height: 200px; background: #CBD5E1;">
-            <span style="position: absolute; top: 12px; right: 12px; background: rgba(0,0,0,0.6); color: #FFF; padding: 4px 10px; border-radius: 20px; font-size: 11px;">بافت تاریخی یزد</span>
-            <img src="https://images.unsplash.com/photo-1583939003579-730e3918a45a?w=500" alt="عقد سنتی" style="width:100%; height:100%; object-fit:cover;">
-          </div>
-          <div style="padding: 16px;">
-            <h3 style="font-size: 15px; font-weight: 700; color: #1E293B; margin: 0 0 6px 0;">عقد سنتی در خانه تاریخی: مهدی & زهرا</h3>
-            <p style="font-size: 12px; color: #64748B; margin: 0;">سفره عقد اسلیمی و پذیرایی اصیل با شیرینی سنتی حاج خلیفه رهبر</p>
-          </div>
-        </div>
-
       </div>
     </div>
   </section>
 
-  <!-- 3. SECTION: VENDOR CTA BANNER -->
-  <section class="vendor-cta-banner rounded-3xl p-8 sm:p-10 shadow-xl border border-[#D4AF37]/50 text-white dir-rtl" style="background: linear-gradient(135deg, #0F172A 0%, #1E293B 100%); padding: 50px 20px; color: #FFFFFF; direction: rtl; text-align: right;">
-    <div style="max-width: 1200px; margin: 0 auto; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 20px;">
-      <div>
-        <span style="color: #94A3B8; font-size: 12px;">🏢 ویژه صاحب‌امتیازان تالار، آتلیه، سالن زیبایی و خدمات مجالس یزد</span>
-        <h2 style="font-size: 24px; font-weight: 800; color: #FFFFFF; margin: 8px 0;">کسب‌وکار عروسی خود را به ۱۵,۰۰0+ زوج یزدی معرفی کنید</h2>
-        <p style="color: #94A3B8; font-size: 13px; margin: 0;">با ثبت‌نام در پلتفرم عروسی تو، دریافت نشان تاییدیه رسمی و مدیریت استعلام‌های آنلاین رزرو، درآمد خود را افزایش دهید.</p>
+  <!-- 7. WHY CHOOSE US ("چرا زوج‌های یزدی عروسی تو را انتخاب می‌کنند؟") -->
+  <section class="why-us-section">
+    <div class="container text-center">
+      <h2>چرا زوج‌های یزدی "عروسی تو" را انتخاب می‌کنند؟</h2>
+      <p class="section-subtext">پلتفرمی امن و هوشمند جهت تجربه‌ای بی‌دغدغه در برنامه‌ریزی رویاپردازی‌ترین جشن زندگی</p>
+
+      <div class="why-grid-4">
+        <div class="why-card">
+          <div class="why-icon">🛡️</div>
+          <h3>کسب‌وکارهای تاییدشده یزد</h3>
+          <p>استعلام جواز کسب، بررسی سوابق و اصالت‌سنجی کامل تمامی تامین‌کنندگان استان یزد</p>
+        </div>
+        <div class="why-card">
+          <div class="why-icon">🏷️</div>
+          <h3>تضمین بهترین قیمت</h3>
+          <p>ارائه پکیج‌های شفاف، قیمت بدون هزینه پنهان و تضمین قیمت عادلانه در بازار یزد</p>
+        </div>
+        <div class="why-card">
+          <div class="why-icon">🤖</div>
+          <h3>ابزارهای هوشمند AI</h3>
+          <p>چک‌لیست ۱۲ ماهه، بودجه‌ریز تخصصی و کارت دعوت دیجیتال با RSVP</p>
+        </div>
+        <div class="why-card">
+          <div class="why-icon">🎧</div>
+          <h3>پشتیبانی اختصاصی</h3>
+          <p>مشاوره تلفنی و آنلاین گام‌به‌گام در برنامه‌ریزی تا شب برگزاری مراسم</p>
+        </div>
       </div>
-      <div style="display: flex; gap: 12px; flex-wrap: wrap;">
-        <a href="#" onclick="toggleVendorModalStatic(true); return false;" style="background: #D4AF37; color: #1E293B; padding: 12px 24px; border-radius: 10px; font-weight: 700; text-decoration: none; font-size: 14px;">➕ ثبت‌نام رایگان کسب‌وکار</a>
-        <a href="#" onclick="switchRole('vendor'); return false;" style="background: rgba(255,255,255,0.1); color: #FFFFFF; border: 1px solid rgba(255,255,255,0.2); padding: 12px 24px; border-radius: 10px; font-weight: 600; text-decoration: none; font-size: 14px;">🏢 ورود به پنل تامین‌کننده</a>
+    </div>
+  </section>
+
+  <!-- 8. REAL WEDDINGS GALLERY ("گالری و روایت عروسی‌های واقعی استان یزد") -->
+  <section class="weddings-gallery-section">
+    <div class="container">
+      <div class="gallery-top-bar">
+        <a href="#" onclick="switchTab('inspiration'); return false;" class="btn-gold-sm">مشاهده مجله ایده‌ها & مودبورد ←</a>
+        <div class="gallery-titles">
+          <span class="rose-tag">❤️ داستان‌های واقعی پیوند عشاق یزد</span>
+          <h2>گالری و روایت عروسی‌های واقعی استان یزد</h2>
+        </div>
+      </div>
+
+      <div class="gallery-grid-3">
+        <div class="wedding-card">
+          <div class="img-box">
+            <span class="location-badge">صفائیه یزد</span>
+            <img src="https://images.unsplash.com/photo-1519741497674-611481863552?w=500" alt="عروسی">
+          </div>
+          <div class="card-info">
+            <h3>جشن عروسی زمردین: امیر & مریم</h3>
+            <p>مراسم باشکوه در باغ تالار مشیرالممالک با تم زمردی و گل‌آرایی مگنولیا</p>
+          </div>
+        </div>
+
+        <div class="wedding-card">
+          <div class="img-box">
+            <span class="location-badge">کویر سندباد یزد</span>
+            <img src="https://images.unsplash.com/photo-1511285560929-80b456fea0bc?w=500" alt="فرمالیته">
+          </div>
+          <div class="card-info">
+            <h3>فرمالیته طلایی کویر: رضا & سارا</h3>
+            <p>عکاسی فرمالیته روی رمل‌های طلایی کویر یزد توسط استودیو تخصصی کویر</p>
+          </div>
+        </div>
+
+        <div class="wedding-card">
+          <div class="img-box">
+            <span class="location-badge">بافت تاریخی یزد</span>
+            <img src="https://images.unsplash.com/photo-1583939003579-730e3918a45a?w=500" alt="عقد سنتی">
+          </div>
+          <div class="card-info">
+            <h3>عقد سنتی در خانه تاریخی: مهدی & زهرا</h3>
+            <p>سفره عقد اسلیمی و پذیرایی اصیل با شیرینی سنتی حاج خلیفه رهبر</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 9. VENDOR REGISTRATION BANNER ("کسب‌وکار عروسی خود را به ۱۵,۰۰۰+ زوج یزدی معرفی کنید") -->
+  <section class="vendor-banner-dark">
+    <div class="container flex-banner">
+      <div class="banner-btns">
+        <a href="#" onclick="toggleVendorModalStatic(true); return false;" class="btn-gold-md">➕ ثبت‌نام رایگان کسب‌وکار</a>
+        <a href="#" onclick="switchRole('vendor'); return false;" class="btn-dark-md">🏢 ورود به پنل تامین‌کننده</a>
+      </div>
+      <div class="banner-info">
+        <span class="badge-gold">🏢 ویژه صاحب‌امتیازان تالار، آتلیه، سالن زیبایی و خدمات مجالس یزد</span>
+        <h2>کسب‌وکار عروسی خود را به ۱۵,۰۰۰+ زوج یزدی معرفی کنید</h2>
+        <p>با ثبت‌نام در پلتفرم عروسی تو، دریافت نشان تاییدیه رسمی و مدیریت استعلام‌های آنلاین رزرو، درآمد خود را افزایش دهید.</p>
       </div>
     </div>
   </section>

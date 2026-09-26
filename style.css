@@ -965,3 +965,564 @@ footer {
     padding: 40px 20px 20px !important;
     direction: rtl !important;
 }
+
+/* Quick Tools Section (Section 5) */
+.quick-tools-section {
+  background-color: #FFFFFF;
+  border: 1px solid #E0D8C8;
+  border-radius: 1.5rem;
+  padding: 2.5rem 1.5rem;
+  margin-top: 2rem;
+  box-shadow: 0 4px 20px rgba(0,0,0,0.02);
+  direction: rtl;
+}
+
+.quick-tools-section .sub-title {
+  display: inline-block;
+  background: rgba(212, 175, 55, 0.1);
+  color: #D4AF37;
+  border: 1px solid rgba(212, 175, 55, 0.2);
+  padding: 0.25rem 0.85rem;
+  border-radius: 9999px;
+  font-size: 0.75rem;
+  font-weight: 700;
+  margin-bottom: 0.75rem;
+}
+
+.quick-tools-section h2 {
+  font-size: 1.5rem;
+  font-weight: 800;
+  color: #111E16;
+  margin-bottom: 2rem;
+}
+
+.tools-grid-4 {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 1.25rem;
+}
+
+.tool-card {
+  background: #FBF9F5;
+  border: 1px solid #E0D8C8;
+  border-radius: 1rem;
+  padding: 1.5rem;
+  text-align: right;
+  cursor: pointer;
+  transition: all 0.25s ease;
+}
+
+.tool-card:hover {
+  border-color: #D4AF37;
+  transform: translateY(-3px);
+  box-shadow: 0 8px 25px rgba(212, 175, 55, 0.15);
+}
+
+.tool-card .tool-icon {
+  font-size: 2rem;
+  margin-bottom: 0.75rem;
+}
+
+.tool-card h3 {
+  font-size: 1rem;
+  font-weight: 700;
+  color: #111E16;
+  margin-bottom: 0.5rem;
+}
+
+.tool-card p {
+  font-size: 0.75rem;
+  color: #607268;
+  line-height: 1.6;
+  margin: 0;
+}
+
+/* Budget Calculator Section (Section 6) */
+.budget-calculator-section {
+  margin-top: 2rem;
+  direction: rtl;
+}
+
+.dark-calc-card {
+  background: linear-gradient(135deg, #0F172A 0%, #1E293B 100%);
+  border: 1px solid rgba(212, 175, 55, 0.4);
+  border-radius: 1.5rem;
+  padding: 2rem;
+  color: #FFFFFF;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+}
+
+.calc-top-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 1px solid rgba(212, 175, 55, 0.25);
+  padding-bottom: 1.25rem;
+  margin-bottom: 1.5rem;
+  flex-wrap: wrap;
+  gap: 1rem;
+}
+
+.btn-gold-sm {
+  background: #D4AF37;
+  color: #111E16;
+  font-size: 0.8rem;
+  font-weight: 800;
+  padding: 0.6rem 1.25rem;
+  border-radius: 0.75rem;
+  text-decoration: none;
+  transition: all 0.2s;
+  box-shadow: 0 4px 12px rgba(212, 175, 55, 0.3);
+}
+
+.btn-gold-sm:hover {
+  background: #F1C40F;
+  transform: translateY(-2px);
+}
+
+.calc-title-box {
+  text-align: right;
+}
+
+.calc-badge {
+  display: inline-block;
+  background: rgba(212, 175, 55, 0.15);
+  color: #D4AF37;
+  border: 1px solid rgba(212, 175, 55, 0.3);
+  padding: 0.2rem 0.75rem;
+  border-radius: 9999px;
+  font-size: 0.7rem;
+  font-weight: 700;
+  margin-bottom: 0.35rem;
+}
+
+.calc-title-box h3 {
+  font-size: 1.35rem;
+  font-weight: 800;
+  color: #D4AF37;
+  margin: 0;
+}
+
+.calc-main-content {
+  display: grid;
+  grid-template-columns: 1fr 1.2fr;
+  gap: 2rem;
+  align-items: center;
+}
+
+@media (max-width: 768px) {
+  .calc-main-content {
+    grid-template-columns: 1fr;
+  }
+}
+
+.calc-result-box {
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(212, 175, 55, 0.3);
+  border-radius: 1.25rem;
+  padding: 1.5rem;
+  text-align: center;
+  backdrop-filter: blur(8px);
+}
+
+.calc-result-box span {
+  font-size: 0.75rem;
+  color: #CBD5E1;
+  display: block;
+  margin-bottom: 0.5rem;
+}
+
+.calc-result-box h2 {
+  font-size: 1.8rem;
+  font-weight: 900;
+  color: #D4AF37;
+  margin: 0.25rem 0 0.5rem 0;
+}
+
+.calc-result-box small {
+  font-size: 0.7rem;
+  color: #94A3B8;
+  display: block;
+  line-height: 1.5;
+}
+
+.calc-controls-box {
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+}
+
+.slider-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 0.8rem;
+  font-weight: 700;
+  color: #E2E8F0;
+  margin-bottom: 0.5rem;
+}
+
+.val-tag {
+  color: #D4AF37;
+  font-weight: 900;
+  font-size: 0.9rem;
+}
+
+.custom-range-slider {
+  width: 100%;
+  accent-color: #D4AF37;
+  cursor: pointer;
+  height: 6px;
+  border-radius: 4px;
+}
+
+.style-row label {
+  display: block;
+  font-size: 0.8rem;
+  font-weight: 700;
+  color: #E2E8F0;
+  margin-bottom: 0.5rem;
+  text-align: right;
+}
+
+.style-btns {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 0.5rem;
+}
+
+.s-btn {
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(212, 175, 55, 0.3);
+  color: #E2E8F0;
+  font-size: 0.75rem;
+  font-weight: 700;
+  padding: 0.6rem 0.5rem;
+  border-radius: 0.75rem;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.s-btn.active, .s-btn:hover {
+  background: #D4AF37;
+  color: #111E16;
+  border-color: #D4AF37;
+}
+
+/* Why Choose Us Section (Section 7) */
+.why-us-section {
+  background: #FAF9F6;
+  border: 1px solid #E0D8C8;
+  border-radius: 1.5rem;
+  padding: 2.5rem 1.5rem;
+  margin-top: 2rem;
+  text-align: center;
+  direction: rtl;
+}
+
+.why-us-section h2 {
+  font-size: 1.5rem;
+  font-weight: 800;
+  color: #111E16;
+  margin-bottom: 0.5rem;
+}
+
+.section-subtext {
+  font-size: 0.85rem;
+  color: #607268;
+  margin-bottom: 2rem;
+}
+
+.why-grid-4 {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 1.25rem;
+}
+
+.why-card {
+  background: #FFFFFF;
+  border: 1px solid #E0D8C8;
+  border-radius: 1rem;
+  padding: 1.5rem;
+  box-shadow: 0 4px 15px rgba(0,0,0,0.03);
+  transition: all 0.25s;
+}
+
+.why-card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 8px 20px rgba(0,0,0,0.06);
+}
+
+.why-icon {
+  width: 50px;
+  height: 50px;
+  background: #1B3B2B;
+  color: #D4AF37;
+  border-radius: 0.75rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.35rem;
+  margin: 0 auto 1rem auto;
+}
+
+.why-card h3 {
+  font-size: 0.95rem;
+  font-weight: 700;
+  color: #111E16;
+  margin-bottom: 0.5rem;
+}
+
+.why-card p {
+  font-size: 0.75rem;
+  color: #607268;
+  line-height: 1.6;
+  margin: 0;
+}
+
+/* Real Weddings Gallery Section (Section 8) */
+.weddings-gallery-section {
+  background: #FFFFFF;
+  border: 1px solid #E0D8C8;
+  border-radius: 1.5rem;
+  padding: 2.5rem 1.5rem;
+  margin-top: 2rem;
+  direction: rtl;
+}
+
+.gallery-top-bar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 1px solid #E0D8C8;
+  padding-bottom: 1rem;
+  margin-bottom: 1.5rem;
+  flex-wrap: wrap;
+  gap: 1rem;
+}
+
+.gallery-titles {
+  text-align: right;
+}
+
+.rose-tag {
+  color: #E11D48;
+  font-size: 0.8rem;
+  font-weight: 700;
+}
+
+.gallery-titles h2 {
+  font-size: 1.35rem;
+  font-weight: 800;
+  color: #111E16;
+  margin: 0.25rem 0 0 0;
+}
+
+.gallery-grid-3 {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 1.25rem;
+}
+
+.wedding-card {
+  border: 1px solid #E0D8C8;
+  border-radius: 1rem;
+  overflow: hidden;
+  background: #FFFFFF;
+  transition: all 0.25s;
+}
+
+.wedding-card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 8px 20px rgba(0,0,0,0.06);
+}
+
+.wedding-card .img-box {
+  position: relative;
+  height: 200px;
+  background: #CBD5E1;
+}
+
+.wedding-card .img-box img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.location-badge {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  background: rgba(0, 0, 0, 0.65);
+  color: #FFFFFF;
+  padding: 0.25rem 0.75rem;
+  border-radius: 9999px;
+  font-size: 0.7rem;
+  font-weight: 700;
+}
+
+.wedding-card .card-info {
+  padding: 1.25rem;
+  text-align: right;
+}
+
+.wedding-card .card-info h3 {
+  font-size: 0.95rem;
+  font-weight: 700;
+  color: #111E16;
+  margin: 0 0 0.5rem 0;
+}
+
+.wedding-card .card-info p {
+  font-size: 0.75rem;
+  color: #607268;
+  margin: 0;
+  line-height: 1.5;
+}
+
+/* Vendor Banner Dark (Section 9) */
+.vendor-banner-dark {
+  background: linear-gradient(135deg, #0F172A 0%, #1E293B 100%);
+  border: 1px solid rgba(212, 175, 55, 0.4);
+  border-radius: 1.5rem;
+  padding: 2.5rem 1.5rem;
+  margin-top: 2rem;
+  color: #FFFFFF;
+  direction: rtl;
+}
+
+.flex-banner {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 1.5rem;
+}
+
+.banner-info {
+  text-align: right;
+  max-width: 650px;
+}
+
+.badge-gold {
+  color: #94A3B8;
+  font-size: 0.75rem;
+  font-weight: 700;
+  display: block;
+  margin-bottom: 0.5rem;
+}
+
+.banner-info h2 {
+  font-size: 1.4rem;
+  font-weight: 800;
+  color: #FFFFFF;
+  margin: 0 0 0.5rem 0;
+}
+
+.banner-info p {
+  color: #94A3B8;
+  font-size: 0.8rem;
+  margin: 0;
+  line-height: 1.6;
+}
+
+.banner-btns {
+  display: flex;
+  gap: 0.75rem;
+  flex-wrap: wrap;
+}
+
+.btn-gold-md {
+  background: #D4AF37;
+  color: #111E16;
+  padding: 0.75rem 1.5rem;
+  border-radius: 0.75rem;
+  font-weight: 800;
+  font-size: 0.85rem;
+  text-decoration: none;
+  transition: all 0.2s;
+  box-shadow: 0 4px 12px rgba(212, 175, 55, 0.3);
+}
+
+.btn-gold-md:hover {
+  background: #F1C40F;
+  transform: translateY(-2px);
+}
+
+.btn-dark-md {
+  background: rgba(255, 255, 255, 0.1);
+  color: #FFFFFF;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  padding: 0.75rem 1.5rem;
+  border-radius: 0.75rem;
+  font-weight: 700;
+  font-size: 0.85rem;
+  text-decoration: none;
+  transition: all 0.2s;
+}
+
+.btn-dark-md:hover {
+  background: rgba(255, 255, 255, 0.2);
+  transform: translateY(-2px);
+}
+
+/* Site Footer (Section 10) */
+.site-footer {
+  background: #0B0F19;
+  border-top: 1px solid rgba(212, 175, 55, 0.3);
+  margin-top: 3rem;
+  padding: 3rem 1.5rem;
+  color: #94A3B8;
+  direction: rtl;
+}
+
+.footer-grid-4 {
+  max-width: 1200px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 2rem;
+}
+
+.f-col h3 {
+  color: #FFFFFF;
+  font-size: 1.15rem;
+  font-weight: 800;
+  margin-top: 0;
+  margin-bottom: 0.75rem;
+}
+
+.f-col h4 {
+  color: #FFFFFF;
+  font-size: 0.9rem;
+  font-weight: 700;
+  margin-top: 0;
+  margin-bottom: 0.75rem;
+}
+
+.f-col p {
+  font-size: 0.75rem;
+  line-height: 1.7;
+  margin: 0.35rem 0;
+}
+
+.f-col ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.f-col ul li {
+  margin-bottom: 0.4rem;
+}
+
+.f-col ul li a {
+  color: #94A3B8;
+  font-size: 0.75rem;
+  text-decoration: none;
+  transition: color 0.2s;
+}
+
+.f-col ul li a:hover {
+  color: #D4AF37;
+}

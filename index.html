@@ -4352,92 +4352,38 @@
     </div>
   </div>
 
-  <!-- FOOTER INTEGRATION -->
-  <footer class="bg-[#1B3B2B] border-t border-[#D4AF37]/40 mt-16 text-white py-12" style="background: #0B0F19; color: #94A3B8; padding: 40px 20px 20px; direction: rtl;">
-    <div class="max-w-7xl mx-auto" style="max-width: 1200px; margin: 0 auto; display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 30px;">
-      <div>
-        <h3 style="color: #FFFFFF; font-size: 18px; margin-bottom: 12px;">عروسی تو ❤️</h3>
-        <p style="font-size: 12px; line-height: 1.7;">پلتفرم هوشمند برنامه‌ریزی عروسی و خدمات مجالس در استان یزد. معرفی برترین تامین‌کنندگان.</p>
+  <!-- 10. FOOTER INTEGRATION -->
+  <footer class="site-footer">
+    <div class="container footer-grid-4">
+      <div class="f-col">
+        <h3>عروسی تو ❤️</h3>
+        <p>پلتفرم هوشمند برنامه‌ریزی عروسی و خدمات مجالس در استان یزد. معرفی برترین تالارها، آتلیه‌ها، سالن‌های زیبایی و مزون‌های معتبر با تضمین قیمت و تاییدیه رسمی اعتبارسنجی.</p>
       </div>
-      <div>
-        <h4 style="color: #FFFFFF; font-size: 14px; margin-bottom: 12px;">دسته‌بندی خدمات</h4>
-        <ul style="list-style: none; padding: 0; margin: 0; font-size: 12px; line-height: 2;">
-          <li><a href="#" onclick="filterVendorsFromMega('تالار و باغ تالار عروسی'); return false;" style="color: #94A3B8; text-decoration: none;">باغ و تالار پذیرایی</a></li>
-          <li><a href="#" onclick="filterVendorsFromMega('آتلیه عکاسی و فیلمبرداری'); return false;" style="color: #94A3B8; text-decoration: none;">آتلیه عکاسی و فیلمبرداری</a></li>
+      <div class="f-col">
+        <h4>دسته‌بندی خدمات</h4>
+        <ul>
+          <li><a href="#" onclick="filterVendorsFromMega('تالار و باغ تالار عروسی'); return false;">باغ و تالار پذیرایی</a></li>
+          <li><a href="#" onclick="filterVendorsFromMega('آتلیه عکاسی و فیلمبرداری'); return false;">آتلیه عکاسی و فیلمبرداری</a></li>
+          <li><a href="#" onclick="filterVendorsFromMega('سالن زیبایی و آرایشگاه عروس'); return false;">سالن زیبایی عروس</a></li>
+          <li><a href="#" onclick="filterVendorsFromMega('مزون لباس عروس'); return false;">مزون لباس عروس</a></li>
+          <li><a href="#" onclick="filterVendorsFromMega('طلافروشی و جواهرفروشی'); return false;">طلا و جواهر عقد</a></li>
         </ul>
       </div>
-      <div>
-        <h4 style="color: #FFFFFF; font-size: 14px; margin-bottom: 12px;">ابزارهای هوشمند</h4>
-        <ul style="list-style: none; padding: 0; margin: 0; font-size: 12px; line-height: 2;">
-          <li><a href="#" onclick="switchTab('planner'); return false;" style="color: #94A3B8; text-decoration: none;">چک‌لیست ۱۲ ماهه</a></li>
-          <li><a href="#" onclick="switchTab('tools'); return false;" style="color: #94A3B8; text-decoration: none;">مدیریت بودجه AI</a></li>
+      <div class="f-col">
+        <h4>ابزارهای هوشمند</h4>
+        <ul>
+          <li><a href="#" onclick="switchTab('planner'); return false;">چک‌لیست ۱۲ ماهه</a></li>
+          <li><a href="#" onclick="switchTab('tools'); return false;">مدیریت بودجه AI</a></li>
+          <li><a href="#" onclick="switchTab('guests'); return false;">مدیریت مهمانان & RSVP</a></li>
+          <li><a href="#" onclick="switchTab('invitation'); return false;">کارت دعوت آنلاین</a></li>
+          <li><a href="#" onclick="switchTab('quizzes'); return false;">تست‌های استایل & روانشناسی</a></li>
         </ul>
       </div>
-      <div>
-        <h4 style="color: #FFFFFF; font-size: 14px; margin-bottom: 12px;">ارتباط با پشتیبانی یزد</h4>
-        <p style="font-size: 12px; margin: 4px 0;">📞 ۰۳۵-۳۸۲۴۰۰۰۰</p>
-        <p style="font-size: 12px; margin: 4px 0;">✉️ info@aroosito.com</p>
-      </div>
-    </div>
-  </footer>
-  <footer class="bg-[#1B3B2B] border-t border-[#D4AF37]/40 mt-8 text-white py-8 hidden">
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-8">
-      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-8 border-b border-[#D4AF37]/25 pb-8">
-        <!-- Brand Info -->
-        <div class="lg:col-span-2 space-y-4">
-          <div class="flex items-center gap-3">
-            <div class="w-10 h-10 rounded-xl bg-[#D4AF37] flex items-center justify-center text-[#1B3B2B] shadow-md">
-              <i data-lucide="heart" class="w-5 h-5 fill-[#1B3B2B] stroke-[#D4AF37]"></i>
-            </div>
-            <span class="text-2xl font-black text-[#D4AF37]">عروسی تو</span>
-          </div>
-          <p class="text-xs text-amber-100/80 leading-relaxed max-w-sm">
-            پلتفرم هوشمند برنامه‌ریزی عروسی و خدمات مجالس در استان یزد. معرف برترین تالارها، آتلیه‌ها، سالن‌های زیبایی و مزون‌های معتبر با تضمین قیمت و تاییدیه رسمی اعتبار.
-          </p>
-          <div class="flex items-center gap-3 text-xs text-amber-200">
-            <span class="flex items-center gap-1"><i data-lucide="shield-check" class="w-4 h-4 text-[#D4AF37]"></i> دارای نماد اعتماد الکترونیکی</span>
-          </div>
-        </div>
-
-        <!-- Quick Links 1 -->
-        <div class="space-y-3">
-          <h4 class="text-xs font-black text-[#D4AF37] uppercase tracking-wider">دسته‌بندی خدمات</h4>
-          <ul class="space-y-2 text-xs font-medium text-slate-200">
-            <li><button onclick="filterVendorsFromMega('تالار و باغ تالار عروسی')" class="hover:text-[#D4AF37] transition-colors">باغ و تالار پذیرایی</button></li>
-            <li><button onclick="filterVendorsFromMega('آتلیه عکاسی و فیلمبرداری')" class="hover:text-[#D4AF37] transition-colors">آتلیه عکاسی و فیلمبرداری</button></li>
-            <li><button onclick="filterVendorsFromMega('سالن زیبایی و آرایشگاه عروس')" class="hover:text-[#D4AF37] transition-colors">سالن زیبایی عروس</button></li>
-            <li><button onclick="filterVendorsFromMega('مزون لباس عروس')" class="hover:text-[#D4AF37] transition-colors">مزون لباس عروس</button></li>
-            <li><button onclick="filterVendorsFromMega('طلافروشی و جواهرفروشی')" class="hover:text-[#D4AF37] transition-colors">طلا و جواهر عقد</button></li>
-          </ul>
-        </div>
-
-        <!-- Quick Links 2 -->
-        <div class="space-y-3">
-          <h4 class="text-xs font-black text-[#D4AF37] uppercase tracking-wider">ابزارهای هوشمند</h4>
-          <ul class="space-y-2 text-xs font-medium text-slate-200">
-            <li><button onclick="switchTab('planner')" class="hover:text-[#D4AF37] transition-colors">چک‌لیست ۱۲ ماهه</button></li>
-            <li><button onclick="switchTab('tools')" class="hover:text-[#D4AF37] transition-colors">مدیریت بودجه AI</button></li>
-            <li><button onclick="switchTab('guests')" class="hover:text-[#D4AF37] transition-colors">مدیریت مهمانان & RSVP</button></li>
-            <li><button onclick="switchTab('invitation')" class="hover:text-[#D4AF37] transition-colors">کارت دعوت آنلاین</button></li>
-            <li><button onclick="switchTab('quizzes')" class="hover:text-[#D4AF37] transition-colors">تست‌های استایل & روانشناسی</button></li>
-          </ul>
-        </div>
-
-        <!-- Contact & Location -->
-        <div class="space-y-3">
-          <h4 class="text-xs font-black text-[#D4AF37] uppercase tracking-wider">ارتباط با پشتیبانی یزد</h4>
-          <div class="space-y-2 text-xs font-medium text-slate-200">
-            <p class="flex items-center gap-2"><i data-lucide="phone" class="w-4 h-4 text-[#D4AF37]"></i> <span dir="ltr">۰۳۵-۳۸۲۴۰۰۰۰</span></p>
-            <p class="flex items-center gap-2"><i data-lucide="mail" class="w-4 h-4 text-[#D4AF37]"></i> info@aroosito.com</p>
-            <p class="flex items-center gap-2"><i data-lucide="map-pin" class="w-4 h-4 text-[#D4AF37]"></i> یزد، صفائیه، خیابان دانشگاه</p>
-          </div>
-        </div>
-      </div>
-
-      <!-- Copyright Bar -->
-      <div class="flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-amber-200/80 font-medium text-center sm:text-right">
-        <p>© تمامی حقوق مادی و معنوی این وب‌سایت متعلق به پلتفرم هوشمند عروسی تو می‌باشد.</p>
-        <p class="text-[#D4AF37] font-bold">طراحی و اجرا ویژه استان یزد 📍</p>
+      <div class="f-col">
+        <h4>ارتباط با پشتیبانی یزد</h4>
+        <p>📞 ۰۳۵-۳۸۲۴۰۰۰۰</p>
+        <p>✉️ info@aroosito.com</p>
+        <p>📍 یزد، صفائیه، خیابان دانشگاه</p>
       </div>
     </div>
   </footer>
