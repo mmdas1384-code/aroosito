@@ -27,6 +27,11 @@ header, nav, .header-container, .navbar {
     z-index: 1000 !important;
 }
 
+/* Utility class fallback for hidden elements */
+.hidden {
+  display: none !important;
+}
+
 /* Default hidden state - no height or layout footprint */
 .mega-menu-container,
 .header-dropdown,
