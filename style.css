@@ -958,7 +958,7 @@ main#directory-view {
 }
 
 .vendor-cta-banner {
-    background: linear-gradient(135deg, #0F172A 0%, #1E293B 100%) !important;
+    background: linear-gradient(135deg, #0F251A 0%, #1B3B2B 100%) !important;
     padding: 50px 20px !important;
     color: #FFFFFF !important;
     direction: rtl !important;
@@ -969,8 +969,8 @@ main#directory-view {
 }
 
 footer {
-    background: #0B0F19 !important;
-    color: #94A3B8 !important;
+    background: #08140E !important;
+    color: #CBD5E1 !important;
     padding: 40px 20px 20px !important;
     direction: rtl !important;
 }
@@ -1053,7 +1053,7 @@ footer {
 }
 
 .dark-calc-card {
-  background: linear-gradient(135deg, #0F172A 0%, #1E293B 100%);
+  background: linear-gradient(135deg, #0F251A 0%, #1B3B2B 100%);
   border: 1px solid rgba(212, 175, 55, 0.4);
   border-radius: 1.5rem;
   padding: 2rem;
@@ -1126,8 +1126,8 @@ footer {
 }
 
 .calc-result-box {
-  background: rgba(255, 255, 255, 0.05);
-  border: 1px solid rgba(212, 175, 55, 0.3);
+  background: #142E22;
+  border: 1px solid rgba(212, 175, 55, 0.4);
   border-radius: 1.25rem;
   padding: 1.5rem;
   text-align: center;
@@ -1391,7 +1391,7 @@ footer {
 
 /* Vendor Banner Dark (Section 9) */
 .vendor-banner-dark {
-  background: linear-gradient(135deg, #0F172A 0%, #1E293B 100%);
+  background: linear-gradient(135deg, #0F251A 0%, #1B3B2B 100%);
   border: 1px solid rgba(212, 175, 55, 0.4);
   border-radius: 1.5rem;
   padding: 2.5rem 1.5rem;
@@ -1459,9 +1459,9 @@ footer {
 }
 
 .btn-dark-md {
-  background: rgba(255, 255, 255, 0.1);
+  background: #142E22;
   color: #FFFFFF;
-  border: 1px solid rgba(255, 255, 255, 0.2);
+  border: 1px solid rgba(212, 175, 55, 0.3);
   padding: 0.75rem 1.5rem;
   border-radius: 0.75rem;
   font-weight: 700;
@@ -1471,17 +1471,18 @@ footer {
 }
 
 .btn-dark-md:hover {
-  background: rgba(255, 255, 255, 0.2);
+  background: #1B3B2B;
+  border-color: #D4AF37;
   transform: translateY(-2px);
 }
 
 /* Site Footer (Section 10) */
 .site-footer {
-  background: #0B0F19;
+  background: #08140E;
   border-top: 1px solid rgba(212, 175, 55, 0.3);
   margin-top: 3rem;
   padding: 3rem 1.5rem;
-  color: #94A3B8;
+  color: #CBD5E1;
   direction: rtl;
 }
 
@@ -1494,7 +1495,7 @@ footer {
 }
 
 .f-col h3 {
-  color: #FFFFFF;
+  color: #D4AF37;
   font-size: 1.15rem;
   font-weight: 800;
   margin-top: 0;
@@ -1502,7 +1503,7 @@ footer {
 }
 
 .f-col h4 {
-  color: #FFFFFF;
+  color: #D4AF37;
   font-size: 0.9rem;
   font-weight: 700;
   margin-top: 0;
@@ -1526,7 +1527,7 @@ footer {
 }
 
 .f-col ul li a {
-  color: #94A3B8;
+  color: #CBD5E1;
   font-size: 0.75rem;
   text-decoration: none;
   transition: color 0.2s;
