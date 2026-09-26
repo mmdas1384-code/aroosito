@@ -7,8 +7,12 @@
   --color-graphite: #111E16;
 }
 
+* {
+  font-family: 'Vazirmatn', Tahoma, sans-serif;
+}
+
 body {
-  font-family: 'Vazirmatn', sans-serif;
+  font-family: 'Vazirmatn', Tahoma, sans-serif;
   background-color: var(--color-off-white);
   color: var(--color-graphite);
   margin: 0;
