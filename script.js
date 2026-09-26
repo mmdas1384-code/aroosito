@@ -7997,19 +7997,21 @@ if (document.readyState === "loading") {
     }
 
     function initVipShowcaseAutoScroll() {
-      const showcaseContainer = document.getElementById('vip-showcase-container') || document.querySelector('.vip-showcase-container');
+      const showcaseContainer = document.querySelector('.vip-carousel-wrapper') ||
+                                document.querySelector('.vendors-showcase-grid') ||
+                                document.getElementById('vipCarouselWrapper') ||
+                                document.getElementById('vip-showcase-container') ||
+                                document.querySelector('.vip-showcase-container');
       if (!showcaseContainer) return;
 
       let autoScrollTimer = null;
-      const scrollStep = 340; // Approx card width + gap
+      const scrollStep = 320; // Width of card + gap
       const intervalTime = 3000; // 3 seconds
 
       function startAutoScroll() {
         if (autoScrollTimer) clearInterval(autoScrollTimer);
         autoScrollTimer = setInterval(() => {
           const maxScroll = showcaseContainer.scrollWidth - showcaseContainer.clientWidth;
-
-          // RTL auto-scroll check
           if (Math.abs(showcaseContainer.scrollLeft) >= maxScroll - 20) {
             showcaseContainer.scrollTo({ left: 0, behavior: 'smooth' });
           } else {
@@ -8022,10 +8024,8 @@ if (document.readyState === "loading") {
         if (autoScrollTimer) clearInterval(autoScrollTimer);
       }
 
-      // Start auto scroll
       startAutoScroll();
 
-      // Pause on hover, resume on leave
       showcaseContainer.addEventListener("mouseenter", stopAutoScroll);
       showcaseContainer.addEventListener("mouseleave", startAutoScroll);
       showcaseContainer.addEventListener("touchstart", stopAutoScroll, { passive: true });
@@ -8652,24 +8652,93 @@ const subgroupData = {
   5: ["تالار عروسی و باغ‌تالار", "عمارت اختصاصی و هتل", "کترینگ و خدمات غذا", "تشریفات و گل‌آرایی ورودی"]
 };
 
-function openSubgroupsModal(catId, catTitle) {
-  const modal = document.getElementById('subgroups-modal');
-  const titleElem = document.getElementById('subgroups-title');
-  const listElem = document.getElementById('subgroups-list');
+function openCategorySubgroups(catId, fallbackTitle) {
+  let categories = [];
+  try {
+    const savedData = localStorage.getItem('wedding_categories');
+    if (savedData) {
+      categories = JSON.parse(savedData);
+    } else {
+      const storedGroups = localStorage.getItem('aroosi_category_groups');
+      if (storedGroups) {
+        categories = JSON.parse(storedGroups);
+      } else if (window.categoriesData && Array.isArray(window.categoriesData)) {
+        categories = window.categoriesData;
+      }
+    }
+  } catch (err) {
+    console.error("Error reading categories from localStorage:", err);
+  }
 
-  if (!modal || !titleElem || !listElem) return;
+  let category = null;
+  if (Array.isArray(categories) && categories.length > 0) {
+    category = categories.find(c => c.id == catId || c.id === 'group-' + catId || c.title === fallbackTitle);
+  }
 
-  titleElem.innerText = `زیرگروه‌های ${catTitle}`;
-  const subgroups = subgroupData[catId] || [];
-  listElem.innerHTML = subgroups.map(sub => `
-    <div class="subgroup-item">
-      <span class="text-xs font-bold text-graphite">📌 ${sub}</span>
-      <button onclick="switchTab('directory'); document.getElementById('subgroups-modal').classList.add('hidden');" class="btn-sub-view cursor-pointer">مشاهده کسب‌وکارها</button>
-    </div>
-  `).join('');
+  let subgroups = [];
+  let displayTitle = fallbackTitle || "خدمات";
 
-  modal.classList.remove('hidden');
+  if (category) {
+    displayTitle = category.title || fallbackTitle || "خدمات";
+    if (category.subgroups && Array.isArray(category.subgroups)) {
+      subgroups = category.subgroups;
+    } else if (category.subcategories && Array.isArray(category.subcategories)) {
+      subgroups = category.subcategories.map(s => typeof s === 'string' ? s : s.title);
+    }
+  }
+
+  if (!subgroups || subgroups.length === 0) {
+    subgroups = subgroupData[catId] || subgroupData[1] || [];
+  }
+
+  const modal = document.getElementById('subgroupModal') || document.getElementById('subgroups-modal');
+  const title = document.getElementById('modalCategoryTitle') || document.getElementById('subgroups-title');
+  const container = document.getElementById('subgroupListContainer') || document.getElementById('subgroups-list');
+
+  const formattedHTML = (subgroups && subgroups.length > 0) ? subgroups.map(sub => {
+    const subStr = typeof sub === 'string' ? sub : (sub.title || sub.name || String(sub));
+    return `
+      <div class="subgroup-item-card">
+        <span class="subgroup-name">📍 ${subStr}</span>
+        <a href="directory-view.html?sub=${encodeURIComponent(subStr)}" onclick="if(typeof switchTab==='function'){ switchTab('directory'); if(typeof filterVendorsByCategoryTitle==='function'){ filterVendorsByCategoryTitle('${subStr}'); } closeSubgroupModal(); return false; }" class="btn-subgroup-view">مشاهده لیست ←</a>
+      </div>
+    `;
+  }).join('') : `<p style="text-align:center; color:#64748B; padding: 20px;">هیچ زیرگروهی برای این دسته ثبت نشده است.</p>`;
+
+  if (title) title.innerText = `زیرگروه‌های ${displayTitle}`;
+  if (container) container.innerHTML = formattedHTML;
+  if (modal) {
+    modal.style.display = 'flex';
+    modal.classList.remove('hidden');
+  }
 }
+
+function openSubgroupsModal(catId, catTitle) {
+  openCategorySubgroups(catId, catTitle);
+}
+
+function closeSubgroupModal() {
+  const modal1 = document.getElementById('subgroupModal');
+  if (modal1) {
+    modal1.style.display = 'none';
+    modal1.classList.add('hidden');
+  }
+
+  const modal2 = document.getElementById('subgroups-modal');
+  if (modal2) {
+    modal2.style.display = 'none';
+    modal2.classList.add('hidden');
+  }
+}
+
+// Close modal when clicking outside of it
+window.addEventListener('click', (e) => {
+  const modal1 = document.getElementById('subgroupModal');
+  if (e.target === modal1) closeSubgroupModal();
+
+  const modal2 = document.getElementById('subgroups-modal');
+  if (e.target === modal2) closeSubgroupModal();
+});
 
   function handleUpdateHeroLogo() {
     const input = document.getElementById('admin-hero-logo-url-input');

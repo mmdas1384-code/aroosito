@@ -558,28 +558,130 @@ main#directory-view {
     font-weight: bold !important;
 }
 
-/* Subgroups Modal Overlay & Card Styling */
-.subgroups-overlay {
-  position: fixed !important; top: 0 !important; left: 0 !important;
-  width: 100vw !important; height: 100vh !important;
-  background: rgba(0,0,0,0.6) !important; backdrop-filter: blur(5px) !important;
-  z-index: 99999 !important; justify-content: center !important; align-items: center !important;
+/* LUXURY REDESIGNED SUBGROUP MODAL STYLES */
+.subgroup-modal-overlay, .subgroups-overlay {
+    position: fixed !important;
+    top: 0 !important;
+    left: 0 !important;
+    width: 100vw !important;
+    height: 100vh !important;
+    background: rgba(15, 23, 20, 0.75) !important;
+    backdrop-filter: blur(10px) !important;
+    z-index: 999999 !important;
+    display: flex !important;
+    justify-content: center !important;
+    align-items: center !important;
 }
-.subgroups-overlay.hidden {
-  display: none !important;
+
+.subgroup-modal-overlay.hidden, .subgroups-overlay.hidden {
+    display: none !important;
 }
-.subgroups-card {
-  background: #FBF9F5 !important; border-radius: 16px !important; padding: 25px !important;
-  width: 90% !important; max-width: 500px !important; direction: rtl !important;
-  box-shadow: 0 20px 40px rgba(0,0,0,0.3) !important; border: 1px solid #D4AF37 !important;
+
+.subgroup-modal-card, .subgroups-card {
+    background: #FBF9F5 !important;
+    border: 1px solid #D4AF37 !important;
+    border-radius: 24px !important;
+    padding: 28px 32px !important;
+    width: 90% !important;
+    max-width: 580px !important;
+    box-shadow: 0 25px 60px rgba(0, 0, 0, 0.35) !important;
+    direction: rtl !important;
+    animation: modalFadeIn 0.3s ease-out !important;
 }
-.subgroup-item {
-  display: flex !important; justify-content: space-between !important; align-items: center !important;
-  padding: 10px 0 !important; border-bottom: 1px solid #EEE !important;
+
+@keyframes modalFadeIn {
+    from { opacity: 0; transform: translateY(15px); }
+    to { opacity: 1; transform: translateY(0); }
 }
-.btn-sub-view {
-  background: #1B3B2B !important; color: #D4AF37 !important; padding: 4px 10px !important;
-  border-radius: 6px !important; font-size: 12px !important; text-decoration: none !important;
+
+.subgroup-modal-header {
+    display: flex !important;
+    justify-content: space-between !important;
+    align-items: center !important;
+    border-bottom: 2px solid rgba(212, 175, 55, 0.25) !important;
+    padding-bottom: 14px !important;
+    margin-bottom: 20px !important;
+}
+
+.modal-title-box {
+    display: flex !important;
+    align-items: center !important;
+    gap: 8px !important;
+}
+
+.modal-title-box h3 {
+    margin: 0 !important;
+    color: #1B3B2B !important;
+    font-size: 19px !important;
+    font-weight: 800 !important;
+}
+
+.modal-close-btn {
+    background: #1B3B2B !important;
+    color: #D4AF37 !important;
+    border: 1px solid #D4AF37 !important;
+    width: 34px !important;
+    height: 34px !important;
+    border-radius: 50% !important;
+    cursor: pointer !important;
+    font-size: 15px !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    transition: all 0.2s ease !important;
+}
+
+.modal-close-btn:hover {
+    background: #D4AF37 !important;
+    color: #1B3B2B !important;
+}
+
+.subgroup-grid-list, .subgroups-grid {
+    display: flex !important;
+    flex-direction: column !important;
+    gap: 12px !important;
+    max-height: 360px !important;
+    overflow-y: auto !important;
+    padding-left: 5px !important;
+}
+
+.subgroup-item-card, .subgroup-item {
+    display: flex !important;
+    justify-content: space-between !important;
+    align-items: center !important;
+    background: #FFFFFF !important;
+    border: 1px solid #E2E8F0 !important;
+    border-radius: 14px !important;
+    padding: 12px 18px !important;
+    transition: all 0.25s ease !important;
+}
+
+.subgroup-item-card:hover, .subgroup-item:hover {
+    border-color: #D4AF37 !important;
+    transform: translateX(-4px) !important;
+    box-shadow: 0 6px 16px rgba(212, 175, 55, 0.12) !important;
+}
+
+.subgroup-name {
+    font-size: 14px !important;
+    font-weight: 700 !important;
+    color: #1E293B !important;
+}
+
+.btn-subgroup-view, .btn-sub-view {
+    background: #1B3B2B !important;
+    color: #D4AF37 !important;
+    padding: 7px 16px !important;
+    border-radius: 10px !important;
+    font-size: 12px !important;
+    font-weight: bold !important;
+    text-decoration: none !important;
+    transition: all 0.2s ease !important;
+}
+
+.btn-subgroup-view:hover, .btn-sub-view:hover {
+    background: #234B37 !important;
+    box-shadow: 0 2px 8px rgba(27, 59, 43, 0.2) !important;
 }
 
 /* Shortcuts Grid Styling */

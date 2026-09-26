@@ -4414,12 +4414,19 @@
       </div>
     </div>
   </footer>
-  <!-- SUBGROUPS MODAL OVERLAY -->
-  <div id="subgroups-modal" class="subgroups-overlay hidden">
-    <div class="subgroups-card relative">
-      <button onclick="document.getElementById('subgroups-modal').classList.add('hidden')" class="close-btn absolute top-3 left-3 w-8 h-8 rounded-full bg-slate-200 hover:bg-slate-300 text-graphite font-bold flex items-center justify-center cursor-pointer transition-colors">✕</button>
-      <h3 id="subgroups-title" class="text-base font-bold text-[#1B3B2B] border-b border-accent pb-3 mb-3"></h3>
-      <div id="subgroups-list" class="subgroups-grid space-y-2"></div>
+  <!-- DYNAMIC SUBGROUP MODAL OVERLAY (REDESIGNED LUXURY MODAL) -->
+  <div id="subgroupModal" class="subgroup-modal-overlay hidden" style="display:none;">
+    <div class="subgroup-modal-card">
+      <div class="subgroup-modal-header">
+        <div class="modal-title-box">
+          <span class="gold-icon">✨</span>
+          <h3 id="modalCategoryTitle">زیرگروه‌های خدمات</h3>
+        </div>
+        <button onclick="closeSubgroupModal()" class="modal-close-btn">✕</button>
+      </div>
+      <div id="subgroupListContainer" class="subgroup-grid-list">
+        <!-- Dynamically populated via JS -->
+      </div>
     </div>
   </div>
 
