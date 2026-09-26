@@ -177,27 +177,98 @@ const HOME_VIEW_HTML = `<!-- HOMEPAGE CONTENT MODULE (home-view.html) -->
   </section>
 
   <!-- CATEGORY SHOWCASE GRID SECTION -->
-  <section class="bg-white border border-accent rounded-3xl p-4 sm:p-5 py-4 my-2 shadow-xs space-y-5">
-    <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 border-b border-accent pb-3">
-      <div>
-        <h2 class="text-lg sm:text-xl font-bold text-graphite flex items-center gap-2">
-          <i data-lucide="layers" class="w-5 h-5 text-[#1B3B2B]"></i>
-          <span class="text-[#1B3B2B]">دسته‌بندی جامع خدمات و تشریفات عروسی</span>
+  <section class="main-categories-section">
+    <div class="categories-header">
+      <div class="categories-title-wrapper">
+        <h2 class="categories-main-title">
+          <svg class="title-icon" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#D4AF37" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <rect x="3" y="3" width="7" height="7"></rect>
+            <rect x="14" y="3" width="7" height="7"></rect>
+            <rect x="14" y="14" width="7" height="7"></rect>
+            <rect x="3" y="14" width="7" height="7"></rect>
+          </svg>
+          <span>دسته‌بندی‌های اصلی خدمات و تشریفات عروسی</span>
         </h2>
-        <p class="text-[11px] sm:text-xs text-secondary mt-0.5">انتخاب رسته اصلی جهت باز کردن کشوی اختصاصی زیرگروه‌ها و استعلام قیمت</p>
+        <p class="categories-sub-title">بررسی و انتخاب از بین ۵ رسته اصلی با دسترسی سریع به تمامی زیرگروه‌ها</p>
       </div>
-
-      <div class="flex items-center gap-2">
-        <button onclick="switchTab('directory')" class="bg-primary hover:bg-emerald-900 text-white font-bold text-xs px-4 py-2 rounded-xl transition-all flex items-center gap-2 shadow-xs">
-          <span>مشاهده همه تامین‌کنندگان</span>
-          <i data-lucide="arrow-left" class="w-4 h-4"></i>
+      <div class="categories-action">
+        <button onclick="switchTab('directory')" class="btn-all-categories">
+          <span>مشاهده همه خدمات</span>
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
         </button>
       </div>
     </div>
 
-    <!-- Static 5-Card Fixed-Height Category Grid -->
-    <div id="category-hierarchical-container" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 gap-5">
-      <!-- Populated dynamically via renderCategoryCards() -->
+    <div class="categories-grid">
+      <!-- Card 1 -->
+      <div class="category-card" onclick="openCategorySubgroupsModal('legal_ceremony')">
+        <div class="category-badge">۵ زیرگروه</div>
+        <div class="category-icon-box">
+          <svg width="28" height="24" viewBox="0 0 24 24" fill="none" stroke="#D4AF37" stroke-width="2"><path d="M3 21h18M3 10h18M5 6l7-3 7 3M4 10v11M20 10v11M8 14v3M12 14v3M16 14v3"/></svg>
+        </div>
+        <h3 class="category-title">تشریفات قانونی، عقد و مشاوره</h3>
+        <p class="category-desc">دفتر ازدواج، مشاوره و سفره عقد</p>
+        <div class="category-card-footer">
+          <span class="vendor-count">+۵ کسب‌وکار</span>
+          <span class="subgroups-link">مشاهده زیرگروه‌ها ←</span>
+        </div>
+      </div>
+
+      <!-- Card 2 -->
+      <div class="category-card" onclick="openCategorySubgroupsModal('gold_shopping')">
+        <div class="category-badge">۵ زیرگروه</div>
+        <div class="category-icon-box">
+          <svg width="28" height="24" viewBox="0 0 24 24" fill="none" stroke="#D4AF37" stroke-width="2"><path d="M6 3h12l4 6-10 12L2 9z"/><path d="M11 3v6M2 9h20"/></svg>
+        </div>
+        <h3 class="category-title">طلا، خرید و خدمات جانبی</h3>
+        <p class="category-desc">حلقه، طلا و خدمات مسافرتی</p>
+        <div class="category-card-footer">
+          <span class="vendor-count">+۱۰ کسب‌وکار</span>
+          <span class="subgroups-link">مشاهده زیرگروه‌ها ←</span>
+        </div>
+      </div>
+
+      <!-- Card 3 -->
+      <div class="category-card" onclick="openCategorySubgroupsModal('beauty_style')">
+        <div class="category-badge">۶ زیرگروه</div>
+        <div class="category-icon-box">
+          <svg width="28" height="24" viewBox="0 0 24 24" fill="none" stroke="#D4AF37" stroke-width="2"><path d="M12 2a5 5 0 0 1 5 5v3a5 5 0 0 1-10 0V7a5 5 0 0 1 5-2z"/><path d="M19 11v1a7 7 0 0 1-14 0v-1M12 19v3"/></svg>
+        </div>
+        <h3 class="category-title">زیبایی و استایل زوجین</h3>
+        <p class="category-desc">آرایشگاه زنانه، مزون و پوشاک</p>
+        <div class="category-card-footer">
+          <span class="vendor-count">+۱۵ کسب‌وکار</span>
+          <span class="subgroups-link">مشاهده زیرگروه‌ها ←</span>
+        </div>
+      </div>
+
+      <!-- Card 4 -->
+      <div class="category-card" onclick="openCategorySubgroupsModal('photo_music')">
+        <div class="category-badge">۹ زیرگروه</div>
+        <div class="category-icon-box">
+          <svg width="28" height="24" viewBox="0 0 24 24" fill="none" stroke="#D4AF37" stroke-width="2"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/><circle cx="12" cy="13" r="4"/></svg>
+        </div>
+        <h3 class="category-title">ثبت لحظات و موسیقی</h3>
+        <p class="category-desc">عکاسی، فیلمبرداری و موزیک</p>
+        <div class="category-card-footer">
+          <span class="vendor-count">+۱۲ کسب‌وکار</span>
+          <span class="subgroups-link">مشاهده زیرگروه‌ها ←</span>
+        </div>
+      </div>
+
+      <!-- Card 5 -->
+      <div class="category-card" onclick="openCategorySubgroupsModal('venue_catering')">
+        <div class="category-badge">۶ زیرگروه</div>
+        <div class="category-icon-box">
+          <svg width="28" height="24" viewBox="0 0 24 24" fill="none" stroke="#D4AF37" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M9 3v18M15 3v18M3 9h18M3 15h18"/></svg>
+        </div>
+        <h3 class="category-title">مکان، تشریفات و پذیرایی</h3>
+        <p class="category-desc">تالار، خدمات غذا و پذیرایی</p>
+        <div class="category-card-footer">
+          <span class="vendor-count">+۴ کسب‌وکار</span>
+          <span class="subgroups-link">مشاهده زیرگروه‌ها ←</span>
+        </div>
+      </div>
     </div>
   </section>
 
@@ -8644,6 +8715,39 @@ if (document.readyState === "loading") {
     }
 
   // Super Admin Hero Logo update function
+const CATEGORY_SUBGROUPS_MAP = {
+  legal_ceremony: {
+    title: "تشریفات قانونی، عقد و مشاوره",
+    badge: "۵ زیرگروه تخصصی",
+    icon: "🏛️",
+    subgroups: ["دفتر رسمی ازدواج و طلاق", "سفره عقد و دیزاین مراسم", "مشاوره خانواده و زوج‌درمانی", "سالن عقد و نامزدی", "خدمات حقوقی و ثبت قرارداد"]
+  },
+  gold_shopping: {
+    title: "طلا، خرید و خدمات جانبی",
+    badge: "۵ زیرگروه تخصصی",
+    icon: "💎",
+    subgroups: ["گالری طلا و جواهرات عروس", "حلقه ازدواج و پشت‌حلقه", "خدمات مسافرتی و تور ماه عسل", "اجاره خودرو لوکس و تشریفاتی", "ساعت و اکسسوری"]
+  },
+  beauty_style: {
+    title: "زیبایی و استایل زوجین",
+    badge: "۶ زیرگروه تخصصی",
+    icon: "✨",
+    subgroups: ["سالن زیبایی و میکاپ VIP عروس", "آرایشگاه و گریم داماد", "مزون لباس عروس و شب", "پوشاک و کت‌وشلوار داماد", "تاج، تور و اکسسوری", "خدمات ناخن و مژه"]
+  },
+  photo_music: {
+    title: "ثبت لحظات و موسیقی",
+    badge: "۹ زیرگروه تخصصی",
+    icon: "📸",
+    subgroups: ["آتلیه عکاسی و فیلمبرداری", "تصویربرداری هوایی (هلی‌شات)", "ساخت کلیپ فرمالیته کویر", "گروه موسیقی و دی‌جی زنده", "نورپردازی و استیج", "سیستم صوتی و اکو", "آتلیه کودک و بارداری", "فرمالیته شمال و جنوب", "تصویربرداری ۴K و ۳۶۰ درجه"]
+  },
+  venue_catering: {
+    title: "مکان، تشریفات و پذیرایی",
+    badge: "۶ زیرگروه تخصصی",
+    icon: "🏰",
+    subgroups: ["تالار عروسی و باغ‌تالار", "عمارت اختصاصی و هتل", "کترینگ و خدمات غذا و شام", "کیک و شیرینی سنتی یزد (حاج خلیفه)", "گل‌آرایی و ماشین عروس", "تشریفات پذیرایی و فینگرفود"]
+  }
+};
+
 const subgroupData = {
   1: ["دفتر رسمی ازدواج و طلاق", "سفره عقد و دیزاین مراسم", "مشاوره خانواده و زوج‌درمانی", "خدمات حقوقی و ثبت قرارداد"],
   2: ["گالری طلا و جواهرات عروس", "حلقه ازدواج و پشت‌حلقه", "خدمات مسافرتی و تور ماه عسل", "اجاره خودرو لوکس"],
@@ -8652,61 +8756,66 @@ const subgroupData = {
   5: ["تالار عروسی و باغ‌تالار", "عمارت اختصاصی و هتل", "کترینگ و خدمات غذا", "تشریفات و گل‌آرایی ورودی"]
 };
 
-function openCategorySubgroups(catId, fallbackTitle) {
-  let categories = [];
-  try {
-    const savedData = localStorage.getItem('wedding_categories');
-    if (savedData) {
-      categories = JSON.parse(savedData);
-    } else {
-      const storedGroups = localStorage.getItem('aroosi_category_groups');
-      if (storedGroups) {
-        categories = JSON.parse(storedGroups);
-      } else if (window.categoriesData && Array.isArray(window.categoriesData)) {
-        categories = window.categoriesData;
-      }
-    }
-  } catch (err) {
-    console.error("Error reading categories from localStorage:", err);
-  }
+function openCategorySubgroupsModal(catKey) {
+  const data = CATEGORY_SUBGROUPS_MAP[catKey] || CATEGORY_SUBGROUPS_MAP.venue_catering;
 
-  let category = null;
-  if (Array.isArray(categories) && categories.length > 0) {
-    category = categories.find(c => c.id == catId || c.id === 'group-' + catId || c.title === fallbackTitle);
-  }
+  const modalTitle = document.getElementById('modalCatTitle');
+  const modalBadge = document.getElementById('modalCatBadge');
+  const modalIcon = document.getElementById('modalCatIcon');
+  const gridContainer = document.getElementById('subgroupGridList');
+  const modal = document.getElementById('subgroupModal');
 
-  let subgroups = [];
-  let displayTitle = fallbackTitle || "خدمات";
+  if (modalTitle) modalTitle.innerText = data.title;
+  if (modalBadge) modalBadge.innerText = data.badge;
+  if (modalIcon) modalIcon.innerText = data.icon;
 
-  if (category) {
-    displayTitle = category.title || fallbackTitle || "خدمات";
-    if (category.subgroups && Array.isArray(category.subgroups)) {
-      subgroups = category.subgroups;
-    } else if (category.subcategories && Array.isArray(category.subcategories)) {
-      subgroups = category.subcategories.map(s => typeof s === 'string' ? s : s.title);
-    }
-  }
-
-  if (!subgroups || subgroups.length === 0) {
-    subgroups = subgroupData[catId] || subgroupData[1] || [];
-  }
-
-  const modal = document.getElementById('subgroupModal') || document.getElementById('subgroups-modal');
-  const title = document.getElementById('modalCategoryTitle') || document.getElementById('subgroups-title');
-  const container = document.getElementById('subgroupListContainer') || document.getElementById('subgroups-list');
-
-  const formattedHTML = (subgroups && subgroups.length > 0) ? subgroups.map(sub => {
-    const subStr = typeof sub === 'string' ? sub : (sub.title || sub.name || String(sub));
-    return `
+  if (gridContainer) {
+    gridContainer.innerHTML = data.subgroups.map(sub => `
       <div class="subgroup-item-card">
-        <span class="subgroup-name">📍 ${subStr}</span>
-        <a href="directory-view.html?sub=${encodeURIComponent(subStr)}" onclick="if(typeof switchTab==='function'){ switchTab('directory'); if(typeof filterVendorsByCategoryTitle==='function'){ filterVendorsByCategoryTitle('${subStr}'); } closeSubgroupModal(); return false; }" class="btn-subgroup-view">مشاهده لیست ←</a>
+        <span class="subgroup-name">📍 ${sub}</span>
+        <button onclick="switchTab('directory'); filterVendorsByCategoryTitle('${sub}'); closeSubgroupModal();" class="btn-subgroup-view">مشاهده لیست ←</button>
       </div>
-    `;
-  }).join('') : `<p style="text-align:center; color:#64748B; padding: 20px;">هیچ زیرگروهی برای این دسته ثبت نشده است.</p>`;
+    `).join('');
+  }
 
-  if (title) title.innerText = `زیرگروه‌های ${displayTitle}`;
-  if (container) container.innerHTML = formattedHTML;
+  if (modal) {
+    modal.style.display = 'flex';
+    modal.classList.remove('hidden');
+  }
+}
+
+function openCategorySubgroups(catId, fallbackTitle) {
+  const catKeyMap = {
+    1: 'legal_ceremony',
+    2: 'gold_shopping',
+    3: 'beauty_style',
+    4: 'photo_music',
+    5: 'venue_catering'
+  };
+  if (typeof catId === 'string' && CATEGORY_SUBGROUPS_MAP[catId]) {
+    openCategorySubgroupsModal(catId);
+    return;
+  }
+  if (catKeyMap[catId]) {
+    openCategorySubgroupsModal(catKeyMap[catId]);
+    return;
+  }
+
+  // Fallback for custom categories
+  let subgroups = subgroupData[catId] || subgroupData[1] || [];
+  const modal = document.getElementById('subgroupModal');
+  const title = document.getElementById('modalCatTitle');
+  const container = document.getElementById('subgroupGridList');
+
+  if (title) title.innerText = fallbackTitle || "خدمات";
+  if (container) {
+    container.innerHTML = subgroups.map(sub => `
+      <div class="subgroup-item-card">
+        <span class="subgroup-name">📍 ${sub}</span>
+        <button onclick="switchTab('directory'); filterVendorsByCategoryTitle('${sub}'); closeSubgroupModal();" class="btn-subgroup-view">مشاهده لیست ←</button>
+      </div>
+    `).join('');
+  }
   if (modal) {
     modal.style.display = 'flex';
     modal.classList.remove('hidden');

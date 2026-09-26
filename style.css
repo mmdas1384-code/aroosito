@@ -558,14 +558,160 @@ main#directory-view {
     font-weight: bold !important;
 }
 
+/* MAIN CATEGORIES SECTION & CARDS GRID */
+.main-categories-section {
+    background: #FFFFFF !important;
+    border: 1px solid #E0D8C8 !important;
+    border-radius: 24px !important;
+    padding: 24px !important;
+    margin: 16px 0 !important;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.02) !important;
+    direction: rtl !important;
+}
+
+.categories-header {
+    display: flex !important;
+    justify-content: space-between !important;
+    align-items: center !important;
+    border-bottom: 1px solid #E0D8C8 !important;
+    padding-bottom: 16px !important;
+    margin-bottom: 20px !important;
+    flex-wrap: wrap !important;
+    gap: 12px !important;
+}
+
+.categories-title-wrapper {
+    display: flex !important;
+    flex-direction: column !important;
+    gap: 4px !important;
+}
+
+.categories-main-title {
+    font-size: 18px !important;
+    font-weight: 800 !important;
+    color: #1B3B2B !important;
+    margin: 0 !important;
+    display: flex !important;
+    align-items: center !important;
+    gap: 8px !important;
+}
+
+.categories-sub-title {
+    font-size: 12px !important;
+    color: #607268 !important;
+    margin: 0 !important;
+}
+
+.btn-all-categories {
+    background-color: #1B3B2B !important;
+    color: #FFFFFF !important;
+    border: none !important;
+    padding: 8px 16px !important;
+    border-radius: 12px !important;
+    font-size: 12px !important;
+    font-weight: 700 !important;
+    cursor: pointer !important;
+    display: flex !important;
+    align-items: center !important;
+    gap: 6px !important;
+    transition: background-color 0.2s ease !important;
+}
+
+.btn-all-categories:hover {
+    background-color: #12271C !important;
+}
+
+.categories-grid {
+    display: grid !important;
+    grid-template-columns: repeat(auto-fit, minmax(210px, 1fr)) !important;
+    gap: 16px !important;
+}
+
+.category-card {
+    background-color: #F5EFEB !important;
+    border: 1px solid #E0D8C8 !important;
+    border-radius: 20px !important;
+    padding: 16px !important;
+    display: flex !important;
+    flex-direction: column !important;
+    justify-content: space-between !important;
+    cursor: pointer !important;
+    transition: all 0.25s ease-in-out !important;
+    position: relative !important;
+    min-height: 200px !important;
+}
+
+.category-card:hover {
+    border-color: #D4AF37 !important;
+    transform: translateY(-4px) !important;
+    box-shadow: 0 10px 25px rgba(212, 175, 55, 0.15) !important;
+    background-color: #FFFFFF !important;
+}
+
+.category-badge {
+    align-self: flex-start !important;
+    background-color: #1B3B2B !important;
+    color: #D4AF37 !important;
+    font-size: 10px !important;
+    font-weight: 700 !important;
+    padding: 3px 10px !important;
+    border-radius: 10px !important;
+}
+
+.category-icon-box {
+    width: 44px !important;
+    height: 44px !important;
+    background-color: #1B3B2B !important;
+    border: 1px solid #D4AF37 !important;
+    border-radius: 14px !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    margin: 12px 0 8px 0 !important;
+}
+
+.category-title {
+    font-size: 14px !important;
+    font-weight: 800 !important;
+    color: #111E16 !important;
+    margin: 0 0 4px 0 !important;
+}
+
+.category-desc {
+    font-size: 11px !important;
+    color: #607268 !important;
+    margin: 0 0 12px 0 !important;
+}
+
+.category-card-footer {
+    display: flex !important;
+    align-items: center !important;
+    justify-content: space-between !important;
+    border-top: 1px solid rgba(224, 216, 200, 0.6) !important;
+    padding-top: 10px !important;
+    margin-top: auto !important;
+}
+
+.vendor-count {
+    font-size: 11px !important;
+    font-weight: 700 !important;
+    color: #1B3B2B !important;
+}
+
+.subgroups-link {
+    font-size: 11px !important;
+    font-weight: 800 !important;
+    color: #D4AF37 !important;
+}
+
 /* LUXURY REDESIGNED SUBGROUP MODAL STYLES */
-.subgroup-modal-overlay, .subgroups-overlay {
+.subgroup-modal-overlay, .subgroups-overlay, .subgroups-modal-overlay {
     position: fixed !important;
     top: 0 !important;
     left: 0 !important;
     width: 100vw !important;
     height: 100vh !important;
-    background: rgba(15, 23, 20, 0.75) !important;
+    background: rgba(15, 23, 20, 0.8) !important;
     backdrop-filter: blur(10px) !important;
     z-index: 999999 !important;
     display: flex !important;
@@ -573,20 +719,23 @@ main#directory-view {
     align-items: center !important;
 }
 
-.subgroup-modal-overlay.hidden, .subgroups-overlay.hidden {
+.subgroup-modal-overlay.hidden, .subgroups-overlay.hidden, .subgroups-modal-overlay.hidden {
     display: none !important;
 }
 
-.subgroup-modal-card, .subgroups-card {
+.subgroups-modal-box, .subgroup-modal-card, .subgroups-card {
     background: #FBF9F5 !important;
-    border: 1px solid #D4AF37 !important;
-    border-radius: 24px !important;
-    padding: 28px 32px !important;
-    width: 90% !important;
-    max-width: 580px !important;
-    box-shadow: 0 25px 60px rgba(0, 0, 0, 0.35) !important;
+    border: 1.5px solid #D4AF37 !important;
+    border-radius: 28px !important;
+    padding: 28px !important;
+    width: 92% !important;
+    max-width: 650px !important;
+    box-shadow: 0 30px 70px rgba(0, 0, 0, 0.4) !important;
     direction: rtl !important;
     animation: modalFadeIn 0.3s ease-out !important;
+    display: flex !important;
+    flex-direction: column !important;
+    gap: 20px !important;
 }
 
 @keyframes modalFadeIn {
@@ -594,55 +743,93 @@ main#directory-view {
     to { opacity: 1; transform: translateY(0); }
 }
 
-.subgroup-modal-header {
+.modal-header-row {
     display: flex !important;
     justify-content: space-between !important;
-    align-items: center !important;
-    border-bottom: 2px solid rgba(212, 175, 55, 0.25) !important;
-    padding-bottom: 14px !important;
-    margin-bottom: 20px !important;
+    align-items: flex-start !important;
+    border-bottom: 1.5px solid rgba(212, 175, 55, 0.3) !important;
+    padding-bottom: 16px !important;
 }
 
-.modal-title-box {
+.modal-header-info {
     display: flex !important;
     align-items: center !important;
-    gap: 8px !important;
+    gap: 14px !important;
+    width: 100% !important;
+    justify-content: space-between !important;
 }
 
-.modal-title-box h3 {
-    margin: 0 !important;
+.modal-header-text h3 {
+    margin: 0 0 4px 0 !important;
     color: #1B3B2B !important;
-    font-size: 19px !important;
-    font-weight: 800 !important;
+    font-size: 20px !important;
+    font-weight: 900 !important;
 }
 
-.modal-close-btn {
+.modal-badge-tag {
+    background-color: #1B3B2B !important;
+    color: #D4AF37 !important;
+    font-size: 11px !important;
+    font-weight: 700 !important;
+    padding: 3px 10px !important;
+    border-radius: 8px !important;
+    display: inline-block !important;
+    margin-bottom: 6px !important;
+}
+
+.modal-subtext {
+    font-size: 12px !important;
+    color: #607268 !important;
+    margin: 0 !important;
+}
+
+.modal-icon-badge {
+    width: 52px !important;
+    height: 52px !important;
+    background-color: #1B3B2B !important;
+    border: 1.5px solid #D4AF37 !important;
+    border-radius: 18px !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    font-size: 24px !important;
+    shrink: 0 !important;
+}
+
+.btn-modal-close {
     background: #1B3B2B !important;
     color: #D4AF37 !important;
     border: 1px solid #D4AF37 !important;
-    width: 34px !important;
-    height: 34px !important;
+    width: 36px !important;
+    height: 36px !important;
     border-radius: 50% !important;
     cursor: pointer !important;
-    font-size: 15px !important;
+    font-size: 16px !important;
     display: flex !important;
     align-items: center !important;
     justify-content: center !important;
     transition: all 0.2s ease !important;
+    margin-left: 12px !important;
 }
 
-.modal-close-btn:hover {
+.btn-modal-close:hover {
     background: #D4AF37 !important;
     color: #1B3B2B !important;
 }
 
-.subgroup-grid-list, .subgroups-grid {
-    display: flex !important;
-    flex-direction: column !important;
+.subgroups-grid-container {
+    display: grid !important;
+    grid-template-columns: repeat(2, 1fr) !important;
     gap: 12px !important;
-    max-height: 360px !important;
+    max-height: 380px !important;
     overflow-y: auto !important;
-    padding-left: 5px !important;
+    padding-left: 4px !important;
+}
+
+@media (max-width: 540px) {
+    .subgroups-grid-container {
+        grid-template-columns: 1fr !important;
+    }
 }
 
 .subgroup-item-card, .subgroup-item {
@@ -650,38 +837,71 @@ main#directory-view {
     justify-content: space-between !important;
     align-items: center !important;
     background: #FFFFFF !important;
-    border: 1px solid #E2E8F0 !important;
-    border-radius: 14px !important;
-    padding: 12px 18px !important;
+    border: 1px solid #E0D8C8 !important;
+    border-radius: 16px !important;
+    padding: 12px 16px !important;
     transition: all 0.25s ease !important;
 }
 
 .subgroup-item-card:hover, .subgroup-item:hover {
     border-color: #D4AF37 !important;
     transform: translateX(-4px) !important;
-    box-shadow: 0 6px 16px rgba(212, 175, 55, 0.12) !important;
+    box-shadow: 0 6px 16px rgba(212, 175, 55, 0.15) !important;
 }
 
 .subgroup-name {
-    font-size: 14px !important;
+    font-size: 13px !important;
     font-weight: 700 !important;
-    color: #1E293B !important;
+    color: #111E16 !important;
 }
 
 .btn-subgroup-view, .btn-sub-view {
     background: #1B3B2B !important;
     color: #D4AF37 !important;
-    padding: 7px 16px !important;
+    padding: 7px 14px !important;
     border-radius: 10px !important;
-    font-size: 12px !important;
-    font-weight: bold !important;
+    font-size: 11px !important;
+    font-weight: 800 !important;
     text-decoration: none !important;
     transition: all 0.2s ease !important;
+    white-space: nowrap !important;
 }
 
 .btn-subgroup-view:hover, .btn-sub-view:hover {
-    background: #234B37 !important;
-    box-shadow: 0 2px 8px rgba(27, 59, 43, 0.2) !important;
+    background: #D4AF37 !important;
+    color: #1B3B2B !important;
+}
+
+.modal-footer-row {
+    display: flex !important;
+    justify-content: space-between !important;
+    align-items: center !important;
+    border-top: 1px solid #E0D8C8 !important;
+    padding-top: 16px !important;
+    flex-wrap: wrap !important;
+    gap: 10px !important;
+}
+
+.btn-footer-close {
+    background-color: #F5EFEB !important;
+    color: #111E16 !important;
+    border: 1px solid #E0D8C8 !important;
+    padding: 8px 20px !important;
+    border-radius: 12px !important;
+    font-size: 12px !important;
+    font-weight: 700 !important;
+    cursor: pointer !important;
+    transition: all 0.2s ease !important;
+}
+
+.btn-footer-close:hover {
+    background-color: #E0D8C8 !important;
+}
+
+.guarantee-text {
+    font-size: 11px !important;
+    color: #1B3B2B !important;
+    font-weight: 700 !important;
 }
 
 /* Shortcuts Grid Styling */

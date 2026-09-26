@@ -4414,19 +4414,32 @@
       </div>
     </div>
   </footer>
-  <!-- DYNAMIC SUBGROUP MODAL OVERLAY (REDESIGNED LUXURY MODAL) -->
-  <div id="subgroupModal" class="subgroup-modal-overlay hidden" style="display:none;">
-    <div class="subgroup-modal-card">
-      <div class="subgroup-modal-header">
-        <div class="modal-title-box">
-          <span class="gold-icon">✨</span>
-          <h3 id="modalCategoryTitle">زیرگروه‌های خدمات</h3>
+  <!-- Subgroups Modal -->
+  <div id="subgroupModal" class="subgroups-modal-overlay hidden" style="display:none;">
+    <div class="subgroups-modal-box">
+
+      <div class="modal-header-row">
+        <button class="btn-modal-close" onclick="closeSubgroupModal()">✕</button>
+        <div class="modal-header-info">
+          <div class="modal-header-text">
+            <h3 id="modalCatTitle">مکان، تشریفات و پذیرایی</h3>
+            <span id="modalCatBadge" class="modal-badge-tag">۵ زیرگروه تخصصی</span>
+            <p class="modal-subtext">جهت مشاهده و فیلتر سریع تامین‌کنندگان، زیرگروه موردنظر را انتخاب کنید.</p>
+          </div>
+          <div class="modal-icon-badge" id="modalCatIcon">🏛️</div>
         </div>
-        <button onclick="closeSubgroupModal()" class="modal-close-btn">✕</button>
       </div>
-      <div id="subgroupListContainer" class="subgroup-grid-list">
-        <!-- Dynamically populated via JS -->
+
+      <!-- 2-Column Grid for Subgroups -->
+      <div class="subgroups-grid-container" id="subgroupGridList">
+        <!-- Populated via JS -->
       </div>
+
+      <div class="modal-footer-row">
+        <button class="btn-footer-close" onclick="closeSubgroupModal()">بستن</button>
+        <span class="guarantee-text">🛡️ تضمین قیمت و تایید صلاحیت کسب‌وکارها در استان یزد</span>
+      </div>
+
     </div>
   </div>
 
