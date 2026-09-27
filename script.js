@@ -23,44 +23,6 @@ const HOME_VIEW_HTML = `<!-- HOMEPAGE CONTENT MODULE (home-view.html) -->
                 بهترین باغ تالارها، آتلیه‌ها، سالن‌های زیبایی و خدمات مجالس را با تضمین قیمت، تاییدیه رسمی اعتبار و استعلام آنلاین رزرو کنید.
               </p>
 
-              <!-- HERO SMART SEARCH BAR CONTAINER -->
-              <div class="bg-white border border-[#D4AF37]/60 rounded-2xl p-2.5 sm:p-3.5 shadow-lg space-y-2.5 mt-4">
-                <div class="grid grid-cols-1 sm:grid-cols-12 gap-2 items-center">
-                  <!-- Input -->
-                  <div class="sm:col-span-5 relative flex items-center">
-                    <i data-lucide="search" class="w-4 h-4 text-secondary absolute right-3 pointer-events-none"></i>
-                    <input id="hero-search-input" type="text" placeholder="مثلاً: نام تالار، آتلیه، سالن زیبایی..." onkeydown="if(event.key==='Enter') handleHeroSearch()" class="w-full bg-slate-50 border border-accent/80 rounded-xl pr-9 pl-3 py-2.5 text-xs font-medium text-graphite placeholder-slate-400 focus:outline-none focus:border-[#D4AF37] focus:bg-white transition-all">
-                  </div>
-                  <!-- City Dropdown -->
-                  <div class="sm:col-span-3">
-                    <select id="hero-city-select" class="w-full bg-slate-50 border border-accent/80 rounded-xl px-2.5 py-2.5 text-xs font-bold text-graphite focus:outline-none focus:border-[#D4AF37] cursor-pointer">
-                      <option value="استان یزد" selected>همه مناطق یزد</option>
-                      <option value="صفائیه">صفائیه</option>
-                      <option value="بافت تاریخی">بافت تاریخی</option>
-                      <option value="میبد">میبد</option>
-                      <option value="اردکان">اردکان</option>
-                      <option value="تفت">تفت</option>
-                    </select>
-                  </div>
-                  <!-- Category Dropdown -->
-                  <div class="sm:col-span-4">
-                    <select id="hero-cat-select" class="w-full bg-slate-50 border border-accent/80 rounded-xl px-2.5 py-2.5 text-xs font-bold text-graphite focus:outline-none focus:border-[#D4AF37] cursor-pointer">
-                      <option value="all" selected>همه دسته‌بندی‌ها</option>
-                      <option value="تالار و باغ تالار عروسی">تالار و باغ تالار عروسی</option>
-                      <option value="آتلیه عکاسی و فیلمبرداری">آتلیه عکاسی و فیلمبرداری</option>
-                      <option value="سالن زیبایی و آرایشگاه عروس">سالن زیبایی و آرایشگاه عروس</option>
-                      <option value="مزون لباس عروس">مزون لباس عروس</option>
-                      <option value="کترینگ و تشریفات پذیرایی">کترینگ و تشریفات پذیرایی</option>
-                    </select>
-                  </div>
-                </div>
-
-                <!-- Gold Search Button -->
-                <button type="button" onclick="handleHeroSearch()" class="w-full bg-[#D4AF37] hover:bg-amber-400 text-[#1B3B2B] font-black text-xs py-2.5 px-4 rounded-xl shadow-md transition-all flex items-center justify-center gap-2 cursor-pointer transform active:scale-98">
-                  <i data-lucide="search" class="w-4 h-4"></i>
-                  <span>جستجوی سریع 🔍</span>
-                </button>
-              </div>
             </div>
 
             <!-- Stats Bar -->
