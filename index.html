@@ -3720,8 +3720,8 @@
   <!-- ========================================== -->
   <!-- MODAL: FULL COMPREHENSIVE VENDOR DETAIL    -->
   <!-- ========================================== -->
-<div id="vendor-detail-modal" class="clean-vmodal-overlay hidden">
-  <div class="clean-vmodal-card">
+<div id="vendor-detail-modal" class="clean-vmodal-overlay hidden" onclick="if(event.target === this) closeVendorDetailModal()">
+  <div class="clean-vmodal-card" onclick="event.stopPropagation()">
 
     <!-- Mobile Pull Indicator Bar -->
     <div class="w-12 h-1.5 bg-slate-300 rounded-full mx-auto my-2.5 sm:hidden"></div>

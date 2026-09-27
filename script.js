@@ -3181,7 +3181,7 @@ if (document.readyState === "loading") {
                 </div>
 
                 <div class="flex items-center gap-2">
-                  <button onclick="loadVendorProfile(${v.id})" class="bg-[#D4AF37] hover:bg-amber-400 text-[#1B3B2B] font-black px-4 py-2.5 rounded-xl text-xs transition-all shadow-xs flex items-center justify-center gap-1.5 cursor-pointer">
+                  <button onclick="openVendorDetailModal(${v.id})" class="bg-[#D4AF37] hover:bg-amber-400 text-[#1B3B2B] font-black px-4 py-2.5 rounded-xl text-xs transition-all shadow-xs flex items-center justify-center gap-1.5 cursor-pointer">
                     <i data-lucide="user" class="w-3.5 h-3.5"></i>
                     <span>مشاهده پروفایل کامل</span>
                   </button>
@@ -3275,7 +3275,7 @@ if (document.readyState === "loading") {
             </div>
 
             <div class="p-5 pt-0 flex flex-col sm:flex-row gap-2">
-              <button onclick="loadVendorProfile(${v.id})" class="flex-1 bg-[#D4AF37] hover:bg-amber-400 text-[#1B3B2B] font-black py-2.5 rounded-xl text-xs transition-all shadow-xs flex items-center justify-center gap-1.5 cursor-pointer">
+              <button onclick="openVendorDetailModal(${v.id})" class="flex-1 bg-[#D4AF37] hover:bg-amber-400 text-[#1B3B2B] font-black py-2.5 rounded-xl text-xs transition-all shadow-xs flex items-center justify-center gap-1.5 cursor-pointer">
                 <i data-lucide="user" class="w-3.5 h-3.5"></i>
                 <span>مشاهده پروفایل کامل</span>
               </button>
@@ -4611,6 +4611,7 @@ if (document.readyState === "loading") {
       if (modal) {
         modal.classList.remove('hidden');
         modal.classList.add('active');
+        modal.classList.add('is-open');
         document.body.style.overflow = 'hidden';
       }
 
@@ -4691,6 +4692,7 @@ if (document.readyState === "loading") {
       if (modal) {
         modal.classList.add('hidden');
         modal.classList.remove('active');
+        modal.classList.remove('is-open');
         document.body.style.overflow = '';
       }
     }
