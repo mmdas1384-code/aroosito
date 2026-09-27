@@ -33,7 +33,7 @@ header, nav, .header-container, .navbar {
 
 /* Utility class fallback for hidden elements */
 .hidden {
-  display: none !important;
+  display: none;
 }
 
 /* Default hidden state - no height or layout footprint */

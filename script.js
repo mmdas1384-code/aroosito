@@ -3431,10 +3431,14 @@ if (document.readyState === "loading") {
 
       switchTab('directory');
 
-      // Sync with main search input
+      // Sync with main and directory instant search inputs
       const mainSearch = document.getElementById('search-input');
       if (mainSearch) {
         mainSearch.value = query;
+      }
+      const directSearch = document.getElementById('directory-instant-search');
+      if (directSearch) {
+        directSearch.value = query;
       }
 
       // Match vendors and subcategories
