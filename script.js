@@ -4620,8 +4620,9 @@ if (document.readyState === "loading") {
       const catEl = document.getElementById('vdm-category');
       const districtEl = document.getElementById('vdm-district');
       const bottomPriceEl = document.getElementById('vdm-bottom-price');
-      const chatBtn = document.getElementById('vdm-chat-btn');
-      const favBtn = document.getElementById('vdm-fav-btn');
+      const bottomPriceBarEl = document.getElementById('vdm-bottom-price-bar');
+      const inquireCta = document.getElementById('vdm-modal-inquire-cta');
+      const chatCta = document.getElementById('vdm-modal-chat-cta');
 
       if (titleEl) titleEl.innerText = vendor.name;
       if (coverEl) coverEl.src = vendor.image || "https://images.unsplash.com/photo-1519167758481-83f550bb49b3?auto=format&fit=crop&w=1200&q=80";
@@ -4629,17 +4630,19 @@ if (document.readyState === "loading") {
       if (catEl) catEl.innerText = vendor.category;
       if (districtEl) districtEl.innerText = `📍 ${vendor.province || 'استان یزد'}، ${vendor.district || 'صفائیه'}`;
       if (bottomPriceEl) bottomPriceEl.innerText = vendor.priceRange || "۶۵,۰۰۰,۰۰۰ تومان";
+      if (bottomPriceBarEl) bottomPriceBarEl.innerText = vendor.priceRange || "۶۵,۰۰۰,۰۰۰ تومان";
 
-      if (chatBtn) {
-        chatBtn.onclick = function() {
+      if (inquireCta) {
+        inquireCta.onclick = function() {
           closeVendorDetailModal();
           openInquiryModal(vendor.id, vendor.name);
         };
       }
 
-      if (favBtn) {
-        favBtn.onclick = function(e) {
-          toggleFavoriteVendor(vendor.id, e);
+      if (chatCta) {
+        chatCta.onclick = function() {
+          closeVendorDetailModal();
+          switchTab('messages');
         };
       }
 
