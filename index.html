@@ -4827,48 +4827,100 @@
           </div>
         </div>
 
-        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
-          <div>
-            <label id="inquiry-date-label" class="block mb-1">تاریخ تقریبی مراسم / مراجعه (شمسی) *</label>
-            <input type="text" required id="inquiry-date" value="۱۴۰۳/۰۶/۱۵" placeholder="مثلاً: ۱۴۰۳/۰۶/۱۵" class="w-full bg-bgCustom border border-accent rounded-xl p-2.5 text-xs font-medium focus:outline-none focus:border-primary">
+        <div>
+          <label id="inquiry-date-label" class="block mb-1">تاریخ تقریبی مراسم / مراجعه (شمسی) *</label>
+          <input type="text" required id="inquiry-date" value="۱۴۰۳/۰۶/۱۵" placeholder="مثلاً: ۱۴۰۳/۰۶/۱۵" class="w-full bg-bgCustom border border-accent rounded-xl p-2.5 text-xs font-medium focus:outline-none focus:border-primary">
+        </div>
+
+        <!-- Dynamic Category-Specific Container -->
+        <div id="inquiry-category-fields-wrapper" class="p-3 bg-primary/5 border border-primary/20 rounded-2xl space-y-3">
+          <!-- Garden / Hall / Catering Fields -->
+          <div id="inquiry-fields-venue" class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+            <div>
+              <label class="block mb-1 text-primary">تعداد تقریبی مهمانان *</label>
+              <select id="inquiry-guests-select" class="w-full bg-white border border-accent rounded-xl p-2.5 text-xs font-semibold focus:outline-none focus:border-primary">
+                <option value="زیر ۲۰۰ نفر">زیر ۲۰۰ نفر</option>
+                <option value="۲۰۰ تا ۴۰۰ نفر" selected>۲۰۰ تا ۴۰۰ نفر</option>
+                <option value="۴۰۰ تا ۷۰۰ نفر">۴۰۰ تا ۷۰۰ نفر</option>
+                <option value="بالای ۷۰۰ نفر">بالای ۷۰۰ نفر</option>
+              </select>
+            </div>
+            <div>
+              <label class="block mb-1 text-primary">سبک پذیرایی & پذیرایی شام *</label>
+              <select id="inquiry-catering-style" class="w-full bg-white border border-accent rounded-xl p-2.5 text-xs font-semibold focus:outline-none focus:border-primary">
+                <option value="سلف‌سرویس VIP">سلف‌سرویس VIP (چند مدل غذا)</option>
+                <option value="دیس‌پرس تک پرس">دیس‌پرس تک پرس</option>
+                <option value="پذیرایی عصرانه & کوکتیل">پذیرایی عصرانه & کوکتیل</option>
+              </select>
+            </div>
           </div>
 
-          <!-- Dynamic Guest Count / Package Specifics -->
-          <div id="inquiry-guests-container">
-            <label class="block mb-1">تعداد تقریبی مهمانان *</label>
-            <input type="number" id="inquiry-guests" value="250" min="1" max="2000" class="w-full bg-bgCustom border border-accent rounded-xl p-2.5 text-xs font-medium focus:outline-none focus:border-primary">
+          <!-- Beauty Salon / Makeup Fields -->
+          <div id="inquiry-fields-beauty" class="grid grid-cols-1 sm:grid-cols-2 gap-3 hidden">
+            <div>
+              <label class="block mb-1 text-primary">پکیج اصلی عروس *</label>
+              <select id="inquiry-bridal-pkg" class="w-full bg-white border border-accent rounded-xl p-2.5 text-xs font-semibold focus:outline-none focus:border-primary">
+                <option value="پکیج VIP عروس (میکاپ، شنیون، تاج، پاکسازی)">پکیج VIP عروس (میکاپ، شنیون، تاج، پاکسازی)</option>
+                <option value="پکیج اقتصادی عروس">پکیج اقتصادی عروس</option>
+                <option value="تست میکاپ & مشاوره قبلی">تست میکاپ & مشاوره قبلی</option>
+              </select>
+            </div>
+            <div>
+              <label class="block mb-1 text-primary">تعداد همراهان (میکاپ/شنیون) *</label>
+              <select id="inquiry-beauty-companions" class="w-full bg-white border border-accent rounded-xl p-2.5 text-xs font-semibold focus:outline-none focus:border-primary">
+                <option value="بدون همراه (فقط عروس)">بدون همراه (فقط عروس)</option>
+                <option value="۱ تا ۳ نفر همراه">۱ تا ۳ نفر همراه</option>
+                <option value="۴ تا ۸ نفر همراه">۴ تا ۸ نفر همراه</option>
+                <option value="بیش از ۸ همراه">بیش از ۸ همراه</option>
+              </select>
+            </div>
           </div>
 
-          <div id="inquiry-nonvenue-container" class="hidden">
-            <label class="block mb-1">نوع پکیج / نیاز اختصاصی *</label>
-            <select id="inquiry-package-type" class="w-full bg-bgCustom border border-accent rounded-xl p-2.5 text-xs font-semibold focus:outline-none focus:border-primary">
-              <option value="فرمالیته کویر یزد">پکیج اختصاصی فرمالیته کویر یزد</option>
-              <option value="مراسم اصلی عروسی">خدمات کامل روز عروسی</option>
-              <option value="پرو و مشاوره اختصاصی">مشاوره حضوری و تست پکیج</option>
-            </select>
+          <!-- Photography Atelier Fields -->
+          <div id="inquiry-fields-photo" class="grid grid-cols-1 sm:grid-cols-2 gap-3 hidden">
+            <div>
+              <label class="block mb-1 text-primary">لوکیشن و سبک تصویربرداری *</label>
+              <select id="inquiry-photo-style" class="w-full bg-white border border-accent rounded-xl p-2.5 text-xs font-semibold focus:outline-none focus:border-primary">
+                <option value="فرمالیته کویر یزد & عمارت">فرمالیته کویر یزد & عمارت</option>
+                <option value="فضای باز & استودیو">فضای باز & استودیو</option>
+                <option value="پوشش کامل روز عروسی">پوشش کامل روز عروسی</option>
+              </select>
+            </div>
+            <div>
+              <label class="block mb-1 text-primary">تجهیزات و تعداد دوربین *</label>
+              <select id="inquiry-photo-equip" class="w-full bg-white border border-accent rounded-xl p-2.5 text-xs font-semibold focus:outline-none focus:border-primary">
+                <option value="۲ دوربین + هلی‌شات">۲ دوربین + تصویربرداری هلی‌شات</option>
+                <option value="۳ دوربین + کرین + هلی‌شات">۳ دوربین + کرین + هلی‌شات (VIP)</option>
+                <option value="تک دوربین استودیویی">تک دوربین استودیویی</option>
+              </select>
+            </div>
+          </div>
+
+          <!-- Bridal Maison / Dress Fields -->
+          <div id="inquiry-fields-maison" class="grid grid-cols-1 sm:grid-cols-2 gap-3 hidden">
+            <div>
+              <label class="block mb-1 text-primary">نوع دریافت لباس عروس *</label>
+              <select id="inquiry-maison-type" class="w-full bg-white border border-accent rounded-xl p-2.5 text-xs font-semibold focus:outline-none focus:border-primary">
+                <option value="دوخت سفارشی & شخصی‌دوزی">دوخت سفارشی & شخصی‌دوزی</option>
+                <option value="اجاره لباس عروس">اجاره لباس عروس</option>
+                <option value="خرید مستقیم از مزون">خرید مستقیم از مزون</option>
+              </select>
+            </div>
+            <div>
+              <label class="block mb-1 text-primary">تاریخ پیشنهادی برای پرو حضوری *</label>
+              <input type="text" id="inquiry-fitting-date" placeholder="مثلاً: ۱۴۰۳/۰۵/۲۰" class="w-full bg-white border border-accent rounded-xl p-2.5 text-xs font-medium focus:outline-none focus:border-primary">
+            </div>
           </div>
         </div>
 
-        <!-- Service Checklist based on offerings -->
+        <!-- Service Checklist dynamically rendered from Vendor services -->
         <div class="space-y-2">
-          <label class="block">خدمات مورد نظر شما (چک‌لیست):</label>
-          <div id="inquiry-services-checklist" class="grid grid-cols-1 sm:grid-cols-2 gap-2 p-3 bg-bgCustom border border-accent rounded-2xl">
-            <label class="flex items-center gap-2 cursor-pointer p-1.5 hover:bg-white rounded-lg">
-              <input type="checkbox" value="منوی شام VIP / سلف سرویس" checked class="rounded text-primary focus:ring-primary w-4 h-4">
-              <span>منوی شام VIP / سلف سرویس</span>
-            </label>
-            <label class="flex items-center gap-2 cursor-pointer p-1.5 hover:bg-white rounded-lg">
-              <input type="checkbox" value="ورودی باغ و سالن اصلی" checked class="rounded text-primary focus:ring-primary w-4 h-4">
-              <span>ورودی باغ و سالن اصلی</span>
-            </label>
-            <label class="flex items-center gap-2 cursor-pointer p-1.5 hover:bg-white rounded-lg">
-              <input type="checkbox" value="شمع‌آرایی & آتش‌بازی" checked class="rounded text-primary focus:ring-primary w-4 h-4">
-              <span>شمع‌آرایی & آتش‌بازی</span>
-            </label>
-            <label class="flex items-center gap-2 cursor-pointer p-1.5 hover:bg-white rounded-lg">
-              <input type="checkbox" value="سفره عقد اختصاصی" class="rounded text-primary focus:ring-primary w-4 h-4">
-              <span>سفره عقد اختصاصی</span>
-            </label>
+          <div class="flex items-center justify-between">
+            <label class="block font-bold text-graphite">انتخاب خدمات مورد نیاز از لیست خدمات این تامین‌کننده:</label>
+            <span class="text-[11px] text-secondary font-normal">امکان انتخاب چندگانه</span>
+          </div>
+          <div id="inquiry-services-checklist" class="grid grid-cols-1 sm:grid-cols-2 gap-2 p-3 bg-bgCustom border border-accent rounded-2xl max-h-48 overflow-y-auto custom-scrollbar">
+            <!-- Dynamically populated via script.js -->
           </div>
         </div>
 

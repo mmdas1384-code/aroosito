@@ -4824,18 +4824,29 @@ if (document.readyState === "loading") {
       document.getElementById('inquiry-vendor-id').value = vendor ? vendor.id : 1;
       document.getElementById('modal-vendor-name').innerText = targetName;
 
-      // Dynamic Category Field Toggling (Guest count for venues vs package for others)
-      const guestsContainer = document.getElementById('inquiry-guests-container');
-      const nonVenueContainer = document.getElementById('inquiry-nonvenue-container');
+      // Category-Specific Dynamic Fields Toggling
       const cat = vendor ? (vendor.category || '') : '';
-      const isVenue = cat.includes("تالار") || cat.includes("باغ") || cat.includes("سالن عقد") || cat.includes("پذیرایی");
 
-      if (isVenue) {
-        if (guestsContainer) guestsContainer.classList.remove('hidden');
-        if (nonVenueContainer) nonVenueContainer.classList.add('hidden');
+      const venueFields = document.getElementById('inquiry-fields-venue');
+      const beautyFields = document.getElementById('inquiry-fields-beauty');
+      const photoFields = document.getElementById('inquiry-fields-photo');
+      const maisonFields = document.getElementById('inquiry-fields-maison');
+
+      // Hide all dynamic blocks initially
+      if (venueFields) venueFields.classList.add('hidden');
+      if (beautyFields) beautyFields.classList.add('hidden');
+      if (photoFields) photoFields.classList.add('hidden');
+      if (maisonFields) maisonFields.classList.add('hidden');
+
+      if (cat.includes("سالن زیبایی") || cat.includes("میکاپ") || cat.includes("آرایشگاه")) {
+        if (beautyFields) beautyFields.classList.remove('hidden');
+      } else if (cat.includes("آتلیه") || cat.includes("عکاسی") || cat.includes("فیلمبرداری")) {
+        if (photoFields) photoFields.classList.remove('hidden');
+      } else if (cat.includes("مزون") || cat.includes("لباس")) {
+        if (maisonFields) maisonFields.classList.remove('hidden');
       } else {
-        if (guestsContainer) guestsContainer.classList.add('hidden');
-        if (nonVenueContainer) nonVenueContainer.classList.remove('hidden');
+        // Garden, Hall, Catering, or General Venues
+        if (venueFields) venueFields.classList.remove('hidden');
       }
 
       // Pre-fill Package Details into Note & Budget fields if package requested
@@ -4850,139 +4861,30 @@ if (document.readyState === "loading") {
         if (customBudgetInp) customBudgetInp.value = '';
       }
 
-      // Update checkboxes dynamically according to vendor category if available
+      // Dynamic Vendor Services Checklist Rendering
       const container = document.getElementById('inquiry-services-checklist');
       if (container && vendor) {
-        if (cat.includes("آتلیه") || cat.includes("عکاسی") || cat.includes("فیلمبرداری")) {
-          container.innerHTML = `
-            <label class="flex items-center gap-2 cursor-pointer p-1.5 hover:bg-white rounded-lg">
-              <input type="checkbox" value="عکاسی و فیلمبرداری روز عروسی" checked class="rounded text-primary focus:ring-primary w-4 h-4">
-              <span>عکاسی و فیلمبرداری روز عروسی</span>
-            </label>
-            <label class="flex items-center gap-2 cursor-pointer p-1.5 hover:bg-white rounded-lg">
-              <input type="checkbox" value="کلیپ فرمالیته شمال / کویر" checked class="rounded text-primary focus:ring-primary w-4 h-4">
-              <span>کلیپ فرمالیته شمال / کویر</span>
-            </label>
-            <label class="flex items-center gap-2 cursor-pointer p-1.5 hover:bg-white rounded-lg">
-              <input type="checkbox" value="آلبوم ایتالیایی 80x40" checked class="rounded text-primary focus:ring-primary w-4 h-4">
-              <span>آلبوم ایتالیایی 80x40</span>
-            </label>
-            <label class="flex items-center gap-2 cursor-pointer p-1.5 hover:bg-white rounded-lg">
-              <input type="checkbox" value="تصویربرداری هلی‌شات & کرین" class="rounded text-primary focus:ring-primary w-4 h-4">
-              <span>تصویربرداری هلی‌شات & کرین</span>
-            </label>
-          `;
-        } else if (cat.includes("سالن زیبایی") || cat.includes("میکاپ") || cat.includes("آرایشگاه")) {
-          container.innerHTML = `
-            <label class="flex items-center gap-2 cursor-pointer p-1.5 hover:bg-white rounded-lg">
-              <input type="checkbox" value="میکاپ و گریم اختصاصی عروس" checked class="rounded text-primary focus:ring-primary w-4 h-4">
-              <span>میکاپ و گریم اختصاصی عروس</span>
-            </label>
-            <label class="flex items-center gap-2 cursor-pointer p-1.5 hover:bg-white rounded-lg">
-              <input type="checkbox" value="شینیون و استایل مو" checked class="rounded text-primary focus:ring-primary w-4 h-4">
-              <span>شینیون و استایل مو</span>
-            </label>
-            <label class="flex items-center gap-2 cursor-pointer p-1.5 hover:bg-white rounded-lg">
-              <input type="checkbox" value="درخواست تست گریم قبلی" class="rounded text-primary focus:ring-primary w-4 h-4">
-              <span>درخواست تست گریم قبلی</span>
-            </label>
-            <label class="flex items-center gap-2 cursor-pointer p-1.5 hover:bg-white rounded-lg">
-              <input type="checkbox" value="میکاپ همراهان" class="rounded text-primary focus:ring-primary w-4 h-4">
-              <span>میکاپ همراهان</span>
-            </label>
-          `;
-        } else if (cat.includes("موزیک") || cat.includes("دی‌جی") || cat.includes("موسیقی")) {
-          container.innerHTML = `
-            <label class="flex items-center gap-2 cursor-pointer p-1.5 hover:bg-white rounded-lg">
-              <input type="checkbox" value="بند زنده و ارکستر کامل" checked class="rounded text-primary focus:ring-primary w-4 h-4">
-              <span>بند زنده و ارکستر کامل</span>
-            </label>
-            <label class="flex items-center gap-2 cursor-pointer p-1.5 hover:bg-white rounded-lg">
-              <input type="checkbox" value="دی‌جی حرفه‌ای و پرکاشن" checked class="rounded text-primary focus:ring-primary w-4 h-4">
-              <span>دی‌جی حرفه‌ای و پرکاشن</span>
-            </label>
-            <label class="flex items-center gap-2 cursor-pointer p-1.5 hover:bg-white rounded-lg">
-              <input type="checkbox" value="تجهیزات سیستم صوت VIP & استیج LED" class="rounded text-primary focus:ring-primary w-4 h-4">
-              <span>تجهیزات سیستم صوت VIP & استیج LED</span>
-            </label>
-          `;
-        } else if (cat.includes("گل") || cat.includes("ماشین")) {
-          container.innerHTML = `
-            <label class="flex items-center gap-2 cursor-pointer p-1.5 hover:bg-white rounded-lg">
-              <input type="checkbox" value="دسته گل عروس (رز/ارکیده VIP)" checked class="rounded text-primary focus:ring-primary w-4 h-4">
-              <span>دسته گل عروس (رز/ارکیده VIP)</span>
-            </label>
-            <label class="flex items-center gap-2 cursor-pointer p-1.5 hover:bg-white rounded-lg">
-              <input type="checkbox" value="گل‌آرایی کامل ماشین عروس" checked class="rounded text-primary focus:ring-primary w-4 h-4">
-              <span>گل‌آرایی کامل ماشین عروس</span>
-            </label>
-            <label class="flex items-center gap-2 cursor-pointer p-1.5 hover:bg-white rounded-lg">
-              <input type="checkbox" value="گل‌آرایی ورودی و جایگاه عروس‌وداماد" class="rounded text-primary focus:ring-primary w-4 h-4">
-              <span>گل‌آرایی ورودی و جایگاه عروس‌وداماد</span>
-            </label>
-            <label class="flex items-center gap-2 cursor-pointer p-1.5 hover:bg-white rounded-lg">
-              <input type="checkbox" value="گل‌آرایی میزهای مهمانان" class="rounded text-primary focus:ring-primary w-4 h-4">
-              <span>گل‌آرایی میزهای مهمانان</span>
-            </label>
-          `;
-        } else if (cat.includes("کیک") || cat.includes("شیرینی")) {
-          container.innerHTML = `
-            <label class="flex items-center gap-2 cursor-pointer p-1.5 hover:bg-white rounded-lg">
-              <input type="checkbox" value="کیک چندطبقه فوندانت/خامه" checked class="rounded text-primary focus:ring-primary w-4 h-4">
-              <span>کیک چندطبقه فوندانت/خامه</span>
-            </label>
-            <label class="flex items-center gap-2 cursor-pointer p-1.5 hover:bg-white rounded-lg">
-              <input type="checkbox" value="مینی‌کیک و کندی‌بار پذیرایی" checked class="rounded text-primary focus:ring-primary w-4 h-4">
-              <span>مینی‌کیک و کندی‌بار پذیرایی</span>
-            </label>
-            <label class="flex items-center gap-2 cursor-pointer p-1.5 hover:bg-white rounded-lg">
-              <input type="checkbox" value="شیرینی مخصوص پذیرایی عروسی" class="rounded text-primary focus:ring-primary w-4 h-4">
-              <span>شیرینی مخصوص پذیرایی عروسی</span>
-            </label>
-            <label class="flex items-center gap-2 cursor-pointer p-1.5 hover:bg-white rounded-lg">
-              <input type="checkbox" value="گیفت و یادبود خوراکی مهمانان" class="rounded text-primary focus:ring-primary w-4 h-4">
-              <span>گیفت و یادبود خوراکی مهمانان</span>
-            </label>
-          `;
-        } else if (cat.includes("مزون") || cat.includes("لباس")) {
-          container.innerHTML = `
-            <label class="flex items-center gap-2 cursor-pointer p-1.5 hover:bg-white rounded-lg">
-              <input type="checkbox" value="دوخت و اجاره لباس عروس VIP" checked class="rounded text-primary focus:ring-primary w-4 h-4">
-              <span>دوخت و اجاره لباس عروس VIP</span>
-            </label>
-            <label class="flex items-center gap-2 cursor-pointer p-1.5 hover:bg-white rounded-lg">
-              <input type="checkbox" value="تور و تاج عروس" checked class="rounded text-primary focus:ring-primary w-4 h-4">
-              <span>تور و تاج عروس</span>
-            </label>
-            <label class="flex items-center gap-2 cursor-pointer p-1.5 hover:bg-white rounded-lg">
-              <input type="checkbox" value="کت و شلوار دامادی" class="rounded text-primary focus:ring-primary w-4 h-4">
-              <span>کت و شلوار دامادی</span>
-            </label>
-            <label class="flex items-center gap-2 cursor-pointer p-1.5 hover:bg-white rounded-lg">
-              <input type="checkbox" value="اکسسوری و جواهرات" class="rounded text-primary focus:ring-primary w-4 h-4">
-              <span>اکسسوری و جواهرات</span>
-            </label>
-          `;
-        } else {
-          container.innerHTML = `
-            <label class="flex items-center gap-2 cursor-pointer p-1.5 hover:bg-white rounded-lg">
-              <input type="checkbox" value="منوی شام VIP / سلف سرویس" checked class="rounded text-primary focus:ring-primary w-4 h-4">
-              <span>منوی شام VIP / سلف سرویس</span>
-            </label>
-            <label class="flex items-center gap-2 cursor-pointer p-1.5 hover:bg-white rounded-lg">
-              <input type="checkbox" value="ورودی باغ و سالن اصلی" checked class="rounded text-primary focus:ring-primary w-4 h-4">
-              <span>ورودی باغ و سالن اصلی</span>
-            </label>
-            <label class="flex items-center gap-2 cursor-pointer p-1.5 hover:bg-white rounded-lg">
-              <input type="checkbox" value="شمع‌آرایی & آتش‌بازی" checked class="rounded text-primary focus:ring-primary w-4 h-4">
-              <span>شمع‌آرایی & آتش‌بازی</span>
-            </label>
-            <label class="flex items-center gap-2 cursor-pointer p-1.5 hover:bg-white rounded-lg">
-              <input type="checkbox" value="سفره عقد اختصاصی" class="rounded text-primary focus:ring-primary w-4 h-4">
-              <span>سفره عقد اختصاصی</span>
-            </label>
-          `;
+        let availableServices = vendor.services || [];
+
+        // If vendor services list is empty, supply category fallback services
+        if (!availableServices || availableServices.length === 0) {
+          if (cat.includes("آتلیه") || cat.includes("عکاسی")) {
+            availableServices = ["عکاسی و فیلمبرداری روز عروسی", "کلیپ فرمالیته شمال / کویر", "آلبوم ایتالیایی 80x40", "تصویربرداری هلی‌شات & کرین"];
+          } else if (cat.includes("سالن زیبایی") || cat.includes("میکاپ")) {
+            availableServices = ["میکاپ و گریم اختصاصی عروس", "شینیون و استایل مو", "تست گریم قبلی", "میکاپ همراهان"];
+          } else if (cat.includes("مزون") || cat.includes("لباس")) {
+            availableServices = ["دوخت سفارشی لباس عروس", "اجاره لباس عروس VIP", "تور و تاج عروس", "اکسسوری و جواهرات"];
+          } else {
+            availableServices = ["ورودی سالن / باغ اصلی", "منوی شام VIP / سلف سرویس", "شمع‌آرایی & آتش‌بازی", "سفره عقد اختصاصی"];
+          }
         }
+
+        container.innerHTML = availableServices.map((service, index) => `
+          <label class="flex items-center gap-2 cursor-pointer p-1.5 hover:bg-white rounded-lg transition-colors">
+            <input type="checkbox" value="${service}" ${index < 3 ? 'checked' : ''} class="rounded text-primary focus:ring-primary w-4 h-4 cursor-pointer">
+            <span class="text-xs text-graphite font-medium">${service}</span>
+          </label>
+        `).join('');
       }
 
       document.getElementById('inquiry-modal').classList.remove('hidden');
@@ -4999,10 +4901,34 @@ if (document.readyState === "loading") {
       const name = document.getElementById('inquiry-name').value.trim();
       const phone = document.getElementById('inquiry-phone').value.trim();
       const date = document.getElementById('inquiry-date').value.trim() || '۱۴۰۳/۰۶/۱۵';
-      const guests = parseInt(document.getElementById('inquiry-guests').value) || 200;
       const budgetRange = document.getElementById('inquiry-budget-range').value;
       const customBudget = (document.getElementById('inquiry-budget-custom') ? document.getElementById('inquiry-budget-custom').value.trim() : '');
       const note = document.getElementById('inquiry-note').value.trim();
+
+      const cat = vendor ? (vendor.category || '') : '';
+      let categoryDetails = {};
+
+      if (cat.includes("سالن زیبایی") || cat.includes("میکاپ")) {
+        categoryDetails = {
+          bridalPackage: document.getElementById('inquiry-bridal-pkg')?.value || '',
+          companions: document.getElementById('inquiry-beauty-companions')?.value || ''
+        };
+      } else if (cat.includes("آتلیه") || cat.includes("عکاسی")) {
+        categoryDetails = {
+          shootingStyle: document.getElementById('inquiry-photo-style')?.value || '',
+          equipment: document.getElementById('inquiry-photo-equip')?.value || ''
+        };
+      } else if (cat.includes("مزون") || cat.includes("لباس")) {
+        categoryDetails = {
+          maisonType: document.getElementById('inquiry-maison-type')?.value || '',
+          fittingDate: document.getElementById('inquiry-fitting-date')?.value || ''
+        };
+      } else {
+        categoryDetails = {
+          guestCount: document.getElementById('inquiry-guests-select')?.value || '۲۰۰ تا ۴۰۰ نفر',
+          cateringStyle: document.getElementById('inquiry-catering-style')?.value || ''
+        };
+      }
 
       const finalBudgetStr = customBudget ? `${budgetRange} (بودجه پیشنهادی: ${customBudget})` : budgetRange;
 
@@ -5014,11 +4940,12 @@ if (document.readyState === "loading") {
       const inquiryPayload = {
         vendorId: vendor.id,
         vendorName: vendor.name,
+        category: vendor.category,
         userName: name,
         userPhone: phone,
         eventDate: date,
-        guestCount: guests,
         budget: finalBudgetStr,
+        categoryDetails: categoryDetails,
         services: checkedServices,
         note: note,
         submittedAt: new Date().toISOString()
