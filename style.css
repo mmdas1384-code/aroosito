@@ -89,9 +89,9 @@ header, nav, .header-container, .navbar {
     left: 0 !important;
     width: 100vw !important;
     height: 100vh !important;
-    background: rgba(8, 20, 14, 0.85) !important;
-    backdrop-filter: blur(8px) !important;
-    -webkit-backdrop-filter: blur(8px) !important;
+    background: rgba(10, 25, 18, 0.85) !important;
+    backdrop-filter: blur(12px) !important;
+    -webkit-backdrop-filter: blur(12px) !important;
     z-index: 999999 !important;
     display: flex !important;
     justify-content: center !important;
@@ -123,13 +123,13 @@ header, nav, .header-container, .navbar {
 .clean-vmodal-card {
     background: #FBF9F5 !important;
     width: 95% !important;
-    max-width: 900px !important;
+    max-width: 960px !important;
     max-height: 90vh !important;
-    border-radius: 16px !important;
+    border-radius: 24px !important;
     position: relative !important;
     direction: rtl !important;
-    box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5), 0 0 0 1px rgba(212, 175, 55, 0.5) !important;
-    border: 1px solid #D4AF37 !important;
+    box-shadow: 0 30px 60px -12px rgba(0, 0, 0, 0.7), 0 0 0 1px rgba(212, 175, 55, 0.4) !important;
+    border: 1px solid rgba(212, 175, 55, 0.4) !important;
     overflow-y: auto !important;
     display: flex !important;
     flex-direction: column !important;
@@ -137,21 +137,25 @@ header, nav, .header-container, .navbar {
     animation: modalSlideUp 0.35s cubic-bezier(0.16, 1, 0.3, 1) !important;
 }
 
-/* Custom dark green scrollbar for modal interior */
+/* Custom styled Emerald/Gold scrollbars for modal interior */
 .clean-vmodal-card::-webkit-scrollbar {
-    width: 6px;
+    width: 8px;
 }
 .clean-vmodal-card::-webkit-scrollbar-track {
-    background: #11231B;
+    background: #0F251A;
+    border-radius: 0 24px 24px 0;
 }
 .clean-vmodal-card::-webkit-scrollbar-thumb {
     background: #1B3B2B;
-    border-radius: 4px;
+    border-radius: 6px;
     border: 1px solid #D4AF37;
+}
+.clean-vmodal-card::-webkit-scrollbar-thumb:hover {
+    background: #D4AF37;
 }
 
 @keyframes modalSlideUp {
-    from { opacity: 0; transform: translateY(20px) scale(0.98); }
+    from { opacity: 0; transform: translateY(24px) scale(0.98); }
     to { opacity: 1; transform: translateY(0) scale(1); }
 }
 
@@ -162,7 +166,7 @@ header, nav, .header-container, .navbar {
     }
     .clean-vmodal-card {
         max-width: 100% !important;
-        max-height: 92vh !important;
+        max-height: 95vh !important;
         border-radius: 24px 24px 0 0 !important;
         margin: 0 !important;
         animation: bottomSheetSlide 0.35s cubic-bezier(0.16, 1, 0.3, 1) !important;
@@ -246,30 +250,43 @@ header, nav, .header-container, .navbar {
 .clean-vmodal-tabs {
     display: flex !important;
     gap: 8px !important;
-    background: #1B3B2B !important;
-    padding: 12px 20px !important;
-    border-bottom: 2px solid #D4AF37 !important;
+    background: #0F251A !important;
+    padding: 10px 16px !important;
+    border-bottom: 1px solid rgba(212, 175, 55, 0.3) !important;
     overflow-x: auto !important;
+    scrollbar-width: none; /* Firefox */
+}
+
+.clean-vmodal-tabs::-webkit-scrollbar {
+    display: none; /* Chrome/Safari */
 }
 
 .vtab-btn {
-    background: transparent !important;
-    color: #FBF9F5 !important;
-    border: none !important;
+    background: rgba(255, 255, 255, 0.05) !important;
+    color: #E0D8C8 !important;
+    border: 1px solid rgba(212, 175, 55, 0.15) !important;
     padding: 8px 16px !important;
-    border-radius: 8px !important;
+    border-radius: 12px !important;
     cursor: pointer !important;
     font-family: inherit !important;
-    font-size: 14px !important;
+    font-size: 13px !important;
+    font-weight: 600 !important;
     white-space: nowrap !important;
     transition: all 0.25s ease-in-out !important;
 }
 
+.vtab-btn:hover {
+    background: rgba(212, 175, 55, 0.15) !important;
+    color: #D4AF37 !important;
+    border-color: rgba(212, 175, 55, 0.4) !important;
+}
+
 .vtab-btn.active {
-    background: #D4AF37 !important;
+    background: linear-gradient(135deg, #D4AF37 0%, #C59B27 100%) !important;
     color: #1B3B2B !important;
-    font-weight: bold !important;
-    box-shadow: 0 4px 12px rgba(212, 175, 55, 0.4) !important;
+    font-weight: 800 !important;
+    border-color: #D4AF37 !important;
+    box-shadow: 0 4px 14px rgba(212, 175, 55, 0.4) !important;
 }
 
 /* Gallery Filter Pills in Modal */

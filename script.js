@@ -4599,6 +4599,8 @@ if (document.readyState === "loading") {
       }
     }
 
+    let currentModalVendor = null;
+
     function openVendorDetailModal(vendorId) {
       let vId = vendorId;
       if (typeof vendorId === 'string' && !isNaN(parseInt(vendorId))) {
@@ -4606,6 +4608,8 @@ if (document.readyState === "loading") {
       }
       const vendor = vendors.find(v => v.id === vId) || vendors[0];
       if (!vendor) return;
+
+      currentModalVendor = vendor;
 
       const modal = document.getElementById('vendor-detail-modal');
       if (modal) {
@@ -4620,7 +4624,6 @@ if (document.readyState === "loading") {
       const avatarEl = document.getElementById('vdm-avatar');
       const catEl = document.getElementById('vdm-category');
       const districtEl = document.getElementById('vdm-district');
-      const bottomPriceEl = document.getElementById('vdm-bottom-price');
       const bottomPriceBarEl = document.getElementById('vdm-bottom-price-bar');
       const inquireCta = document.getElementById('vdm-modal-inquire-cta');
       const chatCta = document.getElementById('vdm-modal-chat-cta');
@@ -4630,7 +4633,6 @@ if (document.readyState === "loading") {
       if (avatarEl) avatarEl.src = vendor.image || "https://images.unsplash.com/photo-1519167758481-83f550bb49b3?auto=format&fit=crop&w=400&q=80";
       if (catEl) catEl.innerText = vendor.category;
       if (districtEl) districtEl.innerText = `📍 ${vendor.province || 'استان یزد'}، ${vendor.district || 'صفائیه'}`;
-      if (bottomPriceEl) bottomPriceEl.innerText = vendor.priceRange || "۶۵,۰۰۰,۰۰۰ تومان";
       if (bottomPriceBarEl) bottomPriceBarEl.innerText = vendor.priceRange || "۶۵,۰۰۰,۰۰۰ تومان";
 
       if (inquireCta) {
@@ -4651,7 +4653,7 @@ if (document.readyState === "loading") {
       const tagsContainer = document.getElementById('vdm-capability-tags');
       if (tagsContainer) {
         const tags = vendor.capabilityTags || ["مجوز رسمی عکاسی کویر", "تجهیزات هلی‌شات & نور کویر", "سرو شیرینی‌های سنتی یزد (حاج خلیفه)", "فضای باز & سالن سرپوشیده"];
-        tagsContainer.innerHTML = tags.map(t => `<span class="bg-amber-100 text-amber-900 border border-amber-300 text-[10px] font-bold px-2.5 py-1 rounded-full flex items-center gap-1">✅ ${t}</span>`).join('');
+        tagsContainer.innerHTML = tags.map(t => `<span class="bg-amber-100 text-amber-900 border border-amber-300 text-[11px] font-bold px-3 py-1 rounded-full flex items-center gap-1">✅ ${t}</span>`).join('');
       }
 
       // Populate Portfolio Gallery Grid
@@ -4671,20 +4673,80 @@ if (document.readyState === "loading") {
         `).join('');
       }
 
-      // Populate Contact Tab
+      // Populate Contact Tab & Map Links
       const phoneEl = document.getElementById('vdm-contact-phone');
       const addressEl = document.getElementById('vdm-contact-address');
       const hoursEl = document.getElementById('vdm-contact-hours');
       const instaEl = document.getElementById('vdm-contact-insta');
 
       if (phoneEl) phoneEl.innerText = vendor.phone || "۰۳۵-۳۸۲۴۰۰۰۰";
-      if (addressEl) addressEl.innerText = vendor.address || `یزد، ${vendor.district || 'صفائیه'}`;
-      if (hoursEl) hoursEl.innerText = vendor.hours || "همه روزه از ۱۰:۰۰ الی ۲۱:۰۰";
+      if (addressEl) addressEl.innerText = vendor.address || `استان یزد، ${vendor.district || 'صفائیه'}`;
+      if (hoursEl) hoursEl.innerText = vendor.hours || "همه روزه از ۱۰:۰۰ الی ۲۲:۰۰";
       if (instaEl) instaEl.innerText = vendor.instagram || "@yazd_wedding_studio";
 
       renderModalAvailabilityCalendar('اردیبهشت');
       switchModalTab(0);
       if (typeof lucide !== 'undefined' && lucide.createIcons) lucide.createIcons();
+    }
+
+    function triggerPackageInquiry(packageName, packagePrice) {
+      if (!currentModalVendor) return;
+      const vName = currentModalVendor.name;
+      const vId = currentModalVendor.id;
+      closeVendorDetailModal();
+      openInquiryModal(vId, vName, packageName, packagePrice);
+    }
+
+    function toggleFavoriteVendorModal() {
+      if (!currentModalVendor) return;
+      toggleFavoriteVendor(currentModalVendor.id);
+      showToast('وضعیت علاقه‌مندی‌ها بروزرسانی شد', 'success');
+    }
+
+    function shareVendorProfile() {
+      if (!currentModalVendor) return;
+      if (navigator.share) {
+        navigator.share({
+          title: currentModalVendor.name,
+          text: `مشاهده پروفایل ${currentModalVendor.name} در عروسی تو`,
+          url: window.location.href
+        }).catch(() => {});
+      } else {
+        showToast('لینک پروفایل تأمین‌کننده در حافظه کپی شد', 'info');
+      }
+    }
+
+    function makeVendorCall() {
+      if (!currentModalVendor) return;
+      const phone = currentModalVendor.phone || '03538240000';
+      window.location.href = `tel:${phone}`;
+    }
+
+    function handleModalReviewSubmit(e) {
+      e.preventDefault();
+      const author = document.getElementById('vdm-review-author')?.value || 'زوج عزیز';
+      const rating = document.getElementById('vdm-review-rating')?.value || '5';
+      const comment = document.getElementById('vdm-review-comment')?.value || '';
+
+      const reviewsList = document.getElementById('vdm-reviews-list');
+      if (reviewsList) {
+        const item = document.createElement('div');
+        item.className = "p-3.5 bg-white border border-gray-200 rounded-xl space-y-1.5 shadow-2xs animate-fadeIn";
+        item.innerHTML = `
+          <div class="flex items-center justify-between text-xs">
+            <strong class="text-[#1B3B2B] flex items-center gap-1.5">
+              <span class="w-6 h-6 rounded-full bg-[#1B3B2B] text-[#D4AF37] flex items-center justify-center font-bold text-[10px]">${author.substring(0, 2)}</span>
+              <span>${author}</span>
+            </strong>
+            <span class="text-amber-500 font-bold">⭐️ ${rating}.۰</span>
+          </div>
+          <p class="text-[11px] text-gray-700 leading-relaxed">${comment}</p>
+        `;
+        reviewsList.prepend(item);
+      }
+
+      showToast('دیدگاه شما با موفقیت ثبت شد و پس از تایید مدیریت نمایش داده خواهد شد.', 'success');
+      e.target.reset();
     }
 
     function closeVendorDetailModal() {
