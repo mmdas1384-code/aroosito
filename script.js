@@ -22,6 +22,45 @@ const HOME_VIEW_HTML = `<!-- HOMEPAGE CONTENT MODULE (home-view.html) -->
               <p class="text-xs sm:text-sm text-graphite/80 leading-relaxed max-w-xl">
                 بهترین باغ تالارها، آتلیه‌ها، سالن‌های زیبایی و خدمات مجالس را با تضمین قیمت، تاییدیه رسمی اعتبار و استعلام آنلاین رزرو کنید.
               </p>
+
+              <!-- HERO SMART SEARCH BAR CONTAINER -->
+              <div class="bg-white border border-[#D4AF37]/60 rounded-2xl p-2.5 sm:p-3.5 shadow-lg space-y-2.5 mt-4">
+                <div class="grid grid-cols-1 sm:grid-cols-12 gap-2 items-center">
+                  <!-- Input -->
+                  <div class="sm:col-span-5 relative flex items-center">
+                    <i data-lucide="search" class="w-4 h-4 text-secondary absolute right-3 pointer-events-none"></i>
+                    <input id="hero-search-input" type="text" placeholder="مثلاً: نام تالار، آتلیه، سالن زیبایی..." onkeydown="if(event.key==='Enter') handleHeroSearch()" class="w-full bg-slate-50 border border-accent/80 rounded-xl pr-9 pl-3 py-2.5 text-xs font-medium text-graphite placeholder-slate-400 focus:outline-none focus:border-[#D4AF37] focus:bg-white transition-all">
+                  </div>
+                  <!-- City Dropdown -->
+                  <div class="sm:col-span-3">
+                    <select id="hero-city-select" class="w-full bg-slate-50 border border-accent/80 rounded-xl px-2.5 py-2.5 text-xs font-bold text-graphite focus:outline-none focus:border-[#D4AF37] cursor-pointer">
+                      <option value="استان یزد" selected>همه مناطق یزد</option>
+                      <option value="صفائیه">صفائیه</option>
+                      <option value="بافت تاریخی">بافت تاریخی</option>
+                      <option value="میبد">میبد</option>
+                      <option value="اردکان">اردکان</option>
+                      <option value="تفت">تفت</option>
+                    </select>
+                  </div>
+                  <!-- Category Dropdown -->
+                  <div class="sm:col-span-4">
+                    <select id="hero-cat-select" class="w-full bg-slate-50 border border-accent/80 rounded-xl px-2.5 py-2.5 text-xs font-bold text-graphite focus:outline-none focus:border-[#D4AF37] cursor-pointer">
+                      <option value="all" selected>همه دسته‌بندی‌ها</option>
+                      <option value="تالار و باغ تالار عروسی">تالار و باغ تالار عروسی</option>
+                      <option value="آتلیه عکاسی و فیلمبرداری">آتلیه عکاسی و فیلمبرداری</option>
+                      <option value="سالن زیبایی و آرایشگاه عروس">سالن زیبایی و آرایشگاه عروس</option>
+                      <option value="مزون لباس عروس">مزون لباس عروس</option>
+                      <option value="کترینگ و تشریفات پذیرایی">کترینگ و تشریفات پذیرایی</option>
+                    </select>
+                  </div>
+                </div>
+
+                <!-- Gold Search Button -->
+                <button type="button" onclick="handleHeroSearch()" class="w-full bg-[#D4AF37] hover:bg-amber-400 text-[#1B3B2B] font-black text-xs py-2.5 px-4 rounded-xl shadow-md transition-all flex items-center justify-center gap-2 cursor-pointer transform active:scale-98">
+                  <i data-lucide="search" class="w-4 h-4"></i>
+                  <span>جستجوی سریع 🔍</span>
+                </button>
+              </div>
             </div>
 
             <!-- Stats Bar -->
@@ -1499,17 +1538,14 @@ if (document.readyState === "loading") {
       const homeView = document.getElementById('home-view');
       const directoryView = document.getElementById('directory-view');
 
-      if (tabId === 'home') {
-        if (homeView) homeView.classList.remove('hidden');
-        if (directoryView) directoryView.classList.add('hidden');
-      } else if (tabId === 'directory') {
+      if (tabId === 'directory') {
         if (homeView) homeView.classList.add('hidden');
         if (directoryView) directoryView.classList.remove('hidden');
         if (typeof renderSidebarCategoryCheckboxes === 'function') renderSidebarCategoryCheckboxes();
         if (typeof renderMultiCategoryPills === 'function') renderMultiCategoryPills();
         if (typeof filterVendors === 'function') filterVendors();
       } else {
-        if (homeView) homeView.classList.add('hidden');
+        if (homeView) homeView.classList.remove('hidden');
         if (directoryView) directoryView.classList.add('hidden');
       }
 
@@ -2549,6 +2585,44 @@ if (document.readyState === "loading") {
       if (vendorSection) vendorSection.scrollIntoView({ behavior: 'smooth' });
     }
 
+    function handleHeroSearch() {
+      const heroSearchInput = document.getElementById('hero-search-input');
+      const heroCitySelect = document.getElementById('hero-city-select');
+      const heroCatSelect = document.getElementById('hero-cat-select');
+
+      const query = heroSearchInput ? heroSearchInput.value.trim() : '';
+      const city = heroCitySelect ? heroCitySelect.value : 'استان یزد';
+      const cat = heroCatSelect ? heroCatSelect.value : 'all';
+
+      // 1. Sync header search inputs
+      const headerSearch = document.getElementById('header-search-input');
+      if (headerSearch) headerSearch.value = query;
+
+      const directSearch = document.getElementById('directory-instant-search');
+      if (directSearch) directSearch.value = query;
+
+      const mainSearch = document.getElementById('search-input');
+      if (mainSearch) mainSearch.value = query;
+
+      // 2. Sync City
+      const headerCity = document.getElementById('header-city-select');
+      if (headerCity) headerCity.value = city;
+      const sidebarCity = document.getElementById('sidebar-city-select');
+      if (sidebarCity) sidebarCity.value = city;
+
+      // 3. Sync Category
+      activeCategoryFilters.clear();
+      if (cat !== 'all') {
+        activeCategoryFilters.add(cat);
+      }
+
+      // 4. Transition to directory tab & re-filter
+      switchTab('directory');
+      if (typeof renderSidebarCategoryCheckboxes === 'function') renderSidebarCategoryCheckboxes();
+      if (typeof renderMultiCategoryPills === 'function') renderMultiCategoryPills();
+      if (typeof filterVendors === 'function') filterVendors();
+    }
+
     function filterVendorsFromMega(title) {
       switchTab('directory');
       filterVendorsByCategoryTitle(title);
@@ -3145,7 +3219,7 @@ if (document.readyState === "loading") {
                 </div>
 
                 <div class="flex items-center gap-2">
-                  <button onclick="openVendorDetailModal(${v.id})" class="bg-[#D4AF37] hover:bg-amber-400 text-[#1B3B2B] font-black px-4 py-2.5 rounded-xl text-xs transition-all shadow-xs flex items-center justify-center gap-1.5 cursor-pointer">
+                  <button onclick="loadVendorProfile(${v.id})" class="bg-[#D4AF37] hover:bg-amber-400 text-[#1B3B2B] font-black px-4 py-2.5 rounded-xl text-xs transition-all shadow-xs flex items-center justify-center gap-1.5 cursor-pointer">
                     <i data-lucide="user" class="w-3.5 h-3.5"></i>
                     <span>مشاهده پروفایل کامل</span>
                   </button>
@@ -3239,7 +3313,7 @@ if (document.readyState === "loading") {
             </div>
 
             <div class="p-5 pt-0 flex flex-col sm:flex-row gap-2">
-              <button onclick="openVendorDetailModal(${v.id})" class="flex-1 bg-[#D4AF37] hover:bg-amber-400 text-[#1B3B2B] font-black py-2.5 rounded-xl text-xs transition-all shadow-xs flex items-center justify-center gap-1.5 cursor-pointer">
+              <button onclick="loadVendorProfile(${v.id})" class="flex-1 bg-[#D4AF37] hover:bg-amber-400 text-[#1B3B2B] font-black py-2.5 rounded-xl text-xs transition-all shadow-xs flex items-center justify-center gap-1.5 cursor-pointer">
                 <i data-lucide="user" class="w-3.5 h-3.5"></i>
                 <span>مشاهده پروفایل کامل</span>
               </button>
@@ -4286,7 +4360,270 @@ if (document.readyState === "loading") {
     }
 
 
-    // VENDOR DETAIL MODAL CONTROLLER
+    // STANDALONE VENDOR PROFILE (& MODAL) CONTROLLERS
+
+    let currentProfileVendorId = 1;
+    let currentProfileMonth = 'اردیبهشت';
+
+    function loadVendorProfile(vendorId) {
+      let vId = vendorId;
+      if (typeof vendorId === 'string' && !isNaN(parseInt(vendorId))) {
+        vId = parseInt(vendorId);
+      }
+      const vendor = vendors.find(v => v.id === vId) || vendors[0];
+      if (!vendor) return;
+
+      currentProfileVendorId = vendor.id;
+
+      // Populate Text & Image Header
+      const nameEl = document.getElementById('vp-name');
+      const coverEl = document.getElementById('vp-cover');
+      const logoEl = document.getElementById('vp-logo');
+      const catEl = document.getElementById('vp-category');
+      const districtEl = document.getElementById('vp-district');
+      const ratingEl = document.getElementById('vp-rating');
+
+      if (nameEl) nameEl.innerText = vendor.name;
+      if (coverEl) coverEl.src = vendor.image || "https://images.unsplash.com/photo-1519167758481-83f550bb49b3?auto=format&fit=crop&w=1600&q=80";
+      if (logoEl) logoEl.src = vendor.image || "https://images.unsplash.com/photo-1519167758481-83f550bb49b3?auto=format&fit=crop&w=400&q=80";
+      if (catEl) catEl.innerText = vendor.category;
+      if (districtEl) districtEl.innerText = `📍 ${vendor.province || 'استان یزد'}، ${vendor.district || 'صفائیه'}`;
+      const reviewCount = Array.isArray(vendor.reviews) ? vendor.reviews.length : (vendor.reviews || 38);
+      if (ratingEl) ratingEl.innerHTML = `<i data-lucide="star" class="w-4 h-4 fill-amber-400 text-amber-400"></i> ${vendor.rating || '۴.۹'} (${reviewCount} دیدگاه)`;
+
+      // Populate Info Bar
+      const hoursEl = document.getElementById('vp-hours');
+      const phoneLinkEl = document.getElementById('vp-phone-link');
+      const instaEl = document.getElementById('vp-instagram');
+      const addressEl = document.getElementById('vp-address');
+      const mapLabelEl = document.getElementById('vp-map-label');
+
+      if (hoursEl) hoursEl.innerText = vendor.hours || "همه روزه از ۱۰:۰۰ الی ۲۱:۰۰";
+      if (phoneLinkEl) {
+        phoneLinkEl.href = `tel:${vendor.phone || '03538240000'}`;
+        phoneLinkEl.innerText = vendor.phone || "۰۳۵-۳۸۲۴۰۰۰۰";
+      }
+      if (instaEl) {
+        instaEl.href = `https://instagram.com/${(vendor.instagram || 'yazd_wedding').replace('@', '')}`;
+        instaEl.innerText = vendor.instagram || "@yazd_wedding_studio";
+      }
+      if (addressEl) addressEl.innerText = vendor.address || `یزد، ${vendor.district || 'صفائیه'}، انتهای خیابان تیمسار فلاحی`;
+      if (mapLabelEl) mapLabelEl.innerText = `موقعیت دقیق ${vendor.name} در یزد`;
+
+      // About Text
+      const aboutEl = document.getElementById('vp-about-text');
+      if (aboutEl) {
+        aboutEl.innerText = vendor.about || `${vendor.name} یکی از برترین و معتبرترین مجموعه‌های ارائه‌دهنده خدمات ${vendor.category} در استان یزد است که با بهره‌گیری از کادر مجرب، تجهیزات حرفه‌ای و تضمین کیفیت عروسی‌تو آماده پذیرایی و ارائه خدمات به زوجین عزیز می‌باشد.`;
+      }
+
+      // Portfolio Lightbox Gallery Grid
+      const galleryGrid = document.getElementById('vp-gallery-grid');
+      const galleryCounter = document.getElementById('vp-gallery-counter');
+      const portfolio = vendor.portfolio || [
+        { url: vendor.image, tag: "نمونه‌کار اصلی" },
+        { url: "https://images.unsplash.com/photo-1519741497674-611481863552?auto=format&fit=crop&w=800&q=80", tag: "دکور و سالن" },
+        { url: "https://images.unsplash.com/photo-1511285560929-80b456fea0bc?auto=format&fit=crop&w=800&q=80", tag: "سفره عقد" },
+        { url: "https://images.unsplash.com/photo-1522673607200-164d1b6ce486?auto=format&fit=crop&w=800&q=80", tag: "فضای باز" },
+        { url: "https://images.unsplash.com/photo-1519225421980-715cb0215aed?auto=format&fit=crop&w=800&q=80", tag: "پذیرایی VIP" },
+        { url: "https://images.unsplash.com/photo-1519741497674-611481863552?auto=format&fit=crop&w=800&q=80", tag: "نورپردازی" }
+      ];
+
+      if (galleryCounter) galleryCounter.innerText = `${portfolio.length} تصویر آلبوم`;
+      if (galleryGrid) {
+        galleryGrid.innerHTML = portfolio.map(item => `
+          <div class="aspect-4/3 rounded-2xl overflow-hidden bg-slate-100 border border-accent/80 relative group cursor-pointer shadow-2xs" onclick="openLightbox('${item.url}')">
+            <img src="${item.url}" alt="${item.tag || 'تصویر نمونه کار'}" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
+            <div class="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center text-white text-xs font-bold gap-1">
+              <i data-lucide="zoom-in" class="w-4 h-4"></i>
+              <span>بزرگ‌نمایی</span>
+            </div>
+            <span class="absolute top-2.5 right-2.5 bg-black/60 text-white text-[10px] font-bold px-2.5 py-0.5 rounded-lg backdrop-blur-md">${item.tag || 'تصویر'}</span>
+          </div>
+        `).join('');
+      }
+
+      // Packages
+      const packagesContainer = document.getElementById('vp-packages-container');
+      if (packagesContainer) {
+        const pkgs = vendor.packages || [
+          { name: "پکیج برنز (اقتصادی)", price: vendor.priceRange || "۴۵,۰۰۰,۰۰۰ تومان", features: ["منوی کلاسیک تک‌پرس", "سیستم صوتی پایه", "اتاق عقد مجزا", "پارکینگ مهمانان"] },
+          { name: "پکیج نقره‌ای (استاندارد)", price: "۷۵,۰۰۰,۰۰۰ تومان", popular: true, features: ["منوی دیس‌پرس ۳ مدل غذا", "سیستم نورپردازی dynamic", "سفره عقد سنتی & گل‌آرایی", "پذیرایی شیرینی حاج خلیفه"] },
+          { name: "پکیج طلایی (VIP)", price: "۱۲۰,۰۰۰,۰۰۰ تومان", features: ["منوی سلف‌سرویس کامل VIP", "نورپردازی حرفه‌ای & استیج LED", "گروه موزیک زنده اختصاصی", "تشریفات ورودی & آتش‌بازی"] }
+        ];
+
+        packagesContainer.innerHTML = pkgs.map(pkg => `
+          <div class="bg-white border ${pkg.popular ? 'border-[#D4AF37] ring-2 ring-[#D4AF37]/30 shadow-md' : 'border-accent'} rounded-2xl p-5 flex flex-col justify-between space-y-4 relative overflow-hidden">
+            ${pkg.popular ? `<span class="absolute top-3 left-3 bg-[#D4AF37] text-[#1B3B2B] text-[10px] font-black px-2.5 py-0.5 rounded-full">پرطرفدارترین</span>` : ''}
+            <div class="space-y-3">
+              <h3 class="font-bold text-sm text-[#1B3B2B]">${pkg.name}</h3>
+              <div class="text-lg font-black text-[#1B3B2B] border-b border-accent/60 pb-3">
+                ${pkg.price}
+              </div>
+              <ul class="space-y-2 text-xs text-graphite/80">
+                ${(pkg.features || pkg.items || ["ارائه تمامی خدمات اصلی با بالاترین کیفیت"]).map(f => `<li class="flex items-center gap-2">✅ <span>${f}</span></li>`).join('')}
+              </ul>
+            </div>
+            <button onclick="openInquiryModal(${vendor.id}, '${vendor.name}')" class="w-full bg-[#1B3B2B] hover:bg-emerald-900 text-white font-bold py-2.5 rounded-xl text-xs transition-colors shadow-2xs flex items-center justify-center gap-1.5 cursor-pointer">
+              <i data-lucide="message-square-quote" class="w-4 h-4 text-[#D4AF37]"></i>
+              <span>انتخاب پکیج & استعلام</span>
+            </button>
+          </div>
+        `).join('');
+      }
+
+      // Reviews
+      const reviewsContainer = document.getElementById('vp-reviews-container');
+      if (reviewsContainer) {
+        const reviews = [
+          { author: "علی و سارا (عروسی مهر ۱۴۰۳)", rating: 5, date: "۲ هفته پیش", comment: "کیفیت خدمات و برخورد پرسنل عالی بود. پذیرایی به بهترین نحو انجام شد و همگی مهمانان رضایت کامل داشتند." },
+          { author: "محمد و مریم (مراسم عقد)", rating: 5, date: "۱ ماه پیش", comment: "از پلتفرم عروسی‌تو رزرو کردیم و قیمت دقیقاً مطابق با تخفیف اولیه اعلامی بود. کاملاً پیشنهاد می‌کنم." }
+        ];
+
+        reviewsContainer.innerHTML = reviews.map(r => `
+          <div class="bg-bgCustom/80 border border-accent/70 rounded-2xl p-4 space-y-2">
+            <div class="flex items-center justify-between">
+              <div class="flex items-center gap-2">
+                <span class="font-bold text-xs text-[#1B3B2B]">${r.author}</span>
+                <span class="bg-emerald-100 text-emerald-800 text-[9px] font-bold px-2 py-0.5 rounded-full border border-emerald-200">زوج تاییدشده</span>
+              </div>
+              <span class="text-[10px] text-secondary font-medium">${r.date}</span>
+            </div>
+            <p class="text-xs text-graphite/80 leading-relaxed">${r.comment}</p>
+          </div>
+        `).join('');
+      }
+
+      renderProfileCalendar('اردیبهشت');
+      switchTab('vendor-profile');
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+      if (typeof lucide !== 'undefined' && lucide.createIcons) lucide.createIcons();
+    }
+
+    function renderProfileCalendar(monthName) {
+      currentProfileMonth = monthName || 'اردیبهشت';
+      const grid = document.getElementById('vp-calendar-grid');
+      if (!grid) return;
+
+      document.querySelectorAll('.vp-month-pill').forEach(btn => {
+        if (btn.innerText.includes(currentProfileMonth)) {
+          btn.className = "vp-month-pill active px-3 py-1 rounded-xl bg-[#1B3B2B] text-white transition-all cursor-pointer font-bold";
+        } else {
+          btn.className = "vp-month-pill px-3 py-1 rounded-xl bg-gray-100 hover:bg-[#1B3B2B] hover:text-white transition-all cursor-pointer text-gray-700";
+        }
+      });
+
+      grid.innerHTML = '';
+
+      // Render Day Name Headers
+      const dayHeaders = ['ش', 'ی', 'د', 'س', 'چ', 'پ', 'ج'];
+      dayHeaders.forEach(h => {
+        const hEl = document.createElement('div');
+        hEl.className = "font-bold text-[10px] text-secondary py-1";
+        hEl.innerText = h;
+        grid.appendChild(hEl);
+      });
+
+      const bookedDays = [3, 8, 12, 15, 19, 24, 27];
+      const vipDays = [5, 14, 28];
+
+      for (let day = 1; day <= 30; day++) {
+        const dayBtn = document.createElement('button');
+        dayBtn.type = 'button';
+        const isBooked = bookedDays.includes(day);
+        const isVip = vipDays.includes(day);
+
+        let bgClass = "bg-emerald-50 text-emerald-900 border-emerald-200 hover:bg-emerald-100 cursor-pointer";
+        let statusTitle = "آزاد جهت استعلام و رزرو";
+
+        if (isBooked) {
+          bgClass = "bg-rose-50 text-rose-400 border-rose-200 cursor-not-allowed opacity-60";
+          statusTitle = "رزرو شده";
+        } else if (isVip) {
+          bgClass = "bg-amber-100 text-amber-900 border-amber-300 font-black cursor-pointer hover:bg-amber-200";
+          statusTitle = "روز ویژه VIP با تخفیف";
+        }
+
+        dayBtn.className = `p-2 rounded-xl border text-xs font-bold transition-all ${bgClass}`;
+        dayBtn.title = `روز ${day} ${currentProfileMonth} - ${statusTitle}`;
+        dayBtn.innerText = day;
+
+        dayBtn.onclick = function() {
+          if (isBooked) {
+            showToast(`روز ${day} ${currentProfileMonth} توسط زوج دیگری رزرو شده است.`, 'warning');
+          } else {
+            const vendor = vendors.find(v => v.id === currentProfileVendorId) || vendors[0];
+            showToast(`تاریخ ${day} ${currentProfileMonth} جهت استعلام قیمت انتخاب گردید.`, 'success');
+            openInquiryModal(vendor.id, vendor.name, `${day} ${currentProfileMonth} ۱۴۰۴`);
+          }
+        };
+
+        grid.appendChild(dayBtn);
+      }
+    }
+
+    function triggerProfileInquiry() {
+      const vendor = vendors.find(v => v.id === currentProfileVendorId) || vendors[0];
+      openInquiryModal(vendor.id, vendor.name);
+    }
+
+    function triggerProfileChat() {
+      const vendor = vendors.find(v => v.id === currentProfileVendorId) || vendors[0];
+      closeVendorDetailModal();
+      openInquiryModal(vendor.id, vendor.name);
+    }
+
+    function shareVendorProfile() {
+      const vendor = vendors.find(v => v.id === currentProfileVendorId) || vendors[0];
+      if (navigator.share) {
+        navigator.share({
+          title: vendor.name,
+          text: `مشاهده مشخصات و پکیج‌های ${vendor.name} در پلتفرم عروسی‌تو`,
+          url: window.location.href
+        }).catch(() => {});
+      } else {
+        showToast('لینک پروفایل این تامین‌کننده در حافظه کپی شد.', 'info');
+      }
+    }
+
+    function toggleFavoriteCurrentVendor(e) {
+      if (e) e.stopPropagation();
+      toggleFavoriteVendor(currentProfileVendorId, e);
+    }
+
+    function toggleProfileReviewForm() {
+      const drawer = document.getElementById('vp-review-form-drawer');
+      if (drawer) drawer.classList.toggle('hidden');
+    }
+
+    function handleProfileReviewSubmit(e) {
+      e.preventDefault();
+      const author = document.getElementById('vp-review-author')?.value.trim();
+      const rating = document.getElementById('vp-review-rating')?.value || '5';
+      const comment = document.getElementById('vp-review-comment')?.value.trim();
+
+      if (!author || !comment) return;
+
+      const container = document.getElementById('vp-reviews-container');
+      if (container) {
+        const card = document.createElement('div');
+        card.className = "bg-bgCustom/80 border border-accent/70 rounded-2xl p-4 space-y-2 animate-fadeIn";
+        card.innerHTML = `
+          <div class="flex items-center justify-between">
+            <div class="flex items-center gap-2">
+              <span class="font-bold text-xs text-[#1B3B2B]">${author}</span>
+              <span class="bg-emerald-100 text-emerald-800 text-[9px] font-bold px-2 py-0.5 rounded-full border border-emerald-200">جدید</span>
+            </div>
+            <span class="text-[10px] text-amber-600 font-bold">⭐️ ${rating} از ۵</span>
+          </div>
+          <p class="text-xs text-graphite/80 leading-relaxed">${comment}</p>
+        `;
+        container.prepend(card);
+      }
+
+      toggleProfileReviewForm();
+      showToast('دیدگاه شما با موفقیت ثبت شد و پس از تایید مدیریت نمایش داده خواهد شد.', 'success');
+      document.getElementById('vp-review-form')?.reset();
+    }
 
     function handleSelectCalendarDay(dayNum, isAvailable) {
       if (!isAvailable) {
