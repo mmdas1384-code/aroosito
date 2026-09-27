@@ -1,15 +1,22 @@
 /* Directory Filters & Layout Styles */
 #tab-directory,
 #directory-view {
-  background-color: var(--color-off-white);
+  background-color: var(--color-off-white, #FBF9F5);
 }
 
 /* Directory Sidebar Filters */
 .directory-sidebar {
   background-color: #ffffff;
-  border: 1px solid var(--color-accent);
+  border: 1px solid var(--color-accent, #E0D8C8);
   border-radius: 1.5rem;
   padding: 1.25rem;
+}
+
+.directory-sidebar focus-within,
+.directory-sidebar select:focus,
+.directory-sidebar input[type="text"]:focus {
+  border-color: #D4AF37 !important;
+  box-shadow: 0 0 0 2px rgba(27, 59, 43, 0.15) !important;
 }
 
 /* Category Checkboxes Checklist */
@@ -18,13 +25,18 @@
   overflow-y: auto;
 }
 
+/* Range Slider Styling */
+#sidebar-capacity-slider {
+  accent-color: #1B3B2B;
+}
+
 /* Active Category Pills & Badges */
 #active-category-pills .category-pill {
   display: inline-flex;
   align-items: center;
   gap: 0.375rem;
   background-color: rgba(212, 175, 55, 0.15);
-  color: var(--color-emerald);
+  color: #1B3B2B;
   border: 1px solid rgba(212, 175, 55, 0.4);
   padding: 0.25rem 0.625rem;
   border-radius: 0.75rem;
@@ -32,34 +44,35 @@
   font-weight: 700;
 }
 
-/* Vendor Grid & Cards */
-#vendor-grid {
+/* Vendor Grid & Cards Layout */
+#vendor-grid.grid {
   display: grid;
   grid-template-columns: repeat(1, minmax(0, 1fr));
   gap: 1.5rem;
 }
 
 @media (min-width: 768px) {
-  #vendor-grid {
+  #vendor-grid.grid {
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 }
 
 @media (min-width: 1024px) {
-  #vendor-grid {
+  #vendor-grid.grid {
     grid-template-columns: repeat(3, minmax(0, 1fr));
   }
 }
 
 .vendor-card {
   background-color: #ffffff;
-  border: 1px solid var(--color-accent);
+  border: 1px solid var(--color-accent, #E0D8C8);
   border-radius: 1.5rem;
   overflow: hidden;
-  transition: all 0.2s ease-in-out;
+  transition: all 0.25s ease-in-out;
 }
 
 .vendor-card:hover {
-  border-color: var(--color-gold);
-  box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1);
+  border-color: #D4AF37;
+  box-shadow: 0 12px 30px -5px rgba(27, 59, 43, 0.12);
+  transform: translateY(-3px);
 }

@@ -479,7 +479,7 @@ const DIRECTORY_VIEW_HTML = `<!-- ISOLATED VENDOR DIRECTORY CONTENT MODULE (dire
   <!-- DIRECTORY MAIN 2-COLUMN LAYOUT -->
   <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
 
-    <!-- SIDEBAR FILTERS (col-span-12 lg:col-span-3) -->
+    <!-- SIDEBAR ADVANCED FILTERS (col-span-12 lg:col-span-3) -->
     <aside class="lg:col-span-3 space-y-6 bg-white border border-accent rounded-3xl p-5 shadow-xs sticky top-28 directory-sidebar">
       <div class="flex items-center justify-between border-b border-accent pb-3">
         <h3 class="text-sm font-black text-graphite flex items-center gap-2">
@@ -491,35 +491,61 @@ const DIRECTORY_VIEW_HTML = `<!-- ISOLATED VENDOR DIRECTORY CONTENT MODULE (dire
         </button>
       </div>
 
-      <!-- Category Multi-Select Checklist -->
+      <!-- Verified Badge Toggle Switch -->
+      <div class="p-3 bg-[#1B3B2B]/5 border border-[#D4AF37]/30 rounded-2xl flex items-center justify-between">
+        <div class="flex items-center gap-2">
+          <i data-lucide="shield-check" class="w-4 h-4 text-[#D4AF37]"></i>
+          <span class="text-xs font-bold text-[#1B3B2B]">فقط تامین‌کنندگان تاییدشده</span>
+        </div>
+        <label class="relative inline-flex items-center cursor-pointer">
+          <input type="checkbox" id="verified-only" checked onchange="filterVendors()" class="sr-only peer">
+          <div class="w-9 h-5 bg-slate-300 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:start-[2px] after:bg-white after:border-slate-300 after:border after:rounded-full after:h-4 after:w-4 after:transition-all peer-checked:bg-[#1B3B2B]"></div>
+        </label>
+      </div>
+
+      <!-- Category & Subgroup Accordions / Multi-Select Checklist -->
       <div class="space-y-3">
-        <label class="text-xs font-extrabold text-graphite block">دسته‌بندی خدمات (چند انتخابی):</label>
-        <div id="sidebar-category-checkboxes" class="space-y-2 max-h-60 overflow-y-auto no-scrollbar text-xs font-bold text-graphite">
+        <label class="text-xs font-extrabold text-graphite block flex items-center justify-between">
+          <span>دسته‌بندی خدمات:</span>
+          <span class="text-[10px] text-secondary font-normal">(چند انتخابی)</span>
+        </label>
+        <div id="sidebar-category-checkboxes" class="space-y-2 max-h-60 overflow-y-auto custom-scrollbar text-xs font-bold text-graphite pr-1">
           <!-- Populated dynamically via JS -->
         </div>
       </div>
 
-      <!-- City/Region Selector -->
+      <!-- Capacity Range Slider -->
       <div class="space-y-2 pt-3 border-t border-accent">
-        <label for="sidebar-city-select" class="text-xs font-extrabold text-graphite block">شهر / منطقه:</label>
-        <select id="sidebar-city-select" onchange="syncAndFilterCity(this.value)" class="w-full bg-bgCustom border border-accent rounded-xl p-2.5 text-xs font-bold text-graphite focus:outline-none focus:border-primary cursor-pointer">
-          <option value="استان یزد" selected>همه مناطق استان یزد</option>
-          <option value="یزد">شهر یزد</option>
+        <div class="flex justify-between items-center text-xs font-extrabold text-graphite">
+          <span>ظرفیت پذیرش (مهمان):</span>
+          <span id="sidebar-capacity-val" class="text-primary font-black">همه ظرفیت‌ها</span>
+        </div>
+        <input type="range" id="sidebar-capacity-slider" min="50" max="1000" step="50" value="1000" oninput="updateCapacitySliderLabel(this.value); filterVendors();" class="w-full h-2 bg-slate-200 rounded-lg appearance-none cursor-pointer accent-[#1B3B2B]">
+        <div class="flex justify-between text-[10px] text-secondary font-semibold">
+          <span>۵۰ نفر</span>
+          <span>۱,۰۰۰+ نفر</span>
+        </div>
+      </div>
+
+      <!-- City / District Selector -->
+      <div class="space-y-2 pt-3 border-t border-accent">
+        <label for="sidebar-city-select" class="text-xs font-extrabold text-graphite block">شهر / منطقه یزد:</label>
+        <select id="sidebar-city-select" onchange="syncAndFilterCity(this.value)" class="w-full bg-bgCustom border border-accent rounded-xl p-2.5 text-xs font-bold text-graphite focus:outline-none focus:ring-2 focus:ring-[#1B3B2B] focus:border-[#D4AF37] cursor-pointer">
+          <option value="استان یزد" selected>همه مناطق استان یزد 📍</option>
           <option value="صفائیه">صفائیه یزد</option>
           <option value="میدان اطلسی">میدان اطلسی</option>
-
+          <option value="خیابان کاشانی">خیابان کاشانی & ملاصدرا</option>
+          <option value="بافت تاریخی">بافت تاریخی یزد</option>
           <option value="میبد">میبد</option>
           <option value="اردکان">اردکان</option>
           <option value="تفت">تفت</option>
-          <option value="اصفهان">اصفهان</option>
-          <option value="شیراز">شیراز</option>
         </select>
       </div>
 
       <!-- Price Range Selector -->
       <div class="space-y-2 pt-3 border-t border-accent">
         <label for="sidebar-price-select" class="text-xs font-extrabold text-graphite block">بازه قیمتی:</label>
-        <select id="sidebar-price-select" onchange="syncAndFilterPrice(this.value)" class="w-full bg-bgCustom border border-accent rounded-xl p-2.5 text-xs font-bold text-graphite focus:outline-none focus:border-primary cursor-pointer">
+        <select id="sidebar-price-select" onchange="syncAndFilterPrice(this.value)" class="w-full bg-bgCustom border border-accent rounded-xl p-2.5 text-xs font-bold text-graphite focus:outline-none focus:ring-2 focus:ring-[#1B3B2B] focus:border-[#D4AF37] cursor-pointer">
           <option value="all" selected>همه بازه‌های قیمتی</option>
           <option value="economic">اقتصادی 💰</option>
           <option value="mid">متوسط 💰💰</option>
@@ -527,42 +553,69 @@ const DIRECTORY_VIEW_HTML = `<!-- ISOLATED VENDOR DIRECTORY CONTENT MODULE (dire
         </select>
       </div>
 
-      <!-- Verified Badge Checkbox -->
-      <div class="pt-3 border-t border-accent">
-        <label class="flex items-center gap-2 cursor-pointer text-xs font-bold text-graphite">
-          <input type="checkbox" id="verified-only" checked onchange="filterVendors()" class="rounded text-primary focus:ring-primary w-4 h-4">
-          <span>فقط دارای تاییدیه رسمی اعتبار</span>
-        </label>
+      <!-- Feature Checkboxes -->
+      <div class="space-y-2 pt-3 border-t border-accent text-xs font-bold text-graphite">
+        <label class="block text-xs font-extrabold text-graphite mb-2">امکانات و ویژگی‌های خاص:</label>
+        <div class="space-y-2">
+          <label class="flex items-center gap-2 cursor-pointer hover:text-primary transition-colors">
+            <input type="checkbox" id="feat-parking" onchange="filterVendors()" class="rounded text-[#1B3B2B] focus:ring-[#1B3B2B] w-4 h-4">
+            <span>پارکینگ اختصاصی</span>
+          </label>
+          <label class="flex items-center gap-2 cursor-pointer hover:text-primary transition-colors">
+            <input type="checkbox" id="feat-sofreh" onchange="filterVendors()" class="rounded text-[#1B3B2B] focus:ring-[#1B3B2B] w-4 h-4">
+            <span>سفره عقد سنتی & VIP</span>
+          </label>
+          <label class="flex items-center gap-2 cursor-pointer hover:text-primary transition-colors">
+            <input type="checkbox" id="feat-garden" onchange="filterVendors()" class="rounded text-[#1B3B2B] focus:ring-[#1B3B2B] w-4 h-4">
+            <span>فضای باز & باغ اختصاصی</span>
+          </label>
+          <label class="flex items-center gap-2 cursor-pointer hover:text-primary transition-colors">
+            <input type="checkbox" id="feat-catering" onchange="filterVendors()" class="rounded text-[#1B3B2B] focus:ring-[#1B3B2B] w-4 h-4">
+            <span>کترینگ و پذیرایی VIP</span>
+          </label>
+        </div>
       </div>
     </aside>
 
     <!-- MAIN DIRECTORY CONTENT (col-span-12 lg:col-span-9) -->
     <div class="lg:col-span-9 space-y-6">
 
-      <!-- Dedicated Sorting Bar & Instant Search Box -->
+      <!-- Sorting & View Controls Bar -->
       <div id="vendor-sorting-bar" class="bg-white border border-accent rounded-2xl p-4 shadow-2xs flex flex-col sm:flex-row sm:items-center justify-between gap-4 text-xs font-bold text-graphite">
         <!-- Instant Search Box -->
         <div class="relative flex-1 max-w-md">
           <i data-lucide="search" class="w-4 h-4 text-primary absolute right-3 top-2.5"></i>
-          <input type="text" id="directory-instant-search" oninput="filterVendors()" placeholder="جستجوی نام تالار، آتلیه یا مزون..." class="w-full bg-bgCustom border border-accent rounded-xl pr-9 pl-3 py-2 text-xs font-medium focus:outline-none focus:border-primary">
+          <input type="text" id="directory-instant-search" oninput="filterVendors()" placeholder="جستجوی نام تالار، آتلیه یا مزون..." class="w-full bg-bgCustom border border-accent rounded-xl pr-9 pl-3 py-2 text-xs font-medium focus:outline-none focus:ring-2 focus:ring-[#1B3B2B] focus:border-[#D4AF37]">
         </div>
 
         <div class="flex items-center gap-4 shrink-0 flex-wrap sm:flex-nowrap justify-between sm:justify-end">
           <div class="flex items-center gap-2">
             <span class="text-secondary">نتایج:</span>
-            <span id="directory-vendor-count-badge" class="bg-primary/10 text-primary border border-primary/20 text-xs font-black px-2.5 py-1 rounded-xl">
-              ۰ تامین‌کننده
+            <span id="directory-vendor-count-badge" class="bg-[#1B3B2B]/10 text-[#1B3B2B] border border-[#1B3B2B]/20 text-xs font-black px-2.5 py-1 rounded-xl">
+              نمایش ۴۸ تامین‌کننده در استان یزد
             </span>
           </div>
 
-          <div class="flex items-center gap-2">
-            <label for="vendor-sort-select" class="text-secondary shrink-0">ترتیب:</label>
-            <select id="vendor-sort-select" onchange="filterVendors()" class="bg-bgCustom border border-accent rounded-xl px-3 py-1.5 text-xs font-bold text-graphite focus:outline-none focus:border-primary cursor-pointer">
-              <option value="popular" selected>محبوب‌ترین (امتیاز بالا) ⭐</option>
-              <option value="newest">جدیدترین 🆕</option>
-              <option value="price-asc">ارزان‌ترین (کمترین قیمت) 📈</option>
-              <option value="price-desc">گران‌ترین (بیشترین قیمت) 📉</option>
-            </select>
+          <div class="flex items-center gap-3">
+            <div class="flex items-center gap-1.5">
+              <label for="vendor-sort-select" class="text-secondary shrink-0">مرتب‌سازی:</label>
+              <select id="vendor-sort-select" onchange="filterVendors()" class="bg-bgCustom border border-accent rounded-xl px-3 py-1.5 text-xs font-bold text-graphite focus:outline-none focus:ring-2 focus:ring-[#1B3B2B] focus:border-[#D4AF37] cursor-pointer">
+                <option value="popular" selected>محبوب‌ترین ⭐</option>
+                <option value="newest">جدیدترین 🆕</option>
+                <option value="price-asc">ارزان‌ترین 📈</option>
+                <option value="price-desc">گران‌ترین 📉</option>
+              </select>
+            </div>
+
+            <!-- View Layout Toggle Icons (Grid / List) -->
+            <div class="flex items-center bg-bgCustom border border-accent rounded-xl p-1 gap-1">
+              <button type="button" id="view-mode-grid" onclick="setDirectoryViewMode('grid')" class="p-1.5 rounded-lg bg-[#1B3B2B] text-white shadow-2xs transition-all cursor-pointer" title="نمای شبکه‌ای">
+                <i data-lucide="grid" class="w-4 h-4"></i>
+              </button>
+              <button type="button" id="view-mode-list" onclick="setDirectoryViewMode('list')" class="p-1.5 rounded-lg text-secondary hover:text-graphite transition-all cursor-pointer" title="نمای لیستی">
+                <i data-lucide="list" class="w-4 h-4"></i>
+              </button>
+            </div>
           </div>
         </div>
       </div>
@@ -2973,31 +3026,67 @@ if (document.readyState === "loading") {
       } catch(e) {}
     }
 
+    let directoryViewMode = 'grid'; // 'grid' | 'list'
+
+    function setDirectoryViewMode(mode) {
+      directoryViewMode = mode;
+      const gridBtn = document.getElementById('view-mode-grid');
+      const listBtn = document.getElementById('view-mode-list');
+      if (gridBtn && listBtn) {
+        if (mode === 'grid') {
+          gridBtn.className = "p-1.5 rounded-lg bg-[#1B3B2B] text-white shadow-2xs transition-all cursor-pointer";
+          listBtn.className = "p-1.5 rounded-lg text-secondary hover:text-graphite transition-all cursor-pointer";
+        } else {
+          listBtn.className = "p-1.5 rounded-lg bg-[#1B3B2B] text-white shadow-2xs transition-all cursor-pointer";
+          gridBtn.className = "p-1.5 rounded-lg text-secondary hover:text-graphite transition-all cursor-pointer";
+        }
+      }
+      filterVendors();
+    }
+
+    function updateCapacitySliderLabel(val) {
+      const lbl = document.getElementById('sidebar-capacity-val');
+      if (lbl) {
+        lbl.textContent = val >= 1000 ? 'همه ظرفیت‌ها' : `تا ${val} نفر`;
+      }
+    }
+
     function renderVendors(list) {
       const grid = document.getElementById('vendor-grid');
       if (!grid) return;
       grid.innerHTML = '';
 
+      if (directoryViewMode === 'list') {
+        grid.className = "flex flex-col gap-4";
+      } else {
+        grid.className = "grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6";
+      }
+
       list.forEach(v => {
         const card = document.createElement('div');
-        card.className = "bg-white border border-accent rounded-3xl overflow-hidden shadow-xs hover:shadow-lg transition-all duration-300 flex flex-col justify-between group hover:-translate-y-1";
 
-        const localTag = v.district || "استان یزد";
-        const ratingVal = v.rating || 4.8;
-        const reviewCount = v.reviewCount || 34;
+        if (directoryViewMode === 'list') {
+          card.className = "bg-white border border-accent rounded-3xl overflow-hidden shadow-xs hover:shadow-lg transition-all duration-300 flex flex-col md:flex-row group hover:-translate-y-0.5";
+        } else {
+          card.className = "bg-white border border-accent rounded-3xl overflow-hidden shadow-xs hover:shadow-lg transition-all duration-300 flex flex-col justify-between group hover:-translate-y-1";
+        }
+
+        const localTag = v.district || "صفائیه یزد";
+        const ratingVal = v.rating || 4.9;
+        const reviewCount = v.reviewCount || 32;
         const isFav = favoriteVendorIds.includes(v.id);
 
-        card.innerHTML = `
-          <div>
-            <div class="relative h-52 overflow-hidden bg-slate-100">
+        if (directoryViewMode === 'list') {
+          card.innerHTML = `
+            <div class="relative w-full md:w-72 h-56 md:h-auto overflow-hidden bg-slate-100 shrink-0">
               <img src="${v.image}" alt="${v.name}" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105">
               <div class="absolute inset-0 bg-gradient-to-t from-graphite/60 via-transparent to-transparent opacity-80"></div>
 
               <div class="absolute top-3 right-3 flex flex-col gap-1.5 items-end">
                 ${v.verified ? `
-                  <div class="bg-primary text-white text-[11px] font-bold px-3 py-1 rounded-full flex items-center gap-1 shadow-md border border-white/20">
-                    <i data-lucide="shield-check" class="w-3.5 h-3.5"></i>
-                    <span>تاییدیه رسمی عروسی تو</span>
+                  <div class="bg-[#1B3B2B] text-[#D4AF37] border border-[#D4AF37]/50 text-[10px] font-black px-2.5 py-0.5 rounded-full shadow-md flex items-center gap-1">
+                    <i data-lucide="shield-check" class="w-3 h-3 text-[#D4AF37]"></i>
+                    <span>تأییدشده عروسی‌تو</span>
                   </div>
                 ` : `
                   <div class="bg-slate-800/80 text-slate-200 text-[10px] font-bold px-2.5 py-0.5 rounded-full backdrop-blur-xs">
@@ -3010,11 +3099,6 @@ if (document.readyState === "loading") {
                 <button type="button" onclick="toggleFavoriteVendor(${v.id}, event)" class="w-8 h-8 rounded-xl bg-white/90 backdrop-blur-md flex items-center justify-center text-rose-500 shadow-sm transition-transform active:scale-95 hover:bg-white cursor-pointer" title="افزودن به نشان‌شده‌ها">
                   <i data-lucide="heart" class="w-4 h-4 ${isFav ? 'fill-rose-500 text-rose-500' : 'text-rose-500'}"></i>
                 </button>
-                <div class="bg-white/90 backdrop-blur-md text-amber-600 text-xs font-black px-2.5 py-1 rounded-xl shadow-xs flex items-center gap-1">
-                  <i data-lucide="star" class="w-3.5 h-3.5 fill-amber-400 text-amber-400"></i>
-                  <span>${ratingVal}</span>
-                  <span class="text-[10px] text-secondary font-normal">(${reviewCount})</span>
-                </div>
               </div>
 
               <div class="absolute bottom-3 right-3 left-3 flex justify-between items-center text-white text-xs">
@@ -3022,62 +3106,150 @@ if (document.readyState === "loading") {
                   <i data-lucide="map-pin" class="w-3 h-3 text-emerald-400"></i>
                   <span>${localTag}</span>
                 </span>
-                <span class="bg-emerald-600/90 text-white font-bold px-2.5 py-1 rounded-lg text-[10px]">
-                  💰💰 قیمت مناسب
-                </span>
               </div>
             </div>
 
-            <div class="p-5 space-y-3">
-              <div>
-                <span class="text-[11px] font-bold text-primary bg-primary/10 px-2.5 py-0.5 rounded-md inline-block mb-1">${v.category}</span>
-                <h3 class="text-base font-bold text-graphite leading-tight group-hover:text-primary transition-colors">${v.name}</h3>
-                <span class="text-xs text-secondary flex items-center gap-1 mt-1 font-medium">
-                  <i data-lucide="check-circle-2" class="w-3.5 h-3.5 text-primary"></i>
-                  <span>${v.city}</span>
-                </span>
+            <div class="p-5 flex-1 flex flex-col justify-between space-y-4">
+              <div class="space-y-2">
+                <div class="flex justify-between items-start flex-wrap gap-2">
+                  <div>
+                    <span class="text-[11px] font-bold text-primary bg-primary/10 px-2.5 py-0.5 rounded-md inline-block mb-1">${v.category}</span>
+                    <h3 class="text-base sm:text-lg font-bold text-graphite leading-tight group-hover:text-primary transition-colors">${v.name}</h3>
+                  </div>
+                  <div class="bg-amber-50 border border-amber-200 text-amber-700 text-xs font-black px-3 py-1 rounded-xl flex items-center gap-1">
+                    <i data-lucide="star" class="w-3.5 h-3.5 fill-amber-400 text-amber-400"></i>
+                    <span>${ratingVal}</span>
+                    <span class="text-[10px] text-secondary font-normal">(${reviewCount} نظر)</span>
+                  </div>
+                </div>
+
+                <p class="text-xs text-secondary font-medium line-clamp-2">
+                  ${v.description || 'برترین ارائه دهنده خدمات تشریفات و برگزاری جشن ازدواج در استان یزد با تضمین قیمت و کیفیت عالی.'}
+                </p>
+
+                <!-- Capability Tags -->
+                <div class="flex flex-wrap gap-1.5 pt-1">
+                  ${(v.capabilityTags || ["تاییدیه کیفیت", "پذیرایی VIP", "پارکینگ اختصاصی"]).map(tag => `
+                    <span class="bg-amber-50 text-amber-900 border border-amber-200/80 text-[10px] font-bold px-2.5 py-0.5 rounded-md flex items-center gap-1">
+                      <i data-lucide="check-circle" class="w-2.5 h-2.5 text-amber-600"></i>
+                      <span>${tag}</span>
+                    </span>
+                  `).join('')}
+                </div>
               </div>
 
-              <!-- Yazd Capability Tags -->
-              <div class="flex flex-wrap gap-1 pt-1">
-                ${(v.capabilityTags || ["مجوز رسمی عکاسی کویر", "تجهیزات هلی‌شات & نور کویر", "سرو شیرینی‌های سنتی یزد (حاج خلیفه)", "فضای باز & سالن سرپوشیده"]).map(tag => `
-                  <span class="bg-amber-50 text-amber-900 border border-amber-200/80 text-[10px] font-bold px-2 py-0.5 rounded-md flex items-center gap-1">
-                    <i data-lucide="check-circle" class="w-2.5 h-2.5 text-amber-600"></i>
-                    <span>${tag}</span>
-                  </span>
-                `).join('')}
-              </div>
+              <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pt-3 border-t border-accent/60">
+                <div class="text-xs font-bold text-graphite">
+                  <span class="text-secondary font-normal block text-[10px]">شروع قیمت پایه از:</span>
+                  <span class="text-primary font-black text-base">${v.priceRange || 'شروع از ۶۵,۰۰۰,۰۰۰ تومان'}</span>
+                </div>
 
-              <div class="text-xs font-bold text-graphite bg-bgCustom p-3 rounded-2xl border border-accent flex justify-between items-center">
-                <span class="text-secondary font-normal">قیمت پایه شروع از:</span>
-                <span class="text-primary font-black text-sm">${v.priceRange}</span>
-              </div>
-
-              <!-- Private Note Block for Couple -->
-              <div class="pt-2 border-t border-accent/60 space-y-1" onclick="event.stopPropagation()">
-                <label class="block text-[10px] font-bold text-secondary flex items-center gap-1">
-                  <i data-lucide="lock" class="w-3 h-3 text-primary"></i>
-                  <span>یادداشت خصوصی زوجین (فقط شما می‌بینید):</span>
-                </label>
-                <div class="flex gap-1.5">
-                  <input type="text" id="private-note-input-${v.id}" value="${getPrivateNote(v.id)}" placeholder="مثلا: هماهنگی جهت تخفیف ۱۰٪..." class="w-full bg-slate-50 border border-accent rounded-xl px-2.5 py-1 text-[11px] font-medium text-graphite focus:outline-none focus:border-primary">
-                  <button onclick="savePrivateNote(${v.id})" class="bg-primary hover:bg-emerald-900 text-white font-bold text-[10px] px-2.5 py-1 rounded-xl shrink-0 transition-colors">ثبت</button>
+                <div class="flex items-center gap-2">
+                  <button onclick="openVendorDetailModal(${v.id})" class="bg-[#D4AF37] hover:bg-amber-400 text-[#1B3B2B] font-black px-4 py-2.5 rounded-xl text-xs transition-all shadow-xs flex items-center justify-center gap-1.5 cursor-pointer">
+                    <i data-lucide="user" class="w-3.5 h-3.5"></i>
+                    <span>مشاهده پروفایل کامل</span>
+                  </button>
+                  <button onclick="openInquiryModal(${v.id}, '${v.name}')" class="bg-white hover:bg-emerald-50 border border-[#1B3B2B] text-[#1B3B2B] font-bold px-4 py-2.5 rounded-xl text-xs transition-all flex items-center justify-center gap-1.5 cursor-pointer">
+                    <i data-lucide="message-square-quote" class="w-3.5 h-3.5"></i>
+                    <span>استعلام سریع قیمت</span>
+                  </button>
                 </div>
               </div>
             </div>
-          </div>
+          `;
+        } else {
+          card.innerHTML = `
+            <div>
+              <div class="relative h-52 overflow-hidden bg-slate-100">
+                <img src="${v.image}" alt="${v.name}" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105">
+                <div class="absolute inset-0 bg-gradient-to-t from-graphite/60 via-transparent to-transparent opacity-80"></div>
 
-          <div class="p-5 pt-0 flex gap-2">
-            <button onclick="openVendorDetailModal(${v.id})" class="flex-1 bg-white hover:bg-slate-50 border border-accent text-graphite hover:border-primary py-2.5 rounded-xl text-xs font-bold transition-all shadow-2xs flex items-center justify-center gap-1">
-              <i data-lucide="info" class="w-3.5 h-3.5 text-primary"></i>
-              <span>نمونه‌کارها و اطلاعات</span>
-            </button>
-            <button onclick="openInquiryModal(${v.id}, '${v.name}')" class="flex-1 bg-primary hover:bg-emerald-900 text-white py-2.5 rounded-xl text-xs font-bold transition-all shadow-xs flex items-center justify-center gap-1">
-              <i data-lucide="message-square" class="w-3.5 h-3.5"></i>
-              <span>استعلام & چت</span>
-            </button>
-          </div>
-        `;
+                <div class="absolute top-3 right-3 flex flex-col gap-1.5 items-end">
+                  ${v.verified ? `
+                    <div class="bg-[#1B3B2B] text-[#D4AF37] border border-[#D4AF37]/50 text-[10px] font-black px-2.5 py-1 rounded-full shadow-md flex items-center gap-1">
+                      <i data-lucide="shield-check" class="w-3.5 h-3.5 text-[#D4AF37]"></i>
+                      <span>تأییدشده عروسی‌تو</span>
+                    </div>
+                  ` : `
+                    <div class="bg-slate-800/80 text-slate-200 text-[10px] font-bold px-2.5 py-0.5 rounded-full backdrop-blur-xs">
+                      تأمین‌کننده مجاز
+                    </div>
+                  `}
+                </div>
+
+                <div class="absolute top-3 left-3 flex items-center gap-2">
+                  <button type="button" onclick="toggleFavoriteVendor(${v.id}, event)" class="w-8 h-8 rounded-xl bg-white/90 backdrop-blur-md flex items-center justify-center text-rose-500 shadow-sm transition-transform active:scale-95 hover:bg-white cursor-pointer" title="افزودن به نشان‌شده‌ها">
+                    <i data-lucide="heart" class="w-4 h-4 ${isFav ? 'fill-rose-500 text-rose-500' : 'text-rose-500'}"></i>
+                  </button>
+                  <div class="bg-white/90 backdrop-blur-md text-amber-600 text-xs font-black px-2.5 py-1 rounded-xl shadow-xs flex items-center gap-1">
+                    <i data-lucide="star" class="w-3.5 h-3.5 fill-amber-400 text-amber-400"></i>
+                    <span>${ratingVal}</span>
+                    <span class="text-[10px] text-secondary font-normal">(${reviewCount})</span>
+                  </div>
+                </div>
+
+                <div class="absolute bottom-3 right-3 left-3 flex justify-between items-center text-white text-xs">
+                  <span class="bg-black/40 backdrop-blur-md px-2.5 py-1 rounded-lg border border-white/10 font-bold flex items-center gap-1">
+                    <i data-lucide="map-pin" class="w-3 h-3 text-emerald-400"></i>
+                    <span>${localTag}</span>
+                  </span>
+                  <span class="bg-emerald-600/90 text-white font-bold px-2.5 py-1 rounded-lg text-[10px]">
+                    قیمت عادلانه
+                  </span>
+                </div>
+              </div>
+
+              <div class="p-5 space-y-3">
+                <div>
+                  <span class="text-[11px] font-bold text-primary bg-primary/10 px-2.5 py-0.5 rounded-md inline-block mb-1">${v.category}</span>
+                  <h3 class="text-base font-bold text-graphite leading-tight group-hover:text-primary transition-colors">${v.name}</h3>
+                  <span class="text-xs text-secondary flex items-center gap-1 mt-1 font-medium">
+                    <i data-lucide="check-circle-2" class="w-3.5 h-3.5 text-primary"></i>
+                    <span>${v.city || 'یزد'}</span>
+                  </span>
+                </div>
+
+                <!-- Capability Tags -->
+                <div class="flex flex-wrap gap-1 pt-1">
+                  ${(v.capabilityTags || ["مجوز رسمی عکاسی کویر", "تجهیزات هلی‌شات", "سرو شیرینی‌های سنتی یزد"]).map(tag => `
+                    <span class="bg-amber-50 text-amber-900 border border-amber-200/80 text-[10px] font-bold px-2 py-0.5 rounded-md flex items-center gap-1">
+                      <i data-lucide="check-circle" class="w-2.5 h-2.5 text-amber-600"></i>
+                      <span>${tag}</span>
+                    </span>
+                  `).join('')}
+                </div>
+
+                <div class="text-xs font-bold text-graphite bg-bgCustom p-3 rounded-2xl border border-accent flex justify-between items-center">
+                  <span class="text-secondary font-normal">قیمت پایه شروع از:</span>
+                  <span class="text-primary font-black text-sm">${v.priceRange || 'استعلام قیمت'}</span>
+                </div>
+
+                <!-- Private Note Block for Couple -->
+                <div class="pt-2 border-t border-accent/60 space-y-1" onclick="event.stopPropagation()">
+                  <label class="block text-[10px] font-bold text-secondary flex items-center gap-1">
+                    <i data-lucide="lock" class="w-3 h-3 text-primary"></i>
+                    <span>یادداشت خصوصی زوجین (فقط شما می‌بینید):</span>
+                  </label>
+                  <div class="flex gap-1.5">
+                    <input type="text" id="private-note-input-${v.id}" value="${getPrivateNote(v.id)}" placeholder="مثلا: هماهنگی جهت تخفیف ۱۰٪..." class="w-full bg-slate-50 border border-accent rounded-xl px-2.5 py-1 text-[11px] font-medium text-graphite focus:outline-none focus:border-primary">
+                    <button onclick="savePrivateNote(${v.id})" class="bg-primary hover:bg-emerald-900 text-white font-bold text-[10px] px-2.5 py-1 rounded-xl shrink-0 transition-colors">ثبت</button>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="p-5 pt-0 flex flex-col sm:flex-row gap-2">
+              <button onclick="openVendorDetailModal(${v.id})" class="flex-1 bg-[#D4AF37] hover:bg-amber-400 text-[#1B3B2B] font-black py-2.5 rounded-xl text-xs transition-all shadow-xs flex items-center justify-center gap-1.5 cursor-pointer">
+                <i data-lucide="user" class="w-3.5 h-3.5"></i>
+                <span>مشاهده پروفایل کامل</span>
+              </button>
+              <button onclick="openInquiryModal(${v.id}, '${v.name}')" class="flex-1 bg-white hover:bg-emerald-50 border border-[#1B3B2B] text-[#1B3B2B] font-bold py-2.5 rounded-xl text-xs transition-all flex items-center justify-center gap-1.5 cursor-pointer">
+                <i data-lucide="message-square-quote" class="w-3.5 h-3.5"></i>
+                <span>استعلام سریع قیمت</span>
+              </button>
+            </div>
+          `;
+        }
         grid.appendChild(card);
       });
 
@@ -3395,6 +3567,14 @@ if (document.readyState === "loading") {
         ? sidebarPriceSelect.value
         : (headerPriceSelect ? headerPriceSelect.value : 'all');
 
+      const capacitySlider = document.getElementById('sidebar-capacity-slider');
+      const maxCapacity = capacitySlider ? parseInt(capacitySlider.value, 10) : 1000;
+
+      const featParking = document.getElementById('feat-parking')?.checked || false;
+      const featSofreh = document.getElementById('feat-sofreh')?.checked || false;
+      const featGarden = document.getElementById('feat-garden')?.checked || false;
+      const featCatering = document.getElementById('feat-catering')?.checked || false;
+
       let filtered = vendors.filter(v => {
         const matchesSearch = !search ||
                               v.name.toLowerCase().includes(search) ||
@@ -3432,7 +3612,21 @@ if (document.readyState === "loading") {
           }
         }
 
-        return matchesSearch && matchesCat && matchesVerified && matchesCity && matchesPrice;
+        let matchesCapacity = true;
+        if (maxCapacity < 1000 && v.capacity) {
+          matchesCapacity = (v.capacity || 0) <= maxCapacity;
+        }
+
+        let matchesFeatures = true;
+        const tagsAndCapabilities = [...(v.tags || []), ...(v.capabilityTags || []), v.description || ''];
+        const tagText = tagsAndCapabilities.join(' ').toLowerCase();
+
+        if (featParking && !tagText.includes('پارکینگ')) matchesFeatures = false;
+        if (featSofreh && !tagText.includes('عقد') && !tagText.includes('سفره')) matchesFeatures = false;
+        if (featGarden && !tagText.includes('باغ') && !tagText.includes('فضای باز')) matchesFeatures = false;
+        if (featCatering && !tagText.includes('کترینگ') && !tagText.includes('پذیرایی') && !tagText.includes('شیرینی')) matchesFeatures = false;
+
+        return matchesSearch && matchesCat && matchesVerified && matchesCity && matchesPrice && matchesCapacity && matchesFeatures;
       });
 
       // Apply dynamic sorting
@@ -3462,7 +3656,7 @@ if (document.readyState === "loading") {
 
       const countBadge = document.getElementById('directory-vendor-count-badge');
       if (countBadge) {
-        countBadge.textContent = `${filtered.length} تامین‌کننده`;
+        countBadge.textContent = `نمایش ${filtered.length} تامین‌کننده در استان یزد`;
       }
     }
 
