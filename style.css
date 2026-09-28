@@ -119,17 +119,18 @@ header, nav, .header-container, .navbar {
     visibility: hidden !important;
 }
 
-/* Modal Inner Main Card */
+/* Modal Inner Main Card - Royal Persian Luxury Transformation */
 .clean-vmodal-card {
-    background: #FBF9F5 !important;
+    background: linear-gradient(145deg, #12281D 0%, #0B1B13 100%) !important;
+    color: #FBF9F5 !important;
     width: 95% !important;
     max-width: 960px !important;
     max-height: 90vh !important;
     border-radius: 24px !important;
     position: relative !important;
     direction: rtl !important;
-    box-shadow: 0 30px 60px -12px rgba(0, 0, 0, 0.7), 0 0 0 1px rgba(212, 175, 55, 0.4) !important;
-    border: 1px solid rgba(212, 175, 55, 0.4) !important;
+    box-shadow: 0 0 35px rgba(0, 0, 0, 0.8), inset 0 0 1px rgba(212, 175, 55, 0.2) !important;
+    border: 1px solid rgba(212, 175, 55, 0.35) !important;
     overflow-y: auto !important;
     display: flex !important;
     flex-direction: column !important;
@@ -137,21 +138,20 @@ header, nav, .header-container, .navbar {
     animation: modalSlideUp 0.35s cubic-bezier(0.16, 1, 0.3, 1) !important;
 }
 
-/* Custom styled Emerald/Gold scrollbars for modal interior */
+/* Custom Ultra-Thin Gold Scrollbars for Modal Interior */
 .clean-vmodal-card::-webkit-scrollbar {
-    width: 8px;
+    width: 5px !important;
 }
 .clean-vmodal-card::-webkit-scrollbar-track {
-    background: #0F251A;
-    border-radius: 0 24px 24px 0;
+    background: #0B1B13 !important;
+    border-radius: 0 24px 24px 0 !important;
 }
 .clean-vmodal-card::-webkit-scrollbar-thumb {
-    background: #1B3B2B;
-    border-radius: 6px;
-    border: 1px solid #D4AF37;
+    background: #D4AF37 !important;
+    border-radius: 6px !important;
 }
 .clean-vmodal-card::-webkit-scrollbar-thumb:hover {
-    background: #D4AF37;
+    background: #E2C258 !important;
 }
 
 @keyframes modalSlideUp {
@@ -246,13 +246,13 @@ header, nav, .header-container, .navbar {
   animation: fadeIn 0.3s ease-in-out;
 }
 
-/* Tabs Bar */
+/* Booklet Style Tab Bar Navigation */
 .clean-vmodal-tabs {
     display: flex !important;
-    gap: 8px !important;
-    background: #0F251A !important;
-    padding: 10px 16px !important;
-    border-bottom: 1px solid rgba(212, 175, 55, 0.3) !important;
+    gap: 12px !important;
+    background: #0B1B13 !important;
+    padding: 12px 20px 0 20px !important;
+    border-bottom: 1px solid rgba(212, 175, 55, 0.35) !important;
     overflow-x: auto !important;
     scrollbar-width: none; /* Firefox */
 }
@@ -262,11 +262,12 @@ header, nav, .header-container, .navbar {
 }
 
 .vtab-btn {
-    background: rgba(255, 255, 255, 0.05) !important;
-    color: #E0D8C8 !important;
-    border: 1px solid rgba(212, 175, 55, 0.15) !important;
-    padding: 8px 16px !important;
-    border-radius: 12px !important;
+    background: transparent !important;
+    color: #CBD5E1 !important;
+    border: none !important;
+    border-bottom: 2px solid transparent !important;
+    border-radius: 0 !important;
+    padding: 10px 16px !important;
     cursor: pointer !important;
     font-family: inherit !important;
     font-size: 13px !important;
@@ -276,17 +277,17 @@ header, nav, .header-container, .navbar {
 }
 
 .vtab-btn:hover {
-    background: rgba(212, 175, 55, 0.15) !important;
     color: #D4AF37 !important;
-    border-color: rgba(212, 175, 55, 0.4) !important;
+    background: transparent !important;
 }
 
 .vtab-btn.active {
-    background: linear-gradient(135deg, #D4AF37 0%, #C59B27 100%) !important;
-    color: #1B3B2B !important;
+    background: transparent !important;
+    color: #D4AF37 !important;
     font-weight: 800 !important;
-    border-color: #D4AF37 !important;
-    box-shadow: 0 4px 14px rgba(212, 175, 55, 0.4) !important;
+    border-bottom: 2px solid #D4AF37 !important;
+    text-shadow: 0 0 8px rgba(212, 175, 55, 0.4) !important;
+    box-shadow: none !important;
 }
 
 /* Gallery Filter Pills in Modal */
@@ -364,29 +365,37 @@ header, nav, .header-container, .navbar {
     letter-spacing: -0.5px !important;
 }
 
-.vmodal-btn-primary {
-    background: linear-gradient(135deg, #D4AF37 0%, #C59B27 100%) !important;
-    color: #1B3B2B !important;
+/* Royal Metallic Gold & Emerald Action Buttons */
+.vmodal-btn-primary,
+#vdm-modal-inquire-cta {
+    background: linear-gradient(135deg, #E2C258 0%, #B88E28 100%) !important;
+    color: #0B1B13 !important;
     border: none !important;
-    padding: 13px !important;
+    padding: 12px 20px !important;
     border-radius: 12px !important;
     font-weight: 800 !important;
     cursor: pointer !important;
     font-family: inherit !important;
-    box-shadow: 0 4px 15px rgba(212, 175, 55, 0.35) !important;
+    box-shadow: 0 4px 18px rgba(212, 175, 55, 0.4) !important;
     transition: all 0.25s ease-in-out !important;
+    position: relative !important;
+    overflow: hidden !important;
 }
 
-.vmodal-btn-primary:hover {
+.vmodal-btn-primary:hover,
+#vdm-modal-inquire-cta:hover {
     transform: translateY(-2px) !important;
-    box-shadow: 0 6px 20px rgba(212, 175, 55, 0.5) !important;
+    box-shadow: 0 6px 24px rgba(212, 175, 55, 0.6) !important;
+    filter: brightness(1.08) !important;
 }
 
-.vmodal-btn-secondary {
-    background: transparent !important;
-    color: #1B3B2B !important;
-    border: 1.5px solid #1B3B2B !important;
-    padding: 12px !important;
+.vmodal-btn-secondary,
+#vdm-modal-chat-cta,
+#vdm-modal-phone-cta {
+    background: rgba(18, 40, 29, 0.6) !important;
+    color: #D4AF37 !important;
+    border: 1px solid #D4AF37 !important;
+    padding: 12px 18px !important;
     border-radius: 12px !important;
     font-weight: 700 !important;
     cursor: pointer !important;
@@ -394,9 +403,50 @@ header, nav, .header-container, .navbar {
     transition: all 0.25s ease-in-out !important;
 }
 
-.vmodal-btn-secondary:hover {
-    background: #1B3B2B !important;
+.vmodal-btn-secondary:hover,
+#vdm-modal-chat-cta:hover,
+#vdm-modal-phone-cta:hover {
+    background: rgba(212, 175, 55, 0.15) !important;
+    border-color: #E2C258 !important;
+    color: #E2C258 !important;
+}
+
+/* Glassmorphic Dark Emerald Containers & Cards inside Modal Body */
+#vendor-detail-modal .bg-white,
+#vendor-detail-modal .bg-slate-50,
+#vendor-detail-modal .bg-\[\#FBF9F5\],
+#vendor-detail-modal .p-4.bg-white,
+#vendor-detail-modal .p-5.bg-white,
+#vendor-detail-modal .p-3\.5.bg-white {
+    background: rgba(255, 255, 255, 0.03) !important;
+    border: 1px solid rgba(212, 175, 55, 0.25) !important;
+    color: #FBF9F5 !important;
+}
+
+#vendor-detail-modal h3,
+#vendor-detail-modal strong,
+#vendor-detail-modal label {
     color: #D4AF37 !important;
+}
+
+#vendor-detail-modal p,
+#vendor-detail-modal span,
+#vendor-detail-modal div {
+    color: #E0D8C8;
+}
+
+#vendor-detail-modal input,
+#vendor-detail-modal textarea,
+#vendor-detail-modal select {
+    background: rgba(0, 0, 0, 0.4) !important;
+    border: 1px solid rgba(212, 175, 55, 0.3) !important;
+    color: #FFFFFF !important;
+}
+
+/* Sticky Bottom Action Bar Transformation */
+#vendor-detail-modal .sticky.bottom-0 {
+    background: linear-gradient(180deg, #12281D 0%, #0B1B13 100%) !important;
+    border-top: 1px solid rgba(212, 175, 55, 0.4) !important;
 }
 
 /* Auth Modal Positioning & Overlay */
