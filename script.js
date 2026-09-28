@@ -4601,7 +4601,8 @@ if (document.readyState === "loading") {
 
     let currentModalVendor = null;
 
-    function openVendorDetailModal(vendorId) {
+    window.openVendorDetailModal = function openVendorDetailModal(vendorId) {
+    window.closeVendorDetailModal = closeVendorDetailModal;
       let vId = vendorId;
       if (typeof vendorId === 'string' && !isNaN(parseInt(vendorId))) {
         vId = parseInt(vendorId);
@@ -9300,3 +9301,7 @@ window.addEventListener('click', (e) => {
       }
     }
   }
+
+
+// Expose modal functions to window globally
+try { window.openVendorDetailModal = openVendorDetailModal; window.closeVendorDetailModal = closeVendorDetailModal; } catch(e) {}

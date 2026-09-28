@@ -119,18 +119,18 @@ header, nav, .header-container, .navbar {
     visibility: hidden !important;
 }
 
-/* Modal Inner Main Card - Royal Persian Luxury Transformation */
+/* Modal Inner Main Card - Light Clean Canvas Modern Transformation */
 .clean-vmodal-card {
-    background: linear-gradient(145deg, #12281D 0%, #0B1B13 100%) !important;
-    color: #FBF9F5 !important;
+    background: #FAF9F5 !important;
+    color: #1A1A1A !important;
     width: 95% !important;
-    max-width: 960px !important;
+    max-width: 980px !important;
     max-height: 90vh !important;
-    border-radius: 24px !important;
+    border-radius: 20px !important;
     position: relative !important;
     direction: rtl !important;
-    box-shadow: 0 0 35px rgba(0, 0, 0, 0.8), inset 0 0 1px rgba(212, 175, 55, 0.2) !important;
-    border: 1px solid rgba(212, 175, 55, 0.35) !important;
+    box-shadow: 0 20px 50px rgba(0, 0, 0, 0.25) !important;
+    border: 1px solid #E5E7EB !important;
     overflow-y: auto !important;
     display: flex !important;
     flex-direction: column !important;
@@ -250,9 +250,9 @@ header, nav, .header-container, .navbar {
 .clean-vmodal-tabs {
     display: flex !important;
     gap: 12px !important;
-    background: #0B1B13 !important;
-    padding: 12px 20px 0 20px !important;
-    border-bottom: 1px solid rgba(212, 175, 55, 0.35) !important;
+    background: #FFFFFF !important;
+    padding: 0 24px !important;
+    border-bottom: 1px solid #E5E7EB !important;
     overflow-x: auto !important;
     scrollbar-width: none; /* Firefox */
 }
@@ -300,10 +300,9 @@ header, nav, .header-container, .navbar {
 
 /* Two Column Body Grid */
 .clean-vmodal-body {
-    display: grid !important;
-    grid-template-columns: 2fr 1fr !important;
-    gap: 20px !important;
-    padding: 25px !important;
+    display: block !important;
+    padding: 24px !important;
+    background-color: #FAF9F5 !important;
 }
 
 @media (max-width: 800px) {
