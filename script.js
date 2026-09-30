@@ -4680,6 +4680,62 @@ if (document.readyState === "loading") {
         `).join('');
       }
 
+      // Populate Packages Container
+      const packagesContainer = document.getElementById('vdm-packages-container');
+      if (packagesContainer) {
+        const pkgs = vendor.packages || [
+          { name: "برنزی (پایه)", price: "۶۵,۰۰۰,۰۰۰ تومان", items: ["منوی شام ۲ رنگ سلف‌سرویس", "ورودی باغ تالار", "سیستم صوتی"] },
+          { name: "نقره‌ای (VIP)", price: "۹۵,۰۰۰,۰۰۰ تومان", items: ["منوی شام ۳ رنگ با کترینگ یزدی", "شمع‌آرایی کامل", "تست غذا برای ۴ نفر"] },
+          { name: "طلایی (Luxury)", price: "۱۴۰,۰۰۰,۰۰۰ تومان", items: ["تمام امکانات نقره‌ای + سفره عقد", "آتش‌بازی ورودی", "اقامت سوئیت عروس"] }
+        ];
+        packagesContainer.innerHTML = pkgs.map(p => `
+          <div class="bg-white border border-stone-200 rounded-2xl p-5 shadow-sm space-y-3 flex flex-col justify-between">
+            <div>
+              <div class="flex justify-between items-center border-b border-stone-100 pb-2 mb-2">
+                <h4 class="font-bold text-[#1B3B2B] text-sm">${p.name}</h4>
+                <span class="text-xs font-black text-[#D4AF37] bg-amber-50 px-2 py-0.5 rounded-md border border-amber-200">${p.price}</span>
+              </div>
+              <ul class="space-y-1.5 text-xs text-stone-600">
+                ${(p.items || []).map(item => `<li class="flex items-center gap-1.5"><span class="text-emerald-600">✓</span> <span>${item}</span></li>`).join('')}
+              </ul>
+            </div>
+            <button onclick="triggerPackageInquiry('${p.name}', '${p.price}')" class="w-full bg-[#1B3B2B] hover:bg-emerald-900 text-white font-bold py-2 rounded-xl text-xs transition-colors mt-3">
+              رزرو این پکیج
+            </button>
+          </div>
+        `).join('');
+      }
+
+      // Populate Amenities Container
+      const amenitiesContainer = document.getElementById('vdm-amenities-container');
+      if (amenitiesContainer) {
+        const amenities = vendor.capabilityTags || ["پارکینگ اختصاصی (۳۰۰ خودرو)", "سیستم صوتی و نورپردازی حرفه‌ای", "سفره عقد سنتی و سنتی-مدرن", "ژنراتور برق اضطراری", "اتاق پرو و میکاپ اختصاصی عروس", "کترینگ غذا و پذیرایی یزدی"];
+        amenitiesContainer.innerHTML = amenities.map(a => `
+          <div class="bg-white border border-stone-200 rounded-xl p-3 flex items-center gap-2 text-xs font-semibold text-stone-800 shadow-2xs">
+            <span class="text-[#D4AF37]">✨</span>
+            <span>${a}</span>
+          </div>
+        `).join('');
+      }
+
+      // Populate Reviews Container
+      const reviewsContainer = document.getElementById('vdm-reviews-container') || document.getElementById('vdm-reviews-list');
+      if (reviewsContainer) {
+        const reviews = vendor.reviews || [
+          { author: "رضا و مریم", text: "کیفیت غذا و میزبانی مجموعه بی‌نظیر بود.", stars: "★★★★★", date: "اردیبهشت ۱۴۰۳" },
+          { author: "محمد و سارا", text: "فضای باغ سنتی بسیار شیک و عکس‌ها رویایی شدند.", stars: "★★★★★", date: "فروردین ۱۴۰۳" }
+        ];
+        reviewsContainer.innerHTML = reviews.map(r => `
+          <div class="bg-white border border-stone-200 rounded-xl p-4 space-y-1.5 shadow-2xs">
+            <div class="flex justify-between items-center text-xs">
+              <strong class="text-[#1B3B2B]">${r.author}</strong>
+              <span class="text-amber-500 font-bold">${r.stars || '★★★★★'} (${r.date || '۱۴۰۳'})</span>
+            </div>
+            <p class="text-xs text-stone-600 leading-relaxed">${r.text}</p>
+          </div>
+        `).join('');
+      }
+
       // Populate Contact Tab & Map Links
       const phoneEl = document.getElementById('vdm-contact-phone') || document.getElementById('vdm-phone');
       const addressEl = document.getElementById('vdm-contact-address') || document.getElementById('vdm-full-address');
@@ -4806,12 +4862,32 @@ if (document.readyState === "loading") {
     }
 
     function renderModalAvailabilityCalendar(monthName) {
+      const container = document.getElementById('vdm-calendar-container');
+      if (container && (!document.getElementById('vdm-calendar-days-grid') || !container.querySelector('.vcal-month-pill'))) {
+        container.innerHTML = `
+          <div class="flex flex-wrap items-center justify-between gap-2 border-b border-stone-100 pb-3 mb-4">
+            <span class="text-xs font-bold text-stone-700">انتخاب ماه:</span>
+            <div class="flex flex-wrap gap-1.5">
+              <button onclick="renderModalAvailabilityCalendar('اردیبهشت')" class="vcal-month-pill px-3 py-1 rounded-xl text-xs font-bold transition-all">اردیبهشت</button>
+              <button onclick="renderModalAvailabilityCalendar('خرداد')" class="vcal-month-pill px-3 py-1 rounded-xl text-xs font-bold transition-all">خرداد</button>
+              <button onclick="renderModalAvailabilityCalendar('تیر')" class="vcal-month-pill px-3 py-1 rounded-xl text-xs font-bold transition-all">تیر</button>
+            </div>
+          </div>
+          <div class="flex items-center justify-around text-xs font-semibold text-stone-500 mb-3 bg-stone-50 py-2 rounded-xl border border-stone-100">
+            <span class="flex items-center gap-1"><span class="w-2.5 h-2.5 rounded-full bg-emerald-500 inline-block"></span> آزاد</span>
+            <span class="flex items-center gap-1"><span class="w-2.5 h-2.5 rounded-full bg-amber-500 inline-block"></span> استعلام</span>
+            <span class="flex items-center gap-1"><span class="w-2.5 h-2.5 rounded-full bg-rose-500 inline-block"></span> رزرو شده</span>
+          </div>
+          <div id="vdm-calendar-days-grid" class="grid grid-cols-5 sm:grid-cols-7 gap-2 sm:gap-2.5"></div>
+        `;
+      }
+
       const pills = document.querySelectorAll('.vcal-month-pill');
       pills.forEach(pill => {
         if (pill.innerText.includes(monthName)) {
-          pill.className = "vcal-month-pill active px-3 py-1.5 rounded-xl bg-[#1B3B2B] text-white transition-all cursor-pointer";
+          pill.className = "vcal-month-pill active px-3 py-1 rounded-xl bg-[#1B3B2B] text-white transition-all cursor-pointer font-bold text-xs";
         } else {
-          pill.className = "vcal-month-pill px-3 py-1.5 rounded-xl bg-white border border-gray-200 text-gray-700 hover:border-[#D4AF37] transition-all cursor-pointer";
+          pill.className = "vcal-month-pill px-3 py-1 rounded-xl bg-white border border-stone-200 text-stone-700 hover:border-[#D4AF37] transition-all cursor-pointer font-bold text-xs";
         }
       });
 

@@ -246,17 +246,16 @@ header, nav, .header-container, .navbar {
   animation: fadeIn 0.3s ease-in-out;
 }
 
-/* Booklet Style Floating Segmented Tab Switcher */
+/* Segmented Capsule Style Tab Switcher */
 .clean-vmodal-tabs {
     display: flex !important;
     align-items: center !important;
     gap: 6px !important;
-    background: rgba(243, 244, 246, 0.95) !important;
-    backdrop-filter: blur(8px) !important;
+    background: #E5E7EB !important;
     padding: 6px !important;
-    border-radius: 16px !important;
-    border: 1px solid rgba(229, 231, 235, 0.9) !important;
-    margin: 12px 24px 8px 24px !important;
+    border-radius: 1rem !important;
+    margin-top: 16px !important;
+    margin-bottom: 16px !important;
     overflow-x: auto !important;
     scrollbar-width: none; /* Firefox */
 }
@@ -267,14 +266,14 @@ header, nav, .header-container, .navbar {
 
 .vtab-btn {
     background: transparent !important;
-    color: #374151 !important;
+    color: #1F2937 !important;
     border: 1px solid transparent !important;
     border-radius: 12px !important;
     padding: 8px 16px !important;
     cursor: pointer !important;
     font-family: inherit !important;
     font-size: 13px !important;
-    font-weight: 700 !important;
+    font-weight: 600 !important;
     white-space: nowrap !important;
     transition: all 0.2s ease-in-out !important;
     display: inline-flex !important;
@@ -284,17 +283,44 @@ header, nav, .header-container, .navbar {
 
 .vtab-btn:hover {
     color: #111827 !important;
-    background: rgba(255, 255, 255, 0.6) !important;
+    background: rgba(255, 255, 255, 0.5) !important;
 }
 
 .vtab-btn.active {
     background: #FFFFFF !important;
     color: #1B3B2B !important;
-    border: 1px solid rgba(229, 231, 235, 0.9) !important;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08) !important;
+    border: 1px solid #D1D5DB !important;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1) !important;
     font-weight: 800 !important;
     position: relative !important;
     text-shadow: none !important;
+}
+
+/* Force High Contrast Dark Slate Typography inside #vendor-detail-modal */
+#vendor-detail-modal {
+    color: #111827 !important;
+}
+
+#vendor-detail-modal h1,
+#vendor-detail-modal h2,
+#vendor-detail-modal h3,
+#vendor-detail-modal h4,
+#vendor-detail-modal p,
+#vendor-detail-modal span:not(.vmodal-badge-gold):not(.bg-[#1B3B2B]),
+#vendor-detail-modal li,
+#vendor-detail-modal label {
+    color: #111827;
+}
+
+#vendor-detail-modal .vtab-pane {
+    color: #111827 !important;
+    background-color: transparent !important;
+}
+
+#vendor-detail-modal .vtab-pane p,
+#vendor-detail-modal .vtab-pane span,
+#vendor-detail-modal .vtab-pane li {
+    color: #1F2937 !important;
 }
 
 .vtab-btn.active::after {
@@ -427,36 +453,13 @@ header, nav, .header-container, .navbar {
     color: #E2C258 !important;
 }
 
-/* Glassmorphic Dark Emerald Containers & Cards inside Modal Body */
-#vendor-detail-modal .bg-white,
-#vendor-detail-modal .bg-slate-50,
-#vendor-detail-modal .bg-\[\#FBF9F5\],
-#vendor-detail-modal .p-4.bg-white,
-#vendor-detail-modal .p-5.bg-white,
-#vendor-detail-modal .p-3\.5.bg-white {
-    background: rgba(255, 255, 255, 0.03) !important;
-    border: 1px solid rgba(212, 175, 55, 0.25) !important;
-    color: #FBF9F5 !important;
-}
-
-#vendor-detail-modal h3,
-#vendor-detail-modal strong,
-#vendor-detail-modal label {
-    color: #D4AF37 !important;
-}
-
-#vendor-detail-modal p,
-#vendor-detail-modal span,
-#vendor-detail-modal div {
-    color: #E0D8C8;
-}
-
+/* Modal Form Input Typography */
 #vendor-detail-modal input,
 #vendor-detail-modal textarea,
 #vendor-detail-modal select {
-    background: rgba(0, 0, 0, 0.4) !important;
-    border: 1px solid rgba(212, 175, 55, 0.3) !important;
-    color: #FFFFFF !important;
+    background: #FFFFFF !important;
+    border: 1px solid #D1D5DB !important;
+    color: #111827 !important;
 }
 
 /* Sticky Bottom Action Bar Transformation */
