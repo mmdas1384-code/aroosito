@@ -4624,6 +4624,81 @@
     </div>
   </div>
 
+  <!-- VENDOR REGISTRATION / ONBOARDING MODAL (#vendor-register-modal) -->
+  <div id="vendor-register-modal" class="hidden fixed inset-0 bg-black/60 backdrop-blur-xs z-[999999] flex items-center justify-center p-4 transition-all animate-fadeIn" onclick="if(event.target === this) toggleVendorModalStatic(false)">
+    <div class="bg-white rounded-3xl shadow-2xl max-w-lg w-full overflow-hidden border border-[#D4AF37]/50 flex flex-col animate-scaleUp relative">
+      <!-- Modal Header -->
+      <div class="bg-[#1B3B2B] text-white p-5 flex items-center justify-between border-b border-[#D4AF37]/30 shrink-0">
+        <div class="flex items-center gap-2.5">
+          <div class="w-10 h-10 rounded-xl bg-[#D4AF37] text-[#1B3B2B] flex items-center justify-center shadow-sm">
+            <i data-lucide="building-2" class="w-5 h-5"></i>
+          </div>
+          <div>
+            <h3 class="text-base font-bold text-[#D4AF37]">ثبت‌نام و عضویت تامین‌کنندگان (کسب‌وکارها)</h3>
+            <span class="text-[11px] text-amber-200/80 font-medium">معرفی خدمات به ۱۵,۰۰۰+ زوج یزدی | کمیسیون ۰٪</span>
+          </div>
+        </div>
+
+        <button onclick="toggleVendorModalStatic(false)" class="w-9 h-9 rounded-xl bg-white/10 hover:bg-white/20 text-white flex items-center justify-center transition-colors cursor-pointer" title="بستن">
+          <i data-lucide="x" class="w-5 h-5"></i>
+        </button>
+      </div>
+
+      <!-- Modal Form Body -->
+      <form id="vendor-onboarding-form" onsubmit="handleVendorModalSubmit(event)" class="p-6 space-y-4 text-xs font-bold text-graphite max-h-[80vh] overflow-y-auto">
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+          <div class="space-y-1">
+            <label class="block text-secondary">نام کسب‌وکار / مجموعه *</label>
+            <input type="text" id="v-name" required placeholder="مثلا: آتلیه تخصصی کویر" class="w-full bg-[#F5EFEB] border border-[#E0D8C8] rounded-xl p-3 text-xs font-medium focus:outline-none focus:border-[#D4AF37]">
+          </div>
+
+          <div class="space-y-1">
+            <label class="block text-secondary">دسته‌بندی اصلی *</label>
+            <select id="v-cat" required class="w-full bg-[#F5EFEB] border border-[#E0D8C8] rounded-xl p-3 text-xs font-medium focus:outline-none focus:border-[#D4AF37]">
+              <option value="تالارها و باغ‌های عروسی">تالارها و باغ‌های عروسی</option>
+              <option value="آتلیه‌ها و عکاسی حرفه‌ای">آتلیه‌ها و عکاسی حرفه‌ای</option>
+              <option value="سالن‌های زیبایی و آرایش عروس">سالن‌های زیبایی و آرایش عروس</option>
+              <option value="مزون لباس عروس و داماد">مزون لباس عروس و داماد</option>
+              <option value="موسیقی، دی‌جی و نورپردازی">موسیقی، دی‌جی و نورپردازی</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+          <div class="space-y-1">
+            <label class="block text-secondary">نام و نام خانوادگی مدير *</label>
+            <input type="text" id="v-manager" required placeholder="جناب آقای / سرکار خانم..." class="w-full bg-[#F5EFEB] border border-[#E0D8C8] rounded-xl p-3 text-xs font-medium focus:outline-none focus:border-[#D4AF37]">
+          </div>
+
+          <div class="space-y-1">
+            <label class="block text-secondary">شهر / منطقه استان یزد *</label>
+            <select id="v-city" required class="w-full bg-[#F5EFEB] border border-[#E0D8C8] rounded-xl p-3 text-xs font-medium focus:outline-none focus:border-[#D4AF37]">
+              <option value="یزد">یزد (مرکز)</option>
+              <option value="میبد">میبد</option>
+              <option value="اردکان">اردکان</option>
+              <option value="بافق">بافق</option>
+              <option value="مهریز">مهریز</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="space-y-1">
+          <label class="block text-secondary">شماره همراه مستقیم مدیریت (جهت دریافت پیامک استعلام) *</label>
+          <input type="tel" id="v-phone" required placeholder="۰۹۱۳۱۲۳۴۵۶۷" class="w-full bg-[#F5EFEB] border border-[#E0D8C8] rounded-xl p-3 text-xs font-medium focus:outline-none focus:border-[#D4AF37] dir-ltr">
+        </div>
+
+        <div class="p-3 bg-emerald-50 border border-emerald-200 rounded-xl text-emerald-800 text-[11px] font-medium leading-relaxed">
+          ✨ با عضویت در عروسی تو، پروفایل اختصاصی کسب‌وکار شما ساخته شده و استعلام‌های آنلاین زوجین مستقیما به پیامک شما ارسال می‌گردد.
+        </div>
+
+        <button type="submit" class="w-full bg-[#D4AF37] hover:bg-amber-400 text-[#1B3B2B] font-black py-3 rounded-2xl text-xs shadow-md transition-all flex items-center justify-center gap-2 cursor-pointer">
+          <i data-lucide="check-circle" class="w-4 h-4"></i>
+          <span>ثبت درخواست عضویت در پلتفرم</span>
+        </button>
+      </form>
+    </div>
+  </div>
+
   <!-- App Script -->
 
   <script src="script.js"></script>

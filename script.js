@@ -4500,10 +4500,17 @@ if (document.readyState === "loading") {
     }
 
     function toggleVendorModalStatic(show) {
-      const modal = document.getElementById('vendor-onboarding-modal');
+      const modal = document.getElementById('vendor-register-modal') || document.getElementById('vendor-onboarding-modal');
       if (modal) {
-        if (show) modal.classList.remove('hidden');
-        else modal.classList.add('hidden');
+        if (show) {
+          modal.classList.remove('hidden');
+          modal.classList.add('flex');
+        } else {
+          modal.classList.add('hidden');
+          modal.classList.remove('flex');
+        }
+      } else if (show) {
+        openAuthModal('vendor');
       }
     }
 
@@ -4527,9 +4534,8 @@ if (document.readyState === "loading") {
         status: 'pending'
       });
 
-      document.getElementById('vendor-onboarding-form').classList.add('hidden');
-      document.getElementById('v-modal-success').classList.remove('hidden');
-
+      toggleVendorModalStatic(false);
+      showToast('درخواست عضویت شما با موفقیت ثبت شد. به‌زودی با شما تماس می‌گیریم.', 'success');
       renderAdminPendingApps();
     }
 
@@ -9502,7 +9508,8 @@ function openCategorySubgroupsModal(catKey) {
   const modalBadge = document.getElementById('modalCatBadge');
   const modalIcon = document.getElementById('modalCatIcon');
   const gridContainer = document.getElementById('subgroupGridList');
-  const modal = document.getElementById('subgroupModal');
+  const modal1 = document.getElementById('subgroupModal');
+  const modal2 = document.getElementById('subgroups-modal');
 
   if (modalTitle) modalTitle.innerText = data.title;
   if (modalBadge) modalBadge.innerText = data.badge;
@@ -9517,9 +9524,13 @@ function openCategorySubgroupsModal(catKey) {
     `).join('');
   }
 
-  if (modal) {
-    modal.style.display = 'flex';
-    modal.classList.remove('hidden');
+  if (modal1) {
+    modal1.style.display = 'flex';
+    modal1.classList.remove('hidden');
+  }
+  if (modal2) {
+    modal2.style.display = 'flex';
+    modal2.classList.remove('hidden');
   }
 }
 
