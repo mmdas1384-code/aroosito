@@ -341,47 +341,49 @@ header, nav, .header-container, .navbar {
     font-weight: bold !important;
 }
 
-/* Two Column Body Grid */
+/* Luxury Vendor Detail Modal Custom Styling */
+#vendor-detail-modal .clean-vmodal-card {
+    background-color: #FAF9F6 !important;
+}
+
 .clean-vmodal-body {
     display: block !important;
     padding: 24px !important;
-    background-color: #FAF9F5 !important;
+    background-color: #FAF9F6 !important;
 }
 
-@media (max-width: 800px) {
-    .clean-vmodal-body {
-        grid-template-columns: 1fr !important;
-    }
+/* Section Box Floating Cards in Modal */
+#vendor-detail-modal .vmodal-card-box,
+#vendor-detail-modal .vtab-pane > div,
+#vendor-detail-modal #vdm-packages-container > div,
+#vendor-detail-modal #vdm-reviews-container > div,
+#vendor-detail-modal #vdm-amenities-container > div,
+#vendor-detail-modal #vdm-calendar-container > div {
+    background: #FFFFFF !important;
+    border-radius: 1.5rem !important;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.04) !important;
+    border: 1px solid rgba(0, 0, 0, 0.03) !important;
 }
 
-.clean-vmodal-main-content {
-    color: #2C3E50 !important;
-    line-height: 1.8 !important;
+/* Gallery Image Hover Scale Effect */
+#vendor-detail-modal img {
+    border-radius: 1.25rem !important;
+    transition: transform 0.3s ease, box-shadow 0.3s ease !important;
 }
 
-.vmodal-amenities-list {
-    list-style: none !important;
-    padding: 0 !important;
-    margin-top: 15px !important;
+#vendor-detail-modal img:hover {
+    transform: scale(1.02) !important;
 }
 
-.vmodal-amenities-list li {
-    margin-bottom: 8px !important;
+/* Sub-labels & Ratings */
+#vendor-detail-modal .text-emerald-900,
+#vendor-detail-modal .text-[#1B3B2B] {
+    color: #1B3B2B !important;
 }
 
-/* Luxury Glassmorphism Sidebar Action Card */
-.clean-vmodal-sidebar {
-    background: rgba(255, 255, 255, 0.92) !important;
-    backdrop-filter: blur(12px) !important;
-    -webkit-backdrop-filter: blur(12px) !important;
-    border: 1.5px solid rgba(212, 175, 55, 0.6) !important;
-    border-radius: 22px !important;
-    padding: 22px !important;
-    display: flex !important;
-    flex-direction: column !important;
-    gap: 14px !important;
-    box-shadow: 0 15px 35px rgba(27, 59, 43, 0.12) !important;
-    height: fit-content !important;
+#vendor-detail-modal .text-[#D4AF37],
+#vendor-detail-modal .text-amber-500 {
+    color: #D4AF37 !important;
 }
 
 /* Calendar Month Pills in Modal */
@@ -393,28 +395,14 @@ header, nav, .header-container, .navbar {
     box-shadow: 0 2px 8px rgba(27, 59, 43, 0.2) !important;
 }
 
-.vmodal-price-box {
-    text-align: center !important;
-    padding-bottom: 12px !important;
-    border-bottom: 1px solid rgba(212, 175, 55, 0.25) !important;
-}
-
-.price-amount {
-    font-size: 22px !important;
-    font-weight: 800 !important;
-    color: #1B3B2B !important;
-    margin-top: 4px !important;
-    letter-spacing: -0.5px !important;
-}
-
 /* Royal Metallic Gold & Emerald Action Buttons */
 .vmodal-btn-primary,
 #vdm-modal-inquire-cta {
     background: linear-gradient(135deg, #E2C258 0%, #B88E28 100%) !important;
     color: #0B1B13 !important;
     border: none !important;
-    padding: 12px 20px !important;
-    border-radius: 12px !important;
+    padding: 12px 24px !important;
+    border-radius: 9999px !important;
     font-weight: 800 !important;
     cursor: pointer !important;
     font-family: inherit !important;
@@ -432,13 +420,12 @@ header, nav, .header-container, .navbar {
 }
 
 .vmodal-btn-secondary,
-#vdm-modal-chat-cta,
-#vdm-modal-phone-cta {
-    background: rgba(18, 40, 29, 0.6) !important;
-    color: #D4AF37 !important;
-    border: 1px solid #D4AF37 !important;
-    padding: 12px 18px !important;
-    border-radius: 12px !important;
+#vdm-modal-chat-cta {
+    background: rgba(27, 59, 43, 0.08) !important;
+    color: #1B3B2B !important;
+    border: 1px solid rgba(212, 175, 55, 0.6) !important;
+    padding: 12px 22px !important;
+    border-radius: 9999px !important;
     font-weight: 700 !important;
     cursor: pointer !important;
     font-family: inherit !important;
@@ -446,11 +433,29 @@ header, nav, .header-container, .navbar {
 }
 
 .vmodal-btn-secondary:hover,
-#vdm-modal-chat-cta:hover,
-#vdm-modal-phone-cta:hover {
-    background: rgba(212, 175, 55, 0.15) !important;
-    border-color: #E2C258 !important;
-    color: #E2C258 !important;
+#vdm-modal-chat-cta:hover {
+    background: rgba(27, 59, 43, 0.15) !important;
+    border-color: #D4AF37 !important;
+}
+
+/* Floating Capsule Bottom Action Bar */
+#vendor-detail-modal .sticky.bottom-0 {
+    position: sticky !important;
+    bottom: 1rem !important;
+    margin-top: 1.5rem !important;
+    margin-bottom: 0.5rem !important;
+    margin-left: auto !important;
+    margin-right: auto !important;
+    max-width: 42rem !important;
+    width: calc(100% - 2rem) !important;
+    background: rgba(255, 255, 255, 0.92) !important;
+    backdrop-filter: blur(16px) !important;
+    -webkit-backdrop-filter: blur(16px) !important;
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.12), 0 0 0 1px rgba(212, 175, 55, 0.3) !important;
+    border-radius: 9999px !important;
+    padding: 0.75rem 1.5rem !important;
+    border: 1px solid rgba(226, 232, 240, 0.8) !important;
+    z-index: 50 !important;
 }
 
 /* Modal Form Input Typography */
@@ -460,12 +465,6 @@ header, nav, .header-container, .navbar {
     background: #FFFFFF !important;
     border: 1px solid #D1D5DB !important;
     color: #111827 !important;
-}
-
-/* Sticky Bottom Action Bar Transformation */
-#vendor-detail-modal .sticky.bottom-0 {
-    background: linear-gradient(180deg, #12281D 0%, #0B1B13 100%) !important;
-    border-top: 1px solid rgba(212, 175, 55, 0.4) !important;
 }
 
 /* Auth Modal Positioning & Overlay */
