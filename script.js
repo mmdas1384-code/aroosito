@@ -2022,6 +2022,7 @@ if (document.readyState === "loading") {
           `;
         } else {
           vendorPortfolio.forEach(item => {
+            const isCover = item.isCover || false;
             const card = document.createElement('div');
             card.className = "bg-bgCustom border border-accent rounded-2xl overflow-hidden shadow-xs hover:shadow-md transition-shadow flex flex-col justify-between";
             card.innerHTML = `
@@ -2031,20 +2032,31 @@ if (document.readyState === "loading") {
                   <span class="absolute top-2.5 right-2.5 bg-graphite/80 backdrop-blur-xs text-white text-[10px] font-bold px-2.5 py-1 rounded-full">
                     ${item.category}
                   </span>
+                  ${isCover ? `
+                    <span class="absolute top-2.5 left-2.5 bg-[#D4AF37] text-[#1B3B2B] text-[10px] font-black px-2 py-0.5 rounded-full shadow-md flex items-center gap-1">
+                      ⭐ کاور اصلی
+                    </span>
+                  ` : ''}
                 </div>
                 <div class="p-3 space-y-1">
                   <h4 class="text-xs font-bold text-graphite line-clamp-2 min-h-[2.25rem]">${item.title}</h4>
                 </div>
               </div>
-              <div class="p-3 pt-0 border-t border-accent/40 mt-2 flex items-center justify-between gap-2 text-xs font-bold">
-                <button type="button" onclick="openPortfolioModal('${item.id}')" class="flex-1 bg-white hover:bg-slate-100 text-graphite border border-accent py-1.5 px-2 rounded-xl transition-colors flex items-center justify-center gap-1 text-[11px]">
-                  <i data-lucide="edit-2" class="w-3.5 h-3.5 text-primary"></i>
-                  <span>ویرایش</span>
+              <div class="p-3 pt-0 border-t border-accent/40 mt-2 space-y-2 text-xs font-bold">
+                <button type="button" onclick="setPortfolioAsCover('${item.id}')" class="w-full ${isCover ? 'bg-amber-100 text-amber-900 border border-amber-300' : 'bg-white hover:bg-emerald-50 text-graphite border border-accent'} py-1.5 px-2 rounded-xl transition-colors flex items-center justify-center gap-1 text-[11px]">
+                  <i data-lucide="star" class="w-3.5 h-3.5 text-primary"></i>
+                  <span>${isCover ? 'کاور اصلی فعال است' : 'انتخاب به‌عنوان کاور'}</span>
                 </button>
-                <button type="button" onclick="deletePortfolioItem('${item.id}')" class="bg-white hover:bg-rose-50 text-rose-600 border border-rose-200 py-1.5 px-2.5 rounded-xl transition-colors flex items-center justify-center gap-1 text-[11px]">
-                  <i data-lucide="trash-2" class="w-3.5 h-3.5"></i>
-                  <span>حذف</span>
-                </button>
+                <div class="flex items-center justify-between gap-2">
+                  <button type="button" onclick="openPortfolioModal('${item.id}')" class="flex-1 bg-white hover:bg-slate-100 text-graphite border border-accent py-1.5 px-2 rounded-xl transition-colors flex items-center justify-center gap-1 text-[11px]">
+                    <i data-lucide="edit-2" class="w-3.5 h-3.5 text-primary"></i>
+                    <span>ویرایش</span>
+                  </button>
+                  <button type="button" onclick="deletePortfolioItem('${item.id}')" class="bg-white hover:bg-rose-50 text-rose-600 border border-rose-200 py-1.5 px-2.5 rounded-xl transition-colors flex items-center justify-center gap-1 text-[11px]">
+                    <i data-lucide="trash-2" class="w-3.5 h-3.5"></i>
+                    <span>حذف</span>
+                  </button>
+                </div>
               </div>
             `;
             dashContainer.appendChild(card);
@@ -2212,6 +2224,28 @@ if (document.readyState === "loading") {
         renderPortfolioUI();
       }
     }
+
+    function setPortfolioAsCover(id) {
+      vendorPortfolio.forEach(p => {
+        p.isCover = (p.id === id);
+      });
+      const selected = vendorPortfolio.find(p => p.id === id);
+      if (selected) {
+        const coverImg = document.getElementById('vp-cover');
+        const vdmCover = document.getElementById('vdm-cover');
+        if (coverImg) coverImg.src = selected.image;
+        if (vdmCover) vdmCover.src = selected.image;
+      }
+      renderPortfolioUI();
+      if (typeof showToast === 'function') {
+        showToast('⭐ تصویر انتخاب‌شده به‌عنوان کاور اصلی ثبت گردید.', 'success');
+      }
+    }
+
+    window.setPortfolioAsCover = setPortfolioAsCover;
+    window.deletePortfolioItem = deletePortfolioItem;
+    window.openPortfolioModal = openPortfolioModal;
+    window.closePortfolioModal = closePortfolioModal;
 
 
     function renderGallery() {
@@ -9661,5 +9695,116 @@ window.toggleReviewSubmitDrawer = function() {
     form.classList.toggle('hidden');
   } else if (typeof showToast === 'function') {
     showToast('✍️ فرم ثبت نظر جدید باز شد', 'info');
+  }
+};
+
+// Subscription Matrix & Billing History Handlers
+window.toggleBillingHistoryDrawer = function() {
+  const drawer = document.getElementById('vd-billing-history-drawer');
+  if (drawer) {
+    drawer.classList.toggle('hidden');
+    if (window.lucide) lucide.createIcons();
+  }
+};
+
+window.openSubscriptionMatrixModal = function() {
+  const modal = document.getElementById('modal-subscription-matrix');
+  if (modal) {
+    modal.classList.remove('hidden');
+    if (window.lucide) lucide.createIcons();
+  }
+};
+
+window.closeSubscriptionMatrixModal = function() {
+  const modal = document.getElementById('modal-subscription-matrix');
+  if (modal) {
+    modal.classList.add('hidden');
+  }
+};
+
+window.selectSubscriptionPlan = function(planName, priceText) {
+  closeSubscriptionMatrixModal();
+  const titleElem = document.getElementById('vd-active-plan-title');
+  if (titleElem) {
+    titleElem.innerText = `اشتراک فعال: ${planName} (${priceText})`;
+  }
+  if (typeof showToast === 'function') {
+    showToast(`✨ درخواست ارتقا/تمدید به پلن ${planName} ثبت شد. فاکتور صادر گردید.`, 'success');
+  }
+};
+
+// Vendor Invoice Builder Handlers
+window.openVendorInvoiceBuilderModal = function(coupleName = 'علی و سارا', pkgTitle = 'پکیج طلایی خدمات عروسی') {
+  const modal = document.getElementById('modal-vendor-invoice-builder');
+  if (modal) {
+    const coupleInput = document.getElementById('inv-builder-couple');
+    const titleInput = document.getElementById('inv-builder-title');
+    if (coupleInput) coupleInput.value = coupleName;
+    if (titleInput) titleInput.value = pkgTitle;
+    modal.classList.remove('hidden');
+    if (window.lucide) lucide.createIcons();
+  }
+};
+
+window.closeVendorInvoiceBuilderModal = function() {
+  const modal = document.getElementById('modal-vendor-invoice-builder');
+  if (modal) {
+    modal.classList.add('hidden');
+  }
+};
+
+window.toggleMasterDiscountBadge = function(isCheck) {
+  const label = document.getElementById('vd-discount-toggle-label');
+  if (label) {
+    label.innerText = isCheck ? 'نشان تخفیف روی پروفایل: فعال' : 'نشان تخفیف روی پروفایل: غیرفعال';
+  }
+  if (typeof showToast === 'function') {
+    showToast(isCheck ? '🏷️ نشان تخفیف‌های ویژه روی پروفایل عمومی فعال شد.' : 'نشان تخفیف‌های عمومی غیرفعال گردید.', 'info');
+  }
+};
+
+window.toggleDiscountPreset = function(presetKey) {
+  const badge = document.getElementById(`badge-status-${presetKey}`);
+  if (!badge) return;
+
+  const isActive = badge.classList.contains('bg-emerald-100');
+  if (isActive) {
+    badge.className = 'bg-slate-200 text-slate-700 text-[10px] font-bold px-2 py-0.5 rounded-md';
+    badge.innerText = 'غیرفعال';
+    if (typeof showToast === 'function') showToast('پیشنهاد تخفیف غیرفعال شد.', 'info');
+  } else {
+    badge.className = 'bg-emerald-100 text-emerald-800 text-[10px] font-bold px-2 py-0.5 rounded-md';
+    badge.innerText = 'فعال';
+    if (typeof showToast === 'function') showToast('🎉 پیشنهاد تخفیف ویژه روی پروفایل عمومی فعال شد.', 'success');
+  }
+};
+
+window.handleSendInvoiceSubmit = function(e) {
+  if (e && e.preventDefault) e.preventDefault();
+  closeVendorInvoiceBuilderModal();
+
+  const couple = document.getElementById('inv-builder-couple')?.value || 'علی و سارا';
+  const title = document.getElementById('inv-builder-title')?.value || 'پکیج خدمات';
+  const date = document.getElementById('inv-builder-date')?.value || '۱۴۰۳/۰۶/۱۵';
+  const total = document.getElementById('inv-builder-total')?.value || '۴۵,۰۰۰,۰۰۰';
+  const deposit = document.getElementById('inv-builder-deposit')?.value || '۱۰,۰۰۰,۰۰۰';
+  const items = document.getElementById('inv-builder-items')?.value || '';
+
+  // Append new invoice message if chat state exists
+  if (typeof activeChatThreadId !== 'undefined' && typeof chatThreads !== 'undefined') {
+    const thread = chatThreads.find(t => t.id === activeChatThreadId) || chatThreads[0];
+    if (thread) {
+      thread.messages.push({
+        id: 'msg-' + Date.now(),
+        sender: 'vendor',
+        text: `📄 پیش‌فاکتور دیجیتال رسمی صادر شد:\nعنوان: ${title}\nتاریخ: ${date}\nمبلغ کل: ${total} تومان\nبیعانه: ${deposit} تومان\nشرح خدمات:\n${items}`,
+        time: 'الان'
+      });
+      if (typeof renderActiveChatThread === 'function') renderActiveChatThread();
+    }
+  }
+
+  if (typeof showToast === 'function') {
+    showToast(`🧾 پیش‌فاکتور دیجیتال به مبلغ ${total} تومان برای ${couple} ارسال شد.`, 'success');
   }
 };

@@ -2153,38 +2153,86 @@
         </div>
       </div>
 
-      <!-- My Plan & Subscription Status Card (وضعیت اشتراک من) -->
-      <div class="bg-white border border-accent rounded-3xl p-6 shadow-xs flex flex-col md:flex-row items-start md:items-center justify-between gap-6 relative overflow-hidden">
-        <div class="space-y-2">
-          <div class="flex items-center gap-2">
-            <span class="bg-amber-100 text-amber-900 border border-amber-300 text-xs font-bold px-3 py-1 rounded-full flex items-center gap-1">
-              <i data-lucide="crown" class="w-3.5 h-3.5 text-amber-600"></i>
-              <span>اشتراک فعال: طلایی ۱ ساله (Gold Tier)</span>
-            </span>
-            <span class="bg-emerald-100 text-emerald-800 text-[11px] font-bold px-2.5 py-0.5 rounded-md">وضعیت: فعال</span>
+      <!-- My Plan & Subscription Status Card (مدیریت اشتراک) -->
+      <div class="bg-white border border-accent rounded-3xl p-6 shadow-xs space-y-4 relative overflow-hidden">
+        <div class="flex flex-col md:flex-row items-start md:items-center justify-between gap-6">
+          <div class="space-y-2">
+            <div class="flex items-center gap-2 flex-wrap">
+              <span class="bg-amber-100 text-amber-900 border border-amber-300 text-xs font-bold px-3 py-1 rounded-full flex items-center gap-1">
+                <i data-lucide="crown" class="w-3.5 h-3.5 text-amber-600"></i>
+                <span id="vd-active-plan-title">اشتراک فعال: طلایی ۱ ساله (Gold Tier)</span>
+              </span>
+              <span class="bg-emerald-100 text-emerald-800 text-[11px] font-bold px-2.5 py-0.5 rounded-md">وضعیت: فعال</span>
+              <span class="bg-primary/10 text-primary border border-primary/20 text-[11px] font-extrabold px-2.5 py-0.5 rounded-md">کمیسیون ۰٪</span>
+            </div>
+
+            <h3 class="text-lg font-black text-graphite flex items-center gap-2">
+              <span>مدیریت پلن و عضویت ویژه کسب‌وکار (Subscription Management)</span>
+            </h3>
+
+            <div class="flex flex-wrap items-center gap-4 text-xs text-secondary font-medium">
+              <span class="flex items-center gap-1">
+                <i data-lucide="calendar" class="w-4 h-4 text-primary"></i>
+                <span>اعتبار باقی‌مانده: <strong class="text-graphite font-bold">۱۴۲ روز</strong> (تا ۱۵ اسفند ۱۴۰۳)</span>
+              </span>
+              <span class="flex items-center gap-1 text-emerald-700 font-bold bg-emerald-50 px-2.5 py-1 rounded-lg border border-emerald-200">
+                <i data-lucide="shield-check" class="w-3.5 h-3.5"></i>
+                <span>تضمین عدم دریافت کمیسیون از رزروها</span>
+              </span>
+            </div>
           </div>
 
-          <h3 class="text-lg font-black text-graphite flex items-center gap-2">
-            <span>مدیریت پلن و عضویت ویژه کسب‌وکار</span>
-          </h3>
-
-          <div class="flex flex-wrap items-center gap-4 text-xs text-secondary font-medium">
-            <span class="flex items-center gap-1">
-              <i data-lucide="calendar" class="w-4 h-4 text-primary"></i>
-              <span>اعتبار باقی‌مانده: <strong class="text-graphite font-bold">۱۴۲ روز</strong> (تا ۱۵ اسفند ۱۴۰۳)</span>
-            </span>
-            <span class="flex items-center gap-1 text-emerald-700 font-bold bg-emerald-50 px-2.5 py-1 rounded-lg border border-emerald-200">
-              <i data-lucide="percent" class="w-3.5 h-3.5"></i>
-              <span>کمیسیون رزرو: ۰٪ (دریافت ۱۰۰٪ مستقیم مبالغ)</span>
-            </span>
+          <div class="flex items-center gap-3 shrink-0 flex-wrap">
+            <button type="button" onclick="toggleBillingHistoryDrawer()" class="bg-bgCustom hover:bg-slate-100 text-graphite border border-accent px-4 py-3 rounded-2xl text-xs font-bold transition-all shadow-xs flex items-center gap-1.5 cursor-pointer">
+              <i data-lucide="receipt" class="w-4 h-4 text-primary"></i>
+              <span>تاریخچه پرداخت‌ها</span>
+            </button>
+            <button type="button" onclick="openSubscriptionMatrixModal()" class="bg-primary hover:bg-emerald-900 text-white px-5 py-3 rounded-2xl text-xs font-bold transition-all shadow-md flex items-center gap-2 cursor-pointer">
+              <i data-lucide="zap" class="w-4 h-4"></i>
+              <span>ارتقا / تمدید اشتراک (ماتریس پلن‌ها)</span>
+            </button>
           </div>
         </div>
 
-        <div class="flex items-center gap-3 shrink-0">
-          <button onclick="showToast('درخواست ارتقا / تمدید اشتراک با موفقیت ثبت گردید. کارشناسان پشتیبانی به‌زودی با شما تماس می‌گیرند.', 'success')" class="bg-primary hover:bg-emerald-900 text-white px-5 py-3 rounded-2xl text-xs font-bold transition-all shadow-md flex items-center gap-2">
-            <i data-lucide="refresh-cw" class="w-4 h-4"></i>
-            <span>تمدید / ارتقای اشتراک</span>
-          </button>
+        <!-- Billing History Drawer (Hidden by default) -->
+        <div id="vd-billing-history-drawer" class="hidden border-t border-accent/70 pt-4 space-y-3">
+          <div class="flex items-center justify-between">
+            <h4 class="text-xs font-bold text-graphite flex items-center gap-1.5">
+              <i data-lucide="history" class="w-4 h-4 text-primary"></i>
+              <span>سوابق تراکنش‌ها و فاکتورهای اشتراک:</span>
+            </h4>
+            <span class="text-[11px] text-secondary">فاکتورهای رسمی تاییدشده</span>
+          </div>
+
+          <div class="overflow-x-auto">
+            <table class="w-full text-right text-xs">
+              <thead class="bg-bgCustom text-secondary border-b border-accent font-bold">
+                <tr>
+                  <th class="p-2.5">عنوان فاکتور</th>
+                  <th class="p-2.5">تاریخ ثبت</th>
+                  <th class="p-2.5">مبلغ پرداخت‌شده</th>
+                  <th class="p-2.5">کد پیگیری</th>
+                  <th class="p-2.5 text-center">وضعیت</th>
+                </tr>
+              </thead>
+              <tbody class="divide-y divide-accent/60 font-medium">
+                <tr>
+                  <td class="p-2.5 font-bold text-graphite">اشتراک طلایی ۱ ساله (تخفیف رونمایی)</td>
+                  <td class="p-2.5 text-secondary">۱۵ اسفند ۱۴۰۲</td>
+                  <td class="p-2.5 font-bold text-primary">۱۲,۵۰۰,۰۰۰ تومان</td>
+                  <td class="p-2.5 font-mono dir-ltr">TRX-984210</td>
+                  <td class="p-2.5 text-center"><span class="bg-emerald-100 text-emerald-800 text-[10px] font-bold px-2 py-0.5 rounded-full">موفق / فعال</span></td>
+                </tr>
+                <tr>
+                  <td class="p-2.5 font-bold text-graphite">ارتقا به نشان تاییدیه VIP کویر</td>
+                  <td class="p-2.5 text-secondary">۲۰ اردیبهشت ۱۴۰۳</td>
+                  <td class="p-2.5 font-bold text-primary">۲,۵۰۰,۰۰۰ تومان</td>
+                  <td class="p-2.5 font-mono dir-ltr">TRX-311094</td>
+                  <td class="p-2.5 text-center"><span class="bg-emerald-100 text-emerald-800 text-[10px] font-bold px-2 py-0.5 rounded-full">موفق / فعال</span></td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
         </div>
       </div>
 
@@ -2222,6 +2270,117 @@
           <div class="flex items-center gap-1 pt-1 text-[11px] font-bold">
             <span class="bg-amber-100 text-amber-900 border border-amber-300 px-2 py-0.5 rounded-full">برتر یزد</span>
             <span class="bg-emerald-100 text-emerald-900 border border-emerald-300 px-2 py-0.5 rounded-full">پاسخگوی سریع</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- In-App Chat & Quick Digital Pre-Invoice Section (چت و پیش‌فاکتور آنلاین) -->
+      <div class="bg-white border border-accent rounded-3xl p-6 shadow-xs space-y-4">
+        <div class="flex flex-col sm:flex-row justify-between sm:items-center gap-3 border-b border-accent pb-3">
+          <div>
+            <h3 class="text-base font-bold text-graphite flex items-center gap-2">
+              <i data-lucide="message-square-quote" class="w-5 h-5 text-primary"></i>
+              <span>گفت‌وگوی آنلاین مستقیم & صدور پیش‌فاکتور دیجیتال (In-App Chat & Invoicing)</span>
+            </h3>
+            <p class="text-xs text-secondary mt-0.5">پاسخ مستقیم به زوج‌های متقاضی و ارسال سریع پیش‌فاکتور شیک با جزئیات بیعانه و خدمات</p>
+          </div>
+
+          <div class="flex items-center gap-2 shrink-0">
+            <button type="button" onclick="openVendorInvoiceBuilderModal()" class="bg-primary hover:bg-emerald-900 text-white font-bold px-4 py-2.5 rounded-xl text-xs transition-colors flex items-center gap-1.5 shadow-xs cursor-pointer">
+              <i data-lucide="file-plus-2" class="w-4 h-4"></i>
+              <span>ایجاد و صدور پیش‌فاکتور جدید</span>
+            </button>
+            <button type="button" onclick="switchTab('messages')" class="bg-bgCustom hover:bg-slate-100 text-graphite border border-accent font-bold px-4 py-2.5 rounded-xl text-xs transition-colors flex items-center gap-1.5 cursor-pointer">
+              <i data-lucide="message-circle" class="w-4 h-4 text-primary"></i>
+              <span>ورود به مرکز گفت‌وگوها (چت)</span>
+            </button>
+          </div>
+        </div>
+
+        <!-- Vendor Active Messages Quick Preview List -->
+        <div class="space-y-3">
+          <h4 class="text-xs font-bold text-graphite">پیام‌ها و استعلام‌های اخیر زوجین:</h4>
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-3 text-xs">
+
+            <div class="p-3.5 bg-bgCustom border border-accent rounded-2xl flex items-center justify-between gap-3">
+              <div class="flex items-center gap-3 min-w-0">
+                <div class="w-10 h-10 rounded-full bg-primary/20 text-primary flex items-center justify-center font-bold shrink-0">
+                  ع & س
+                </div>
+                <div class="min-w-0 space-y-0.5">
+                  <strong class="block text-graphite font-bold truncate">علی & سارا (استعلام پکیج فرمالیته)</strong>
+                  <span class="text-[11px] text-secondary truncate block">سلام، امکان دریافت پیش‌فاکتور برای ۱۵ مهر هست؟</span>
+                </div>
+              </div>
+              <div class="flex items-center gap-2 shrink-0">
+                <span class="bg-amber-100 text-amber-800 text-[10px] font-bold px-2 py-0.5 rounded-md">در انتظار پیش‌فاکتور</span>
+                <button type="button" onclick="openVendorInvoiceBuilderModal('علی و سارا', 'فرمالیته کویر یزد')" class="bg-primary hover:bg-emerald-900 text-white font-bold px-3 py-1.5 rounded-xl text-[11px] transition-colors shadow-2xs">صدور پیش‌فاکتور</button>
+              </div>
+            </div>
+
+            <div class="p-3.5 bg-bgCustom border border-accent rounded-2xl flex items-center justify-between gap-3">
+              <div class="flex items-center gap-3 min-w-0">
+                <div class="w-10 h-10 rounded-full bg-emerald-100 text-emerald-800 flex items-center justify-center font-bold shrink-0">
+                  م & ز
+                </div>
+                <div class="min-w-0 space-y-0.5">
+                  <strong class="block text-graphite font-bold truncate">محمد & زهرا (پکیج طلایی عروسی)</strong>
+                  <span class="text-[11px] text-secondary truncate block">پیش‌فاکتور دریافت شد، زمان مشاوره حضوری تایید شد.</span>
+                </div>
+              </div>
+              <div class="flex items-center gap-2 shrink-0">
+                <span class="bg-emerald-100 text-emerald-800 text-[10px] font-bold px-2 py-0.5 rounded-md">پیش‌فاکتور ارسال شد</span>
+                <button type="button" onclick="switchTab('messages')" class="bg-bgCustom hover:bg-slate-100 border border-accent text-graphite font-bold px-3 py-1.5 rounded-xl text-[11px] transition-colors">مشاهده چت</button>
+              </div>
+            </div>
+
+          </div>
+        </div>
+      </div>
+
+      <!-- Promotional Discounts & Limited-time Badge Tool (مدیریت تخفیف‌های ویژه) -->
+      <div class="bg-white border border-accent rounded-3xl p-6 shadow-xs space-y-4">
+        <div class="flex flex-col sm:flex-row justify-between sm:items-center gap-3 border-b border-accent pb-3">
+          <div>
+            <h3 class="text-base font-bold text-graphite flex items-center gap-2">
+              <i data-lucide="tag" class="w-5 h-5 text-primary"></i>
+              <span>مدیریت نشان‌ها و پیشنهادهای تخفیف‌دار ویژه (Promotional Discounts Tool)</span>
+            </h3>
+            <p class="text-xs text-secondary mt-0.5">فعال‌سازی بج‌های تخفیف رزرو زودهنگام یا وسط هفته جهت جذب رزروهای بیشتر</p>
+          </div>
+
+          <label class="flex items-center gap-2 text-xs font-bold text-graphite bg-bgCustom px-3.5 py-2 rounded-xl border border-accent cursor-pointer shrink-0">
+            <input type="checkbox" id="vd-discount-master-toggle" checked onchange="toggleMasterDiscountBadge(this.checked)" class="rounded text-primary focus:ring-primary w-4 h-4">
+            <span id="vd-discount-toggle-label">نشان تخفیف روی پروفایل: فعال</span>
+          </label>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-4 text-xs font-bold text-graphite">
+          <div class="p-4 bg-bgCustom border border-accent rounded-2xl space-y-2">
+            <div class="flex justify-between items-center">
+              <span class="text-graphite font-black">۱. تخفیف رزرو وسط هفته (۱۵٪)</span>
+              <span id="badge-status-midweek" class="bg-emerald-100 text-emerald-800 text-[10px] font-bold px-2 py-0.5 rounded-md">فعال</span>
+            </div>
+            <p class="text-[11px] text-secondary font-normal">نمایش بج «۱۵٪ تخفیف ویژه رزرو روزهای شنبه تا چهارشنبه» روی پروفایل عمومی</p>
+            <button type="button" onclick="toggleDiscountPreset('midweek')" class="w-full bg-white hover:bg-slate-100 text-graphite border border-accent py-1.5 rounded-xl font-bold transition-colors text-[11px]">تغییر وضعیت فعال/غیرفعال</button>
+          </div>
+
+          <div class="p-4 bg-bgCustom border border-accent rounded-2xl space-y-2">
+            <div class="flex justify-between items-center">
+              <span class="text-graphite font-black">۲. تخفیف رزرو زودهنگام (۱۰٪)</span>
+              <span id="badge-status-early" class="bg-slate-200 text-slate-700 text-[10px] font-bold px-2 py-0.5 rounded-md">غیرفعال</span>
+            </div>
+            <p class="text-[11px] text-secondary font-normal">ویژه زوج‌هایی که حداقل ۶۰ روز قبل از تاریخ مراسم اقدام به رزرو می‌کنند</p>
+            <button type="button" onclick="toggleDiscountPreset('early')" class="w-full bg-white hover:bg-slate-100 text-graphite border border-accent py-1.5 rounded-xl font-bold transition-colors text-[11px]">تغییر وضعیت فعال/غیرفعال</button>
+          </div>
+
+          <div class="p-4 bg-bgCustom border border-accent rounded-2xl space-y-2">
+            <div class="flex justify-between items-center">
+              <span class="text-graphite font-black">۳. تخفیف هدیه فصل (۲۰٪)</span>
+              <span id="badge-status-season" class="bg-slate-200 text-slate-700 text-[10px] font-bold px-2 py-0.5 rounded-md">غیرفعال</span>
+            </div>
+            <p class="text-[11px] text-secondary font-normal">بج اختصاصی جشنواره پاییزه/زمستانه با ۲۰٪ تخفیف روی کلیپ فرمالیته</p>
+            <button type="button" onclick="toggleDiscountPreset('season')" class="w-full bg-white hover:bg-slate-100 text-graphite border border-accent py-1.5 rounded-xl font-bold transition-colors text-[11px]">تغییر وضعیت فعال/غیرفعال</button>
           </div>
         </div>
       </div>
@@ -4621,6 +4780,238 @@
       <div class="p-4 bg-[#F5EFEB] border-t border-[#E0D8C8] text-center text-[11px] text-secondary font-medium">
         ورود شما به معنای پذیرش <a href="#" class="text-[#D4AF37] font-bold hover:underline">قوانین و حریم خصوصی</a> عروسی تو می‌باشد.
       </div>
+    </div>
+  </div>
+
+  <!-- DIGITAL PRE-INVOICE BUILDER MODAL (#modal-vendor-invoice-builder) -->
+  <div id="modal-vendor-invoice-builder" class="hidden fixed inset-0 bg-black/60 backdrop-blur-xs z-[999999] flex items-center justify-center p-4 transition-all animate-fadeIn" onclick="if(event.target === this) closeVendorInvoiceBuilderModal()">
+    <div class="bg-white rounded-3xl shadow-2xl max-w-lg w-full overflow-hidden border border-[#D4AF37]/50 flex flex-col animate-scaleUp relative max-h-[90vh]">
+      <!-- Header -->
+      <div class="bg-[#1B3B2B] text-white p-5 flex items-center justify-between border-b border-[#D4AF37]/30 shrink-0">
+        <div class="flex items-center gap-2.5">
+          <div class="w-10 h-10 rounded-xl bg-[#D4AF37] text-[#1B3B2B] flex items-center justify-center shadow-sm">
+            <i data-lucide="receipt" class="w-5 h-5"></i>
+          </div>
+          <div>
+            <h3 class="text-base font-bold text-[#D4AF37]">صدور پیش‌فاکتور دیجیتال رسمی (Digital Invoice Builder)</h3>
+            <span class="text-[11px] text-amber-200/80 font-medium">ارسال مستقیم فاکتور شیک به چت اختصاصی زوجین</span>
+          </div>
+        </div>
+
+        <button onclick="closeVendorInvoiceBuilderModal()" class="w-9 h-9 rounded-xl bg-white/10 hover:bg-white/20 text-white flex items-center justify-center transition-colors cursor-pointer" title="بستن">
+          <i data-lucide="x" class="w-5 h-5"></i>
+        </button>
+      </div>
+
+      <!-- Invoice Form Body -->
+      <form id="vendor-invoice-builder-form" onsubmit="handleSendInvoiceSubmit(event)" class="p-6 space-y-4 text-xs font-bold text-graphite overflow-y-auto">
+        <div class="space-y-1">
+          <label class="block text-secondary">نام زوج / دریافت‌کننده پیش‌فاکتور *</label>
+          <input type="text" id="inv-builder-couple" required value="علی و سارا" class="w-full bg-[#F5EFEB] border border-[#E0D8C8] rounded-xl p-3 text-xs font-medium focus:outline-none focus:border-[#D4AF37]">
+        </div>
+
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+          <div class="space-y-1">
+            <label class="block text-secondary">عنوان پکیج / خدمت اصلی *</label>
+            <input type="text" id="inv-builder-title" required value="پکیج طلایی عکاسی و فیلمبرداری عروسی" class="w-full bg-[#F5EFEB] border border-[#E0D8C8] rounded-xl p-3 text-xs font-medium focus:outline-none focus:border-[#D4AF37]">
+          </div>
+
+          <div class="space-y-1">
+            <label class="block text-secondary">تاریخ برگزاری / رزرو (شمسی) *</label>
+            <input type="text" id="inv-builder-date" required value="۱۴۰۳/۰۶/۱۵" class="w-full bg-[#F5EFEB] border border-[#E0D8C8] rounded-xl p-3 text-xs font-medium focus:outline-none focus:border-[#D4AF37]">
+          </div>
+        </div>
+
+        <div class="space-y-1">
+          <label class="block text-secondary">اقلام و شرح خدمات تضمین‌شده (با خط جدید جدا کنید) *</label>
+          <textarea id="inv-builder-items" rows="3" required class="w-full bg-[#F5EFEB] border border-[#E0D8C8] rounded-xl p-3 text-xs font-medium focus:outline-none focus:border-[#D4AF37] leading-relaxed">۲ دوربین سونی Alpha 4K
+تصویربرداری هلی‌شات و کرین
+آلبوم ایتالیایی چرمی ۶۰×۳۰
+کلیپ اختصاصی کویر یزد</textarea>
+        </div>
+
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+          <div class="space-y-1">
+            <label class="block text-secondary">مبلغ کل پیش‌فاکتور (تومان) *</label>
+            <input type="text" id="inv-builder-total" required value="۴۵,۰۰۰,۰۰۰" class="w-full bg-[#F5EFEB] border border-[#E0D8C8] rounded-xl p-3 text-xs font-bold text-primary focus:outline-none focus:border-[#D4AF37]">
+          </div>
+
+          <div class="space-y-1">
+            <label class="block text-secondary">مبلغ بیعانه جهت تثبیت رزرو (تومان) *</label>
+            <input type="text" id="inv-builder-deposit" required value="۱۰,۰۰۰,۰۰۰" class="w-full bg-[#F5EFEB] border border-[#E0D8C8] rounded-xl p-3 text-xs font-bold text-emerald-800 focus:outline-none focus:border-[#D4AF37]">
+          </div>
+        </div>
+
+        <div class="p-3 bg-amber-50 border border-amber-200 rounded-xl text-amber-900 text-[11px] font-medium leading-relaxed">
+          💡 این پیش‌فاکتور به‌صورت شیک در گفتگو آنلاین زوج قرار گرفته و پیامک اطلاع‌رسانی برای زوج ارسال می‌شود.
+        </div>
+
+        <button type="submit" class="w-full bg-[#D4AF37] hover:bg-amber-400 text-[#1B3B2B] font-black py-3 rounded-2xl text-xs shadow-md transition-all flex items-center justify-center gap-2 cursor-pointer">
+          <i data-lucide="send" class="w-4 h-4"></i>
+          <span>تایید و ارسال پیش‌فاکتور دیجیتال به چت زوج</span>
+        </button>
+      </form>
+    </div>
+  </div>
+
+  <!-- SUBSCRIPTION MATRIX MODAL (#modal-subscription-matrix) -->
+  <div id="modal-subscription-matrix" class="hidden fixed inset-0 bg-black/60 backdrop-blur-xs z-[999999] flex items-center justify-center p-4 transition-all animate-fadeIn" onclick="if(event.target === this) closeSubscriptionMatrixModal()">
+    <div class="bg-white rounded-3xl shadow-2xl max-w-4xl w-full overflow-hidden border border-[#D4AF37]/50 flex flex-col animate-scaleUp relative max-h-[90vh]">
+      <!-- Header -->
+      <div class="bg-[#1B3B2B] text-white p-5 sm:p-6 flex items-center justify-between border-b border-[#D4AF37]/30 shrink-0">
+        <div class="flex items-center gap-3">
+          <div class="w-11 h-11 rounded-2xl bg-[#D4AF37] text-[#1B3B2B] flex items-center justify-center shadow-md">
+            <i data-lucide="crown" class="w-6 h-6"></i>
+          </div>
+          <div>
+            <h3 class="text-lg sm:text-xl font-black text-[#D4AF37]">ماتریس پلن‌ها و اشتراک تامین‌کنندگان (۰٪ کمیسیون)</h3>
+            <p class="text-xs text-amber-200/90 font-medium">انتخاب سطح عضویت جهت دیده‌شدن برتر در استان یزد و دریافت استعلام‌های مستقیم</p>
+          </div>
+        </div>
+
+        <button onclick="closeSubscriptionMatrixModal()" class="w-9 h-9 rounded-xl bg-white/10 hover:bg-white/20 text-white flex items-center justify-center transition-colors cursor-pointer" title="بستن">
+          <i data-lucide="x" class="w-5 h-5"></i>
+        </button>
+      </div>
+
+      <!-- Matrix Cards Body -->
+      <div class="p-6 overflow-y-auto space-y-6 bg-slate-50/50">
+        <div class="grid grid-cols-1 md:grid-cols-4 gap-4">
+
+          <!-- Plan 1: Bronze -->
+          <div class="bg-white border border-accent rounded-2xl p-4 flex flex-col justify-between space-y-4 hover:border-primary transition-all">
+            <div class="space-y-2">
+              <span class="bg-slate-100 text-slate-800 text-[10px] font-bold px-2.5 py-0.5 rounded-full inline-block">پلن برنز (پایه)</span>
+              <h4 class="text-sm font-black text-graphite">پایه برنز</h4>
+              <p class="text-xs font-black text-primary">۴,۵۰۰,۰۰۰ تومان <span class="text-[10px] text-secondary font-normal">/ سالانه</span></p>
+              <ul class="text-[11px] text-secondary space-y-2 pt-2 border-t border-accent/60">
+                <li class="flex items-center gap-1.5"><i data-lucide="check" class="w-3.5 h-3.5 text-emerald-600"></i> ثبت در دایرکتوری عمومی</li>
+                <li class="flex items-center gap-1.5"><i data-lucide="check" class="w-3.5 h-3.5 text-emerald-600"></i> کمیسیون رزرو: ۰٪</li>
+                <li class="flex items-center gap-1.5"><i data-lucide="check" class="w-3.5 h-3.5 text-emerald-600"></i> حداکثر ۵ نمونه‌کار</li>
+                <li class="flex items-center gap-1.5 opacity-50"><i data-lucide="x" class="w-3.5 h-3.5"></i> بدون نشان ویژه‌سازی</li>
+              </ul>
+            </div>
+            <button type="button" onclick="selectSubscriptionPlan('برنز', '۴,۵۰۰,۰۰۰ تومان')" class="w-full bg-slate-100 hover:bg-slate-200 text-graphite font-bold py-2 rounded-xl text-xs transition-colors">انتخاب برنز</button>
+          </div>
+
+          <!-- Plan 2: Silver -->
+          <div class="bg-white border border-accent rounded-2xl p-4 flex flex-col justify-between space-y-4 hover:border-primary transition-all">
+            <div class="space-y-2">
+              <span class="bg-emerald-100 text-emerald-800 text-[10px] font-bold px-2.5 py-0.5 rounded-full inline-block">پلن نقره‌ای</span>
+              <h4 class="text-sm font-black text-graphite">استاندارد نقره‌ای</h4>
+              <p class="text-xs font-black text-primary">۸,۹۰۰,۰۰۰ تومان <span class="text-[10px] text-secondary font-normal">/ سالانه</span></p>
+              <ul class="text-[11px] text-secondary space-y-2 pt-2 border-t border-accent/60">
+                <li class="flex items-center gap-1.5"><i data-lucide="check" class="w-3.5 h-3.5 text-emerald-600"></i> تمام امکانات برنز</li>
+                <li class="flex items-center gap-1.5"><i data-lucide="check" class="w-3.5 h-3.5 text-emerald-600"></i> ثبت ۱۵ عکس نمونه‌کار</li>
+                <li class="flex items-center gap-1.5"><i data-lucide="check" class="w-3.5 h-3.5 text-emerald-600"></i> پاسخگوی خودکار چت</li>
+                <li class="flex items-center gap-1.5"><i data-lucide="check" class="w-3.5 h-3.5 text-emerald-600"></i> ثبت تخفیف‌های ویژه</li>
+              </ul>
+            </div>
+            <button type="button" onclick="selectSubscriptionPlan('نقره‌ای', '۸,۹۰۰,۰۰۰ تومان')" class="w-full bg-slate-100 hover:bg-slate-200 text-graphite font-bold py-2 rounded-xl text-xs transition-colors">انتخاب نقره‌ای</button>
+          </div>
+
+          <!-- Plan 3: Gold (Active) -->
+          <div class="bg-amber-50/80 border-2 border-[#D4AF37] rounded-2xl p-4 flex flex-col justify-between space-y-4 relative shadow-md">
+            <span class="absolute -top-3 right-4 bg-[#D4AF37] text-[#1B3B2B] text-[10px] font-black px-2.5 py-0.5 rounded-full shadow-xs">محبوب‌ترین (فعال شما)</span>
+            <div class="space-y-2 pt-1">
+              <span class="bg-amber-100 text-amber-900 text-[10px] font-bold px-2.5 py-0.5 rounded-full inline-block">پلن طلایی</span>
+              <h4 class="text-sm font-black text-graphite">طلایی ۱ ساله</h4>
+              <p class="text-xs font-black text-primary">۱۲,۵۰۰,۰۰۰ تومان <span class="text-[10px] text-secondary font-normal">/ سالانه</span></p>
+              <ul class="text-[11px] text-secondary space-y-2 pt-2 border-t border-amber-200">
+                <li class="flex items-center gap-1.5"><i data-lucide="check" class="w-3.5 h-3.5 text-emerald-600"></i> حضور در ویترین VIP صفحه اصلی</li>
+                <li class="flex items-center gap-1.5"><i data-lucide="check" class="w-3.5 h-3.5 text-emerald-600"></i> نمونه‌کار نامحدود + لایت‌باکس</li>
+                <li class="flex items-center gap-1.5"><i data-lucide="check" class="w-3.5 h-3.5 text-emerald-600"></i> صدور پیش‌فاکتور دیجیتال</li>
+                <li class="flex items-center gap-1.5"><i data-lucide="check" class="w-3.5 h-3.5 text-emerald-600"></i> ارسال SMS آنی به مشتری</li>
+              </ul>
+            </div>
+            <button type="button" onclick="selectSubscriptionPlan('طلایی', '۱۲,۵۰۰,۰۰۰ تومان')" class="w-full bg-primary hover:bg-emerald-900 text-white font-black py-2 rounded-xl text-xs transition-colors shadow-xs">تمدید طلایی</button>
+          </div>
+
+          <!-- Plan 4: VIP Kavir -->
+          <div class="bg-gradient-to-b from-slate-900 to-emerald-950 text-white border border-[#D4AF37] rounded-2xl p-4 flex flex-col justify-between space-y-4 shadow-lg">
+            <div class="space-y-2">
+              <span class="bg-[#D4AF37] text-[#1B3B2B] text-[10px] font-black px-2.5 py-0.5 rounded-full inline-block">VIP اختصاصی کویر</span>
+              <h4 class="text-sm font-black text-[#D4AF37]">ویژه VIP استان یزد</h4>
+              <p class="text-xs font-black text-amber-300">۱۸,۹۰۰,۰۰۰ تومان <span class="text-[10px] text-slate-300 font-normal">/ سالانه</span></p>
+              <ul class="text-[11px] text-slate-200 space-y-2 pt-2 border-t border-white/20">
+                <li class="flex items-center gap-1.5"><i data-lucide="check" class="w-3.5 h-3.5 text-[#D4AF37]"></i> نشان طلایی تاییدیه اختصاصی</li>
+                <li class="flex items-center gap-1.5"><i data-lucide="check" class="w-3.5 h-3.5 text-[#D4AF37]"></i> رتبه ۱ نتایج جستجو دایرکتوری</li>
+                <li class="flex items-center gap-1.5"><i data-lucide="check" class="w-3.5 h-3.5 text-[#D4AF37]"></i> پشتیبانی ۲۴ ساعته اختصاصی</li>
+              </ul>
+            </div>
+            <button type="button" onclick="selectSubscriptionPlan('VIP کویر', '۱۸,۹۰۰,۰۰۰ تومان')" class="w-full bg-[#D4AF37] hover:bg-amber-400 text-[#1B3B2B] font-black py-2 rounded-xl text-xs transition-colors shadow-xs">ارتقا به VIP</button>
+          </div>
+
+        </div>
+
+        <div class="bg-emerald-50 border border-emerald-200 rounded-2xl p-4 text-xs text-emerald-900 flex items-center justify-between gap-3">
+          <div class="flex items-center gap-2">
+            <i data-lucide="shield-check" class="w-5 h-5 text-emerald-700 shrink-0"></i>
+            <span>تضمین رسمی عروسی تو: ۱۰۰٪ مبالغ رزرو مستقیماً توسط کسب‌وکار شما دریافت شده و هیچ‌گونه کمیسیونی کسر نمی‌گردد.</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- PORTFOLIO MODAL (#portfolio-modal) -->
+  <div id="portfolio-modal" class="hidden fixed inset-0 bg-black/60 backdrop-blur-xs z-[999999] flex items-center justify-center p-4 transition-all animate-fadeIn" onclick="if(event.target === this) closePortfolioModal()">
+    <div class="bg-white rounded-3xl shadow-2xl max-w-lg w-full overflow-hidden border border-[#D4AF37]/50 flex flex-col animate-scaleUp relative">
+      <div class="bg-[#1B3B2B] text-white p-5 flex items-center justify-between border-b border-[#D4AF37]/30 shrink-0">
+        <div class="flex items-center gap-2.5">
+          <div class="w-10 h-10 rounded-xl bg-[#D4AF37] text-[#1B3B2B] flex items-center justify-center shadow-sm">
+            <i data-lucide="image" class="w-5 h-5"></i>
+          </div>
+          <div>
+            <h3 id="portfolio-modal-title" class="text-base font-bold text-[#D4AF37]">افزودن / ویرایش نمونه‌کار</h3>
+            <span class="text-[11px] text-amber-200/80 font-medium">مدیریت تصاویر گالری عمومی و انتخاب کاور اصلی</span>
+          </div>
+        </div>
+
+        <button onclick="closePortfolioModal()" class="w-9 h-9 rounded-xl bg-white/10 hover:bg-white/20 text-white flex items-center justify-center transition-colors cursor-pointer" title="بستن">
+          <i data-lucide="x" class="w-5 h-5"></i>
+        </button>
+      </div>
+
+      <form id="portfolio-form" onsubmit="savePortfolioModal(event)" class="p-6 space-y-4 text-xs font-bold text-graphite">
+        <input type="hidden" id="port-id" value="">
+
+        <div class="space-y-1">
+          <label class="block text-secondary">عنوان تصویر / نمونه‌کار *</label>
+          <input type="text" id="port-title" required placeholder="مثلاً: دیزاین ورودی باغ و سفره عقد VIP" class="w-full bg-[#F5EFEB] border border-[#E0D8C8] rounded-xl p-3 text-xs font-medium focus:outline-none focus:border-[#D4AF37]">
+        </div>
+
+        <div class="space-y-1">
+          <label class="block text-secondary">تگ دسته‌بندی تصویر *</label>
+          <select id="port-category" required class="w-full bg-[#F5EFEB] border border-[#E0D8C8] rounded-xl p-3 text-xs font-bold text-graphite focus:outline-none focus:border-[#D4AF37] cursor-pointer">
+            <option value="ورودی">ورودی & محوطه</option>
+            <option value="سالن اصلی">سالن اصلی & استیج</option>
+            <option value="سفره عقد">سفره عقد سنتی & VIP</option>
+            <option value="دیزاین & گل‌آرایی">دیزاین & گل‌آرایی</option>
+            <option value="فرمالیته & عکاسی">فرمالیته & عکاسی</option>
+            <option value="نورپردازی & سیستم صوتی">نورپردازی & سیستم صوتی</option>
+          </select>
+        </div>
+
+        <div class="space-y-1">
+          <label class="block text-secondary">آدرس اینترنتی تصویر (Image URL) *</label>
+          <input type="text" id="port-img-url" required placeholder="https://images.unsplash.com/..." class="w-full bg-[#F5EFEB] border border-[#E0D8C8] rounded-xl p-3 text-xs font-mono dir-ltr focus:outline-none focus:border-[#D4AF37]">
+        </div>
+
+        <div class="space-y-1">
+          <label class="block text-secondary">یا آپلود مستقیم تصویر از دستگاه:</label>
+          <input type="file" id="port-img-file" accept="image/*" class="w-full bg-[#F5EFEB] border border-[#E0D8C8] rounded-xl p-2 text-xs font-medium cursor-pointer">
+        </div>
+
+        <div class="p-3 bg-amber-50 border border-amber-200 rounded-xl text-amber-900 text-[11px] font-medium leading-relaxed">
+          💡 پس از افزودن، می‌توانید دکمه «انتخاب به‌عنوان کاور» را روی تصویر مربوطه بزنید.
+        </div>
+
+        <button type="submit" class="w-full bg-[#D4AF37] hover:bg-amber-400 text-[#1B3B2B] font-black py-3 rounded-2xl text-xs shadow-md transition-all flex items-center justify-center gap-2 cursor-pointer">
+          <i data-lucide="check" class="w-4 h-4"></i>
+          <span>ذخیره نمونه‌کار</span>
+        </button>
+      </form>
     </div>
   </div>
 
