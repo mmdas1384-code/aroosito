@@ -246,13 +246,17 @@ header, nav, .header-container, .navbar {
   animation: fadeIn 0.3s ease-in-out;
 }
 
-/* Booklet Style Tab Bar Navigation */
+/* Booklet Style Floating Segmented Tab Switcher */
 .clean-vmodal-tabs {
     display: flex !important;
-    gap: 12px !important;
-    background: #FFFFFF !important;
-    padding: 0 24px !important;
-    border-bottom: 1px solid #E5E7EB !important;
+    align-items: center !important;
+    gap: 6px !important;
+    background: rgba(243, 244, 246, 0.95) !important;
+    backdrop-filter: blur(8px) !important;
+    padding: 6px !important;
+    border-radius: 16px !important;
+    border: 1px solid rgba(229, 231, 235, 0.9) !important;
+    margin: 12px 24px 8px 24px !important;
     overflow-x: auto !important;
     scrollbar-width: none; /* Firefox */
 }
@@ -263,31 +267,44 @@ header, nav, .header-container, .navbar {
 
 .vtab-btn {
     background: transparent !important;
-    color: #CBD5E1 !important;
-    border: none !important;
-    border-bottom: 2px solid transparent !important;
-    border-radius: 0 !important;
-    padding: 10px 16px !important;
+    color: #374151 !important;
+    border: 1px solid transparent !important;
+    border-radius: 12px !important;
+    padding: 8px 16px !important;
     cursor: pointer !important;
     font-family: inherit !important;
     font-size: 13px !important;
-    font-weight: 600 !important;
+    font-weight: 700 !important;
     white-space: nowrap !important;
-    transition: all 0.25s ease-in-out !important;
+    transition: all 0.2s ease-in-out !important;
+    display: inline-flex !important;
+    align-items: center !important;
+    gap: 6px !important;
 }
 
 .vtab-btn:hover {
-    color: #D4AF37 !important;
-    background: transparent !important;
+    color: #111827 !important;
+    background: rgba(255, 255, 255, 0.6) !important;
 }
 
 .vtab-btn.active {
-    background: transparent !important;
-    color: #D4AF37 !important;
+    background: #FFFFFF !important;
+    color: #1B3B2B !important;
+    border: 1px solid rgba(229, 231, 235, 0.9) !important;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08) !important;
     font-weight: 800 !important;
-    border-bottom: 2px solid #D4AF37 !important;
-    text-shadow: 0 0 8px rgba(212, 175, 55, 0.4) !important;
-    box-shadow: none !important;
+    position: relative !important;
+    text-shadow: none !important;
+}
+
+.vtab-btn.active::after {
+    content: '' !important;
+    display: inline-block !important;
+    width: 6px !important;
+    height: 6px !important;
+    border-radius: 50% !important;
+    background: #D4AF37 !important;
+    margin-right: 4px !important;
 }
 
 /* Gallery Filter Pills in Modal */

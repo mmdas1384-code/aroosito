@@ -9310,7 +9310,16 @@ window.addEventListener('click', (e) => {
 
 
 // Expose modal functions to window globally
-try { window.openVendorDetailModal = openVendorDetailModal; window.closeVendorDetailModal = closeVendorDetailModal; } catch(e) {}
+try {
+  window.openVendorDetailModal = openVendorDetailModal;
+  window.closeVendorDetailModal = closeVendorDetailModal;
+  window.switchModalTab = switchModalTab;
+  window.switchVdmSubTab = switchVdmSubTab;
+  window.toggleFavoriteVendorModal = toggleFavoriteVendorModal;
+  window.triggerPackageInquiry = triggerPackageInquiry;
+  window.handleModalReviewSubmit = handleModalReviewSubmit;
+  window.renderModalAvailabilityCalendar = renderModalAvailabilityCalendar;
+} catch(e) {}
 
 
 // Helper functions for vendor profile modal actions
