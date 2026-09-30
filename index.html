@@ -1779,10 +1779,10 @@
           </div>
 
           <div class="space-y-1.5">
-            <label class="block">نرخ کارمزد خدمات رزرو آنلاین یزد (%):</label>
+            <label class="block">نرخ اشتراک پایه ماهانه تامین‌کنندگان (تومان):</label>
             <div class="flex gap-2">
-              <input type="number" id="admin-commission-rate" value="2.5" class="w-full bg-slate-50 border border-accent rounded-xl px-3 py-2 text-xs font-medium focus:outline-none focus:border-primary">
-              <button onclick="showToast('نرخ کارمزد پلتفرم با موفقیت بروزرسانی شد', 'success')" class="bg-primary hover:bg-emerald-900 text-white px-3 py-2 rounded-xl text-xs font-bold transition-all shrink-0">ثبت</button>
+              <input type="text" id="admin-subscription-base" value="۲,۵۰۰,۰۰۰" class="w-full bg-slate-50 border border-accent rounded-xl px-3 py-2 text-xs font-medium focus:outline-none focus:border-primary">
+              <button onclick="showToast('تعرفه اشتراک پلتفرم با موفقیت بروزرسانی شد', 'success')" class="bg-primary hover:bg-emerald-900 text-white px-3 py-2 rounded-xl text-xs font-bold transition-all shrink-0">ثبت</button>
             </div>
           </div>
 
@@ -1849,73 +1849,73 @@
         </div>
       </div>
 
-      <!-- Dynamic Commission & Revenue Logs Section -->
+      <!-- Dynamic Subscription & Membership Revenue Logs Section -->
       <div class="bg-white border border-accent rounded-3xl p-6 shadow-xs space-y-4">
         <div class="flex justify-between items-center border-b border-accent pb-3">
           <h3 class="text-lg font-bold text-graphite flex items-center gap-2">
-            <i data-lucide="line-chart" class="w-5 h-5 text-primary"></i>
-            <span>گزارش درآمد پلتفرم و کارمزد تراکنش‌های یزد (Dynamic Commission & Revenue Logs)</span>
+            <i data-lucide="award" class="w-5 h-5 text-primary"></i>
+            <span>گزارش درآمد حاصل از اشتراک تامین‌کنندگان یزد (Subscription & Membership Revenue Logs)</span>
           </h3>
-          <span class="bg-emerald-50 text-emerald-800 text-xs font-bold px-3 py-1 rounded-full border border-emerald-200">کارمزد فعال: ۲.۵٪</span>
+          <span class="bg-emerald-50 text-emerald-800 text-xs font-bold px-3 py-1 rounded-full border border-emerald-200">مدل حق اشتراک ثابت (۰٪ کمیسیون)</span>
         </div>
 
         <div class="grid grid-cols-1 md:grid-cols-3 gap-4 text-xs">
           <div class="bg-bgCustom border border-accent rounded-2xl p-4 space-y-1">
-            <span class="text-secondary font-bold">کل حجم معاملات (GMV یزد):</span>
-            <span class="block text-xl font-black text-graphite">۴۸,۵۰۰,۰۰۰,۰۰۰ تومان</span>
+            <span class="text-secondary font-bold">تعداد کل اشتراک‌های فعال:</span>
+            <span class="block text-xl font-black text-graphite">۱۲۸ تامین‌کننده</span>
           </div>
 
           <div class="bg-bgCustom border border-accent rounded-2xl p-4 space-y-1">
-            <span class="text-secondary font-bold">درآمد کارمزد پلتفرم (۲.۵٪):</span>
-            <span class="block text-xl font-black text-primary">۱,۲۱۲,۵۰۰,۰۰۰ تومان</span>
+            <span class="text-secondary font-bold">درآمد کل حاصل از اشتراک‌ها (سالانه):</span>
+            <span class="block text-xl font-black text-primary">۱,۴۵۰,۰۰۰,۰۰۰ تومان</span>
           </div>
 
           <div class="bg-bgCustom border border-accent rounded-2xl p-4 space-y-1">
-            <span class="text-secondary font-bold">رشد درآمد ماهانه:</span>
-            <span class="block text-xl font-black text-emerald-700">↑ ۱۸.۴٪ نسبت به ماه قبل</span>
+            <span class="text-secondary font-bold">اشتراک‌های در آستانه انقضا (۳۰ روز):</span>
+            <span class="block text-xl font-black text-amber-700">۱۴ تامین‌کننده</span>
           </div>
         </div>
 
         <div class="space-y-3 pt-2">
-          <h4 class="text-xs font-bold text-graphite">تفکیک درآمد کارمزد به تفکیک دسته‌بندی‌های اصلی خدمات:</h4>
+          <h4 class="text-xs font-bold text-graphite">تفکیک درآمد و توزیع پلن‌های اشتراک فعال (Subscription Tiers):</h4>
           <div id="admin-revenue-breakdown" class="space-y-2.5 text-xs font-bold">
             <div class="space-y-1">
               <div class="flex justify-between text-graphite">
-                <span>تالارها و باغ‌های عروسی (۴۰٪)</span>
-                <span>۴۸۵,۰۰۰,۰۰۰ تومان</span>
+                <span>پلن طلایی / Gold Tier (۵۵٪) — ۷۰ تامین‌کننده</span>
+                <span>۷۹۷,۵۰۰,۰۰۰ تومان</span>
               </div>
               <div class="w-full bg-slate-100 h-2 rounded-full overflow-hidden">
-                <div class="bg-primary h-full rounded-full" style="width: 40%;"></div>
+                <div class="bg-primary h-full rounded-full" style="width: 55%;"></div>
               </div>
             </div>
 
             <div class="space-y-1">
               <div class="flex justify-between text-graphite">
-                <span>آتلیه‌ها و عکاسی حرفه‌ای (۲۵٪)</span>
-                <span>۳۰۳,۱۲۵,۰۰۰ تومان</span>
+                <span>پلن VIP کویر / VIP Tier (۲۵٪) — ۳۲ تامین‌کننده</span>
+                <span>۵۰۷,۵۰۰,۰۰۰ تومان</span>
               </div>
               <div class="w-full bg-slate-100 h-2 rounded-full overflow-hidden">
-                <div class="bg-emerald-600 h-full rounded-full" style="width: 25%;"></div>
+                <div class="bg-amber-500 h-full rounded-full" style="width: 25%;"></div>
               </div>
             </div>
 
             <div class="space-y-1">
               <div class="flex justify-between text-graphite">
-                <span>سالن‌های زیبایی و آرایش عروس (۲۰٪)</span>
-                <span>۲۴۲,۵۰۰,۰۰۰ تومان</span>
+                <span>پلن نقره‌ای / Silver Tier (۱۵٪) — ۱۹ تامین‌کننده</span>
+                <span>۱۱۵,۰۰۰,۰۰۰ تومان</span>
               </div>
               <div class="w-full bg-slate-100 h-2 rounded-full overflow-hidden">
-                <div class="bg-amber-500 h-full rounded-full" style="width: 20%;"></div>
+                <div class="bg-emerald-600 h-full rounded-full" style="width: 15%;"></div>
               </div>
             </div>
 
             <div class="space-y-1">
               <div class="flex justify-between text-graphite">
-                <span>مزون و سایر خدمات جانبی (۱۵٪)</span>
-                <span>۱۸۱,۸۷۵,۰۰۰ تومان</span>
+                <span>پلن برنز / Bronze Tier (۵٪) — ۷ تامین‌کننده</span>
+                <span>۳۰,۰۰۰,۰۰۰ تومان</span>
               </div>
               <div class="w-full bg-slate-100 h-2 rounded-full overflow-hidden">
-                <div class="bg-rose-500 h-full rounded-full" style="width: 15%;"></div>
+                <div class="bg-slate-400 h-full rounded-full" style="width: 5%;"></div>
               </div>
             </div>
           </div>
@@ -2150,6 +2150,41 @@
             <input type="checkbox" id="sms-toggle" checked onchange="showToast('تنظیمات دریافت پیامک فوری مشتری به روزرسانی شد.', 'info')" class="rounded text-primary focus:ring-primary w-4 h-4">
             <span>پیامک مشتری</span>
           </label>
+        </div>
+      </div>
+
+      <!-- My Plan & Subscription Status Card (وضعیت اشتراک من) -->
+      <div class="bg-white border border-accent rounded-3xl p-6 shadow-xs flex flex-col md:flex-row items-start md:items-center justify-between gap-6 relative overflow-hidden">
+        <div class="space-y-2">
+          <div class="flex items-center gap-2">
+            <span class="bg-amber-100 text-amber-900 border border-amber-300 text-xs font-bold px-3 py-1 rounded-full flex items-center gap-1">
+              <i data-lucide="crown" class="w-3.5 h-3.5 text-amber-600"></i>
+              <span>اشتراک فعال: طلایی ۱ ساله (Gold Tier)</span>
+            </span>
+            <span class="bg-emerald-100 text-emerald-800 text-[11px] font-bold px-2.5 py-0.5 rounded-md">وضعیت: فعال</span>
+          </div>
+
+          <h3 class="text-lg font-black text-graphite flex items-center gap-2">
+            <span>مدیریت پلن و عضویت ویژه کسب‌وکار</span>
+          </h3>
+
+          <div class="flex flex-wrap items-center gap-4 text-xs text-secondary font-medium">
+            <span class="flex items-center gap-1">
+              <i data-lucide="calendar" class="w-4 h-4 text-primary"></i>
+              <span>اعتبار باقی‌مانده: <strong class="text-graphite font-bold">۱۴۲ روز</strong> (تا ۱۵ اسفند ۱۴۰۳)</span>
+            </span>
+            <span class="flex items-center gap-1 text-emerald-700 font-bold bg-emerald-50 px-2.5 py-1 rounded-lg border border-emerald-200">
+              <i data-lucide="percent" class="w-3.5 h-3.5"></i>
+              <span>کمیسیون رزرو: ۰٪ (دریافت ۱۰۰٪ مستقیم مبالغ)</span>
+            </span>
+          </div>
+        </div>
+
+        <div class="flex items-center gap-3 shrink-0">
+          <button onclick="showToast('درخواست ارتقا / تمدید اشتراک با موفقیت ثبت گردید. کارشناسان پشتیبانی به‌زودی با شما تماس می‌گیرند.', 'success')" class="bg-primary hover:bg-emerald-900 text-white px-5 py-3 rounded-2xl text-xs font-bold transition-all shadow-md flex items-center gap-2">
+            <i data-lucide="refresh-cw" class="w-4 h-4"></i>
+            <span>تمدید / ارتقای اشتراک</span>
+          </button>
         </div>
       </div>
 
@@ -4377,10 +4412,13 @@
   <div id="modal-vendor-package" class="fixed inset-0 bg-black/60 backdrop-blur-xs z-[9999] hidden items-center justify-center p-4">
     <div class="bg-white border border-accent rounded-3xl max-w-lg w-full p-6 shadow-2xl space-y-4 relative">
       <div class="flex justify-between items-center border-b border-accent pb-3">
-        <h3 id="modal-package-title" class="text-base font-bold text-graphite flex items-center gap-2">
-          <i data-lucide="package-plus" class="w-5 h-5 text-primary"></i>
-          <span>افزودن / ویرایش پکیج خدمات</span>
-        </h3>
+        <div>
+          <h3 id="modal-package-title" class="text-base font-bold text-graphite flex items-center gap-2">
+            <i data-lucide="package-plus" class="w-5 h-5 text-primary"></i>
+            <span>افزودن / ویرایش پکیج خدمات</span>
+          </h3>
+          <p class="text-[11px] text-emerald-700 font-bold mt-0.5">دریافت مستقیم ۱۰۰٪ تسویه از مشتری (۰٪ کمیسیون پلتفرم)</p>
+        </div>
         <button type="button" onclick="toggleAddPackageModal(false)" class="text-secondary hover:text-graphite font-bold">
           <i data-lucide="x" class="w-5 h-5"></i>
         </button>
