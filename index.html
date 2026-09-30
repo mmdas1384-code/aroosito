@@ -1192,6 +1192,10 @@
           <i data-lucide="coins" class="w-4 h-4"></i>
           <span>💰 خلاصه بودجه و هزینه‌ها</span>
         </button>
+        <button id="planner-subtab-offers" onclick="switchPlannerSubTab('offers')" class="flex-1 py-3 px-4 rounded-xl transition-all text-secondary hover:text-graphite hover:bg-slate-50 text-center flex items-center justify-center gap-2">
+          <i data-lucide="message-square" class="w-4 h-4"></i>
+          <span>📩 استعلام‌ها و پیشنهادهای دریافتی</span>
+        </button>
       </div>
 
       <!-- SUB-TAB 1: CHRONOLOGICAL CHECKLIST WORKSPACE -->
@@ -1312,9 +1316,9 @@
             <div>
               <h2 class="text-xl font-bold text-graphite flex items-center gap-2">
                 <i data-lucide="calculator" class="w-6 h-6 text-primary"></i>
-                <span>خلاصه بودجه و هزینه‌های ثبت شده</span>
+                <span>خلاصه بودجه و هزینه‌های ثبت شده (Interactive Budget Tracker)</span>
               </h2>
-              <p class="text-xs text-secondary mt-1">نمای وضعیت مالی مرتبط با اقدامات و قراردادهای شما</p>
+              <p class="text-xs text-secondary mt-1">محاسبه آنلاین بودجه تخصیصی در برابر هزینه‌های پرداختی با نمودار تفکیک دسته‌بندی‌ها</p>
             </div>
 
             <button onclick="switchTab('tools')" class="bg-primary hover:bg-emerald-900 text-white px-4 py-2.5 rounded-xl text-xs font-bold transition-all flex items-center gap-2 shadow-xs">
@@ -1325,6 +1329,30 @@
 
           <div id="planner-budget-summary-container">
             <!-- Rendered via JS -->
+          </div>
+        </section>
+      </div>
+
+      <!-- SUB-TAB 4: INQUIRIES & VENDOR OFFERS TAB -->
+      <div id="planner-panel-offers" class="planner-panel hidden space-y-6">
+        <section class="bg-white border border-accent rounded-3xl p-6 sm:p-8 shadow-xs space-y-6">
+          <div class="flex flex-col sm:flex-row justify-between sm:items-center gap-4 border-b border-accent pb-4">
+            <div>
+              <h2 class="text-xl font-bold text-graphite flex items-center gap-2">
+                <i data-lucide="message-square" class="w-6 h-6 text-primary"></i>
+                <span>پیگیری استعلام‌ها و پیشنهادهای قیمت دریافتی (Inquiry Tracking & Offers)</span>
+              </h2>
+              <p class="text-xs text-secondary mt-1">مشاهده تمام درخواست‌های قیمت ارسالی برای تامین‌کنندگان یزد و کاتالوگ‌ها/پیشنهادهای دریافتی</p>
+            </div>
+
+            <button onclick="switchTab('directory')" class="bg-primary hover:bg-emerald-900 text-white px-4 py-2 rounded-xl text-xs font-bold transition-all flex items-center gap-1.5 shadow-xs shrink-0">
+              <i data-lucide="plus" class="w-4 h-4"></i>
+              <span>استعلام از تامین‌کنندگان جدید</span>
+            </button>
+          </div>
+
+          <div id="planner-offers-list" class="space-y-4">
+            <!-- Populated dynamically via JS -->
           </div>
         </section>
       </div>
@@ -1794,9 +1822,12 @@
       <!-- Pending Vendor Onboarding Applications Table -->
       <div class="bg-white border border-accent rounded-3xl p-6 shadow-xs space-y-4">
         <div class="flex justify-between items-center border-b border-accent pb-3">
-          <h3 class="text-lg font-bold text-graphite">درخواست‌های معلق عضویت کسب‌وکارها (Pending Vendors)</h3>
+          <h3 class="text-lg font-bold text-graphite flex items-center gap-2">
+            <i data-lucide="user-check" class="w-5 h-5 text-primary"></i>
+            <span>صف بررسی و اعتبارسنجی تامین‌کنندگان جدید (Vendor Verification Queue)</span>
+          </h3>
           <span class="bg-amber-50 text-amber-800 text-xs font-bold px-3 py-1 rounded-full border border-amber-200">
-            بررسی مدارک و اعطای تاییدیه رسمی
+            بررسی مدارک و اعطای نشان تایید
           </span>
         </div>
 
@@ -1808,13 +1839,86 @@
                 <th class="p-3">دسته‌بندی</th>
                 <th class="p-3">مدیریت & موبایل</th>
                 <th class="p-3">شهر</th>
-                <th class="p-3 text-center">عملیات تایید</th>
+                <th class="p-3 text-center">عملیات تایید / رد</th>
               </tr>
             </thead>
             <tbody id="admin-pending-apps-table" class="divide-y divide-accent/60 font-medium">
               <!-- Populated via JS -->
             </tbody>
           </table>
+        </div>
+      </div>
+
+      <!-- Dynamic Commission & Revenue Logs Section -->
+      <div class="bg-white border border-accent rounded-3xl p-6 shadow-xs space-y-4">
+        <div class="flex justify-between items-center border-b border-accent pb-3">
+          <h3 class="text-lg font-bold text-graphite flex items-center gap-2">
+            <i data-lucide="line-chart" class="w-5 h-5 text-primary"></i>
+            <span>گزارش درآمد پلتفرم و کارمزد تراکنش‌های یزد (Dynamic Commission & Revenue Logs)</span>
+          </h3>
+          <span class="bg-emerald-50 text-emerald-800 text-xs font-bold px-3 py-1 rounded-full border border-emerald-200">کارمزد فعال: ۲.۵٪</span>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-4 text-xs">
+          <div class="bg-bgCustom border border-accent rounded-2xl p-4 space-y-1">
+            <span class="text-secondary font-bold">کل حجم معاملات (GMV یزد):</span>
+            <span class="block text-xl font-black text-graphite">۴۸,۵۰۰,۰۰۰,۰۰۰ تومان</span>
+          </div>
+
+          <div class="bg-bgCustom border border-accent rounded-2xl p-4 space-y-1">
+            <span class="text-secondary font-bold">درآمد کارمزد پلتفرم (۲.۵٪):</span>
+            <span class="block text-xl font-black text-primary">۱,۲۱۲,۵۰۰,۰۰۰ تومان</span>
+          </div>
+
+          <div class="bg-bgCustom border border-accent rounded-2xl p-4 space-y-1">
+            <span class="text-secondary font-bold">رشد درآمد ماهانه:</span>
+            <span class="block text-xl font-black text-emerald-700">↑ ۱۸.۴٪ نسبت به ماه قبل</span>
+          </div>
+        </div>
+
+        <div class="space-y-3 pt-2">
+          <h4 class="text-xs font-bold text-graphite">تفکیک درآمد کارمزد به تفکیک دسته‌بندی‌های اصلی خدمات:</h4>
+          <div id="admin-revenue-breakdown" class="space-y-2.5 text-xs font-bold">
+            <div class="space-y-1">
+              <div class="flex justify-between text-graphite">
+                <span>تالارها و باغ‌های عروسی (۴۰٪)</span>
+                <span>۴۸۵,۰۰۰,۰۰۰ تومان</span>
+              </div>
+              <div class="w-full bg-slate-100 h-2 rounded-full overflow-hidden">
+                <div class="bg-primary h-full rounded-full" style="width: 40%;"></div>
+              </div>
+            </div>
+
+            <div class="space-y-1">
+              <div class="flex justify-between text-graphite">
+                <span>آتلیه‌ها و عکاسی حرفه‌ای (۲۵٪)</span>
+                <span>۳۰۳,۱۲۵,۰۰۰ تومان</span>
+              </div>
+              <div class="w-full bg-slate-100 h-2 rounded-full overflow-hidden">
+                <div class="bg-emerald-600 h-full rounded-full" style="width: 25%;"></div>
+              </div>
+            </div>
+
+            <div class="space-y-1">
+              <div class="flex justify-between text-graphite">
+                <span>سالن‌های زیبایی و آرایش عروس (۲۰٪)</span>
+                <span>۲۴۲,۵۰۰,۰۰۰ تومان</span>
+              </div>
+              <div class="w-full bg-slate-100 h-2 rounded-full overflow-hidden">
+                <div class="bg-amber-500 h-full rounded-full" style="width: 20%;"></div>
+              </div>
+            </div>
+
+            <div class="space-y-1">
+              <div class="flex justify-between text-graphite">
+                <span>مزون و سایر خدمات جانبی (۱۵٪)</span>
+                <span>۱۸۱,۸۷۵,۰۰۰ تومان</span>
+              </div>
+              <div class="w-full bg-slate-100 h-2 rounded-full overflow-hidden">
+                <div class="bg-rose-500 h-full rounded-full" style="width: 15%;"></div>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
 
@@ -2241,9 +2345,9 @@
         <div class="flex justify-between items-center border-b border-accent pb-4">
           <h3 class="text-lg font-bold text-graphite flex items-center gap-2">
             <i data-lucide="package-plus" class="w-5 h-5 text-primary"></i>
-            <span>مدیریت پکیج‌های قیمت و نمونه‌کارها (Portfolio & Package Manager)</span>
+            <span>مدیریت پکیج‌های قیمت و نمونه‌کارها (Package Editor & Manager)</span>
           </h3>
-          <button onclick="toggleAddPackageModal(true)" class="bg-primary text-white font-bold px-4 py-2 rounded-xl text-xs hover:bg-emerald-900 transition-colors flex items-center gap-1.5">
+          <button onclick="toggleAddPackageModal(true)" class="bg-primary text-white font-bold px-4 py-2 rounded-xl text-xs hover:bg-emerald-900 transition-colors flex items-center gap-1.5 shadow-xs">
             <i data-lucide="plus" class="w-4 h-4"></i>
             <span>افزودن پکیج خدمات جدید</span>
           </button>
@@ -2256,14 +2360,21 @@
 
       <!-- Persian Booking Calendar Simulator -->
       <section class="bg-white border border-accent rounded-3xl p-6 shadow-xs space-y-4">
-        <div class="flex items-center justify-between border-b border-accent pb-3">
+        <div class="flex flex-col sm:flex-row items-start sm:items-center justify-between border-b border-accent pb-3 gap-2">
           <div>
-            <h3 class="text-lg font-bold text-graphite">تقویم رزرو و روزهای پر/خالی (اردیبهشت ۱۴۰۳)</h3>
-            <p class="text-xs text-secondary">روی روزها کلیک کنید تا وضعیت آنها بین "آزاد" (سبز) و "رزرو شده" (قرمز) تغییر کند</p>
+            <h3 class="text-lg font-bold text-graphite flex items-center gap-2">
+              <i data-lucide="calendar" class="w-5 h-5 text-primary"></i>
+              <span>تقویم رزرو و روزهای پر/خالی (Interactive Shamsi Calendar Manager)</span>
+            </h3>
+            <p class="text-xs text-secondary mt-0.5">روی هر تاریخ کلیک کنید تا وضعیت آن بین "آزاد" (سبز) و "رزرو شده" (قرمز) تغییر کند.</p>
           </div>
-          <div class="flex items-center gap-3 text-xs font-bold">
-            <span class="flex items-center gap-1"><span class="w-3 h-3 rounded-full bg-primary inline-block"></span> آزاد</span>
-            <span class="flex items-center gap-1"><span class="w-3 h-3 rounded-full bg-rose-500 inline-block"></span> رزرو شده</span>
+          <div class="flex items-center gap-3 text-xs font-bold shrink-0">
+            <span class="flex items-center gap-1.5 bg-emerald-50 text-emerald-800 px-2.5 py-1 rounded-full border border-emerald-200">
+              <span class="w-2.5 h-2.5 rounded-full bg-emerald-500 inline-block"></span> آزاد
+            </span>
+            <span class="flex items-center gap-1.5 bg-rose-50 text-rose-800 px-2.5 py-1 rounded-full border border-rose-200">
+              <span class="w-2.5 h-2.5 rounded-full bg-rose-500 inline-block"></span> رزرو شده
+            </span>
           </div>
         </div>
 
@@ -2274,7 +2385,13 @@
 
       <!-- Incoming Inquiries Response Panel -->
       <section class="bg-white border border-accent rounded-3xl p-6 shadow-xs space-y-4">
-        <h3 class="text-lg font-bold text-graphite border-b border-accent pb-3">استعلام‌های جدید دریافتی از زوج‌ها</h3>
+        <div class="flex justify-between items-center border-b border-accent pb-3">
+          <h3 class="text-lg font-bold text-graphite flex items-center gap-2">
+            <i data-lucide="message-square" class="w-5 h-5 text-primary"></i>
+            <span>استعلام‌های جدید دریافتی و مدیریت درخواست‌ها (Interactive Inquiry Manager)</span>
+          </h3>
+          <span class="text-xs font-bold text-secondary bg-bgCustom px-3 py-1 rounded-full border border-accent">لیست لیدها و وضعیت</span>
+        </div>
 
         <div id="inquiry-list" class="space-y-3">
           <!-- Populated via JS -->
@@ -4256,6 +4373,93 @@
     </div>
   </footer>
   <!-- SUBGROUPS MODAL OVERLAY -->
+  <!-- Vendor Package Modal -->
+  <div id="modal-vendor-package" class="fixed inset-0 bg-black/60 backdrop-blur-xs z-[9999] hidden items-center justify-center p-4">
+    <div class="bg-white border border-accent rounded-3xl max-w-lg w-full p-6 shadow-2xl space-y-4 relative">
+      <div class="flex justify-between items-center border-b border-accent pb-3">
+        <h3 id="modal-package-title" class="text-base font-bold text-graphite flex items-center gap-2">
+          <i data-lucide="package-plus" class="w-5 h-5 text-primary"></i>
+          <span>افزودن / ویرایش پکیج خدمات</span>
+        </h3>
+        <button type="button" onclick="toggleAddPackageModal(false)" class="text-secondary hover:text-graphite font-bold">
+          <i data-lucide="x" class="w-5 h-5"></i>
+        </button>
+      </div>
+
+      <form id="form-vendor-package" onsubmit="saveVendorPackageModal(event)" class="space-y-3 text-xs font-bold text-graphite">
+        <input type="hidden" id="pkg-edit-index" value="-1">
+        <div>
+          <label class="block mb-1">عنوان پکیج *</label>
+          <input type="text" id="pkg-title" placeholder="مثلا: پکیج طلایی وی‌آی‌پی" required class="w-full bg-bgCustom border border-accent rounded-xl p-2.5 text-xs font-medium focus:outline-none focus:border-primary">
+        </div>
+        <div class="grid grid-cols-2 gap-3">
+          <div>
+            <label class="block mb-1">قیمت (تومان) *</label>
+            <input type="text" id="pkg-price" placeholder="مثلا: ۴۵,۰۰۰,۰۰۰" required class="w-full bg-bgCustom border border-accent rounded-xl p-2.5 text-xs font-medium focus:outline-none focus:border-primary">
+          </div>
+          <div>
+            <label class="block mb-1">نشان تخفیف / ویژه‌سازی</label>
+            <input type="text" id="pkg-badge" placeholder="مثلا: ۱۵٪ تخفیف ویژه" class="w-full bg-bgCustom border border-accent rounded-xl p-2.5 text-xs font-medium focus:outline-none focus:border-primary">
+          </div>
+        </div>
+        <div>
+          <label class="block mb-1">ویژگی‌ها و اقلام پکیج (با خط جدید جدا کنید) *</label>
+          <textarea id="pkg-features" rows="4" placeholder="۲ نوبت عکاسی مجلل&#10;تصویربرداری هوایی با هلی‌شات&#10;آلبوم ایتالیایی ۶۰ در ۳۰" required class="w-full bg-bgCustom border border-accent rounded-xl p-2.5 text-xs font-medium focus:outline-none focus:border-primary"></textarea>
+        </div>
+
+        <div class="flex justify-end gap-2 pt-2 border-t border-accent">
+          <button type="button" onclick="toggleAddPackageModal(false)" class="bg-bgCustom hover:bg-slate-100 border border-accent text-graphite px-4 py-2 rounded-xl text-xs transition-colors">انصراف</button>
+          <button type="submit" class="bg-primary hover:bg-emerald-900 text-white font-bold px-5 py-2 rounded-xl text-xs transition-colors shadow-xs">ذخیره پکیج</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- Inquiry Quick Reply Modal -->
+  <div id="modal-inquiry-reply" class="fixed inset-0 bg-black/60 backdrop-blur-xs z-[9999] hidden items-center justify-center p-4">
+    <div class="bg-white border border-accent rounded-3xl max-w-lg w-full p-6 shadow-2xl space-y-4 relative">
+      <div class="flex justify-between items-center border-b border-accent pb-3">
+        <h3 class="text-base font-bold text-graphite flex items-center gap-2">
+          <i data-lucide="send" class="w-5 h-5 text-primary"></i>
+          <span>ارسال پاسخ مستقیم به زوج</span>
+        </h3>
+        <button type="button" onclick="closeInquiryReplyModal()" class="text-secondary hover:text-graphite font-bold">
+          <i data-lucide="x" class="w-5 h-5"></i>
+        </button>
+      </div>
+
+      <div class="space-y-3 text-xs font-bold text-graphite">
+        <input type="hidden" id="inquiry-reply-id" value="">
+        <div id="inquiry-reply-couple-info" class="p-3 bg-bgCustom border border-accent rounded-2xl space-y-1">
+          <p class="text-primary font-bold" id="reply-couple-name">زوج محترم</p>
+          <p class="text-secondary font-normal text-[11px]" id="reply-inquiry-details">جزئیات استعلام...</p>
+        </div>
+
+        <div>
+          <label class="block mb-1">تغییر وضعیت استعلام:</label>
+          <select id="reply-status-select" class="w-full bg-bgCustom border border-accent rounded-xl p-2.5 text-xs font-bold focus:outline-none focus:border-primary">
+            <option value="replied" selected>پاسخ داده شده (ارسال کاتالوگ و قیمت)</option>
+            <option value="booked">رزرو نهایی (تایید و ثبت قرارداد)</option>
+            <option value="pending">در انتظار بررسی</option>
+          </select>
+        </div>
+
+        <div>
+          <label class="block mb-1">متن پاسخ و پیشنهاد قیمت ویژه:</label>
+          <textarea id="reply-message-text" rows="3" class="w-full bg-bgCustom border border-accent rounded-xl p-2.5 text-xs font-medium focus:outline-none focus:border-primary" placeholder="سلام! با تشکر از درخواست شما. کاتالوگ و تخفیف ویژه برای تاریخ درخواستی شما آماده است..."></textarea>
+        </div>
+
+        <div class="flex justify-end gap-2 pt-2 border-t border-accent">
+          <button type="button" onclick="closeInquiryReplyModal()" class="bg-bgCustom hover:bg-slate-100 border border-accent text-graphite px-4 py-2 rounded-xl text-xs transition-colors">انصراف</button>
+          <button type="button" onclick="sendInquiryReply()" class="bg-primary hover:bg-emerald-900 text-white font-bold px-5 py-2 rounded-xl text-xs transition-colors shadow-xs flex items-center gap-1.5">
+            <i data-lucide="check" class="w-4 h-4"></i>
+            <span>ثبت و ارسال پاسخ</span>
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
   <div id="subgroups-modal" class="subgroups-overlay hidden">
     <div class="subgroups-card relative">
       <button onclick="document.getElementById('subgroups-modal').classList.add('hidden')" class="close-btn absolute top-3 left-3 w-8 h-8 rounded-full bg-slate-200 hover:bg-slate-300 text-graphite font-bold flex items-center justify-center cursor-pointer transition-colors">✕</button>

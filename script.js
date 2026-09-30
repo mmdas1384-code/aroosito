@@ -2255,7 +2255,10 @@ if (document.readyState === "loading") {
           card.className = "bg-bgCustom border border-accent rounded-2xl p-5 space-y-4 shadow-xs hover:border-primary transition-all flex flex-col justify-between";
           card.innerHTML = `
             <div class="space-y-2">
-              <span class="text-[11px] font-bold text-primary bg-primary/10 px-2.5 py-0.5 rounded-full">پکیج رسمی</span>
+              <div class="flex items-center justify-between">
+                <span class="text-[11px] font-bold text-primary bg-primary/10 px-2.5 py-0.5 rounded-full">پکیج رسمی</span>
+                ${pkg.badge ? `<span class="text-[10px] font-bold text-amber-800 bg-amber-100 px-2 py-0.5 rounded-full">${pkg.badge}</span>` : ''}
+              </div>
               <h4 class="text-base font-bold text-graphite">${pkg.name}</h4>
               <p class="text-sm font-black text-primary">${pkg.price}</p>
 
@@ -2274,16 +2277,29 @@ if (document.readyState === "loading") {
 
       if (dashContainer) {
         dashContainer.innerHTML = '';
-        vendorPackages.forEach(pkg => {
+        vendorPackages.forEach((pkg, idx) => {
           const card = document.createElement('div');
-          card.className = "bg-bgCustom border border-accent rounded-2xl p-4 space-y-2 text-xs";
+          card.className = "bg-bgCustom border border-accent rounded-2xl p-4 space-y-3 text-xs shadow-xs hover:border-primary/50 transition-all flex flex-col justify-between";
           card.innerHTML = `
-            <div class="flex justify-between items-center font-bold text-graphite">
-              <span>${pkg.name}</span>
-              <button onclick="deletePackage('${pkg.id}')" class="text-rose-600 hover:underline text-[11px]">حذف</button>
+            <div class="space-y-1.5">
+              <div class="flex justify-between items-start font-bold text-graphite">
+                <span class="text-sm text-graphite font-black">${pkg.name}</span>
+                ${pkg.badge ? `<span class="text-[10px] font-bold text-amber-800 bg-amber-100 px-2 py-0.5 rounded-full shrink-0">${pkg.badge}</span>` : ''}
+              </div>
+              <p class="text-primary font-black text-xs">${pkg.price}</p>
+              <ul class="space-y-1 pt-2 border-t border-accent/60 text-secondary text-[11px]">
+                ${pkg.features.map(f => `<li class="flex items-center gap-1.5"><i data-lucide="check" class="w-3.5 h-3.5 text-primary"></i><span>${f}</span></li>`).join('')}
+              </ul>
             </div>
-            <p class="text-primary font-bold">${pkg.price}</p>
-            <p class="text-secondary text-[11px] truncate">${pkg.features.join(' ، ')}</p>
+
+            <div class="flex items-center justify-end gap-2 pt-2 border-t border-accent/60">
+              <button onclick="editVendorPackage(${idx})" class="bg-white hover:bg-emerald-50 text-primary border border-primary/30 font-bold px-3 py-1 rounded-lg text-[11px] transition-colors flex items-center gap-1">
+                <i data-lucide="edit-2" class="w-3 h-3"></i> ویرایش
+              </button>
+              <button onclick="deletePackage('${pkg.id}')" class="bg-white hover:bg-rose-50 text-rose-600 border border-rose-200 font-bold px-3 py-1 rounded-lg text-[11px] transition-colors flex items-center gap-1">
+                <i data-lucide="trash-2" class="w-3 h-3"></i> حذف
+              </button>
+            </div>
           `;
           dashContainer.appendChild(card);
         });
@@ -2293,33 +2309,62 @@ if (document.readyState === "loading") {
     }
 
     function toggleAddPackageModal(show) {
-      const modal = document.getElementById('package-modal');
+      const modal = document.getElementById('modal-vendor-package') || document.getElementById('package-modal');
       if (modal) {
-        if (show) modal.classList.remove('hidden');
-        else modal.classList.add('hidden');
+        if (show) {
+          document.getElementById('pkg-edit-index').value = '-1';
+          document.getElementById('form-vendor-package')?.reset();
+          document.getElementById('modal-package-title').innerHTML = '<i data-lucide="package-plus" class="w-5 h-5 text-primary"></i><span>افزودن پکیج جدید</span>';
+          modal.classList.remove('hidden');
+          modal.classList.add('flex');
+        } else {
+          modal.classList.add('hidden');
+          modal.classList.remove('flex');
+        }
       }
     }
 
-    function handleAddPackageSubmit(e) {
+    function editVendorPackage(idx) {
+      const pkg = vendorPackages[idx];
+      if (!pkg) return;
+      const modal = document.getElementById('modal-vendor-package');
+      if (!modal) return;
+      document.getElementById('pkg-edit-index').value = idx;
+      document.getElementById('pkg-title').value = pkg.name || '';
+      document.getElementById('pkg-price').value = pkg.price || '';
+      document.getElementById('pkg-badge').value = pkg.badge || '';
+      document.getElementById('pkg-features').value = pkg.features ? pkg.features.join('\n') : '';
+      document.getElementById('modal-package-title').innerHTML = '<i data-lucide="edit-3" class="w-5 h-5 text-primary"></i><span>ویرایش پکیج خدمات</span>';
+      modal.classList.remove('hidden');
+      modal.classList.add('flex');
+    }
+
+    function saveVendorPackageModal(e) {
       e.preventDefault();
-      const name = document.getElementById('pkg-name').value.trim();
+      const editIdx = parseInt(document.getElementById('pkg-edit-index').value);
+      const name = document.getElementById('pkg-title').value.trim();
       const price = document.getElementById('pkg-price').value.trim();
+      const badge = document.getElementById('pkg-badge').value.trim();
       const featuresRaw = document.getElementById('pkg-features').value.trim();
 
       if (!name || !price) return;
+      const features = featuresRaw ? featuresRaw.split('\n').map(f => f.trim()).filter(Boolean) : ['خدمات باکیفیت کامل'];
 
-      const features = featuresRaw ? featuresRaw.split(',').map(f => f.trim()) : ['خدمات با کیفیت کامل'];
+      if (editIdx >= 0 && vendorPackages[editIdx]) {
+        vendorPackages[editIdx] = { ...vendorPackages[editIdx], name, price, badge, features };
+        showToast('پکیج خدمات با موفقیت به روزرسانی شد.', 'success');
+      } else {
+        vendorPackages.push({ id: 'pkg-' + Date.now(), name, price, badge, features });
+        showToast('پکیج جدید با موفقیت اضافه گردید.', 'success');
+      }
 
-      vendorPackages.push({ id: 'pkg-' + Date.now(), name, price, features });
       renderVendorPackages();
       toggleAddPackageModal(false);
-      document.getElementById('pkg-name').value = '';
-      document.getElementById('pkg-price').value = '';
-      document.getElementById('pkg-features').value = '';
     }
 
     function deletePackage(id) {
       vendorPackages = vendorPackages.filter(p => p.id !== id);
+      showToast('پکیج موردنظر حذف گردید.', 'info');
       renderVendorPackages();
     }
 
@@ -3744,7 +3789,7 @@ if (document.readyState === "loading") {
     function switchPlannerSubTab(subTabKey) {
       activePlannerSubTab = subTabKey;
 
-      ['checklist', 'vendors', 'budget'].forEach(key => {
+      ['checklist', 'vendors', 'budget', 'offers'].forEach(key => {
         const btn = document.getElementById('planner-subtab-' + key);
         const panel = document.getElementById('planner-panel-' + key);
         if (btn) {
@@ -3764,6 +3809,8 @@ if (document.readyState === "loading") {
         renderPlannerAttachedVendors();
       } else if (subTabKey === 'budget') {
         renderPlannerBudgetSummary();
+      } else if (subTabKey === 'offers') {
+        renderPlannerOffersTab();
       }
 
       lucide.createIcons();
@@ -3858,22 +3905,63 @@ if (document.readyState === "loading") {
       const totalTasks = staticChecklist.length;
       const completedTasks = staticChecklist.filter(t => t.completed).length;
 
+      const totalBudgetNum = 350000000;
+      const totalSpentNum = 180000000;
+      const remainingNum = totalBudgetNum - totalSpentNum;
+      const spentPercent = Math.round((totalSpentNum / totalBudgetNum) * 100);
+
+      const categoriesBreakdown = [
+        { name: 'تالار و باغ عروسی', budgeted: 140000000, spent: 95000000, color: 'bg-primary' },
+        { name: 'عکاسی و فیلم‌برداری', budgeted: 70000000, spent: 45000000, color: 'bg-emerald-600' },
+        { name: 'سالن زیبایی و آرایش عروس', budgeted: 40000000, spent: 25000000, color: 'bg-amber-500' },
+        { name: 'مزون و لباس عروس/داماد', budgeted: 50000000, spent: 15000000, color: 'bg-rose-500' },
+        { name: 'موسیقی، گل‌آرایی و سایر', budgeted: 50000000, spent: 0, color: 'bg-slate-400' }
+      ];
+
       container.innerHTML = `
         <div class="space-y-6">
           <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
             <div class="bg-bgCustom p-5 rounded-2xl border border-accent space-y-1">
-              <span class="text-xs font-bold text-secondary">تعداد کل اقدامات برنامه:</span>
-              <span class="block text-xl font-black text-graphite">${totalTasks} کار اصلی</span>
+              <span class="text-xs font-bold text-secondary">بودجه کل مصوب:</span>
+              <span class="block text-xl font-black text-graphite">${totalBudgetNum.toLocaleString('fa-IR')} <span class="text-xs font-normal text-secondary">تومان</span></span>
             </div>
 
             <div class="bg-bgCustom p-5 rounded-2xl border border-accent space-y-1">
-              <span class="text-xs font-bold text-secondary">قراردادهای بسته‌شده:</span>
-              <span class="block text-xl font-black text-primary">${attachedTasks.length} تامین‌کننده</span>
+              <span class="text-xs font-bold text-secondary">هزینه‌های پرداخت‌شده:</span>
+              <span class="block text-xl font-black text-primary">${totalSpentNum.toLocaleString('fa-IR')} <span class="text-xs font-normal text-secondary">تومان (${spentPercent}٪)</span></span>
             </div>
 
             <div class="bg-bgCustom p-5 rounded-2xl border border-accent space-y-1">
-              <span class="text-xs font-bold text-secondary">اقدامات نهایی شده:</span>
-              <span class="block text-xl font-black text-emerald-700">${completedTasks} مورد (${Math.round((completedTasks/totalTasks)*100)}٪)</span>
+              <span class="text-xs font-bold text-secondary">مانده بودجه در دسترس:</span>
+              <span class="block text-xl font-black text-emerald-700">${remainingNum.toLocaleString('fa-IR')} <span class="text-xs font-normal text-secondary">تومان</span></span>
+            </div>
+          </div>
+
+          <!-- Real-Time Interactive Category Progress Bars -->
+          <div class="bg-white border border-accent rounded-2xl p-5 space-y-4">
+            <h4 class="text-sm font-bold text-graphite flex items-center justify-between border-b border-accent pb-3">
+              <span class="flex items-center gap-2">
+                <i data-lucide="bar-chart-3" class="w-4 h-4 text-primary"></i>
+                <span>تفکیک سهم دسته‌بندی‌ها از بودجه و میزان پیشرفت</span>
+              </span>
+              <span class="text-xs font-bold text-secondary">${spentPercent}٪ از کل بودجه صرف شده</span>
+            </h4>
+
+            <div class="space-y-3.5">
+              ${categoriesBreakdown.map(cat => {
+                const catPercent = Math.round((cat.spent / cat.budgeted) * 100);
+                return `
+                  <div class="space-y-1">
+                    <div class="flex justify-between text-xs font-bold text-graphite">
+                      <span>${cat.name}</span>
+                      <span class="text-secondary">${cat.spent.toLocaleString('fa-IR')} از ${cat.budgeted.toLocaleString('fa-IR')} تومان (${catPercent}٪)</span>
+                    </div>
+                    <div class="w-full bg-slate-100 h-2.5 rounded-full overflow-hidden border border-accent/40">
+                      <div class="${cat.color} h-full rounded-full transition-all duration-500" style="width: ${catPercent}%;"></div>
+                    </div>
+                  </div>
+                `;
+              }).join('')}
             </div>
           </div>
 
@@ -3891,6 +3979,73 @@ if (document.readyState === "loading") {
           </div>
         </div>
       `;
+
+      lucide.createIcons();
+    }
+
+    function renderPlannerOffersTab() {
+      const container = document.getElementById('planner-offers-list');
+      if (!container) return;
+
+      container.innerHTML = '';
+
+      if (!inquiries || inquiries.length === 0) {
+        container.innerHTML = `
+          <div class="p-8 text-center text-secondary space-y-3 bg-bgCustom rounded-3xl border border-accent">
+            <i data-lucide="message-square" class="w-10 h-10 mx-auto text-secondary/50"></i>
+            <p class="text-xs font-bold text-graphite">هنوز هیچ استعلام قیمتی ارسال نکرده‌اید.</p>
+            <button onclick="switchTab('directory')" class="bg-primary text-white font-bold px-4 py-2 rounded-xl text-xs">مشاهده دایرکتوری و ارسال استعلام</button>
+          </div>
+        `;
+        lucide.createIcons();
+        return;
+      }
+
+      inquiries.forEach((inq, idx) => {
+        const currentStatus = inq.status || 'pending';
+        const card = document.createElement('div');
+        card.className = "bg-bgCustom border border-accent rounded-2xl p-5 space-y-3 shadow-xs hover:border-primary/40 transition-all";
+        card.innerHTML = `
+          <div class="flex flex-col sm:flex-row justify-between sm:items-center gap-2">
+            <div>
+              <span class="text-xs font-bold text-secondary block">درخواست ثبت شده برای:</span>
+              <h4 class="text-base font-black text-graphite">${inq.vendorName || 'تامین‌کننده مجلل یزد'}</h4>
+            </div>
+            <span class="text-xs font-bold px-3 py-1 rounded-full ${
+              currentStatus === 'booked' ? 'bg-emerald-100 text-emerald-800 border border-emerald-300' :
+              currentStatus === 'replied' ? 'bg-blue-100 text-blue-800 border border-blue-300' :
+              currentStatus === 'cancelled' ? 'bg-rose-100 text-rose-800 border border-rose-300' :
+              'bg-amber-100 text-amber-800 border border-amber-300'
+            }">
+              ${currentStatus === 'booked' ? 'رزرو نهایی شد 🎉' : currentStatus === 'replied' ? 'پاسخ و پیشنهاد جدید دریافت شد 📩' : currentStatus === 'cancelled' ? 'لغو شده' : 'در انتظار بررسی تامین‌کننده ⏳'}
+            </span>
+          </div>
+
+          <div class="flex flex-wrap items-center gap-4 text-xs text-secondary font-medium bg-white p-3 rounded-xl border border-accent/60">
+            <span><strong>تاریخ مراسم:</strong> ${inq.date || '۱۴۰۳/۰۶/۱۵'}</span>
+            <span><strong>تعداد مهمانان:</strong> ${inq.guests || 200} نفر</span>
+            <span><strong>پکیج درخواستی:</strong> ${inq.package || inq.service || 'پکیج اصلی'}</span>
+          </div>
+
+          ${inq.replyMsg ? `
+            <div class="bg-emerald-50/80 border border-emerald-200 rounded-xl p-3.5 space-y-1.5 text-xs text-emerald-900">
+              <span class="font-bold text-primary flex items-center gap-1.5">
+                <i data-lucide="check-circle" class="w-4 h-4 text-primary"></i>
+                <span>پاسخ و کاتالوگ ارسالی تامین‌کننده:</span>
+              </span>
+              <p class="font-medium leading-relaxed">${inq.replyMsg}</p>
+            </div>
+          ` : ''}
+
+          <div class="flex justify-end gap-2 pt-1">
+            <button onclick="switchTab('messages')" class="bg-primary hover:bg-emerald-900 text-white font-bold px-4 py-2 rounded-xl text-xs transition-colors flex items-center gap-1.5 shadow-xs">
+              <i data-lucide="message-circle" class="w-4 h-4"></i>
+              <span>گفتگو و مشاهده پیش‌فاکتور</span>
+            </button>
+          </div>
+        `;
+        container.appendChild(card);
+      });
 
       lucide.createIcons();
     }
@@ -4131,17 +4286,23 @@ if (document.readyState === "loading") {
         tr.className = "hover:bg-slate-50";
         tr.innerHTML = `
           <td class="p-3 font-bold text-graphite">${app.name}</td>
-          <td class="p-3 text-primary">${app.category}</td>
+          <td class="p-3 text-primary font-semibold">${app.category}</td>
           <td class="p-3 font-semibold text-graphite">${app.manager} (${app.phone})</td>
-          <td class="p-3 text-secondary">${app.city}</td>
+          <td class="p-3 text-secondary font-medium">${app.city}</td>
           <td class="p-3 text-center">
-            <button onclick="approveVendorAppStatic('${app.id}')" class="bg-primary text-white font-bold text-xs px-3 py-1.5 rounded-lg hover:bg-emerald-900 transition-colors">
-              تایید و اعطای پنل
-            </button>
+            <div class="flex items-center justify-center gap-1.5">
+              <button onclick="approveVendorAppStatic('${app.id}')" class="bg-primary hover:bg-emerald-900 text-white font-bold text-xs px-3 py-1.5 rounded-xl transition-colors shadow-xs flex items-center gap-1">
+                <i data-lucide="check" class="w-3.5 h-3.5"></i> تایید و اعطا
+              </button>
+              <button onclick="rejectVendorAppStatic('${app.id}')" class="bg-white hover:bg-rose-50 text-rose-600 border border-rose-200 font-bold text-xs px-2.5 py-1.5 rounded-xl transition-colors flex items-center gap-1">
+                <i data-lucide="x" class="w-3.5 h-3.5"></i> عدم تایید
+              </button>
+            </div>
           </td>
         `;
         tbody.appendChild(tr);
       });
+      lucide.createIcons();
     }
 
     function approveVendorAppStatic(appId) {
@@ -4156,12 +4317,22 @@ if (document.readyState === "loading") {
           rating: 5.0,
           verified: true,
           capabilityTags: ["مجوز رسمی عکاسی کویر", "تجهیزات هلی‌شات & نور کویر", "سرو شیرینی‌های سنتی یزد (حاج خلیفه)", "فضای باز & سالن سرپوشیده"],
-        priceRange: "استعلام قیمت",
+          priceRange: "استعلام قیمت",
           image: "https://images.unsplash.com/photo-1519167758481-83f550bb49b3?auto=format&fit=crop&w=800&q=80"
         });
+        showToast(`مجموعه ${app.name} با موفقیت تایید و به لیست اصلی متصل شد.`, 'success');
         renderVendors(vendors);
         renderAdminPendingApps();
         renderAdminTable();
+      }
+    }
+
+    function rejectVendorAppStatic(appId) {
+      const app = staticVendorApplications.find(a => a.id === appId);
+      if (app) {
+        app.status = 'rejected';
+        showToast(`درخواست مجموعه ${app.name} رد شد.`, 'info');
+        renderAdminPendingApps();
       }
     }
 
@@ -4216,56 +4387,104 @@ if (document.readyState === "loading") {
 
       inquiries.forEach((inq, idx) => {
         const card = document.createElement('div');
-        card.className = "p-4 bg-bgCustom rounded-2xl border border-accent space-y-2.5";
+        card.className = "p-4 bg-bgCustom rounded-2xl border border-accent space-y-3 shadow-xs hover:border-primary/40 transition-all";
         const currentStatus = inq.status || 'pending';
 
         card.innerHTML = `
-          <div class="flex flex-col sm:flex-row justify-between sm:items-center gap-2 text-xs">
+          <div class="flex flex-col sm:flex-row justify-between sm:items-center gap-2">
             <div class="flex items-center gap-2">
-              <span class="font-bold text-graphite text-sm">${inq.name} (${inq.phone})</span>
-              <span class="text-[10px] font-bold px-2 py-0.5 rounded-full ${
-                currentStatus === 'booked' ? 'bg-emerald-100 text-emerald-800' :
-                currentStatus === 'replied' ? 'bg-blue-100 text-blue-800' :
-                currentStatus === 'cancelled' ? 'bg-rose-100 text-rose-800' : 'bg-amber-100 text-amber-800'
+              <span class="font-black text-graphite text-sm">${inq.name || 'زوج محترم'}</span>
+              <span class="text-secondary text-xs font-medium dir-ltr">(${inq.phone || '۰۹۱۲۰۰۰۰۰۰۰'})</span>
+            </div>
+            <div class="flex items-center gap-2">
+              <span class="text-[11px] font-bold px-2.5 py-0.5 rounded-full ${
+                currentStatus === 'booked' ? 'bg-emerald-100 text-emerald-800 border border-emerald-300' :
+                currentStatus === 'replied' ? 'bg-blue-100 text-blue-800 border border-blue-300' :
+                currentStatus === 'cancelled' ? 'bg-rose-100 text-rose-800 border border-rose-300' :
+                'bg-amber-100 text-amber-800 border border-amber-300'
               }">
-                ${currentStatus === 'booked' ? 'نهایی / رزرو شده' : currentStatus === 'replied' ? 'پاسخ داده شده' : currentStatus === 'cancelled' ? 'لغو شده' : 'در انتظار پاسخ'}
+                ${currentStatus === 'booked' ? 'رزرو نهایی' : currentStatus === 'replied' ? 'پاسخ داده شده' : currentStatus === 'cancelled' ? 'لغو شده' : 'جدید / در انتظار پاسخ'}
               </span>
             </div>
-            <span class="text-secondary font-medium">تاریخ مراسم: ${inq.date} | ${inq.guests || 200} مهمان</span>
           </div>
 
-          <p class="text-xs text-graphite/90 bg-white p-2.5 rounded-xl border border-accent/60">${inq.details}</p>
+          <div class="flex flex-wrap items-center gap-4 text-xs text-secondary font-medium bg-white/80 p-2.5 rounded-xl border border-accent/60">
+            <span><strong class="text-graphite">تاریخ درخواست:</strong> ${inq.date || '۱۴۰۳/۰۶/۱۵'}</span>
+            <span><strong class="text-graphite">تعداد مهمان:</strong> ${inq.guests || 200} نفر</span>
+            <span><strong class="text-graphite">خدمت/پکیج:</strong> ${inq.service || inq.package || 'خدمات عمومی'}</span>
+          </div>
 
-          <div class="pt-1 flex flex-wrap items-center justify-between gap-2 border-t border-accent/60 text-xs">
+          <p class="text-xs text-graphite bg-white p-3 rounded-xl border border-accent/60 leading-relaxed">${inq.details || 'توضیحات و نیازمندی‌های اختصاصی زوج ثبت شده در سامانه عروسی تو.'}</p>
+
+          <div class="pt-2 flex flex-wrap items-center justify-between gap-2 border-t border-accent/60 text-xs">
             <div class="flex items-center gap-2">
-              <label class="text-secondary font-bold text-[11px]">تغییر وضعیت لید:</label>
-              <select onchange="updateInquiryStatus(${idx}, this.value)" class="bg-white border border-accent rounded-lg px-2 py-1 text-xs font-bold text-graphite focus:outline-none">
-                <option value="pending" ${currentStatus === 'pending' ? 'selected' : ''}>در انتظار پاسخ</option>
+              <label class="text-secondary font-bold text-[11px]">تغییر وضعیت:</label>
+              <select onchange="updateInquiryStatus(${idx}, this.value)" class="bg-white border border-accent rounded-xl px-2.5 py-1 text-xs font-bold text-graphite focus:outline-none focus:border-primary">
+                <option value="pending" ${currentStatus === 'pending' ? 'selected' : ''}>جدید (در انتظار)</option>
                 <option value="replied" ${currentStatus === 'replied' ? 'selected' : ''}>پاسخ داده شده</option>
                 <option value="booked" ${currentStatus === 'booked' ? 'selected' : ''}>رزرو نهایی شد</option>
                 <option value="cancelled" ${currentStatus === 'cancelled' ? 'selected' : ''}>لغو شد</option>
               </select>
             </div>
 
-            <div class="flex items-center gap-1.5">
-              <button onclick="openPreInvoiceModal()" class="bg-primary hover:bg-emerald-900 text-white px-3 py-1.5 rounded-lg text-xs font-bold transition-colors cursor-pointer">
-                صدور پیش‌فاکتور
+            <div class="flex items-center gap-2">
+              <button onclick="openInquiryReplyModal(${idx})" class="bg-primary hover:bg-emerald-900 text-white px-3.5 py-1.5 rounded-xl text-xs font-bold transition-colors cursor-pointer shadow-xs flex items-center gap-1">
+                <i data-lucide="send" class="w-3.5 h-3.5"></i> پاسخ سریع
               </button>
-              <button onclick="exportInquiriesCsv()" class="bg-white border border-accent hover:border-primary text-graphite px-2.5 py-1.5 rounded-lg text-xs font-bold transition-colors cursor-pointer">
-                خروجی CSV
+              <button onclick="openPreInvoiceModal()" class="bg-bgCustom hover:bg-slate-100 border border-accent text-graphite px-3 py-1.5 rounded-xl text-xs font-bold transition-colors cursor-pointer">
+                پیش‌فاکتور
               </button>
             </div>
           </div>
         `;
         container.appendChild(card);
       });
+      lucide.createIcons();
+    }
+
+    function openInquiryReplyModal(idx) {
+      const inq = inquiries[idx];
+      if (!inq) return;
+      const modal = document.getElementById('modal-inquiry-reply');
+      if (!modal) return;
+      document.getElementById('inquiry-reply-id').value = idx;
+      document.getElementById('reply-couple-name').innerText = inq.name || 'زوج محترم';
+      document.getElementById('reply-inquiry-details').innerText = `تاریخ مراسم: ${inq.date || 'نامشخص'} | مهمانان: ${inq.guests || '۲۰۰'} نفر | خدمت: ${inq.service || 'عمومی'}`;
+      document.getElementById('reply-status-select').value = 'replied';
+      document.getElementById('reply-message-text').value = `سلام ${inq.name || 'گرامی'} عزیز! درخواست استعلام شما برای تاریخ ${inq.date || 'مربوطه'} بررسی شد. پکیج و کاتالوگ قیمت همراه با تخفیف ویژه پلتفرم عروسی تو برای شما فعال گردید.`;
+      modal.classList.remove('hidden');
+      modal.classList.add('flex');
+    }
+
+    function closeInquiryReplyModal() {
+      const modal = document.getElementById('modal-inquiry-reply');
+      if (modal) {
+        modal.classList.add('hidden');
+        modal.classList.remove('flex');
+      }
+    }
+
+    function sendInquiryReply() {
+      const idx = parseInt(document.getElementById('inquiry-reply-id').value);
+      const newStatus = document.getElementById('reply-status-select').value;
+      const replyMsg = document.getElementById('reply-message-text').value;
+
+      if (inquiries[idx]) {
+        inquiries[idx].status = newStatus;
+        inquiries[idx].replyMsg = replyMsg;
+        showToast('پاسخ و پیشنهاد قیمت با موفقیت برای زوج ارسال شد.', 'success');
+        renderInquiries();
+        closeInquiryReplyModal();
+        if (typeof renderPlannerOffersTab === 'function') renderPlannerOffersTab();
+      }
     }
 
     function updateInquiryStatus(index, newStatus) {
       if (inquiries[index]) {
         inquiries[index].status = newStatus;
-        showToast('وضعیت لید مشتری به روزرسانی شد.', 'success');
+        showToast('وضعیت استعلام به روزرسانی شد.', 'success');
         renderInquiries();
+        if (typeof renderPlannerOffersTab === 'function') renderPlannerOffersTab();
       }
     }
 
