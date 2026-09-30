@@ -3962,6 +3962,424 @@
     </div>
   </div>
 
+
+  <div id="lightbox-modal" class="fixed inset-0 z-50 bg-black/90 backdrop-blur-md flex items-center justify-center p-4 hidden">
+    <button onclick="closeLightbox()" class="absolute top-6 left-6 text-white hover:text-accent p-2 rounded-full bg-white/10">
+      <i data-lucide="x" class="w-8 h-8"></i>
+    </button>
+    <div class="max-w-4xl max-h-[85vh] overflow-hidden rounded-2xl shadow-2xl">
+      <img id="lightbox-img" src="" alt="بزرگنمایی نمونه‌کار" class="w-full h-full object-contain">
+    </div>
+  </div>
+
+  <!-- ========================================== -->
+  <!-- MODAL: PARENT CATEGORY MODAL (ADD / EDIT)  -->
+  <!-- ========================================== -->
+
+
+  <div id="inquiry-modal" class="fixed inset-0 z-[9999999] bg-black/60 backdrop-blur-xs flex items-center justify-center p-4 hidden">
+    <div class="bg-white border border-accent rounded-3xl max-w-xl w-full p-6 sm:p-8 shadow-2xl space-y-5 relative max-h-[90vh] overflow-y-auto custom-scrollbar">
+      <button onclick="closeInquiryModal()" class="absolute top-5 left-5 text-secondary hover:text-graphite transition-colors">
+        <i data-lucide="x" class="w-6 h-6"></i>
+      </button>
+
+      <div class="border-b border-accent pb-4">
+        <div class="inline-flex items-center gap-1.5 bg-primary/10 text-primary text-xs font-bold px-3 py-1 rounded-full mb-1">
+          <i data-lucide="message-square-quote" class="w-3.5 h-3.5"></i>
+          <span>استعلام قیمت آنلاین و مستقیم</span>
+        </div>
+        <h3 id="modal-vendor-name" class="text-xl font-bold text-graphite">درخواست استعلام قیمت از تامین‌کننده</h3>
+        <p class="text-xs text-secondary mt-0.5">پس از ارسال، استعلام شما در پنل پیام‌ها ثبت شده و پیش‌فاکتور برای شما صادر می‌گردد.</p>
+      </div>
+
+      <form id="inquiry-form" onsubmit="handleInquirySubmit(event)" class="space-y-4 text-xs font-bold text-graphite">
+        <input type="hidden" id="inquiry-vendor-id" value="">
+
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+          <div>
+            <label class="block mb-1">نام و نام خانوادگی شما *</label>
+            <input type="text" required id="inquiry-name" value="علی و سارا" class="w-full bg-bgCustom border border-accent rounded-xl p-2.5 text-xs font-medium focus:outline-none focus:border-primary">
+          </div>
+
+          <div>
+            <label class="block mb-1">شماره تماس (جهت دریافت پیامک/پیش‌فاکتور) *</label>
+            <input type="tel" required id="inquiry-phone" value="09121234567" placeholder="۰۹۱۲..." class="w-full bg-bgCustom border border-accent rounded-xl p-2.5 text-xs font-medium focus:outline-none focus:border-primary dir-ltr">
+          </div>
+        </div>
+
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+          <div>
+            <label id="inquiry-date-label" class="block mb-1">تاریخ تقریبی مراسم / مراجعه (شمسی) *</label>
+            <input type="text" required id="inquiry-date" value="۱۴۰۳/۰۶/۱۵" placeholder="مثلاً: ۱۴۰۳/۰۶/۱۵" class="w-full bg-bgCustom border border-accent rounded-xl p-2.5 text-xs font-medium focus:outline-none focus:border-primary">
+          </div>
+
+          <!-- Dynamic Guest Count / Package Specifics -->
+          <div id="inquiry-guests-container">
+            <label class="block mb-1">تعداد تقریبی مهمانان *</label>
+            <input type="number" id="inquiry-guests" value="250" min="1" max="2000" class="w-full bg-bgCustom border border-accent rounded-xl p-2.5 text-xs font-medium focus:outline-none focus:border-primary">
+          </div>
+
+          <div id="inquiry-nonvenue-container" class="hidden">
+            <label class="block mb-1">نوع پکیج / نیاز اختصاصی *</label>
+            <select id="inquiry-package-type" class="w-full bg-bgCustom border border-accent rounded-xl p-2.5 text-xs font-semibold focus:outline-none focus:border-primary">
+              <option value="فرمالیته کویر یزد">پکیج اختصاصی فرمالیته کویر یزد</option>
+              <option value="مراسم اصلی عروسی">خدمات کامل روز عروسی</option>
+              <option value="پرو و مشاوره اختصاصی">مشاوره حضوری و تست پکیج</option>
+            </select>
+          </div>
+        </div>
+
+        <!-- Service Checklist based on offerings -->
+        <div class="space-y-2">
+          <label class="block">خدمات مورد نظر شما (چک‌لیست):</label>
+          <div id="inquiry-services-checklist" class="grid grid-cols-1 sm:grid-cols-2 gap-2 p-3 bg-bgCustom border border-accent rounded-2xl">
+            <label class="flex items-center gap-2 cursor-pointer p-1.5 hover:bg-white rounded-lg">
+              <input type="checkbox" value="منوی شام VIP / سلف سرویس" checked class="rounded text-primary focus:ring-primary w-4 h-4">
+              <span>منوی شام VIP / سلف سرویس</span>
+            </label>
+            <label class="flex items-center gap-2 cursor-pointer p-1.5 hover:bg-white rounded-lg">
+              <input type="checkbox" value="ورودی باغ و سالن اصلی" checked class="rounded text-primary focus:ring-primary w-4 h-4">
+              <span>ورودی باغ و سالن اصلی</span>
+            </label>
+            <label class="flex items-center gap-2 cursor-pointer p-1.5 hover:bg-white rounded-lg">
+              <input type="checkbox" value="شمع‌آرایی & آتش‌بازی" checked class="rounded text-primary focus:ring-primary w-4 h-4">
+              <span>شمع‌آرایی & آتش‌بازی</span>
+            </label>
+            <label class="flex items-center gap-2 cursor-pointer p-1.5 hover:bg-white rounded-lg">
+              <input type="checkbox" value="سفره عقد اختصاصی" class="rounded text-primary focus:ring-primary w-4 h-4">
+              <span>سفره عقد اختصاصی</span>
+            </label>
+          </div>
+        </div>
+
+        <div class="space-y-3">
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+            <div>
+              <label class="block mb-1">محدوده بودجه مد نظر:</label>
+              <select id="inquiry-budget-range" class="w-full bg-bgCustom border border-accent rounded-xl p-2.5 text-xs font-semibold focus:outline-none focus:border-primary cursor-pointer">
+                <option value="۱۰ تا ۲۰ میلیون تومان">۱۰ تا ۲۰ میلیون تومان</option>
+                <option value="۲۰ تا ۴۰ میلیون تومان">۲۰ تا ۴۰ میلیون تومان</option>
+                <option value="۴۰ تا ۷۰ میلیون تومان">۴۰ تا ۷۰ میلیون تومان</option>
+                <option value="۷۰ تا ۱۲۰ میلیون تومان" selected>۷۰ تا ۱۲۰ میلیون تومان</option>
+                <option value="بالای ۱۲۰ میلیون تومان (VIP)">بالای ۱۲۰ میلیون تومان (VIP)</option>
+                <option value="توافقی / استعلام متقابل">توافقی / استعلام متقابل</option>
+              </select>
+            </div>
+
+            <div>
+              <label class="block mb-1">توضیحات و پیام اختصاصی برای تامین‌کننده:</label>
+              <input type="text" id="inquiry-note" value="سلام، درخواست استعلام قیمت و دریافت پیش‌فاکتور را دارم." class="w-full bg-bgCustom border border-accent rounded-xl p-2.5 text-xs font-medium focus:outline-none focus:border-primary">
+            </div>
+          </div>
+
+          <!-- Manual Budget Input & Quick Selector Pills -->
+          <div class="p-3 bg-primary/5 border border-primary/20 rounded-2xl space-y-2">
+            <div class="flex items-center justify-between">
+              <label class="block text-xs font-bold text-primary">مبلغ بودجه پیشنهادی یا حداکثر سقف پرداختی (تومان - اختیاری):</label>
+              <span class="text-[11px] text-secondary font-normal">انتخاب سریع یا ورود دستی</span>
+            </div>
+            <div class="flex items-center gap-2">
+              <input type="text" id="inquiry-budget-custom" placeholder="مثلاً: ۳۵,۰۰۰,۰۰۰ تومان" class="w-full bg-white border border-accent rounded-xl p-2 text-xs font-bold text-graphite focus:outline-none focus:border-primary">
+            </div>
+            <div class="flex items-center gap-1.5 flex-wrap pt-1">
+              <span class="text-[11px] text-secondary">پیشنهاد سریع:</span>
+              <button type="button" onclick="setInquiryBudgetPill('۱۰ تا ۲۰ میلیون تومان', '۱۵,۰۰۰,۰۰۰ تومان')" class="px-2.5 py-1 bg-white hover:bg-primary/10 border border-accent hover:border-primary/40 rounded-lg text-[11px] text-graphite transition-all">
+                ۱۰ تا ۲۰ میلیون
+              </button>
+              <button type="button" onclick="setInquiryBudgetPill('۲۰ تا ۴۰ میلیون تومان', '۳۰,۰۰۰,۰۰۰ تومان')" class="px-2.5 py-1 bg-white hover:bg-primary/10 border border-accent hover:border-primary/40 rounded-lg text-[11px] text-graphite transition-all">
+                ۲۰ تا ۴۰ میلیون
+              </button>
+              <button type="button" onclick="setInquiryBudgetPill('۴۰ تا ۷۰ میلیون تومان', '۵۰,۰۰۰,۰۰۰ تومان')" class="px-2.5 py-1 bg-white hover:bg-primary/10 border border-accent hover:border-primary/40 rounded-lg text-[11px] text-graphite transition-all">
+                ۴۰ تا ۷۰ میلیون
+              </button>
+              <button type="button" onclick="setInquiryBudgetPill('توافقی / استعلام متقابل', 'توافقی')" class="px-2.5 py-1 bg-white hover:bg-primary/10 border border-accent hover:border-primary/40 rounded-lg text-[11px] text-graphite transition-all">
+                توافقی / استعلام متقابل
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <button type="submit" class="w-full bg-primary hover:bg-emerald-900 text-white font-bold py-3.5 rounded-2xl text-xs transition-all shadow-md flex items-center justify-center gap-2 mt-2">
+          <i data-lucide="send" class="w-4 h-4"></i>
+          <span>ارسال فوری استعلام قیمت و ورود به گفت‌وگو</span>
+        </button>
+      </form>
+    </div>
+  </div>
+
+  <!-- LOCATION & PROVINCE EXPANSION MODAL -->
+  <div id="location-modal" class="fixed inset-0 z-50 bg-black/60 backdrop-blur-xs flex items-center justify-center p-4 hidden">
+    <div class="bg-white rounded-3xl max-w-lg w-full p-6 sm:p-8 space-y-6 shadow-2xl border border-accent relative">
+      <button onclick="closeLocationModal()" class="absolute top-6 left-6 text-secondary hover:text-graphite transition-colors">
+        <i data-lucide="x" class="w-5 h-5"></i>
+      </button>
+
+      <div class="space-y-1">
+        <div class="inline-flex items-center gap-1.5 bg-amber-50 text-amber-900 border border-amber-200 px-3 py-1 rounded-full text-xs font-bold">
+          <i data-lucide="map-pin" class="w-3.5 h-3.5 text-amber-700"></i>
+          <span>انتخاب استان و موقعیت مکانی</span>
+        </div>
+        <h3 class="text-xl font-bold text-graphite">موقعیت مکانی فعال شما</h3>
+        <p class="text-xs text-secondary">مشاهده و رزرو خدمات تامین‌کنندگان معتبر عروسی و تشریفات</p>
+      </div>
+
+      <!-- ACTIVE PROVINCE LOCATION STATUS -->
+      <div class="bg-emerald-50 border border-emerald-200 p-4 rounded-2xl flex items-center justify-between">
+        <div class="flex items-center gap-3">
+          <div class="w-10 h-10 rounded-xl bg-primary text-white flex items-center justify-center font-bold shadow-xs">
+            <i data-lucide="building-2" class="w-5 h-5"></i>
+          </div>
+          <div>
+            <span class="block text-xs font-extrabold text-graphite">استان یزد (فعال)</span>
+            <span class="text-[11px] text-primary font-bold">پوشش کامل خدمات تشریفات، تالار و آتلیه‌ها</span>
+          </div>
+        </div>
+        <span class="bg-primary text-white text-[10px] font-bold px-2.5 py-1 rounded-full shadow-xs">فعال</span>
+      </div>
+
+      <!-- PROVINCIAL & CITY EXPANSION PREVIEW SECTION -->
+      <div class="border-t border-accent pt-4 space-y-3">
+        <div class="flex items-center justify-between">
+          <span class="text-xs font-bold text-graphite flex items-center gap-1.5">
+            <i data-lucide="sparkles" class="w-4 h-4 text-amber-600"></i>
+            <span>توسعه فازهای بعدی شهرستان‌ها و استان‌ها:</span>
+          </span>
+          <span class="text-[10px] text-amber-800 bg-amber-100 font-bold px-2 py-0.5 rounded-md">به زودی ⏳</span>
+        </div>
+
+        <div class="space-y-2">
+          <div class="text-[11px] font-bold text-secondary">شهرستان‌های استان یزد:</div>
+          <div class="flex flex-wrap gap-2 text-xs font-medium text-secondary">
+            <span class="px-3 py-1.5 bg-slate-100 rounded-xl border border-slate-200 flex items-center gap-1">
+              <span>تفت</span>
+              <span class="text-[10px] text-amber-700 bg-amber-50 px-1.5 py-0.2 rounded-md border border-amber-200">پیش‌رو</span>
+            </span>
+            <span class="px-3 py-1.5 bg-slate-100 rounded-xl border border-slate-200 flex items-center gap-1">
+              <span>میبد</span>
+              <span class="text-[10px] text-amber-700 bg-amber-50 px-1.5 py-0.2 rounded-md border border-amber-200">پیش‌رو</span>
+            </span>
+            <span class="px-3 py-1.5 bg-slate-100 rounded-xl border border-slate-200 flex items-center gap-1">
+              <span>اردکان</span>
+              <span class="text-[10px] text-amber-700 bg-amber-50 px-1.5 py-0.2 rounded-md border border-amber-200">پیش‌رو</span>
+            </span>
+            <span class="px-3 py-1.5 bg-slate-100 rounded-xl border border-slate-200">بافق</span>
+            <span class="px-3 py-1.5 bg-slate-100 rounded-xl border border-slate-200">مهریز</span>
+          </div>
+        </div>
+
+        <div class="space-y-2 pt-1">
+          <div class="text-[11px] font-bold text-secondary">استان‌های در دست توسعه:</div>
+          <div class="flex flex-wrap gap-2 text-xs font-medium text-secondary">
+            <span class="px-3 py-1.5 bg-slate-100 rounded-xl border border-slate-200">اصفهان 🏛️</span>
+            <span class="px-3 py-1.5 bg-slate-100 rounded-xl border border-slate-200">شیراز 🌸</span>
+            <span class="px-3 py-1.5 bg-slate-100 rounded-xl border border-slate-200">کرمان 🌴</span>
+            <span class="px-3 py-1.5 bg-slate-100 rounded-xl border border-slate-200">تهران 🏙️</span>
+          </div>
+        </div>
+
+        <div class="p-3 bg-bgCustom border border-accent rounded-2xl flex items-center justify-between gap-2 mt-2">
+          <span class="text-[11px] text-graphite font-semibold">می‌خواهید هنگام فعال‌سازی شهر یا استان خود باخبر شوید؟</span>
+          <button onclick="requestCityNotify('شهرستان‌ها و استان‌های جدید')" class="bg-primary hover:bg-emerald-900 text-white font-bold px-3 py-1.5 rounded-xl text-[11px] transition-colors shrink-0 shadow-xs flex items-center gap-1">
+            <i data-lucide="bell" class="w-3.5 h-3.5"></i>
+            <span>به من خبر بده</span>
+          </button>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- FOOTER INTEGRATION -->
+  <footer class="bg-[#1B3B2B] border-t border-[#D4AF37]/40 mt-16 text-white py-12">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-8">
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-8 border-b border-[#D4AF37]/25 pb-8">
+        <!-- Brand Info -->
+        <div class="lg:col-span-2 space-y-4">
+          <div class="flex items-center gap-3">
+            <div class="w-10 h-10 rounded-xl bg-[#D4AF37] flex items-center justify-center text-[#1B3B2B] shadow-md">
+              <i data-lucide="heart" class="w-5 h-5 fill-[#1B3B2B] stroke-[#D4AF37]"></i>
+            </div>
+            <span class="text-2xl font-black text-[#D4AF37]">عروسی تو</span>
+          </div>
+          <p class="text-xs text-amber-100/80 leading-relaxed max-w-sm">
+            پلتفرم هوشمند برنامه‌ریزی عروسی و خدمات مجالس در استان یزد. معرف برترین تالارها، آتلیه‌ها، سالن‌های زیبایی و مزون‌های معتبر با تضمین قیمت و تاییدیه رسمی اعتبار.
+          </p>
+          <div class="flex items-center gap-3 text-xs text-amber-200">
+            <span class="flex items-center gap-1"><i data-lucide="shield-check" class="w-4 h-4 text-[#D4AF37]"></i> دارای نماد اعتماد الکترونیکی</span>
+          </div>
+        </div>
+
+        <!-- Quick Links 1 -->
+        <div class="space-y-3">
+          <h4 class="text-xs font-black text-[#D4AF37] uppercase tracking-wider">دسته‌بندی خدمات</h4>
+          <ul class="space-y-2 text-xs font-medium text-slate-200">
+            <li><button onclick="filterVendorsFromMega('تالار و باغ تالار عروسی')" class="hover:text-[#D4AF37] transition-colors">باغ و تالار پذیرایی</button></li>
+            <li><button onclick="filterVendorsFromMega('آتلیه عکاسی و فیلمبرداری')" class="hover:text-[#D4AF37] transition-colors">آتلیه عکاسی و فیلمبرداری</button></li>
+            <li><button onclick="filterVendorsFromMega('سالن زیبایی و آرایشگاه عروس')" class="hover:text-[#D4AF37] transition-colors">سالن زیبایی عروس</button></li>
+            <li><button onclick="filterVendorsFromMega('مزون لباس عروس')" class="hover:text-[#D4AF37] transition-colors">مزون لباس عروس</button></li>
+            <li><button onclick="filterVendorsFromMega('طلافروشی و جواهرفروشی')" class="hover:text-[#D4AF37] transition-colors">طلا و جواهر عقد</button></li>
+          </ul>
+        </div>
+
+        <!-- Quick Links 2 -->
+        <div class="space-y-3">
+          <h4 class="text-xs font-black text-[#D4AF37] uppercase tracking-wider">ابزارهای هوشمند</h4>
+          <ul class="space-y-2 text-xs font-medium text-slate-200">
+            <li><button onclick="switchTab('planner')" class="hover:text-[#D4AF37] transition-colors">چک‌لیست ۱۲ ماهه</button></li>
+            <li><button onclick="switchTab('tools')" class="hover:text-[#D4AF37] transition-colors">مدیریت بودجه AI</button></li>
+            <li><button onclick="switchTab('guests')" class="hover:text-[#D4AF37] transition-colors">مدیریت مهمانان & RSVP</button></li>
+            <li><button onclick="switchTab('invitation')" class="hover:text-[#D4AF37] transition-colors">کارت دعوت آنلاین</button></li>
+            <li><button onclick="switchTab('quizzes')" class="hover:text-[#D4AF37] transition-colors">تست‌های استایل & روانشناسی</button></li>
+          </ul>
+        </div>
+
+        <!-- Contact & Location -->
+        <div class="space-y-3">
+          <h4 class="text-xs font-black text-[#D4AF37] uppercase tracking-wider">ارتباط با پشتیبانی یزد</h4>
+          <div class="space-y-2 text-xs font-medium text-slate-200">
+            <p class="flex items-center gap-2"><i data-lucide="phone" class="w-4 h-4 text-[#D4AF37]"></i> <span dir="ltr">۰۳۵-۳۸۲۴۰۰۰۰</span></p>
+            <p class="flex items-center gap-2"><i data-lucide="mail" class="w-4 h-4 text-[#D4AF37]"></i> info@aroosito.com</p>
+            <p class="flex items-center gap-2"><i data-lucide="map-pin" class="w-4 h-4 text-[#D4AF37]"></i> یزد، صفائیه، خیابان دانشگاه</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Copyright Bar -->
+      <div class="flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-amber-200/80 font-medium text-center sm:text-right">
+        <p>© تمامی حقوق مادی و معنوی این وب‌سایت متعلق به پلتفرم هوشمند عروسی تو می‌باشد.</p>
+        <p class="text-[#D4AF37] font-bold">طراحی و اجرا ویژه استان یزد 📍</p>
+      </div>
+    </div>
+  </footer>
+  <!-- SUBGROUPS MODAL OVERLAY -->
+  <div id="subgroups-modal" class="subgroups-overlay hidden">
+    <div class="subgroups-card relative">
+      <button onclick="document.getElementById('subgroups-modal').classList.add('hidden')" class="close-btn absolute top-3 left-3 w-8 h-8 rounded-full bg-slate-200 hover:bg-slate-300 text-graphite font-bold flex items-center justify-center cursor-pointer transition-colors">✕</button>
+      <h3 id="subgroups-title" class="text-base font-bold text-[#1B3B2B] border-b border-accent pb-3 mb-3"></h3>
+      <div id="subgroups-list" class="subgroups-grid space-y-2"></div>
+    </div>
+  </div>
+
+  <!-- FLOATING SUB-CATEGORY DRAWER / MODAL -->
+  <div id="sub-category-drawer-modal" class="hidden fixed inset-0 bg-black/60 backdrop-blur-xs z-50 items-center justify-center p-4 transition-all animate-fadeIn">
+    <div class="bg-white rounded-3xl shadow-2xl max-w-2xl w-full overflow-hidden border border-[#D4AF37]/40 flex flex-col max-h-[85vh] animate-scaleUp">
+
+      <!-- Drawer Header (Emerald Forest #1B3B2B & Rich Gold #D4AF37) -->
+      <div class="bg-[#1B3B2B] text-white p-5 sm:p-6 flex items-center justify-between border-b border-[#D4AF37]/30 shrink-0">
+        <div class="flex items-center gap-3">
+          <div id="drawer-header-icon" class="w-12 h-12 rounded-2xl bg-[#D4AF37] text-[#1B3B2B] flex items-center justify-center shadow-md">
+            <i data-lucide="layers" class="w-6 h-6"></i>
+          </div>
+          <div>
+            <div class="flex items-center gap-2">
+              <h3 id="drawer-header-title" class="text-lg sm:text-xl font-black text-[#D4AF37]">عنوان رسته اصلی</h3>
+              <span id="drawer-header-badge" class="bg-white/10 text-amber-200 text-[10px] font-extrabold px-2.5 py-0.5 rounded-full border border-[#D4AF37]/30">زیرگروه‌ها</span>
+            </div>
+            <p id="drawer-header-desc" class="text-xs text-slate-200 mt-0.5 font-medium">جهت مشاهده و فیلتر سریع تأمین‌کنندگان، زیرگروه موردنظر را انتخاب کنید.</p>
+          </div>
+        </div>
+
+        <button onclick="closeSubCategoryDrawer()" class="w-10 h-10 rounded-xl bg-white/10 hover:bg-white/20 text-white flex items-center justify-center transition-colors cursor-pointer shrink-0">
+          <i data-lucide="x" class="w-5 h-5"></i>
+        </button>
+      </div>
+
+      <!-- Drawer Body: Grid of Sub-Category Cards -->
+      <div id="drawer-subcategories-grid" class="p-5 sm:p-6 overflow-y-auto grid grid-cols-1 sm:grid-cols-2 gap-3.5 max-h-[60vh] bg-slate-50/50">
+        <!-- Dynamically populated via openSubCategoryDrawer() -->
+      </div>
+
+      <!-- Drawer Footer -->
+      <div class="p-4 bg-white border-t border-accent/60 flex items-center justify-between text-xs text-secondary shrink-0">
+        <div class="flex items-center gap-1.5 font-medium">
+          <i data-lucide="shield-check" class="w-4 h-4 text-[#1B3B2B]"></i>
+          <span>تضمین قیمت و تایید صلاحیت کسب‌وکارها در استان یزد</span>
+        </div>
+        <button onclick="closeSubCategoryDrawer()" class="px-4 py-2 bg-slate-100 hover:bg-slate-200 text-graphite rounded-xl font-bold transition-colors">
+          بستن
+        </button>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- AUTHENTICATION MODAL (#auth-modal) -->
+  <div id="auth-modal" class="hidden fixed inset-0 bg-black/60 backdrop-blur-xs z-[999999] flex items-center justify-center p-4 transition-all animate-fadeIn">
+    <div class="bg-white rounded-3xl shadow-2xl max-w-md w-full overflow-hidden border border-[#D4AF37]/50 flex flex-col animate-scaleUp">
+      <!-- Modal Header -->
+      <div class="bg-[#1B3B2B] text-white p-5 flex items-center justify-between border-b border-[#D4AF37]/30 shrink-0">
+        <div class="flex items-center gap-2.5">
+          <div class="w-10 h-10 rounded-xl bg-[#D4AF37] text-[#1B3B2B] flex items-center justify-center shadow-sm">
+            <i data-lucide="user-check" class="w-5 h-5"></i>
+          </div>
+          <div>
+            <h3 class="text-base font-bold text-[#D4AF37]">ورود / ثبت‌نام در عروسی تو</h3>
+            <span class="text-[11px] text-amber-200/80 font-medium">دسترسی سریع به پنل و اطلاعات رزرو</span>
+          </div>
+        </div>
+
+        <button onclick="closeAuthModal()" class="w-9 h-9 rounded-xl bg-white/10 hover:bg-white/20 text-white flex items-center justify-center transition-colors cursor-pointer">
+          <i data-lucide="x" class="w-5 h-5"></i>
+        </button>
+      </div>
+
+      <!-- Auth Modal Tabs -->
+      <div class="p-5 space-y-5">
+        <div class="flex bg-[#F5EFEB] border border-[#E0D8C8] rounded-2xl p-1 text-xs font-bold shadow-2xs">
+          <button id="auth-tab-couple" onclick="switchAuthTab('couple')" class="flex-1 py-2.5 rounded-xl transition-all bg-[#1B3B2B] text-white shadow-xs text-center cursor-pointer">
+            ورود / ثبت‌نام زوج‌ها
+          </button>
+          <button id="auth-tab-vendor" onclick="switchAuthTab('vendor')" class="flex-1 py-2.5 rounded-xl transition-all text-secondary hover:text-graphite text-center cursor-pointer">
+            ورود کسب‌وکارها
+          </button>
+        </div>
+
+        <!-- Couple Auth Form -->
+        <form id="auth-form-couple" onsubmit="handleCoupleAuthSubmit(event)" class="space-y-4 text-xs font-bold text-graphite">
+          <div class="space-y-1">
+            <label class="block text-secondary">شماره همراه (تلفن همراه):</label>
+            <input type="tel" id="auth-couple-phone" required placeholder="۰۹۱۲۳۴۵۶۷۸۹" class="w-full bg-[#F5EFEB] border border-[#E0D8C8] rounded-xl p-3 text-xs font-medium focus:outline-none focus:border-[#D4AF37] dir-ltr">
+          </div>
+
+          <div class="space-y-1">
+            <label class="block text-secondary">رمز عبور / کد تایید:</label>
+            <input type="password" id="auth-couple-password" required placeholder="••••••••" class="w-full bg-[#F5EFEB] border border-[#E0D8C8] rounded-xl p-3 text-xs font-medium focus:outline-none focus:border-[#D4AF37]">
+          </div>
+
+          <button type="submit" class="w-full bg-[#D4AF37] hover:bg-amber-400 text-[#1B3B2B] font-black py-3 rounded-2xl text-xs shadow-md transition-all flex items-center justify-center gap-2 cursor-pointer">
+            <i data-lucide="log-in" class="w-4 h-4"></i>
+            <span>ورود به حساب زوجین</span>
+          </button>
+        </form>
+
+        <!-- Vendor Auth Form -->
+        <form id="auth-form-vendor" onsubmit="handleVendorAuthSubmit(event)" class="hidden space-y-4 text-xs font-bold text-graphite">
+          <div class="space-y-1">
+            <label class="block text-secondary">نام کاربری / ایمیل کسب‌وکار:</label>
+            <input type="text" id="auth-vendor-user" required placeholder="نام آتلیه یا تالار..." class="w-full bg-[#F5EFEB] border border-[#E0D8C8] rounded-xl p-3 text-xs font-medium focus:outline-none focus:border-[#D4AF37]">
+          </div>
+
+          <div class="space-y-1">
+            <label class="block text-secondary">رمز عبور پنل تامین‌کننده:</label>
+            <input type="password" id="auth-vendor-password" required placeholder="••••••••" class="w-full bg-[#F5EFEB] border border-[#E0D8C8] rounded-xl p-3 text-xs font-medium focus:outline-none focus:border-[#D4AF37]">
+          </div>
+
+          <button type="submit" class="w-full bg-[#1B3B2B] hover:bg-emerald-900 text-white font-bold py-3 rounded-2xl text-xs shadow-md transition-all flex items-center justify-center gap-2 cursor-pointer">
+            <i data-lucide="store" class="w-4 h-4 text-[#D4AF37]"></i>
+            <span>ورود به پنل تامین‌کننده</span>
+          </button>
+        </form>
+      </div>
+
+      <!-- Footer Disclaimer -->
+      <div class="p-4 bg-[#F5EFEB] border-t border-[#E0D8C8] text-center text-[11px] text-secondary font-medium">
+        ورود شما به معنای پذیرش <a href="#" class="text-[#D4AF37] font-bold hover:underline">قوانین و حریم خصوصی</a> عروسی تو می‌باشد.
+      </div>
+    </div>
+  </div>
+
+  <!-- App Script -->
+
   <script src="script.js"></script>
 </body>
 </html>

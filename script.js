@@ -4622,19 +4622,25 @@ if (document.readyState === "loading") {
 
       const titleEl = document.getElementById('vdm-title');
       const coverEl = document.getElementById('vdm-cover');
-      const avatarEl = document.getElementById('vdm-avatar');
+      let avatarEl = document.getElementById('vdm-avatar');
+      if (avatarEl && avatarEl.tagName !== 'IMG') {
+        const childImg = avatarEl.querySelector('img');
+        if (childImg) avatarEl = childImg;
+      }
       const catEl = document.getElementById('vdm-category');
-      const districtEl = document.getElementById('vdm-district');
-      const bottomPriceBarEl = document.getElementById('vdm-bottom-price-bar');
+      const districtEl = document.getElementById('vdm-district') || document.getElementById('vdm-address');
+      const bottomPriceBarEl = document.getElementById('vdm-bottom-price-bar') || document.getElementById('vdm-price');
+      const aboutEl = document.getElementById('vdm-about') || document.getElementById('vdm-about-text');
       const inquireCta = document.getElementById('vdm-modal-inquire-cta');
       const chatCta = document.getElementById('vdm-modal-chat-cta');
 
       if (titleEl) titleEl.innerText = vendor.name;
       if (coverEl) coverEl.src = vendor.image || "https://images.unsplash.com/photo-1519167758481-83f550bb49b3?auto=format&fit=crop&w=1200&q=80";
-      if (avatarEl) avatarEl.src = vendor.image || "https://images.unsplash.com/photo-1519167758481-83f550bb49b3?auto=format&fit=crop&w=400&q=80";
+      if (avatarEl && avatarEl.tagName === 'IMG') avatarEl.src = vendor.image || "https://images.unsplash.com/photo-1519167758481-83f550bb49b3?auto=format&fit=crop&w=400&q=80";
       if (catEl) catEl.innerText = vendor.category;
       if (districtEl) districtEl.innerText = `📍 ${vendor.province || 'استان یزد'}، ${vendor.district || 'صفائیه'}`;
       if (bottomPriceBarEl) bottomPriceBarEl.innerText = vendor.priceRange || "۶۵,۰۰۰,۰۰۰ تومان";
+      if (aboutEl) aboutEl.innerText = vendor.description || vendor.about || "توضیحات جامع مجموعه و خدمات تخصصی آن.";
 
       if (inquireCta) {
         inquireCta.onclick = function() {
@@ -4675,8 +4681,8 @@ if (document.readyState === "loading") {
       }
 
       // Populate Contact Tab & Map Links
-      const phoneEl = document.getElementById('vdm-contact-phone');
-      const addressEl = document.getElementById('vdm-contact-address');
+      const phoneEl = document.getElementById('vdm-contact-phone') || document.getElementById('vdm-phone');
+      const addressEl = document.getElementById('vdm-contact-address') || document.getElementById('vdm-full-address');
       const hoursEl = document.getElementById('vdm-contact-hours');
       const instaEl = document.getElementById('vdm-contact-insta');
 
@@ -9305,3 +9311,40 @@ window.addEventListener('click', (e) => {
 
 // Expose modal functions to window globally
 try { window.openVendorDetailModal = openVendorDetailModal; window.closeVendorDetailModal = closeVendorDetailModal; } catch(e) {}
+
+
+// Helper functions for vendor profile modal actions
+window.openVendorChatFromModal = function() {
+  if (typeof closeVendorDetailModal === 'function') closeVendorDetailModal();
+  if (typeof switchTab === 'function') switchTab('messages');
+  if (typeof showToast === 'function') showToast('💬 چت مستقیم با تامین‌کننده فعال شد', 'info');
+};
+
+window.openInquireFromVendorModal = function() {
+  const v = (typeof currentModalVendor !== 'undefined' && currentModalVendor) ? currentModalVendor : null;
+  if (typeof closeVendorDetailModal === 'function') closeVendorDetailModal();
+  if (v && typeof openInquiryModal === 'function') {
+    openInquiryModal(v.id, v.name);
+  } else if (typeof openInquiryModal === 'function') {
+    openInquiryModal(1, 'تامین‌کننده');
+  }
+};
+
+window.shareVendorModal = function(e) {
+  if (e && e.stopPropagation) e.stopPropagation();
+  if (navigator.share) {
+    navigator.share({ title: document.title, url: window.location.href }).catch(() => {});
+  } else {
+    if (navigator.clipboard) navigator.clipboard.writeText(window.location.href);
+    if (typeof showToast === 'function') showToast('🔗 لینک اشتراک‌گذاری کپی شد!', 'success');
+  }
+};
+
+window.toggleReviewSubmitDrawer = function() {
+  const form = document.getElementById('vdm-add-review-form');
+  if (form) {
+    form.classList.toggle('hidden');
+  } else if (typeof showToast === 'function') {
+    showToast('✍️ فرم ثبت نظر جدید باز شد', 'info');
+  }
+};
