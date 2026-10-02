@@ -5118,6 +5118,81 @@
     </div>
   </div>
 
+  <!-- BUDGET LINE ITEM MODAL (#modal-budget-item) -->
+  <div id="modal-budget-item" class="hidden fixed inset-0 bg-black/60 backdrop-blur-xs z-[999999] flex items-center justify-center p-4 transition-all animate-fadeIn" onclick="if(event.target === this) closeBudgetItemModal()">
+    <div class="bg-[#FCFCFA] rounded-3xl shadow-2xl max-w-lg w-full overflow-hidden border border-[#D4AF37]/50 flex flex-col animate-scaleUp relative">
+      <div class="bg-[#1B3B2B] text-white p-5 flex items-center justify-between border-b border-[#D4AF37]/30 shrink-0">
+        <div class="flex items-center gap-2.5">
+          <div class="w-10 h-10 rounded-xl bg-[#D4AF37] text-[#1B3B2B] flex items-center justify-center shadow-sm">
+            <i data-lucide="coins" class="w-5 h-5"></i>
+          </div>
+          <div>
+            <h3 id="budget-item-modal-title" class="text-base font-bold text-[#D4AF37]">افزودن / ویرایش قلم هزینه بودجه</h3>
+            <span class="text-[11px] text-amber-200/80 font-medium">مدیریت ریز هزینه‌های مراسم عروسی در یزد</span>
+          </div>
+        </div>
+
+        <button onclick="closeBudgetItemModal()" class="w-9 h-9 rounded-xl bg-white/10 hover:bg-white/20 text-white flex items-center justify-center transition-colors cursor-pointer" title="بستن">
+          <i data-lucide="x" class="w-5 h-5"></i>
+        </button>
+      </div>
+
+      <form id="budget-item-form" onsubmit="handleSaveBudgetItem(event)" class="p-6 space-y-4 text-xs font-bold text-[#111827]">
+        <input type="hidden" id="bmi-id" value="">
+
+        <div class="space-y-1">
+          <label class="block text-secondary">عنوان قلم هزینه / خدمت *</label>
+          <input type="text" id="bmi-title" required placeholder="مثلاً: بیعانه شام تالار یا رزرو عکاس کویر" class="w-full bg-white border border-[#E0D8C8] rounded-xl p-3 text-xs font-medium focus:outline-none focus:border-[#D4AF37]">
+        </div>
+
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+          <div class="space-y-1">
+            <label class="block text-secondary">دسته‌بندی اصلی *</label>
+            <select id="bmi-category" required class="w-full bg-white border border-[#E0D8C8] rounded-xl p-3 text-xs font-bold text-graphite focus:outline-none focus:border-[#D4AF37] cursor-pointer">
+              <option value="تالار و تشریفات پذیرایی">۱. تالار و تشریفات پذیرایی (~۴۰٪)</option>
+              <option value="عکاسی و فیلم‌برداری">۲. عکاسی و فیلم‌برداری (~۱۵٪)</option>
+              <option value="لباس، طلا و آرایشگاه">۳. لباس، طلا و آرایشگاه (~۲۰٪)</option>
+              <option value="گل‌آرایی، دکور و موزیک">۴. گل‌آرایی، دکور و موزیک (~۱۰٪)</option>
+              <option value="ماشین عروس و ماه عسل">۵. ماشین عروس و ماه عسل (~۱۰٪)</option>
+              <option value="هزینه‌های پیش‌بینی‌نشده">۶. هزینه‌های پیش‌بینی‌نشده (~۵٪)</option>
+            </select>
+          </div>
+
+          <div class="space-y-1">
+            <label class="block text-secondary">مبلغ برآوردی / توافقی (تومان) *</label>
+            <input type="number" id="bmi-estimated" required placeholder="مثلاً: ۴۵۰۰۰۰۰۰" class="w-full bg-white border border-[#E0D8C8] rounded-xl p-3 text-xs font-medium focus:outline-none focus:border-[#D4AF37] dir-ltr">
+          </div>
+        </div>
+
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+          <div class="space-y-1">
+            <label class="block text-secondary">مبلغ پرداختی تاکنون (تومان)</label>
+            <input type="number" id="bmi-paid" value="0" placeholder="مثلاً: ۱۵۰۰۰۰۰۰" class="w-full bg-white border border-[#E0D8C8] rounded-xl p-3 text-xs font-medium focus:outline-none focus:border-[#D4AF37] dir-ltr">
+          </div>
+
+          <div class="space-y-1">
+            <label class="block text-secondary">وضعیت پرداخت *</label>
+            <select id="bmi-status" required class="w-full bg-white border border-[#E0D8C8] rounded-xl p-3 text-xs font-bold text-graphite focus:outline-none focus:border-[#D4AF37] cursor-pointer">
+              <option value="FULL">پرداخت کامل (تسویه)</option>
+              <option value="ADVANCE">پیش‌پرداخت (بیعانه)</option>
+              <option value="UNPAID">مانده (پرداخت‌نشده)</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="space-y-1">
+          <label class="block text-secondary">یادداشت / شماره پیگیری / تامین‌کننده مرتبط:</label>
+          <input type="text" id="bmi-notes" placeholder="مثلاً: شماره رسید بانک، رزرو شده با تالار مشیرالممالک" class="w-full bg-white border border-[#E0D8C8] rounded-xl p-3 text-xs font-medium focus:outline-none focus:border-[#D4AF37]">
+        </div>
+
+        <button type="submit" class="w-full bg-[#D4AF37] hover:bg-amber-400 text-[#1B3B2B] font-black py-3 rounded-2xl text-xs shadow-md transition-all flex items-center justify-center gap-2 cursor-pointer">
+          <i data-lucide="check" class="w-4 h-4"></i>
+          <span>ذخیره قلم هزینه</span>
+        </button>
+      </form>
+    </div>
+  </div>
+
   <!-- VENDOR CUSTOM QUESTION MODAL (#modal-vendor-custom-question) -->
   <div id="modal-vendor-custom-question" class="hidden fixed inset-0 bg-black/60 backdrop-blur-xs z-[999999] flex items-center justify-center p-4 transition-all animate-fadeIn" onclick="if(event.target === this) closeCustomQuestionModal()">
     <div class="bg-white rounded-3xl shadow-2xl max-w-lg w-full overflow-hidden border border-[#D4AF37]/50 flex flex-col animate-scaleUp relative">

@@ -992,46 +992,34 @@ if (document.readyState === "loading") {
     let timeframeList = [
       "همه",
       "۱۲ تا ۹ ماه قبل",
-      "۹ تا ۶ ماه قبل",
       "۶ تا ۳ ماه قبل",
-      "۳ تا ۱ ماه قبل",
-      "۱ هفته قبل",
-      "روز عروسی و بعد از آن"
+      "۱ ماه قبل",
+      "هفته و روز قبل"
     ];
 
     let staticChecklist = [
       // ۱۲ تا ۹ ماه قبل
-      { id: "chk-1", title: "تعیین بودجه اولیه و سقف هزینه‌های جشن", timeframe: "۱۲ تا ۹ ماه قبل", completed: true, dueDate: "۱۲ ماه قبل", priority: "urgent", category: "عمومی", attachedVendorId: null, vendorStatus: "finalized" },
-      { id: "chk-2", title: "انتخاب و رزرو باغ تالار یا محل برگزاری مراسم", timeframe: "۱۲ تا ۹ ماه قبل", completed: true, dueDate: "۱۰ ماه قبل", priority: "urgent", category: "تالار و باغ تشریفات", attachedVendorId: 1, vendorStatus: "finalized" },
-      { id: "chk-3", title: "تعیین لیست اولیه و تعداد تقریبی مهمانان", timeframe: "۱۲ تا ۹ ماه قبل", completed: true, dueDate: "۹ ماه قبل", priority: "suggested", category: "عمومی", attachedVendorId: null, vendorStatus: null },
-
-      // ۹ تا ۶ ماه قبل
-      { id: "chk-4", title: "انتخاب و عقد قرارداد با آتلیه فیلم و عکس", timeframe: "۹ تا ۶ ماه قبل", completed: false, dueDate: "۸ ماه قبل", priority: "urgent", category: "آتلیه و عکاسی", attachedVendorId: 2, vendorStatus: "deposit_paid" },
-      { id: "chk-5", title: "رزرو و هماهنگی سالن زیبایی و میکاپ عروس", timeframe: "۹ تا ۶ ماه قبل", completed: false, dueDate: "۷ ماه قبل", priority: "urgent", category: "سالن زیبایی", attachedVendorId: 3, vendorStatus: "quote_received" },
-      { id: "chk-6", title: "انتخاب گروه موسیقی، دی‌جی و سیستم نورپردازی", timeframe: "۹ تا ۶ ماه قبل", completed: false, dueDate: "۶ ماه قبل", priority: "suggested", category: "موزیک", attachedVendorId: null, vendorStatus: null },
+      { id: "chk-1", title: "برنامه‌ریزی اولیه، تعیین سقف بودجه و تعداد مهمانان", timeframe: "۱۲ تا ۹ ماه قبل", completed: true, dueDate: "۱۲ ماه قبل", priority: "urgent", category: "عمومی", attachedVendorId: null, vendorStatus: "finalized" },
+      { id: "chk-2", title: "رزرو باغ/تالارهای سنتی و عمارت‌های معتبر یزد (مشیرالممالک، قصر)", timeframe: "۱۲ تا ۹ ماه قبل", completed: true, dueDate: "۱۰ ماه قبل", priority: "urgent", category: "تالار و باغ تشریفات", attachedVendorId: 1, vendorStatus: "finalized" },
+      { id: "chk-3", title: "انتخاب آتلیه تخصصی و اخذ مجوز رسمی عکاسی فرمالیته کویر یزد", timeframe: "۱۲ تا ۹ ماه قبل", completed: true, dueDate: "۹ ماه قبل", priority: "urgent", category: "آتلیه و عکاسی", attachedVendorId: 2, vendorStatus: "deposit_paid" },
 
       // ۶ تا ۳ ماه قبل
-      { id: "chk-7", title: "سفارش یا اجاره لباس عروس و خرید اکسسوری", timeframe: "۶ تا ۳ ماه قبل", completed: false, dueDate: "۵ ماه قبل", priority: "urgent", category: "مزون و لباس عروس", attachedVendorId: 4, vendorStatus: "deposit_paid" },
-      { id: "chk-8", title: "انتخاب و خرید کت و شلوار و کفش داماد", timeframe: "۶ تا ۳ ماه قبل", completed: false, dueDate: "۴ ماه قبل", priority: "suggested", category: "کت و شلوار داماد", attachedVendorId: null, vendorStatus: null },
-      { id: "chk-9", title: "خرید حلقه‌های ازدواج و سرویس طلا", timeframe: "۶ تا ۳ ماه قبل", completed: false, dueDate: "۳ ماه قبل", priority: "urgent", category: "طلافروشی و جواهرفروشی", attachedVendorId: null, vendorStatus: null },
+      { id: "chk-4", title: "تست آرایش و گریم عروس در سالن‌های زیبایی لوکس یزد", timeframe: "۶ تا ۳ ماه قبل", completed: false, dueDate: "۵ ماه قبل", priority: "urgent", category: "سالن زیبایی", attachedVendorId: 3, vendorStatus: "quote_received" },
+      { id: "chk-5", title: "سفارش و دوخت سفارشی لباس عروس در مزون‌های تخصصی یزد", timeframe: "۶ تا ۳ ماه قبل", completed: false, dueDate: "۴ ماه قبل", priority: "urgent", category: "مزون و لباس عروس", attachedVendorId: 4, vendorStatus: "deposit_paid" },
+      { id: "chk-6", title: "خرید حلقه‌های ازدواج و سرویس طلا از بازار خان یزد", timeframe: "۶ تا ۳ ماه قبل", completed: false, dueDate: "۳ ماه قبل", priority: "suggested", category: "طلافروشی و جواهرفروشی", attachedVendorId: 8, vendorStatus: "quote_received" },
 
-      // ۳ تا ۱ ماه قبل
-      { id: "chk-10", title: "طراحی و ارسال کارت دعوت دیجیتال و پیگیری RSVP", timeframe: "۳ تا ۱ ماه قبل", completed: false, dueDate: "۲ ماه قبل", priority: "urgent", category: "عمومی", attachedVendorId: null, vendorStatus: null },
-      { id: "chk-11", title: "رزرو ماشین عروس و سفار ش گل‌آرایی ماشین و دسته گل", timeframe: "۳ تا ۱ ماه قبل", completed: false, dueDate: "۶ هفته قبل", priority: "suggested", category: "گل‌آرایی و ماشین عروس", attachedVendorId: null, vendorStatus: null },
-      { id: "chk-12", title: "انتخاب مدل و سفارش کیک و شیرینی عروسی", timeframe: "۳ تا ۱ ماه قبل", completed: false, dueDate: "۴ هفته قبل", priority: "optional", category: "کیک و شیرینی‌فروشی", attachedVendorId: null, vendorStatus: null },
+      // ۱ ماه قبل
+      { id: "chk-7", title: "رزرو کیک و شیرینی‌های سنتی اصیل یزد (قطاب، باقلوا حاج خلیفه)", timeframe: "۱ ماه قبل", completed: false, dueDate: "۳ هفته قبل", priority: "urgent", category: "کیک و شیرینی‌فروشی", attachedVendorId: 7, vendorStatus: "quote_received" },
+      { id: "chk-8", title: "طراحی، تنظیم آدرس نقشه و ارسال کارت دعوت دیجیتال با سیستم RSVP", timeframe: "۱ ماه قبل", completed: false, dueDate: "۲ هفته قبل", priority: "urgent", category: "عمومی", attachedVendorId: null, vendorStatus: null },
+      { id: "chk-9", title: "هماهنگی گل‌آرایی ماشین عروس و سفره عقد سنتی/VIP", timeframe: "۱ ماه قبل", completed: false, dueDate: "۱۰ روز قبل", priority: "suggested", category: "گل‌آرایی و ماشین عروس", attachedVendorId: null, vendorStatus: null },
 
-      // ۱ هفته قبل
-      { id: "chk-13", title: "هماهنگی نهایی سینک برنامه با تالار، آتلیه و تشریفات", timeframe: "۱ هفته قبل", completed: false, dueDate: "۵ روز قبل", priority: "urgent", category: "عمومی", attachedVendorId: null, vendorStatus: null },
-      { id: "chk-14", title: "پرو نهایی لباس عروس و کت و شلوار داماد", timeframe: "۱ هفته قبل", completed: false, dueDate: "۳ روز قبل", priority: "urgent", category: "مزون و لباس عروس", attachedVendorId: null, vendorStatus: null },
-      { id: "chk-15", title: "تمرین نهایی رقص ورود و ورودی جشن", timeframe: "۱ هفته قبل", completed: false, dueDate: "۲ روز قبل", priority: "optional", category: "عمومی", attachedVendorId: null, vendorStatus: null },
-
-      // روز عروسی و بعد از آن
-      { id: "chk-16", title: "حضور به موقع در آرایشگاه و شروع سناریوی تصویربرداری", timeframe: "روز عروسی و بعد از آن", completed: false, dueDate: "صبح عروسی", priority: "urgent", category: "سالن زیبایی", attachedVendorId: null, vendorStatus: null },
-      { id: "chk-17", title: "تسویه حساب نهایی با تمامی تامین‌کنندگان", timeframe: "روز عروسی و بعد از آن", completed: false, dueDate: "پایان شب", priority: "urgent", category: "عمومی", attachedVendorId: null, vendorStatus: null },
-      { id: "chk-18", title: "تحویل عکس‌ها و ویدیوهای خام جهت انتخاب آلبوم", timeframe: "روز عروسی و بعد از آن", completed: false, dueDate: "۲ هفته بعد", priority: "suggested", category: "آتلیه و عکاسی", attachedVendorId: null, vendorStatus: null }
+      // هفته و روز قبل
+      { id: "chk-10", title: "هماهنگی نهایی سینک زمانی با مدیریت تالار، آتلیه و موزیک", timeframe: "هفته و روز قبل", completed: false, dueDate: "۳ روز قبل", priority: "urgent", category: "عمومی", attachedVendorId: null, vendorStatus: null },
+      { id: "chk-11", title: "تسویه‌حساب‌ها، تحویل‌ها و آرامش قبل از شب جشن عروسی", timeframe: "هفته و روز قبل", completed: false, dueDate: "روز قبل", priority: "urgent", category: "عمومی", attachedVendorId: null, vendorStatus: null }
     ];
 
     let activeChecklistFilter = "همه";
+    let activeChecklistStatusFilter = "ALL"; // ALL | UNCOMPLETED | COMPLETED
 
     let staticVendorApplications = [
       { id: "app-101", name: "تشریفات و گل‌آرایی مگنولیا", category: "گل‌آرایی و ماشین عروس", city: "تهران", manager: "علیرضا حسینی", phone: "۰۹۱۲۹۸۷۶۵۴۳", status: "pending" }
@@ -3795,7 +3783,7 @@ if (document.readyState === "loading") {
           renderChecklistTimeframeButtons();
         };
         const isActive = activeChecklistFilter === tf;
-        btn.className = `px-3.5 py-2 rounded-xl text-xs font-bold transition-all ${
+        btn.className = `px-3.5 py-2 rounded-xl text-xs font-bold transition-all cursor-pointer ${
           isActive
             ? 'bg-primary text-white shadow-xs'
             : 'bg-bgCustom text-graphite border border-accent hover:border-primary'
@@ -3803,6 +3791,23 @@ if (document.readyState === "loading") {
         btn.innerText = tf;
         btnContainer.appendChild(btn);
       });
+
+      // Append quick status filter buttons
+      const statusGroup = document.createElement('div');
+      statusGroup.className = "flex items-center gap-1.5 pt-2 sm:pt-0 sm:mr-auto border-t sm:border-t-0 border-accent/60 w-full sm:w-auto";
+      statusGroup.innerHTML = `
+        <span class="text-[11px] font-bold text-secondary hidden md:inline">وضعیت:</span>
+        <button type="button" onclick="filterChecklistTasksByStatus('ALL')" class="px-2.5 py-1 rounded-lg text-[11px] font-bold transition-all ${
+          activeChecklistStatusFilter === 'ALL' ? 'bg-[#1B3B2B] text-white' : 'bg-slate-100 text-graphite hover:bg-slate-200'
+        }">همه کارها</button>
+        <button type="button" onclick="filterChecklistTasksByStatus('UNCOMPLETED')" class="px-2.5 py-1 rounded-lg text-[11px] font-bold transition-all ${
+          activeChecklistStatusFilter === 'UNCOMPLETED' ? 'bg-amber-600 text-white' : 'bg-slate-100 text-graphite hover:bg-slate-200'
+        }">انجام نشده</button>
+        <button type="button" onclick="filterChecklistTasksByStatus('COMPLETED')" class="px-2.5 py-1 rounded-lg text-[11px] font-bold transition-all ${
+          activeChecklistStatusFilter === 'COMPLETED' ? 'bg-emerald-700 text-white' : 'bg-slate-100 text-graphite hover:bg-slate-200'
+        }">تکمیل شده</button>
+      `;
+      btnContainer.appendChild(statusGroup);
     }
 
     function toggleChecklistTask(id) {
@@ -3932,86 +3937,360 @@ if (document.readyState === "loading") {
       lucide.createIcons();
     }
 
+    // ENTERPRISE WEDDING BUDGET PLANNER STATE & FUNCTIONS
+    let budgetPlannerState = {
+      totalBudget: 350000000,
+      categories: [
+        { id: "c1", name: "تالار و تشریفات پذیرایی", defaultSplit: 0.40, color: "#1B3B2B" },
+        { id: "c2", name: "عکاسی و فیلم‌برداری", defaultSplit: 0.15, color: "#D4AF37" },
+        { id: "c3", name: "لباس، طلا و آرایشگاه", defaultSplit: 0.20, color: "#607268" },
+        { id: "c4", name: "گل‌آرایی، دکور و موزیک", defaultSplit: 0.10, color: "#B89628" },
+        { id: "c5", name: "ماشین عروس و ماه عسل", defaultSplit: 0.10, color: "#2E533F" },
+        { id: "c6", name: "هزینه‌های پیش‌بینی‌نشده", defaultSplit: 0.05, color: "#8D99AE" }
+      ],
+      lineItems: [
+        { id: "item-1", title: "ورودی و ورودی شام باغ تالار مشیرالممالک", category: "تالار و تشریفات پذیرایی", estimated: 140000000, paid: 95000000, status: "ADVANCE", notes: "بیعانه اولیه پرداخت شد" },
+        { id: "item-2", title: "پکیج کامل عکاسی و فرمالیته کویر", category: "عکاسی و فیلم‌برداری", estimated: 52500000, paid: 45000000, status: "ADVANCE", notes: "شامل ۲ آلبوم و هلی‌شات" },
+        { id: "item-3", title: "سالن زیبایی و آرایشگاه رویال عروس", category: "لباس، طلا و آرایشگاه", estimated: 25000000, paid: 25000000, status: "FULL", notes: "تسویه کامل گردید" },
+        { id: "item-4", title: "سفارش و دوخت لباس عروس مزون ترمه", category: "لباس، طلا و آرایشگاه", estimated: 45000000, paid: 15000000, status: "ADVANCE", notes: "پرو دوم هفته آینده" },
+        { id: "item-5", title: "گل‌آرایی ورودی، جایگاه و دسته گل", category: "گل‌آرایی، دکور و موزیک", estimated: 35000000, paid: 0, status: "UNPAID", notes: "در مرحله استعلام" }
+      ]
+    };
+
+    function loadBudgetStateFromStorage() {
+      try {
+        const stored = localStorage.getItem('aroosi_enterprise_budget_db');
+        if (stored) {
+          const parsed = JSON.parse(stored);
+          if (parsed && typeof parsed.totalBudget === 'number') {
+            budgetPlannerState = parsed;
+          }
+        }
+      } catch (e) {
+        console.error('Failed to load budget state:', e);
+      }
+    }
+
+    function saveBudgetStateToStorage() {
+      try {
+        localStorage.setItem('aroosi_enterprise_budget_db', JSON.stringify(budgetPlannerState));
+      } catch (e) {
+        console.error('Failed to save budget state:', e);
+      }
+    }
+
+    function openBudgetItemModal(itemId = null) {
+      const modal = document.getElementById('modal-budget-item');
+      if (!modal) return;
+
+      const titleElem = document.getElementById('budget-item-modal-title');
+      const idInp = document.getElementById('bmi-id');
+      const titleInp = document.getElementById('bmi-title');
+      const catInp = document.getElementById('bmi-category');
+      const estInp = document.getElementById('bmi-estimated');
+      const paidInp = document.getElementById('bmi-paid');
+      const statusInp = document.getElementById('bmi-status');
+      const notesInp = document.getElementById('bmi-notes');
+
+      if (itemId) {
+        const item = budgetPlannerState.lineItems.find(i => i.id === itemId);
+        if (item) {
+          if (titleElem) titleElem.innerText = "ویرایش قلم هزینه بودجه";
+          if (idInp) idInp.value = item.id;
+          if (titleInp) titleInp.value = item.title;
+          if (catInp) catInp.value = item.category;
+          if (estInp) estInp.value = item.estimated;
+          if (paidInp) paidInp.value = item.paid;
+          if (statusInp) statusInp.value = item.status || "UNPAID";
+          if (notesInp) notesInp.value = item.notes || "";
+        }
+      } else {
+        if (titleElem) titleElem.innerText = "افزودن قلم هزینه جدید به بودجه";
+        if (idInp) idInp.value = "";
+        if (titleInp) titleInp.value = "";
+        if (catInp) catInp.value = "تالار و تشریفات پذیرایی";
+        if (estInp) estInp.value = "";
+        if (paidInp) paidInp.value = "0";
+        if (statusInp) statusInp.value = "UNPAID";
+        if (notesInp) notesInp.value = "";
+      }
+
+      modal.classList.remove('hidden');
+      if (window.lucide) lucide.createIcons();
+    }
+
+    function closeBudgetItemModal() {
+      const modal = document.getElementById('modal-budget-item');
+      if (modal) modal.classList.add('hidden');
+    }
+
+    function handleSaveBudgetItem(e) {
+      if (e && e.preventDefault) e.preventDefault();
+
+      const id = document.getElementById('bmi-id')?.value;
+      const title = document.getElementById('bmi-title')?.value.trim();
+      const category = document.getElementById('bmi-category')?.value;
+      const estimated = Number(document.getElementById('bmi-estimated')?.value) || 0;
+      const paid = Number(document.getElementById('bmi-paid')?.value) || 0;
+      const status = document.getElementById('bmi-status')?.value || "UNPAID";
+      const notes = document.getElementById('bmi-notes')?.value.trim() || "";
+
+      if (!title || estimated <= 0) {
+        showToast('لطفاً عنوان و مبلغ برآوردی معتبر وارد کنید.', 'warning');
+        return;
+      }
+
+      if (id) {
+        const idx = budgetPlannerState.lineItems.findIndex(i => i.id === id);
+        if (idx !== -1) {
+          budgetPlannerState.lineItems[idx] = { id, title, category, estimated, paid, status, notes };
+        }
+      } else {
+        budgetPlannerState.lineItems.unshift({
+          id: 'item-' + Date.now(),
+          title, category, estimated, paid, status, notes
+        });
+      }
+
+      saveBudgetStateToStorage();
+      closeBudgetItemModal();
+      renderPlannerBudgetSummary();
+      showToast('قلم هزینه با موفقیت ثبت گردید.', 'success');
+    }
+
+    function deleteBudgetItem(itemId) {
+      if (confirm('آیا از حذف این قلم هزینه اطمینان دارید؟')) {
+        budgetPlannerState.lineItems = budgetPlannerState.lineItems.filter(i => i.id !== itemId);
+        saveBudgetStateToStorage();
+        renderPlannerBudgetSummary();
+        showToast('قلم هزینه از بودجه حذف گردید.', 'info');
+      }
+    }
+
+    function updateTotalBudgetCap(newBudget) {
+      const val = Number(newBudget);
+      if (val && val > 0) {
+        budgetPlannerState.totalBudget = val;
+        saveBudgetStateToStorage();
+        renderPlannerBudgetSummary();
+        showToast('سقف بودجه کل با موفقیت بروزرسانی شد.', 'success');
+      }
+    }
+
     function renderPlannerBudgetSummary() {
       const container = document.getElementById('planner-budget-summary-container');
       if (!container) return;
 
-      const attachedTasks = staticChecklist.filter(t => t.attachedVendorId);
-      const totalTasks = staticChecklist.length;
-      const completedTasks = staticChecklist.filter(t => t.completed).length;
+      loadBudgetStateFromStorage();
 
-      const totalBudgetNum = 350000000;
-      const totalSpentNum = 180000000;
-      const remainingNum = totalBudgetNum - totalSpentNum;
-      const spentPercent = Math.round((totalSpentNum / totalBudgetNum) * 100);
+      const totalBudget = budgetPlannerState.totalBudget || 350000000;
+      const totalPaid = budgetPlannerState.lineItems.reduce((acc, item) => acc + (Number(item.paid) || 0), 0);
+      const totalEstimatedSpent = budgetPlannerState.lineItems.reduce((acc, item) => acc + (Number(item.estimated) || 0), 0);
+      const remaining = totalBudget - totalPaid;
 
-      const categoriesBreakdown = [
-        { name: 'تالار و باغ عروسی', budgeted: 140000000, spent: 95000000, color: 'bg-primary' },
-        { name: 'عکاسی و فیلم‌برداری', budgeted: 70000000, spent: 45000000, color: 'bg-emerald-600' },
-        { name: 'سالن زیبایی و آرایش عروس', budgeted: 40000000, spent: 25000000, color: 'bg-amber-500' },
-        { name: 'مزون و لباس عروس/داماد', budgeted: 50000000, spent: 15000000, color: 'bg-rose-500' },
-        { name: 'موسیقی، گل‌آرایی و سایر', budgeted: 50000000, spent: 0, color: 'bg-slate-400' }
-      ];
+      // Evaluate Health Status Badge
+      let healthBadgeText = "عالی (مدیریت متوازن)";
+      let healthBadgeClass = "health-badge-excellent";
+      let healthDesc = "هزینه‌های شما کاملاً طبق بودجه کل مصوب در حال مدیریت است.";
+
+      if (totalEstimatedSpent > totalBudget * 1.1) {
+        healthBadgeText = "خطر (تجاوز از سقف بودجه)";
+        healthBadgeClass = "health-badge-danger";
+        healthDesc = "مجموع هزینه‌های برآوردی از سقف بودجه کل شما فراتر رفته است.";
+      } else if (totalEstimatedSpent > totalBudget) {
+        healthBadgeText = "هشدار (نزدیک به سقف)";
+        healthBadgeClass = "health-badge-warning";
+        healthDesc = "برآورد هزینه‌ها به سقف بودجه نزدیک شده است، در انتخاب پکیج‌ها دقت کنید.";
+      }
+
+      // Calculate Category Splits
+      const categoryCalculations = budgetPlannerState.categories.map(cat => {
+        const catTargetBudget = totalBudget * cat.defaultSplit;
+        const catItems = budgetPlannerState.lineItems.filter(i => i.category === cat.name);
+        const catEstimatedTotal = catItems.reduce((a, b) => a + (Number(b.estimated) || 0), 0);
+        const catPaidTotal = catItems.reduce((a, b) => a + (Number(b.paid) || 0), 0);
+
+        const diff = catEstimatedTotal - catTargetBudget;
+        let diffText = "منطبق بر سهم";
+        let diffColorClass = "text-[#1B3B2B]";
+        let progressBgClass = "bg-[#1B3B2B]";
+
+        if (diff > 0) {
+          diffText = `+${diff.toLocaleString('fa-IR')} تومان فراتر از سهم`;
+          diffColorClass = "text-rose-600";
+          progressBgClass = "bg-rose-500";
+        } else if (diff < 0) {
+          diffText = `${Math.abs(diff).toLocaleString('fa-IR')} تومان صرفه‌جویی`;
+          diffColorClass = "text-emerald-700";
+          progressBgClass = "bg-[#1B3B2B]";
+        } else {
+          progressBgClass = "bg-[#D4AF37]";
+        }
+
+        const pct = Math.min(100, Math.round((catEstimatedTotal / catTargetBudget) * 100));
+
+        return {
+          ...cat,
+          targetBudget: catTargetBudget,
+          itemsCount: catItems.length,
+          estimatedTotal: catEstimatedTotal,
+          paidTotal: catPaidTotal,
+          diffText,
+          diffColorClass,
+          progressBgClass,
+          pct
+        };
+      });
 
       container.innerHTML = `
-        <div class="space-y-6">
-          <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
-            <div class="bg-bgCustom p-5 rounded-2xl border border-accent space-y-1">
-              <span class="text-xs font-bold text-secondary">بودجه کل مصوب:</span>
-              <span class="block text-xl font-black text-graphite">${totalBudgetNum.toLocaleString('fa-IR')} <span class="text-xs font-normal text-secondary">تومان</span></span>
+        <div class="space-y-8">
+
+          <!-- TOP HERO SUMMARY BANNER (4 KEY METRIC COUNTERS) -->
+          <div class="ivory-card rounded-3xl p-6 sm:p-8 space-y-6">
+            <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 border-b border-[#D4AF37]/30 pb-4">
+              <div class="space-y-1">
+                <span class="text-xs font-bold text-primary bg-primary/10 px-3 py-1 rounded-full border border-primary/20">خلاصه مالی کل جشن</span>
+                <h3 class="text-xl font-black text-[#111827] mt-1">بودجه‌ریز هوشمند پیشرفته عروسی در یزد</h3>
+              </div>
+
+              <div class="flex items-center gap-2">
+                <span class="px-3.5 py-1.5 rounded-full text-xs font-black ${healthBadgeClass}">
+                  وضعیت بودجه: ${healthBadgeText}
+                </span>
+                <button onclick="openBudgetItemModal()" class="bg-[#1B3B2B] hover:bg-emerald-900 text-[#D4AF37] border border-[#D4AF37]/40 px-4 py-2.5 rounded-xl text-xs font-bold transition-all shadow-md flex items-center gap-1.5 cursor-pointer">
+                  <i data-lucide="plus" class="w-4 h-4 text-[#D4AF37]"></i>
+                  <span>+ ثبت هزینه جدید</span>
+                </button>
+              </div>
             </div>
 
-            <div class="bg-bgCustom p-5 rounded-2xl border border-accent space-y-1">
-              <span class="text-xs font-bold text-secondary">هزینه‌های پرداخت‌شده:</span>
-              <span class="block text-xl font-black text-primary">${totalSpentNum.toLocaleString('fa-IR')} <span class="text-xs font-normal text-secondary">تومان (${spentPercent}٪)</span></span>
-            </div>
+            <!-- 4 METRIC COUNTERS -->
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+              <div class="bg-white/80 p-4 rounded-2xl border border-[#D4AF37]/30 shadow-2xs space-y-1.5">
+                <span class="text-xs font-bold text-secondary flex items-center justify-between">
+                  <span>بودجه کل مصوب:</span>
+                  <button onclick="const b = prompt('سقف جدید بودجه کل (تومان):', '${totalBudget}'); if(b) updateTotalBudgetCap(b);" class="text-[10px] text-primary hover:underline font-bold">تغییر سقف</button>
+                </span>
+                <span class="block text-xl font-black text-[#111827]">${totalBudget.toLocaleString('fa-IR')} <span class="text-xs font-normal text-secondary">تومان</span></span>
+              </div>
 
-            <div class="bg-bgCustom p-5 rounded-2xl border border-accent space-y-1">
-              <span class="text-xs font-bold text-secondary">مانده بودجه در دسترس:</span>
-              <span class="block text-xl font-black text-emerald-700">${remainingNum.toLocaleString('fa-IR')} <span class="text-xs font-normal text-secondary">تومان</span></span>
+              <div class="bg-white/80 p-4 rounded-2xl border border-[#D4AF37]/30 shadow-2xs space-y-1.5">
+                <span class="text-xs font-bold text-secondary">پرداخت شده (تسویه + بیعانه):</span>
+                <span class="block text-xl font-black text-[#1B3B2B]">${totalPaid.toLocaleString('fa-IR')} <span class="text-xs font-normal text-secondary">تومان</span></span>
+              </div>
+
+              <div class="bg-white/80 p-4 rounded-2xl border border-[#D4AF37]/30 shadow-2xs space-y-1.5">
+                <span class="text-xs font-bold text-secondary">باقیمانده تا سقف بودجه:</span>
+                <span class="block text-xl font-black ${remaining < 0 ? 'text-rose-600' : 'text-emerald-700'}">${remaining.toLocaleString('fa-IR')} <span class="text-xs font-normal text-secondary">تومان</span></span>
+              </div>
+
+              <div class="bg-white/80 p-4 rounded-2xl border border-[#D4AF37]/30 shadow-2xs space-y-1.5">
+                <span class="text-xs font-bold text-secondary">ارزیابی سلامت بودجه:</span>
+                <span class="block text-xs font-bold text-graphite leading-relaxed">${healthDesc}</span>
+              </div>
             </div>
           </div>
 
-          <!-- Real-Time Interactive Category Progress Bars -->
-          <div class="bg-white border border-accent rounded-2xl p-5 space-y-4">
-            <h4 class="text-sm font-bold text-graphite flex items-center justify-between border-b border-accent pb-3">
-              <span class="flex items-center gap-2">
-                <i data-lucide="bar-chart-3" class="w-4 h-4 text-primary"></i>
-                <span>تفکیک سهم دسته‌بندی‌ها از بودجه و میزان پیشرفت</span>
-              </span>
-              <span class="text-xs font-bold text-secondary">${spentPercent}٪ از کل بودجه صرف شده</span>
-            </h4>
+          <!-- DYNAMIC SPLIT ACROSS 6 CORE CATEGORIES WITH COLOR CODED PROGRESS -->
+          <div class="bg-white border border-accent rounded-3xl p-6 sm:p-8 shadow-xs space-y-5">
+            <div class="flex justify-between items-center border-b border-accent pb-3">
+              <h4 class="text-base font-black text-[#111827] flex items-center gap-2">
+                <i data-lucide="pie-chart" class="w-5 h-5 text-primary"></i>
+                <span>تفکیک درصدی و مقایسه سهم سقف بودجه با هزینه‌های واقعی</span>
+              </h4>
+              <span class="text-xs text-secondary font-bold">تقسیم ۶ گانه استاندارد</span>
+            </div>
 
-            <div class="space-y-3.5">
-              ${categoriesBreakdown.map(cat => {
-                const catPercent = Math.round((cat.spent / cat.budgeted) * 100);
-                return `
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+              ${categoryCalculations.map(cat => `
+                <div class="p-4 bg-[#FCFCFA] border border-accent/80 rounded-2xl space-y-2.5 hover:border-[#D4AF37]/60 transition-all">
+                  <div class="flex justify-between items-center text-xs font-bold">
+                    <span class="text-[#111827] font-black">${cat.name} (${Math.round(cat.defaultSplit * 100)}٪)</span>
+                    <span class="${cat.diffColorClass} font-black text-[11px]">${cat.diffText}</span>
+                  </div>
+
                   <div class="space-y-1">
-                    <div class="flex justify-between text-xs font-bold text-graphite">
-                      <span>${cat.name}</span>
-                      <span class="text-secondary">${cat.spent.toLocaleString('fa-IR')} از ${cat.budgeted.toLocaleString('fa-IR')} تومان (${catPercent}٪)</span>
+                    <div class="w-full bg-slate-200 h-2.5 rounded-full overflow-hidden border border-accent/40">
+                      <div class="${cat.progressBgClass} h-full rounded-full transition-all duration-500" style="width: ${cat.pct}%;"></div>
                     </div>
-                    <div class="w-full bg-slate-100 h-2.5 rounded-full overflow-hidden border border-accent/40">
-                      <div class="${cat.color} h-full rounded-full transition-all duration-500" style="width: ${catPercent}%;"></div>
+                    <div class="flex justify-between text-[11px] text-secondary font-medium pt-0.5">
+                      <span>برآورد: ${cat.estimatedTotal.toLocaleString('fa-IR')} تومان</span>
+                      <span>سهم مصوب: ${cat.targetBudget.toLocaleString('fa-IR')} تومان</span>
                     </div>
                   </div>
-                `;
-              }).join('')}
+                </div>
+              `).join('')}
             </div>
           </div>
 
-          <div class="bg-primary/5 border border-primary/20 rounded-2xl p-6 space-y-3">
-            <h3 class="text-sm font-bold text-primary flex items-center gap-2">
-              <i data-lucide="sparkles" class="w-4 h-4"></i>
-              <span>دستیار هوشمند بودجه عروسی تو</span>
-            </h3>
-            <p class="text-xs text-graphite leading-relaxed">
-              جهت فرمولاسیون کامل و تقسیم‌بندی بودجه پیشنهادی بر اساس سبک تشریفات و شهر برگزاری مراسم، می‌توانید از موتور هوشمند تخمین بودجه استفاده نمایید.
-            </p>
-            <button onclick="switchTab('tools')" class="bg-primary text-white text-xs font-bold px-4 py-2.5 rounded-xl shadow-xs transition-colors">
-              محاسبه هوشمند سقف بودجه
-            </button>
+          <!-- LINE ITEMS CRUD TABLE -->
+          <div class="bg-white border border-accent rounded-3xl p-6 sm:p-8 shadow-xs space-y-4">
+            <div class="flex flex-col sm:flex-row justify-between sm:items-center gap-3 border-b border-accent pb-4">
+              <div>
+                <h4 class="text-base font-black text-[#111827] flex items-center gap-2">
+                  <i data-lucide="list-checks" class="w-5 h-5 text-primary"></i>
+                  <span>ریز هزینه‌ها و اقلام ثبت‌شده (Line Items CRUD)</span>
+                </h4>
+                <p class="text-xs text-secondary mt-0.5">مدیریت وضعیت پرداخت، بیعانه‌ها و تسویه‌حساب با تامین‌کنندگان یزد</p>
+              </div>
+
+              <button onclick="openBudgetItemModal()" class="bg-primary hover:bg-emerald-900 text-white font-bold text-xs px-4 py-2 rounded-xl transition-all shadow-xs flex items-center gap-1.5 self-start sm:self-auto cursor-pointer">
+                <i data-lucide="plus" class="w-4 h-4"></i>
+                <span>افزودن قلم جدید</span>
+              </button>
+            </div>
+
+            <div class="overflow-x-auto">
+              <table class="w-full text-right text-xs">
+                <thead class="bg-bgCustom text-secondary border-b border-accent font-bold">
+                  <tr>
+                    <th class="p-3">عنوان خدمت / قلم هزینه</th>
+                    <th class="p-3">دسته‌بندی</th>
+                    <th class="p-3 text-center">برآورد (تومان)</th>
+                    <th class="p-3 text-center">پرداختی (تومان)</th>
+                    <th class="p-3 text-center">وضعیت پرداخت</th>
+                    <th class="p-3 text-center">عملیات</th>
+                  </tr>
+                </thead>
+                <tbody class="divide-y divide-accent/60 font-medium text-graphite">
+                  ${budgetPlannerState.lineItems.length === 0 ? `
+                    <tr><td colspan="6" class="p-6 text-center text-secondary font-bold">هنوز هیچ قلم هزینه‌ای ثبت نشده است.</td></tr>
+                  ` : budgetPlannerState.lineItems.map(item => {
+                    let statusBadge = '<span class="bg-rose-100 text-rose-800 px-2.5 py-1 rounded-md text-[10px] font-bold">پرداخت نشده</span>';
+                    if (item.status === 'FULL') {
+                      statusBadge = '<span class="bg-emerald-100 text-emerald-800 px-2.5 py-1 rounded-md text-[10px] font-bold">پرداخت کامل (تسویه)</span>';
+                    } else if (item.status === 'ADVANCE') {
+                      statusBadge = '<span class="bg-amber-100 text-amber-800 px-2.5 py-1 rounded-md text-[10px] font-bold">پیش‌پرداخت (بیعانه)</span>';
+                    }
+
+                    return `
+                      <tr class="hover:bg-slate-50/80 transition-colors">
+                        <td class="p-3.5">
+                          <span class="font-bold text-[#111827] block">${item.title}</span>
+                          ${item.notes ? `<span class="text-[10px] text-secondary block mt-0.5">${item.notes}</span>` : ''}
+                        </td>
+                        <td class="p-3.5 text-secondary font-bold text-[11px]">${item.category}</td>
+                        <td class="p-3.5 text-center font-black text-graphite">${Number(item.estimated).toLocaleString('fa-IR')}</td>
+                        <td class="p-3.5 text-center font-black text-primary">${Number(item.paid).toLocaleString('fa-IR')}</td>
+                        <td class="p-3.5 text-center">${statusBadge}</td>
+                        <td class="p-3.5 text-center">
+                          <div class="flex items-center justify-center gap-2">
+                            <button onclick="openBudgetItemModal('${item.id}')" title="ویرایش" class="p-1.5 rounded-lg bg-bgCustom hover:bg-slate-200 border border-accent text-primary">
+                              <i data-lucide="edit-3" class="w-3.5 h-3.5"></i>
+                            </button>
+                            <button onclick="deleteBudgetItem('${item.id}')" title="حذف" class="p-1.5 rounded-lg bg-rose-50 hover:bg-rose-100 border border-rose-200 text-rose-600">
+                              <i data-lucide="trash-2" class="w-3.5 h-3.5"></i>
+                            </button>
+                          </div>
+                        </td>
+                      </tr>
+                    `;
+                  }).join('')}
+                </tbody>
+              </table>
+            </div>
           </div>
+
         </div>
       `;
 
@@ -4085,6 +4364,12 @@ if (document.readyState === "loading") {
       lucide.createIcons();
     }
 
+    function filterChecklistTasksByStatus(status) {
+      activeChecklistStatusFilter = status;
+      renderChecklistTimeframeButtons();
+      renderChecklistTimeline();
+    }
+
     function renderChecklistTimeline() {
       const container = document.getElementById('checklist-timeline-container');
       if (!container) return;
@@ -4102,7 +4387,7 @@ if (document.readyState === "loading") {
       const plannerCountdownBadge = document.getElementById('planner-countdown-badge');
 
       if (progressBar) progressBar.style.width = percent + '%';
-      if (progressText) progressText.innerText = percent + '٪ انجام شده';
+      if (progressText) progressText.innerText = `${percent}٪ آمادگی کارهای عروسی انجام شده`;
       if (completedCountText) completedCountText.innerText = `${completedCount} از ${total} مورد`;
 
       const urgentUncompleted = staticChecklist.filter(t => (t.priority === 'urgent' || t.isUrgent) && !t.completed).length;
@@ -4112,12 +4397,18 @@ if (document.readyState === "loading") {
 
       container.innerHTML = '';
 
-      const itemsToRender = activeChecklistFilter === "همه"
+      let itemsToRender = activeChecklistFilter === "همه"
         ? staticChecklist
         : staticChecklist.filter(t => t.timeframe === activeChecklistFilter || t.category === activeChecklistFilter);
 
+      if (activeChecklistStatusFilter === 'COMPLETED') {
+        itemsToRender = itemsToRender.filter(t => t.completed);
+      } else if (activeChecklistStatusFilter === 'UNCOMPLETED') {
+        itemsToRender = itemsToRender.filter(t => !t.completed);
+      }
+
       if (itemsToRender.length === 0) {
-        container.innerHTML = '<div class="p-8 text-center text-secondary text-xs font-semibold bg-bgCustom rounded-2xl border border-accent">هیچ اقدامی برای این بازه زمانی یافت نشد.</div>';
+        container.innerHTML = '<div class="p-8 text-center text-secondary text-xs font-semibold bg-bgCustom rounded-2xl border border-accent">هیچ اقدامی برای این فیلتر زمان‌بندی یا وضعیت یافت نشد.</div>';
         return;
       }
 
@@ -4144,7 +4435,7 @@ if (document.readyState === "loading") {
 
         const div = document.createElement('div');
         div.className = `p-5 rounded-2xl border transition-all space-y-4 ${
-          t.completed ? 'bg-primary/5 border-primary/30 shadow-xs' : 'bg-white border-accent hover:border-primary/40 shadow-xs'
+          t.completed ? 'bg-emerald-50/50 border-emerald-200 shadow-2xs' : 'bg-white border-accent hover:border-primary/40 shadow-xs'
         }`;
 
         div.innerHTML = `
@@ -4157,7 +4448,7 @@ if (document.readyState === "loading") {
               </button>
               <div class="space-y-1">
                 <div class="flex items-center gap-2 flex-wrap">
-                  <span class="text-sm sm:text-base font-bold ${t.completed ? 'line-through text-graphite/60' : 'text-graphite'}">${t.title}</span>
+                  <span class="text-sm sm:text-base font-bold ${t.completed ? 'task-completed-strikethrough' : 'text-[#111827]'}">${t.title}</span>
                   ${priorityBadge}
                 </div>
               </div>
