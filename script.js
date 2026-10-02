@@ -10054,6 +10054,65 @@ if (document.readyState === "loading") {
     // INSPIRATION GALLERY & MOODBOARD HUB LOGIC
     // ==========================================
     let inspirationState = {
+      articles: [
+        {
+                "id": 101,
+                "title": "راهنمای جامع عکاسی فرمالیته در کویر و بافت تاریخی یزد",
+                "categoryKey": "desert",
+                "categoryName": "عکاسی کویر & بافت تاریخی",
+                "vendorCategoryMatch": "آتلیه و عکاسی",
+                "readTime": "۵ دقیقه مطالعه",
+                "author": "تیم عکاسی استودیو کویر یزد",
+                "date": "۱۰ مهر ۱۴۰۳",
+                "image": "https://images.unsplash.com/photo-1509316975850-ff9c5deb0cd9?auto=format&fit=crop&w=800&q=80",
+                "isFeatured": true,
+                "summary": "بهترین زمان‌بندی طلایی برای ثبت عکس‌های کویر شهداد و شبستان‌های بادگیر یزد همراه با نکات انتخاب لباس و تجهیزات نورپردازی.",
+                "content": "<p class=\"text-xs sm:text-sm text-graphite leading-relaxed\">عکاسی فرمالیته در پهنه رمل‌های طلایی کویر یزد و کوچه‌های آشتی‌کنان بافت تاریخی، تجربه‌ای شگفت‌انگیز و منحصربه‌فرد برای زوج‌ها است. با این حال، تفاوت‌های آب‌وهوایی و انعکاس شدید نور خورشید نیازمند رعایت نکات تخصصی است.</p><h4 class=\"text-sm font-bold text-[#1B3B2B] mt-4 mb-2\">۱. ساعت طلایی (Golden Hour) در کویر یزد</h4><p class=\"text-xs sm:text-sm text-graphite leading-relaxed\">بهترین زمان برای شروع عکاسی کویر، حدود ۹۰ دقیقه قبل از غروب آفتاب است. در این بازه، نور نرم خورشید سایه‌های کشیده و رنگ‌های گرم روی رمل‌ها ایجاد می‌کند که عالی‌ترین پس‌زمینه برای ثبت ویدیوهای هلی‌شات و عکس‌های احساسی است.</p><div class=\"p-4 bg-amber-50/80 border-r-4 border-[#D4AF37] rounded-xl my-4 text-xs font-bold text-amber-900 leading-relaxed\">«پیشنهاد ویژه آتلیه‌های یزد: استفاده از تورهای بلند ۲ الی ۳ متری و پارچه‌های حریر در کویر، جلوه‌ای رویایی و حرکتی باشکوه در عکس‌ها خلق می‌کند.»</div><h4 class=\"text-sm font-bold text-[#1B3B2B] mt-4 mb-2\">۲. لوکیشن‌های پیشنهادی بافت تاریخی</h4><p class=\"text-xs sm:text-sm text-graphite leading-relaxed\">پشت‌بام‌های سنتی محله فهادان، مسجد جامع یزد و خانه‌های تاریخی نظیر خانه لاری‌ها و هتل باغ مشیرالممالک، تنوع بصری فوق‌العاده‌ای در کنار عکس‌های کویر فراهم می‌سازند.</p>"
+        },
+        {
+                "id": 102,
+                "title": "ترندهای گل‌آرایی، سفره عقد و نورپردازی سالن‌های عروسی ۱۴۰۳",
+                "categoryKey": "decor",
+                "categoryName": "دکوراسیون & نورپردازی",
+                "vendorCategoryMatch": "گل‌آرایی و ماشین عروس",
+                "readTime": "۴ دقیقه مطالعه",
+                "author": "طراح تشریفات مشیرالممالک",
+                "date": "۵ مهر ۱۴۰۳",
+                "image": "https://images.unsplash.com/photo-1519167758481-83f550bb49b3?auto=format&fit=crop&w=800&q=80",
+                "isFeatured": false,
+                "summary": "ترکیب گل‌های استوایی و ارکیده با شمعدان‌های کریستال و سفره عقد اسلیمی سنتی برای سالن‌ها و عمارت‌های یزد.",
+                "content": "<p class=\"text-xs sm:text-sm text-graphite leading-relaxed\">طراحی دکوراسیون تالارها و باغ‌های عروسی در سال جدید به سمت المان‌های طبیعی، ترکیبات مینی‌مال شیک و نورپردازی گرم هالوژنی سوق پیدا کرده است.</p><h4 class=\"text-sm font-bold text-[#1B3B2B] mt-4 mb-2\">سفره عقد تلفیقی سنتی و مدرن</h4><p class=\"text-xs sm:text-sm text-graphite leading-relaxed\">استفاده از آینه‌کاری‌های هندسی اصیل در کنار ظروف برنجی و گل‌آرایی‌های پودری، ظاهری مجلل به جایگاه عقد می‌بخشد.</p>"
+        },
+        {
+                "id": 103,
+                "title": "راهنمای انتخاب طلا، جواهرات و استایل عروس متناسب با فرم چهره",
+                "categoryKey": "attire",
+                "categoryName": "استایل، طلا & جواهرات",
+                "vendorCategoryMatch": "طلا، جواهر و حلقه ازدواج",
+                "readTime": "۶ دقیقه مطالعه",
+                "author": "کارشناس گالری طلا برلیان",
+                "date": "۲۸ شهریور ۱۴۰۳",
+                "image": "https://images.unsplash.com/photo-1605100804763-247f67b3557e?auto=format&fit=crop&w=800&q=80",
+                "isFeatured": false,
+                "summary": "نکات کلیدی برای ست کردن سرویس طلا، تاج و تور عروس با یقه لباس عروس و فرم صورت.",
+                "content": "<p class=\"text-xs sm:text-sm text-graphite leading-relaxed\">انتخاب سرویس طلا و جواهر باید هماهنگی کامل با یقه لباس عروس (دکلته، قایقی، ایستاده) و سبک میکاپ داشته باشد.</p>"
+        },
+        {
+                "id": 104,
+                "title": "آداب و رسوم سنتی عروسی در یزد: از نقل‌بندان تا پذیرایی اصیل",
+                "categoryKey": "traditions",
+                "categoryName": "آداب & رسوم سنتی یزد",
+                "vendorCategoryMatch": "کترینگ و تشریفات پذیرایی",
+                "readTime": "۵ دقیقه مطالعه",
+                "author": "پژوهشگر فرهنگ بومی یزد",
+                "date": "۲۰ شهریور ۱۴۰۳",
+                "image": "https://images.unsplash.com/photo-1535141192574-5d4897c13136?auto=format&fit=crop&w=800&q=80",
+                "isFeatured": false,
+                "summary": "مروری بر سنت‌های زیبای خانوادگی یزدی‌ها در برگزاری مراسم عقد، حنابندان و پذیرایی اصیل.",
+                "content": "<p class=\"text-xs sm:text-sm text-graphite leading-relaxed\">فرهنگ اصیل یزدی سرشار از آیین‌های صمیمانه و با برکتی است که مراسم عروسی را به خاطره‌ای ماندگار تبدیل می‌سازد.</p>"
+        }
+],
+      bookmarkedArticles: [],
       activeSubTab: 'gallery', // 'gallery' | 'moodboard'
       selectedCategory: 'all',
       bookmarkedIds: [1, 4, 7],
@@ -10278,6 +10337,29 @@ if (document.readyState === "loading") {
       renderInspirationGalleryGrid();
     }
 
+    const MOODBOARD_STORAGE_KEY = 'aroosi_saved_inspiration_db';
+
+    function loadSavedMoodboardIds() {
+      try {
+        const stored = localStorage.getItem(MOODBOARD_STORAGE_KEY);
+        if (stored) return JSON.parse(stored);
+      } catch (e) {
+        console.error('Failed to load moodboard', e);
+      }
+      return [1, 4, 7];
+    }
+
+    function saveMoodboardIds(ids) {
+      try {
+        localStorage.setItem(MOODBOARD_STORAGE_KEY, JSON.stringify(ids));
+      } catch (e) {
+        console.error('Failed to save moodboard', e);
+      }
+    }
+
+    // Initialize bookmarkedIds from localStorage
+    inspirationState.bookmarkedIds = loadSavedMoodboardIds();
+
     function toggleBookmarkMoodboard(itemId, e) {
       if (e) e.stopPropagation();
       const idx = inspirationState.bookmarkedIds.indexOf(itemId);
@@ -10289,7 +10371,9 @@ if (document.readyState === "loading") {
         showToast('❤️ به مودبورد اختصاصی شما اضافه شد', 'success');
       }
 
+      saveMoodboardIds(inspirationState.bookmarkedIds);
       updateMoodboardBadge();
+
       if (inspirationState.activeSubTab === 'gallery') {
         renderInspirationGalleryGrid();
       } else {
@@ -10385,7 +10469,66 @@ if (document.readyState === "loading") {
       }
     }
 
+    function renderMagazineFeaturedBanner() {
+      const banner = document.getElementById('magazine-featured-banner');
+      if (!banner) return;
+
+      const articles = inspirationState.articles || [];
+      const featured = articles.find(a => a.isFeatured) || articles[0];
+      if (!featured) {
+        banner.innerHTML = '';
+        return;
+      }
+
+      banner.innerHTML = `
+        <div onclick="openArticleModal(${featured.id})" class="relative bg-gradient-to-r from-[#0F251A] to-[#1B3B2B] text-white rounded-3xl p-6 sm:p-10 overflow-hidden shadow-lg border border-[#D4AF37]/30 cursor-pointer group space-y-6">
+          <div class="absolute inset-0 opacity-40 group-hover:scale-105 transition-transform duration-700 pointer-events-none">
+            <img src="${featured.image}" alt="${featured.title}" class="w-full h-full object-cover">
+          </div>
+          <div class="absolute inset-0 bg-gradient-to-t from-[#08140E] via-[#0F251A]/80 to-transparent pointer-events-none"></div>
+
+          <div class="relative z-10 space-y-4 max-w-2xl">
+            <div class="inline-flex items-center gap-2 bg-[#D4AF37] text-[#1B3B2B] text-xs font-black px-3.5 py-1.5 rounded-full shadow-md">
+              <i data-lucide="sparkles" class="w-4 h-4"></i>
+              <span>مقاله و ترند ویژه هفته</span>
+            </div>
+
+            <h3 class="text-xl sm:text-3xl font-black text-white leading-snug group-hover:text-[#D4AF37] transition-colors">
+              ${featured.title}
+            </h3>
+
+            <p class="text-xs sm:text-sm text-emerald-100/90 leading-relaxed font-medium line-clamp-2">
+              ${featured.summary}
+            </p>
+
+            <div class="flex flex-wrap items-center gap-4 pt-2 text-xs font-bold text-amber-200">
+              <span class="flex items-center gap-1.5">
+                <i data-lucide="user" class="w-4 h-4 text-[#D4AF37]"></i>
+                <span>${featured.author}</span>
+              </span>
+              <span>•</span>
+              <span class="flex items-center gap-1.5">
+                <i data-lucide="clock" class="w-4 h-4 text-[#D4AF37]"></i>
+                <span>${featured.readTime}</span>
+              </span>
+            </div>
+          </div>
+
+          <div class="relative z-10 pt-2 flex items-center justify-between border-t border-white/10">
+            <span class="text-xs font-bold text-[#D4AF37] flex items-center gap-1.5 group-hover:translate-x-[-4px] transition-transform">
+              <span>مطالعه مقاله کامل</span>
+              <i data-lucide="arrow-left" class="w-4 h-4"></i>
+            </span>
+          </div>
+        </div>
+      `;
+
+      if (window.lucide) lucide.createIcons();
+    }
+
     function renderInspirationGalleryGrid() {
+      renderMagazineFeaturedBanner();
+
       const grid = document.getElementById('insp-gallery-grid');
       if (!grid) return;
       grid.innerHTML = '';
@@ -11174,3 +11317,98 @@ window.handleCounselorSubmit = function(event) {
     showToast(`✨ درخواست مشاوره برای ${name} با موفقیت ثبت شد. مشاورین یزد به‌زودی جهت هماهنگی زمان با شما تماس می‌گیرند.`, 'success', 5000);
   }
 };
+
+/* Article Reader & Magazine Handlers */
+window.openArticleModal = function(articleId) {
+  const articles = inspirationState.articles || [];
+  const article = articles.find(a => a.id === articleId);
+  if (!article) return;
+
+  const modal = document.getElementById('modal-article-reader');
+  const catEl = document.getElementById('article-modal-category');
+  const container = document.getElementById('article-modal-content-container');
+
+  if (catEl) catEl.innerText = article.categoryName || 'مجله عروسی تو';
+
+  if (container) {
+    container.innerHTML = `
+      <!-- ARTICLE COVER BANNER -->
+      <div class="relative h-64 sm:h-80 rounded-2xl overflow-hidden bg-slate-900 border border-accent shadow-sm">
+        <img src="${article.image}" alt="${article.title}" class="w-full h-full object-cover opacity-90">
+        <div class="absolute inset-0 bg-gradient-to-t from-graphite/90 via-graphite/30 to-transparent p-6 flex flex-col justify-end text-white space-y-2">
+          <div class="flex items-center gap-2 text-[11px] font-bold">
+            <span class="bg-[#D4AF37] text-[#1B3B2B] px-3 py-1 rounded-full shadow-xs">${article.categoryName}</span>
+            <span>•</span>
+            <span class="text-emerald-200">${article.readTime}</span>
+          </div>
+          <h2 class="text-xl sm:text-2xl font-black leading-snug text-white">${article.title}</h2>
+        </div>
+      </div>
+
+      <!-- AUTHOR & METADATA BAR -->
+      <div class="flex flex-wrap items-center justify-between gap-3 p-4 bg-[#F5EFEB] border border-[#E0D8C8] rounded-2xl text-xs">
+        <div class="flex items-center gap-2">
+          <div class="w-8 h-8 rounded-full bg-[#1B3B2B] text-[#D4AF37] flex items-center justify-center font-bold">
+            <i data-lucide="user" class="w-4 h-4"></i>
+          </div>
+          <div>
+            <span class="font-bold text-graphite block">${article.author}</span>
+            <span class="text-[10px] text-secondary">${article.date}</span>
+          </div>
+        </div>
+
+        <button onclick="bookmarkArticle(${article.id})" class="px-3.5 py-2 rounded-xl bg-white border border-[#E0D8C8] hover:border-[#D4AF37] text-graphite font-bold flex items-center gap-1.5 transition-all shadow-2xs cursor-pointer">
+          <i data-lucide="bookmark" class="w-4 h-4 text-[#D4AF37]"></i>
+          <span>ذخیره در علاقه‌مندی‌ها</span>
+        </button>
+      </div>
+
+      <!-- ARTICLE BODY TEXT -->
+      <div class="prose prose-sm max-w-none space-y-4 text-graphite leading-relaxed">
+        ${article.content}
+      </div>
+
+      <!-- DIRECT RELATED VENDORS CHIP ACTION -->
+      <div class="p-5 bg-[#1B3B2B] text-white rounded-2xl space-y-3 shadow-md">
+        <div class="space-y-1">
+          <span class="text-xs font-bold text-[#D4AF37] block">تامین‌کنندگان مرتبط با موضوع این مقاله:</span>
+          <p class="text-[11px] text-emerald-100/90">مشاهده و استعلام مستقیم از برترین تامین‌کنندگان دارای مجوز در استان یزد</p>
+        </div>
+
+        <button onclick="closeArticleReaderModal(); filterVendorsByCategoryTitle('${article.vendorCategoryMatch || 'همه'}')" class="bg-[#D4AF37] hover:bg-amber-400 text-[#1B3B2B] font-black px-5 py-2.5 rounded-xl text-xs transition-all shadow-xs flex items-center gap-2 cursor-pointer">
+          <i data-lucide="store" class="w-4 h-4"></i>
+          <span>مشاهده تامین‌کنندگان ${article.vendorCategoryMatch}</span>
+        </button>
+      </div>
+    `;
+  }
+
+  if (modal) {
+    modal.classList.remove('hidden');
+    modal.classList.add('flex');
+    if (window.lucide) lucide.createIcons();
+  }
+};
+
+window.closeArticleReaderModal = function() {
+  const modal = document.getElementById('modal-article-reader');
+  if (modal) {
+    modal.classList.add('hidden');
+    modal.classList.remove('flex');
+  }
+};
+
+window.bookmarkArticle = function(articleId) {
+  if (typeof showToast === 'function') {
+    showToast('✨ مقاله به فهرست مطالعه‌های بعدی شما اضافه شد.', 'success');
+  }
+};
+
+/* Expose Budget and Checklist handlers to window for inline HTML events */
+if (typeof openBudgetItemModal === 'function') window.openBudgetItemModal = openBudgetItemModal;
+if (typeof closeBudgetItemModal === 'function') window.closeBudgetItemModal = closeBudgetItemModal;
+if (typeof handleSaveBudgetItem === 'function') window.handleSaveBudgetItem = handleSaveBudgetItem;
+if (typeof deleteBudgetItem === 'function') window.deleteBudgetItem = deleteBudgetItem;
+if (typeof updateTotalBudgetCap === 'function') window.updateTotalBudgetCap = updateTotalBudgetCap;
+if (typeof filterChecklistTasksByStatus === 'function') window.filterChecklistTasksByStatus = filterChecklistTasksByStatus;
+if (typeof filterVendorsByCategoryTitle === 'function') window.filterVendorsByCategoryTitle = filterVendorsByCategoryTitle;
