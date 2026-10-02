@@ -1512,6 +1512,7 @@ if (document.readyState === "loading") {
       }
 
       if (tabId === 'guests') renderGuestsAndGifts();
+      if (tabId === 'vendor-dash' && typeof renderVendorCustomQuestionsList === 'function') renderVendorCustomQuestionsList(1);
 
       const target = document.getElementById('tab-' + tabId);
       if (target) target.classList.remove('hidden');
@@ -4448,6 +4449,15 @@ if (document.readyState === "loading") {
             <span><strong class="text-graphite">خدمت/پکیج:</strong> ${inq.service || inq.package || 'خدمات عمومی'}</span>
           </div>
 
+          ${(inq.customAnswers && inq.customAnswers.length) ? `
+            <div class="bg-amber-50/80 p-3 rounded-xl border border-amber-200/80 text-xs font-bold text-amber-950 space-y-1">
+              <span class="block text-[11px] font-black text-amber-900 border-b border-amber-200 pb-1">📋 پاسخ‌های سوالات اختصاصی فرم استعلام:</span>
+              <div class="space-y-0.5 pt-0.5">
+                ${inq.customAnswers.map(a => `<div class="flex items-center gap-1.5"><span class="text-amber-800 font-bold">• ${a.label}:</span> <span class="text-graphite font-black">${a.value}</span></div>`).join('')}
+              </div>
+            </div>
+          ` : ''}
+
           <p class="text-xs text-graphite bg-white p-3 rounded-xl border border-accent/60 leading-relaxed">${inq.details || 'توضیحات و نیازمندی‌های اختصاصی زوج ثبت شده در سامانه عروسی تو.'}</p>
 
           <div class="pt-2 flex flex-wrap items-center justify-between gap-2 border-t border-accent/60 text-xs">
@@ -5293,6 +5303,60 @@ if (document.readyState === "loading") {
         `).join('');
       }
 
+      // Dynamic Custom Questions Rendering for Vendor
+      const customContainer = document.getElementById('inquiry-custom-fields-container');
+      if (customContainer) {
+        const customQuestions = (typeof getVendorCustomQuestions === 'function') ? getVendorCustomQuestions(vendor ? vendor.id : 1) : [];
+        if (customQuestions && customQuestions.length > 0) {
+          customContainer.innerHTML = `
+            <div class="border-b border-amber-200 pb-1 mb-2 flex items-center justify-between">
+              <span class="text-xs font-bold text-amber-900 flex items-center gap-1">
+                <i data-lucide="help-circle" class="w-3.5 h-3.5 text-amber-700"></i>
+                <span>سوالات اختصاصی مجموعه ${targetName}:</span>
+              </span>
+              <span class="text-[10px] text-amber-800">پاسخ‌های شما جهت ارزیابی دقیق‌تر</span>
+            </div>
+            <div class="space-y-3">
+              ${customQuestions.map((q, idx) => {
+                const reqAttr = q.required ? 'required' : '';
+                const reqAsterisk = q.required ? '<span class="text-rose-600 mr-0.5">*</span>' : '';
+
+                if (q.type === 'select') {
+                  const optionsHtml = (q.options || []).map(opt => `<option value="${opt}">${opt}</option>`).join('');
+                  return `
+                    <div class="space-y-1">
+                      <label class="block text-xs font-bold text-graphite">${q.label} ${reqAsterisk}</label>
+                      <select data-custom-q-id="${q.id}" data-custom-q-label="${q.label}" ${reqAttr} class="inquiry-custom-input w-full bg-white border border-accent rounded-xl p-2.5 text-xs font-semibold focus:outline-none focus:border-primary cursor-pointer">
+                        ${optionsHtml}
+                      </select>
+                    </div>
+                  `;
+                } else if (q.type === 'number') {
+                  return `
+                    <div class="space-y-1">
+                      <label class="block text-xs font-bold text-graphite">${q.label} ${reqAsterisk}</label>
+                      <input type="number" data-custom-q-id="${q.id}" data-custom-q-label="${q.label}" ${reqAttr} placeholder="ورود عدد..." class="inquiry-custom-input w-full bg-white border border-accent rounded-xl p-2.5 text-xs font-medium focus:outline-none focus:border-primary">
+                    </div>
+                  `;
+                } else {
+                  return `
+                    <div class="space-y-1">
+                      <label class="block text-xs font-bold text-graphite">${q.label} ${reqAsterisk}</label>
+                      <input type="text" data-custom-q-id="${q.id}" data-custom-q-label="${q.label}" ${reqAttr} placeholder="توضیحات شما..." class="inquiry-custom-input w-full bg-white border border-accent rounded-xl p-2.5 text-xs font-medium focus:outline-none focus:border-primary">
+                    </div>
+                  `;
+                }
+              }).join('')}
+            </div>
+          `;
+          customContainer.classList.remove('hidden');
+          if (window.lucide) lucide.createIcons();
+        } else {
+          customContainer.innerHTML = '';
+          customContainer.classList.add('hidden');
+        }
+      }
+
       document.getElementById('inquiry-modal').classList.remove('hidden');
     }
 
@@ -5343,6 +5407,17 @@ if (document.readyState === "loading") {
         checkedServices.push(cb.value);
       });
 
+      const customAnswers = [];
+      document.querySelectorAll('#inquiry-custom-fields-container .inquiry-custom-input').forEach(inp => {
+        const qLabel = inp.getAttribute('data-custom-q-label') || '';
+        const qVal = inp.value.trim();
+        if (qLabel && qVal) {
+          customAnswers.push({ label: qLabel, value: qVal });
+        }
+      });
+
+      const guestsNum = document.getElementById('inquiry-guests')?.value || 200;
+
       const inquiryPayload = {
         vendorId: vendor.id,
         vendorName: vendor.name,
@@ -5352,6 +5427,7 @@ if (document.readyState === "loading") {
         eventDate: date,
         budget: finalBudgetStr,
         categoryDetails: categoryDetails,
+        customAnswers: customAnswers,
         services: checkedServices,
         note: note,
         submittedAt: new Date().toISOString()
@@ -5380,13 +5456,17 @@ if (document.readyState === "loading") {
         console.log('Static client environment submit:', err);
       }
 
+      const customAnswersStr = customAnswers.map(a => `${a.label}: ${a.value}`).join(' | ');
+      const combinedDetails = customAnswersStr ? `${customAnswersStr} — ${note || ''}` : (note || `استعلام ${vendor.name} - ${checkedServices.join('، ')}`);
+
       inquiries.push({
         id: Date.now(),
         name,
         phone,
         date,
-        guests,
-        details: `استعلام ${vendor.name} - ${checkedServices.join('، ')}`
+        guests: guestsNum,
+        customAnswers,
+        details: combinedDetails
       });
 
       // Find or create active thread in chatState
@@ -5409,7 +5489,7 @@ if (document.readyState === "loading") {
           lastTime: currentTimeStr,
           inquiryData: {
             date,
-            guests,
+            guests: guestsNum,
             services: checkedServices,
             budget: finalBudgetStr,
             note
@@ -5423,14 +5503,14 @@ if (document.readyState === "loading") {
         thread.lastTime = currentTimeStr;
         thread.inquiryData = {
           date,
-          guests,
+          guests: guestsNum,
           services: checkedServices,
           budget: finalBudgetStr,
           note
         };
       }
 
-      const inquirySummaryText = `ارسال استعلام قیمت سریع:\n• دسته بندی: ${vendor.category}\n• تاریخ مراسم: ${date}\n• تعداد مهمانان: ${guests} نفر\n• خدمات درخواستی: ${checkedServices.join('، ')}\n• بودجه: ${finalBudgetStr}\n• توضیحات: ${note || '-'}`;
+      const inquirySummaryText = `ارسال استعلام قیمت سریع:\n• دسته بندی: ${vendor.category}\n• تاریخ مراسم: ${date}\n• تعداد مهمانان: ${guestsNum} نفر\n• خدمات درخواستی: ${checkedServices.join('، ')}\n• بودجه: ${finalBudgetStr}\n• توضیحات: ${note || '-'}`;
 
       thread.messages.push({
         id: "msg-" + Date.now(),
@@ -9806,5 +9886,214 @@ window.handleSendInvoiceSubmit = function(e) {
 
   if (typeof showToast === 'function') {
     showToast(`🧾 پیش‌فاکتور دیجیتال به مبلغ ${total} تومان برای ${couple} ارسال شد.`, 'success');
+  }
+};
+
+// ==========================================
+// VENDOR CUSTOM INQUIRY FORM BUILDER LOGIC
+// ==========================================
+
+function getVendorCustomQuestions(vendorId = 1) {
+  try {
+    const stored = localStorage.getItem(`aroosi_vendor_custom_questions_${vendorId}`);
+    if (stored) {
+      return JSON.parse(stored);
+    }
+  } catch (e) {
+    console.error('Error reading vendor custom questions from localStorage:', e);
+  }
+
+  const v = vendors.find(v => v.id === vendorId) || vendors[0];
+  if (v && v.customQuestions) {
+    return v.customQuestions;
+  }
+
+  // Default fallback initial questions for vendor 1
+  const defaultQuestions = [
+    { id: 'cq-1', label: 'حدود تعداد مهمانان مدنظر شما؟', type: 'select', options: ['زیر ۱۵۰ نفر', '۱۵۰ تا ۳۰۰ نفر', '۳۰۰ تا ۵۰۰ نفر', 'بالای ۵۰۰ نفر'], required: true },
+    { id: 'cq-2', label: 'نوع منوی شام و پذیرایی مدنظر؟', type: 'select', options: ['منوی تک‌پرسی کلاسیک', 'منوی ۲ رنگ با دسر', 'منوی VIP بوفه سلف‌سرویس'], required: true },
+    { id: 'cq-3', label: 'توضیحات و نیازمندی‌های خاص مراسم شما؟', type: 'text', options: [], required: false }
+  ];
+
+  if (v) v.customQuestions = defaultQuestions;
+  return defaultQuestions;
+}
+
+function saveVendorCustomQuestions(vendorId = 1, questions = []) {
+  try {
+    localStorage.setItem(`aroosi_vendor_custom_questions_${vendorId}`, JSON.stringify(questions));
+  } catch (e) {
+    console.error('Error saving vendor custom questions:', e);
+  }
+  const v = vendors.find(v => v.id === vendorId) || vendors[0];
+  if (v) {
+    v.customQuestions = questions;
+  }
+}
+
+window.renderVendorCustomQuestionsList = function(vendorId = 1) {
+  const container = document.getElementById('vd-custom-questions-list');
+  if (!container) return;
+
+  const questions = getVendorCustomQuestions(vendorId);
+  container.innerHTML = '';
+
+  if (!questions || questions.length === 0) {
+    container.innerHTML = `
+      <div class="col-span-1 md:col-span-2 p-6 text-center text-secondary bg-bgCustom rounded-2xl border border-accent space-y-2">
+        <p class="text-xs font-bold text-graphite">هنوز هیچ سوال اختصاصی برای فرم استعلام خود اضافه نکرده‌اید.</p>
+        <p class="text-[11px] text-secondary">زوج‌ها هنگام استعلام فقط فیلدهای عمومی را مشاهده خواهند کرد.</p>
+        <button type="button" onclick="openCustomQuestionModal()" class="bg-primary hover:bg-emerald-900 text-white font-bold px-4 py-2 rounded-xl text-xs transition-colors shadow-2xs mt-1">
+          + افزودن اولین سوال اختصاصی
+        </button>
+      </div>
+    `;
+    if (window.lucide) lucide.createIcons();
+    return;
+  }
+
+  questions.forEach((q, idx) => {
+    const card = document.createElement('div');
+    card.className = "p-4 bg-bgCustom border border-accent rounded-2xl space-y-2 hover:border-primary/50 transition-all flex flex-col justify-between";
+
+    const typeLabel = q.type === 'select' ? 'منوی کشویی' : q.type === 'number' ? 'عددی' : 'متنی';
+    const reqBadge = q.required ? '<span class="bg-amber-100 text-amber-800 text-[10px] font-bold px-2 py-0.5 rounded-md">الزامی</span>' : '<span class="bg-slate-100 text-slate-600 text-[10px] font-bold px-2 py-0.5 rounded-md">اختیاری</span>';
+    const optsText = (q.type === 'select' && q.options && q.options.length) ? `گزینه‌ها: ${q.options.join(' ، ')}` : '';
+
+    card.innerHTML = `
+      <div class="space-y-1">
+        <div class="flex items-center justify-between gap-2">
+          <span class="font-black text-graphite text-xs flex items-center gap-1.5">
+            <span class="w-5 h-5 rounded-full bg-primary/10 text-primary flex items-center justify-center text-[10px] font-black">${idx + 1}</span>
+            <span>${q.label}</span>
+          </span>
+          <div class="flex items-center gap-1 shrink-0">
+            <span class="bg-emerald-100 text-emerald-800 text-[10px] font-bold px-2 py-0.5 rounded-md">${typeLabel}</span>
+            ${reqBadge}
+          </div>
+        </div>
+        ${optsText ? `<p class="text-[11px] text-secondary font-medium mr-6 truncate">${optsText}</p>` : ''}
+      </div>
+
+      <div class="flex items-center justify-end gap-2 pt-2 border-t border-accent/60">
+        <button type="button" onclick="openCustomQuestionModal('${q.id}')" class="text-xs text-primary hover:underline font-bold">ویرایش</button>
+        <span class="text-accent">|</span>
+        <button type="button" onclick="deleteCustomQuestion('${q.id}')" class="text-xs text-rose-600 hover:underline font-bold">حذف</button>
+      </div>
+    `;
+    container.appendChild(card);
+  });
+
+  if (window.lucide) lucide.createIcons();
+};
+
+window.openCustomQuestionModal = function(qId = null) {
+  const modal = document.getElementById('modal-vendor-custom-question');
+  if (!modal) return;
+
+  const idInp = document.getElementById('cq-id');
+  const labelInp = document.getElementById('cq-label');
+  const typeInp = document.getElementById('cq-type');
+  const reqInp = document.getElementById('cq-required');
+  const optsInp = document.getElementById('cq-options');
+  const titleElem = document.getElementById('custom-q-modal-title');
+
+  const questions = getVendorCustomQuestions(1);
+
+  if (qId) {
+    const q = questions.find(item => item.id === qId);
+    if (q) {
+      if (idInp) idInp.value = q.id;
+      if (labelInp) labelInp.value = q.label;
+      if (typeInp) typeInp.value = q.type || 'text';
+      if (reqInp) reqInp.checked = !!q.required;
+      if (optsInp) optsInp.value = (q.options || []).join('، ');
+      if (titleElem) titleElem.innerText = 'ویرایش سوال اختصاصی فرم استعلام';
+      toggleCustomQuestionOptions(q.type || 'text');
+    }
+  } else {
+    if (idInp) idInp.value = '';
+    if (labelInp) labelInp.value = '';
+    if (typeInp) typeInp.value = 'text';
+    if (reqInp) reqInp.checked = true;
+    if (optsInp) optsInp.value = '';
+    if (titleElem) titleElem.innerText = 'افزودن سوال اختصاصی جدید';
+    toggleCustomQuestionOptions('text');
+  }
+
+  modal.classList.remove('hidden');
+  if (window.lucide) lucide.createIcons();
+};
+
+window.closeCustomQuestionModal = function() {
+  const modal = document.getElementById('modal-vendor-custom-question');
+  if (modal) modal.classList.add('hidden');
+};
+
+window.toggleCustomQuestionOptions = function(typeVal) {
+  const optsBox = document.getElementById('cq-options-container');
+  if (!optsBox) return;
+  if (typeVal === 'select') {
+    optsBox.classList.remove('hidden');
+  } else {
+    optsBox.classList.add('hidden');
+  }
+};
+
+window.saveCustomQuestion = function(e) {
+  if (e && e.preventDefault) e.preventDefault();
+
+  const idVal = document.getElementById('cq-id')?.value;
+  const labelVal = document.getElementById('cq-label')?.value.trim();
+  const typeVal = document.getElementById('cq-type')?.value || 'text';
+  const reqVal = document.getElementById('cq-required')?.checked;
+  const optsRaw = document.getElementById('cq-options')?.value.trim() || '';
+
+  if (!labelVal) {
+    if (typeof showToast === 'function') showToast('لطفاً عنوان سوال را وارد کنید.', 'danger');
+    return;
+  }
+
+  const optionsArr = typeVal === 'select' ? optsRaw.split(/[,،]/).map(s => s.trim()).filter(Boolean) : [];
+
+  const questions = getVendorCustomQuestions(1);
+
+  if (idVal) {
+    const idx = questions.findIndex(q => q.id === idVal);
+    if (idx !== -1) {
+      questions[idx] = {
+        id: idVal,
+        label: labelVal,
+        type: typeVal,
+        required: reqVal,
+        options: optionsArr
+      };
+    }
+  } else {
+    questions.push({
+      id: 'cq-' + Date.now(),
+      label: labelVal,
+      type: typeVal,
+      required: reqVal,
+      options: optionsArr
+    });
+  }
+
+  saveVendorCustomQuestions(1, questions);
+  closeCustomQuestionModal();
+  renderVendorCustomQuestionsList(1);
+
+  if (typeof showToast === 'function') {
+    showToast('✨ سوال اختصاصی با موفقیت در فرم استعلام قرار گرفت.', 'success');
+  }
+};
+
+window.deleteCustomQuestion = function(qId) {
+  let questions = getVendorCustomQuestions(1);
+  questions = questions.filter(q => q.id !== qId);
+  saveVendorCustomQuestions(1, questions);
+  renderVendorCustomQuestionsList(1);
+  if (typeof showToast === 'function') {
+    showToast('سوال اختصاصی از فرم استعلام حذف گردید.', 'info');
   }
 };

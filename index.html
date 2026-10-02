@@ -2385,6 +2385,29 @@
         </div>
       </div>
 
+      <!-- Custom Inquiry Form Builder Widget (مدیریت فرم استعلام اختصاصی) -->
+      <div class="bg-white border border-accent rounded-3xl p-6 shadow-xs space-y-4">
+        <div class="flex flex-col sm:flex-row justify-between sm:items-center gap-3 border-b border-accent pb-3">
+          <div>
+            <h3 class="text-base font-bold text-graphite flex items-center gap-2">
+              <i data-lucide="help-circle" class="w-5 h-5 text-primary"></i>
+              <span>مدیریت فرم استعلام اختصاصی (Custom Inquiry Form Builder)</span>
+            </h3>
+            <p class="text-xs text-secondary mt-0.5">تعریف سوالات و فیلدهای اختصاصی که زوج‌ها هنگام ثبت استعلام از شما باید پاسخ دهند</p>
+          </div>
+
+          <button type="button" onclick="openCustomQuestionModal()" class="bg-primary hover:bg-emerald-900 text-white font-bold px-4 py-2.5 rounded-xl text-xs shadow-xs transition-all flex items-center gap-1.5 shrink-0 cursor-pointer">
+            <i data-lucide="plus" class="w-4 h-4"></i>
+            <span>افزودن سوال اختصاصی جدید</span>
+          </button>
+        </div>
+
+        <!-- Custom Questions List Container -->
+        <div id="vd-custom-questions-list" class="grid grid-cols-1 md:grid-cols-2 gap-3 text-xs font-bold text-graphite">
+          <!-- Populated dynamically via JS renderVendorCustomQuestionsList() -->
+        </div>
+      </div>
+
       <!-- AI Quick Responder Configuration Box -->
       <div class="bg-white border border-accent rounded-3xl p-6 shadow-xs space-y-4">
         <div class="flex flex-col sm:flex-row justify-between sm:items-center gap-3 border-b border-accent pb-3">
@@ -4344,6 +4367,11 @@
           </div>
         </div>
 
+        <!-- Vendor Specific Custom Inquiry Questions Container -->
+        <div id="inquiry-custom-fields-container" class="space-y-3 p-3.5 bg-amber-50/60 border border-amber-200/80 rounded-2xl hidden">
+          <!-- Dynamically populated via JS when vendor has customQuestions -->
+        </div>
+
         <!-- Service Checklist based on offerings -->
         <div class="space-y-2">
           <label class="block">خدمات مورد نظر شما (چک‌لیست):</label>
@@ -5085,6 +5113,64 @@
         <button type="submit" class="w-full bg-[#D4AF37] hover:bg-amber-400 text-[#1B3B2B] font-black py-3 rounded-2xl text-xs shadow-md transition-all flex items-center justify-center gap-2 cursor-pointer">
           <i data-lucide="check-circle" class="w-4 h-4"></i>
           <span>ثبت درخواست عضویت در پلتفرم</span>
+        </button>
+      </form>
+    </div>
+  </div>
+
+  <!-- VENDOR CUSTOM QUESTION MODAL (#modal-vendor-custom-question) -->
+  <div id="modal-vendor-custom-question" class="hidden fixed inset-0 bg-black/60 backdrop-blur-xs z-[999999] flex items-center justify-center p-4 transition-all animate-fadeIn" onclick="if(event.target === this) closeCustomQuestionModal()">
+    <div class="bg-white rounded-3xl shadow-2xl max-w-lg w-full overflow-hidden border border-[#D4AF37]/50 flex flex-col animate-scaleUp relative">
+      <div class="bg-[#1B3B2B] text-white p-5 flex items-center justify-between border-b border-[#D4AF37]/30 shrink-0">
+        <div class="flex items-center gap-2.5">
+          <div class="w-10 h-10 rounded-xl bg-[#D4AF37] text-[#1B3B2B] flex items-center justify-center shadow-sm">
+            <i data-lucide="plus-circle" class="w-5 h-5"></i>
+          </div>
+          <div>
+            <h3 id="custom-q-modal-title" class="text-base font-bold text-[#D4AF37]">افزودن سوال اختصاصی به فرم استعلام</h3>
+            <span class="text-[11px] text-amber-200/80 font-medium">پاسخ‌های زوج مستقیماً در جدول استعلام‌ها نمایش داده می‌شود</span>
+          </div>
+        </div>
+
+        <button onclick="closeCustomQuestionModal()" class="w-9 h-9 rounded-xl bg-white/10 hover:bg-white/20 text-white flex items-center justify-center transition-colors cursor-pointer" title="بستن">
+          <i data-lucide="x" class="w-5 h-5"></i>
+        </button>
+      </div>
+
+      <form id="custom-question-form" onsubmit="saveCustomQuestion(event)" class="p-6 space-y-4 text-xs font-bold text-graphite">
+        <input type="hidden" id="cq-id" value="">
+
+        <div class="space-y-1">
+          <label class="block text-secondary">عنوان سوال / پرسش از مشتری *</label>
+          <input type="text" id="cq-label" required placeholder="مثلاً: حدود تعداد مهمانان مدنظر شما؟ یا نوع منوی درخواستی؟" class="w-full bg-[#F5EFEB] border border-[#E0D8C8] rounded-xl p-3 text-xs font-medium focus:outline-none focus:border-[#D4AF37]">
+        </div>
+
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+          <div class="space-y-1">
+            <label class="block text-secondary">نوع ورودی (Field Type) *</label>
+            <select id="cq-type" onchange="toggleCustomQuestionOptions(this.value)" required class="w-full bg-[#F5EFEB] border border-[#E0D8C8] rounded-xl p-3 text-xs font-bold text-graphite focus:outline-none focus:border-[#D4AF37] cursor-pointer">
+              <option value="text">متن کوتاه (Text)</option>
+              <option value="number">عدد (Number)</option>
+              <option value="select">منوی کشویی (Dropdown List)</option>
+            </select>
+          </div>
+
+          <div class="space-y-1 flex flex-col justify-end">
+            <label class="flex items-center gap-2 p-3 bg-[#F5EFEB] border border-[#E0D8C8] rounded-xl cursor-pointer">
+              <input type="checkbox" id="cq-required" checked class="rounded text-[#1B3B2B] focus:ring-[#1B3B2B] w-4 h-4">
+              <span class="text-xs text-graphite">پاسخ الزامی است</span>
+            </label>
+          </div>
+        </div>
+
+        <div id="cq-options-container" class="hidden space-y-1">
+          <label class="block text-secondary">گزینه‌های منوی کشویی (با ویرگول «،» جدا کنید) *</label>
+          <input type="text" id="cq-options" placeholder="منوی ۱ کباب، منوی ۲ سلف‌سرویس، منوی VIP" class="w-full bg-[#F5EFEB] border border-[#E0D8C8] rounded-xl p-3 text-xs font-medium focus:outline-none focus:border-[#D4AF37]">
+        </div>
+
+        <button type="submit" class="w-full bg-[#D4AF37] hover:bg-amber-400 text-[#1B3B2B] font-black py-3 rounded-2xl text-xs shadow-md transition-all flex items-center justify-center gap-2 cursor-pointer">
+          <i data-lucide="check" class="w-4 h-4"></i>
+          <span>ذخیره سوال اختصاصی</span>
         </button>
       </form>
     </div>
