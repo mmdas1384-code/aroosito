@@ -6128,46 +6128,6 @@ if (document.readyState === "loading") {
       showToast(isActive ? 'بافر ۱۰٪ هزینه‌های پنهان به محاسبات اضافه شد' : 'بافر ۱۰٪ غیرفعال گردید', 'info');
     }
 
-    function setSweetsGuests(cnt) {
-      const input = document.getElementById('sweets-guest-count');
-      if (input) {
-        input.value = cnt;
-        calculateYazdiSweets();
-      }
-    }
-
-    function calculateYazdiSweets() {
-      const guestCnt = parseInt(document.getElementById('sweets-guest-count')?.value) || 250;
-
-      // Rates per guest in kg
-      const ghotabKg = (guestCnt * 0.02).toFixed(1);
-      const baklavaKg = (guestCnt * 0.025).toFixed(1);
-      const lozKg = (guestCnt * 0.03).toFixed(1);
-
-      // Prices per kg (Toman)
-      const ghotabPricePerKg = 280000;
-      const baklavaPricePerKg = 350000;
-      const lozPricePerKg = 180000;
-
-      const ghotabCost = Math.round(ghotabKg * ghotabPricePerKg);
-      const baklavaCost = Math.round(baklavaKg * baklavaPricePerKg);
-      const lozCost = Math.round(lozKg * lozPricePerKg);
-      const totalCost = ghotabCost + baklavaCost + lozCost;
-      const totalKg = (parseFloat(ghotabKg) + parseFloat(baklavaKg) + parseFloat(lozKg)).toFixed(1);
-
-      if (document.getElementById('sweets-ghotab-kg')) document.getElementById('sweets-ghotab-kg').innerText = `${ghotabKg} کیلوگرم`;
-      if (document.getElementById('sweets-ghotab-cost')) document.getElementById('sweets-ghotab-cost').innerText = `${ghotabCost.toLocaleString('fa-IR')} تومان`;
-
-      if (document.getElementById('sweets-baklava-kg')) document.getElementById('sweets-baklava-kg').innerText = `${baklavaKg} کیلوگرم`;
-      if (document.getElementById('sweets-baklava-cost')) document.getElementById('sweets-baklava-cost').innerText = `${baklavaCost.toLocaleString('fa-IR')} تومان`;
-
-      if (document.getElementById('sweets-loz-kg')) document.getElementById('sweets-loz-kg').innerText = `${lozKg} کیلوگرم`;
-      if (document.getElementById('sweets-loz-cost')) document.getElementById('sweets-loz-cost').innerText = `${lozCost.toLocaleString('fa-IR')} تومان`;
-
-      if (document.getElementById('sweets-total-weight-text')) document.getElementById('sweets-total-weight-text').innerText = `${totalKg} کیلوگرم شیرینی سنتی یزد`;
-      if (document.getElementById('sweets-total-cost-text')) document.getElementById('sweets-total-cost-text').innerText = `${totalCost.toLocaleString('fa-IR')} تومان`;
-    }
-
     function calculateAndRenderBwResults() {
       const activeServices = bwState.services.filter(s => s.checked);
       const totalBudget = bwState.targetBudget;
