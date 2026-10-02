@@ -1720,42 +1720,172 @@ if (document.readyState === "loading") {
           </div>
         `;
       } else {
-        // Psychology Compatibility Result
-        const compatScore = Math.min(98, Math.max(65, Math.round((styleScores.compat / (quiz.questions.length * 90)) * 100)));
+        // Psychology Compatibility & Diagnostic Scorecard Result
+        const totalAnswered = Object.keys(quizState.userAnswers).length;
+
+        let totalWeightEarned = 0;
+        let maxPossibleWeight = totalAnswered * 10;
+
+        Object.values(quizState.userAnswers).forEach(ans => {
+          if (ans) {
+            totalWeightEarned += typeof ans.weight === 'number' ? ans.weight : (ans.score?.compat || 5);
+          }
+        });
+
+        const scorePercent = maxPossibleWeight > 0 ? Math.min(100, Math.max(10, Math.round((totalWeightEarned / maxPossibleWeight) * 100))) : 85;
+
+        let levelTitle = "";
+        let levelBadgeClass = "";
+        let levelBadgeText = "";
+        let strengths = [];
+        let growthAreas = [];
+        let expertAdvice = "";
+
+        if (scorePercent >= 80) {
+          levelTitle = "آمادگی عاطفی و هم‌راستایی عالی (سطح طلایی)";
+          levelBadgeClass = "bg-emerald-100 text-[#1B3B2B] border border-emerald-300";
+          levelBadgeText = "آمادگی فوق‌العاده - " + scorePercent + "٪";
+          strengths = [
+            "سطح بالای بلوغ ارتباطی و توانایی گفتگو در شرایط پرچالش",
+            "احترام عمیق به حریم خصوصی، استقلال فکری و اهداف فردی یکدیگر",
+            "هم‌نظری ارزشمند در مدیریت مالی، تقسیم مسئولیت‌ها و برنامه‌های آینده"
+          ];
+          growthAreas = [
+            "ثبت جلسات هم‌فکری هفتگی کوتاه برای جلوگیری از فرسودگی کارهای اجرایی عروسی",
+            "تمرکز بیشتر روی حفظ لحظات رومانتیک دو نفره در کنار برنامه‌ریزی‌های شلوغ"
+          ];
+          expertAdvice = "الگوهای انتخابی شما نشان‌دهنده پختگی هیجانی، اعتماد متقابل و توانایی عالی برای ساخت زندگی مشترک پایدار است. برنامه‌ریزی عروسی برای شما تجربه‌ای لذت‌بخش و تقویت‌کننده پیوند عاطفی خواهد بود.";
+        } else if (scorePercent >= 60) {
+          levelTitle = "هم‌راستایی مطلوب (نیازمند گفتگوی بیشتر در برخی محورها)";
+          levelBadgeClass = "bg-amber-100 text-amber-900 border border-amber-300";
+          levelBadgeText = "تفاهم خوب - " + scorePercent + "٪";
+          strengths = [
+            "اشتیاق مثبت و حسن نیت بالا برای حل مسائل و پیشبرد کارهای عروسی",
+            "انعطاف‌پذیری خوب در مواجهه با نظرات همسر و خانواده‌ها"
+          ];
+          growthAreas = [
+            "شفاف‌سازی بیشتر انتظارات مالی و تعیین مرزهای دقیق برای مداخلات اطرافیان",
+            "تمرین تکنیک‌های شنود فعال هنگام بروز اختلاف نظر در جزئیات تشریفات"
+          ];
+          expertAdvice = "تفاهم شما در سطح خوبی قرار دارد؛ با این حال پیش از اتخاذ تصمیمات بزرگ مالی یا تشریفاتی، حتماً جلسات گفتگوی صمیمانه دو نفره برای شفاف‌سازی انتظارات متقابل برگزار کنید.";
+        } else {
+          levelTitle = "نیازمند تعمیق گفتگو و مشاوره تخصصی قبل از ازدواج";
+          levelBadgeClass = "bg-[#5C1325]/10 text-[#5C1325] border border-[#5C1325]/30";
+          levelBadgeText = "نیازمند مشاوره - " + scorePercent + "٪";
+          strengths = [
+            "صداقت بالا در پاسخ‌دهی و آگاهی از نقاط نیازمند بهبود در رابطه",
+            "انگیزه برای دریافت راهنمایی‌های تخصصی روان‌شناسی"
+          ];
+          growthAreas = [
+            "بازنگری و گفتگو درباره انتظارات مالی، نحوه مدیریت استرس و مرزبندی با خانواده‌ها",
+            "کنترل خشم و استرس‌های ناشی از حجم کارهای اجرایی روزهای قبل از جشن"
+          ];
+          expertAdvice = "اختلاف نظر در دوران برنامه‌ریزی طبیعی است، اما جهت افزایش آرامش خاطر و جلوگیری از سوءتفاهم‌های عاطفی، پیشنهاد می‌شود از یک جلسه مشاوره تخصصی پیش از ازدواج استفاده کنید.";
+        }
+
+        // Save result to quiz history
+        saveQuizHistoryEntry({
+          quizId: quiz.id,
+          quizTitle: quiz.title,
+          quizCategory: quiz.category,
+          date: new Date().toLocaleDateString('fa-IR'),
+          scorePercent: scorePercent,
+          levelTitle: levelTitle
+        });
 
         mainResultHTML = `
-          <div class="bg-gradient-to-br from-rose-50 via-pink-50/30 to-bgCustom border border-rose-200 rounded-3xl p-6 sm:p-8 space-y-6">
-            <div class="flex flex-col sm:flex-row justify-between sm:items-center gap-4 border-b border-rose-200 pb-4">
-              <div>
-                <span class="text-xs font-bold text-rose-700 bg-rose-100 px-3 py-1 rounded-full">نتیجه آنالیز روانشناسی</span>
-                <h3 class="text-2xl font-black text-graphite mt-1">شاخص تفاهم و سازگاری در برنامه‌ریزی: عالی</h3>
+          <!-- DIAGNOSTIC SCORECARD CONTAINER -->
+          <div class="bg-[#FCFCFA] border-2 border-[#D4AF37]/50 rounded-3xl p-6 sm:p-8 space-y-6 shadow-md">
+            <!-- HEADER INFO -->
+            <div class="flex flex-col sm:flex-row justify-between sm:items-center gap-4 border-b border-[#E0D8C8] pb-5">
+              <div class="space-y-1">
+                <span class="inline-flex items-center gap-1.5 px-3.5 py-1 rounded-full text-xs font-bold ${levelBadgeClass}">
+                  <i data-lucide="award" class="w-4 h-4"></i>
+                  <span>${levelBadgeText}</span>
+                </span>
+                <h3 class="text-xl sm:text-2xl font-black text-graphite mt-2">${levelTitle}</h3>
+                <p class="text-xs text-secondary font-medium">کارنامه تحلیل روان‌شناسی اختصاصی ${quiz.title}</p>
               </div>
 
-              <div class="text-left dir-ltr bg-white p-3 rounded-2xl border border-rose-200 shadow-xs">
-                <span class="block text-3xl font-black text-rose-600">${compatScore}٪</span>
-                <span class="text-[10px] font-bold text-secondary">میزان تفاهم مشترک</span>
+              <div class="text-left dir-ltr bg-white p-4 rounded-2xl border border-[#E0D8C8] shadow-xs shrink-0">
+                <span class="block text-3xl font-black text-[#1B3B2B]">${scorePercent}٪</span>
+                <span class="text-[10px] font-bold text-secondary">امتیاز نهایی آمادگی</span>
               </div>
             </div>
 
-            <div class="p-5 bg-white rounded-2xl border border-rose-100 text-xs text-graphite leading-relaxed space-y-3">
-              <h4 class="font-bold text-rose-800 text-sm">توصیه‌های مشاوره خانواده برای روزهای برنامه‌ریزی:</h4>
-              <p>الگوهای انتخابی شما نشان‌دهنده سطح بالای پختگی هیجانی، احترام متقابل به نظرات خانواده‌ها و توانایی گفتگو در شرایط پرچالش است. پیشنهاد می‌شود وظایف چک‌لیست را بر اساس علاقه‌مندی‌های شخصی تقسیم کنید.</p>
+            <!-- KEY STRENGTHS & GROWTH AREAS GRID -->
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <!-- STRENGTHS -->
+              <div class="bg-emerald-50/60 border border-emerald-200 p-5 rounded-2xl space-y-3">
+                <h4 class="font-bold text-[#1B3B2B] text-xs flex items-center gap-2">
+                  <i data-lucide="check-circle-2" class="w-4 h-4 text-emerald-600"></i>
+                  <span>نقاط قوت و دارایی‌های ارتباطی زوج:</span>
+                </h4>
+                <ul class="space-y-2 text-xs text-graphite font-medium">
+                  ${strengths.map(s => `
+                    <li class="flex items-start gap-2">
+                      <span class="text-emerald-600 font-bold">•</span>
+                      <span>${s}</span>
+                    </li>
+                  `).join('')}
+                </ul>
+              </div>
+
+              <!-- GROWTH AREAS -->
+              <div class="bg-amber-50/60 border border-amber-200 p-5 rounded-2xl space-y-3">
+                <h4 class="font-bold text-amber-900 text-xs flex items-center gap-2">
+                  <i data-lucide="trending-up" class="w-4 h-4 text-amber-600"></i>
+                  <span>محورهای پیشنهادی برای گفتگو و رشد:</span>
+                </h4>
+                <ul class="space-y-2 text-xs text-graphite font-medium">
+                  ${growthAreas.map(g => `
+                    <li class="flex items-start gap-2">
+                      <span class="text-amber-600 font-bold">•</span>
+                      <span>${g}</span>
+                    </li>
+                  `).join('')}
+                </ul>
+              </div>
+            </div>
+
+            <!-- EXPERT ADVICE BANNER -->
+            <div class="p-5 bg-white rounded-2xl border border-[#E0D8C8] space-y-2">
+              <span class="text-xs font-bold text-[#1B3B2B] flex items-center gap-2">
+                <i data-lucide="lightbulb" class="w-4 h-4 text-[#D4AF37]"></i>
+                <span>توصیه راهبردی مشاور خانواده عروسی تو:</span>
+              </span>
+              <p class="text-xs text-graphite leading-relaxed font-medium">${expertAdvice}</p>
+            </div>
+
+            <!-- COUNSELOR CONSULTATION CTA BANNER -->
+            <div class="bg-[#1B3B2B] text-white p-5 rounded-2xl flex flex-col sm:flex-row justify-between sm:items-center gap-4">
+              <div class="space-y-1">
+                <h4 class="text-sm font-bold text-[#D4AF37]">مایل به تعمیق بیشتر گفتگوها هستید؟</h4>
+                <p class="text-xs text-emerald-100/90 font-medium">هماهنگی جلسه مشاوره تخصصی ازدواج با مشاورین برجسته خانواده استان یزد</p>
+              </div>
+
+              <button onclick="openCounselorModal()" class="bg-[#D4AF37] hover:bg-amber-400 text-[#1B3B2B] font-black px-5 py-3 rounded-xl text-xs transition-all shadow-md shrink-0 flex items-center gap-2">
+                <i data-lucide="heart-handshake" class="w-4 h-4"></i>
+                <span>درخواست مشاوره تخصصی ازدواج</span>
+              </button>
             </div>
           </div>
         `;
       }
+
+      const isPsych = quiz.category === 'psychology';
 
       resultView.innerHTML = `
         <!-- HEADER ACTIONS -->
         <div class="flex justify-between items-center border-b border-accent pb-4">
           <div class="flex items-center gap-2">
             <i data-lucide="award" class="w-6 h-6 text-primary"></i>
-            <h2 class="text-xl font-bold text-graphite">کارت تحلیل زنده و اختصاصی تست</h2>
+            <h2 class="text-xl font-bold text-graphite">کارنامه تحلیل روان‌شناسی و استایل</h2>
           </div>
 
           <button onclick="exitQuizRunner()" class="text-xs font-bold text-secondary hover:text-graphite flex items-center gap-1">
             <i data-lucide="rotate-ccw" class="w-4 h-4"></i>
-            <span>تکرار یا شرکت در تست دیگر</span>
+            <span>بازگشت به فهرست آزمون‌ها</span>
           </button>
         </div>
 
@@ -1764,19 +1894,26 @@ if (document.readyState === "loading") {
 
         <!-- INTEGRATED ACTION BUTTONS -->
         <div class="pt-4 border-t border-accent grid grid-cols-1 sm:grid-cols-3 gap-3">
-          <button onclick="applyStyleToDirectory()" class="bg-primary hover:bg-emerald-900 text-white font-bold py-3 px-4 rounded-2xl text-xs shadow-md transition-all flex items-center justify-center gap-2">
-            <i data-lucide="filter" class="w-4 h-4"></i>
-            <span>اعمال این استایل روی دایرکتوری و چک‌لیست</span>
-          </button>
+          ${isPsych ? `
+            <button onclick="openCounselorModal()" class="bg-[#1B3B2B] hover:bg-emerald-900 text-white font-bold py-3 px-4 rounded-2xl text-xs shadow-md transition-all flex items-center justify-center gap-2">
+              <i data-lucide="heart-handshake" class="w-4 h-4 text-[#D4AF37]"></i>
+              <span>رزرو مشاوره ازدواج در یزد</span>
+            </button>
+          ` : `
+            <button onclick="applyStyleToDirectory()" class="bg-primary hover:bg-emerald-900 text-white font-bold py-3 px-4 rounded-2xl text-xs shadow-md transition-all flex items-center justify-center gap-2">
+              <i data-lucide="filter" class="w-4 h-4"></i>
+              <span>اعمال این استایل روی دایرکتوری و چک‌لیست</span>
+            </button>
+          `}
 
-          <button onclick="showToast('کارت تحلیل خلاصه استایل با موفقیت جهت دانلود یا پرینت آماده شد.', 'info');" class="bg-bgCustom border border-accent hover:border-primary text-graphite font-bold py-3 px-4 rounded-2xl text-xs shadow-xs transition-all flex items-center justify-center gap-2">
+          <button onclick="showToast('کارنامه تحلیل روان‌شناسی با موفقیت جهت ذخیره‌سازی آماده شد.', 'info');" class="bg-bgCustom border border-accent hover:border-primary text-graphite font-bold py-3 px-4 rounded-2xl text-xs shadow-xs transition-all flex items-center justify-center gap-2">
             <i data-lucide="download" class="w-4 h-4 text-primary"></i>
-            <span>دانلود کارت تحلیل استایل</span>
+            <span>دانلود کارنامه تحلیل (PDF)</span>
           </button>
 
           <button onclick="copyQuizResultLink()" class="bg-bgCustom border border-accent hover:border-primary text-graphite font-bold py-3 px-4 rounded-2xl text-xs shadow-xs transition-all flex items-center justify-center gap-2">
             <i data-lucide="share-2" class="w-4 h-4 text-primary"></i>
-            <span>اشتراک‌گذاری با همسر / پارتنر</span>
+            <span>اشتراک‌گذاری کارنامه با همسر</span>
           </button>
         </div>
       `;
@@ -6812,165 +6949,942 @@ if (document.readyState === "loading") {
       }
     ]
   },
-  {
-    "id": "quiz-psych-budget",
+    {
+    "id": "quiz-psych-readiness",
     "category": "psychology",
-    "title": "تست سنجش تفاهم در مدیریت هزینه‌ها و بودجه",
-    "description": "تحلیل هم‌نظری در اولویت‌بندی مالی، تقسیم هزینه‌ها و پیشگیری از چالش‌های بودجه",
-    "image": "https://images.unsplash.com/photo-1554224155-8d04cb21cd6c?auto=format&fit=crop&w=800&q=80",
-    "duration": "۴ دقیقه",
-    "questionsCount": 3,
-    "badge": "مدیریت بودجه",
+    "title": "سنجش آمادگی روان‌شناختی و بلوغ ورود به زندگی مشترک",
+    "description": "ارزیابی خودشناسی عمیق، مسئولیت‌پذیری عاطفی، بلوغ ارتباطی و توانایی ساخت رابطه پایدار",
+    "image": "https://images.unsplash.com/photo-1511285560929-80b456fea0bc?auto=format&fit=crop&w=800&q=80",
+    "duration": "۵ دقیقه",
+    "questionsCount": 10,
+    "badge": "استاندارد روان‌شناسی",
     "questions": [
       {
         "id": "q1",
-        "text": "ما و همسرم درباره سقف بودجه کل عروسی و نحوه تقسیم آن توافق کامل داریم.",
+        "text": "تصویر ذهنی من از زندگی مشترک متکی بر واقع‌گرایی، همدلی و مسئولیت‌پذیری دوجانبه است.",
         "options": [
           {
-            "id": "lk1",
+            "id": "opt1",
             "label": "کاملاً موافقم",
+            "weight": 10,
+            "styleKey": "compat_vhigh",
+            "score": {
+              "compat": 10
+            }
+          },
+          {
+            "id": "opt2",
+            "label": "موافقم",
+            "weight": 8,
             "styleKey": "compat_high",
             "score": {
-              "compat": 100,
-              "budget_sync": 100
+              "compat": 8
             }
           },
           {
-            "id": "lk2",
-            "label": "موافقم",
+            "id": "opt3",
+            "label": "تا حدودی / نظری ندارم",
+            "weight": 5,
             "styleKey": "compat_mid",
             "score": {
-              "compat": 80,
-              "budget_sync": 80
+              "compat": 5
             }
           },
           {
-            "id": "lk3",
-            "label": "نظری ندارم / خنثی",
-            "styleKey": "compat_neutral",
-            "score": {
-              "compat": 50,
-              "budget_sync": 50
-            }
-          },
-          {
-            "id": "lk4",
+            "id": "opt4",
             "label": "مخالفم",
+            "weight": 2,
             "styleKey": "compat_low",
             "score": {
-              "compat": 30,
-              "budget_sync": 30
+              "compat": 2
             }
           },
           {
-            "id": "lk5",
+            "id": "opt5",
             "label": "کاملاً مخالفم",
+            "weight": 0,
             "styleKey": "compat_vlow",
             "score": {
-              "compat": 10,
-              "budget_sync": 10
+              "compat": 0
             }
           }
         ]
       },
       {
         "id": "q2",
-        "text": "در صورت افزایش غیرمنتظره هزینه‌ها، می‌توانیم با آرامش و گفتگو آیتم‌های کم‌اهمیت‌تر را حذف کنیم.",
+        "text": "توانایی گفتگو و بیان شفاف نیازها و احساسات بدون ترس از قضاوت شدن توسط پارتنر را دارم.",
         "options": [
           {
-            "id": "lk1",
+            "id": "opt1",
             "label": "کاملاً موافقم",
+            "weight": 10,
+            "styleKey": "compat_vhigh",
+            "score": {
+              "compat": 10
+            }
+          },
+          {
+            "id": "opt2",
+            "label": "موافقم",
+            "weight": 8,
             "styleKey": "compat_high",
             "score": {
-              "compat": 100,
-              "budget_sync": 100
+              "compat": 8
             }
           },
           {
-            "id": "lk2",
-            "label": "موافقم",
+            "id": "opt3",
+            "label": "تا حدودی / نظری ندارم",
+            "weight": 5,
             "styleKey": "compat_mid",
             "score": {
-              "compat": 80,
-              "budget_sync": 80
+              "compat": 5
             }
           },
           {
-            "id": "lk3",
-            "label": "نظری ندارم / خنثی",
-            "styleKey": "compat_neutral",
-            "score": {
-              "compat": 50,
-              "budget_sync": 50
-            }
-          },
-          {
-            "id": "lk4",
+            "id": "opt4",
             "label": "مخالفم",
+            "weight": 2,
             "styleKey": "compat_low",
             "score": {
-              "compat": 30,
-              "budget_sync": 30
+              "compat": 2
             }
           },
           {
-            "id": "lk5",
+            "id": "opt5",
             "label": "کاملاً مخالفم",
+            "weight": 0,
             "styleKey": "compat_vlow",
             "score": {
-              "compat": 10,
-              "budget_sync": 10
+              "compat": 0
             }
           }
         ]
       },
       {
         "id": "q3",
-        "text": "اولویت‌های مالی ما (مثلاً بین کیفیت تالار در برابر عکاسی و فیلم‌برداری) کاملاً همسو است.",
+        "text": "در مواجهه با اختلاف نظرها، اولویت من حل مسالمت‌آمیز مسئله است تا اثبات برتری خود.",
         "options": [
           {
-            "id": "lk1",
+            "id": "opt1",
             "label": "کاملاً موافقم",
+            "weight": 10,
+            "styleKey": "compat_vhigh",
+            "score": {
+              "compat": 10
+            }
+          },
+          {
+            "id": "opt2",
+            "label": "موافقم",
+            "weight": 8,
             "styleKey": "compat_high",
             "score": {
-              "compat": 100,
-              "budget_sync": 100
+              "compat": 8
             }
           },
           {
-            "id": "lk2",
-            "label": "موافقم",
+            "id": "opt3",
+            "label": "تا حدودی / نظری ندارم",
+            "weight": 5,
             "styleKey": "compat_mid",
             "score": {
-              "compat": 80,
-              "budget_sync": 80
+              "compat": 5
             }
           },
           {
-            "id": "lk3",
-            "label": "نظری ندارم / خنثی",
-            "styleKey": "compat_neutral",
-            "score": {
-              "compat": 50,
-              "budget_sync": 50
-            }
-          },
-          {
-            "id": "lk4",
+            "id": "opt4",
             "label": "مخالفم",
+            "weight": 2,
             "styleKey": "compat_low",
             "score": {
-              "compat": 30,
-              "budget_sync": 30
+              "compat": 2
             }
           },
           {
-            "id": "lk5",
+            "id": "opt5",
             "label": "کاملاً مخالفم",
+            "weight": 0,
             "styleKey": "compat_vlow",
             "score": {
-              "compat": 10,
-              "budget_sync": 10
+              "compat": 0
+            }
+          }
+        ]
+      },
+      {
+        "id": "q4",
+        "text": "آمادگی کافی برای مدیریت مستقل مسائل مالی و برنامه‌ریزی اقتصادی زندگی مشترک را دارم.",
+        "options": [
+          {
+            "id": "opt1",
+            "label": "کاملاً موافقم",
+            "weight": 10,
+            "styleKey": "compat_vhigh",
+            "score": {
+              "compat": 10
+            }
+          },
+          {
+            "id": "opt2",
+            "label": "موافقم",
+            "weight": 8,
+            "styleKey": "compat_high",
+            "score": {
+              "compat": 8
+            }
+          },
+          {
+            "id": "opt3",
+            "label": "تا حدودی / نظری ندارم",
+            "weight": 5,
+            "styleKey": "compat_mid",
+            "score": {
+              "compat": 5
+            }
+          },
+          {
+            "id": "opt4",
+            "label": "مخالفم",
+            "weight": 2,
+            "styleKey": "compat_low",
+            "score": {
+              "compat": 2
+            }
+          },
+          {
+            "id": "opt5",
+            "label": "کاملاً مخالفم",
+            "weight": 0,
+            "styleKey": "compat_vlow",
+            "score": {
+              "compat": 0
+            }
+          }
+        ]
+      },
+      {
+        "id": "q5",
+        "text": "توانایی مدیریت هیجانات، خشم و اضطراب در روزهای پرفشار قبل از عروسی را در خود می‌بینم.",
+        "options": [
+          {
+            "id": "opt1",
+            "label": "کاملاً موافقم",
+            "weight": 10,
+            "styleKey": "compat_vhigh",
+            "score": {
+              "compat": 10
+            }
+          },
+          {
+            "id": "opt2",
+            "label": "موافقم",
+            "weight": 8,
+            "styleKey": "compat_high",
+            "score": {
+              "compat": 8
+            }
+          },
+          {
+            "id": "opt3",
+            "label": "تا حدودی / نظری ندارم",
+            "weight": 5,
+            "styleKey": "compat_mid",
+            "score": {
+              "compat": 5
+            }
+          },
+          {
+            "id": "opt4",
+            "label": "مخالفم",
+            "weight": 2,
+            "styleKey": "compat_low",
+            "score": {
+              "compat": 2
+            }
+          },
+          {
+            "id": "opt5",
+            "label": "کاملاً مخالفم",
+            "weight": 0,
+            "styleKey": "compat_vlow",
+            "score": {
+              "compat": 0
+            }
+          }
+        ]
+      },
+      {
+        "id": "q6",
+        "text": "احترام به استقلال فکری، اهداف شخصی و حریم خصوصی همسرم را اصل اساسی می‌دانم.",
+        "options": [
+          {
+            "id": "opt1",
+            "label": "کاملاً موافقم",
+            "weight": 10,
+            "styleKey": "compat_vhigh",
+            "score": {
+              "compat": 10
+            }
+          },
+          {
+            "id": "opt2",
+            "label": "موافقم",
+            "weight": 8,
+            "styleKey": "compat_high",
+            "score": {
+              "compat": 8
+            }
+          },
+          {
+            "id": "opt3",
+            "label": "تا حدودی / نظری ندارم",
+            "weight": 5,
+            "styleKey": "compat_mid",
+            "score": {
+              "compat": 5
+            }
+          },
+          {
+            "id": "opt4",
+            "label": "مخالفم",
+            "weight": 2,
+            "styleKey": "compat_low",
+            "score": {
+              "compat": 2
+            }
+          },
+          {
+            "id": "opt5",
+            "label": "کاملاً مخالفم",
+            "weight": 0,
+            "styleKey": "compat_vlow",
+            "score": {
+              "compat": 0
+            }
+          }
+        ]
+      },
+      {
+        "id": "q7",
+        "text": "در تصمیم‌گیری‌های کلان زندگی، توانایی مرزبندی سالم با نظرات و مداخلات اطرافیان را دارم.",
+        "options": [
+          {
+            "id": "opt1",
+            "label": "کاملاً موافقم",
+            "weight": 10,
+            "styleKey": "compat_vhigh",
+            "score": {
+              "compat": 10
+            }
+          },
+          {
+            "id": "opt2",
+            "label": "موافقم",
+            "weight": 8,
+            "styleKey": "compat_high",
+            "score": {
+              "compat": 8
+            }
+          },
+          {
+            "id": "opt3",
+            "label": "تا حدودی / نظری ندارم",
+            "weight": 5,
+            "styleKey": "compat_mid",
+            "score": {
+              "compat": 5
+            }
+          },
+          {
+            "id": "opt4",
+            "label": "مخالفم",
+            "weight": 2,
+            "styleKey": "compat_low",
+            "score": {
+              "compat": 2
+            }
+          },
+          {
+            "id": "opt5",
+            "label": "کاملاً مخالفم",
+            "weight": 0,
+            "styleKey": "compat_vlow",
+            "score": {
+              "compat": 0
+            }
+          }
+        ]
+      },
+      {
+        "id": "q8",
+        "text": "توانایی پذیرش نقاط ضعف خود و انعطاف‌پذیری برای بهبود رفتارهای ارتباطی را دارم.",
+        "options": [
+          {
+            "id": "opt1",
+            "label": "کاملاً موافقم",
+            "weight": 10,
+            "styleKey": "compat_vhigh",
+            "score": {
+              "compat": 10
+            }
+          },
+          {
+            "id": "opt2",
+            "label": "موافقم",
+            "weight": 8,
+            "styleKey": "compat_high",
+            "score": {
+              "compat": 8
+            }
+          },
+          {
+            "id": "opt3",
+            "label": "تا حدودی / نظری ندارم",
+            "weight": 5,
+            "styleKey": "compat_mid",
+            "score": {
+              "compat": 5
+            }
+          },
+          {
+            "id": "opt4",
+            "label": "مخالفم",
+            "weight": 2,
+            "styleKey": "compat_low",
+            "score": {
+              "compat": 2
+            }
+          },
+          {
+            "id": "opt5",
+            "label": "کاملاً مخالفم",
+            "weight": 0,
+            "styleKey": "compat_vlow",
+            "score": {
+              "compat": 0
+            }
+          }
+        ]
+      },
+      {
+        "id": "q9",
+        "text": "درک متقابل از وظایف خانوادگی و تقسیم عادلانه مسئولیت‌ها در زندگی روزمره را قبول دارم.",
+        "options": [
+          {
+            "id": "opt1",
+            "label": "کاملاً موافقم",
+            "weight": 10,
+            "styleKey": "compat_vhigh",
+            "score": {
+              "compat": 10
+            }
+          },
+          {
+            "id": "opt2",
+            "label": "موافقم",
+            "weight": 8,
+            "styleKey": "compat_high",
+            "score": {
+              "compat": 8
+            }
+          },
+          {
+            "id": "opt3",
+            "label": "تا حدودی / نظری ندارم",
+            "weight": 5,
+            "styleKey": "compat_mid",
+            "score": {
+              "compat": 5
+            }
+          },
+          {
+            "id": "opt4",
+            "label": "مخالفم",
+            "weight": 2,
+            "styleKey": "compat_low",
+            "score": {
+              "compat": 2
+            }
+          },
+          {
+            "id": "opt5",
+            "label": "کاملاً مخالفم",
+            "weight": 0,
+            "styleKey": "compat_vlow",
+            "score": {
+              "compat": 0
+            }
+          }
+        ]
+      },
+      {
+        "id": "q10",
+        "text": "احساس آمادگی و اشتیاق عمیق برای متعهد ماندن و ساختن این مسیر مشترک را دارم.",
+        "options": [
+          {
+            "id": "opt1",
+            "label": "کاملاً موافقم",
+            "weight": 10,
+            "styleKey": "compat_vhigh",
+            "score": {
+              "compat": 10
+            }
+          },
+          {
+            "id": "opt2",
+            "label": "موافقم",
+            "weight": 8,
+            "styleKey": "compat_high",
+            "score": {
+              "compat": 8
+            }
+          },
+          {
+            "id": "opt3",
+            "label": "تا حدودی / نظری ندارم",
+            "weight": 5,
+            "styleKey": "compat_mid",
+            "score": {
+              "compat": 5
+            }
+          },
+          {
+            "id": "opt4",
+            "label": "مخالفم",
+            "weight": 2,
+            "styleKey": "compat_low",
+            "score": {
+              "compat": 2
+            }
+          },
+          {
+            "id": "opt5",
+            "label": "کاملاً مخالفم",
+            "weight": 0,
+            "styleKey": "compat_vlow",
+            "score": {
+              "compat": 0
+            }
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "quiz-psych-lifestyle",
+    "category": "psychology",
+    "title": "تست هماهنگی و هم‌راستایی سبک زندگی زوجین",
+    "description": "تحلیل میزان تفاهم در تصمیم‌گیری‌های روزمره، مدیریت مالی، تعاملات اجتماعی و ارزش‌های کلان",
+    "image": "https://images.unsplash.com/photo-1520854221256-17451cc331bf?auto=format&fit=crop&w=800&q=80",
+    "duration": "۴ دقیقه",
+    "questionsCount": 8,
+    "badge": "تفاهم سبک زندگی",
+    "questions": [
+      {
+        "id": "q1",
+        "text": "درباره محل سکونت، سبک چیدمان منزل و اولویت‌های رفاهی اولیه با همسرم توافق کامل دارم.",
+        "options": [
+          {
+            "id": "opt1",
+            "label": "کاملاً موافقم",
+            "weight": 10,
+            "styleKey": "compat_vhigh",
+            "score": {
+              "compat": 10
+            }
+          },
+          {
+            "id": "opt2",
+            "label": "موافقم",
+            "weight": 8,
+            "styleKey": "compat_high",
+            "score": {
+              "compat": 8
+            }
+          },
+          {
+            "id": "opt3",
+            "label": "تا حدودی / نظری ندارم",
+            "weight": 5,
+            "styleKey": "compat_mid",
+            "score": {
+              "compat": 5
+            }
+          },
+          {
+            "id": "opt4",
+            "label": "مخالفم",
+            "weight": 2,
+            "styleKey": "compat_low",
+            "score": {
+              "compat": 2
+            }
+          },
+          {
+            "id": "opt5",
+            "label": "کاملاً مخالفم",
+            "weight": 0,
+            "styleKey": "compat_vlow",
+            "score": {
+              "compat": 0
+            }
+          }
+        ]
+      },
+      {
+        "id": "q2",
+        "text": "نحوه گذراندن اوقات فراغت، رفت‌وآمدهای فامیلی و تعاملات اجتماعی ما کاملاً هماهنگ است.",
+        "options": [
+          {
+            "id": "opt1",
+            "label": "کاملاً موافقم",
+            "weight": 10,
+            "styleKey": "compat_vhigh",
+            "score": {
+              "compat": 10
+            }
+          },
+          {
+            "id": "opt2",
+            "label": "موافقم",
+            "weight": 8,
+            "styleKey": "compat_high",
+            "score": {
+              "compat": 8
+            }
+          },
+          {
+            "id": "opt3",
+            "label": "تا حدودی / نظری ندارم",
+            "weight": 5,
+            "styleKey": "compat_mid",
+            "score": {
+              "compat": 5
+            }
+          },
+          {
+            "id": "opt4",
+            "label": "مخالفم",
+            "weight": 2,
+            "styleKey": "compat_low",
+            "score": {
+              "compat": 2
+            }
+          },
+          {
+            "id": "opt5",
+            "label": "کاملاً مخالفم",
+            "weight": 0,
+            "styleKey": "compat_vlow",
+            "score": {
+              "compat": 0
+            }
+          }
+        ]
+      },
+      {
+        "id": "q3",
+        "text": "نظرات ما درباره نحوه پس‌انداز، سرمایه‌گذاری و مدیریت خرج‌های روزمره زندگی به هم نزدیک است.",
+        "options": [
+          {
+            "id": "opt1",
+            "label": "کاملاً موافقم",
+            "weight": 10,
+            "styleKey": "compat_vhigh",
+            "score": {
+              "compat": 10
+            }
+          },
+          {
+            "id": "opt2",
+            "label": "موافقم",
+            "weight": 8,
+            "styleKey": "compat_high",
+            "score": {
+              "compat": 8
+            }
+          },
+          {
+            "id": "opt3",
+            "label": "تا حدودی / نظری ندارم",
+            "weight": 5,
+            "styleKey": "compat_mid",
+            "score": {
+              "compat": 5
+            }
+          },
+          {
+            "id": "opt4",
+            "label": "مخالفم",
+            "weight": 2,
+            "styleKey": "compat_low",
+            "score": {
+              "compat": 2
+            }
+          },
+          {
+            "id": "opt5",
+            "label": "کاملاً مخالفم",
+            "weight": 0,
+            "styleKey": "compat_vlow",
+            "score": {
+              "compat": 0
+            }
+          }
+        ]
+      },
+      {
+        "id": "q4",
+        "text": "در موضوعات مرتبط با اشتغال، تحصیل و اهداف شغلی آینده، یکدیگر را تشویق و حمایت می‌کنیم.",
+        "options": [
+          {
+            "id": "opt1",
+            "label": "کاملاً موافقم",
+            "weight": 10,
+            "styleKey": "compat_vhigh",
+            "score": {
+              "compat": 10
+            }
+          },
+          {
+            "id": "opt2",
+            "label": "موافقم",
+            "weight": 8,
+            "styleKey": "compat_high",
+            "score": {
+              "compat": 8
+            }
+          },
+          {
+            "id": "opt3",
+            "label": "تا حدودی / نظری ندارم",
+            "weight": 5,
+            "styleKey": "compat_mid",
+            "score": {
+              "compat": 5
+            }
+          },
+          {
+            "id": "opt4",
+            "label": "مخالفم",
+            "weight": 2,
+            "styleKey": "compat_low",
+            "score": {
+              "compat": 2
+            }
+          },
+          {
+            "id": "opt5",
+            "label": "کاملاً مخالفم",
+            "weight": 0,
+            "styleKey": "compat_vlow",
+            "score": {
+              "compat": 0
+            }
+          }
+        ]
+      },
+      {
+        "id": "q5",
+        "text": "سبک زندگی، عادات فردی و نظم روزمره ما با یکدیگر سازگاری قابل توجهی دارد.",
+        "options": [
+          {
+            "id": "opt1",
+            "label": "کاملاً موافقم",
+            "weight": 10,
+            "styleKey": "compat_vhigh",
+            "score": {
+              "compat": 10
+            }
+          },
+          {
+            "id": "opt2",
+            "label": "موافقم",
+            "weight": 8,
+            "styleKey": "compat_high",
+            "score": {
+              "compat": 8
+            }
+          },
+          {
+            "id": "opt3",
+            "label": "تا حدودی / نظری ندارم",
+            "weight": 5,
+            "styleKey": "compat_mid",
+            "score": {
+              "compat": 5
+            }
+          },
+          {
+            "id": "opt4",
+            "label": "مخالفم",
+            "weight": 2,
+            "styleKey": "compat_low",
+            "score": {
+              "compat": 2
+            }
+          },
+          {
+            "id": "opt5",
+            "label": "کاملاً مخالفم",
+            "weight": 0,
+            "styleKey": "compat_vlow",
+            "score": {
+              "compat": 0
+            }
+          }
+        ]
+      },
+      {
+        "id": "q6",
+        "text": "درباره نحوه تعامل با خانواده‌های یکدیگر و حفظ مرزهای احترام توافق نظر داریم.",
+        "options": [
+          {
+            "id": "opt1",
+            "label": "کاملاً موافقم",
+            "weight": 10,
+            "styleKey": "compat_vhigh",
+            "score": {
+              "compat": 10
+            }
+          },
+          {
+            "id": "opt2",
+            "label": "موافقم",
+            "weight": 8,
+            "styleKey": "compat_high",
+            "score": {
+              "compat": 8
+            }
+          },
+          {
+            "id": "opt3",
+            "label": "تا حدودی / نظری ندارم",
+            "weight": 5,
+            "styleKey": "compat_mid",
+            "score": {
+              "compat": 5
+            }
+          },
+          {
+            "id": "opt4",
+            "label": "مخالفم",
+            "weight": 2,
+            "styleKey": "compat_low",
+            "score": {
+              "compat": 2
+            }
+          },
+          {
+            "id": "opt5",
+            "label": "کاملاً مخالفم",
+            "weight": 0,
+            "styleKey": "compat_vlow",
+            "score": {
+              "compat": 0
+            }
+          }
+        ]
+      },
+      {
+        "id": "q7",
+        "text": "معیارها و ارزش‌های اخلاقی و اعتقادی ما برای اداره زندگی مشترک هم‌راستا است.",
+        "options": [
+          {
+            "id": "opt1",
+            "label": "کاملاً موافقم",
+            "weight": 10,
+            "styleKey": "compat_vhigh",
+            "score": {
+              "compat": 10
+            }
+          },
+          {
+            "id": "opt2",
+            "label": "موافقم",
+            "weight": 8,
+            "styleKey": "compat_high",
+            "score": {
+              "compat": 8
+            }
+          },
+          {
+            "id": "opt3",
+            "label": "تا حدودی / نظری ندارم",
+            "weight": 5,
+            "styleKey": "compat_mid",
+            "score": {
+              "compat": 5
+            }
+          },
+          {
+            "id": "opt4",
+            "label": "مخالفم",
+            "weight": 2,
+            "styleKey": "compat_low",
+            "score": {
+              "compat": 2
+            }
+          },
+          {
+            "id": "opt5",
+            "label": "کاملاً مخالفم",
+            "weight": 0,
+            "styleKey": "compat_vlow",
+            "score": {
+              "compat": 0
+            }
+          }
+        ]
+      },
+      {
+        "id": "q8",
+        "text": "درباره زمان‌بندی برنامه‌های آینده زندگی (مانند فرزندواری) به درک مشترک رسیده‌ایم.",
+        "options": [
+          {
+            "id": "opt1",
+            "label": "کاملاً موافقم",
+            "weight": 10,
+            "styleKey": "compat_vhigh",
+            "score": {
+              "compat": 10
+            }
+          },
+          {
+            "id": "opt2",
+            "label": "موافقم",
+            "weight": 8,
+            "styleKey": "compat_high",
+            "score": {
+              "compat": 8
+            }
+          },
+          {
+            "id": "opt3",
+            "label": "تا حدودی / نظری ندارم",
+            "weight": 5,
+            "styleKey": "compat_mid",
+            "score": {
+              "compat": 5
+            }
+          },
+          {
+            "id": "opt4",
+            "label": "مخالفم",
+            "weight": 2,
+            "styleKey": "compat_low",
+            "score": {
+              "compat": 2
+            }
+          },
+          {
+            "id": "opt5",
+            "label": "کاملاً مخالفم",
+            "weight": 0,
+            "styleKey": "compat_vlow",
+            "score": {
+              "compat": 0
             }
           }
         ]
@@ -6980,492 +7894,315 @@ if (document.readyState === "loading") {
   {
     "id": "quiz-psych-stress",
     "category": "psychology",
-    "title": "تست تحلیل سبک مدیریت استرس و بحران‌های قبل از عروسی",
-    "description": "شناسایی نقاط محرک استرس، صبوری هیجانی و راهکارهای حفظ آرامش مشترک",
+    "title": "مقیاس مدیریت استرس و اضطراب برنامه‌ریزی عروسی",
+    "description": "سنجش تاب‌آوری هیجانی، حفظ صمیمیت زوجین و کنترل چالش‌های اجرایی و مالی قبل از مراسم",
     "image": "https://images.unsplash.com/photo-1522673607200-164d1b6ce486?auto=format&fit=crop&w=800&q=80",
     "duration": "۳ دقیقه",
-    "questionsCount": 3,
+    "questionsCount": 6,
     "badge": "مدیریت استرس",
     "questions": [
       {
         "id": "q1",
-        "text": "هنگامی که برنامه‌ریزی‌ها طبق زمان‌بندی دقیق پیش نمی‌رود، می‌توانم خونسردی خود را حفظ کنم.",
+        "text": "هنگام مواجهه با هزینه‌های غیرمنتظره عروسی، آرامش خود را حفظ کرده و منطقی تصمیم می‌گیرم.",
         "options": [
           {
-            "id": "lk1",
+            "id": "opt1",
             "label": "کاملاً موافقم",
+            "weight": 10,
+            "styleKey": "compat_vhigh",
+            "score": {
+              "compat": 10
+            }
+          },
+          {
+            "id": "opt2",
+            "label": "موافقم",
+            "weight": 8,
             "styleKey": "compat_high",
             "score": {
-              "compat": 100,
-              "budget_sync": 100
+              "compat": 8
             }
           },
           {
-            "id": "lk2",
-            "label": "موافقم",
+            "id": "opt3",
+            "label": "تا حدودی / نظری ندارم",
+            "weight": 5,
             "styleKey": "compat_mid",
             "score": {
-              "compat": 80,
-              "budget_sync": 80
+              "compat": 5
             }
           },
           {
-            "id": "lk3",
-            "label": "نظری ندارم / خنثی",
-            "styleKey": "compat_neutral",
-            "score": {
-              "compat": 50,
-              "budget_sync": 50
-            }
-          },
-          {
-            "id": "lk4",
+            "id": "opt4",
             "label": "مخالفم",
+            "weight": 2,
             "styleKey": "compat_low",
             "score": {
-              "compat": 30,
-              "budget_sync": 30
+              "compat": 2
             }
           },
           {
-            "id": "lk5",
+            "id": "opt5",
             "label": "کاملاً مخالفم",
+            "weight": 0,
             "styleKey": "compat_vlow",
             "score": {
-              "compat": 10,
-              "budget_sync": 10
+              "compat": 0
             }
           }
         ]
       },
       {
         "id": "q2",
-        "text": "من و همسرم در روزهای پرفشار قبل از عروسی تکیه‌گاه عاطفی یکدیگر هستیم و استرس را منتقل نمی‌کنیم.",
+        "text": "تداخل نظرات خانواده‌ها درباره تشریفات عروسی باعث ایجاد تنش شدیدی میان ما نمی‌شود.",
         "options": [
           {
-            "id": "lk1",
+            "id": "opt1",
             "label": "کاملاً موافقم",
+            "weight": 10,
+            "styleKey": "compat_vhigh",
+            "score": {
+              "compat": 10
+            }
+          },
+          {
+            "id": "opt2",
+            "label": "موافقم",
+            "weight": 8,
             "styleKey": "compat_high",
             "score": {
-              "compat": 100,
-              "budget_sync": 100
+              "compat": 8
             }
           },
           {
-            "id": "lk2",
-            "label": "موافقم",
+            "id": "opt3",
+            "label": "تا حدودی / نظری ندارم",
+            "weight": 5,
             "styleKey": "compat_mid",
             "score": {
-              "compat": 80,
-              "budget_sync": 80
+              "compat": 5
             }
           },
           {
-            "id": "lk3",
-            "label": "نظری ندارم / خنثی",
-            "styleKey": "compat_neutral",
-            "score": {
-              "compat": 50,
-              "budget_sync": 50
-            }
-          },
-          {
-            "id": "lk4",
+            "id": "opt4",
             "label": "مخالفم",
+            "weight": 2,
             "styleKey": "compat_low",
             "score": {
-              "compat": 30,
-              "budget_sync": 30
+              "compat": 2
             }
           },
           {
-            "id": "lk5",
+            "id": "opt5",
             "label": "کاملاً مخالفم",
+            "weight": 0,
             "styleKey": "compat_vlow",
             "score": {
-              "compat": 10,
-              "budget_sync": 10
+              "compat": 0
             }
           }
         ]
       },
       {
         "id": "q3",
-        "text": "توانایی عبور از خطاهای جزئی تامین‌کنندگان در روز جشن بدون خراب کردن حالم را دارم.",
+        "text": "زمان‌بندی و حجم کارهای چک‌لیست برنامه‌ریزی باعث احساس فرسودگی شدید ذهنی من نشده است.",
         "options": [
           {
-            "id": "lk1",
+            "id": "opt1",
             "label": "کاملاً موافقم",
+            "weight": 10,
+            "styleKey": "compat_vhigh",
+            "score": {
+              "compat": 10
+            }
+          },
+          {
+            "id": "opt2",
+            "label": "موافقم",
+            "weight": 8,
             "styleKey": "compat_high",
             "score": {
-              "compat": 100,
-              "budget_sync": 100
+              "compat": 8
             }
           },
           {
-            "id": "lk2",
-            "label": "موافقم",
+            "id": "opt3",
+            "label": "تا حدودی / نظری ندارم",
+            "weight": 5,
             "styleKey": "compat_mid",
             "score": {
-              "compat": 80,
-              "budget_sync": 80
+              "compat": 5
             }
           },
           {
-            "id": "lk3",
-            "label": "نظری ندارم / خنثی",
-            "styleKey": "compat_neutral",
-            "score": {
-              "compat": 50,
-              "budget_sync": 50
-            }
-          },
-          {
-            "id": "lk4",
+            "id": "opt4",
             "label": "مخالفم",
+            "weight": 2,
             "styleKey": "compat_low",
             "score": {
-              "compat": 30,
-              "budget_sync": 30
+              "compat": 2
             }
           },
           {
-            "id": "lk5",
+            "id": "opt5",
             "label": "کاملاً مخالفم",
+            "weight": 0,
             "styleKey": "compat_vlow",
             "score": {
-              "compat": 10,
-              "budget_sync": 10
-            }
-          }
-        ]
-      }
-    ]
-  },
-  {
-    "id": "quiz-psych-readiness",
-    "category": "psychology",
-    "title": "تست خودشناسی و آمادگی عاطفی ورود به زندگی مشترک",
-    "description": "ارزیابی بلوغ ارتباطی، مسئولیت‌پذیری و آمادگی روحی برای شروع فصل جدید زندگی",
-    "image": "https://images.unsplash.com/photo-1511285560929-80b456fea0bc?auto=format&fit=crop&w=800&q=80",
-    "duration": "۴ دقیقه",
-    "questionsCount": 3,
-    "badge": "خودشناسی ازدواج",
-    "questions": [
-      {
-        "id": "q1",
-        "text": "تصویر ذهنی من از زندگی مشترک متکی بر واقع‌گرایی، همدلی و پذیرش مسئولیت‌های جدید است.",
-        "options": [
-          {
-            "id": "lk1",
-            "label": "کاملاً موافقم",
-            "styleKey": "compat_high",
-            "score": {
-              "compat": 100,
-              "budget_sync": 100
-            }
-          },
-          {
-            "id": "lk2",
-            "label": "موافقم",
-            "styleKey": "compat_mid",
-            "score": {
-              "compat": 80,
-              "budget_sync": 80
-            }
-          },
-          {
-            "id": "lk3",
-            "label": "نظری ندارم / خنثی",
-            "styleKey": "compat_neutral",
-            "score": {
-              "compat": 50,
-              "budget_sync": 50
-            }
-          },
-          {
-            "id": "lk4",
-            "label": "مخالفم",
-            "styleKey": "compat_low",
-            "score": {
-              "compat": 30,
-              "budget_sync": 30
-            }
-          },
-          {
-            "id": "lk5",
-            "label": "کاملاً مخالفم",
-            "styleKey": "compat_vlow",
-            "score": {
-              "compat": 10,
-              "budget_sync": 10
+              "compat": 0
             }
           }
         ]
       },
       {
-        "id": "q2",
-        "text": "توانایی گفتگو درباره نیازها و احساسات عمیق خود بدون ترس از قضاوت شدن را دارم.",
+        "id": "q4",
+        "text": "در صورت بروز تاخیر یا ناهماهنگی در خدمات تامین‌کنندگان، قدرت جایگزینی و صبر دارم.",
         "options": [
           {
-            "id": "lk1",
+            "id": "opt1",
             "label": "کاملاً موافقم",
+            "weight": 10,
+            "styleKey": "compat_vhigh",
+            "score": {
+              "compat": 10
+            }
+          },
+          {
+            "id": "opt2",
+            "label": "موافقم",
+            "weight": 8,
             "styleKey": "compat_high",
             "score": {
-              "compat": 100,
-              "budget_sync": 100
+              "compat": 8
             }
           },
           {
-            "id": "lk2",
-            "label": "موافقم",
+            "id": "opt3",
+            "label": "تا حدودی / نظری ندارم",
+            "weight": 5,
             "styleKey": "compat_mid",
             "score": {
-              "compat": 80,
-              "budget_sync": 80
+              "compat": 5
             }
           },
           {
-            "id": "lk3",
-            "label": "نظری ندارم / خنثی",
-            "styleKey": "compat_neutral",
-            "score": {
-              "compat": 50,
-              "budget_sync": 50
-            }
-          },
-          {
-            "id": "lk4",
+            "id": "opt4",
             "label": "مخالفم",
+            "weight": 2,
             "styleKey": "compat_low",
             "score": {
-              "compat": 30,
-              "budget_sync": 30
+              "compat": 2
             }
           },
           {
-            "id": "lk5",
+            "id": "opt5",
             "label": "کاملاً مخالفم",
+            "weight": 0,
             "styleKey": "compat_vlow",
             "score": {
-              "compat": 10,
-              "budget_sync": 10
+              "compat": 0
             }
           }
         ]
       },
       {
-        "id": "q3",
-        "text": "آمادگی کافی برای اولویت دادن به تصمیمات دو نفره در برابر تمایلات فردی گذشته را احساس می‌کنم.",
+        "id": "q5",
+        "text": "ارتباط عاطفی و صمیمیت ما تحت تاثیر شلوغی‌ها و استرس‌های دوره برنامه‌ریزی کم نشده است.",
         "options": [
           {
-            "id": "lk1",
+            "id": "opt1",
             "label": "کاملاً موافقم",
+            "weight": 10,
+            "styleKey": "compat_vhigh",
+            "score": {
+              "compat": 10
+            }
+          },
+          {
+            "id": "opt2",
+            "label": "موافقم",
+            "weight": 8,
             "styleKey": "compat_high",
             "score": {
-              "compat": 100,
-              "budget_sync": 100
+              "compat": 8
             }
           },
           {
-            "id": "lk2",
-            "label": "موافقم",
+            "id": "opt3",
+            "label": "تا حدودی / نظری ندارم",
+            "weight": 5,
             "styleKey": "compat_mid",
             "score": {
-              "compat": 80,
-              "budget_sync": 80
+              "compat": 5
             }
           },
           {
-            "id": "lk3",
-            "label": "نظری ندارم / خنثی",
-            "styleKey": "compat_neutral",
-            "score": {
-              "compat": 50,
-              "budget_sync": 50
-            }
-          },
-          {
-            "id": "lk4",
+            "id": "opt4",
             "label": "مخالفم",
+            "weight": 2,
             "styleKey": "compat_low",
             "score": {
-              "compat": 30,
-              "budget_sync": 30
+              "compat": 2
             }
           },
           {
-            "id": "lk5",
+            "id": "opt5",
             "label": "کاملاً مخالفم",
+            "weight": 0,
             "styleKey": "compat_vlow",
             "score": {
-              "compat": 10,
-              "budget_sync": 10
-            }
-          }
-        ]
-      }
-    ]
-  },
-  {
-    "id": "quiz-psych-family",
-    "category": "psychology",
-    "title": "تست میزان هم‌نظری در تصمیم‌گیری‌ها و مداخله اطرافیان",
-    "description": "تحلیل مرزبندی سالم با اطرافیان، حفظ استقلال زوجین و مدیریت محترمانه نظرات خانواده",
-    "image": "https://images.unsplash.com/photo-1520854221256-17451cc331bf?auto=format&fit=crop&w=800&q=80",
-    "duration": "۳ دقیقه",
-    "questionsCount": 3,
-    "badge": "مرزبندی خانواده",
-    "questions": [
-      {
-        "id": "q1",
-        "text": "من و همسرم مرز مشخصی برای حفظ استقلال تصمیم‌گیری‌های دو نفره خود تعیین کرده‌ایم.",
-        "options": [
-          {
-            "id": "lk1",
-            "label": "کاملاً موافقم",
-            "styleKey": "compat_high",
-            "score": {
-              "compat": 100,
-              "budget_sync": 100
-            }
-          },
-          {
-            "id": "lk2",
-            "label": "موافقم",
-            "styleKey": "compat_mid",
-            "score": {
-              "compat": 80,
-              "budget_sync": 80
-            }
-          },
-          {
-            "id": "lk3",
-            "label": "نظری ندارم / خنثی",
-            "styleKey": "compat_neutral",
-            "score": {
-              "compat": 50,
-              "budget_sync": 50
-            }
-          },
-          {
-            "id": "lk4",
-            "label": "مخالفم",
-            "styleKey": "compat_low",
-            "score": {
-              "compat": 30,
-              "budget_sync": 30
-            }
-          },
-          {
-            "id": "lk5",
-            "label": "کاملاً مخالفم",
-            "styleKey": "compat_vlow",
-            "score": {
-              "compat": 10,
-              "budget_sync": 10
+              "compat": 0
             }
           }
         ]
       },
       {
-        "id": "q2",
-        "text": "توانایی شنیدن محترمانه نظرات اطرافیان بدون ایجاد تعارض در رابطه دونفره‌مان را داریم.",
+        "id": "q6",
+        "text": "از ابزارهای مدیریت آنلاین و مشورت با متخصصین برای کاهش فشار کارهای عروسی استفاده می‌کنم.",
         "options": [
           {
-            "id": "lk1",
+            "id": "opt1",
             "label": "کاملاً موافقم",
+            "weight": 10,
+            "styleKey": "compat_vhigh",
+            "score": {
+              "compat": 10
+            }
+          },
+          {
+            "id": "opt2",
+            "label": "موافقم",
+            "weight": 8,
             "styleKey": "compat_high",
             "score": {
-              "compat": 100,
-              "budget_sync": 100
+              "compat": 8
             }
           },
           {
-            "id": "lk2",
-            "label": "موافقم",
+            "id": "opt3",
+            "label": "تا حدودی / نظری ندارم",
+            "weight": 5,
             "styleKey": "compat_mid",
             "score": {
-              "compat": 80,
-              "budget_sync": 80
+              "compat": 5
             }
           },
           {
-            "id": "lk3",
-            "label": "نظری ندارم / خنثی",
-            "styleKey": "compat_neutral",
-            "score": {
-              "compat": 50,
-              "budget_sync": 50
-            }
-          },
-          {
-            "id": "lk4",
+            "id": "opt4",
             "label": "مخالفم",
+            "weight": 2,
             "styleKey": "compat_low",
             "score": {
-              "compat": 30,
-              "budget_sync": 30
+              "compat": 2
             }
           },
           {
-            "id": "lk5",
+            "id": "opt5",
             "label": "کاملاً مخالفم",
+            "weight": 0,
             "styleKey": "compat_vlow",
             "score": {
-              "compat": 10,
-              "budget_sync": 10
-            }
-          }
-        ]
-      },
-      {
-        "id": "q3",
-        "text": "در صورت بروز اختلاف نظر میان خانواده‌ها، پشت یکدیگر ایستاده و حامی هم هستیم.",
-        "options": [
-          {
-            "id": "lk1",
-            "label": "کاملاً موافقم",
-            "styleKey": "compat_high",
-            "score": {
-              "compat": 100,
-              "budget_sync": 100
-            }
-          },
-          {
-            "id": "lk2",
-            "label": "موافقم",
-            "styleKey": "compat_mid",
-            "score": {
-              "compat": 80,
-              "budget_sync": 80
-            }
-          },
-          {
-            "id": "lk3",
-            "label": "نظری ندارم / خنثی",
-            "styleKey": "compat_neutral",
-            "score": {
-              "compat": 50,
-              "budget_sync": 50
-            }
-          },
-          {
-            "id": "lk4",
-            "label": "مخالفم",
-            "styleKey": "compat_low",
-            "score": {
-              "compat": 30,
-              "budget_sync": 30
-            }
-          },
-          {
-            "id": "lk5",
-            "label": "کاملاً مخالفم",
-            "styleKey": "compat_vlow",
-            "score": {
-              "compat": 10,
-              "budget_sync": 10
+              "compat": 0
             }
           }
         ]
@@ -8322,14 +9059,37 @@ if (document.readyState === "loading") {
       renderQuizCatalogCards();
     }
 
+    const QUIZ_HISTORY_KEY = 'aroosi_quiz_history_db';
+
+    function getQuizHistory() {
+      try {
+        const stored = localStorage.getItem(QUIZ_HISTORY_KEY);
+        return stored ? JSON.parse(stored) : [];
+      } catch (e) {
+        return [];
+      }
+    }
+
+    function saveQuizHistoryEntry(entry) {
+      try {
+        let history = getQuizHistory();
+        history = [entry, ...history.filter(h => h.quizId !== entry.quizId)].slice(0, 10);
+        localStorage.setItem(QUIZ_HISTORY_KEY, JSON.stringify(history));
+      } catch (e) {
+        console.error('Failed to save quiz history', e);
+      }
+    }
+
     function renderQuizCatalogCards() {
       const grid = document.getElementById('quiz-cards-grid');
       if (!grid) return;
       grid.innerHTML = '';
 
       const filteredQuizzes = quizState.quizzes.filter(q => q.category === quizState.activeTab);
+      const history = getQuizHistory();
 
       filteredQuizzes.forEach(quiz => {
+        const pastResult = history.find(h => h.quizId === quiz.id);
         const card = document.createElement('div');
         card.className = "bg-white border border-accent rounded-3xl overflow-hidden shadow-xs hover:shadow-md transition-all flex flex-col justify-between";
         card.innerHTML = `
@@ -8339,6 +9099,12 @@ if (document.readyState === "loading") {
               <div class="absolute top-3 right-3 bg-primary text-white text-[11px] font-bold px-3 py-1 rounded-full shadow-md">
                 ${quiz.badge}
               </div>
+              ${pastResult ? `
+                <div class="absolute bottom-3 right-3 left-3 bg-[#1B3B2B]/90 backdrop-blur-xs text-[#D4AF37] text-[11px] font-bold px-3 py-1.5 rounded-xl border border-[#D4AF37]/40 flex justify-between items-center shadow-md">
+                  <span>آخرین نتیجه: ${pastResult.scorePercent}٪</span>
+                  <span class="text-white text-[10px] font-normal">${pastResult.date}</span>
+                </div>
+              ` : ''}
             </div>
 
             <div class="p-6 space-y-3">
@@ -8359,15 +9125,46 @@ if (document.readyState === "loading") {
             </div>
           </div>
 
-          <div class="p-6 pt-0">
-            <button onclick="startQuizRunner('${quiz.id}')" class="w-full bg-primary hover:bg-emerald-900 text-white font-bold py-3 rounded-2xl text-xs shadow-md transition-all flex items-center justify-center gap-2">
-              <span>شروع تست هوشمند</span>
+          <div class="p-6 pt-0 space-y-2">
+            <button onclick="startQuizRunner('${quiz.id}')" class="w-full bg-primary hover:bg-emerald-900 text-white font-bold py-3 rounded-2xl text-xs shadow-md transition-all flex items-center justify-center gap-2 cursor-pointer">
+              <span>${pastResult ? 'شرکت مجدد در تست' : 'شروع تست هوشمند'}</span>
               <i data-lucide="arrow-left" class="w-4 h-4"></i>
             </button>
           </div>
         `;
         grid.appendChild(card);
       });
+
+      // Render Past History Drawer/Banner if exists
+      if (history.length > 0 && quizState.activeTab === 'psychology') {
+        const historyBanner = document.createElement('div');
+        historyBanner.className = "col-span-full bg-[#FCFCFA] border border-[#D4AF37]/40 rounded-3xl p-5 space-y-3 mt-4 shadow-xs";
+        historyBanner.innerHTML = `
+          <div class="flex justify-between items-center border-b border-[#E0D8C8] pb-3">
+            <div class="flex items-center gap-2 text-xs font-bold text-[#1B3B2B]">
+              <i data-lucide="history" class="w-4 h-4 text-[#D4AF37]"></i>
+              <span>سوابق آزمون‌های روان‌شناسی انجام‌شده شما</span>
+            </div>
+            <span class="text-[11px] text-secondary font-medium">${history.length} تست ثبت‌شده</span>
+          </div>
+
+          <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-3 text-xs">
+            ${history.filter(h => h.quizCategory === 'psychology').map(h => `
+              <div class="p-3.5 bg-white border border-[#E0D8C8] rounded-2xl flex justify-between items-center gap-2 shadow-2xs">
+                <div>
+                  <span class="font-bold text-graphite block truncate max-w-[180px]">${h.quizTitle}</span>
+                  <span class="text-[10px] text-secondary block">${h.levelTitle}</span>
+                </div>
+                <div class="text-left shrink-0 dir-ltr">
+                  <span class="font-black text-[#1B3B2B] text-sm block">${h.scorePercent}٪</span>
+                  <span class="text-[9px] text-secondary block">${h.date}</span>
+                </div>
+              </div>
+            `).join('')}
+          </div>
+        `;
+        grid.appendChild(historyBanner);
+      }
 
       lucide.createIcons();
     }
@@ -10346,5 +11143,34 @@ window.deleteCustomQuestion = function(qId) {
   renderVendorCustomQuestionsList(1);
   if (typeof showToast === 'function') {
     showToast('سوال اختصاصی از فرم استعلام حذف گردید.', 'info');
+  }
+};
+
+/* Counselor Modal Handlers */
+window.openCounselorModal = function() {
+  const modal = document.getElementById('modal-counselor-consultation');
+  if (modal) {
+    modal.classList.remove('hidden');
+    modal.classList.add('flex');
+    if (window.lucide) lucide.createIcons();
+  }
+};
+
+window.closeCounselorModal = function() {
+  const modal = document.getElementById('modal-counselor-consultation');
+  if (modal) {
+    modal.classList.add('hidden');
+    modal.classList.remove('flex');
+  }
+};
+
+window.handleCounselorSubmit = function(event) {
+  if (event) event.preventDefault();
+  const name = document.getElementById('counselor-name')?.value || 'کاربر گرامی';
+
+  closeCounselorModal();
+
+  if (typeof showToast === 'function') {
+    showToast(`✨ درخواست مشاوره برای ${name} با موفقیت ثبت شد. مشاورین یزد به‌زودی جهت هماهنگی زمان با شما تماس می‌گیرند.`, 'success', 5000);
   }
 };
