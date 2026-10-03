@@ -2617,6 +2617,7 @@ if (document.readyState === "loading") {
         expandedCategoryIds.add(groupId);
       }
       renderCategoryCards();
+      renderSidebarCategoryCheckboxes();
     }
 
     function renderCategoryCards() {
@@ -3703,30 +3704,51 @@ if (document.readyState === "loading") {
     function renderSidebarCategoryCheckboxes() {
       const container = document.getElementById('sidebar-category-checkboxes');
       if (!container) return;
-      const categories = [
-        "تالار و باغ تالار عروسی",
-        "آتلیه عکاسی و فیلمبرداری",
-        "سالن زیبایی و آرایشگاه عروس",
-        "کترینگ و تشریفات پذیرایی",
-        "کیک و شیرینی عروسی",
-        "گل‌آرایی و ماشین عروس",
-        "موسیقی و دی‌جی",
-        "دفتر ازدواج و سالن عقد",
-        "مزون لباس عروس",
-        "طلافروشی و جواهرفروشی"
-      ];
 
-      container.innerHTML = categories.map(cat => {
-        const isChecked = activeCategoryFilters.has(cat);
+      container.innerHTML = categoryGroups.map(group => {
+        const isGroupExpanded = expandedCategoryIds.has(group.id);
+        const activeSubInGroupCount = group.subcategories.filter(sub => activeCategoryFilters.has(sub.title)).length;
+
         return `
-          <label class="flex items-center justify-between p-2 rounded-xl border border-accent/60 hover:bg-slate-50 cursor-pointer transition-colors">
-            <div class="flex items-center gap-2">
-              <input type="checkbox" value="${cat}" ${isChecked ? 'checked' : ''} onchange="toggleCategoryFilter('${cat}')" class="rounded text-primary focus:ring-primary w-4 h-4">
-              <span class="text-xs font-bold text-graphite">${cat}</span>
+          <div class="border border-[#1B3B2B]/20 rounded-2xl overflow-hidden mb-2 bg-[#FCFCFA] shadow-2xs transition-all">
+            <!-- Accordion Group Header -->
+            <button type="button" onclick="toggleCategoryAccordion('${group.id}')" class="w-full p-2.5 flex items-center justify-between bg-[#F5EFEB]/80 hover:bg-[#F5EFEB] text-right transition-colors cursor-pointer">
+              <div class="flex items-center gap-2">
+                <div class="w-7 h-7 rounded-lg bg-[#1B3B2B] text-[#D4AF37] flex items-center justify-center shrink-0 shadow-xs">
+                  <i data-lucide="${group.icon || 'grid'}" class="w-3.5 h-3.5"></i>
+                </div>
+                <span class="text-xs font-extrabold text-[#1B3B2B]">${group.title}</span>
+              </div>
+              <div class="flex items-center gap-1.5">
+                ${activeSubInGroupCount > 0 ? `<span class="text-[10px] font-bold bg-[#D4AF37] text-[#1B3B2B] px-1.5 py-0.5 rounded-full">${activeSubInGroupCount}</span>` : ''}
+                <i data-lucide="chevron-down" class="w-4 h-4 text-[#1B3B2B] transition-transform duration-200 ${isGroupExpanded ? 'rotate-180' : ''}"></i>
+              </div>
+            </button>
+
+            <!-- Sub-Categories Expandable Container -->
+            <div class="${isGroupExpanded ? 'block' : 'hidden'} p-2 space-y-1.5 bg-[#FCFCFA] border-t border-[#1B3B2B]/10">
+              <div class="flex flex-wrap gap-1.5 pt-1">
+                ${group.subcategories.map(sub => {
+                  const isChecked = activeCategoryFilters.has(sub.title);
+                  return `
+                    <button
+                      type="button"
+                      onclick="toggleCategoryFilter('${sub.title}')"
+                      class="px-2.5 py-1 rounded-xl text-[11px] font-bold transition-all duration-200 flex items-center gap-1.5 cursor-pointer border ${isChecked ? 'bg-[#1B3B2B] text-[#FCFCFA] border-[#D4AF37] shadow-xs ring-2 ring-[#D4AF37]/30 scale-[1.02]' : 'bg-[#FCFCFA] text-[#1B3B2B] border-[#1B3B2B]/20 hover:border-[#D4AF37] hover:bg-[#F5EFEB]'}">
+                      <span class="w-1.5 h-1.5 rounded-full ${isChecked ? 'bg-[#D4AF37]' : 'bg-[#1B3B2B]/30'}"></span>
+                      <span>${sub.title}</span>
+                    </button>
+                  `;
+                }).join('')}
+              </div>
             </div>
-          </label>
+          </div>
         `;
       }).join('');
+
+      if (typeof lucide !== 'undefined') {
+        lucide.createIcons();
+      }
     }
 
     function toggleCategoryFilter(category) {
@@ -11436,3 +11458,283 @@ if (typeof filterChecklistTasksByStatus === 'function') window.filterChecklistTa
 if (typeof filterVendorsByCategoryTitle === 'function') window.filterVendorsByCategoryTitle = filterVendorsByCategoryTitle;
 if (typeof openIdeaDetailModal === 'function') window.openIdeaDetailModal = openIdeaDetailModal;
 if (typeof closeIdeaDetailModal === 'function') window.closeIdeaDetailModal = closeIdeaDetailModal;
+
+/* Automatically expose all global functions to window object for reliable SPA event delegation */
+if (typeof acceptPreInvoiceAndPayDeposit === "function") window.acceptPreInvoiceAndPayDeposit = acceptPreInvoiceAndPayDeposit;
+if (typeof addPreInvoiceLineItem === "function") window.addPreInvoiceLineItem = addPreInvoiceLineItem;
+if (typeof applyStyleToDirectory === "function") window.applyStyleToDirectory = applyStyleToDirectory;
+if (typeof applyYazdBudgetPreset === "function") window.applyYazdBudgetPreset = applyYazdBudgetPreset;
+if (typeof approveVendorAppStatic === "function") window.approveVendorAppStatic = approveVendorAppStatic;
+if (typeof calculateAndRenderBwResults === "function") window.calculateAndRenderBwResults = calculateAndRenderBwResults;
+if (typeof calculateHomeBudgetPreview === "function") window.calculateHomeBudgetPreview = calculateHomeBudgetPreview;
+if (typeof closeAppointmentModal === "function") window.closeAppointmentModal = closeAppointmentModal;
+if (typeof closeAuthModal === "function") window.closeAuthModal = closeAuthModal;
+if (typeof closeBudgetItemModal === "function") window.closeBudgetItemModal = closeBudgetItemModal;
+if (typeof closeGiftModal === "function") window.closeGiftModal = closeGiftModal;
+if (typeof closeGuestModal === "function") window.closeGuestModal = closeGuestModal;
+if (typeof closeIdeaDetailModal === "function") window.closeIdeaDetailModal = closeIdeaDetailModal;
+if (typeof closeInquiryModal === "function") window.closeInquiryModal = closeInquiryModal;
+if (typeof closeInquiryReplyModal === "function") window.closeInquiryReplyModal = closeInquiryReplyModal;
+if (typeof closeLightbox === "function") window.closeLightbox = closeLightbox;
+if (typeof closeLocationModal === "function") window.closeLocationModal = closeLocationModal;
+if (typeof closeParentCatModal === "function") window.closeParentCatModal = closeParentCatModal;
+if (typeof closePortfolioModal === "function") window.closePortfolioModal = closePortfolioModal;
+if (typeof closePreInvoiceModal === "function") window.closePreInvoiceModal = closePreInvoiceModal;
+if (typeof closeQrModal === "function") window.closeQrModal = closeQrModal;
+if (typeof closeRevisionModal === "function") window.closeRevisionModal = closeRevisionModal;
+if (typeof closeRsvpModal === "function") window.closeRsvpModal = closeRsvpModal;
+if (typeof closeSubCatModal === "function") window.closeSubCatModal = closeSubCatModal;
+if (typeof closeSubCategoryDrawer === "function") window.closeSubCategoryDrawer = closeSubCategoryDrawer;
+if (typeof closeSubgroupModal === "function") window.closeSubgroupModal = closeSubgroupModal;
+if (typeof closeVendorDetailModal === "function") window.closeVendorDetailModal = closeVendorDetailModal;
+if (typeof closeVendorModal === "function") window.closeVendorModal = closeVendorModal;
+if (typeof closeVendorSelectModal === "function") window.closeVendorSelectModal = closeVendorSelectModal;
+if (typeof confirmAppointmentScheduleCard === "function") window.confirmAppointmentScheduleCard = confirmAppointmentScheduleCard;
+if (typeof copyBankCardNumber === "function") window.copyBankCardNumber = copyBankCardNumber;
+if (typeof copyInvitationLink === "function") window.copyInvitationLink = copyInvitationLink;
+if (typeof copyQuizResultLink === "function") window.copyQuizResultLink = copyQuizResultLink;
+if (typeof deleteBudgetItem === "function") window.deleteBudgetItem = deleteBudgetItem;
+if (typeof deleteCustomBwService === "function") window.deleteCustomBwService = deleteCustomBwService;
+if (typeof deleteGift === "function") window.deleteGift = deleteGift;
+if (typeof deleteGuest === "function") window.deleteGuest = deleteGuest;
+if (typeof deletePackage === "function") window.deletePackage = deletePackage;
+if (typeof deleteParentCategory === "function") window.deleteParentCategory = deleteParentCategory;
+if (typeof deletePortfolioItem === "function") window.deletePortfolioItem = deletePortfolioItem;
+if (typeof deleteSubCategory === "function") window.deleteSubCategory = deleteSubCategory;
+if (typeof detachVendorFromTask === "function") window.detachVendorFromTask = detachVendorFromTask;
+if (typeof dismissToast === "function") window.dismissToast = dismissToast;
+if (typeof editGuest === "function") window.editGuest = editGuest;
+if (typeof editVendorPackage === "function") window.editVendorPackage = editVendorPackage;
+if (typeof exitQuizRunner === "function") window.exitQuizRunner = exitQuizRunner;
+if (typeof exportGuestsExcel === "function") window.exportGuestsExcel = exportGuestsExcel;
+if (typeof exportInquiriesCsv === "function") window.exportInquiriesCsv = exportInquiriesCsv;
+if (typeof exportMoodboardPdf === "function") window.exportMoodboardPdf = exportMoodboardPdf;
+if (typeof filterByYazdDistrict === "function") window.filterByYazdDistrict = filterByYazdDistrict;
+if (typeof filterChatThreads === "function") window.filterChatThreads = filterChatThreads;
+if (typeof filterChecklistTasksByStatus === "function") window.filterChecklistTasksByStatus = filterChecklistTasksByStatus;
+if (typeof filterDirectoryByVendorCategory === "function") window.filterDirectoryByVendorCategory = filterDirectoryByVendorCategory;
+if (typeof filterInspirationByCategory === "function") window.filterInspirationByCategory = filterInspirationByCategory;
+if (typeof filterInspirationItems === "function") window.filterInspirationItems = filterInspirationItems;
+if (typeof filterModalGallery === "function") window.filterModalGallery = filterModalGallery;
+if (typeof filterVendors === "function") window.filterVendors = filterVendors;
+if (typeof filterVendorsByCategoryTitle === "function") window.filterVendorsByCategoryTitle = filterVendorsByCategoryTitle;
+if (typeof filterVendorsFromMega === "function") window.filterVendorsFromMega = filterVendorsFromMega;
+if (typeof filterVipShowcase === "function") window.filterVipShowcase = filterVipShowcase;
+if (typeof finishQuizRunner === "function") window.finishQuizRunner = finishQuizRunner;
+if (typeof getPrivateNote === "function") window.getPrivateNote = getPrivateNote;
+if (typeof getQuizHistory === "function") window.getQuizHistory = getQuizHistory;
+if (typeof getSelectedFontFamily === "function") window.getSelectedFontFamily = getSelectedFontFamily;
+if (typeof getVendorCustomQuestions === "function") window.getVendorCustomQuestions = getVendorCustomQuestions;
+if (typeof handleAddCustomBwService === "function") window.handleAddCustomBwService = handleAddCustomBwService;
+if (typeof handleAddNewTaskSubmit === "function") window.handleAddNewTaskSubmit = handleAddNewTaskSubmit;
+if (typeof handleAvatarDelete === "function") window.handleAvatarDelete = handleAvatarDelete;
+if (typeof handleAvatarUpload === "function") window.handleAvatarUpload = handleAvatarUpload;
+if (typeof handleCoupleAuthSubmit === "function") window.handleCoupleAuthSubmit = handleCoupleAuthSubmit;
+if (typeof handleGiftFormSubmit === "function") window.handleGiftFormSubmit = handleGiftFormSubmit;
+if (typeof handleGuestFormSubmit === "function") window.handleGuestFormSubmit = handleGuestFormSubmit;
+if (typeof handleGuestInputChange === "function") window.handleGuestInputChange = handleGuestInputChange;
+if (typeof handleGuestRsvpSubmit === "function") window.handleGuestRsvpSubmit = handleGuestRsvpSubmit;
+if (typeof handleHeaderSearchFocus === "function") window.handleHeaderSearchFocus = handleHeaderSearchFocus;
+if (typeof handleHeaderSearchInput === "function") window.handleHeaderSearchInput = handleHeaderSearchInput;
+if (typeof handleHeroSearch === "function") window.handleHeroSearch = handleHeroSearch;
+if (typeof handleInquirySubmit === "function") window.handleInquirySubmit = handleInquirySubmit;
+if (typeof handleIssuePreInvoiceSubmit === "function") window.handleIssuePreInvoiceSubmit = handleIssuePreInvoiceSubmit;
+if (typeof handleModalReviewSubmit === "function") window.handleModalReviewSubmit = handleModalReviewSubmit;
+if (typeof handlePortfolioFileSelect === "function") window.handlePortfolioFileSelect = handlePortfolioFileSelect;
+if (typeof handlePortfolioSubmit === "function") window.handlePortfolioSubmit = handlePortfolioSubmit;
+if (typeof handleProfileReviewSubmit === "function") window.handleProfileReviewSubmit = handleProfileReviewSubmit;
+if (typeof handleProvinceChange === "function") window.handleProvinceChange = handleProvinceChange;
+if (typeof handleRsvpSubmit === "function") window.handleRsvpSubmit = handleRsvpSubmit;
+if (typeof handleSaveBudgetItem === "function") window.handleSaveBudgetItem = handleSaveBudgetItem;
+if (typeof handleSaveParentCategory === "function") window.handleSaveParentCategory = handleSaveParentCategory;
+if (typeof handleSaveSubCategory === "function") window.handleSaveSubCategory = handleSaveSubCategory;
+if (typeof handleSaveVendorAttachment === "function") window.handleSaveVendorAttachment = handleSaveVendorAttachment;
+if (typeof handleScheduleAppointmentSubmit === "function") window.handleScheduleAppointmentSubmit = handleScheduleAppointmentSubmit;
+if (typeof handleSelectCalendarDay === "function") window.handleSelectCalendarDay = handleSelectCalendarDay;
+if (typeof handleSendChatMessage === "function") window.handleSendChatMessage = handleSendChatMessage;
+if (typeof handleSubmitPreInvoiceRevision === "function") window.handleSubmitPreInvoiceRevision = handleSubmitPreInvoiceRevision;
+if (typeof handleUpdateHeroLogo === "function") window.handleUpdateHeroLogo = handleUpdateHeroLogo;
+if (typeof handleVendorAuthSubmit === "function") window.handleVendorAuthSubmit = handleVendorAuthSubmit;
+if (typeof handleVendorModalSubmit === "function") window.handleVendorModalSubmit = handleVendorModalSubmit;
+if (typeof handleVendorProfileUpdate === "function") window.handleVendorProfileUpdate = handleVendorProfileUpdate;
+if (typeof initVipShowcaseAutoScroll === "function") window.initVipShowcaseAutoScroll = initVipShowcaseAutoScroll;
+if (typeof loadBudgetStateFromStorage === "function") window.loadBudgetStateFromStorage = loadBudgetStateFromStorage;
+if (typeof loadCategoryGroupsFromStorage === "function") window.loadCategoryGroupsFromStorage = loadCategoryGroupsFromStorage;
+if (typeof loadChatStateFromStorage === "function") window.loadChatStateFromStorage = loadChatStateFromStorage;
+if (typeof loadFavoritesFromStorage === "function") window.loadFavoritesFromStorage = loadFavoritesFromStorage;
+if (typeof loadSavedMoodboardIds === "function") window.loadSavedMoodboardIds = loadSavedMoodboardIds;
+if (typeof loadVendorProfile === "function") window.loadVendorProfile = loadVendorProfile;
+if (typeof loadViewTemplates === "function") window.loadViewTemplates = loadViewTemplates;
+if (typeof makeVendorCall === "function") window.makeVendorCall = makeVendorCall;
+if (typeof navigateBwStep === "function") window.navigateBwStep = navigateBwStep;
+if (typeof navigateQuizQuestion === "function") window.navigateQuizQuestion = navigateQuizQuestion;
+if (typeof openAppointmentModal === "function") window.openAppointmentModal = openAppointmentModal;
+if (typeof openAuthModal === "function") window.openAuthModal = openAuthModal;
+if (typeof openBudgetItemModal === "function") window.openBudgetItemModal = openBudgetItemModal;
+if (typeof openCategorySubgroups === "function") window.openCategorySubgroups = openCategorySubgroups;
+if (typeof openCategorySubgroupsModal === "function") window.openCategorySubgroupsModal = openCategorySubgroupsModal;
+if (typeof openEnvelopeAnimation === "function") window.openEnvelopeAnimation = openEnvelopeAnimation;
+if (typeof openGiftModal === "function") window.openGiftModal = openGiftModal;
+if (typeof openGuestModal === "function") window.openGuestModal = openGuestModal;
+if (typeof openIdeaDetailModal === "function") window.openIdeaDetailModal = openIdeaDetailModal;
+if (typeof openInquiryModal === "function") window.openInquiryModal = openInquiryModal;
+if (typeof openInquiryReplyModal === "function") window.openInquiryReplyModal = openInquiryReplyModal;
+if (typeof openLightbox === "function") window.openLightbox = openLightbox;
+if (typeof openLocationModal === "function") window.openLocationModal = openLocationModal;
+if (typeof openParentCategoryModal === "function") window.openParentCategoryModal = openParentCategoryModal;
+if (typeof openPortfolioModal === "function") window.openPortfolioModal = openPortfolioModal;
+if (typeof openPreInvoiceModal === "function") window.openPreInvoiceModal = openPreInvoiceModal;
+if (typeof openQrModal === "function") window.openQrModal = openQrModal;
+if (typeof openRevisionModal === "function") window.openRevisionModal = openRevisionModal;
+if (typeof openRsvpModal === "function") window.openRsvpModal = openRsvpModal;
+if (typeof openSubCategoryDrawer === "function") window.openSubCategoryDrawer = openSubCategoryDrawer;
+if (typeof openSubCategoryModal === "function") window.openSubCategoryModal = openSubCategoryModal;
+if (typeof openSubgroupsModal === "function") window.openSubgroupsModal = openSubgroupsModal;
+if (typeof openVendorDetailModal === "function") window.openVendorDetailModal = openVendorDetailModal;
+if (typeof openVendorSelectModal === "function") window.openVendorSelectModal = openVendorSelectModal;
+if (typeof previewPortfolioModalImage === "function") window.previewPortfolioModalImage = previewPortfolioModalImage;
+if (typeof rejectVendorAppStatic === "function") window.rejectVendorAppStatic = rejectVendorAppStatic;
+if (typeof renderAdminCategories === "function") window.renderAdminCategories = renderAdminCategories;
+if (typeof renderAdminPendingApps === "function") window.renderAdminPendingApps = renderAdminPendingApps;
+if (typeof renderAdminTable === "function") window.renderAdminTable = renderAdminTable;
+if (typeof renderBwServicesChecklist === "function") window.renderBwServicesChecklist = renderBwServicesChecklist;
+if (typeof renderCalendar === "function") window.renderCalendar = renderCalendar;
+if (typeof renderCategoryCards === "function") window.renderCategoryCards = renderCategoryCards;
+if (typeof renderChatActiveThread === "function") window.renderChatActiveThread = renderChatActiveThread;
+if (typeof renderChatThreadsList === "function") window.renderChatThreadsList = renderChatThreadsList;
+if (typeof renderChecklistTimeframeButtons === "function") window.renderChecklistTimeframeButtons = renderChecklistTimeframeButtons;
+if (typeof renderChecklistTimeline === "function") window.renderChecklistTimeline = renderChecklistTimeline;
+if (typeof renderFavoriteVendorsList === "function") window.renderFavoriteVendorsList = renderFavoriteVendorsList;
+if (typeof renderGallery === "function") window.renderGallery = renderGallery;
+if (typeof renderGiftsTable === "function") window.renderGiftsTable = renderGiftsTable;
+if (typeof renderGuestsAndGifts === "function") window.renderGuestsAndGifts = renderGuestsAndGifts;
+if (typeof renderGuestsKPIs === "function") window.renderGuestsKPIs = renderGuestsKPIs;
+if (typeof renderGuestsTable === "function") window.renderGuestsTable = renderGuestsTable;
+if (typeof renderInquiries === "function") window.renderInquiries = renderInquiries;
+if (typeof renderInspirationCategoryPills === "function") window.renderInspirationCategoryPills = renderInspirationCategoryPills;
+if (typeof renderInspirationGalleryGrid === "function") window.renderInspirationGalleryGrid = renderInspirationGalleryGrid;
+if (typeof renderInvAdminRsvpTable === "function") window.renderInvAdminRsvpTable = renderInvAdminRsvpTable;
+if (typeof renderInvitationPreview === "function") window.renderInvitationPreview = renderInvitationPreview;
+if (typeof renderMagazineFeaturedBanner === "function") window.renderMagazineFeaturedBanner = renderMagazineFeaturedBanner;
+if (typeof renderModalAvailabilityCalendar === "function") window.renderModalAvailabilityCalendar = renderModalAvailabilityCalendar;
+if (typeof renderMoodboardGrid === "function") window.renderMoodboardGrid = renderMoodboardGrid;
+if (typeof renderMultiCategoryPills === "function") window.renderMultiCategoryPills = renderMultiCategoryPills;
+if (typeof renderPlannerAttachedVendors === "function") window.renderPlannerAttachedVendors = renderPlannerAttachedVendors;
+if (typeof renderPlannerBudgetSummary === "function") window.renderPlannerBudgetSummary = renderPlannerBudgetSummary;
+if (typeof renderPlannerOffersTab === "function") window.renderPlannerOffersTab = renderPlannerOffersTab;
+if (typeof renderPortfolioUI === "function") window.renderPortfolioUI = renderPortfolioUI;
+if (typeof renderProfileCalendar === "function") window.renderProfileCalendar = renderProfileCalendar;
+if (typeof renderQuizCatalogCards === "function") window.renderQuizCatalogCards = renderQuizCatalogCards;
+if (typeof renderQuizQuestion === "function") window.renderQuizQuestion = renderQuizQuestion;
+if (typeof renderQuizResultDashboard === "function") window.renderQuizResultDashboard = renderQuizResultDashboard;
+if (typeof renderSidebarCategoryCheckboxes === "function") window.renderSidebarCategoryCheckboxes = renderSidebarCategoryCheckboxes;
+if (typeof renderVendorPackages === "function") window.renderVendorPackages = renderVendorPackages;
+if (typeof renderVendors === "function") window.renderVendors = renderVendors;
+if (typeof requestCityNotify === "function") window.requestCityNotify = requestCityNotify;
+if (typeof resetAllCategoryFilters === "function") window.resetAllCategoryFilters = resetAllCategoryFilters;
+if (typeof resetBwWizard === "function") window.resetBwWizard = resetBwWizard;
+if (typeof resetEnvelopeAnimation === "function") window.resetEnvelopeAnimation = resetEnvelopeAnimation;
+if (typeof runAiAllocation === "function") window.runAiAllocation = runAiAllocation;
+if (typeof saveBudgetStateToStorage === "function") window.saveBudgetStateToStorage = saveBudgetStateToStorage;
+if (typeof saveCategoryGroupsToStorage === "function") window.saveCategoryGroupsToStorage = saveCategoryGroupsToStorage;
+if (typeof saveChatStateToStorage === "function") window.saveChatStateToStorage = saveChatStateToStorage;
+if (typeof saveFavoritesToStorage === "function") window.saveFavoritesToStorage = saveFavoritesToStorage;
+if (typeof saveMoodboardIds === "function") window.saveMoodboardIds = saveMoodboardIds;
+if (typeof savePrivateNote === "function") window.savePrivateNote = savePrivateNote;
+if (typeof saveQuizHistoryEntry === "function") window.saveQuizHistoryEntry = saveQuizHistoryEntry;
+if (typeof saveVendorCustomQuestions === "function") window.saveVendorCustomQuestions = saveVendorCustomQuestions;
+if (typeof saveVendorPackageModal === "function") window.saveVendorPackageModal = saveVendorPackageModal;
+if (typeof selectBwStyle === "function") window.selectBwStyle = selectBwStyle;
+if (typeof selectChatThread === "function") window.selectChatThread = selectChatThread;
+if (typeof selectLocationCity === "function") window.selectLocationCity = selectLocationCity;
+if (typeof selectLocationProvince === "function") window.selectLocationProvince = selectLocationProvince;
+if (typeof selectQuizOption === "function") window.selectQuizOption = selectQuizOption;
+if (typeof selectSearchSuggestion === "function") window.selectSearchSuggestion = selectSearchSuggestion;
+if (typeof sendInquiryReply === "function") window.sendInquiryReply = sendInquiryReply;
+if (typeof sendSmsBroadcast === "function") window.sendSmsBroadcast = sendSmsBroadcast;
+if (typeof setBwGuestCount === "function") window.setBwGuestCount = setBwGuestCount;
+if (typeof setDirectoryViewMode === "function") window.setDirectoryViewMode = setDirectoryViewMode;
+if (typeof setHomeBudgetTier === "function") window.setHomeBudgetTier = setHomeBudgetTier;
+if (typeof setInquiryBudgetPill === "function") window.setInquiryBudgetPill = setInquiryBudgetPill;
+if (typeof setInvAudioChoice === "function") window.setInvAudioChoice = setInvAudioChoice;
+if (typeof setInvDisplayLang === "function") window.setInvDisplayLang = setInvDisplayLang;
+if (typeof setInvTheme === "function") window.setInvTheme = setInvTheme;
+if (typeof setPortfolioAsCover === "function") window.setPortfolioAsCover = setPortfolioAsCover;
+if (typeof shareMoodboardLink === "function") window.shareMoodboardLink = shareMoodboardLink;
+if (typeof shareVendorProfile === "function") window.shareVendorProfile = shareVendorProfile;
+if (typeof showGlobalToast === "function") window.showGlobalToast = showGlobalToast;
+if (typeof showToast === "function") window.showToast = showToast;
+if (typeof showToastNotification === "function") window.showToastNotification = showToastNotification;
+if (typeof startAutoScroll === "function") window.startAutoScroll = startAutoScroll;
+if (typeof startQuizRunner === "function") window.startQuizRunner = startQuizRunner;
+if (typeof stopAutoScroll === "function") window.stopAutoScroll = stopAutoScroll;
+if (typeof submitNewReview === "function") window.submitNewReview = submitNewReview;
+if (typeof switchAuthTab === "function") window.switchAuthTab = switchAuthTab;
+if (typeof switchGuestSubTab === "function") window.switchGuestSubTab = switchGuestSubTab;
+if (typeof switchInspirationSubTab === "function") window.switchInspirationSubTab = switchInspirationSubTab;
+if (typeof switchInvMobileTab === "function") window.switchInvMobileTab = switchInvMobileTab;
+if (typeof switchModalTab === "function") window.switchModalTab = switchModalTab;
+if (typeof switchPlannerSubTab === "function") window.switchPlannerSubTab = switchPlannerSubTab;
+if (typeof switchQuizCategoryTab === "function") window.switchQuizCategoryTab = switchQuizCategoryTab;
+if (typeof switchRole === "function") window.switchRole = switchRole;
+if (typeof switchTab === "function") window.switchTab = switchTab;
+if (typeof switchVdmSubTab === "function") window.switchVdmSubTab = switchVdmSubTab;
+if (typeof syncAndFilterCity === "function") window.syncAndFilterCity = syncAndFilterCity;
+if (typeof syncAndFilterPrice === "function") window.syncAndFilterPrice = syncAndFilterPrice;
+if (typeof syncCategoryStateAndRender === "function") window.syncCategoryStateAndRender = syncCategoryStateAndRender;
+if (typeof toggleAccountMenu === "function") window.toggleAccountMenu = toggleAccountMenu;
+if (typeof toggleAddPackageModal === "function") window.toggleAddPackageModal = toggleAddPackageModal;
+if (typeof toggleAddReviewForm === "function") window.toggleAddReviewForm = toggleAddReviewForm;
+if (typeof toggleBookmarkMoodboard === "function") window.toggleBookmarkMoodboard = toggleBookmarkMoodboard;
+if (typeof toggleBwService === "function") window.toggleBwService = toggleBwService;
+if (typeof toggleCategoriesExpand === "function") window.toggleCategoriesExpand = toggleCategoriesExpand;
+if (typeof toggleCategoryAccordion === "function") window.toggleCategoryAccordion = toggleCategoryAccordion;
+if (typeof toggleCategoryFilter === "function") window.toggleCategoryFilter = toggleCategoryFilter;
+if (typeof toggleChecklistTask === "function") window.toggleChecklistTask = toggleChecklistTask;
+if (typeof toggleDate === "function") window.toggleDate = toggleDate;
+if (typeof toggleFavoriteCurrentVendor === "function") window.toggleFavoriteCurrentVendor = toggleFavoriteCurrentVendor;
+if (typeof toggleFavoriteVendor === "function") window.toggleFavoriteVendor = toggleFavoriteVendor;
+if (typeof toggleFavoriteVendorModal === "function") window.toggleFavoriteVendorModal = toggleFavoriteVendorModal;
+if (typeof toggleGuestRsvp === "function") window.toggleGuestRsvp = toggleGuestRsvp;
+if (typeof toggleHiddenCostsBuffer === "function") window.toggleHiddenCostsBuffer = toggleHiddenCostsBuffer;
+if (typeof toggleInvFeature === "function") window.toggleInvFeature = toggleInvFeature;
+if (typeof toggleInvMusic === "function") window.toggleInvMusic = toggleInvMusic;
+if (typeof toggleModalFaq === "function") window.toggleModalFaq = toggleModalFaq;
+if (typeof toggleNewTaskModal === "function") window.toggleNewTaskModal = toggleNewTaskModal;
+if (typeof toggleProfileReviewForm === "function") window.toggleProfileReviewForm = toggleProfileReviewForm;
+if (typeof toggleVendorModalStatic === "function") window.toggleVendorModalStatic = toggleVendorModalStatic;
+if (typeof toggleVendorVerification === "function") window.toggleVendorVerification = toggleVendorVerification;
+if (typeof triggerPackageInquiry === "function") window.triggerPackageInquiry = triggerPackageInquiry;
+if (typeof triggerProfileChat === "function") window.triggerProfileChat = triggerProfileChat;
+if (typeof triggerProfileInquiry === "function") window.triggerProfileInquiry = triggerProfileInquiry;
+if (typeof updateBudgetFormattedDisplay === "function") window.updateBudgetFormattedDisplay = updateBudgetFormattedDisplay;
+if (typeof updateBwStepUI === "function") window.updateBwStepUI = updateBwStepUI;
+if (typeof updateCapacitySliderLabel === "function") window.updateCapacitySliderLabel = updateCapacitySliderLabel;
+if (typeof updateGuestBtnStyles === "function") window.updateGuestBtnStyles = updateGuestBtnStyles;
+if (typeof updateInquiryStatus === "function") window.updateInquiryStatus = updateInquiryStatus;
+if (typeof updateInvStateFromForm === "function") window.updateInvStateFromForm = updateInvStateFromForm;
+if (typeof updateMoodboardBadge === "function") window.updateMoodboardBadge = updateMoodboardBadge;
+if (typeof updateTotalBudgetCap === "function") window.updateTotalBudgetCap = updateTotalBudgetCap;
+if (typeof updateVendorAvatarUI === "function") window.updateVendorAvatarUI = updateVendorAvatarUI;
+
+/* Function aliases and missing modal handlers */
+if (typeof handlePortfolioSubmit === "function") {
+  window.savePortfolioModal = handlePortfolioSubmit;
+}
+
+window.toggleVendorVerificationRequestModal = function(show) {
+  const modal = document.getElementById('modal-vendor-verification-request') || document.getElementById('vendor-verification-modal');
+  if (modal) {
+    if (show) {
+      modal.classList.remove('hidden');
+      modal.classList.add('flex');
+    } else {
+      modal.classList.add('hidden');
+      modal.classList.remove('flex');
+    }
+  } else {
+    if (typeof showToast === 'function') {
+      showToast('درخواست تایید اعتبار شما با موفقیت به پشتیبانی ارسال شد.', 'success');
+    }
+  }
+};
