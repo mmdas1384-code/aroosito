@@ -3807,12 +3807,16 @@ if (document.readyState === "loading") {
     function syncAndFilterCity(val) {
       const headerCity = document.getElementById('header-city-select');
       if (headerCity) headerCity.value = val;
+      const sidebarCity = document.getElementById('sidebar-city-select');
+      if (sidebarCity) sidebarCity.value = val;
       filterVendors();
     }
 
     function syncAndFilterPrice(val) {
       const headerPrice = document.getElementById('header-price-select');
       if (headerPrice) headerPrice.value = val;
+      const sidebarPrice = document.getElementById('sidebar-price-select');
+      if (sidebarPrice) sidebarPrice.value = val;
       filterVendors();
     }
 
@@ -3879,7 +3883,12 @@ if (document.readyState === "loading") {
 
         let matchesPrice = true;
         if (selectedPriceRange !== 'all') {
-          const rawPrice = parseInt((v.priceRange || '').replace(/[^\d]/g, ''), 10) || 0;
+          const parsePriceNumeric = (str) => {
+            if (!str) return 0;
+            const enStr = str.toString().replace(/[۰-۹]/g, d => '۰۱۲۳۴۵۶۷۸۹'.indexOf(d));
+            return parseInt(enStr.replace(/[^\d]/g, ''), 10) || 0;
+          };
+          const rawPrice = parsePriceNumeric(v.priceRange);
           if (selectedPriceRange === 'economic') {
             matchesPrice = rawPrice <= 35000000;
           } else if (selectedPriceRange === 'mid') {
@@ -3911,8 +3920,13 @@ if (document.readyState === "loading") {
       const sortMode = sortSelect ? sortSelect.value : 'popular';
 
       filtered.sort((a, b) => {
-        const priceA = parseInt((a.priceRange || '').replace(/[^\d]/g, ''), 10) || 0;
-        const priceB = parseInt((b.priceRange || '').replace(/[^\d]/g, ''), 10) || 0;
+        const parsePriceNumeric = (str) => {
+          if (!str) return 0;
+          const enStr = str.toString().replace(/[۰-۹]/g, d => '۰۱۲۳۴۵۶۷۸۹'.indexOf(d));
+          return parseInt(enStr.replace(/[^\d]/g, ''), 10) || 0;
+        };
+        const priceA = parsePriceNumeric(a.priceRange);
+        const priceB = parsePriceNumeric(b.priceRange);
 
         if (sortMode === 'popular') {
           if ((b.rating || 0) !== (a.rating || 0)) {
@@ -11351,6 +11365,57 @@ window.closeCounselorModal = function() {
   }
 };
 
+window.openAboutModal = function() {
+  const modal = document.getElementById('modal-about');
+  if (modal) {
+    modal.classList.remove('hidden');
+    modal.classList.add('flex');
+    if (window.lucide) lucide.createIcons();
+  }
+};
+
+window.closeAboutModal = function() {
+  const modal = document.getElementById('modal-about');
+  if (modal) {
+    modal.classList.add('hidden');
+    modal.classList.remove('flex');
+  }
+};
+
+window.openFaqModal = function() {
+  const modal = document.getElementById('modal-faq');
+  if (modal) {
+    modal.classList.remove('hidden');
+    modal.classList.add('flex');
+    if (window.lucide) lucide.createIcons();
+  }
+};
+
+window.closeFaqModal = function() {
+  const modal = document.getElementById('modal-faq');
+  if (modal) {
+    modal.classList.add('hidden');
+    modal.classList.remove('flex');
+  }
+};
+
+window.openTermsModal = function() {
+  const modal = document.getElementById('modal-terms');
+  if (modal) {
+    modal.classList.remove('hidden');
+    modal.classList.add('flex');
+    if (window.lucide) lucide.createIcons();
+  }
+};
+
+window.closeTermsModal = function() {
+  const modal = document.getElementById('modal-terms');
+  if (modal) {
+    modal.classList.add('hidden');
+    modal.classList.remove('flex');
+  }
+};
+
 window.handleCounselorSubmit = function(event) {
   if (event) event.preventDefault();
   const name = document.getElementById('counselor-name')?.value || 'کاربر گرامی';
@@ -11736,5 +11801,18 @@ window.toggleVendorVerificationRequestModal = function(show) {
     if (typeof showToast === 'function') {
       showToast('درخواست تایید اعتبار شما با موفقیت به پشتیبانی ارسال شد.', 'success');
     }
+  }
+};
+
+window.shareInvitationSocial = function(platform) {
+  const url = encodeURIComponent('https://aroosito.com/invitation/ali-and-sara');
+  const text = encodeURIComponent('دعوتنامه دیجیتال مراسم عروسی علی و سارا 🌸🍃\nبرای مشاهده جزییات و اعلام حضور روی لینک کلیک کنید:');
+
+  if (platform === 'whatsapp') {
+    window.open(`https://api.whatsapp.com/send?text=${text}%20${url}`, '_blank');
+  } else if (platform === 'eitaa') {
+    window.open(`https://eitaa.com/share?url=${url}&text=${text}`, '_blank');
+  } else {
+    copyInvitationLink();
   }
 };
