@@ -5499,8 +5499,9 @@ if (document.readyState === "loading") {
       if (!currentModalVendor) return;
       const vName = currentModalVendor.name;
       const vId = currentModalVendor.id;
+      const vImg = currentModalVendor.image || '';
       closeVendorDetailModal();
-      openInquiryModal(vId, vName, packageName, packagePrice);
+      openInquiryModal(vId, vName, packageName, packagePrice, 'پکیج', '', vImg);
     }
 
     function toggleFavoriteVendorModal() {
@@ -5703,7 +5704,7 @@ if (document.readyState === "loading") {
     }
 
 
-    function openInquiryModal(vendorId, vendorName, packageTitle, packagePrice) {
+    function openInquiryModal(vendorId, vendorName, itemTitle, itemPrice, itemType, itemId, itemThumb) {
       let vId = vendorId;
       if (typeof vendorId === 'string' && !isNaN(parseInt(vendorId))) {
         vId = parseInt(vendorId);
@@ -5711,8 +5712,47 @@ if (document.readyState === "loading") {
       const vendor = vendors.find(v => v.id === vId) || vendors[0];
       const targetName = vendorName || (vendor ? vendor.name : "تامین‌کننده");
 
+      const typeVal = itemType || (itemTitle ? 'پکیج' : 'عمومی');
+      const idVal = itemId || '';
+      const titleVal = itemTitle || '';
+
+      const typeInput = document.getElementById('inquiry-item-type');
+      const idInput = document.getElementById('inquiry-item-id');
+      const titleInput = document.getElementById('inquiry-item-title');
+      if (typeInput) typeInput.value = typeVal;
+      if (idInput) idInput.value = idVal;
+      if (titleInput) titleInput.value = titleVal;
+
       document.getElementById('inquiry-vendor-id').value = vendor ? vendor.id : 1;
       document.getElementById('modal-vendor-name').innerText = targetName;
+
+      // Update Context Banner Card
+      const contextBanner = document.getElementById('inquiry-context-banner');
+      const contextTypeText = document.getElementById('inquiry-context-type-text');
+      const contextTitle = document.getElementById('inquiry-context-title');
+      const contextPrice = document.getElementById('inquiry-context-price');
+      const contextSub = document.getElementById('inquiry-context-sub');
+      const contextThumb = document.getElementById('inquiry-context-thumb');
+
+      if (contextBanner) {
+        if (titleVal) {
+          contextBanner.classList.remove('hidden');
+          if (contextTypeText) contextTypeText.innerText = `درخواست استعلام برای: ${typeVal}`;
+          if (contextTitle) contextTitle.innerText = titleVal;
+          if (contextPrice) contextPrice.innerText = itemPrice || '';
+          if (contextSub) contextSub.innerText = vendor ? `${vendor.name} • ${vendor.category}` : targetName;
+
+          const thumbSrc = itemThumb || (vendor ? vendor.image : '');
+          if (contextThumb && thumbSrc) {
+            contextThumb.src = thumbSrc;
+            contextThumb.classList.remove('hidden');
+          } else if (contextThumb) {
+            contextThumb.classList.add('hidden');
+          }
+        } else {
+          contextBanner.classList.add('hidden');
+        }
+      }
 
       // Category-Specific Dynamic Fields Toggling
       const cat = vendor ? (vendor.category || '') : '';
@@ -5743,9 +5783,9 @@ if (document.readyState === "loading") {
       const noteInput = document.getElementById('inquiry-note');
       const customBudgetInp = document.getElementById('inquiry-budget-custom');
 
-      if (packageTitle) {
-        if (noteInput) noteInput.value = `استعلام پکیج انتخابی: ${packageTitle} (${packagePrice || ''})`;
-        if (customBudgetInp) customBudgetInp.value = packagePrice || '';
+      if (itemTitle) {
+        if (noteInput) noteInput.value = `سلام، درخواست استعلام قیمت و مشاوره درباره ${typeVal} «${itemTitle}» را دارم.`;
+        if (customBudgetInp) customBudgetInp.value = itemPrice || '';
       } else {
         if (noteInput) noteInput.value = 'سلام، درخواست استعلام قیمت و دریافت پیش‌فاکتور را دارم.';
         if (customBudgetInp) customBudgetInp.value = '';
@@ -5891,6 +5931,9 @@ if (document.readyState === "loading") {
       });
 
       const guestsNum = document.getElementById('inquiry-guests')?.value || 200;
+      const itemType = document.getElementById('inquiry-item-type')?.value || 'عمومی';
+      const itemId = document.getElementById('inquiry-item-id')?.value || '';
+      const itemTitle = document.getElementById('inquiry-item-title')?.value || '';
 
       const inquiryPayload = {
         vendorId: vendor.id,
@@ -5900,6 +5943,9 @@ if (document.readyState === "loading") {
         userPhone: phone,
         eventDate: date,
         budget: finalBudgetStr,
+        itemType: itemType,
+        itemId: itemId,
+        itemTitle: itemTitle,
         categoryDetails: categoryDetails,
         customAnswers: customAnswers,
         services: checkedServices,
@@ -5919,7 +5965,7 @@ if (document.readyState === "loading") {
       }
 
       try {
-        if (typeof fetch === 'function') {
+        if (typeof fetch === 'function' && window.location.protocol.startsWith('http')) {
           fetch('/api/inquiries/submit', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
@@ -10482,7 +10528,7 @@ if (document.readyState === "loading") {
         inquiryBtn.onclick = function() {
           closeIdeaDetailModal();
           if (typeof openInquiryModal === 'function') {
-            openInquiryModal(v.id, v.name);
+            openInquiryModal(v.id, v.name, idea.title, '', 'ایده/ژورنال', idea.id, idea.image);
           } else {
             showToast(`استعلام قیمت برای ${v.name} ثبت شد`, 'success');
           }
