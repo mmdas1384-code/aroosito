@@ -5227,6 +5227,72 @@
   </div>
 
   <!-- ========================================== -->
+  <!-- MODAL: IDEA DETAIL & DIRECT INQUIRY       -->
+  <!-- ========================================== -->
+  <div id="idea-detail-modal" class="hidden fixed inset-0 bg-black/60 backdrop-blur-xs z-[999999] flex items-center justify-center p-4 transition-all animate-fadeIn" onclick="if(event.target === this) closeIdeaDetailModal()">
+    <div class="bg-[#FCFCFA] border border-[#D4AF37]/50 rounded-3xl max-w-2xl w-full overflow-hidden shadow-2xl flex flex-col max-h-[90vh]">
+      <!-- HEADER -->
+      <div class="bg-[#1B3B2B] text-white p-5 flex items-center justify-between border-b border-[#D4AF37]/30 shrink-0">
+        <div class="flex items-center gap-3">
+          <div class="w-10 h-10 rounded-xl bg-[#D4AF37] text-[#1B3B2B] flex items-center justify-center font-bold shadow-xs">
+            <i data-lucide="sparkles" class="w-5 h-5"></i>
+          </div>
+          <div>
+            <h3 id="modal-idea-category" class="text-xs font-bold text-[#D4AF37]">ژورنال ایده‌ها و سبک‌های عروسی</h3>
+            <span id="modal-idea-views" class="text-[11px] text-emerald-100/80 font-medium">بازدید: ۱.۲ هزار</span>
+          </div>
+        </div>
+
+        <button onclick="closeIdeaDetailModal()" class="w-9 h-9 rounded-xl bg-white/10 hover:bg-white/20 text-white flex items-center justify-center transition-colors cursor-pointer" title="بستن">
+          <i data-lucide="x" class="w-5 h-5"></i>
+        </button>
+      </div>
+
+      <!-- BODY CONTENT -->
+      <div class="p-6 space-y-5 overflow-y-auto text-xs text-graphite font-medium">
+        <div class="relative h-64 sm:h-80 rounded-2xl overflow-hidden bg-slate-900 border border-[#E0D8C8] shadow-xs">
+          <img id="modal-idea-img" src="" alt="ایده عروسی" class="w-full h-full object-cover">
+        </div>
+
+        <h3 id="modal-idea-title" class="text-base sm:text-lg font-black text-graphite leading-relaxed"></h3>
+
+        <!-- VENDOR CARD BANNER -->
+        <div class="p-4 bg-[#F5EFEB] border border-[#E0D8C8] rounded-2xl flex flex-col sm:flex-row justify-between sm:items-center gap-3">
+          <div class="flex items-center gap-3">
+            <img id="modal-idea-vendor-avatar" src="" alt="تامین‌کننده" class="w-12 h-12 rounded-xl object-cover border border-[#D4AF37]">
+            <div>
+              <span id="modal-idea-vendor-name" class="font-bold text-graphite text-xs block"></span>
+              <div class="flex items-center gap-2 text-[10px] text-secondary mt-0.5">
+                <span id="modal-idea-vendor-cat"></span>
+                <span>•</span>
+                <span id="modal-idea-vendor-district-text">یزد</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="flex items-center gap-1 text-amber-900 bg-amber-100 px-3 py-1 rounded-xl border border-amber-200 text-xs font-bold shrink-0">
+            <i data-lucide="star" class="w-3.5 h-3.5 text-amber-600 fill-amber-500"></i>
+            <span id="modal-idea-vendor-rating">۴.۸</span>
+          </div>
+        </div>
+
+        <!-- ACTION BUTTONS -->
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 pt-2">
+          <button id="modal-idea-inquiry-btn" class="bg-[#1B3B2B] hover:bg-emerald-900 text-white font-black py-3.5 rounded-2xl text-xs shadow-md transition-all flex items-center justify-center gap-2 cursor-pointer">
+            <i data-lucide="message-square-quote" class="w-4 h-4 text-[#D4AF37]"></i>
+            <span>استعلام قیمت و رزرو این سبک</span>
+          </button>
+
+          <button id="modal-idea-vendor-btn" class="bg-white border border-[#E0D8C8] hover:border-[#D4AF37] text-graphite font-bold py-3.5 rounded-2xl text-xs shadow-2xs transition-all flex items-center justify-center gap-2 cursor-pointer">
+            <i data-lucide="store" class="w-4 h-4 text-[#1B3B2B]"></i>
+            <span>مشاهده پروفایل تامین‌کننده</span>
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ========================================== -->
   <!-- MODAL: ARTICLE READER & MAGAZINE DRAWER   -->
   <!-- ========================================== -->
   <div id="modal-article-reader" class="hidden fixed inset-0 bg-black/60 backdrop-blur-xs z-[999999] flex items-center justify-center p-4 transition-all animate-fadeIn" onclick="if(event.target === this) closeArticleReaderModal()">

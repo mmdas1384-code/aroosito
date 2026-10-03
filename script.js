@@ -2036,10 +2036,20 @@ if (document.readyState === "loading") {
           </div>
         </div>
 
-        <!-- QUESTION PROMPT -->
-        <div class="text-center space-y-2 py-2">
-          <h3 class="text-lg sm:text-xl font-black text-graphite leading-relaxed">${question.text}</h3>
-          <p class="text-xs text-secondary font-medium">گزینه‌ای که بیشترین تطابق را با نظر و روحیات شما دارد انتخاب کنید</p>
+        <!-- QUIZ HEADER WITH UN SPLASH IMAGE -->
+        <div class="space-y-4">
+          <div class="relative h-44 sm:h-52 rounded-2xl overflow-hidden bg-slate-900 border border-accent shadow-xs">
+            <img src="${quiz.image}" alt="${quiz.title}" class="w-full h-full object-cover opacity-85">
+            <div class="absolute inset-0 bg-gradient-to-t from-graphite/90 via-graphite/30 to-transparent p-5 flex flex-col justify-end text-white">
+              <span class="bg-[#D4AF37] text-[#1B3B2B] text-[10px] font-black px-3 py-1 rounded-full w-fit shadow-xs mb-1.5">${quiz.badge}</span>
+              <h4 class="text-sm sm:text-base font-bold text-white">${quiz.title}</h4>
+            </div>
+          </div>
+
+          <div class="text-center space-y-1.5 py-1">
+            <h3 class="text-lg sm:text-xl font-black text-graphite leading-relaxed">${question.text}</h3>
+            <p class="text-xs text-secondary font-medium">گزینه‌ای که بیشترین تطابق را با واقعیت و روحیات شما دارد انتخاب کنید</p>
+          </div>
         </div>
 
         <!-- OPTIONS GRID/LIST -->
@@ -10435,25 +10445,37 @@ if (document.readyState === "loading") {
       if (inquiryBtn) {
         inquiryBtn.onclick = function() {
           closeIdeaDetailModal();
-          openInquiryModal(v.id, v.name);
+          if (typeof openInquiryModal === 'function') {
+            openInquiryModal(v.id, v.name);
+          } else {
+            showToast(`استعلام قیمت برای ${v.name} ثبت شد`, 'success');
+          }
         };
       }
 
-      const profileBtn = document.getElementById('modal-idea-profile-btn');
-      if (profileBtn) {
-        profileBtn.onclick = function() {
+      const vendorBtn = document.getElementById('modal-idea-vendor-btn');
+      if (vendorBtn) {
+        vendorBtn.onclick = function() {
           closeIdeaDetailModal();
-          switchTab('vendor-profile');
+          if (typeof loadVendorProfile === 'function') {
+            loadVendorProfile(v.id);
+          } else if (typeof filterVendorsByCategoryTitle === 'function') {
+            filterVendorsByCategoryTitle(v.category || 'همه');
+          }
         };
       }
 
       modal.classList.remove('hidden');
-      lucide.createIcons();
+      modal.classList.add('flex');
+      if (window.lucide) lucide.createIcons();
     }
 
     function closeIdeaDetailModal() {
       const modal = document.getElementById('idea-detail-modal');
-      if (modal) modal.classList.add('hidden');
+      if (modal) {
+        modal.classList.add('hidden');
+        modal.classList.remove('flex');
+      }
     }
 
     function filterDirectoryByVendorCategory(vendorCategory) {
@@ -11412,3 +11434,5 @@ if (typeof deleteBudgetItem === 'function') window.deleteBudgetItem = deleteBudg
 if (typeof updateTotalBudgetCap === 'function') window.updateTotalBudgetCap = updateTotalBudgetCap;
 if (typeof filterChecklistTasksByStatus === 'function') window.filterChecklistTasksByStatus = filterChecklistTasksByStatus;
 if (typeof filterVendorsByCategoryTitle === 'function') window.filterVendorsByCategoryTitle = filterVendorsByCategoryTitle;
+if (typeof openIdeaDetailModal === 'function') window.openIdeaDetailModal = openIdeaDetailModal;
+if (typeof closeIdeaDetailModal === 'function') window.closeIdeaDetailModal = closeIdeaDetailModal;
