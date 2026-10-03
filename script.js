@@ -10827,32 +10827,68 @@ const CATEGORY_SUBGROUPS_MAP = {
   legal_ceremony: {
     title: "تشریفات قانونی، عقد و مشاوره",
     badge: "۵ زیرگروه تخصصی",
-    icon: "🏛️",
-    subgroups: ["دفتر رسمی ازدواج و طلاق", "سفره عقد و دیزاین مراسم", "مشاوره خانواده و زوج‌درمانی", "سالن عقد و نامزدی", "خدمات حقوقی و ثبت قرارداد"]
+    icon: "building-2",
+    subgroups: [
+      { id: "sub-1", title: "دفتر رسمی ازدواج و طلاق", count: "+۱۲ مجموعه", desc: "ثبت رسمی ازدواج، ثبت سالن عقد و سفره عقد" },
+      { id: "sub-2", title: "سفره عقد و دیزاین مراسم", count: "+۸ مرکز", desc: "دیزاین سفره عقد سنتی و مدرن با شمع‌آرایی" },
+      { id: "sub-3", title: "مشاوره خانواده و زوج‌درمانی", count: "+۶ کلینیک", desc: "مشاوره تخصصی قبل از ازدواج و آزمون‌های روانشناسی" },
+      { id: "sub-4", title: "سالن عقد و نامزدی", count: "+۱۰ سالن", desc: "سالن‌های عقد باظرفیت محدود و امکانات پذیرایی" },
+      { id: "sub-5", title: "خدمات حقوقی و ثبت قرارداد", count: "+۵ دفتر", desc: "مشاوره حقوقی شروط ضمن عقد و تنظیم قراردادها" }
+    ]
   },
   gold_shopping: {
     title: "طلا، خرید و خدمات جانبی",
     badge: "۵ زیرگروه تخصصی",
-    icon: "💎",
-    subgroups: ["گالری طلا و جواهرات عروس", "حلقه ازدواج و پشت‌حلقه", "خدمات مسافرتی و تور ماه عسل", "اجاره خودرو لوکس و تشریفاتی", "ساعت و اکسسوری"]
+    icon: "gem",
+    subgroups: [
+      { id: "sub-6", title: "گالری طلا و جواهرات عروس", count: "+۱۵ گالری", desc: "سرویس طلا، جواهر و سنگ‌های قیمتی ساخت یزد" },
+      { id: "sub-7", title: "حلقه ازدواج و پشت‌حلقه", count: "+۲۰ مرکز", desc: "حلقه‌های نامزدی و ست‌های پلاتین و طلا" },
+      { id: "sub-8", title: "خدمات مسافرتی و تور ماه عسل", count: "+۸ آژانس", desc: "رزرو تورهای داخلی و خارجی ماه عسل" },
+      { id: "sub-9", title: "اجاره خودرو لوکس و تشریفاتی", count: "+۶ مجموعه", desc: "اجاره ماشین عروس با راننده و گل‌آرایی اختصاصی" },
+      { id: "sub-10", title: "ساعت و اکسسوری", count: "+۱۰ فروشگاه", desc: "ست‌های برند ساعت و اکسسوری‌های زنانه و مردانه" }
+    ]
   },
   beauty_style: {
     title: "زیبایی و استایل زوجین",
     badge: "۶ زیرگروه تخصصی",
-    icon: "✨",
-    subgroups: ["سالن زیبایی و میکاپ VIP عروس", "آرایشگاه و گریم داماد", "مزون لباس عروس و شب", "پوشاک و کت‌وشلوار داماد", "تاج، تور و اکسسوری", "خدمات ناخن و مژه"]
+    icon: "sparkles",
+    subgroups: [
+      { id: "sub-11", title: "سالن زیبایی و میکاپ VIP عروس", count: "+۱۸ سالن", desc: "میکاپ تخصصی عروس، شینیون و پاکسازی پوست" },
+      { id: "sub-12", title: "آرایشگاه و گریم داماد", count: "+۱۲ مجموعه", desc: "پکیج کامل پاکسازی، گریم و استایل موی داماد" },
+      { id: "sub-13", title: "مزون لباس عروس و شب", count: "+۱۴ مزون", desc: "دوخت و اجاره لباس عروس، فرمالیته و تور" },
+      { id: "sub-14", title: "پوشاک و کت‌وشلوار داماد", count: "+۱۰ فروشگاه", desc: "کت‌وشلوار دامادی، پیراهن و اکسسوری‌های مردانه" },
+      { id: "sub-15", title: "تاج، تور و اکسسوری", count: "+۸ کارگاه", desc: "طراحی و ساخت تاج عروس، ریسه و تور سر" },
+      { id: "sub-16", title: "خدمات ناخن و مژه", count: "+۱۵ کلینیک", desc: "کاشت تخصصی ناخن، اکستنشن مژه و مراقبت پوستی" }
+    ]
   },
   photo_music: {
     title: "ثبت لحظات و موسیقی",
     badge: "۹ زیرگروه تخصصی",
-    icon: "📸",
-    subgroups: ["آتلیه عکاسی و فیلمبرداری", "تصویربرداری هوایی (هلی‌شات)", "ساخت کلیپ فرمالیته کویر", "گروه موسیقی و دی‌جی زنده", "نورپردازی و استیج", "سیستم صوتی و اکو", "آتلیه کودک و بارداری", "فرمالیته شمال و جنوب", "تصویربرداری ۴K و ۳۶۰ درجه"]
+    icon: "camera",
+    subgroups: [
+      { id: "sub-17", title: "آتلیه عکاسی و فیلمبرداری", count: "+۱۶ آتلیه", desc: "عکاسی سناریومحور، آلبوم دیجیتال و کلیپ ویدئویی" },
+      { id: "sub-18", title: "تصویربرداری هوایی (هلی‌شات)", count: "+۸ تیم", desc: "تصویربرداری ۴K با پهپاد و هلی‌شات هوایی" },
+      { id: "sub-19", title: "ساخت کلیپ فرمالیته کویر", count: "+۱۰ استودیو", desc: "عکاسی و فیلمبرداری اختصاصی در کویر یزد" },
+      { id: "sub-20", title: "گروه موسیقی و دی‌جی زنده", count: "+۱۲ گروه", desc: "ارکستر زنده، دی‌جی خانم و آقا با نوازندگان حرفه‌ای" },
+      { id: "sub-21", title: "نورپردازی و استیج", count: "+۶ مجری", desc: "طراحی استیج رقص، استیج هلندی و نورپردازی حرفه‌ای" },
+      { id: "sub-22", title: "سیستم صوتی و اکو", count: "+۸ مرکز", desc: "اجاره و اجرای سیستم‌های صوتی هیبریدی" },
+      { id: "sub-23", title: "آتلیه کودک و بارداری", count: "+۵ آتلیه", desc: "عکاسی تخصصی خانوادگی و یادبود" },
+      { id: "sub-24", title: "فرمالیته شمال و جنوب", count: "+۶ تیم", desc: "سفرهای لوکس فرمالیته شمال، هرمز و قشم" },
+      { id: "sub-25", title: "تصویربرداری ۴K و ۳۶۰ درجه", count: "+۷ مجموعه", desc: "استفاده از دوربین‌های ۳۶۰ درجه و لنز سینمایی" }
+    ]
   },
   venue_catering: {
     title: "مکان، تشریفات و پذیرایی",
     badge: "۶ زیرگروه تخصصی",
-    icon: "🏰",
-    subgroups: ["تالار عروسی و باغ‌تالار", "عمارت اختصاصی و هتل", "کترینگ و خدمات غذا و شام", "کیک و شیرینی سنتی یزد (حاج خلیفه)", "گل‌آرایی و ماشین عروس", "تشریفات پذیرایی و فینگرفود"]
+    icon: "building",
+    subgroups: [
+      { id: "sub-26", title: "تالار عروسی و باغ‌تالار", count: "+۱۵ تالار", desc: "باغ‌تالارهای باشکوه صفائیه و یزد با ظرفیت بالا" },
+      { id: "sub-27", title: "عمارت اختصاصی و هتل", count: "+۸ هتل", desc: "هتل‌های سنتی و پنج ستاره بافت تاریخی یزد" },
+      { id: "sub-28", title: "کترینگ و خدمات غذا و شام", count: "+۱۲ کترینگ", desc: "منوهای غذایی ایرانی، سنتی و فرنگی سفارشی" },
+      { id: "sub-29", title: "کیک و شیرینی سنتی یزد (حاج خلیفه)", count: "+۱۰ قنادی", desc: "قطاب، باقلوا، کیک طبقاتی و شیرینی عروسی" },
+      { id: "sub-30", title: "گل‌آرایی و ماشین عروس", count: "+۱۴ گل‌فروشی", desc: "گل‌آرایی ورودی، جایگاه عروس و ماشین عروس" },
+      { id: "sub-31", title: "تشریفات پذیرایی و فینگرفود", count: "+۹ تیم", desc: "مهمانداران آموزش‌دیده، بوفه فینگرفود و بار میوه" }
+    ]
   }
 };
 
@@ -10864,37 +10900,88 @@ const subgroupData = {
   5: ["تالار عروسی و باغ‌تالار", "عمارت اختصاصی و هتل", "کترینگ و خدمات غذا", "تشریفات و گل‌آرایی ورودی"]
 };
 
+function closeAllSubgroupModals() {
+  const modalDrawer = document.getElementById('sub-category-drawer-modal');
+  const modalSimple = document.getElementById('subgroups-modal');
+  const modalGrid = document.getElementById('subgroupModal');
+  if (modalDrawer) { modalDrawer.classList.add('hidden'); modalDrawer.classList.remove('flex'); }
+  if (modalSimple) { modalSimple.classList.add('hidden'); modalSimple.style.display = 'none'; }
+  if (modalGrid) { modalGrid.classList.add('hidden'); modalGrid.style.display = 'none'; }
+  document.body.style.overflow = '';
+}
+
 function openCategorySubgroupsModal(catKey) {
   const data = CATEGORY_SUBGROUPS_MAP[catKey] || CATEGORY_SUBGROUPS_MAP.venue_catering;
 
-  const modalTitle = document.getElementById('modalCatTitle');
-  const modalBadge = document.getElementById('modalCatBadge');
-  const modalIcon = document.getElementById('modalCatIcon');
-  const gridContainer = document.getElementById('subgroupGridList');
-  const modal1 = document.getElementById('subgroupModal');
-  const modal2 = document.getElementById('subgroups-modal');
+  // 1. Populate Floating Sub-Category Drawer (#sub-category-drawer-modal)
+  const drawerModal = document.getElementById('sub-category-drawer-modal');
+  const drawerTitle = document.getElementById('drawer-header-title');
+  const drawerBadge = document.getElementById('drawer-header-badge');
+  const drawerIcon = document.getElementById('drawer-header-icon');
+  const drawerGrid = document.getElementById('drawer-subcategories-grid');
 
-  if (modalTitle) modalTitle.innerText = data.title;
-  if (modalBadge) modalBadge.innerText = data.badge;
-  if (modalIcon) modalIcon.innerText = data.icon;
+  if (drawerTitle) drawerTitle.innerText = data.title;
+  if (drawerBadge) drawerBadge.innerText = data.badge;
+  if (drawerIcon) drawerIcon.innerHTML = `<i data-lucide="${data.icon || 'layers'}" class="w-6 h-6 text-[#1B3B2B]"></i>`;
 
-  if (gridContainer) {
-    gridContainer.innerHTML = data.subgroups.map(sub => `
-      <div class="subgroup-item-card">
-        <span class="subgroup-name">📍 ${sub}</span>
-        <button onclick="switchTab('directory'); filterVendorsByCategoryTitle('${sub}'); closeSubgroupModal();" class="btn-subgroup-view">مشاهده لیست ←</button>
-      </div>
-    `).join('');
+  if (drawerGrid) {
+    drawerGrid.innerHTML = data.subgroups.map(sub => {
+      const subTitle = typeof sub === 'string' ? sub : sub.title;
+      const subCount = typeof sub === 'string' ? '+۵ کسب‌وکار' : (sub.count || '+۵ کسب‌وکار');
+      const subDesc = typeof sub === 'string' ? 'مشاهده و استعلام قیمت کسب‌وکارهای تاییدشده یزد' : (sub.desc || 'مشاهده و استعلام قیمت کسب‌وکارهای تاییدشده یزد');
+
+      return `
+        <div onclick="switchTab('directory'); filterVendorsByCategoryTitle('${subTitle}'); closeAllSubgroupModals();" class="bg-[#FCFCFA] border border-[#D4AF37]/50 hover:border-[#D4AF37] rounded-2xl p-4 transition-all duration-300 shadow-2xs hover:shadow-md hover:-translate-y-0.5 cursor-pointer flex flex-col justify-between group">
+          <div class="space-y-1.5">
+            <div class="flex items-center justify-between gap-2">
+              <span class="font-black text-xs text-[#1B3B2B] group-hover:text-[#D4AF37] transition-colors flex items-center gap-1.5">
+                <i data-lucide="tag" class="w-3.5 h-3.5 text-[#D4AF37]"></i>
+                ${subTitle}
+              </span>
+              <span class="bg-[#1B3B2B]/10 text-[#1B3B2B] text-[10px] font-bold px-2 py-0.5 rounded-full">${subCount}</span>
+            </div>
+            <p class="text-[11px] text-secondary leading-relaxed font-medium line-clamp-2">${subDesc}</p>
+          </div>
+          <div class="pt-3 border-t border-accent/50 mt-3 flex items-center justify-between text-[11px] text-[#D4AF37] font-bold">
+            <span>مشاهده و فیلتر لیست</span>
+            <span class="group-hover:translate-x-[-3px] transition-transform">←</span>
+          </div>
+        </div>
+      `;
+    }).join('');
   }
 
-  if (modal1) {
-    modal1.style.display = 'flex';
-    modal1.classList.remove('hidden');
+  // 2. Populate Simple Subgroups Modal (#subgroups-modal)
+  const simpleModal = document.getElementById('subgroups-modal');
+  const simpleTitle = document.getElementById('subgroups-title');
+  const simpleList = document.getElementById('subgroups-list');
+
+  if (simpleTitle) simpleTitle.innerText = data.title + ' (' + data.badge + ')';
+  if (simpleList) {
+    simpleList.innerHTML = data.subgroups.map(sub => {
+      const subTitle = typeof sub === 'string' ? sub : sub.title;
+      return `
+        <div class="flex items-center justify-between bg-[#FCFCFA] border border-[#D4AF37]/40 rounded-xl p-3 shadow-2xs">
+          <span class="text-xs font-bold text-[#1B3B2B]">📍 ${subTitle}</span>
+          <button onclick="switchTab('directory'); filterVendorsByCategoryTitle('${subTitle}'); closeAllSubgroupModals();" class="bg-[#1B3B2B] hover:bg-emerald-900 text-white font-bold px-3 py-1.5 rounded-lg text-xs transition-colors">
+            مشاهده لیست ←
+          </button>
+        </div>
+      `;
+    }).join('');
   }
-  if (modal2) {
-    modal2.style.display = 'flex';
-    modal2.classList.remove('hidden');
+
+  // Show Active Modal
+  if (drawerModal) {
+    drawerModal.classList.remove('hidden');
+    drawerModal.classList.add('flex');
+  } else if (simpleModal) {
+    simpleModal.classList.remove('hidden');
+    simpleModal.style.display = 'flex';
   }
+
+  document.body.style.overflow = 'hidden';
+  if (typeof lucide !== 'undefined' && lucide.createIcons) lucide.createIcons();
 }
 
 function openCategorySubgroups(catId, fallbackTitle) {
@@ -10940,17 +11027,7 @@ function openSubgroupsModal(catId, catTitle) {
 }
 
 function closeSubgroupModal() {
-  const modal1 = document.getElementById('subgroupModal');
-  if (modal1) {
-    modal1.style.display = 'none';
-    modal1.classList.add('hidden');
-  }
-
-  const modal2 = document.getElementById('subgroups-modal');
-  if (modal2) {
-    modal2.style.display = 'none';
-    modal2.classList.add('hidden');
-  }
+  closeAllSubgroupModals();
 }
 
 // Close modal when clicking outside of it
@@ -11550,6 +11627,7 @@ if (typeof closeRevisionModal === "function") window.closeRevisionModal = closeR
 if (typeof closeRsvpModal === "function") window.closeRsvpModal = closeRsvpModal;
 if (typeof closeSubCatModal === "function") window.closeSubCatModal = closeSubCatModal;
 if (typeof closeSubCategoryDrawer === "function") window.closeSubCategoryDrawer = closeSubCategoryDrawer;
+if (typeof closeAllSubgroupModals === "function") window.closeAllSubgroupModals = closeAllSubgroupModals;
 if (typeof closeSubgroupModal === "function") window.closeSubgroupModal = closeSubgroupModal;
 if (typeof closeVendorDetailModal === "function") window.closeVendorDetailModal = closeVendorDetailModal;
 if (typeof closeVendorModal === "function") window.closeVendorModal = closeVendorModal;
