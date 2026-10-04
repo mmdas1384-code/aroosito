@@ -1477,8 +1477,60 @@ if (document.readyState === "loading") {
       }
     }
 
+    function downloadCsvFile(filename, csvContent) {
+      const BOM = "\uFEFF";
+      const blob = new Blob([BOM + csvContent], { type: "text/csv;charset=utf-8;" });
+      const url = URL.createObjectURL(blob);
+      const link = document.createElement("a");
+      link.setAttribute("href", url);
+      link.setAttribute("download", filename);
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+      URL.revokeObjectURL(url);
+    }
+
     function exportGuestsExcel() {
-      showToast("خروجی کامل لیست مهمانان و هدایا در قالب Excel آماده گردید.", 'info');
+      let csv = "نام مهمان,دسته‌بندی,شماره همراه,تعداد همراهان,میز اختصاصی,وضعیت حضور\n";
+      if (typeof guestListState !== 'undefined' && guestListState.length > 0) {
+        guestListState.forEach(g => {
+          const statusText = g.status === 'CONFIRMED' ? 'قطعی' : (g.status === 'DECLINED' ? 'عذرخواهی' : 'در انتظار');
+          csv += `"${g.name || ''}","${g.side || ''}","${g.phone || ''}","${g.companions || 0}","${g.table || ''}","${statusText}"\n`;
+        });
+      } else {
+        csv += "موردی یافت نشد\n";
+      }
+      downloadCsvFile("لیست_مهمانان_عروسی_یزد.csv", csv);
+      showToast("خروجی کامل لیست مهمانان در قالب CSV/Excel دانلود گردید.", 'success');
+    }
+
+    function exportChecklistCsv() {
+      let csv = "عنوان اقدام,بازه زمانی,اولویت,وضعیت,تأمین‌کننده متصل\n";
+      if (typeof staticChecklist !== 'undefined' && staticChecklist.length > 0) {
+        staticChecklist.forEach(t => {
+          const timeframeObj = typeof timeframeList !== 'undefined' ? timeframeList.find(tf => tf.key === t.timeframeKey) : null;
+          const tfName = timeframeObj ? timeframeObj.label : t.timeframeKey;
+          const statusStr = t.completed ? 'تکمیل‌شده' : 'معوقه';
+          const priorityStr = t.priority === 'urgent' || t.isUrgent ? 'فوری' : 'عادی';
+          const vendor = typeof vendors !== 'undefined' && t.attachedVendorId ? vendors.find(v => v.id === t.attachedVendorId) : null;
+          const vendorName = vendor ? vendor.title : 'نامتصل';
+          csv += `"${t.title || ''}","${tfName || ''}","${priorityStr}","${statusStr}","${vendorName}"\n`;
+        });
+      }
+      downloadCsvFile("چک_لیست_برنامه‌ریزی_عروسی.csv", csv);
+      showToast("خروجی کامل چک‌لیست ۱۲ ماهه دانلود گردید.", 'success');
+    }
+
+    function exportBudgetSummaryCsv() {
+      let csv = "عنوان خدمت,درصد تخصیصی,مبلغ برآوردی (تومان),وضعیت\n";
+      if (typeof bwState !== 'undefined' && bwState.services) {
+        bwState.services.filter(s => s.active).forEach(s => {
+          const allocatedVal = typeof calculateAllocatedBudget === 'function' ? calculateAllocatedBudget(s) : 0;
+          csv += `"${s.title || ''}","${s.percentage || 0}%","${allocatedVal.toLocaleString('fa-IR')}","فعال"\n`;
+        });
+      }
+      downloadCsvFile("برآورد_بودجه_عروسی.csv", csv);
+      showToast("جدول برآورد بودجه در قالب فایل CSV دانلود گردید.", 'success');
     }
 
     // TAB SWITCHING FUNCTION
@@ -4132,11 +4184,11 @@ if (document.readyState === "loading") {
         { id: "c6", name: "هزینه‌های پیش‌بینی‌نشده", defaultSplit: 0.05, color: "#8D99AE" }
       ],
       lineItems: [
-        { id: "item-1", title: "ورودی و ورودی شام باغ تالار مشیرالممالک", category: "تالار و تشریفات پذیرایی", estimated: 140000000, paid: 95000000, status: "ADVANCE", notes: "بیعانه اولیه پرداخت شد" },
-        { id: "item-2", title: "پکیج کامل عکاسی و فرمالیته کویر", category: "عکاسی و فیلم‌برداری", estimated: 52500000, paid: 45000000, status: "ADVANCE", notes: "شامل ۲ آلبوم و هلی‌شات" },
-        { id: "item-3", title: "سالن زیبایی و آرایشگاه رویال عروس", category: "لباس، طلا و آرایشگاه", estimated: 25000000, paid: 25000000, status: "FULL", notes: "تسویه کامل گردید" },
-        { id: "item-4", title: "سفارش و دوخت لباس عروس مزون ترمه", category: "لباس، طلا و آرایشگاه", estimated: 45000000, paid: 15000000, status: "ADVANCE", notes: "پرو دوم هفته آینده" },
-        { id: "item-5", title: "گل‌آرایی ورودی، جایگاه و دسته گل", category: "گل‌آرایی، دکور و موزیک", estimated: 35000000, paid: 0, status: "UNPAID", notes: "در مرحله استعلام" }
+        { id: "item-1", title: "ورودی و ورودی شام باغ تالار مشیرالممالک", category: "تالار و تشریفات پذیرایی", estimated: 140000000, paid: 95000000, status: "ADVANCE", notes: "بیعانه اولیه پرداخت شد", party: "groom" },
+        { id: "item-2", title: "پکیج کامل عکاسی و فرمالیته کویر", category: "عکاسی و فیلم‌برداری", estimated: 52500000, paid: 45000000, status: "ADVANCE", notes: "شامل ۲ آلبوم و هلی‌شات", party: "shared" },
+        { id: "item-3", title: "سالن زیبایی و آرایشگاه رویال عروس", category: "لباس، طلا و آرایشگاه", estimated: 25000000, paid: 25000000, status: "FULL", notes: "تسویه کامل گردید", party: "groom" },
+        { id: "item-4", title: "سفارش و دوخت لباس عروس مزون ترمه", category: "لباس، طلا و آرایشگاه", estimated: 45000000, paid: 15000000, status: "ADVANCE", notes: "پرو دوم هفته آینده", party: "groom" },
+        { id: "item-5", title: "گل‌آرایی ورودی، جایگاه و دسته گل", category: "گل‌آرایی، دکور و موزیک", estimated: 35000000, paid: 0, status: "UNPAID", notes: "در مرحله استعلام", party: "bride" }
       ]
     };
 
@@ -4173,6 +4225,7 @@ if (document.readyState === "loading") {
       const estInp = document.getElementById('bmi-estimated');
       const paidInp = document.getElementById('bmi-paid');
       const statusInp = document.getElementById('bmi-status');
+      const partyInp = document.getElementById('bmi-party');
       const notesInp = document.getElementById('bmi-notes');
 
       if (itemId) {
@@ -4185,6 +4238,7 @@ if (document.readyState === "loading") {
           if (estInp) estInp.value = item.estimated;
           if (paidInp) paidInp.value = item.paid;
           if (statusInp) statusInp.value = item.status || "UNPAID";
+          if (partyInp) partyInp.value = item.party || "groom";
           if (notesInp) notesInp.value = item.notes || "";
         }
       } else {
@@ -4195,6 +4249,7 @@ if (document.readyState === "loading") {
         if (estInp) estInp.value = "";
         if (paidInp) paidInp.value = "0";
         if (statusInp) statusInp.value = "UNPAID";
+        if (partyInp) partyInp.value = "groom";
         if (notesInp) notesInp.value = "";
       }
 
@@ -4216,6 +4271,7 @@ if (document.readyState === "loading") {
       const estimated = Number(document.getElementById('bmi-estimated')?.value) || 0;
       const paid = Number(document.getElementById('bmi-paid')?.value) || 0;
       const status = document.getElementById('bmi-status')?.value || "UNPAID";
+      const party = document.getElementById('bmi-party')?.value || "groom";
       const notes = document.getElementById('bmi-notes')?.value.trim() || "";
 
       if (!title || estimated <= 0) {
@@ -4226,12 +4282,12 @@ if (document.readyState === "loading") {
       if (id) {
         const idx = budgetPlannerState.lineItems.findIndex(i => i.id === id);
         if (idx !== -1) {
-          budgetPlannerState.lineItems[idx] = { id, title, category, estimated, paid, status, notes };
+          budgetPlannerState.lineItems[idx] = { id, title, category, estimated, paid, status, party, notes };
         }
       } else {
         budgetPlannerState.lineItems.unshift({
           id: 'item-' + Date.now(),
-          title, category, estimated, paid, status, notes
+          title, category, estimated, paid, status, party, notes
         });
       }
 
@@ -4270,6 +4326,19 @@ if (document.readyState === "loading") {
       const totalPaid = budgetPlannerState.lineItems.reduce((acc, item) => acc + (Number(item.paid) || 0), 0);
       const totalEstimatedSpent = budgetPlannerState.lineItems.reduce((acc, item) => acc + (Number(item.estimated) || 0), 0);
       const remaining = totalBudget - totalPaid;
+
+      // Dual Budget Split Totals (Groom vs Bride vs Shared)
+      const groomTotal = budgetPlannerState.lineItems
+        .filter(i => (i.party || 'groom') === 'groom')
+        .reduce((acc, item) => acc + (Number(item.estimated) || 0), 0);
+
+      const brideTotal = budgetPlannerState.lineItems
+        .filter(i => i.party === 'bride')
+        .reduce((acc, item) => acc + (Number(item.estimated) || 0), 0);
+
+      const sharedTotal = budgetPlannerState.lineItems
+        .filter(i => i.party === 'shared')
+        .reduce((acc, item) => acc + (Number(item.estimated) || 0), 0);
 
       // Evaluate Health Status Badge
       let healthBadgeText = "عالی (مدیریت متوازن)";
@@ -4374,6 +4443,55 @@ if (document.readyState === "loading") {
             </div>
           </div>
 
+          <!-- DUAL BUDGET SPLIT (GROOM VS BRIDE VS SHARED) -->
+          <div class="bg-white border border-accent rounded-3xl p-6 sm:p-8 shadow-xs space-y-5">
+            <div class="flex justify-between items-center border-b border-accent pb-3">
+              <h4 class="text-base font-black text-[#111827] flex items-center gap-2">
+                <i data-lucide="scale" class="w-5 h-5 text-[#D4AF37]"></i>
+                <span>تفکیک و سهم‌بندی ۲ طرفه بودجه (خانواده داماد / خانواده عروس / مشترک)</span>
+              </h4>
+              <span class="text-xs text-secondary font-bold">سازگار با رسوم ازدواج در یزد</span>
+            </div>
+
+            <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
+              <div class="p-4 bg-emerald-50/60 border border-emerald-200 rounded-2xl space-y-1.5">
+                <div class="flex items-center justify-between text-xs font-bold text-emerald-900">
+                  <span class="flex items-center gap-1.5">
+                    <i data-lucide="user-check" class="w-4 h-4 text-emerald-700"></i>
+                    <span>سهم خانواده داماد</span>
+                  </span>
+                  <span class="text-[10px] bg-emerald-200/80 text-emerald-800 px-2 py-0.5 rounded-full">اصلی</span>
+                </div>
+                <span class="block text-lg font-black text-emerald-900">${groomTotal.toLocaleString('fa-IR')} <span class="text-xs font-normal">تومان</span></span>
+                <span class="block text-[10px] text-emerald-700 font-medium">شامل تالار، شام، ماشین، آرایشگاه عروس و...</span>
+              </div>
+
+              <div class="p-4 bg-rose-50/60 border border-rose-200 rounded-2xl space-y-1.5">
+                <div class="flex items-center justify-between text-xs font-bold text-rose-900">
+                  <span class="flex items-center gap-1.5">
+                    <i data-lucide="heart" class="w-4 h-4 text-rose-600"></i>
+                    <span>سهم خانواده عروس</span>
+                  </span>
+                  <span class="text-[10px] bg-rose-200/80 text-rose-800 px-2 py-0.5 rounded-full">جهیزیه & عقد</span>
+                </div>
+                <span class="block text-lg font-black text-rose-900">${brideTotal.toLocaleString('fa-IR')} <span class="text-xs font-normal">تومان</span></span>
+                <span class="block text-[10px] text-rose-700 font-medium">شامل گل‌آرایی، سفره عقد، آرایشگاه داماد و...</span>
+              </div>
+
+              <div class="p-4 bg-amber-50/60 border border-amber-200 rounded-2xl space-y-1.5">
+                <div class="flex items-center justify-between text-xs font-bold text-amber-900">
+                  <span class="flex items-center gap-1.5">
+                    <i data-lucide="users" class="w-4 h-4 text-amber-700"></i>
+                    <span>مخارج مشترک (۵۰ / ۵۰)</span>
+                  </span>
+                  <span class="text-[10px] bg-amber-200/80 text-amber-800 px-2 py-0.5 rounded-full">توافقی</span>
+                </div>
+                <span class="block text-lg font-black text-amber-900">${sharedTotal.toLocaleString('fa-IR')} <span class="text-xs font-normal">تومان</span></span>
+                <span class="block text-[10px] text-amber-700 font-medium">شامل پکیج عکاسی، فیلم‌برداری و گروه موزیک</span>
+              </div>
+            </div>
+          </div>
+
           <!-- DYNAMIC SPLIT ACROSS 6 CORE CATEGORIES WITH COLOR CODED PROGRESS -->
           <div class="bg-white border border-accent rounded-3xl p-6 sm:p-8 shadow-xs space-y-5">
             <div class="flex justify-between items-center border-b border-accent pb-3">
@@ -4429,6 +4547,7 @@ if (document.readyState === "loading") {
                   <tr>
                     <th class="p-3">عنوان خدمت / قلم هزینه</th>
                     <th class="p-3">دسته‌بندی</th>
+                    <th class="p-3 text-center">سهم‌بندی</th>
                     <th class="p-3 text-center">برآورد (تومان)</th>
                     <th class="p-3 text-center">پرداختی (تومان)</th>
                     <th class="p-3 text-center">وضعیت پرداخت</th>
@@ -4446,6 +4565,13 @@ if (document.readyState === "loading") {
                       statusBadge = '<span class="bg-amber-100 text-amber-800 px-2.5 py-1 rounded-md text-[10px] font-bold">پیش‌پرداخت (بیعانه)</span>';
                     }
 
+                    let partyBadge = '<span class="bg-emerald-50 text-emerald-800 border border-emerald-200 px-2 py-0.5 rounded-full text-[10px] font-bold">سهم داماد</span>';
+                    if (item.party === 'bride') {
+                      partyBadge = '<span class="bg-rose-50 text-rose-800 border border-rose-200 px-2 py-0.5 rounded-full text-[10px] font-bold">سهم عروس</span>';
+                    } else if (item.party === 'shared') {
+                      partyBadge = '<span class="bg-amber-50 text-amber-800 border border-amber-200 px-2 py-0.5 rounded-full text-[10px] font-bold">مشترک</span>';
+                    }
+
                     return `
                       <tr class="hover:bg-slate-50/80 transition-colors">
                         <td class="p-3.5">
@@ -4453,6 +4579,7 @@ if (document.readyState === "loading") {
                           ${item.notes ? `<span class="text-[10px] text-secondary block mt-0.5">${item.notes}</span>` : ''}
                         </td>
                         <td class="p-3.5 text-secondary font-bold text-[11px]">${item.category}</td>
+                        <td class="p-3.5 text-center">${partyBadge}</td>
                         <td class="p-3.5 text-center font-black text-graphite">${Number(item.estimated).toLocaleString('fa-IR')}</td>
                         <td class="p-3.5 text-center font-black text-primary">${Number(item.paid).toLocaleString('fa-IR')}</td>
                         <td class="p-3.5 text-center">${statusBadge}</td>
@@ -5471,7 +5598,13 @@ if (document.readyState === "loading") {
         reviewsContainer.innerHTML = reviews.map(r => `
           <div class="bg-white border border-stone-200 rounded-xl p-4 space-y-1.5 shadow-2xs">
             <div class="flex justify-between items-center text-xs">
-              <strong class="text-[#1B3B2B]">${r.author}</strong>
+              <div class="flex items-center gap-2">
+                <strong class="text-[#1B3B2B]">${r.author}</strong>
+                <span class="bg-emerald-100 text-emerald-800 text-[9px] font-bold px-2 py-0.5 rounded-full border border-emerald-200 inline-flex items-center gap-1">
+                  <i data-lucide="check-circle" class="w-2.5 h-2.5 text-emerald-700"></i>
+                  <span>زوج تاییدشده</span>
+                </span>
+              </div>
               <span class="text-amber-500 font-bold">${r.stars || '★★★★★'} (${r.date || '۱۴۰۳'})</span>
             </div>
             <p class="text-xs text-stone-600 leading-relaxed">${r.text}</p>
@@ -10865,7 +10998,8 @@ if (document.readyState === "loading") {
     }
 
     function exportMoodboardPdf() {
-      showToast('فایل خلاصه مودبورد شما آماده دانلود گردید.', 'info');
+      window.print();
+      showToast('صفحه مودبورد جهت دانلود یا چاپ آماده گردید.', 'info');
     }
 
   // Super Admin Hero Logo update function
@@ -11695,6 +11829,8 @@ if (typeof dismissToast === "function") window.dismissToast = dismissToast;
 if (typeof editGuest === "function") window.editGuest = editGuest;
 if (typeof editVendorPackage === "function") window.editVendorPackage = editVendorPackage;
 if (typeof exitQuizRunner === "function") window.exitQuizRunner = exitQuizRunner;
+if (typeof exportBudgetSummaryCsv === "function") window.exportBudgetSummaryCsv = exportBudgetSummaryCsv;
+if (typeof exportChecklistCsv === "function") window.exportChecklistCsv = exportChecklistCsv;
 if (typeof exportGuestsExcel === "function") window.exportGuestsExcel = exportGuestsExcel;
 if (typeof exportInquiriesCsv === "function") window.exportInquiriesCsv = exportInquiriesCsv;
 if (typeof exportMoodboardPdf === "function") window.exportMoodboardPdf = exportMoodboardPdf;

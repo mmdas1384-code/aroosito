@@ -1213,10 +1213,16 @@
                 <p class="text-xs text-secondary mt-1">مدیریت کرونولوژیک تمامی اقدامات از ۱۲ ماه قبل تا شب عروسی</p>
               </div>
 
-              <button onclick="toggleNewTaskModal(true)" class="bg-primary hover:bg-emerald-900 text-white px-4 py-2.5 rounded-xl text-xs font-bold transition-all flex items-center gap-2 shadow-xs">
-                <i data-lucide="plus" class="w-4 h-4"></i>
-                <span>افزودن مهم جدید</span>
-              </button>
+              <div class="flex items-center gap-2">
+                <button onclick="exportChecklistCsv()" class="bg-slate-100 hover:bg-slate-200 text-graphite px-3.5 py-2.5 rounded-xl text-xs font-bold transition-colors flex items-center gap-1.5 border border-accent">
+                  <i data-lucide="download" class="w-4 h-4 text-primary"></i>
+                  <span>خروجی اکسل / چاپ</span>
+                </button>
+                <button onclick="toggleNewTaskModal(true)" class="bg-primary hover:bg-emerald-900 text-white px-4 py-2.5 rounded-xl text-xs font-bold transition-all flex items-center gap-2 shadow-xs">
+                  <i data-lucide="plus" class="w-4 h-4"></i>
+                  <span>افزودن مهم جدید</span>
+                </button>
+              </div>
             </div>
 
             <!-- Real-time Progress Card & Countdown Banner -->
@@ -3778,6 +3784,10 @@
               </div>
 
               <div class="flex items-center gap-3">
+                <button type="button" onclick="exportBudgetSummaryCsv()" class="bg-white hover:bg-slate-50 text-graphite border border-accent px-4 py-2.5 rounded-xl text-xs font-bold transition-all flex items-center gap-1.5 shadow-xs">
+                  <i data-lucide="download" class="w-4 h-4 text-primary"></i>
+                  <span>دانلود خروجی CSV / چاپ</span>
+                </button>
                 <button type="button" onclick="resetBwWizard()" class="bg-white hover:bg-slate-50 text-graphite border border-accent px-4 py-2.5 rounded-xl text-xs font-bold transition-all flex items-center gap-1.5 shadow-xs">
                   <i data-lucide="rotate-ccw" class="w-4 h-4 text-primary"></i>
                   <span>ویرایش مجدد پاسخ‌ها</span>
@@ -5105,6 +5115,15 @@
               <option value="UNPAID">مانده (پرداخت‌نشده)</option>
             </select>
           </div>
+        </div>
+
+        <div class="space-y-1">
+          <label class="block text-secondary">طرف پرداخت‌کننده (سهم‌بندی ۲ طرفه)</label>
+          <select id="bmi-party" class="w-full bg-white border border-[#E0D8C8] rounded-xl p-3 text-xs font-bold text-graphite focus:outline-none focus:border-[#D4AF37] cursor-pointer">
+            <option value="groom">داماد / خانواده داماد</option>
+            <option value="bride">عروس / خانواده عروس</option>
+            <option value="shared">مشترک (۵۰ / ۵۰)</option>
+          </select>
         </div>
 
         <div class="space-y-1">
