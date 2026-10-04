@@ -68,8 +68,8 @@ const HOME_VIEW_HTML = `<!-- HOMEPAGE CONTENT MODULE (home-view.html) -->
               </button>
             </div>
 
-            <!-- Horizontal Auto-Scrolling Carousel Grid Wrapper -->
-            <div id="vip-showcase-container" class="relative overflow-x-auto vip-showcase-container flex gap-3 p-1">
+            <!-- Vertical Grid / List Showcase Wrapper -->
+            <div id="vip-showcase-container" class="vip-showcase-container grid grid-cols-1 gap-3 p-1 max-h-[380px] overflow-y-auto custom-scrollbar">
               <!-- Item 1 (Venue) -->
               <div data-vip-cat="hall" class="vip-vendor-card bg-white border border-accent/80 hover:border-[#D4AF37] p-3 rounded-2xl shadow-2xs hover:shadow-lg transition-all flex flex-col gap-2.5 group relative overflow-hidden">
                 <div class="relative h-28 rounded-xl overflow-hidden bg-slate-900">
@@ -317,23 +317,23 @@ const HOME_VIEW_HTML = `<!-- HOMEPAGE CONTENT MODULE (home-view.html) -->
           <div class="calc-main-content">
             <div class="calc-result-box">
               <span>برآورد کل هزینه‌های اصلی مراسم:</span>
-              <h2>۳۵۰,۰۰۰,۰۰۰ تومان</h2>
+              <h2 id="home-calc-result-price">۳۸۰,۰۰۰,۰۰۰ تومان</h2>
               <small>شامل ورودی تالار، شام، آتلیه، آرایشگاه، مزون لباس و شیرینی‌سرای یزد</small>
             </div>
 
             <div class="calc-controls-box">
               <div class="slider-row">
-                <span class="val-tag">250 نفر</span>
+                <span id="home-calc-guest-tag" class="val-tag">250 نفر</span>
                 <label>تعداد مهمانان تخمینی:</label>
               </div>
-              <input type="range" min="50" max="1000" value="250" class="custom-range-slider">
+              <input type="range" id="home-calc-range" min="50" max="1000" step="25" value="250" oninput="updateHomeQuickBudget()" class="custom-range-slider cursor-pointer">
 
               <div class="style-row">
                 <label>سطح تشریفات و خدمات:</label>
                 <div class="style-btns">
-                  <button class="s-btn flex items-center justify-center gap-1"><i data-lucide="gem" class="w-3.5 h-3.5 text-[#D4AF37]"></i> لوکس / VIP</button>
-                  <button class="s-btn active flex items-center justify-center gap-1"><i data-lucide="star" class="w-3.5 h-3.5 text-[#D4AF37] fill-[#D4AF37]"></i> متوسط</button>
-                  <button class="s-btn flex items-center justify-center gap-1"><i data-lucide="sparkles" class="w-3.5 h-3.5 text-[#D4AF37]"></i> اقتصادی</button>
+                  <button type="button" onclick="setHomeCalcStyle('luxury')" id="home-style-luxury" class="s-btn flex items-center justify-center gap-1 cursor-pointer"><i data-lucide="gem" class="w-3.5 h-3.5 text-[#D4AF37]"></i> لوکس / VIP</button>
+                  <button type="button" onclick="setHomeCalcStyle('medium')" id="home-style-medium" class="s-btn active flex items-center justify-center gap-1 cursor-pointer"><i data-lucide="star" class="w-3.5 h-3.5 text-[#D4AF37] fill-[#D4AF37]"></i> متوسط</button>
+                  <button type="button" onclick="setHomeCalcStyle('economic')" id="home-style-economic" class="s-btn flex items-center justify-center gap-1 cursor-pointer"><i data-lucide="sparkles" class="w-3.5 h-3.5 text-[#D4AF37]"></i> اقتصادی</button>
                 </div>
               </div>
             </div>
@@ -1552,7 +1552,15 @@ if (document.readyState === "loading") {
       }
 
       if (tabId === 'guests') renderGuestsAndGifts();
-      if (tabId === 'vendor-dash' && typeof renderVendorCustomQuestionsList === 'function') renderVendorCustomQuestionsList(1);
+      if (tabId === 'vendor-dash') {
+        if (typeof renderVendorPromoBadges === 'function') renderVendorPromoBadges();
+        if (typeof renderVendorPackages === 'function') renderVendorPackages();
+        if (typeof renderVendorDashCalendar === 'function') renderVendorDashCalendar();
+        if (typeof renderVendorInquiriesTable === 'function') renderVendorInquiriesTable();
+        if (typeof renderVendorReviewsManager === 'function') renderVendorReviewsManager();
+        if (typeof updateVendorAnalyticsUI === 'function') updateVendorAnalyticsUI();
+        if (typeof renderVendorCustomQuestionsList === 'function') renderVendorCustomQuestionsList(1);
+      }
 
       const target = document.getElementById('tab-' + tabId);
       if (target) target.classList.remove('hidden');
@@ -2512,6 +2520,7 @@ if (document.readyState === "loading") {
               <ul class="space-y-1 pt-2 border-t border-accent/60 text-secondary text-[11px]">
                 ${pkg.features.map(f => `<li class="flex items-center gap-1.5"><i data-lucide="check" class="w-3.5 h-3.5 text-primary"></i><span>${f}</span></li>`).join('')}
               </ul>
+              ${pkg.requirements ? `<p class="text-[10px] font-bold text-amber-900 bg-amber-50 p-1.5 rounded-lg border border-amber-200 mt-1">📌 شرط/الزام: ${pkg.requirements}</p>` : ''}
             </div>
 
             <div class="flex items-center justify-end gap-2 pt-2 border-t border-accent/60">
@@ -2556,6 +2565,9 @@ if (document.readyState === "loading") {
       document.getElementById('pkg-price').value = pkg.price || '';
       document.getElementById('pkg-badge').value = pkg.badge || '';
       document.getElementById('pkg-features').value = pkg.features ? pkg.features.join('\n') : '';
+      if (document.getElementById('pkg-requirements')) {
+        document.getElementById('pkg-requirements').value = pkg.requirements || '';
+      }
       document.getElementById('modal-package-title').innerHTML = '<i data-lucide="edit-3" class="w-5 h-5 text-primary"></i><span>ویرایش پکیج خدمات</span>';
       modal.classList.remove('hidden');
       modal.classList.add('flex');
@@ -2568,17 +2580,21 @@ if (document.readyState === "loading") {
       const price = document.getElementById('pkg-price').value.trim();
       const badge = document.getElementById('pkg-badge').value.trim();
       const featuresRaw = document.getElementById('pkg-features').value.trim();
+      const requirements = document.getElementById('pkg-requirements')?.value.trim() || '';
 
       if (!name || !price) return;
       const features = featuresRaw ? featuresRaw.split('\n').map(f => f.trim()).filter(Boolean) : ['خدمات باکیفیت کامل'];
 
       if (editIdx >= 0 && vendorPackages[editIdx]) {
-        vendorPackages[editIdx] = { ...vendorPackages[editIdx], name, price, badge, features };
+        vendorPackages[editIdx] = { ...vendorPackages[editIdx], name, price, badge, features, requirements };
         showToast('پکیج خدمات با موفقیت به روزرسانی شد.', 'success');
       } else {
-        vendorPackages.push({ id: 'pkg-' + Date.now(), name, price, badge, features });
+        vendorPackages.push({ id: 'pkg-' + Date.now(), name, price, badge, features, requirements });
         showToast('پکیج جدید با موفقیت اضافه گردید.', 'success');
       }
+
+      const vendor2 = vendors.find(v => v.id === 2);
+      if (vendor2) vendor2.packages = vendorPackages;
 
       renderVendorPackages();
       toggleAddPackageModal(false);
@@ -3380,6 +3396,14 @@ if (document.readyState === "loading") {
         const reviewCount = v.reviewCount || 32;
         const isFav = favoriteVendorIds.includes(v.id);
 
+        const priceNum = (typeof parsePriceNumeric === 'function') ? parsePriceNumeric(v.priceRange || '') : 0;
+        let priceTierBadge = "💰 اقتصادی";
+        if (priceNum > 80000000) {
+          priceTierBadge = "💰💰💰 لوکس";
+        } else if (priceNum > 30000000) {
+          priceTierBadge = "💰💰 متوسط";
+        }
+
         if (directoryViewMode === 'list') {
           card.innerHTML = `
             <div class="relative w-full md:w-72 h-56 md:h-auto overflow-hidden bg-slate-100 shrink-0">
@@ -3497,8 +3521,8 @@ if (document.readyState === "loading") {
                     <i data-lucide="map-pin" class="w-3 h-3 text-emerald-400"></i>
                     <span>${localTag}</span>
                   </span>
-                  <span class="bg-emerald-600/90 text-white font-bold px-2.5 py-1 rounded-lg text-[10px]">
-                    قیمت عادلانه
+                  <span class="bg-black/60 backdrop-blur-md text-[#D4AF37] border border-[#D4AF37]/40 font-black px-2.5 py-1 rounded-lg text-[11px]">
+                    ${priceTierBadge}
                   </span>
                 </div>
               </div>
@@ -5150,6 +5174,10 @@ if (document.readyState === "loading") {
         if (show) {
           modal.classList.remove('hidden');
           modal.classList.add('flex');
+          const catSelect = document.getElementById('v-cat');
+          if (catSelect && typeof categoryGroups !== 'undefined' && categoryGroups.length > 0) {
+            catSelect.innerHTML = categoryGroups.map(cg => `<option value="${cg.title}">${cg.title}</option>`).join('');
+          }
         } else {
           modal.classList.add('hidden');
           modal.classList.remove('flex');
@@ -5890,6 +5918,20 @@ if (document.readyState === "loading") {
       // Category-Specific Dynamic Fields Toggling
       const cat = vendor ? (vendor.category || '') : '';
 
+      const guestsContainer = document.getElementById('inquiry-guests-container');
+      const nonVenueContainer = document.getElementById('inquiry-nonvenue-container');
+      const dateLabel = document.getElementById('inquiry-date-label');
+
+      if (cat.includes("آتلیه") || cat.includes("عکاسی") || cat.includes("فیلمبرداری") || cat.includes("مزون") || cat.includes("لباس") || cat.includes("سالن زیبایی") || cat.includes("میکاپ") || cat.includes("آرایشگاه") || cat.includes("طلا")) {
+        if (guestsContainer) guestsContainer.classList.add('hidden');
+        if (nonVenueContainer) nonVenueContainer.classList.remove('hidden');
+        if (dateLabel) dateLabel.innerText = "تاریخ تقریبی مراجعه / پرو / مراسم *";
+      } else {
+        if (guestsContainer) guestsContainer.classList.remove('hidden');
+        if (nonVenueContainer) nonVenueContainer.classList.add('hidden');
+        if (dateLabel) dateLabel.innerText = "تاریخ تقریبی مراسم / مراجعه (شمسی) *";
+      }
+
       const venueFields = document.getElementById('inquiry-fields-venue');
       const beautyFields = document.getElementById('inquiry-fields-beauty');
       const photoFields = document.getElementById('inquiry-fields-photo');
@@ -5908,7 +5950,6 @@ if (document.readyState === "loading") {
       } else if (cat.includes("مزون") || cat.includes("لباس")) {
         if (maisonFields) maisonFields.classList.remove('hidden');
       } else {
-        // Garden, Hall, Catering, or General Venues
         if (venueFields) venueFields.classList.remove('hidden');
       }
 
@@ -10696,7 +10737,7 @@ if (document.readyState === "loading") {
         inquiryBtn.onclick = function() {
           closeIdeaDetailModal();
           if (typeof openInquiryModal === 'function') {
-            openInquiryModal(v.id, v.name, idea.title, '', 'ایده/ژورنال', idea.id, idea.image);
+            openInquiryModal(v.id, v.name, item.title, '', 'ایده/ژورنال', item.id, item.image);
           } else {
             showToast(`استعلام قیمت برای ${v.name} ثبت شد`, 'success');
           }
@@ -11384,19 +11425,430 @@ window.toggleMasterDiscountBadge = function(isCheck) {
   }
 };
 
-window.toggleDiscountPreset = function(presetKey) {
-  const badge = document.getElementById(`badge-status-${presetKey}`);
-  if (!badge) return;
+// ==========================================
+// ISOLATED STEP 2: VENDOR DASHBOARD UPGRADES
+// ==========================================
 
-  const isActive = badge.classList.contains('bg-emerald-100');
-  if (isActive) {
-    badge.className = 'bg-slate-200 text-slate-700 text-[10px] font-bold px-2 py-0.5 rounded-md';
-    badge.innerText = 'غیرفعال';
-    if (typeof showToast === 'function') showToast('پیشنهاد تخفیف غیرفعال شد.', 'info');
+// 1. PROMOTIONS & DISCOUNT BADGES STATE & FUNCTIONS
+let vendorPromosState = [];
+try {
+  const savedPromos = localStorage.getItem('aroosi_vendor_promos_2');
+  if (savedPromos) {
+    vendorPromosState = JSON.parse(savedPromos);
+  }
+} catch (e) { vendorPromosState = []; }
+
+if (!vendorPromosState || !vendorPromosState.length) {
+  vendorPromosState = [
+    { id: 'promo-1', title: 'تخفیف ۲۰٪ فصل پاییز', discountPct: 20, expiryDays: 5, description: 'ویژه عکاسی و کلیپ فرمالیته کویر یزد با مجوز رسمی', active: true },
+    { id: 'promo-2', title: 'تخفیف رزرو وسط هفته (۱۵٪)', discountPct: 15, expiryDays: 12, description: 'ویژه مراسم‌های روزهای شنبه تا چهارشنبه', active: false },
+    { id: 'promo-3', title: 'پیشنهاد هدیه ویژه رزرو زودهنگام', discountPct: 10, expiryDays: 30, description: 'رزرو حداقل ۶۰ روز قبل از تاریخ مراسم', active: true }
+  ];
+}
+
+window.renderVendorPromoBadges = function() {
+  const container = document.getElementById('vd-promo-badges-list');
+  if (!container) return;
+  container.innerHTML = '';
+
+  vendorPromosState.forEach(promo => {
+    const card = document.createElement('div');
+    card.className = `p-4 border rounded-2xl space-y-2.5 transition-all ${
+      promo.active ? 'bg-white border-primary/40 shadow-xs' : 'bg-bgCustom border-accent/80 opacity-75'
+    }`;
+    card.innerHTML = `
+      <div class="flex justify-between items-center gap-2">
+        <span class="text-graphite font-black text-xs truncate">${promo.title}</span>
+        <span class="${promo.active ? 'bg-emerald-100 text-emerald-800' : 'bg-slate-200 text-slate-700'} text-[10px] font-bold px-2 py-0.5 rounded-md shrink-0">
+          ${promo.active ? 'فعال' : 'غیرفعال'}
+        </span>
+      </div>
+      <div class="flex items-center gap-2 flex-wrap text-[11px]">
+        <span class="bg-rose-100 text-rose-800 font-bold px-2 py-0.5 rounded-md flex items-center gap-1">
+          <i data-lucide="zap" class="w-3 h-3 text-rose-600"></i>
+          <span>${promo.discountPct}٪ تخفیف</span>
+        </span>
+        <span class="bg-amber-100 text-amber-900 font-bold px-2 py-0.5 rounded-md flex items-center gap-1">
+          <i data-lucide="clock" class="w-3 h-3 text-amber-600"></i>
+          <span>${promo.expiryDays} روز باقی‌مانده</span>
+        </span>
+      </div>
+      <p class="text-[11px] text-secondary font-normal line-clamp-2">${promo.description || 'توضیحات پیشنهاد ویژه'}</p>
+      <div class="flex items-center justify-end gap-1.5 pt-2 border-t border-accent/60">
+        <button type="button" onclick="togglePromoBadgeStatus('${promo.id}')" class="bg-bgCustom hover:bg-slate-100 text-graphite border border-accent py-1 px-2.5 rounded-lg font-bold text-[11px] transition-colors cursor-pointer">
+          ${promo.active ? 'غیرفعال‌سازی' : 'فعال‌سازی'}
+        </button>
+        <button type="button" onclick="openPromoBadgeModal('${promo.id}')" class="bg-white hover:bg-emerald-50 text-primary border border-primary/30 py-1 px-2.5 rounded-lg font-bold text-[11px] transition-colors cursor-pointer">
+          ویرایش
+        </button>
+        <button type="button" onclick="deletePromoBadge('${promo.id}')" class="bg-white hover:bg-rose-50 text-rose-600 border border-rose-200 py-1 px-2.5 rounded-lg font-bold text-[11px] transition-colors cursor-pointer">
+          حذف
+        </button>
+      </div>
+    `;
+    container.appendChild(card);
+  });
+
+  if (window.lucide) lucide.createIcons();
+
+  const vendor2 = vendors.find(v => v.id === 2);
+  if (vendor2) {
+    vendor2.promoBadges = vendorPromosState;
+  }
+};
+
+window.openPromoBadgeModal = function(promoId = null) {
+  const modal = document.getElementById('modal-vendor-promo-badge');
+  if (!modal) return;
+
+  document.getElementById('promo-edit-id').value = promoId || '';
+  if (promoId) {
+    const promo = vendorPromosState.find(p => p.id === promoId);
+    if (promo) {
+      document.getElementById('promo-title').value = promo.title || '';
+      document.getElementById('promo-discount-pct').value = promo.discountPct || 10;
+      document.getElementById('promo-expiry-days').value = promo.expiryDays || 7;
+      document.getElementById('promo-description').value = promo.description || '';
+      document.getElementById('promo-active-toggle').checked = !!promo.active;
+      document.getElementById('modal-promo-title').innerText = 'ویرایش نشان تخفیف ویژه';
+    }
   } else {
-    badge.className = 'bg-emerald-100 text-emerald-800 text-[10px] font-bold px-2 py-0.5 rounded-md';
-    badge.innerText = 'فعال';
-    if (typeof showToast === 'function') showToast('🎉 پیشنهاد تخفیف ویژه روی پروفایل عمومی فعال شد.', 'success');
+    document.getElementById('form-vendor-promo-badge')?.reset();
+    document.getElementById('promo-edit-id').value = '';
+    document.getElementById('modal-promo-title').innerText = 'افزودن نشان تخفیف ویژه جدید';
+  }
+
+  modal.classList.remove('hidden');
+  modal.classList.add('flex');
+};
+
+window.closePromoBadgeModal = function() {
+  const modal = document.getElementById('modal-vendor-promo-badge');
+  if (modal) {
+    modal.classList.add('hidden');
+    modal.classList.remove('flex');
+  }
+};
+
+window.savePromoBadgeModal = function(e) {
+  if (e && e.preventDefault) e.preventDefault();
+  const editId = document.getElementById('promo-edit-id').value;
+  const title = document.getElementById('promo-title').value.trim();
+  const discountPct = parseInt(document.getElementById('promo-discount-pct').value, 10) || 10;
+  const expiryDays = parseInt(document.getElementById('promo-expiry-days').value, 10) || 7;
+  const description = document.getElementById('promo-description').value.trim();
+  const active = document.getElementById('promo-active-toggle').checked;
+
+  if (!title) return;
+
+  if (editId) {
+    vendorPromosState = vendorPromosState.map(p => p.id === editId ? { ...p, title, discountPct, expiryDays, description, active } : p);
+    showToast('نشان تخفیف با موفقیت به روزرسانی شد.', 'success');
+  } else {
+    vendorPromosState.push({
+      id: 'promo-' + Date.now(),
+      title,
+      discountPct,
+      expiryDays,
+      description,
+      active
+    });
+    showToast('نشان تخفیف جدید ایجاد شد و روی پروفایل فعال گردید.', 'success');
+  }
+
+  try {
+    localStorage.setItem('aroosi_vendor_promos_2', JSON.stringify(vendorPromosState));
+  } catch (err) {}
+
+  renderVendorPromoBadges();
+  closePromoBadgeModal();
+  if (typeof renderVendors === 'function') renderVendors(vendors);
+};
+
+window.deletePromoBadge = function(promoId) {
+  vendorPromosState = vendorPromosState.filter(p => p.id !== promoId);
+  try {
+    localStorage.setItem('aroosi_vendor_promos_2', JSON.stringify(vendorPromosState));
+  } catch (err) {}
+  renderVendorPromoBadges();
+  if (typeof renderVendors === 'function') renderVendors(vendors);
+  showToast('نشان تخفیف حذف گردید.', 'info');
+};
+
+window.togglePromoBadgeStatus = function(promoId) {
+  vendorPromosState = vendorPromosState.map(p => p.id === promoId ? { ...p, active: !p.active } : p);
+  try {
+    localStorage.setItem('aroosi_vendor_promos_2', JSON.stringify(vendorPromosState));
+  } catch (err) {}
+  renderVendorPromoBadges();
+  if (typeof renderVendors === 'function') renderVendors(vendors);
+  showToast('وضعیت نشان تخفیف تغییر یافت.', 'info');
+};
+
+// 2. CALENDAR DAY BLOCKING STATE & FUNCTIONS
+let vendorBlockedDates = [];
+try {
+  const savedBlocked = localStorage.getItem('aroosi_vendor_blocked_2');
+  if (savedBlocked) vendorBlockedDates = JSON.parse(savedBlocked);
+} catch(e) { vendorBlockedDates = []; }
+
+if (!vendorBlockedDates || !vendorBlockedDates.length) {
+  vendorBlockedDates = [5, 12, 18, 25];
+}
+
+window.renderVendorDashCalendar = function() {
+  const grid = document.getElementById('calendar-grid');
+  if (!grid) return;
+  grid.innerHTML = '';
+
+  // Render Day Name Headers
+  const dayHeaders = ['ش', 'ی', 'د', 'س', 'چ', 'پ', 'ج'];
+  dayHeaders.forEach(h => {
+    const hEl = document.createElement('div');
+    hEl.className = "font-bold text-[11px] text-secondary py-1 bg-bgCustom rounded-lg border border-accent/40 text-center";
+    hEl.innerText = h;
+    grid.appendChild(hEl);
+  });
+
+  const bookedDays = [3, 15, 22];
+
+  for (let day = 1; day <= 30; day++) {
+    const isBlocked = vendorBlockedDates.includes(day);
+    const isBooked = bookedDays.includes(day);
+
+    const dayBtn = document.createElement('button');
+    dayBtn.type = 'button';
+    dayBtn.onclick = () => toggleVendorBlockedDate(day);
+
+    let statusClass = "bg-emerald-50 text-emerald-900 border-emerald-300 hover:bg-emerald-100 cursor-pointer";
+    let statusLabel = "آزاد";
+
+    if (isBooked) {
+      statusClass = "bg-amber-100 text-amber-900 border-amber-300 font-black cursor-pointer";
+      statusLabel = "رزرو نهایی";
+    } else if (isBlocked) {
+      statusClass = "bg-rose-100 text-rose-900 border-rose-300 font-black cursor-pointer";
+      statusLabel = "پر / تعطیل";
+    }
+
+    dayBtn.className = `p-2.5 rounded-2xl border text-xs font-bold transition-all flex flex-col items-center justify-center gap-1 shadow-2xs ${statusClass}`;
+    dayBtn.innerHTML = `
+      <span class="text-sm font-black">${day}</span>
+      <span class="text-[9px] px-1.5 py-0.2 rounded-full ${
+        isBlocked ? 'bg-rose-200 text-rose-900' : isBooked ? 'bg-amber-200 text-amber-950' : 'bg-emerald-200 text-emerald-900'
+      }">${statusLabel}</span>
+    `;
+
+    grid.appendChild(dayBtn);
+  }
+
+  const vendor2 = vendors.find(v => v.id === 2);
+  if (vendor2) {
+    vendor2.blockedDates = vendorBlockedDates;
+  }
+};
+
+window.toggleVendorBlockedDate = function(dayNum) {
+  if (vendorBlockedDates.includes(dayNum)) {
+    vendorBlockedDates = vendorBlockedDates.filter(d => d !== dayNum);
+    showToast(`روز ${dayNum} شهريور از حالت تعطیل خارج و آزاد شد.`, 'success');
+  } else {
+    vendorBlockedDates.push(dayNum);
+    showToast(`روز ${dayNum} شهريور به عنوان روز پر / تعطیل علامت‌گذاری شد.`, 'info');
+  }
+
+  try {
+    localStorage.setItem('aroosi_vendor_blocked_2', JSON.stringify(vendorBlockedDates));
+  } catch (err) {}
+
+  renderVendorDashCalendar();
+};
+
+// 3. ESSENTIAL VENDOR CONTROLS: LEADS TABLE & ANALYTICS
+let vendorAnalytics = { views: 3850, inquiries: 162, conversionRate: "4.2%", favorites: 48 };
+try {
+  const savedAnalytics = localStorage.getItem('aroosi_vendor_analytics_2');
+  if (savedAnalytics) vendorAnalytics = JSON.parse(savedAnalytics);
+} catch(e) {}
+
+window.updateVendorAnalyticsUI = function() {
+  const viewsEl = document.getElementById('vd-kpi-views');
+  const convEl = document.getElementById('vd-kpi-conversion');
+  const leadsEl = document.getElementById('vd-kpi-leads');
+
+  if (viewsEl) viewsEl.innerHTML = `${vendorAnalytics.views.toLocaleString('fa-IR')} <span class="text-xs font-normal text-secondary">بازدید</span>`;
+  if (convEl) convEl.innerHTML = `${vendorAnalytics.conversionRate} <span class="text-xs font-normal text-secondary">استعلام</span>`;
+  if (leadsEl) leadsEl.innerHTML = `${inquiries.length.toLocaleString('fa-IR')} <span class="text-xs font-normal text-secondary">درخواست</span>`;
+};
+
+window.incrementVendorViewCount = function(vendorId) {
+  if (vendorId === 2) {
+    vendorAnalytics.views += 1;
+    const conv = ((inquiries.length / vendorAnalytics.views) * 100).toFixed(1) + '%';
+    vendorAnalytics.conversionRate = conv;
+    try {
+      localStorage.setItem('aroosi_vendor_analytics_2', JSON.stringify(vendorAnalytics));
+    } catch(e) {}
+    updateVendorAnalyticsUI();
+  }
+};
+
+window.renderVendorInquiriesTable = function() {
+  const container = document.getElementById('inquiry-list');
+  if (!container) return;
+  container.innerHTML = '';
+
+  const searchInput = document.getElementById('vd-inquiry-search-input')?.value.toLowerCase().trim() || '';
+  const statusFilter = document.getElementById('vd-inquiry-status-filter')?.value || 'all';
+
+  let filtered = inquiries.filter(inq => {
+    const matchesSearch = !searchInput ||
+      (inq.name && inq.name.toLowerCase().includes(searchInput)) ||
+      (inq.phone && inq.phone.includes(searchInput)) ||
+      (inq.service && inq.service.toLowerCase().includes(searchInput));
+    const matchesStatus = statusFilter === 'all' || (inq.status || 'pending') === statusFilter;
+    return matchesSearch && matchesStatus;
+  });
+
+  if (filtered.length === 0) {
+    container.innerHTML = `
+      <div class="p-6 text-center text-secondary text-xs font-bold bg-bgCustom rounded-2xl border border-accent">
+        هیچ استعلامی مطابق با فیلتر جستجوی شما یافت نشد.
+      </div>
+    `;
+    return;
+  }
+
+  filtered.forEach((inq, idx) => {
+    const card = document.createElement('div');
+    card.className = "p-4 bg-bgCustom rounded-2xl border border-accent space-y-3 shadow-xs hover:border-primary/40 transition-all";
+    const currentStatus = inq.status || 'pending';
+
+    card.innerHTML = `
+      <div class="flex flex-col sm:flex-row justify-between sm:items-center gap-2">
+        <div class="flex items-center gap-2">
+          <span class="font-black text-graphite text-sm">${inq.name || 'زوج محترم'}</span>
+          <span class="text-secondary text-xs font-medium dir-ltr">(${inq.phone || '۰۹۱۲۰۰۰۰۰۰۰'})</span>
+        </div>
+        <div class="flex items-center gap-2">
+          <select onchange="updateInquiryStatus('${inq.id || idx}', this.value)" class="bg-white border border-accent text-xs font-bold rounded-lg px-2 py-1 text-graphite focus:outline-none focus:border-primary cursor-pointer">
+            <option value="pending" ${currentStatus === 'pending' ? 'selected' : ''}>در انتظار بررسی</option>
+            <option value="replied" ${currentStatus === 'replied' ? 'selected' : ''}>پاسخ داده شده</option>
+            <option value="booked" ${currentStatus === 'booked' ? 'selected' : ''}>رزرو نهایی</option>
+            <option value="cancelled" ${currentStatus === 'cancelled' ? 'selected' : ''}>لغو شده</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="flex flex-wrap items-center gap-4 text-xs text-secondary font-medium bg-white/80 p-2.5 rounded-xl border border-accent/60">
+        <span><strong class="text-graphite">تاریخ درخواست:</strong> ${inq.date || '۱۴۰۳/۰۶/۱۵'}</span>
+        ${inq.guests ? `<span><strong class="text-graphite">تعداد مهمان:</strong> ${inq.guests} نفر</span>` : ''}
+        <span><strong class="text-graphite">خدمت/پکیج:</strong> ${inq.service || inq.package || 'خدمات عمومی'}</span>
+      </div>
+
+      ${(inq.customAnswers && inq.customAnswers.length) ? `
+        <div class="bg-amber-50/80 p-3 rounded-xl border border-amber-200/80 text-xs font-bold text-amber-950 space-y-1">
+          <span class="block text-[11px] font-black text-amber-900 border-b border-amber-200 pb-1">📋 پاسخ‌های سوالات اختصاصی فرم استعلام:</span>
+          <div class="space-y-0.5 pt-0.5">
+            ${inq.customAnswers.map(a => `<div class="flex items-center gap-1.5"><span class="text-amber-800 font-bold">• ${a.label}:</span> <span class="text-graphite font-black">${a.value}</span></div>`).join('')}
+          </div>
+        </div>
+      ` : ''}
+
+      <p class="text-xs text-graphite bg-white p-3 rounded-xl border border-accent/60 leading-relaxed">${inq.details || 'توضیحات و نیازمندی‌های اختصاصی زوج ثبت شده در سامانه عروسی تو.'}</p>
+
+      <div class="flex items-center justify-end gap-2 pt-2 border-t border-accent/60">
+        <button type="button" onclick="openVendorInvoiceBuilderModal('${inq.name || 'زوج محترم'}', '${inq.service || 'پکیج فرمالیته'}')" class="bg-primary hover:bg-emerald-900 text-white font-bold px-3 py-1.5 rounded-xl text-xs transition-colors shadow-2xs cursor-pointer">
+          صدور پیش‌فاکتور
+        </button>
+        <button type="button" onclick="openInquiryReplyModal('${inq.id || idx}', '${inq.name || 'زوج محترم'}')" class="bg-white hover:bg-emerald-50 text-primary border border-primary/30 font-bold px-3 py-1.5 rounded-xl text-xs transition-colors cursor-pointer">
+          پاسخ مستقیم
+        </button>
+      </div>
+    `;
+    container.appendChild(card);
+  });
+
+  updateVendorAnalyticsUI();
+};
+
+window.updateInquiryStatus = function(inquiryId, newStatus) {
+  const inq = inquiries.find((i, idx) => (i.id === inquiryId || idx.toString() === inquiryId.toString()));
+  if (inq) {
+    inq.status = newStatus;
+    showToast('وضعیت استعلام به روزرسانی شد.', 'success');
+    renderVendorInquiriesTable();
+  }
+};
+
+// 4. CUSTOMER REVIEW RESPONSE MANAGER
+window.renderVendorReviewsManager = function() {
+  const container = document.getElementById('vd-reviews-list-container');
+  if (!container) return;
+  container.innerHTML = '';
+
+  const vendor2 = vendors.find(v => v.id === 2);
+  const reviews = (vendor2 && vendor2.reviews) ? vendor2.reviews : [
+    { author: "رضا و مریم", text: "کیفیت خدمات عکاسی و برخورد تیم استودیو کویر فوق‌العاده بود.", stars: "★★★★★", date: "اردیبهشت ۱۴۰۳" },
+    { author: "محمد و سارا", text: "عکس‌های فرمالیته غروب کویر بسیار زیبا شد.", stars: "★★★★★", date: "فروردین ۱۴۰۳" }
+  ];
+
+  const badgeEl = document.getElementById('vd-reviews-count-badge');
+  if (badgeEl) badgeEl.innerText = `${reviews.length} دیدگاه ثبت شده`;
+
+  reviews.forEach((r, idx) => {
+    const card = document.createElement('div');
+    card.className = "p-4 bg-bgCustom rounded-2xl border border-accent space-y-3 text-xs shadow-xs";
+    card.innerHTML = `
+      <div class="flex justify-between items-center font-bold text-graphite">
+        <div class="flex items-center gap-2">
+          <span class="text-sm font-black">${r.author}</span>
+          <span class="bg-emerald-100 text-emerald-800 text-[10px] font-bold px-2 py-0.5 rounded-full border border-emerald-200">زوج تاییدشده</span>
+        </div>
+        <span class="text-amber-500 font-bold">${r.stars || '★★★★★'} (${r.date || '۱۴۰۳'})</span>
+      </div>
+
+      <p class="text-graphite font-medium bg-white p-3 rounded-xl border border-accent/60">${r.text}</p>
+
+      ${r.vendorReply ? `
+        <div class="bg-emerald-50 border-r-3 border-primary p-3 rounded-l-xl space-y-1">
+          <span class="font-black text-primary text-[11px] block flex items-center gap-1">
+            <i data-lucide="corner-down-left" class="w-3.5 h-3.5 text-primary"></i>
+            پاسخ ثبت‌شده مدیر کسب‌وکار:
+          </span>
+          <p class="text-graphite font-semibold text-xs">${r.vendorReply}</p>
+        </div>
+      ` : ''}
+
+      <div class="space-y-2 pt-2 border-t border-accent/60">
+        <label class="block text-secondary font-bold text-[11px]">ارسال / ویرایش پاسخ رسمی مدیر:</label>
+        <div class="flex gap-2">
+          <input type="text" id="vd-review-reply-input-${idx}" value="${r.vendorReply || ''}" placeholder="پاسخ رسمی شما به این دیدگاه..." class="flex-1 bg-white border border-accent rounded-xl px-3 py-2 text-xs font-medium focus:outline-none focus:border-primary">
+          <button type="button" onclick="saveVendorReviewReply(${idx})" class="bg-primary hover:bg-emerald-900 text-white font-bold px-4 py-2 rounded-xl text-xs transition-colors shrink-0 shadow-2xs cursor-pointer">
+            ثبت پاسخ
+          </button>
+        </div>
+      </div>
+    `;
+    container.appendChild(card);
+  });
+
+  if (window.lucide) lucide.createIcons();
+};
+
+window.saveVendorReviewReply = function(reviewIdx) {
+  const input = document.getElementById(`vd-review-reply-input-${reviewIdx}`);
+  if (!input) return;
+
+  const replyText = input.value.trim();
+  const vendor2 = vendors.find(v => v.id === 2);
+  if (vendor2 && vendor2.reviews && vendor2.reviews[reviewIdx]) {
+    vendor2.reviews[reviewIdx].vendorReply = replyText;
+    showToast('پاسخ مدیر با موفقیت ثبت شد و روی پروفایل عمومی نمایش داده خواهد شد.', 'success');
+    renderVendorReviewsManager();
+    if (typeof loadVendorProfile === 'function' && currentProfileVendorId === 2) {
+      loadVendorProfile(2);
+    }
   }
 };
 
@@ -11428,6 +11880,54 @@ window.handleSendInvoiceSubmit = function(e) {
   if (typeof showToast === 'function') {
     showToast(`🧾 پیش‌فاکتور دیجیتال به مبلغ ${total} تومان برای ${couple} ارسال شد.`, 'success');
   }
+};
+
+window.openPreInvoicePrintModal = function(invoiceData) {
+  const modal = document.getElementById('modal-preinvoice-print');
+  if (!modal) return;
+
+  const data = invoiceData || {
+    num: 'INV-1403-882',
+    date: '۱۴۰۳/۰۶/۱۵',
+    vendorName: 'هتل باغ و تشریفات مشیرالممالک یزد',
+    coupleName: 'علی و سارا',
+    title: 'پکیج خدمات تشریفات و ورودی باغ',
+    eventDate: '۱۴۰۳/۰۶/۱۵',
+    total: '۴۵,۰۰۰,۰۰۰ تومان',
+    deposit: '۱۰,۰۰۰,۰۰۰ تومان',
+    balance: '۳۵,۰۰۰,۰۰۰ تومان',
+    items: 'ورودی باغ اصلی، شام سلف سرویس VIP، گل‌آرایی ورودی و نورپردازی استیج'
+  };
+
+  const numEl = document.getElementById('pip-num');
+  const dateEl = document.getElementById('pip-date');
+  const vEl = document.getElementById('pip-vendor-name');
+  const cEl = document.getElementById('pip-couple-name');
+  const tEl = document.getElementById('pip-service-title');
+  const edEl = document.getElementById('pip-event-date');
+  const totEl = document.getElementById('pip-total-amount');
+  const descEl = document.getElementById('pip-items-desc');
+  const depEl = document.getElementById('pip-deposit');
+  const balEl = document.getElementById('pip-balance');
+
+  if (numEl) numEl.innerText = data.num || 'INV-1403-882';
+  if (dateEl) dateEl.innerText = data.date || '۱۴۰۳/۰۶/۱۵';
+  if (vEl) vEl.innerText = data.vendorName || 'تامین‌کننده معتبر یزد';
+  if (cEl) cEl.innerText = data.coupleName || 'علی و سارا';
+  if (tEl) tEl.innerText = data.title || 'پکیج خدمات';
+  if (edEl) edEl.innerText = data.eventDate || '۱۴۰۳/۰۶/۱۵';
+  if (totEl) totEl.innerText = data.total || '۴۵,۰۰۰,۰۰۰ تومان';
+  if (descEl) descEl.innerText = data.items || 'شرح خدمات و تعهدات رسمی';
+  if (depEl) depEl.innerText = data.deposit || '۱۰,۰۰۰,۰۰۰ تومان';
+  if (balEl) balEl.innerText = data.balance || '۳۵,۰۰۰,۰۰۰ تومان';
+
+  modal.classList.remove('hidden');
+  if (window.lucide) lucide.createIcons();
+};
+
+window.closePreInvoicePrintModal = function() {
+  const modal = document.getElementById('modal-preinvoice-print');
+  if (modal) modal.classList.add('hidden');
 };
 
 // ==========================================
@@ -12110,5 +12610,50 @@ window.shareInvitationSocial = function(platform) {
     window.open(`https://eitaa.com/share?url=${url}&text=${text}`, '_blank');
   } else {
     copyInvitationLink();
+  }
+};
+
+let currentHomeCalcStyle = 'medium';
+
+window.setHomeCalcStyle = function(style) {
+  currentHomeCalcStyle = style;
+  const luxuryBtn = document.getElementById('home-style-luxury');
+  const mediumBtn = document.getElementById('home-style-medium');
+  const ecoBtn = document.getElementById('home-style-economic');
+
+  if (luxuryBtn) luxuryBtn.classList.toggle('active', style === 'luxury');
+  if (mediumBtn) mediumBtn.classList.toggle('active', style === 'medium');
+  if (ecoBtn) ecoBtn.classList.toggle('active', style === 'economic');
+
+  updateHomeQuickBudget();
+};
+
+window.updateHomeQuickBudget = function() {
+  const rangeInput = document.getElementById('home-calc-range');
+  const guestTag = document.getElementById('home-calc-guest-tag');
+  const resultPrice = document.getElementById('home-calc-result-price');
+
+  if (!rangeInput) return;
+
+  const guests = parseInt(rangeInput.value, 10) || 250;
+  if (guestTag) {
+    guestTag.innerText = guests.toLocaleString('fa-IR') + ' نفر';
+  }
+
+  let basePerGuest = 1400000;
+  let fixedBase = 30000000;
+  if (currentHomeCalcStyle === 'economic') {
+    basePerGuest = 850000;
+    fixedBase = 20000000;
+  } else if (currentHomeCalcStyle === 'luxury') {
+    basePerGuest = 2600000;
+    fixedBase = 60000000;
+  }
+
+  const totalCost = fixedBase + (guests * basePerGuest);
+  const formatted = totalCost.toLocaleString('fa-IR') + ' تومان';
+
+  if (resultPrice) {
+    resultPrice.innerText = formatted;
   }
 };
