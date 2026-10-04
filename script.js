@@ -9102,6 +9102,18 @@ if (document.readyState === "loading") {
       if (previewDate) previewDate.innerText = invitationState.weddingDateJalali;
       if (previewTime) previewTime.innerText = `ساعت ${invitationState.ceremonyTime}`;
 
+      // Update Live Countdown Counters
+      const cntDays = document.getElementById('inv-cnt-days');
+      const cntHours = document.getElementById('inv-cnt-hours');
+      const cntMins = document.getElementById('inv-cnt-mins');
+      const cntSecs = document.getElementById('inv-cnt-secs');
+      if (cntDays && cntHours && cntMins && cntSecs) {
+        cntDays.innerText = "۱۴۵";
+        cntHours.innerText = "۰۸";
+        cntMins.innerText = "۲۴";
+        cntSecs.innerText = "۵۰";
+      }
+
       // 4. Venue & Map Links
       const previewVenue = document.getElementById('inv-preview-venue');
       const previewAddress = document.getElementById('inv-preview-address');
@@ -9203,6 +9215,29 @@ if (document.readyState === "loading") {
 
       if (badge) {
         badge.innerHTML = `<span>تعداد حاضرین قطعی: ${totalAttendingGuests} نفر</span>`;
+      }
+    }
+
+    function handleQuickRsvp(status) {
+      const nameInp = document.getElementById('guest-rsvp-name');
+      const name = nameInp ? nameInp.value.trim() : "";
+      const guestName = name || "مهمان گرامی";
+
+      invitationState.rsvps.unshift({
+        id: Date.now(),
+        name: guestName,
+        status: status,
+        guestsCount: status === 'attending' ? 1 : 0,
+        note: status === 'attending' ? 'ثبت پاسخ ۱کلیکی: با کمال میل شرکت می‌کنم' : 'ثبت پاسخ ۱کلیکی: امکان حضور ندارم'
+      });
+
+      renderInvAdminRsvpTable();
+      if (nameInp) nameInp.value = '';
+
+      if (status === 'attending') {
+        showToast(`پاسخ ۱کلیکی شما ثبت شد! با کمال میل منتظر دیدار ${guestName} هستیم.`, 'success');
+      } else {
+        showToast('پاسخ عدم حضور شما ثبت گردید. با سپاس از اعلام قبلی.', 'info');
       }
     }
 
@@ -11859,6 +11894,7 @@ if (typeof handleGiftFormSubmit === "function") window.handleGiftFormSubmit = ha
 if (typeof handleGuestFormSubmit === "function") window.handleGuestFormSubmit = handleGuestFormSubmit;
 if (typeof handleGuestInputChange === "function") window.handleGuestInputChange = handleGuestInputChange;
 if (typeof handleGuestRsvpSubmit === "function") window.handleGuestRsvpSubmit = handleGuestRsvpSubmit;
+if (typeof handleQuickRsvp === "function") window.handleQuickRsvp = handleQuickRsvp;
 if (typeof handleHeaderSearchFocus === "function") window.handleHeaderSearchFocus = handleHeaderSearchFocus;
 if (typeof handleHeaderSearchInput === "function") window.handleHeaderSearchInput = handleHeaderSearchInput;
 if (typeof handleHeroSearch === "function") window.handleHeroSearch = handleHeroSearch;

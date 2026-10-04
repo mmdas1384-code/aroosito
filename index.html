@@ -3401,7 +3401,18 @@
                   <p class="text-[10px] text-secondary">لطفاً وضعیت حضور خود را اعلام بفرمایید</p>
                 </div>
 
-                <form onsubmit="handleGuestRsvpSubmit(event)" class="space-y-3 text-xs font-bold text-graphite">
+                <div class="grid grid-cols-2 gap-2">
+                  <button type="button" onclick="handleQuickRsvp('attending')" class="bg-emerald-600 hover:bg-emerald-700 text-white font-bold py-2 px-3 rounded-xl text-[11px] shadow-sm transition-all flex items-center justify-center gap-1 cursor-pointer">
+                    <i data-lucide="check" class="w-3.5 h-3.5"></i>
+                    <span>با کمال میل شرکت می‌کنم</span>
+                  </button>
+                  <button type="button" onclick="handleQuickRsvp('declined')" class="bg-rose-600 hover:bg-rose-700 text-white font-bold py-2 px-3 rounded-xl text-[11px] shadow-sm transition-all flex items-center justify-center gap-1 cursor-pointer">
+                    <i data-lucide="x" class="w-3.5 h-3.5"></i>
+                    <span>امکان حضور ندارم</span>
+                  </button>
+                </div>
+
+                <form onsubmit="handleGuestRsvpSubmit(event)" class="space-y-3 text-xs font-bold text-graphite pt-1">
                   <div>
                     <label class="block mb-1 text-[11px]">نام و نام خانوادگی شما:</label>
                     <input type="text" id="guest-rsvp-name" required placeholder="مثلاً: محمد حسینی" class="w-full bg-bgCustom border border-accent rounded-xl p-2 text-xs font-medium focus:outline-none focus:border-primary">
