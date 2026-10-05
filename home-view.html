@@ -67,8 +67,8 @@
               </button>
             </div>
 
-            <!-- Horizontal Auto-Scrolling Carousel Grid Wrapper -->
-            <div id="vip-showcase-container" class="relative overflow-x-auto vip-showcase-container flex gap-3 p-1">
+            <!-- Vertical Grid / List Showcase Wrapper -->
+            <div id="vip-showcase-container" class="vip-showcase-container grid grid-cols-1 gap-3 p-1 max-h-[380px] overflow-y-auto custom-scrollbar">
               <!-- Item 1 (Venue) -->
               <div data-vip-cat="hall" class="vip-vendor-card bg-white border border-accent/80 hover:border-[#D4AF37] p-3 rounded-2xl shadow-2xs hover:shadow-lg transition-all flex flex-col gap-2.5 group relative overflow-hidden">
                 <div class="relative h-28 rounded-xl overflow-hidden bg-slate-900">
@@ -316,23 +316,23 @@
           <div class="calc-main-content">
             <div class="calc-result-box">
               <span>برآورد کل هزینه‌های اصلی مراسم:</span>
-              <h2>۳۵۰,۰۰۰,۰۰۰ تومان</h2>
+              <h2 id="home-calc-result-price">۳۸۰,۰۰۰,۰۰۰ تومان</h2>
               <small>شامل ورودی تالار، شام، آتلیه، آرایشگاه، مزون لباس و شیرینی‌سرای یزد</small>
             </div>
 
             <div class="calc-controls-box">
               <div class="slider-row">
-                <span class="val-tag">250 نفر</span>
+                <span id="home-calc-guest-tag" class="val-tag">250 نفر</span>
                 <label>تعداد مهمانان تخمینی:</label>
               </div>
-              <input type="range" min="50" max="1000" value="250" class="custom-range-slider">
+              <input type="range" id="home-calc-range" min="50" max="1000" step="25" value="250" oninput="updateHomeQuickBudget()" class="custom-range-slider cursor-pointer">
 
               <div class="style-row">
                 <label>سطح تشریفات و خدمات:</label>
                 <div class="style-btns">
-                  <button class="s-btn flex items-center justify-center gap-1"><i data-lucide="gem" class="w-3.5 h-3.5 text-[#D4AF37]"></i> لوکس / VIP</button>
-                  <button class="s-btn active flex items-center justify-center gap-1"><i data-lucide="star" class="w-3.5 h-3.5 text-[#D4AF37] fill-[#D4AF37]"></i> متوسط</button>
-                  <button class="s-btn flex items-center justify-center gap-1"><i data-lucide="sparkles" class="w-3.5 h-3.5 text-[#D4AF37]"></i> اقتصادی</button>
+                  <button type="button" onclick="setHomeCalcStyle('luxury')" id="home-style-luxury" class="s-btn flex items-center justify-center gap-1 cursor-pointer"><i data-lucide="gem" class="w-3.5 h-3.5 text-[#D4AF37]"></i> لوکس / VIP</button>
+                  <button type="button" onclick="setHomeCalcStyle('medium')" id="home-style-medium" class="s-btn active flex items-center justify-center gap-1 cursor-pointer"><i data-lucide="star" class="w-3.5 h-3.5 text-[#D4AF37] fill-[#D4AF37]"></i> متوسط</button>
+                  <button type="button" onclick="setHomeCalcStyle('economic')" id="home-style-economic" class="s-btn flex items-center justify-center gap-1 cursor-pointer"><i data-lucide="sparkles" class="w-3.5 h-3.5 text-[#D4AF37]"></i> اقتصادی</button>
                 </div>
               </div>
             </div>

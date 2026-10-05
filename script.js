@@ -68,8 +68,8 @@ const HOME_VIEW_HTML = `<!-- HOMEPAGE CONTENT MODULE (home-view.html) -->
               </button>
             </div>
 
-            <!-- Horizontal Auto-Scrolling Carousel Grid Wrapper -->
-            <div id="vip-showcase-container" class="relative overflow-x-auto vip-showcase-container flex gap-3 p-1">
+            <!-- Vertical Grid / List Showcase Wrapper -->
+            <div id="vip-showcase-container" class="vip-showcase-container grid grid-cols-1 gap-3 p-1 max-h-[380px] overflow-y-auto custom-scrollbar">
               <!-- Item 1 (Venue) -->
               <div data-vip-cat="hall" class="vip-vendor-card bg-white border border-accent/80 hover:border-[#D4AF37] p-3 rounded-2xl shadow-2xs hover:shadow-lg transition-all flex flex-col gap-2.5 group relative overflow-hidden">
                 <div class="relative h-28 rounded-xl overflow-hidden bg-slate-900">
@@ -317,23 +317,23 @@ const HOME_VIEW_HTML = `<!-- HOMEPAGE CONTENT MODULE (home-view.html) -->
           <div class="calc-main-content">
             <div class="calc-result-box">
               <span>برآورد کل هزینه‌های اصلی مراسم:</span>
-              <h2>۳۵۰,۰۰۰,۰۰۰ تومان</h2>
+              <h2 id="home-calc-result-price">۳۸۰,۰۰۰,۰۰۰ تومان</h2>
               <small>شامل ورودی تالار، شام، آتلیه، آرایشگاه، مزون لباس و شیرینی‌سرای یزد</small>
             </div>
 
             <div class="calc-controls-box">
               <div class="slider-row">
-                <span class="val-tag">250 نفر</span>
+                <span id="home-calc-guest-tag" class="val-tag">250 نفر</span>
                 <label>تعداد مهمانان تخمینی:</label>
               </div>
-              <input type="range" min="50" max="1000" value="250" class="custom-range-slider">
+              <input type="range" id="home-calc-range" min="50" max="1000" step="25" value="250" oninput="updateHomeQuickBudget()" class="custom-range-slider cursor-pointer">
 
               <div class="style-row">
                 <label>سطح تشریفات و خدمات:</label>
                 <div class="style-btns">
-                  <button class="s-btn flex items-center justify-center gap-1"><i data-lucide="gem" class="w-3.5 h-3.5 text-[#D4AF37]"></i> لوکس / VIP</button>
-                  <button class="s-btn active flex items-center justify-center gap-1"><i data-lucide="star" class="w-3.5 h-3.5 text-[#D4AF37] fill-[#D4AF37]"></i> متوسط</button>
-                  <button class="s-btn flex items-center justify-center gap-1"><i data-lucide="sparkles" class="w-3.5 h-3.5 text-[#D4AF37]"></i> اقتصادی</button>
+                  <button type="button" onclick="setHomeCalcStyle('luxury')" id="home-style-luxury" class="s-btn flex items-center justify-center gap-1 cursor-pointer"><i data-lucide="gem" class="w-3.5 h-3.5 text-[#D4AF37]"></i> لوکس / VIP</button>
+                  <button type="button" onclick="setHomeCalcStyle('medium')" id="home-style-medium" class="s-btn active flex items-center justify-center gap-1 cursor-pointer"><i data-lucide="star" class="w-3.5 h-3.5 text-[#D4AF37] fill-[#D4AF37]"></i> متوسط</button>
+                  <button type="button" onclick="setHomeCalcStyle('economic')" id="home-style-economic" class="s-btn flex items-center justify-center gap-1 cursor-pointer"><i data-lucide="sparkles" class="w-3.5 h-3.5 text-[#D4AF37]"></i> اقتصادی</button>
                 </div>
               </div>
             </div>
@@ -992,46 +992,34 @@ if (document.readyState === "loading") {
     let timeframeList = [
       "همه",
       "۱۲ تا ۹ ماه قبل",
-      "۹ تا ۶ ماه قبل",
       "۶ تا ۳ ماه قبل",
-      "۳ تا ۱ ماه قبل",
-      "۱ هفته قبل",
-      "روز عروسی و بعد از آن"
+      "۱ ماه قبل",
+      "هفته و روز قبل"
     ];
 
     let staticChecklist = [
       // ۱۲ تا ۹ ماه قبل
-      { id: "chk-1", title: "تعیین بودجه اولیه و سقف هزینه‌های جشن", timeframe: "۱۲ تا ۹ ماه قبل", completed: true, dueDate: "۱۲ ماه قبل", priority: "urgent", category: "عمومی", attachedVendorId: null, vendorStatus: "finalized" },
-      { id: "chk-2", title: "انتخاب و رزرو باغ تالار یا محل برگزاری مراسم", timeframe: "۱۲ تا ۹ ماه قبل", completed: true, dueDate: "۱۰ ماه قبل", priority: "urgent", category: "تالار و باغ تشریفات", attachedVendorId: 1, vendorStatus: "finalized" },
-      { id: "chk-3", title: "تعیین لیست اولیه و تعداد تقریبی مهمانان", timeframe: "۱۲ تا ۹ ماه قبل", completed: true, dueDate: "۹ ماه قبل", priority: "suggested", category: "عمومی", attachedVendorId: null, vendorStatus: null },
-
-      // ۹ تا ۶ ماه قبل
-      { id: "chk-4", title: "انتخاب و عقد قرارداد با آتلیه فیلم و عکس", timeframe: "۹ تا ۶ ماه قبل", completed: false, dueDate: "۸ ماه قبل", priority: "urgent", category: "آتلیه و عکاسی", attachedVendorId: 2, vendorStatus: "deposit_paid" },
-      { id: "chk-5", title: "رزرو و هماهنگی سالن زیبایی و میکاپ عروس", timeframe: "۹ تا ۶ ماه قبل", completed: false, dueDate: "۷ ماه قبل", priority: "urgent", category: "سالن زیبایی", attachedVendorId: 3, vendorStatus: "quote_received" },
-      { id: "chk-6", title: "انتخاب گروه موسیقی، دی‌جی و سیستم نورپردازی", timeframe: "۹ تا ۶ ماه قبل", completed: false, dueDate: "۶ ماه قبل", priority: "suggested", category: "موزیک", attachedVendorId: null, vendorStatus: null },
+      { id: "chk-1", title: "برنامه‌ریزی اولیه، تعیین سقف بودجه و تعداد مهمانان", timeframe: "۱۲ تا ۹ ماه قبل", completed: true, dueDate: "۱۲ ماه قبل", priority: "urgent", category: "عمومی", attachedVendorId: null, vendorStatus: "finalized" },
+      { id: "chk-2", title: "رزرو باغ/تالارهای سنتی و عمارت‌های معتبر یزد (مشیرالممالک، قصر)", timeframe: "۱۲ تا ۹ ماه قبل", completed: true, dueDate: "۱۰ ماه قبل", priority: "urgent", category: "تالار و باغ تشریفات", attachedVendorId: 1, vendorStatus: "finalized" },
+      { id: "chk-3", title: "انتخاب آتلیه تخصصی و اخذ مجوز رسمی عکاسی فرمالیته کویر یزد", timeframe: "۱۲ تا ۹ ماه قبل", completed: true, dueDate: "۹ ماه قبل", priority: "urgent", category: "آتلیه و عکاسی", attachedVendorId: 2, vendorStatus: "deposit_paid" },
 
       // ۶ تا ۳ ماه قبل
-      { id: "chk-7", title: "سفارش یا اجاره لباس عروس و خرید اکسسوری", timeframe: "۶ تا ۳ ماه قبل", completed: false, dueDate: "۵ ماه قبل", priority: "urgent", category: "مزون و لباس عروس", attachedVendorId: 4, vendorStatus: "deposit_paid" },
-      { id: "chk-8", title: "انتخاب و خرید کت و شلوار و کفش داماد", timeframe: "۶ تا ۳ ماه قبل", completed: false, dueDate: "۴ ماه قبل", priority: "suggested", category: "کت و شلوار داماد", attachedVendorId: null, vendorStatus: null },
-      { id: "chk-9", title: "خرید حلقه‌های ازدواج و سرویس طلا", timeframe: "۶ تا ۳ ماه قبل", completed: false, dueDate: "۳ ماه قبل", priority: "urgent", category: "طلافروشی و جواهرفروشی", attachedVendorId: null, vendorStatus: null },
+      { id: "chk-4", title: "تست آرایش و گریم عروس در سالن‌های زیبایی لوکس یزد", timeframe: "۶ تا ۳ ماه قبل", completed: false, dueDate: "۵ ماه قبل", priority: "urgent", category: "سالن زیبایی", attachedVendorId: 3, vendorStatus: "quote_received" },
+      { id: "chk-5", title: "سفارش و دوخت سفارشی لباس عروس در مزون‌های تخصصی یزد", timeframe: "۶ تا ۳ ماه قبل", completed: false, dueDate: "۴ ماه قبل", priority: "urgent", category: "مزون و لباس عروس", attachedVendorId: 4, vendorStatus: "deposit_paid" },
+      { id: "chk-6", title: "خرید حلقه‌های ازدواج و سرویس طلا از بازار خان یزد", timeframe: "۶ تا ۳ ماه قبل", completed: false, dueDate: "۳ ماه قبل", priority: "suggested", category: "طلافروشی و جواهرفروشی", attachedVendorId: 8, vendorStatus: "quote_received" },
 
-      // ۳ تا ۱ ماه قبل
-      { id: "chk-10", title: "طراحی و ارسال کارت دعوت دیجیتال و پیگیری RSVP", timeframe: "۳ تا ۱ ماه قبل", completed: false, dueDate: "۲ ماه قبل", priority: "urgent", category: "عمومی", attachedVendorId: null, vendorStatus: null },
-      { id: "chk-11", title: "رزرو ماشین عروس و سفار ش گل‌آرایی ماشین و دسته گل", timeframe: "۳ تا ۱ ماه قبل", completed: false, dueDate: "۶ هفته قبل", priority: "suggested", category: "گل‌آرایی و ماشین عروس", attachedVendorId: null, vendorStatus: null },
-      { id: "chk-12", title: "انتخاب مدل و سفارش کیک و شیرینی عروسی", timeframe: "۳ تا ۱ ماه قبل", completed: false, dueDate: "۴ هفته قبل", priority: "optional", category: "کیک و شیرینی‌فروشی", attachedVendorId: null, vendorStatus: null },
+      // ۱ ماه قبل
+      { id: "chk-7", title: "رزرو کیک و شیرینی‌های سنتی اصیل یزد (قطاب، باقلوا حاج خلیفه)", timeframe: "۱ ماه قبل", completed: false, dueDate: "۳ هفته قبل", priority: "urgent", category: "کیک و شیرینی‌فروشی", attachedVendorId: 7, vendorStatus: "quote_received" },
+      { id: "chk-8", title: "طراحی، تنظیم آدرس نقشه و ارسال کارت دعوت دیجیتال با سیستم RSVP", timeframe: "۱ ماه قبل", completed: false, dueDate: "۲ هفته قبل", priority: "urgent", category: "عمومی", attachedVendorId: null, vendorStatus: null },
+      { id: "chk-9", title: "هماهنگی گل‌آرایی ماشین عروس و سفره عقد سنتی/VIP", timeframe: "۱ ماه قبل", completed: false, dueDate: "۱۰ روز قبل", priority: "suggested", category: "گل‌آرایی و ماشین عروس", attachedVendorId: null, vendorStatus: null },
 
-      // ۱ هفته قبل
-      { id: "chk-13", title: "هماهنگی نهایی سینک برنامه با تالار، آتلیه و تشریفات", timeframe: "۱ هفته قبل", completed: false, dueDate: "۵ روز قبل", priority: "urgent", category: "عمومی", attachedVendorId: null, vendorStatus: null },
-      { id: "chk-14", title: "پرو نهایی لباس عروس و کت و شلوار داماد", timeframe: "۱ هفته قبل", completed: false, dueDate: "۳ روز قبل", priority: "urgent", category: "مزون و لباس عروس", attachedVendorId: null, vendorStatus: null },
-      { id: "chk-15", title: "تمرین نهایی رقص ورود و ورودی جشن", timeframe: "۱ هفته قبل", completed: false, dueDate: "۲ روز قبل", priority: "optional", category: "عمومی", attachedVendorId: null, vendorStatus: null },
-
-      // روز عروسی و بعد از آن
-      { id: "chk-16", title: "حضور به موقع در آرایشگاه و شروع سناریوی تصویربرداری", timeframe: "روز عروسی و بعد از آن", completed: false, dueDate: "صبح عروسی", priority: "urgent", category: "سالن زیبایی", attachedVendorId: null, vendorStatus: null },
-      { id: "chk-17", title: "تسویه حساب نهایی با تمامی تامین‌کنندگان", timeframe: "روز عروسی و بعد از آن", completed: false, dueDate: "پایان شب", priority: "urgent", category: "عمومی", attachedVendorId: null, vendorStatus: null },
-      { id: "chk-18", title: "تحویل عکس‌ها و ویدیوهای خام جهت انتخاب آلبوم", timeframe: "روز عروسی و بعد از آن", completed: false, dueDate: "۲ هفته بعد", priority: "suggested", category: "آتلیه و عکاسی", attachedVendorId: null, vendorStatus: null }
+      // هفته و روز قبل
+      { id: "chk-10", title: "هماهنگی نهایی سینک زمانی با مدیریت تالار، آتلیه و موزیک", timeframe: "هفته و روز قبل", completed: false, dueDate: "۳ روز قبل", priority: "urgent", category: "عمومی", attachedVendorId: null, vendorStatus: null },
+      { id: "chk-11", title: "تسویه‌حساب‌ها، تحویل‌ها و آرامش قبل از شب جشن عروسی", timeframe: "هفته و روز قبل", completed: false, dueDate: "روز قبل", priority: "urgent", category: "عمومی", attachedVendorId: null, vendorStatus: null }
     ];
 
     let activeChecklistFilter = "همه";
+    let activeChecklistStatusFilter = "ALL"; // ALL | UNCOMPLETED | COMPLETED
 
     let staticVendorApplications = [
       { id: "app-101", name: "تشریفات و گل‌آرایی مگنولیا", category: "گل‌آرایی و ماشین عروس", city: "تهران", manager: "علیرضا حسینی", phone: "۰۹۱۲۹۸۷۶۵۴۳", status: "pending" }
@@ -1489,8 +1477,60 @@ if (document.readyState === "loading") {
       }
     }
 
+    function downloadCsvFile(filename, csvContent) {
+      const BOM = "\uFEFF";
+      const blob = new Blob([BOM + csvContent], { type: "text/csv;charset=utf-8;" });
+      const url = URL.createObjectURL(blob);
+      const link = document.createElement("a");
+      link.setAttribute("href", url);
+      link.setAttribute("download", filename);
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+      URL.revokeObjectURL(url);
+    }
+
     function exportGuestsExcel() {
-      showToast("خروجی کامل لیست مهمانان و هدایا در قالب Excel آماده گردید.", 'info');
+      let csv = "نام مهمان,دسته‌بندی,شماره همراه,تعداد همراهان,میز اختصاصی,وضعیت حضور\n";
+      if (typeof guestListState !== 'undefined' && guestListState.length > 0) {
+        guestListState.forEach(g => {
+          const statusText = g.status === 'CONFIRMED' ? 'قطعی' : (g.status === 'DECLINED' ? 'عذرخواهی' : 'در انتظار');
+          csv += `"${g.name || ''}","${g.side || ''}","${g.phone || ''}","${g.companions || 0}","${g.table || ''}","${statusText}"\n`;
+        });
+      } else {
+        csv += "موردی یافت نشد\n";
+      }
+      downloadCsvFile("لیست_مهمانان_عروسی_یزد.csv", csv);
+      showToast("خروجی کامل لیست مهمانان در قالب CSV/Excel دانلود گردید.", 'success');
+    }
+
+    function exportChecklistCsv() {
+      let csv = "عنوان اقدام,بازه زمانی,اولویت,وضعیت,تأمین‌کننده متصل\n";
+      if (typeof staticChecklist !== 'undefined' && staticChecklist.length > 0) {
+        staticChecklist.forEach(t => {
+          const timeframeObj = typeof timeframeList !== 'undefined' ? timeframeList.find(tf => tf.key === t.timeframeKey) : null;
+          const tfName = timeframeObj ? timeframeObj.label : t.timeframeKey;
+          const statusStr = t.completed ? 'تکمیل‌شده' : 'معوقه';
+          const priorityStr = t.priority === 'urgent' || t.isUrgent ? 'فوری' : 'عادی';
+          const vendor = typeof vendors !== 'undefined' && t.attachedVendorId ? vendors.find(v => v.id === t.attachedVendorId) : null;
+          const vendorName = vendor ? vendor.title : 'نامتصل';
+          csv += `"${t.title || ''}","${tfName || ''}","${priorityStr}","${statusStr}","${vendorName}"\n`;
+        });
+      }
+      downloadCsvFile("چک_لیست_برنامه‌ریزی_عروسی.csv", csv);
+      showToast("خروجی کامل چک‌لیست ۱۲ ماهه دانلود گردید.", 'success');
+    }
+
+    function exportBudgetSummaryCsv() {
+      let csv = "عنوان خدمت,درصد تخصیصی,مبلغ برآوردی (تومان),وضعیت\n";
+      if (typeof bwState !== 'undefined' && bwState.services) {
+        bwState.services.filter(s => s.active).forEach(s => {
+          const allocatedVal = typeof calculateAllocatedBudget === 'function' ? calculateAllocatedBudget(s) : 0;
+          csv += `"${s.title || ''}","${s.percentage || 0}%","${allocatedVal.toLocaleString('fa-IR')}","فعال"\n`;
+        });
+      }
+      downloadCsvFile("برآورد_بودجه_عروسی.csv", csv);
+      showToast("جدول برآورد بودجه در قالب فایل CSV دانلود گردید.", 'success');
     }
 
     // TAB SWITCHING FUNCTION
@@ -1512,7 +1552,15 @@ if (document.readyState === "loading") {
       }
 
       if (tabId === 'guests') renderGuestsAndGifts();
-      if (tabId === 'vendor-dash' && typeof renderVendorCustomQuestionsList === 'function') renderVendorCustomQuestionsList(1);
+      if (tabId === 'vendor-dash') {
+        if (typeof renderVendorPromoBadges === 'function') renderVendorPromoBadges();
+        if (typeof renderVendorPackages === 'function') renderVendorPackages();
+        if (typeof renderVendorDashCalendar === 'function') renderVendorDashCalendar();
+        if (typeof renderVendorInquiriesTable === 'function') renderVendorInquiriesTable();
+        if (typeof renderVendorReviewsManager === 'function') renderVendorReviewsManager();
+        if (typeof updateVendorAnalyticsUI === 'function') updateVendorAnalyticsUI();
+        if (typeof renderVendorCustomQuestionsList === 'function') renderVendorCustomQuestionsList(1);
+      }
 
       const target = document.getElementById('tab-' + tabId);
       if (target) target.classList.remove('hidden');
@@ -1732,42 +1780,172 @@ if (document.readyState === "loading") {
           </div>
         `;
       } else {
-        // Psychology Compatibility Result
-        const compatScore = Math.min(98, Math.max(65, Math.round((styleScores.compat / (quiz.questions.length * 90)) * 100)));
+        // Psychology Compatibility & Diagnostic Scorecard Result
+        const totalAnswered = Object.keys(quizState.userAnswers).length;
+
+        let totalWeightEarned = 0;
+        let maxPossibleWeight = totalAnswered * 10;
+
+        Object.values(quizState.userAnswers).forEach(ans => {
+          if (ans) {
+            totalWeightEarned += typeof ans.weight === 'number' ? ans.weight : (ans.score?.compat || 5);
+          }
+        });
+
+        const scorePercent = maxPossibleWeight > 0 ? Math.min(100, Math.max(10, Math.round((totalWeightEarned / maxPossibleWeight) * 100))) : 85;
+
+        let levelTitle = "";
+        let levelBadgeClass = "";
+        let levelBadgeText = "";
+        let strengths = [];
+        let growthAreas = [];
+        let expertAdvice = "";
+
+        if (scorePercent >= 80) {
+          levelTitle = "آمادگی عاطفی و هم‌راستایی عالی (سطح طلایی)";
+          levelBadgeClass = "bg-emerald-100 text-[#1B3B2B] border border-emerald-300";
+          levelBadgeText = "آمادگی فوق‌العاده - " + scorePercent + "٪";
+          strengths = [
+            "سطح بالای بلوغ ارتباطی و توانایی گفتگو در شرایط پرچالش",
+            "احترام عمیق به حریم خصوصی، استقلال فکری و اهداف فردی یکدیگر",
+            "هم‌نظری ارزشمند در مدیریت مالی، تقسیم مسئولیت‌ها و برنامه‌های آینده"
+          ];
+          growthAreas = [
+            "ثبت جلسات هم‌فکری هفتگی کوتاه برای جلوگیری از فرسودگی کارهای اجرایی عروسی",
+            "تمرکز بیشتر روی حفظ لحظات رومانتیک دو نفره در کنار برنامه‌ریزی‌های شلوغ"
+          ];
+          expertAdvice = "الگوهای انتخابی شما نشان‌دهنده پختگی هیجانی، اعتماد متقابل و توانایی عالی برای ساخت زندگی مشترک پایدار است. برنامه‌ریزی عروسی برای شما تجربه‌ای لذت‌بخش و تقویت‌کننده پیوند عاطفی خواهد بود.";
+        } else if (scorePercent >= 60) {
+          levelTitle = "هم‌راستایی مطلوب (نیازمند گفتگوی بیشتر در برخی محورها)";
+          levelBadgeClass = "bg-amber-100 text-amber-900 border border-amber-300";
+          levelBadgeText = "تفاهم خوب - " + scorePercent + "٪";
+          strengths = [
+            "اشتیاق مثبت و حسن نیت بالا برای حل مسائل و پیشبرد کارهای عروسی",
+            "انعطاف‌پذیری خوب در مواجهه با نظرات همسر و خانواده‌ها"
+          ];
+          growthAreas = [
+            "شفاف‌سازی بیشتر انتظارات مالی و تعیین مرزهای دقیق برای مداخلات اطرافیان",
+            "تمرین تکنیک‌های شنود فعال هنگام بروز اختلاف نظر در جزئیات تشریفات"
+          ];
+          expertAdvice = "تفاهم شما در سطح خوبی قرار دارد؛ با این حال پیش از اتخاذ تصمیمات بزرگ مالی یا تشریفاتی، حتماً جلسات گفتگوی صمیمانه دو نفره برای شفاف‌سازی انتظارات متقابل برگزار کنید.";
+        } else {
+          levelTitle = "نیازمند تعمیق گفتگو و مشاوره تخصصی قبل از ازدواج";
+          levelBadgeClass = "bg-[#5C1325]/10 text-[#5C1325] border border-[#5C1325]/30";
+          levelBadgeText = "نیازمند مشاوره - " + scorePercent + "٪";
+          strengths = [
+            "صداقت بالا در پاسخ‌دهی و آگاهی از نقاط نیازمند بهبود در رابطه",
+            "انگیزه برای دریافت راهنمایی‌های تخصصی روان‌شناسی"
+          ];
+          growthAreas = [
+            "بازنگری و گفتگو درباره انتظارات مالی، نحوه مدیریت استرس و مرزبندی با خانواده‌ها",
+            "کنترل خشم و استرس‌های ناشی از حجم کارهای اجرایی روزهای قبل از جشن"
+          ];
+          expertAdvice = "اختلاف نظر در دوران برنامه‌ریزی طبیعی است، اما جهت افزایش آرامش خاطر و جلوگیری از سوءتفاهم‌های عاطفی، پیشنهاد می‌شود از یک جلسه مشاوره تخصصی پیش از ازدواج استفاده کنید.";
+        }
+
+        // Save result to quiz history
+        saveQuizHistoryEntry({
+          quizId: quiz.id,
+          quizTitle: quiz.title,
+          quizCategory: quiz.category,
+          date: new Date().toLocaleDateString('fa-IR'),
+          scorePercent: scorePercent,
+          levelTitle: levelTitle
+        });
 
         mainResultHTML = `
-          <div class="bg-gradient-to-br from-rose-50 via-pink-50/30 to-bgCustom border border-rose-200 rounded-3xl p-6 sm:p-8 space-y-6">
-            <div class="flex flex-col sm:flex-row justify-between sm:items-center gap-4 border-b border-rose-200 pb-4">
-              <div>
-                <span class="text-xs font-bold text-rose-700 bg-rose-100 px-3 py-1 rounded-full">نتیجه آنالیز روانشناسی</span>
-                <h3 class="text-2xl font-black text-graphite mt-1">شاخص تفاهم و سازگاری در برنامه‌ریزی: عالی</h3>
+          <!-- DIAGNOSTIC SCORECARD CONTAINER -->
+          <div class="bg-[#FCFCFA] border-2 border-[#D4AF37]/50 rounded-3xl p-6 sm:p-8 space-y-6 shadow-md">
+            <!-- HEADER INFO -->
+            <div class="flex flex-col sm:flex-row justify-between sm:items-center gap-4 border-b border-[#E0D8C8] pb-5">
+              <div class="space-y-1">
+                <span class="inline-flex items-center gap-1.5 px-3.5 py-1 rounded-full text-xs font-bold ${levelBadgeClass}">
+                  <i data-lucide="award" class="w-4 h-4"></i>
+                  <span>${levelBadgeText}</span>
+                </span>
+                <h3 class="text-xl sm:text-2xl font-black text-graphite mt-2">${levelTitle}</h3>
+                <p class="text-xs text-secondary font-medium">کارنامه تحلیل روان‌شناسی اختصاصی ${quiz.title}</p>
               </div>
 
-              <div class="text-left dir-ltr bg-white p-3 rounded-2xl border border-rose-200 shadow-xs">
-                <span class="block text-3xl font-black text-rose-600">${compatScore}٪</span>
-                <span class="text-[10px] font-bold text-secondary">میزان تفاهم مشترک</span>
+              <div class="text-left dir-ltr bg-white p-4 rounded-2xl border border-[#E0D8C8] shadow-xs shrink-0">
+                <span class="block text-3xl font-black text-[#1B3B2B]">${scorePercent}٪</span>
+                <span class="text-[10px] font-bold text-secondary">امتیاز نهایی آمادگی</span>
               </div>
             </div>
 
-            <div class="p-5 bg-white rounded-2xl border border-rose-100 text-xs text-graphite leading-relaxed space-y-3">
-              <h4 class="font-bold text-rose-800 text-sm">توصیه‌های مشاوره خانواده برای روزهای برنامه‌ریزی:</h4>
-              <p>الگوهای انتخابی شما نشان‌دهنده سطح بالای پختگی هیجانی، احترام متقابل به نظرات خانواده‌ها و توانایی گفتگو در شرایط پرچالش است. پیشنهاد می‌شود وظایف چک‌لیست را بر اساس علاقه‌مندی‌های شخصی تقسیم کنید.</p>
+            <!-- KEY STRENGTHS & GROWTH AREAS GRID -->
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <!-- STRENGTHS -->
+              <div class="bg-emerald-50/60 border border-emerald-200 p-5 rounded-2xl space-y-3">
+                <h4 class="font-bold text-[#1B3B2B] text-xs flex items-center gap-2">
+                  <i data-lucide="check-circle-2" class="w-4 h-4 text-emerald-600"></i>
+                  <span>نقاط قوت و دارایی‌های ارتباطی زوج:</span>
+                </h4>
+                <ul class="space-y-2 text-xs text-graphite font-medium">
+                  ${strengths.map(s => `
+                    <li class="flex items-start gap-2">
+                      <span class="text-emerald-600 font-bold">•</span>
+                      <span>${s}</span>
+                    </li>
+                  `).join('')}
+                </ul>
+              </div>
+
+              <!-- GROWTH AREAS -->
+              <div class="bg-amber-50/60 border border-amber-200 p-5 rounded-2xl space-y-3">
+                <h4 class="font-bold text-amber-900 text-xs flex items-center gap-2">
+                  <i data-lucide="trending-up" class="w-4 h-4 text-amber-600"></i>
+                  <span>محورهای پیشنهادی برای گفتگو و رشد:</span>
+                </h4>
+                <ul class="space-y-2 text-xs text-graphite font-medium">
+                  ${growthAreas.map(g => `
+                    <li class="flex items-start gap-2">
+                      <span class="text-amber-600 font-bold">•</span>
+                      <span>${g}</span>
+                    </li>
+                  `).join('')}
+                </ul>
+              </div>
+            </div>
+
+            <!-- EXPERT ADVICE BANNER -->
+            <div class="p-5 bg-white rounded-2xl border border-[#E0D8C8] space-y-2">
+              <span class="text-xs font-bold text-[#1B3B2B] flex items-center gap-2">
+                <i data-lucide="lightbulb" class="w-4 h-4 text-[#D4AF37]"></i>
+                <span>توصیه راهبردی مشاور خانواده عروسی تو:</span>
+              </span>
+              <p class="text-xs text-graphite leading-relaxed font-medium">${expertAdvice}</p>
+            </div>
+
+            <!-- COUNSELOR CONSULTATION CTA BANNER -->
+            <div class="bg-[#1B3B2B] text-white p-5 rounded-2xl flex flex-col sm:flex-row justify-between sm:items-center gap-4">
+              <div class="space-y-1">
+                <h4 class="text-sm font-bold text-[#D4AF37]">مایل به تعمیق بیشتر گفتگوها هستید؟</h4>
+                <p class="text-xs text-emerald-100/90 font-medium">هماهنگی جلسه مشاوره تخصصی ازدواج با مشاورین برجسته خانواده استان یزد</p>
+              </div>
+
+              <button onclick="openCounselorModal()" class="bg-[#D4AF37] hover:bg-amber-400 text-[#1B3B2B] font-black px-5 py-3 rounded-xl text-xs transition-all shadow-md shrink-0 flex items-center gap-2">
+                <i data-lucide="heart-handshake" class="w-4 h-4"></i>
+                <span>درخواست مشاوره تخصصی ازدواج</span>
+              </button>
             </div>
           </div>
         `;
       }
+
+      const isPsych = quiz.category === 'psychology';
 
       resultView.innerHTML = `
         <!-- HEADER ACTIONS -->
         <div class="flex justify-between items-center border-b border-accent pb-4">
           <div class="flex items-center gap-2">
             <i data-lucide="award" class="w-6 h-6 text-primary"></i>
-            <h2 class="text-xl font-bold text-graphite">کارت تحلیل زنده و اختصاصی تست</h2>
+            <h2 class="text-xl font-bold text-graphite">کارنامه تحلیل روان‌شناسی و استایل</h2>
           </div>
 
           <button onclick="exitQuizRunner()" class="text-xs font-bold text-secondary hover:text-graphite flex items-center gap-1">
             <i data-lucide="rotate-ccw" class="w-4 h-4"></i>
-            <span>تکرار یا شرکت در تست دیگر</span>
+            <span>بازگشت به فهرست آزمون‌ها</span>
           </button>
         </div>
 
@@ -1776,19 +1954,26 @@ if (document.readyState === "loading") {
 
         <!-- INTEGRATED ACTION BUTTONS -->
         <div class="pt-4 border-t border-accent grid grid-cols-1 sm:grid-cols-3 gap-3">
-          <button onclick="applyStyleToDirectory()" class="bg-primary hover:bg-emerald-900 text-white font-bold py-3 px-4 rounded-2xl text-xs shadow-md transition-all flex items-center justify-center gap-2">
-            <i data-lucide="filter" class="w-4 h-4"></i>
-            <span>اعمال این استایل روی دایرکتوری و چک‌لیست</span>
-          </button>
+          ${isPsych ? `
+            <button onclick="openCounselorModal()" class="bg-[#1B3B2B] hover:bg-emerald-900 text-white font-bold py-3 px-4 rounded-2xl text-xs shadow-md transition-all flex items-center justify-center gap-2">
+              <i data-lucide="heart-handshake" class="w-4 h-4 text-[#D4AF37]"></i>
+              <span>رزرو مشاوره ازدواج در یزد</span>
+            </button>
+          ` : `
+            <button onclick="applyStyleToDirectory()" class="bg-primary hover:bg-emerald-900 text-white font-bold py-3 px-4 rounded-2xl text-xs shadow-md transition-all flex items-center justify-center gap-2">
+              <i data-lucide="filter" class="w-4 h-4"></i>
+              <span>اعمال این استایل روی دایرکتوری و چک‌لیست</span>
+            </button>
+          `}
 
-          <button onclick="showToast('کارت تحلیل خلاصه استایل با موفقیت جهت دانلود یا پرینت آماده شد.', 'info');" class="bg-bgCustom border border-accent hover:border-primary text-graphite font-bold py-3 px-4 rounded-2xl text-xs shadow-xs transition-all flex items-center justify-center gap-2">
+          <button onclick="showToast('کارنامه تحلیل روان‌شناسی با موفقیت جهت ذخیره‌سازی آماده شد.', 'info');" class="bg-bgCustom border border-accent hover:border-primary text-graphite font-bold py-3 px-4 rounded-2xl text-xs shadow-xs transition-all flex items-center justify-center gap-2">
             <i data-lucide="download" class="w-4 h-4 text-primary"></i>
-            <span>دانلود کارت تحلیل استایل</span>
+            <span>دانلود کارنامه تحلیل (PDF)</span>
           </button>
 
           <button onclick="copyQuizResultLink()" class="bg-bgCustom border border-accent hover:border-primary text-graphite font-bold py-3 px-4 rounded-2xl text-xs shadow-xs transition-all flex items-center justify-center gap-2">
             <i data-lucide="share-2" class="w-4 h-4 text-primary"></i>
-            <span>اشتراک‌گذاری با همسر / پارتنر</span>
+            <span>اشتراک‌گذاری کارنامه با همسر</span>
           </button>
         </div>
       `;
@@ -1911,10 +2096,20 @@ if (document.readyState === "loading") {
           </div>
         </div>
 
-        <!-- QUESTION PROMPT -->
-        <div class="text-center space-y-2 py-2">
-          <h3 class="text-lg sm:text-xl font-black text-graphite leading-relaxed">${question.text}</h3>
-          <p class="text-xs text-secondary font-medium">گزینه‌ای که بیشترین تطابق را با نظر و روحیات شما دارد انتخاب کنید</p>
+        <!-- QUIZ HEADER WITH UN SPLASH IMAGE -->
+        <div class="space-y-4">
+          <div class="relative h-44 sm:h-52 rounded-2xl overflow-hidden bg-slate-900 border border-accent shadow-xs">
+            <img src="${quiz.image}" alt="${quiz.title}" class="w-full h-full object-cover opacity-85">
+            <div class="absolute inset-0 bg-gradient-to-t from-graphite/90 via-graphite/30 to-transparent p-5 flex flex-col justify-end text-white">
+              <span class="bg-[#D4AF37] text-[#1B3B2B] text-[10px] font-black px-3 py-1 rounded-full w-fit shadow-xs mb-1.5">${quiz.badge}</span>
+              <h4 class="text-sm sm:text-base font-bold text-white">${quiz.title}</h4>
+            </div>
+          </div>
+
+          <div class="text-center space-y-1.5 py-1">
+            <h3 class="text-lg sm:text-xl font-black text-graphite leading-relaxed">${question.text}</h3>
+            <p class="text-xs text-secondary font-medium">گزینه‌ای که بیشترین تطابق را با واقعیت و روحیات شما دارد انتخاب کنید</p>
+          </div>
         </div>
 
         <!-- OPTIONS GRID/LIST -->
@@ -2325,6 +2520,7 @@ if (document.readyState === "loading") {
               <ul class="space-y-1 pt-2 border-t border-accent/60 text-secondary text-[11px]">
                 ${pkg.features.map(f => `<li class="flex items-center gap-1.5"><i data-lucide="check" class="w-3.5 h-3.5 text-primary"></i><span>${f}</span></li>`).join('')}
               </ul>
+              ${pkg.requirements ? `<p class="text-[10px] font-bold text-amber-900 bg-amber-50 p-1.5 rounded-lg border border-amber-200 mt-1">📌 شرط/الزام: ${pkg.requirements}</p>` : ''}
             </div>
 
             <div class="flex items-center justify-end gap-2 pt-2 border-t border-accent/60">
@@ -2369,6 +2565,9 @@ if (document.readyState === "loading") {
       document.getElementById('pkg-price').value = pkg.price || '';
       document.getElementById('pkg-badge').value = pkg.badge || '';
       document.getElementById('pkg-features').value = pkg.features ? pkg.features.join('\n') : '';
+      if (document.getElementById('pkg-requirements')) {
+        document.getElementById('pkg-requirements').value = pkg.requirements || '';
+      }
       document.getElementById('modal-package-title').innerHTML = '<i data-lucide="edit-3" class="w-5 h-5 text-primary"></i><span>ویرایش پکیج خدمات</span>';
       modal.classList.remove('hidden');
       modal.classList.add('flex');
@@ -2381,17 +2580,21 @@ if (document.readyState === "loading") {
       const price = document.getElementById('pkg-price').value.trim();
       const badge = document.getElementById('pkg-badge').value.trim();
       const featuresRaw = document.getElementById('pkg-features').value.trim();
+      const requirements = document.getElementById('pkg-requirements')?.value.trim() || '';
 
       if (!name || !price) return;
       const features = featuresRaw ? featuresRaw.split('\n').map(f => f.trim()).filter(Boolean) : ['خدمات باکیفیت کامل'];
 
       if (editIdx >= 0 && vendorPackages[editIdx]) {
-        vendorPackages[editIdx] = { ...vendorPackages[editIdx], name, price, badge, features };
+        vendorPackages[editIdx] = { ...vendorPackages[editIdx], name, price, badge, features, requirements };
         showToast('پکیج خدمات با موفقیت به روزرسانی شد.', 'success');
       } else {
-        vendorPackages.push({ id: 'pkg-' + Date.now(), name, price, badge, features });
+        vendorPackages.push({ id: 'pkg-' + Date.now(), name, price, badge, features, requirements });
         showToast('پکیج جدید با موفقیت اضافه گردید.', 'success');
       }
+
+      const vendor2 = vendors.find(v => v.id === 2);
+      if (vendor2) vendor2.packages = vendorPackages;
 
       renderVendorPackages();
       toggleAddPackageModal(false);
@@ -2482,6 +2685,7 @@ if (document.readyState === "loading") {
         expandedCategoryIds.add(groupId);
       }
       renderCategoryCards();
+      renderSidebarCategoryCheckboxes();
     }
 
     function renderCategoryCards() {
@@ -2693,10 +2897,50 @@ if (document.readyState === "loading") {
       }
     }
 
+    function renderNavMegaCategoryMenu() {
+      const megaContainer = document.getElementById('mega-category-menu');
+      if (!megaContainer) return;
+      const gridContainer = megaContainer.querySelector('.grid');
+      if (!gridContainer) return;
+
+      gridContainer.innerHTML = categoryGroups.map(group => {
+        const subButtons = group.subcategories.map(sub => `
+          <button onclick="filterVendorsFromMega('${sub.title}')" class="text-right text-xs font-medium text-graphite hover:text-primary hover:bg-slate-50 p-1.5 rounded-lg transition-colors flex items-center gap-1.5 cursor-pointer">
+            <span class="w-1.5 h-1.5 rounded-full bg-primary inline-block"></span>
+            <span>${sub.title}</span>
+          </button>
+        `).join('');
+
+        return `
+          <div class="space-y-3">
+            <div class="font-black text-xs text-graphite flex items-center gap-1.5 border-b border-accent/60 pb-1.5 text-emeraldHeader">
+              <i data-lucide="${group.icon || 'folder'}" class="w-4 h-4 text-primary"></i>
+              <span>${group.title}</span>
+            </div>
+            <div class="flex flex-col gap-1.5">
+              ${subButtons || '<span class="text-[11px] text-secondary italic">بدون زیرگروه</span>'}
+            </div>
+          </div>
+        `;
+      }).join('');
+      if (typeof lucide !== 'undefined' && lucide.createIcons) lucide.createIcons();
+    }
+
+    function renderVendorRegistrationCategoryOptions() {
+      const catSelect = document.getElementById('v-cat');
+      if (!catSelect) return;
+      catSelect.innerHTML = categoryGroups.map(cg => `<option value="${cg.title}">${cg.title}</option>`).join('');
+    }
+
     function syncCategoryStateAndRender() {
       saveCategoryGroupsToStorage();
       renderCategoryCards();
       renderAdminCategories();
+      renderNavMegaCategoryMenu();
+      renderVendorRegistrationCategoryOptions();
+      if (typeof renderSidebarCategoryCheckboxes === 'function') {
+        renderSidebarCategoryCheckboxes();
+      }
     }
 
     function renderAdminCategories() {
@@ -3192,6 +3436,14 @@ if (document.readyState === "loading") {
         const reviewCount = v.reviewCount || 32;
         const isFav = favoriteVendorIds.includes(v.id);
 
+        const priceNum = (typeof parsePriceNumeric === 'function') ? parsePriceNumeric(v.priceRange || '') : 0;
+        let priceTierBadge = "💰 اقتصادی";
+        if (priceNum > 80000000) {
+          priceTierBadge = "💰💰💰 لوکس";
+        } else if (priceNum > 30000000) {
+          priceTierBadge = "💰💰 متوسط";
+        }
+
         if (directoryViewMode === 'list') {
           card.innerHTML = `
             <div class="relative w-full md:w-72 h-56 md:h-auto overflow-hidden bg-slate-100 shrink-0">
@@ -3309,8 +3561,8 @@ if (document.readyState === "loading") {
                     <i data-lucide="map-pin" class="w-3 h-3 text-emerald-400"></i>
                     <span>${localTag}</span>
                   </span>
-                  <span class="bg-emerald-600/90 text-white font-bold px-2.5 py-1 rounded-lg text-[10px]">
-                    قیمت عادلانه
+                  <span class="bg-black/60 backdrop-blur-md text-[#D4AF37] border border-[#D4AF37]/40 font-black px-2.5 py-1 rounded-lg text-[11px]">
+                    ${priceTierBadge}
                   </span>
                 </div>
               </div>
@@ -3568,30 +3820,51 @@ if (document.readyState === "loading") {
     function renderSidebarCategoryCheckboxes() {
       const container = document.getElementById('sidebar-category-checkboxes');
       if (!container) return;
-      const categories = [
-        "تالار و باغ تالار عروسی",
-        "آتلیه عکاسی و فیلمبرداری",
-        "سالن زیبایی و آرایشگاه عروس",
-        "کترینگ و تشریفات پذیرایی",
-        "کیک و شیرینی عروسی",
-        "گل‌آرایی و ماشین عروس",
-        "موسیقی و دی‌جی",
-        "دفتر ازدواج و سالن عقد",
-        "مزون لباس عروس",
-        "طلافروشی و جواهرفروشی"
-      ];
 
-      container.innerHTML = categories.map(cat => {
-        const isChecked = activeCategoryFilters.has(cat);
+      container.innerHTML = categoryGroups.map(group => {
+        const isGroupExpanded = expandedCategoryIds.has(group.id);
+        const activeSubInGroupCount = group.subcategories.filter(sub => activeCategoryFilters.has(sub.title)).length;
+
         return `
-          <label class="flex items-center justify-between p-2 rounded-xl border border-accent/60 hover:bg-slate-50 cursor-pointer transition-colors">
-            <div class="flex items-center gap-2">
-              <input type="checkbox" value="${cat}" ${isChecked ? 'checked' : ''} onchange="toggleCategoryFilter('${cat}')" class="rounded text-primary focus:ring-primary w-4 h-4">
-              <span class="text-xs font-bold text-graphite">${cat}</span>
+          <div class="border border-[#1B3B2B]/20 rounded-2xl overflow-hidden mb-2 bg-[#FCFCFA] shadow-2xs transition-all">
+            <!-- Accordion Group Header -->
+            <button type="button" onclick="toggleCategoryAccordion('${group.id}')" class="w-full p-2.5 flex items-center justify-between bg-[#F5EFEB]/80 hover:bg-[#F5EFEB] text-right transition-colors cursor-pointer">
+              <div class="flex items-center gap-2">
+                <div class="w-7 h-7 rounded-lg bg-[#1B3B2B] text-[#D4AF37] flex items-center justify-center shrink-0 shadow-xs">
+                  <i data-lucide="${group.icon || 'grid'}" class="w-3.5 h-3.5"></i>
+                </div>
+                <span class="text-xs font-extrabold text-[#1B3B2B]">${group.title}</span>
+              </div>
+              <div class="flex items-center gap-1.5">
+                ${activeSubInGroupCount > 0 ? `<span class="text-[10px] font-bold bg-[#D4AF37] text-[#1B3B2B] px-1.5 py-0.5 rounded-full">${activeSubInGroupCount}</span>` : ''}
+                <i data-lucide="chevron-down" class="w-4 h-4 text-[#1B3B2B] transition-transform duration-200 ${isGroupExpanded ? 'rotate-180' : ''}"></i>
+              </div>
+            </button>
+
+            <!-- Sub-Categories Expandable Container -->
+            <div class="${isGroupExpanded ? 'block' : 'hidden'} p-2 space-y-1.5 bg-[#FCFCFA] border-t border-[#1B3B2B]/10">
+              <div class="flex flex-wrap gap-1.5 pt-1">
+                ${group.subcategories.map(sub => {
+                  const isChecked = activeCategoryFilters.has(sub.title);
+                  return `
+                    <button
+                      type="button"
+                      onclick="toggleCategoryFilter('${sub.title}')"
+                      class="px-2.5 py-1 rounded-xl text-[11px] font-bold transition-all duration-200 flex items-center gap-1.5 cursor-pointer border ${isChecked ? 'bg-[#1B3B2B] text-[#FCFCFA] border-[#D4AF37] shadow-xs ring-2 ring-[#D4AF37]/30 scale-[1.02]' : 'bg-[#FCFCFA] text-[#1B3B2B] border-[#1B3B2B]/20 hover:border-[#D4AF37] hover:bg-[#F5EFEB]'}">
+                      <span class="w-1.5 h-1.5 rounded-full ${isChecked ? 'bg-[#D4AF37]' : 'bg-[#1B3B2B]/30'}"></span>
+                      <span>${sub.title}</span>
+                    </button>
+                  `;
+                }).join('')}
+              </div>
             </div>
-          </label>
+          </div>
         `;
       }).join('');
+
+      if (typeof lucide !== 'undefined') {
+        lucide.createIcons();
+      }
     }
 
     function toggleCategoryFilter(category) {
@@ -3650,12 +3923,16 @@ if (document.readyState === "loading") {
     function syncAndFilterCity(val) {
       const headerCity = document.getElementById('header-city-select');
       if (headerCity) headerCity.value = val;
+      const sidebarCity = document.getElementById('sidebar-city-select');
+      if (sidebarCity) sidebarCity.value = val;
       filterVendors();
     }
 
     function syncAndFilterPrice(val) {
       const headerPrice = document.getElementById('header-price-select');
       if (headerPrice) headerPrice.value = val;
+      const sidebarPrice = document.getElementById('sidebar-price-select');
+      if (sidebarPrice) sidebarPrice.value = val;
       filterVendors();
     }
 
@@ -3722,7 +3999,12 @@ if (document.readyState === "loading") {
 
         let matchesPrice = true;
         if (selectedPriceRange !== 'all') {
-          const rawPrice = parseInt((v.priceRange || '').replace(/[^\d]/g, ''), 10) || 0;
+          const parsePriceNumeric = (str) => {
+            if (!str) return 0;
+            const enStr = str.toString().replace(/[۰-۹]/g, d => '۰۱۲۳۴۵۶۷۸۹'.indexOf(d));
+            return parseInt(enStr.replace(/[^\d]/g, ''), 10) || 0;
+          };
+          const rawPrice = parsePriceNumeric(v.priceRange);
           if (selectedPriceRange === 'economic') {
             matchesPrice = rawPrice <= 35000000;
           } else if (selectedPriceRange === 'mid') {
@@ -3754,8 +4036,13 @@ if (document.readyState === "loading") {
       const sortMode = sortSelect ? sortSelect.value : 'popular';
 
       filtered.sort((a, b) => {
-        const priceA = parseInt((a.priceRange || '').replace(/[^\d]/g, ''), 10) || 0;
-        const priceB = parseInt((b.priceRange || '').replace(/[^\d]/g, ''), 10) || 0;
+        const parsePriceNumeric = (str) => {
+          if (!str) return 0;
+          const enStr = str.toString().replace(/[۰-۹]/g, d => '۰۱۲۳۴۵۶۷۸۹'.indexOf(d));
+          return parseInt(enStr.replace(/[^\d]/g, ''), 10) || 0;
+        };
+        const priceA = parsePriceNumeric(a.priceRange);
+        const priceB = parsePriceNumeric(b.priceRange);
 
         if (sortMode === 'popular') {
           if ((b.rating || 0) !== (a.rating || 0)) {
@@ -3795,7 +4082,7 @@ if (document.readyState === "loading") {
           renderChecklistTimeframeButtons();
         };
         const isActive = activeChecklistFilter === tf;
-        btn.className = `px-3.5 py-2 rounded-xl text-xs font-bold transition-all ${
+        btn.className = `px-3.5 py-2 rounded-xl text-xs font-bold transition-all cursor-pointer ${
           isActive
             ? 'bg-primary text-white shadow-xs'
             : 'bg-bgCustom text-graphite border border-accent hover:border-primary'
@@ -3803,6 +4090,23 @@ if (document.readyState === "loading") {
         btn.innerText = tf;
         btnContainer.appendChild(btn);
       });
+
+      // Append quick status filter buttons
+      const statusGroup = document.createElement('div');
+      statusGroup.className = "flex items-center gap-1.5 pt-2 sm:pt-0 sm:mr-auto border-t sm:border-t-0 border-accent/60 w-full sm:w-auto";
+      statusGroup.innerHTML = `
+        <span class="text-[11px] font-bold text-secondary hidden md:inline">وضعیت:</span>
+        <button type="button" onclick="filterChecklistTasksByStatus('ALL')" class="px-2.5 py-1 rounded-lg text-[11px] font-bold transition-all ${
+          activeChecklistStatusFilter === 'ALL' ? 'bg-[#1B3B2B] text-white' : 'bg-slate-100 text-graphite hover:bg-slate-200'
+        }">همه کارها</button>
+        <button type="button" onclick="filterChecklistTasksByStatus('UNCOMPLETED')" class="px-2.5 py-1 rounded-lg text-[11px] font-bold transition-all ${
+          activeChecklistStatusFilter === 'UNCOMPLETED' ? 'bg-amber-600 text-white' : 'bg-slate-100 text-graphite hover:bg-slate-200'
+        }">انجام نشده</button>
+        <button type="button" onclick="filterChecklistTasksByStatus('COMPLETED')" class="px-2.5 py-1 rounded-lg text-[11px] font-bold transition-all ${
+          activeChecklistStatusFilter === 'COMPLETED' ? 'bg-emerald-700 text-white' : 'bg-slate-100 text-graphite hover:bg-slate-200'
+        }">تکمیل شده</button>
+      `;
+      btnContainer.appendChild(statusGroup);
     }
 
     function toggleChecklistTask(id) {
@@ -3932,86 +4236,435 @@ if (document.readyState === "loading") {
       lucide.createIcons();
     }
 
+    // ENTERPRISE WEDDING BUDGET PLANNER STATE & FUNCTIONS
+    let budgetPlannerState = {
+      totalBudget: 350000000,
+      categories: [
+        { id: "c1", name: "تالار و تشریفات پذیرایی", defaultSplit: 0.40, color: "#1B3B2B" },
+        { id: "c2", name: "عکاسی و فیلم‌برداری", defaultSplit: 0.15, color: "#D4AF37" },
+        { id: "c3", name: "لباس، طلا و آرایشگاه", defaultSplit: 0.20, color: "#607268" },
+        { id: "c4", name: "گل‌آرایی، دکور و موزیک", defaultSplit: 0.10, color: "#B89628" },
+        { id: "c5", name: "ماشین عروس و ماه عسل", defaultSplit: 0.10, color: "#2E533F" },
+        { id: "c6", name: "هزینه‌های پیش‌بینی‌نشده", defaultSplit: 0.05, color: "#8D99AE" }
+      ],
+      lineItems: [
+        { id: "item-1", title: "ورودی و ورودی شام باغ تالار مشیرالممالک", category: "تالار و تشریفات پذیرایی", estimated: 140000000, paid: 95000000, status: "ADVANCE", notes: "بیعانه اولیه پرداخت شد", party: "groom" },
+        { id: "item-2", title: "پکیج کامل عکاسی و فرمالیته کویر", category: "عکاسی و فیلم‌برداری", estimated: 52500000, paid: 45000000, status: "ADVANCE", notes: "شامل ۲ آلبوم و هلی‌شات", party: "shared" },
+        { id: "item-3", title: "سالن زیبایی و آرایشگاه رویال عروس", category: "لباس، طلا و آرایشگاه", estimated: 25000000, paid: 25000000, status: "FULL", notes: "تسویه کامل گردید", party: "groom" },
+        { id: "item-4", title: "سفارش و دوخت لباس عروس مزون ترمه", category: "لباس، طلا و آرایشگاه", estimated: 45000000, paid: 15000000, status: "ADVANCE", notes: "پرو دوم هفته آینده", party: "groom" },
+        { id: "item-5", title: "گل‌آرایی ورودی، جایگاه و دسته گل", category: "گل‌آرایی، دکور و موزیک", estimated: 35000000, paid: 0, status: "UNPAID", notes: "در مرحله استعلام", party: "bride" }
+      ]
+    };
+
+    function loadBudgetStateFromStorage() {
+      try {
+        const stored = localStorage.getItem('aroosi_enterprise_budget_db');
+        if (stored) {
+          const parsed = JSON.parse(stored);
+          if (parsed && typeof parsed.totalBudget === 'number') {
+            budgetPlannerState = parsed;
+          }
+        }
+      } catch (e) {
+        console.error('Failed to load budget state:', e);
+      }
+    }
+
+    function saveBudgetStateToStorage() {
+      try {
+        localStorage.setItem('aroosi_enterprise_budget_db', JSON.stringify(budgetPlannerState));
+      } catch (e) {
+        console.error('Failed to save budget state:', e);
+      }
+    }
+
+    function openBudgetItemModal(itemId = null) {
+      const modal = document.getElementById('modal-budget-item');
+      if (!modal) return;
+
+      const titleElem = document.getElementById('budget-item-modal-title');
+      const idInp = document.getElementById('bmi-id');
+      const titleInp = document.getElementById('bmi-title');
+      const catInp = document.getElementById('bmi-category');
+      const estInp = document.getElementById('bmi-estimated');
+      const paidInp = document.getElementById('bmi-paid');
+      const statusInp = document.getElementById('bmi-status');
+      const partyInp = document.getElementById('bmi-party');
+      const notesInp = document.getElementById('bmi-notes');
+
+      if (itemId) {
+        const item = budgetPlannerState.lineItems.find(i => i.id === itemId);
+        if (item) {
+          if (titleElem) titleElem.innerText = "ویرایش قلم هزینه بودجه";
+          if (idInp) idInp.value = item.id;
+          if (titleInp) titleInp.value = item.title;
+          if (catInp) catInp.value = item.category;
+          if (estInp) estInp.value = item.estimated;
+          if (paidInp) paidInp.value = item.paid;
+          if (statusInp) statusInp.value = item.status || "UNPAID";
+          if (partyInp) partyInp.value = item.party || "groom";
+          if (notesInp) notesInp.value = item.notes || "";
+        }
+      } else {
+        if (titleElem) titleElem.innerText = "افزودن قلم هزینه جدید به بودجه";
+        if (idInp) idInp.value = "";
+        if (titleInp) titleInp.value = "";
+        if (catInp) catInp.value = "تالار و تشریفات پذیرایی";
+        if (estInp) estInp.value = "";
+        if (paidInp) paidInp.value = "0";
+        if (statusInp) statusInp.value = "UNPAID";
+        if (partyInp) partyInp.value = "groom";
+        if (notesInp) notesInp.value = "";
+      }
+
+      modal.classList.remove('hidden');
+      if (window.lucide) lucide.createIcons();
+    }
+
+    function closeBudgetItemModal() {
+      const modal = document.getElementById('modal-budget-item');
+      if (modal) modal.classList.add('hidden');
+    }
+
+    function handleSaveBudgetItem(e) {
+      if (e && e.preventDefault) e.preventDefault();
+
+      const id = document.getElementById('bmi-id')?.value;
+      const title = document.getElementById('bmi-title')?.value.trim();
+      const category = document.getElementById('bmi-category')?.value;
+      const estimated = Number(document.getElementById('bmi-estimated')?.value) || 0;
+      const paid = Number(document.getElementById('bmi-paid')?.value) || 0;
+      const status = document.getElementById('bmi-status')?.value || "UNPAID";
+      const party = document.getElementById('bmi-party')?.value || "groom";
+      const notes = document.getElementById('bmi-notes')?.value.trim() || "";
+
+      if (!title || estimated <= 0) {
+        showToast('لطفاً عنوان و مبلغ برآوردی معتبر وارد کنید.', 'warning');
+        return;
+      }
+
+      if (id) {
+        const idx = budgetPlannerState.lineItems.findIndex(i => i.id === id);
+        if (idx !== -1) {
+          budgetPlannerState.lineItems[idx] = { id, title, category, estimated, paid, status, party, notes };
+        }
+      } else {
+        budgetPlannerState.lineItems.unshift({
+          id: 'item-' + Date.now(),
+          title, category, estimated, paid, status, party, notes
+        });
+      }
+
+      saveBudgetStateToStorage();
+      closeBudgetItemModal();
+      renderPlannerBudgetSummary();
+      showToast('قلم هزینه با موفقیت ثبت گردید.', 'success');
+    }
+
+    function deleteBudgetItem(itemId) {
+      if (confirm('آیا از حذف این قلم هزینه اطمینان دارید؟')) {
+        budgetPlannerState.lineItems = budgetPlannerState.lineItems.filter(i => i.id !== itemId);
+        saveBudgetStateToStorage();
+        renderPlannerBudgetSummary();
+        showToast('قلم هزینه از بودجه حذف گردید.', 'info');
+      }
+    }
+
+    function updateTotalBudgetCap(newBudget) {
+      const val = Number(newBudget);
+      if (val && val > 0) {
+        budgetPlannerState.totalBudget = val;
+        saveBudgetStateToStorage();
+        renderPlannerBudgetSummary();
+        showToast('سقف بودجه کل با موفقیت بروزرسانی شد.', 'success');
+      }
+    }
+
     function renderPlannerBudgetSummary() {
       const container = document.getElementById('planner-budget-summary-container');
       if (!container) return;
 
-      const attachedTasks = staticChecklist.filter(t => t.attachedVendorId);
-      const totalTasks = staticChecklist.length;
-      const completedTasks = staticChecklist.filter(t => t.completed).length;
+      loadBudgetStateFromStorage();
 
-      const totalBudgetNum = 350000000;
-      const totalSpentNum = 180000000;
-      const remainingNum = totalBudgetNum - totalSpentNum;
-      const spentPercent = Math.round((totalSpentNum / totalBudgetNum) * 100);
+      const totalBudget = budgetPlannerState.totalBudget || 350000000;
+      const totalPaid = budgetPlannerState.lineItems.reduce((acc, item) => acc + (Number(item.paid) || 0), 0);
+      const totalEstimatedSpent = budgetPlannerState.lineItems.reduce((acc, item) => acc + (Number(item.estimated) || 0), 0);
+      const remaining = totalBudget - totalPaid;
 
-      const categoriesBreakdown = [
-        { name: 'تالار و باغ عروسی', budgeted: 140000000, spent: 95000000, color: 'bg-primary' },
-        { name: 'عکاسی و فیلم‌برداری', budgeted: 70000000, spent: 45000000, color: 'bg-emerald-600' },
-        { name: 'سالن زیبایی و آرایش عروس', budgeted: 40000000, spent: 25000000, color: 'bg-amber-500' },
-        { name: 'مزون و لباس عروس/داماد', budgeted: 50000000, spent: 15000000, color: 'bg-rose-500' },
-        { name: 'موسیقی، گل‌آرایی و سایر', budgeted: 50000000, spent: 0, color: 'bg-slate-400' }
-      ];
+      // Dual Budget Split Totals (Groom vs Bride vs Shared)
+      const groomTotal = budgetPlannerState.lineItems
+        .filter(i => (i.party || 'groom') === 'groom')
+        .reduce((acc, item) => acc + (Number(item.estimated) || 0), 0);
+
+      const brideTotal = budgetPlannerState.lineItems
+        .filter(i => i.party === 'bride')
+        .reduce((acc, item) => acc + (Number(item.estimated) || 0), 0);
+
+      const sharedTotal = budgetPlannerState.lineItems
+        .filter(i => i.party === 'shared')
+        .reduce((acc, item) => acc + (Number(item.estimated) || 0), 0);
+
+      // Evaluate Health Status Badge
+      let healthBadgeText = "عالی (مدیریت متوازن)";
+      let healthBadgeClass = "health-badge-excellent";
+      let healthDesc = "هزینه‌های شما کاملاً طبق بودجه کل مصوب در حال مدیریت است.";
+
+      if (totalEstimatedSpent > totalBudget * 1.1) {
+        healthBadgeText = "خطر (تجاوز از سقف بودجه)";
+        healthBadgeClass = "health-badge-danger";
+        healthDesc = "مجموع هزینه‌های برآوردی از سقف بودجه کل شما فراتر رفته است.";
+      } else if (totalEstimatedSpent > totalBudget) {
+        healthBadgeText = "هشدار (نزدیک به سقف)";
+        healthBadgeClass = "health-badge-warning";
+        healthDesc = "برآورد هزینه‌ها به سقف بودجه نزدیک شده است، در انتخاب پکیج‌ها دقت کنید.";
+      }
+
+      // Calculate Category Splits
+      const categoryCalculations = budgetPlannerState.categories.map(cat => {
+        const catTargetBudget = totalBudget * cat.defaultSplit;
+        const catItems = budgetPlannerState.lineItems.filter(i => i.category === cat.name);
+        const catEstimatedTotal = catItems.reduce((a, b) => a + (Number(b.estimated) || 0), 0);
+        const catPaidTotal = catItems.reduce((a, b) => a + (Number(b.paid) || 0), 0);
+
+        const diff = catEstimatedTotal - catTargetBudget;
+        let diffText = "منطبق بر سهم";
+        let diffColorClass = "text-[#1B3B2B]";
+        let progressBgClass = "bg-[#1B3B2B]";
+
+        if (diff > 0) {
+          diffText = `+${diff.toLocaleString('fa-IR')} تومان فراتر از سهم`;
+          diffColorClass = "text-rose-600";
+          progressBgClass = "bg-rose-500";
+        } else if (diff < 0) {
+          diffText = `${Math.abs(diff).toLocaleString('fa-IR')} تومان صرفه‌جویی`;
+          diffColorClass = "text-emerald-700";
+          progressBgClass = "bg-[#1B3B2B]";
+        } else {
+          progressBgClass = "bg-[#D4AF37]";
+        }
+
+        const pct = Math.min(100, Math.round((catEstimatedTotal / catTargetBudget) * 100));
+
+        return {
+          ...cat,
+          targetBudget: catTargetBudget,
+          itemsCount: catItems.length,
+          estimatedTotal: catEstimatedTotal,
+          paidTotal: catPaidTotal,
+          diffText,
+          diffColorClass,
+          progressBgClass,
+          pct
+        };
+      });
 
       container.innerHTML = `
-        <div class="space-y-6">
-          <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
-            <div class="bg-bgCustom p-5 rounded-2xl border border-accent space-y-1">
-              <span class="text-xs font-bold text-secondary">بودجه کل مصوب:</span>
-              <span class="block text-xl font-black text-graphite">${totalBudgetNum.toLocaleString('fa-IR')} <span class="text-xs font-normal text-secondary">تومان</span></span>
+        <div class="space-y-8">
+
+          <!-- TOP HERO SUMMARY BANNER (4 KEY METRIC COUNTERS) -->
+          <div class="ivory-card rounded-3xl p-6 sm:p-8 space-y-6">
+            <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 border-b border-[#D4AF37]/30 pb-4">
+              <div class="space-y-1">
+                <span class="text-xs font-bold text-primary bg-primary/10 px-3 py-1 rounded-full border border-primary/20">خلاصه مالی کل جشن</span>
+                <h3 class="text-xl font-black text-[#111827] mt-1">بودجه‌ریز هوشمند پیشرفته عروسی در یزد</h3>
+              </div>
+
+              <div class="flex items-center gap-2">
+                <span class="px-3.5 py-1.5 rounded-full text-xs font-black ${healthBadgeClass}">
+                  وضعیت بودجه: ${healthBadgeText}
+                </span>
+                <button onclick="openBudgetItemModal()" class="bg-[#1B3B2B] hover:bg-emerald-900 text-[#D4AF37] border border-[#D4AF37]/40 px-4 py-2.5 rounded-xl text-xs font-bold transition-all shadow-md flex items-center gap-1.5 cursor-pointer">
+                  <i data-lucide="plus" class="w-4 h-4 text-[#D4AF37]"></i>
+                  <span>+ ثبت هزینه جدید</span>
+                </button>
+              </div>
             </div>
 
-            <div class="bg-bgCustom p-5 rounded-2xl border border-accent space-y-1">
-              <span class="text-xs font-bold text-secondary">هزینه‌های پرداخت‌شده:</span>
-              <span class="block text-xl font-black text-primary">${totalSpentNum.toLocaleString('fa-IR')} <span class="text-xs font-normal text-secondary">تومان (${spentPercent}٪)</span></span>
-            </div>
+            <!-- 4 METRIC COUNTERS -->
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+              <div class="bg-white/80 p-4 rounded-2xl border border-[#D4AF37]/30 shadow-2xs space-y-1.5">
+                <span class="text-xs font-bold text-secondary flex items-center justify-between">
+                  <span>بودجه کل مصوب:</span>
+                  <button onclick="const b = prompt('سقف جدید بودجه کل (تومان):', '${totalBudget}'); if(b) updateTotalBudgetCap(b);" class="text-[10px] text-primary hover:underline font-bold">تغییر سقف</button>
+                </span>
+                <span class="block text-xl font-black text-[#111827]">${totalBudget.toLocaleString('fa-IR')} <span class="text-xs font-normal text-secondary">تومان</span></span>
+              </div>
 
-            <div class="bg-bgCustom p-5 rounded-2xl border border-accent space-y-1">
-              <span class="text-xs font-bold text-secondary">مانده بودجه در دسترس:</span>
-              <span class="block text-xl font-black text-emerald-700">${remainingNum.toLocaleString('fa-IR')} <span class="text-xs font-normal text-secondary">تومان</span></span>
+              <div class="bg-white/80 p-4 rounded-2xl border border-[#D4AF37]/30 shadow-2xs space-y-1.5">
+                <span class="text-xs font-bold text-secondary">پرداخت شده (تسویه + بیعانه):</span>
+                <span class="block text-xl font-black text-[#1B3B2B]">${totalPaid.toLocaleString('fa-IR')} <span class="text-xs font-normal text-secondary">تومان</span></span>
+              </div>
+
+              <div class="bg-white/80 p-4 rounded-2xl border border-[#D4AF37]/30 shadow-2xs space-y-1.5">
+                <span class="text-xs font-bold text-secondary">باقیمانده تا سقف بودجه:</span>
+                <span class="block text-xl font-black ${remaining < 0 ? 'text-rose-600' : 'text-emerald-700'}">${remaining.toLocaleString('fa-IR')} <span class="text-xs font-normal text-secondary">تومان</span></span>
+              </div>
+
+              <div class="bg-white/80 p-4 rounded-2xl border border-[#D4AF37]/30 shadow-2xs space-y-1.5">
+                <span class="text-xs font-bold text-secondary">ارزیابی سلامت بودجه:</span>
+                <span class="block text-xs font-bold text-graphite leading-relaxed">${healthDesc}</span>
+              </div>
             </div>
           </div>
 
-          <!-- Real-Time Interactive Category Progress Bars -->
-          <div class="bg-white border border-accent rounded-2xl p-5 space-y-4">
-            <h4 class="text-sm font-bold text-graphite flex items-center justify-between border-b border-accent pb-3">
-              <span class="flex items-center gap-2">
-                <i data-lucide="bar-chart-3" class="w-4 h-4 text-primary"></i>
-                <span>تفکیک سهم دسته‌بندی‌ها از بودجه و میزان پیشرفت</span>
-              </span>
-              <span class="text-xs font-bold text-secondary">${spentPercent}٪ از کل بودجه صرف شده</span>
-            </h4>
+          <!-- DUAL BUDGET SPLIT (GROOM VS BRIDE VS SHARED) -->
+          <div class="bg-white border border-accent rounded-3xl p-6 sm:p-8 shadow-xs space-y-5">
+            <div class="flex justify-between items-center border-b border-accent pb-3">
+              <h4 class="text-base font-black text-[#111827] flex items-center gap-2">
+                <i data-lucide="scale" class="w-5 h-5 text-[#D4AF37]"></i>
+                <span>تفکیک و سهم‌بندی ۲ طرفه بودجه (خانواده داماد / خانواده عروس / مشترک)</span>
+              </h4>
+              <span class="text-xs text-secondary font-bold">سازگار با رسوم ازدواج در یزد</span>
+            </div>
 
-            <div class="space-y-3.5">
-              ${categoriesBreakdown.map(cat => {
-                const catPercent = Math.round((cat.spent / cat.budgeted) * 100);
-                return `
+            <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
+              <div class="p-4 bg-emerald-50/60 border border-emerald-200 rounded-2xl space-y-1.5">
+                <div class="flex items-center justify-between text-xs font-bold text-emerald-900">
+                  <span class="flex items-center gap-1.5">
+                    <i data-lucide="user-check" class="w-4 h-4 text-emerald-700"></i>
+                    <span>سهم خانواده داماد</span>
+                  </span>
+                  <span class="text-[10px] bg-emerald-200/80 text-emerald-800 px-2 py-0.5 rounded-full">اصلی</span>
+                </div>
+                <span class="block text-lg font-black text-emerald-900">${groomTotal.toLocaleString('fa-IR')} <span class="text-xs font-normal">تومان</span></span>
+                <span class="block text-[10px] text-emerald-700 font-medium">شامل تالار، شام، ماشین، آرایشگاه عروس و...</span>
+              </div>
+
+              <div class="p-4 bg-rose-50/60 border border-rose-200 rounded-2xl space-y-1.5">
+                <div class="flex items-center justify-between text-xs font-bold text-rose-900">
+                  <span class="flex items-center gap-1.5">
+                    <i data-lucide="heart" class="w-4 h-4 text-rose-600"></i>
+                    <span>سهم خانواده عروس</span>
+                  </span>
+                  <span class="text-[10px] bg-rose-200/80 text-rose-800 px-2 py-0.5 rounded-full">جهیزیه & عقد</span>
+                </div>
+                <span class="block text-lg font-black text-rose-900">${brideTotal.toLocaleString('fa-IR')} <span class="text-xs font-normal">تومان</span></span>
+                <span class="block text-[10px] text-rose-700 font-medium">شامل گل‌آرایی، سفره عقد، آرایشگاه داماد و...</span>
+              </div>
+
+              <div class="p-4 bg-amber-50/60 border border-amber-200 rounded-2xl space-y-1.5">
+                <div class="flex items-center justify-between text-xs font-bold text-amber-900">
+                  <span class="flex items-center gap-1.5">
+                    <i data-lucide="users" class="w-4 h-4 text-amber-700"></i>
+                    <span>مخارج مشترک (۵۰ / ۵۰)</span>
+                  </span>
+                  <span class="text-[10px] bg-amber-200/80 text-amber-800 px-2 py-0.5 rounded-full">توافقی</span>
+                </div>
+                <span class="block text-lg font-black text-amber-900">${sharedTotal.toLocaleString('fa-IR')} <span class="text-xs font-normal">تومان</span></span>
+                <span class="block text-[10px] text-amber-700 font-medium">شامل پکیج عکاسی، فیلم‌برداری و گروه موزیک</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- DYNAMIC SPLIT ACROSS 6 CORE CATEGORIES WITH COLOR CODED PROGRESS -->
+          <div class="bg-white border border-accent rounded-3xl p-6 sm:p-8 shadow-xs space-y-5">
+            <div class="flex justify-between items-center border-b border-accent pb-3">
+              <h4 class="text-base font-black text-[#111827] flex items-center gap-2">
+                <i data-lucide="pie-chart" class="w-5 h-5 text-primary"></i>
+                <span>تفکیک درصدی و مقایسه سهم سقف بودجه با هزینه‌های واقعی</span>
+              </h4>
+              <span class="text-xs text-secondary font-bold">تقسیم ۶ گانه استاندارد</span>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+              ${categoryCalculations.map(cat => `
+                <div class="p-4 bg-[#FCFCFA] border border-accent/80 rounded-2xl space-y-2.5 hover:border-[#D4AF37]/60 transition-all">
+                  <div class="flex justify-between items-center text-xs font-bold">
+                    <span class="text-[#111827] font-black">${cat.name} (${Math.round(cat.defaultSplit * 100)}٪)</span>
+                    <span class="${cat.diffColorClass} font-black text-[11px]">${cat.diffText}</span>
+                  </div>
+
                   <div class="space-y-1">
-                    <div class="flex justify-between text-xs font-bold text-graphite">
-                      <span>${cat.name}</span>
-                      <span class="text-secondary">${cat.spent.toLocaleString('fa-IR')} از ${cat.budgeted.toLocaleString('fa-IR')} تومان (${catPercent}٪)</span>
+                    <div class="w-full bg-slate-200 h-2.5 rounded-full overflow-hidden border border-accent/40">
+                      <div class="${cat.progressBgClass} h-full rounded-full transition-all duration-500" style="width: ${cat.pct}%;"></div>
                     </div>
-                    <div class="w-full bg-slate-100 h-2.5 rounded-full overflow-hidden border border-accent/40">
-                      <div class="${cat.color} h-full rounded-full transition-all duration-500" style="width: ${catPercent}%;"></div>
+                    <div class="flex justify-between text-[11px] text-secondary font-medium pt-0.5">
+                      <span>برآورد: ${cat.estimatedTotal.toLocaleString('fa-IR')} تومان</span>
+                      <span>سهم مصوب: ${cat.targetBudget.toLocaleString('fa-IR')} تومان</span>
                     </div>
                   </div>
-                `;
-              }).join('')}
+                </div>
+              `).join('')}
             </div>
           </div>
 
-          <div class="bg-primary/5 border border-primary/20 rounded-2xl p-6 space-y-3">
-            <h3 class="text-sm font-bold text-primary flex items-center gap-2">
-              <i data-lucide="sparkles" class="w-4 h-4"></i>
-              <span>دستیار هوشمند بودجه عروسی تو</span>
-            </h3>
-            <p class="text-xs text-graphite leading-relaxed">
-              جهت فرمولاسیون کامل و تقسیم‌بندی بودجه پیشنهادی بر اساس سبک تشریفات و شهر برگزاری مراسم، می‌توانید از موتور هوشمند تخمین بودجه استفاده نمایید.
-            </p>
-            <button onclick="switchTab('tools')" class="bg-primary text-white text-xs font-bold px-4 py-2.5 rounded-xl shadow-xs transition-colors">
-              محاسبه هوشمند سقف بودجه
-            </button>
+          <!-- LINE ITEMS CRUD TABLE -->
+          <div class="bg-white border border-accent rounded-3xl p-6 sm:p-8 shadow-xs space-y-4">
+            <div class="flex flex-col sm:flex-row justify-between sm:items-center gap-3 border-b border-accent pb-4">
+              <div>
+                <h4 class="text-base font-black text-[#111827] flex items-center gap-2">
+                  <i data-lucide="list-checks" class="w-5 h-5 text-primary"></i>
+                  <span>ریز هزینه‌ها و اقلام ثبت‌شده (Line Items CRUD)</span>
+                </h4>
+                <p class="text-xs text-secondary mt-0.5">مدیریت وضعیت پرداخت، بیعانه‌ها و تسویه‌حساب با تامین‌کنندگان یزد</p>
+              </div>
+
+              <button onclick="openBudgetItemModal()" class="bg-primary hover:bg-emerald-900 text-white font-bold text-xs px-4 py-2 rounded-xl transition-all shadow-xs flex items-center gap-1.5 self-start sm:self-auto cursor-pointer">
+                <i data-lucide="plus" class="w-4 h-4"></i>
+                <span>افزودن قلم جدید</span>
+              </button>
+            </div>
+
+            <div class="overflow-x-auto">
+              <table class="w-full text-right text-xs">
+                <thead class="bg-bgCustom text-secondary border-b border-accent font-bold">
+                  <tr>
+                    <th class="p-3">عنوان خدمت / قلم هزینه</th>
+                    <th class="p-3">دسته‌بندی</th>
+                    <th class="p-3 text-center">سهم‌بندی</th>
+                    <th class="p-3 text-center">برآورد (تومان)</th>
+                    <th class="p-3 text-center">پرداختی (تومان)</th>
+                    <th class="p-3 text-center">وضعیت پرداخت</th>
+                    <th class="p-3 text-center">عملیات</th>
+                  </tr>
+                </thead>
+                <tbody class="divide-y divide-accent/60 font-medium text-graphite">
+                  ${budgetPlannerState.lineItems.length === 0 ? `
+                    <tr><td colspan="6" class="p-6 text-center text-secondary font-bold">هنوز هیچ قلم هزینه‌ای ثبت نشده است.</td></tr>
+                  ` : budgetPlannerState.lineItems.map(item => {
+                    let statusBadge = '<span class="bg-rose-100 text-rose-800 px-2.5 py-1 rounded-md text-[10px] font-bold">پرداخت نشده</span>';
+                    if (item.status === 'FULL') {
+                      statusBadge = '<span class="bg-emerald-100 text-emerald-800 px-2.5 py-1 rounded-md text-[10px] font-bold">پرداخت کامل (تسویه)</span>';
+                    } else if (item.status === 'ADVANCE') {
+                      statusBadge = '<span class="bg-amber-100 text-amber-800 px-2.5 py-1 rounded-md text-[10px] font-bold">پیش‌پرداخت (بیعانه)</span>';
+                    }
+
+                    let partyBadge = '<span class="bg-emerald-50 text-emerald-800 border border-emerald-200 px-2 py-0.5 rounded-full text-[10px] font-bold">سهم داماد</span>';
+                    if (item.party === 'bride') {
+                      partyBadge = '<span class="bg-rose-50 text-rose-800 border border-rose-200 px-2 py-0.5 rounded-full text-[10px] font-bold">سهم عروس</span>';
+                    } else if (item.party === 'shared') {
+                      partyBadge = '<span class="bg-amber-50 text-amber-800 border border-amber-200 px-2 py-0.5 rounded-full text-[10px] font-bold">مشترک</span>';
+                    }
+
+                    return `
+                      <tr class="hover:bg-slate-50/80 transition-colors">
+                        <td class="p-3.5">
+                          <span class="font-bold text-[#111827] block">${item.title}</span>
+                          ${item.notes ? `<span class="text-[10px] text-secondary block mt-0.5">${item.notes}</span>` : ''}
+                        </td>
+                        <td class="p-3.5 text-secondary font-bold text-[11px]">${item.category}</td>
+                        <td class="p-3.5 text-center">${partyBadge}</td>
+                        <td class="p-3.5 text-center font-black text-graphite">${Number(item.estimated).toLocaleString('fa-IR')}</td>
+                        <td class="p-3.5 text-center font-black text-primary">${Number(item.paid).toLocaleString('fa-IR')}</td>
+                        <td class="p-3.5 text-center">${statusBadge}</td>
+                        <td class="p-3.5 text-center">
+                          <div class="flex items-center justify-center gap-2">
+                            <button onclick="openBudgetItemModal('${item.id}')" title="ویرایش" class="p-1.5 rounded-lg bg-bgCustom hover:bg-slate-200 border border-accent text-primary">
+                              <i data-lucide="edit-3" class="w-3.5 h-3.5"></i>
+                            </button>
+                            <button onclick="deleteBudgetItem('${item.id}')" title="حذف" class="p-1.5 rounded-lg bg-rose-50 hover:bg-rose-100 border border-rose-200 text-rose-600">
+                              <i data-lucide="trash-2" class="w-3.5 h-3.5"></i>
+                            </button>
+                          </div>
+                        </td>
+                      </tr>
+                    `;
+                  }).join('')}
+                </tbody>
+              </table>
+            </div>
           </div>
+
         </div>
       `;
 
@@ -4085,6 +4738,12 @@ if (document.readyState === "loading") {
       lucide.createIcons();
     }
 
+    function filterChecklistTasksByStatus(status) {
+      activeChecklistStatusFilter = status;
+      renderChecklistTimeframeButtons();
+      renderChecklistTimeline();
+    }
+
     function renderChecklistTimeline() {
       const container = document.getElementById('checklist-timeline-container');
       if (!container) return;
@@ -4102,7 +4761,7 @@ if (document.readyState === "loading") {
       const plannerCountdownBadge = document.getElementById('planner-countdown-badge');
 
       if (progressBar) progressBar.style.width = percent + '%';
-      if (progressText) progressText.innerText = percent + '٪ انجام شده';
+      if (progressText) progressText.innerText = `${percent}٪ آمادگی کارهای عروسی انجام شده`;
       if (completedCountText) completedCountText.innerText = `${completedCount} از ${total} مورد`;
 
       const urgentUncompleted = staticChecklist.filter(t => (t.priority === 'urgent' || t.isUrgent) && !t.completed).length;
@@ -4112,12 +4771,18 @@ if (document.readyState === "loading") {
 
       container.innerHTML = '';
 
-      const itemsToRender = activeChecklistFilter === "همه"
+      let itemsToRender = activeChecklistFilter === "همه"
         ? staticChecklist
         : staticChecklist.filter(t => t.timeframe === activeChecklistFilter || t.category === activeChecklistFilter);
 
+      if (activeChecklistStatusFilter === 'COMPLETED') {
+        itemsToRender = itemsToRender.filter(t => t.completed);
+      } else if (activeChecklistStatusFilter === 'UNCOMPLETED') {
+        itemsToRender = itemsToRender.filter(t => !t.completed);
+      }
+
       if (itemsToRender.length === 0) {
-        container.innerHTML = '<div class="p-8 text-center text-secondary text-xs font-semibold bg-bgCustom rounded-2xl border border-accent">هیچ اقدامی برای این بازه زمانی یافت نشد.</div>';
+        container.innerHTML = '<div class="p-8 text-center text-secondary text-xs font-semibold bg-bgCustom rounded-2xl border border-accent">هیچ اقدامی برای این فیلتر زمان‌بندی یا وضعیت یافت نشد.</div>';
         return;
       }
 
@@ -4144,7 +4809,7 @@ if (document.readyState === "loading") {
 
         const div = document.createElement('div');
         div.className = `p-5 rounded-2xl border transition-all space-y-4 ${
-          t.completed ? 'bg-primary/5 border-primary/30 shadow-xs' : 'bg-white border-accent hover:border-primary/40 shadow-xs'
+          t.completed ? 'bg-emerald-50/50 border-emerald-200 shadow-2xs' : 'bg-white border-accent hover:border-primary/40 shadow-xs'
         }`;
 
         div.innerHTML = `
@@ -4157,7 +4822,7 @@ if (document.readyState === "loading") {
               </button>
               <div class="space-y-1">
                 <div class="flex items-center gap-2 flex-wrap">
-                  <span class="text-sm sm:text-base font-bold ${t.completed ? 'line-through text-graphite/60' : 'text-graphite'}">${t.title}</span>
+                  <span class="text-sm sm:text-base font-bold ${t.completed ? 'task-completed-strikethrough' : 'text-[#111827]'}">${t.title}</span>
                   ${priorityBadge}
                 </div>
               </div>
@@ -4371,17 +5036,212 @@ if (document.readyState === "loading") {
       }
     }
 
+    function renderAdminVendorTrafficTable() {
+      const tbody = document.getElementById('admin-vendor-traffic-table');
+      if (!tbody) return;
+      tbody.innerHTML = '';
+
+      let totalViewsSum = 0;
+      let totalLeadsSum = 0;
+
+      vendors.forEach(v => {
+        const views = v.viewsCount || Math.floor(Math.random() * 800) + 200;
+        const leads = v.leadsCount || Math.floor(views * 0.15) + 5;
+        const convRate = Math.min(((leads / views) * 100), 100).toFixed(1);
+
+        totalViewsSum += views;
+        totalLeadsSum += leads;
+
+        const tr = document.createElement('tr');
+        tr.className = "hover:bg-slate-50 transition-colors";
+        tr.innerHTML = `
+          <td class="p-3 font-bold text-graphite flex items-center gap-2">
+            <img src="${v.image || 'https://images.unsplash.com/photo-1519167758481-83f550bb49b3?auto=format&fit=crop&w=100&q=80'}" class="w-7 h-7 rounded-lg object-cover">
+            <span>${v.name}</span>
+          </td>
+          <td class="p-3 text-secondary">${v.category}</td>
+          <td class="p-3 font-black text-graphite">${views.toLocaleString('fa-IR')}</td>
+          <td class="p-3 font-black text-emerald-700">${leads.toLocaleString('fa-IR')}</td>
+          <td class="p-3">
+            <span class="inline-block bg-primary/10 text-primary border border-primary/20 px-2 py-0.5 rounded-lg text-[11px] font-bold">
+              ${convRate}٪
+            </span>
+          </td>
+        `;
+        tbody.appendChild(tr);
+      });
+
+      const totalViewsEl = document.getElementById('admin-analytics-total-views');
+      if (totalViewsEl) totalViewsEl.textContent = (totalViewsSum * 2).toLocaleString('fa-IR');
+
+      const vendorViewsEl = document.getElementById('admin-analytics-vendor-views');
+      if (vendorViewsEl) vendorViewsEl.textContent = totalViewsSum.toLocaleString('fa-IR');
+
+      const leadsCountEl = document.getElementById('admin-analytics-leads-count');
+      if (leadsCountEl) leadsCountEl.textContent = totalLeadsSum.toLocaleString('fa-IR');
+    }
+
+    function renderAdminSystemLogs() {
+      const container = document.getElementById('admin-system-logs-container');
+      if (!container) return;
+
+      const mockLogs = [
+        `[${new Date().toLocaleTimeString('fa-IR')}] SYSTEM: Syncing categories across Top Nav & Directory Sidebar completed.`,
+        `[${new Date(Date.now() - 120000).toLocaleTimeString('fa-IR')}] VENDOR_APP: Vendor 'آتلیه تخصصی کویر' submitted registration documents for review.`,
+        `[${new Date(Date.now() - 360000).toLocaleTimeString('fa-IR')}] INQUIRY: New inquiry submitted for 'باغ تالار مشیرالممالک' by couple #4082.`,
+        `[${new Date(Date.now() - 720000).toLocaleTimeString('fa-IR')}] SUBSCRIPTION: Vendor 'سالن زیبایی ترمه' renewed Gold VIP subscription plan.`
+      ];
+
+      container.innerHTML = mockLogs.map(log => `<div>> ${log}</div>`).join('');
+    }
+
+    function updateVendorSubscriptionTier(vendorId, newTier) {
+      vendors = vendors.map(v => {
+        if (v.id === vendorId) {
+          const maxPhotosMap = { FREE: 3, BRONZE: 6, SILVER: 12, GOLD_VIP: 24 };
+          return {
+            ...v,
+            tier: newTier,
+            maxPortfolioUploads: maxPhotosMap[newTier] || 6,
+            vipShowcaseBadge: newTier === 'GOLD_VIP',
+            directPhoneVisible: newTier !== 'FREE'
+          };
+        }
+        return v;
+      });
+      showToast(`سطح اشتراک تامین‌کننده بروزرسانی گردید (${newTier})`, 'success');
+      renderAdminTable();
+      renderVendors(vendors);
+    }
+
+    let adminReviewsState = [
+      { id: 101, author: 'علی و سارا', vendorName: 'باغ تالار مشیرالممالک', rating: 5, comment: 'همه چیز فوق‌العاده بود، برخورد پرسنل عالی و کیفیت غذا بی‌نظیر.', verifiedCouple: true, status: 'APPROVED' },
+      { id: 102, author: 'محمدرضا و مریم', vendorName: 'آتلیه تخصصی کویر', rating: 5, comment: 'عکاسی فرمالیته در کویر باکیفیت و بدون نقص انجام شد.', verifiedCouple: true, status: 'APPROVED' },
+      { id: 103, author: 'مهدی و زهرا', vendorName: 'سالن زیبایی ترمه', rating: 4, comment: 'میکاپ عروس عالی بود اما کمی تاخیر داشتند.', verifiedCouple: false, status: 'PENDING' }
+    ];
+
+    let adminUsersState = [
+      { id: 1, name: 'علی ابراهیمی', phone: '۰۹۱۳۱۵۱۰۰۱۱', weddingDate: '۱۴۰۳/۰۸/۲۵', blocked: false },
+      { id: 2, name: 'مریم دهقانی', phone: '۰۹۱۳۲۵۲۰۰۲۲', weddingDate: '۱۴۰۳/۰۹/۱۰', blocked: false },
+      { id: 3, name: 'رضا زارع', phone: '۰۹۱۳۳۵۳۰۰۳۳', weddingDate: '۱۴۰۳/۱۰/۱۵', blocked: false }
+    ];
+
+    function toggleAdminReviewStatus(reviewId) {
+      adminReviewsState = adminReviewsState.map(r => {
+        if (r.id === reviewId) {
+          const nextStatus = r.status === 'APPROVED' ? 'REJECTED' : 'APPROVED';
+          return { ...r, status: nextStatus };
+        }
+        return r;
+      });
+      showToast('وضعیت انتشار دیدگاه بروزرسانی شد', 'info');
+      renderAdminReviewsModerationTable();
+    }
+
+    function toggleAdminReviewVerifiedBadge(reviewId) {
+      adminReviewsState = adminReviewsState.map(r => r.id === reviewId ? { ...r, verifiedCouple: !r.verifiedCouple } : r);
+      showToast('نشان "زوج تاییدشده" بروزرسانی گردید', 'success');
+      renderAdminReviewsModerationTable();
+    }
+
+    function renderAdminReviewsModerationTable() {
+      const tbody = document.getElementById('admin-reviews-moderation-table');
+      if (!tbody) return;
+      tbody.innerHTML = '';
+
+      adminReviewsState.forEach(r => {
+        const tr = document.createElement('tr');
+        tr.className = "hover:bg-slate-50";
+        tr.innerHTML = `
+          <td class="p-3 font-bold text-graphite">${r.author}</td>
+          <td class="p-3 text-secondary">${r.vendorName}</td>
+          <td class="p-3 max-w-xs">
+            <div class="flex items-center gap-1 text-amber-500 font-bold mb-0.5">
+              <span>★ ${r.rating}</span>
+            </div>
+            <p class="text-[11px] text-graphite line-clamp-2">${r.comment}</p>
+          </td>
+          <td class="p-3">
+            <button onclick="toggleAdminReviewVerifiedBadge(${r.id})" class="inline-flex items-center gap-1 px-2.5 py-1 rounded-full text-[10px] font-bold ${
+              r.verifiedCouple ? 'bg-emerald-50 text-emerald-800 border border-emerald-200' : 'bg-slate-100 text-secondary border border-slate-200'
+            }">
+              <i data-lucide="check-circle" class="w-3 h-3"></i>
+              <span>${r.verifiedCouple ? 'زوج تاییدشده' : 'کاربر عادی'}</span>
+            </button>
+          </td>
+          <td class="p-3">
+            <span class="inline-flex items-center gap-1 px-2.5 py-1 rounded-full text-[10px] font-bold ${
+              r.status === 'APPROVED' ? 'bg-primary/10 text-primary' : r.status === 'PENDING' ? 'bg-amber-50 text-amber-700' : 'bg-rose-50 text-rose-700'
+            }">
+              ${r.status === 'APPROVED' ? 'منتشرشده' : r.status === 'PENDING' ? 'در انتظار تایید' : 'ردشده'}
+            </span>
+          </td>
+          <td class="p-3 text-center">
+            <button onclick="toggleAdminReviewStatus(${r.id})" class="text-xs font-bold underline ${r.status === 'APPROVED' ? 'text-rose-600' : 'text-primary'}">
+              ${r.status === 'APPROVED' ? 'عدم تایید / عدم انتشار' : 'تایید و انتشار عمومی'}
+            </button>
+          </td>
+        `;
+        tbody.appendChild(tr);
+      });
+      if (typeof lucide !== 'undefined' && lucide.createIcons) lucide.createIcons();
+    }
+
+    function toggleAdminUserBlockStatus(userId) {
+      adminUsersState = adminUsersState.map(u => u.id === userId ? { ...u, blocked: !u.blocked } : u);
+      showToast('وضعیت دسترسی حساب کاربر بروزرسانی گردید', 'warning');
+      renderAdminUserAccountsTable();
+    }
+
+    function renderAdminUserAccountsTable() {
+      const tbody = document.getElementById('admin-user-accounts-table');
+      if (!tbody) return;
+      tbody.innerHTML = '';
+
+      adminUsersState.forEach(u => {
+        const tr = document.createElement('tr');
+        tr.className = "hover:bg-slate-50";
+        tr.innerHTML = `
+          <td class="p-3 font-bold text-graphite">${u.name}</td>
+          <td class="p-3 text-graphite" dir="ltr">${u.phone}</td>
+          <td class="p-3 text-secondary font-medium">${u.weddingDate}</td>
+          <td class="p-3">
+            <span class="inline-flex items-center gap-1 px-2.5 py-1 rounded-full text-[10px] font-bold ${
+              u.blocked ? 'bg-rose-50 text-rose-700 border border-rose-200' : 'bg-emerald-50 text-emerald-800 border border-emerald-200'
+            }">
+              ${u.blocked ? 'حساب مسدودشده' : 'فعال و تاییدشده'}
+            </span>
+          </td>
+          <td class="p-3 text-center">
+            <button onclick="toggleAdminUserBlockStatus(${u.id})" class="text-xs font-bold underline ${u.blocked ? 'text-emerald-700' : 'text-rose-600'}">
+              ${u.blocked ? 'رفع مسدودی حساب' : 'مسدودسازی حساب'}
+            </button>
+          </td>
+        `;
+        tbody.appendChild(tr);
+      });
+    }
+
     function renderAdminTable() {
       const tbody = document.getElementById('admin-vendor-table');
       if (!tbody) return;
       tbody.innerHTML = '';
 
       vendors.forEach(v => {
+        const currentTier = v.tier || (v.id === 1 ? 'GOLD_VIP' : 'SILVER');
         const tr = document.createElement('tr');
         tr.className = "hover:bg-slate-50";
         tr.innerHTML = `
           <td class="p-3 font-bold text-graphite">${v.name}</td>
           <td class="p-3 text-secondary">${v.category}</td>
+          <td class="p-3">
+            <select onchange="updateVendorSubscriptionTier(${v.id}, this.value)" class="bg-slate-50 border border-accent rounded-xl p-1.5 text-xs font-bold text-graphite focus:outline-none focus:border-primary">
+              <option value="FREE" ${currentTier === 'FREE' ? 'selected' : ''}>برنز رایگان (Free)</option>
+              <option value="BRONZE" ${currentTier === 'BRONZE' ? 'selected' : ''}>برنز اقتصادی (Bronze)</option>
+              <option value="SILVER" ${currentTier === 'SILVER' ? 'selected' : ''}>نقره‌ای استاندارد (Silver)</option>
+              <option value="GOLD_VIP" ${currentTier === 'GOLD_VIP' ? 'selected' : ''}>طلایی ویژه (Gold VIP)</option>
+            </select>
+          </td>
           <td class="p-3 text-graphite" dir="ltr">۰۹۱۲۰۰۰۰۰۰۰</td>
           <td class="p-3">
             <span class="inline-flex items-center gap-1 px-2.5 py-1 rounded-full text-[11px] font-bold ${
@@ -4398,6 +5258,11 @@ if (document.readyState === "loading") {
         `;
         tbody.appendChild(tr);
       });
+
+      renderAdminVendorTrafficTable();
+      renderAdminSystemLogs();
+      renderAdminReviewsModerationTable();
+      renderAdminUserAccountsTable();
     }
 
     function toggleVendorVerification(id) {
@@ -4549,6 +5414,10 @@ if (document.readyState === "loading") {
         if (show) {
           modal.classList.remove('hidden');
           modal.classList.add('flex');
+          const catSelect = document.getElementById('v-cat');
+          if (catSelect && typeof categoryGroups !== 'undefined' && categoryGroups.length > 0) {
+            catSelect.innerHTML = categoryGroups.map(cg => `<option value="${cg.title}">${cg.title}</option>`).join('');
+          }
         } else {
           modal.classList.add('hidden');
           modal.classList.remove('flex');
@@ -4997,7 +5866,13 @@ if (document.readyState === "loading") {
         reviewsContainer.innerHTML = reviews.map(r => `
           <div class="bg-white border border-stone-200 rounded-xl p-4 space-y-1.5 shadow-2xs">
             <div class="flex justify-between items-center text-xs">
-              <strong class="text-[#1B3B2B]">${r.author}</strong>
+              <div class="flex items-center gap-2">
+                <strong class="text-[#1B3B2B]">${r.author}</strong>
+                <span class="bg-emerald-100 text-emerald-800 text-[9px] font-bold px-2 py-0.5 rounded-full border border-emerald-200 inline-flex items-center gap-1">
+                  <i data-lucide="check-circle" class="w-2.5 h-2.5 text-emerald-700"></i>
+                  <span>زوج تاییدشده</span>
+                </span>
+              </div>
               <span class="text-amber-500 font-bold">${r.stars || '★★★★★'} (${r.date || '۱۴۰۳'})</span>
             </div>
             <p class="text-xs text-stone-600 leading-relaxed">${r.text}</p>
@@ -5025,8 +5900,9 @@ if (document.readyState === "loading") {
       if (!currentModalVendor) return;
       const vName = currentModalVendor.name;
       const vId = currentModalVendor.id;
+      const vImg = currentModalVendor.image || '';
       closeVendorDetailModal();
-      openInquiryModal(vId, vName, packageName, packagePrice);
+      openInquiryModal(vId, vName, packageName, packagePrice, 'پکیج', '', vImg);
     }
 
     function toggleFavoriteVendorModal() {
@@ -5229,7 +6105,7 @@ if (document.readyState === "loading") {
     }
 
 
-    function openInquiryModal(vendorId, vendorName, packageTitle, packagePrice) {
+    function openInquiryModal(vendorId, vendorName, itemTitle, itemPrice, itemType, itemId, itemThumb) {
       let vId = vendorId;
       if (typeof vendorId === 'string' && !isNaN(parseInt(vendorId))) {
         vId = parseInt(vendorId);
@@ -5237,11 +6113,64 @@ if (document.readyState === "loading") {
       const vendor = vendors.find(v => v.id === vId) || vendors[0];
       const targetName = vendorName || (vendor ? vendor.name : "تامین‌کننده");
 
+      const typeVal = itemType || (itemTitle ? 'پکیج' : 'عمومی');
+      const idVal = itemId || '';
+      const titleVal = itemTitle || '';
+
+      const typeInput = document.getElementById('inquiry-item-type');
+      const idInput = document.getElementById('inquiry-item-id');
+      const titleInput = document.getElementById('inquiry-item-title');
+      if (typeInput) typeInput.value = typeVal;
+      if (idInput) idInput.value = idVal;
+      if (titleInput) titleInput.value = titleVal;
+
       document.getElementById('inquiry-vendor-id').value = vendor ? vendor.id : 1;
       document.getElementById('modal-vendor-name').innerText = targetName;
 
+      // Update Context Banner Card
+      const contextBanner = document.getElementById('inquiry-context-banner');
+      const contextTypeText = document.getElementById('inquiry-context-type-text');
+      const contextTitle = document.getElementById('inquiry-context-title');
+      const contextPrice = document.getElementById('inquiry-context-price');
+      const contextSub = document.getElementById('inquiry-context-sub');
+      const contextThumb = document.getElementById('inquiry-context-thumb');
+
+      if (contextBanner) {
+        if (titleVal) {
+          contextBanner.classList.remove('hidden');
+          if (contextTypeText) contextTypeText.innerText = `درخواست استعلام برای: ${typeVal}`;
+          if (contextTitle) contextTitle.innerText = titleVal;
+          if (contextPrice) contextPrice.innerText = itemPrice || '';
+          if (contextSub) contextSub.innerText = vendor ? `${vendor.name} • ${vendor.category}` : targetName;
+
+          const thumbSrc = itemThumb || (vendor ? vendor.image : '');
+          if (contextThumb && thumbSrc) {
+            contextThumb.src = thumbSrc;
+            contextThumb.classList.remove('hidden');
+          } else if (contextThumb) {
+            contextThumb.classList.add('hidden');
+          }
+        } else {
+          contextBanner.classList.add('hidden');
+        }
+      }
+
       // Category-Specific Dynamic Fields Toggling
       const cat = vendor ? (vendor.category || '') : '';
+
+      const guestsContainer = document.getElementById('inquiry-guests-container');
+      const nonVenueContainer = document.getElementById('inquiry-nonvenue-container');
+      const dateLabel = document.getElementById('inquiry-date-label');
+
+      if (cat.includes("آتلیه") || cat.includes("عکاسی") || cat.includes("فیلمبرداری") || cat.includes("مزون") || cat.includes("لباس") || cat.includes("سالن زیبایی") || cat.includes("میکاپ") || cat.includes("آرایشگاه") || cat.includes("طلا")) {
+        if (guestsContainer) guestsContainer.classList.add('hidden');
+        if (nonVenueContainer) nonVenueContainer.classList.remove('hidden');
+        if (dateLabel) dateLabel.innerText = "تاریخ تقریبی مراجعه / پرو / مراسم *";
+      } else {
+        if (guestsContainer) guestsContainer.classList.remove('hidden');
+        if (nonVenueContainer) nonVenueContainer.classList.add('hidden');
+        if (dateLabel) dateLabel.innerText = "تاریخ تقریبی مراسم / مراجعه (شمسی) *";
+      }
 
       const venueFields = document.getElementById('inquiry-fields-venue');
       const beautyFields = document.getElementById('inquiry-fields-beauty');
@@ -5261,7 +6190,6 @@ if (document.readyState === "loading") {
       } else if (cat.includes("مزون") || cat.includes("لباس")) {
         if (maisonFields) maisonFields.classList.remove('hidden');
       } else {
-        // Garden, Hall, Catering, or General Venues
         if (venueFields) venueFields.classList.remove('hidden');
       }
 
@@ -5269,9 +6197,9 @@ if (document.readyState === "loading") {
       const noteInput = document.getElementById('inquiry-note');
       const customBudgetInp = document.getElementById('inquiry-budget-custom');
 
-      if (packageTitle) {
-        if (noteInput) noteInput.value = `استعلام پکیج انتخابی: ${packageTitle} (${packagePrice || ''})`;
-        if (customBudgetInp) customBudgetInp.value = packagePrice || '';
+      if (itemTitle) {
+        if (noteInput) noteInput.value = `سلام، درخواست استعلام قیمت و مشاوره درباره ${typeVal} «${itemTitle}» را دارم.`;
+        if (customBudgetInp) customBudgetInp.value = itemPrice || '';
       } else {
         if (noteInput) noteInput.value = 'سلام، درخواست استعلام قیمت و دریافت پیش‌فاکتور را دارم.';
         if (customBudgetInp) customBudgetInp.value = '';
@@ -5417,6 +6345,9 @@ if (document.readyState === "loading") {
       });
 
       const guestsNum = document.getElementById('inquiry-guests')?.value || 200;
+      const itemType = document.getElementById('inquiry-item-type')?.value || 'عمومی';
+      const itemId = document.getElementById('inquiry-item-id')?.value || '';
+      const itemTitle = document.getElementById('inquiry-item-title')?.value || '';
 
       const inquiryPayload = {
         vendorId: vendor.id,
@@ -5426,6 +6357,9 @@ if (document.readyState === "loading") {
         userPhone: phone,
         eventDate: date,
         budget: finalBudgetStr,
+        itemType: itemType,
+        itemId: itemId,
+        itemTitle: itemTitle,
         categoryDetails: categoryDetails,
         customAnswers: customAnswers,
         services: checkedServices,
@@ -5445,7 +6379,7 @@ if (document.readyState === "loading") {
       }
 
       try {
-        if (typeof fetch === 'function') {
+        if (typeof fetch === 'function' && window.location.protocol.startsWith('http')) {
           fetch('/api/inquiries/submit', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
@@ -5835,46 +6769,6 @@ if (document.readyState === "loading") {
         calculateAndRenderBwResults();
       }
       showToast(isActive ? 'بافر ۱۰٪ هزینه‌های پنهان به محاسبات اضافه شد' : 'بافر ۱۰٪ غیرفعال گردید', 'info');
-    }
-
-    function setSweetsGuests(cnt) {
-      const input = document.getElementById('sweets-guest-count');
-      if (input) {
-        input.value = cnt;
-        calculateYazdiSweets();
-      }
-    }
-
-    function calculateYazdiSweets() {
-      const guestCnt = parseInt(document.getElementById('sweets-guest-count')?.value) || 250;
-
-      // Rates per guest in kg
-      const ghotabKg = (guestCnt * 0.02).toFixed(1);
-      const baklavaKg = (guestCnt * 0.025).toFixed(1);
-      const lozKg = (guestCnt * 0.03).toFixed(1);
-
-      // Prices per kg (Toman)
-      const ghotabPricePerKg = 280000;
-      const baklavaPricePerKg = 350000;
-      const lozPricePerKg = 180000;
-
-      const ghotabCost = Math.round(ghotabKg * ghotabPricePerKg);
-      const baklavaCost = Math.round(baklavaKg * baklavaPricePerKg);
-      const lozCost = Math.round(lozKg * lozPricePerKg);
-      const totalCost = ghotabCost + baklavaCost + lozCost;
-      const totalKg = (parseFloat(ghotabKg) + parseFloat(baklavaKg) + parseFloat(lozKg)).toFixed(1);
-
-      if (document.getElementById('sweets-ghotab-kg')) document.getElementById('sweets-ghotab-kg').innerText = `${ghotabKg} کیلوگرم`;
-      if (document.getElementById('sweets-ghotab-cost')) document.getElementById('sweets-ghotab-cost').innerText = `${ghotabCost.toLocaleString('fa-IR')} تومان`;
-
-      if (document.getElementById('sweets-baklava-kg')) document.getElementById('sweets-baklava-kg').innerText = `${baklavaKg} کیلوگرم`;
-      if (document.getElementById('sweets-baklava-cost')) document.getElementById('sweets-baklava-cost').innerText = `${baklavaCost.toLocaleString('fa-IR')} تومان`;
-
-      if (document.getElementById('sweets-loz-kg')) document.getElementById('sweets-loz-kg').innerText = `${lozKg} کیلوگرم`;
-      if (document.getElementById('sweets-loz-cost')) document.getElementById('sweets-loz-cost').innerText = `${lozCost.toLocaleString('fa-IR')} تومان`;
-
-      if (document.getElementById('sweets-total-weight-text')) document.getElementById('sweets-total-weight-text').innerText = `${totalKg} کیلوگرم شیرینی سنتی یزد`;
-      if (document.getElementById('sweets-total-cost-text')) document.getElementById('sweets-total-cost-text').innerText = `${totalCost.toLocaleString('fa-IR')} تومان`;
     }
 
     function calculateAndRenderBwResults() {
@@ -6561,165 +7455,942 @@ if (document.readyState === "loading") {
       }
     ]
   },
-  {
-    "id": "quiz-psych-budget",
+    {
+    "id": "quiz-psych-readiness",
     "category": "psychology",
-    "title": "تست سنجش تفاهم در مدیریت هزینه‌ها و بودجه",
-    "description": "تحلیل هم‌نظری در اولویت‌بندی مالی، تقسیم هزینه‌ها و پیشگیری از چالش‌های بودجه",
-    "image": "https://images.unsplash.com/photo-1554224155-8d04cb21cd6c?auto=format&fit=crop&w=800&q=80",
-    "duration": "۴ دقیقه",
-    "questionsCount": 3,
-    "badge": "مدیریت بودجه",
+    "title": "سنجش آمادگی روان‌شناختی و بلوغ ورود به زندگی مشترک",
+    "description": "ارزیابی خودشناسی عمیق، مسئولیت‌پذیری عاطفی، بلوغ ارتباطی و توانایی ساخت رابطه پایدار",
+    "image": "https://images.unsplash.com/photo-1511285560929-80b456fea0bc?auto=format&fit=crop&w=800&q=80",
+    "duration": "۵ دقیقه",
+    "questionsCount": 10,
+    "badge": "استاندارد روان‌شناسی",
     "questions": [
       {
         "id": "q1",
-        "text": "ما و همسرم درباره سقف بودجه کل عروسی و نحوه تقسیم آن توافق کامل داریم.",
+        "text": "تصویر ذهنی من از زندگی مشترک متکی بر واقع‌گرایی، همدلی و مسئولیت‌پذیری دوجانبه است.",
         "options": [
           {
-            "id": "lk1",
+            "id": "opt1",
             "label": "کاملاً موافقم",
+            "weight": 10,
+            "styleKey": "compat_vhigh",
+            "score": {
+              "compat": 10
+            }
+          },
+          {
+            "id": "opt2",
+            "label": "موافقم",
+            "weight": 8,
             "styleKey": "compat_high",
             "score": {
-              "compat": 100,
-              "budget_sync": 100
+              "compat": 8
             }
           },
           {
-            "id": "lk2",
-            "label": "موافقم",
+            "id": "opt3",
+            "label": "تا حدودی / نظری ندارم",
+            "weight": 5,
             "styleKey": "compat_mid",
             "score": {
-              "compat": 80,
-              "budget_sync": 80
+              "compat": 5
             }
           },
           {
-            "id": "lk3",
-            "label": "نظری ندارم / خنثی",
-            "styleKey": "compat_neutral",
-            "score": {
-              "compat": 50,
-              "budget_sync": 50
-            }
-          },
-          {
-            "id": "lk4",
+            "id": "opt4",
             "label": "مخالفم",
+            "weight": 2,
             "styleKey": "compat_low",
             "score": {
-              "compat": 30,
-              "budget_sync": 30
+              "compat": 2
             }
           },
           {
-            "id": "lk5",
+            "id": "opt5",
             "label": "کاملاً مخالفم",
+            "weight": 0,
             "styleKey": "compat_vlow",
             "score": {
-              "compat": 10,
-              "budget_sync": 10
+              "compat": 0
             }
           }
         ]
       },
       {
         "id": "q2",
-        "text": "در صورت افزایش غیرمنتظره هزینه‌ها، می‌توانیم با آرامش و گفتگو آیتم‌های کم‌اهمیت‌تر را حذف کنیم.",
+        "text": "توانایی گفتگو و بیان شفاف نیازها و احساسات بدون ترس از قضاوت شدن توسط پارتنر را دارم.",
         "options": [
           {
-            "id": "lk1",
+            "id": "opt1",
             "label": "کاملاً موافقم",
+            "weight": 10,
+            "styleKey": "compat_vhigh",
+            "score": {
+              "compat": 10
+            }
+          },
+          {
+            "id": "opt2",
+            "label": "موافقم",
+            "weight": 8,
             "styleKey": "compat_high",
             "score": {
-              "compat": 100,
-              "budget_sync": 100
+              "compat": 8
             }
           },
           {
-            "id": "lk2",
-            "label": "موافقم",
+            "id": "opt3",
+            "label": "تا حدودی / نظری ندارم",
+            "weight": 5,
             "styleKey": "compat_mid",
             "score": {
-              "compat": 80,
-              "budget_sync": 80
+              "compat": 5
             }
           },
           {
-            "id": "lk3",
-            "label": "نظری ندارم / خنثی",
-            "styleKey": "compat_neutral",
-            "score": {
-              "compat": 50,
-              "budget_sync": 50
-            }
-          },
-          {
-            "id": "lk4",
+            "id": "opt4",
             "label": "مخالفم",
+            "weight": 2,
             "styleKey": "compat_low",
             "score": {
-              "compat": 30,
-              "budget_sync": 30
+              "compat": 2
             }
           },
           {
-            "id": "lk5",
+            "id": "opt5",
             "label": "کاملاً مخالفم",
+            "weight": 0,
             "styleKey": "compat_vlow",
             "score": {
-              "compat": 10,
-              "budget_sync": 10
+              "compat": 0
             }
           }
         ]
       },
       {
         "id": "q3",
-        "text": "اولویت‌های مالی ما (مثلاً بین کیفیت تالار در برابر عکاسی و فیلم‌برداری) کاملاً همسو است.",
+        "text": "در مواجهه با اختلاف نظرها، اولویت من حل مسالمت‌آمیز مسئله است تا اثبات برتری خود.",
         "options": [
           {
-            "id": "lk1",
+            "id": "opt1",
             "label": "کاملاً موافقم",
+            "weight": 10,
+            "styleKey": "compat_vhigh",
+            "score": {
+              "compat": 10
+            }
+          },
+          {
+            "id": "opt2",
+            "label": "موافقم",
+            "weight": 8,
             "styleKey": "compat_high",
             "score": {
-              "compat": 100,
-              "budget_sync": 100
+              "compat": 8
             }
           },
           {
-            "id": "lk2",
-            "label": "موافقم",
+            "id": "opt3",
+            "label": "تا حدودی / نظری ندارم",
+            "weight": 5,
             "styleKey": "compat_mid",
             "score": {
-              "compat": 80,
-              "budget_sync": 80
+              "compat": 5
             }
           },
           {
-            "id": "lk3",
-            "label": "نظری ندارم / خنثی",
-            "styleKey": "compat_neutral",
-            "score": {
-              "compat": 50,
-              "budget_sync": 50
-            }
-          },
-          {
-            "id": "lk4",
+            "id": "opt4",
             "label": "مخالفم",
+            "weight": 2,
             "styleKey": "compat_low",
             "score": {
-              "compat": 30,
-              "budget_sync": 30
+              "compat": 2
             }
           },
           {
-            "id": "lk5",
+            "id": "opt5",
             "label": "کاملاً مخالفم",
+            "weight": 0,
             "styleKey": "compat_vlow",
             "score": {
-              "compat": 10,
-              "budget_sync": 10
+              "compat": 0
+            }
+          }
+        ]
+      },
+      {
+        "id": "q4",
+        "text": "آمادگی کافی برای مدیریت مستقل مسائل مالی و برنامه‌ریزی اقتصادی زندگی مشترک را دارم.",
+        "options": [
+          {
+            "id": "opt1",
+            "label": "کاملاً موافقم",
+            "weight": 10,
+            "styleKey": "compat_vhigh",
+            "score": {
+              "compat": 10
+            }
+          },
+          {
+            "id": "opt2",
+            "label": "موافقم",
+            "weight": 8,
+            "styleKey": "compat_high",
+            "score": {
+              "compat": 8
+            }
+          },
+          {
+            "id": "opt3",
+            "label": "تا حدودی / نظری ندارم",
+            "weight": 5,
+            "styleKey": "compat_mid",
+            "score": {
+              "compat": 5
+            }
+          },
+          {
+            "id": "opt4",
+            "label": "مخالفم",
+            "weight": 2,
+            "styleKey": "compat_low",
+            "score": {
+              "compat": 2
+            }
+          },
+          {
+            "id": "opt5",
+            "label": "کاملاً مخالفم",
+            "weight": 0,
+            "styleKey": "compat_vlow",
+            "score": {
+              "compat": 0
+            }
+          }
+        ]
+      },
+      {
+        "id": "q5",
+        "text": "توانایی مدیریت هیجانات، خشم و اضطراب در روزهای پرفشار قبل از عروسی را در خود می‌بینم.",
+        "options": [
+          {
+            "id": "opt1",
+            "label": "کاملاً موافقم",
+            "weight": 10,
+            "styleKey": "compat_vhigh",
+            "score": {
+              "compat": 10
+            }
+          },
+          {
+            "id": "opt2",
+            "label": "موافقم",
+            "weight": 8,
+            "styleKey": "compat_high",
+            "score": {
+              "compat": 8
+            }
+          },
+          {
+            "id": "opt3",
+            "label": "تا حدودی / نظری ندارم",
+            "weight": 5,
+            "styleKey": "compat_mid",
+            "score": {
+              "compat": 5
+            }
+          },
+          {
+            "id": "opt4",
+            "label": "مخالفم",
+            "weight": 2,
+            "styleKey": "compat_low",
+            "score": {
+              "compat": 2
+            }
+          },
+          {
+            "id": "opt5",
+            "label": "کاملاً مخالفم",
+            "weight": 0,
+            "styleKey": "compat_vlow",
+            "score": {
+              "compat": 0
+            }
+          }
+        ]
+      },
+      {
+        "id": "q6",
+        "text": "احترام به استقلال فکری، اهداف شخصی و حریم خصوصی همسرم را اصل اساسی می‌دانم.",
+        "options": [
+          {
+            "id": "opt1",
+            "label": "کاملاً موافقم",
+            "weight": 10,
+            "styleKey": "compat_vhigh",
+            "score": {
+              "compat": 10
+            }
+          },
+          {
+            "id": "opt2",
+            "label": "موافقم",
+            "weight": 8,
+            "styleKey": "compat_high",
+            "score": {
+              "compat": 8
+            }
+          },
+          {
+            "id": "opt3",
+            "label": "تا حدودی / نظری ندارم",
+            "weight": 5,
+            "styleKey": "compat_mid",
+            "score": {
+              "compat": 5
+            }
+          },
+          {
+            "id": "opt4",
+            "label": "مخالفم",
+            "weight": 2,
+            "styleKey": "compat_low",
+            "score": {
+              "compat": 2
+            }
+          },
+          {
+            "id": "opt5",
+            "label": "کاملاً مخالفم",
+            "weight": 0,
+            "styleKey": "compat_vlow",
+            "score": {
+              "compat": 0
+            }
+          }
+        ]
+      },
+      {
+        "id": "q7",
+        "text": "در تصمیم‌گیری‌های کلان زندگی، توانایی مرزبندی سالم با نظرات و مداخلات اطرافیان را دارم.",
+        "options": [
+          {
+            "id": "opt1",
+            "label": "کاملاً موافقم",
+            "weight": 10,
+            "styleKey": "compat_vhigh",
+            "score": {
+              "compat": 10
+            }
+          },
+          {
+            "id": "opt2",
+            "label": "موافقم",
+            "weight": 8,
+            "styleKey": "compat_high",
+            "score": {
+              "compat": 8
+            }
+          },
+          {
+            "id": "opt3",
+            "label": "تا حدودی / نظری ندارم",
+            "weight": 5,
+            "styleKey": "compat_mid",
+            "score": {
+              "compat": 5
+            }
+          },
+          {
+            "id": "opt4",
+            "label": "مخالفم",
+            "weight": 2,
+            "styleKey": "compat_low",
+            "score": {
+              "compat": 2
+            }
+          },
+          {
+            "id": "opt5",
+            "label": "کاملاً مخالفم",
+            "weight": 0,
+            "styleKey": "compat_vlow",
+            "score": {
+              "compat": 0
+            }
+          }
+        ]
+      },
+      {
+        "id": "q8",
+        "text": "توانایی پذیرش نقاط ضعف خود و انعطاف‌پذیری برای بهبود رفتارهای ارتباطی را دارم.",
+        "options": [
+          {
+            "id": "opt1",
+            "label": "کاملاً موافقم",
+            "weight": 10,
+            "styleKey": "compat_vhigh",
+            "score": {
+              "compat": 10
+            }
+          },
+          {
+            "id": "opt2",
+            "label": "موافقم",
+            "weight": 8,
+            "styleKey": "compat_high",
+            "score": {
+              "compat": 8
+            }
+          },
+          {
+            "id": "opt3",
+            "label": "تا حدودی / نظری ندارم",
+            "weight": 5,
+            "styleKey": "compat_mid",
+            "score": {
+              "compat": 5
+            }
+          },
+          {
+            "id": "opt4",
+            "label": "مخالفم",
+            "weight": 2,
+            "styleKey": "compat_low",
+            "score": {
+              "compat": 2
+            }
+          },
+          {
+            "id": "opt5",
+            "label": "کاملاً مخالفم",
+            "weight": 0,
+            "styleKey": "compat_vlow",
+            "score": {
+              "compat": 0
+            }
+          }
+        ]
+      },
+      {
+        "id": "q9",
+        "text": "درک متقابل از وظایف خانوادگی و تقسیم عادلانه مسئولیت‌ها در زندگی روزمره را قبول دارم.",
+        "options": [
+          {
+            "id": "opt1",
+            "label": "کاملاً موافقم",
+            "weight": 10,
+            "styleKey": "compat_vhigh",
+            "score": {
+              "compat": 10
+            }
+          },
+          {
+            "id": "opt2",
+            "label": "موافقم",
+            "weight": 8,
+            "styleKey": "compat_high",
+            "score": {
+              "compat": 8
+            }
+          },
+          {
+            "id": "opt3",
+            "label": "تا حدودی / نظری ندارم",
+            "weight": 5,
+            "styleKey": "compat_mid",
+            "score": {
+              "compat": 5
+            }
+          },
+          {
+            "id": "opt4",
+            "label": "مخالفم",
+            "weight": 2,
+            "styleKey": "compat_low",
+            "score": {
+              "compat": 2
+            }
+          },
+          {
+            "id": "opt5",
+            "label": "کاملاً مخالفم",
+            "weight": 0,
+            "styleKey": "compat_vlow",
+            "score": {
+              "compat": 0
+            }
+          }
+        ]
+      },
+      {
+        "id": "q10",
+        "text": "احساس آمادگی و اشتیاق عمیق برای متعهد ماندن و ساختن این مسیر مشترک را دارم.",
+        "options": [
+          {
+            "id": "opt1",
+            "label": "کاملاً موافقم",
+            "weight": 10,
+            "styleKey": "compat_vhigh",
+            "score": {
+              "compat": 10
+            }
+          },
+          {
+            "id": "opt2",
+            "label": "موافقم",
+            "weight": 8,
+            "styleKey": "compat_high",
+            "score": {
+              "compat": 8
+            }
+          },
+          {
+            "id": "opt3",
+            "label": "تا حدودی / نظری ندارم",
+            "weight": 5,
+            "styleKey": "compat_mid",
+            "score": {
+              "compat": 5
+            }
+          },
+          {
+            "id": "opt4",
+            "label": "مخالفم",
+            "weight": 2,
+            "styleKey": "compat_low",
+            "score": {
+              "compat": 2
+            }
+          },
+          {
+            "id": "opt5",
+            "label": "کاملاً مخالفم",
+            "weight": 0,
+            "styleKey": "compat_vlow",
+            "score": {
+              "compat": 0
+            }
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "quiz-psych-lifestyle",
+    "category": "psychology",
+    "title": "تست هماهنگی و هم‌راستایی سبک زندگی زوجین",
+    "description": "تحلیل میزان تفاهم در تصمیم‌گیری‌های روزمره، مدیریت مالی، تعاملات اجتماعی و ارزش‌های کلان",
+    "image": "https://images.unsplash.com/photo-1520854221256-17451cc331bf?auto=format&fit=crop&w=800&q=80",
+    "duration": "۴ دقیقه",
+    "questionsCount": 8,
+    "badge": "تفاهم سبک زندگی",
+    "questions": [
+      {
+        "id": "q1",
+        "text": "درباره محل سکونت، سبک چیدمان منزل و اولویت‌های رفاهی اولیه با همسرم توافق کامل دارم.",
+        "options": [
+          {
+            "id": "opt1",
+            "label": "کاملاً موافقم",
+            "weight": 10,
+            "styleKey": "compat_vhigh",
+            "score": {
+              "compat": 10
+            }
+          },
+          {
+            "id": "opt2",
+            "label": "موافقم",
+            "weight": 8,
+            "styleKey": "compat_high",
+            "score": {
+              "compat": 8
+            }
+          },
+          {
+            "id": "opt3",
+            "label": "تا حدودی / نظری ندارم",
+            "weight": 5,
+            "styleKey": "compat_mid",
+            "score": {
+              "compat": 5
+            }
+          },
+          {
+            "id": "opt4",
+            "label": "مخالفم",
+            "weight": 2,
+            "styleKey": "compat_low",
+            "score": {
+              "compat": 2
+            }
+          },
+          {
+            "id": "opt5",
+            "label": "کاملاً مخالفم",
+            "weight": 0,
+            "styleKey": "compat_vlow",
+            "score": {
+              "compat": 0
+            }
+          }
+        ]
+      },
+      {
+        "id": "q2",
+        "text": "نحوه گذراندن اوقات فراغت، رفت‌وآمدهای فامیلی و تعاملات اجتماعی ما کاملاً هماهنگ است.",
+        "options": [
+          {
+            "id": "opt1",
+            "label": "کاملاً موافقم",
+            "weight": 10,
+            "styleKey": "compat_vhigh",
+            "score": {
+              "compat": 10
+            }
+          },
+          {
+            "id": "opt2",
+            "label": "موافقم",
+            "weight": 8,
+            "styleKey": "compat_high",
+            "score": {
+              "compat": 8
+            }
+          },
+          {
+            "id": "opt3",
+            "label": "تا حدودی / نظری ندارم",
+            "weight": 5,
+            "styleKey": "compat_mid",
+            "score": {
+              "compat": 5
+            }
+          },
+          {
+            "id": "opt4",
+            "label": "مخالفم",
+            "weight": 2,
+            "styleKey": "compat_low",
+            "score": {
+              "compat": 2
+            }
+          },
+          {
+            "id": "opt5",
+            "label": "کاملاً مخالفم",
+            "weight": 0,
+            "styleKey": "compat_vlow",
+            "score": {
+              "compat": 0
+            }
+          }
+        ]
+      },
+      {
+        "id": "q3",
+        "text": "نظرات ما درباره نحوه پس‌انداز، سرمایه‌گذاری و مدیریت خرج‌های روزمره زندگی به هم نزدیک است.",
+        "options": [
+          {
+            "id": "opt1",
+            "label": "کاملاً موافقم",
+            "weight": 10,
+            "styleKey": "compat_vhigh",
+            "score": {
+              "compat": 10
+            }
+          },
+          {
+            "id": "opt2",
+            "label": "موافقم",
+            "weight": 8,
+            "styleKey": "compat_high",
+            "score": {
+              "compat": 8
+            }
+          },
+          {
+            "id": "opt3",
+            "label": "تا حدودی / نظری ندارم",
+            "weight": 5,
+            "styleKey": "compat_mid",
+            "score": {
+              "compat": 5
+            }
+          },
+          {
+            "id": "opt4",
+            "label": "مخالفم",
+            "weight": 2,
+            "styleKey": "compat_low",
+            "score": {
+              "compat": 2
+            }
+          },
+          {
+            "id": "opt5",
+            "label": "کاملاً مخالفم",
+            "weight": 0,
+            "styleKey": "compat_vlow",
+            "score": {
+              "compat": 0
+            }
+          }
+        ]
+      },
+      {
+        "id": "q4",
+        "text": "در موضوعات مرتبط با اشتغال، تحصیل و اهداف شغلی آینده، یکدیگر را تشویق و حمایت می‌کنیم.",
+        "options": [
+          {
+            "id": "opt1",
+            "label": "کاملاً موافقم",
+            "weight": 10,
+            "styleKey": "compat_vhigh",
+            "score": {
+              "compat": 10
+            }
+          },
+          {
+            "id": "opt2",
+            "label": "موافقم",
+            "weight": 8,
+            "styleKey": "compat_high",
+            "score": {
+              "compat": 8
+            }
+          },
+          {
+            "id": "opt3",
+            "label": "تا حدودی / نظری ندارم",
+            "weight": 5,
+            "styleKey": "compat_mid",
+            "score": {
+              "compat": 5
+            }
+          },
+          {
+            "id": "opt4",
+            "label": "مخالفم",
+            "weight": 2,
+            "styleKey": "compat_low",
+            "score": {
+              "compat": 2
+            }
+          },
+          {
+            "id": "opt5",
+            "label": "کاملاً مخالفم",
+            "weight": 0,
+            "styleKey": "compat_vlow",
+            "score": {
+              "compat": 0
+            }
+          }
+        ]
+      },
+      {
+        "id": "q5",
+        "text": "سبک زندگی، عادات فردی و نظم روزمره ما با یکدیگر سازگاری قابل توجهی دارد.",
+        "options": [
+          {
+            "id": "opt1",
+            "label": "کاملاً موافقم",
+            "weight": 10,
+            "styleKey": "compat_vhigh",
+            "score": {
+              "compat": 10
+            }
+          },
+          {
+            "id": "opt2",
+            "label": "موافقم",
+            "weight": 8,
+            "styleKey": "compat_high",
+            "score": {
+              "compat": 8
+            }
+          },
+          {
+            "id": "opt3",
+            "label": "تا حدودی / نظری ندارم",
+            "weight": 5,
+            "styleKey": "compat_mid",
+            "score": {
+              "compat": 5
+            }
+          },
+          {
+            "id": "opt4",
+            "label": "مخالفم",
+            "weight": 2,
+            "styleKey": "compat_low",
+            "score": {
+              "compat": 2
+            }
+          },
+          {
+            "id": "opt5",
+            "label": "کاملاً مخالفم",
+            "weight": 0,
+            "styleKey": "compat_vlow",
+            "score": {
+              "compat": 0
+            }
+          }
+        ]
+      },
+      {
+        "id": "q6",
+        "text": "درباره نحوه تعامل با خانواده‌های یکدیگر و حفظ مرزهای احترام توافق نظر داریم.",
+        "options": [
+          {
+            "id": "opt1",
+            "label": "کاملاً موافقم",
+            "weight": 10,
+            "styleKey": "compat_vhigh",
+            "score": {
+              "compat": 10
+            }
+          },
+          {
+            "id": "opt2",
+            "label": "موافقم",
+            "weight": 8,
+            "styleKey": "compat_high",
+            "score": {
+              "compat": 8
+            }
+          },
+          {
+            "id": "opt3",
+            "label": "تا حدودی / نظری ندارم",
+            "weight": 5,
+            "styleKey": "compat_mid",
+            "score": {
+              "compat": 5
+            }
+          },
+          {
+            "id": "opt4",
+            "label": "مخالفم",
+            "weight": 2,
+            "styleKey": "compat_low",
+            "score": {
+              "compat": 2
+            }
+          },
+          {
+            "id": "opt5",
+            "label": "کاملاً مخالفم",
+            "weight": 0,
+            "styleKey": "compat_vlow",
+            "score": {
+              "compat": 0
+            }
+          }
+        ]
+      },
+      {
+        "id": "q7",
+        "text": "معیارها و ارزش‌های اخلاقی و اعتقادی ما برای اداره زندگی مشترک هم‌راستا است.",
+        "options": [
+          {
+            "id": "opt1",
+            "label": "کاملاً موافقم",
+            "weight": 10,
+            "styleKey": "compat_vhigh",
+            "score": {
+              "compat": 10
+            }
+          },
+          {
+            "id": "opt2",
+            "label": "موافقم",
+            "weight": 8,
+            "styleKey": "compat_high",
+            "score": {
+              "compat": 8
+            }
+          },
+          {
+            "id": "opt3",
+            "label": "تا حدودی / نظری ندارم",
+            "weight": 5,
+            "styleKey": "compat_mid",
+            "score": {
+              "compat": 5
+            }
+          },
+          {
+            "id": "opt4",
+            "label": "مخالفم",
+            "weight": 2,
+            "styleKey": "compat_low",
+            "score": {
+              "compat": 2
+            }
+          },
+          {
+            "id": "opt5",
+            "label": "کاملاً مخالفم",
+            "weight": 0,
+            "styleKey": "compat_vlow",
+            "score": {
+              "compat": 0
+            }
+          }
+        ]
+      },
+      {
+        "id": "q8",
+        "text": "درباره زمان‌بندی برنامه‌های آینده زندگی (مانند فرزندواری) به درک مشترک رسیده‌ایم.",
+        "options": [
+          {
+            "id": "opt1",
+            "label": "کاملاً موافقم",
+            "weight": 10,
+            "styleKey": "compat_vhigh",
+            "score": {
+              "compat": 10
+            }
+          },
+          {
+            "id": "opt2",
+            "label": "موافقم",
+            "weight": 8,
+            "styleKey": "compat_high",
+            "score": {
+              "compat": 8
+            }
+          },
+          {
+            "id": "opt3",
+            "label": "تا حدودی / نظری ندارم",
+            "weight": 5,
+            "styleKey": "compat_mid",
+            "score": {
+              "compat": 5
+            }
+          },
+          {
+            "id": "opt4",
+            "label": "مخالفم",
+            "weight": 2,
+            "styleKey": "compat_low",
+            "score": {
+              "compat": 2
+            }
+          },
+          {
+            "id": "opt5",
+            "label": "کاملاً مخالفم",
+            "weight": 0,
+            "styleKey": "compat_vlow",
+            "score": {
+              "compat": 0
             }
           }
         ]
@@ -6729,492 +8400,315 @@ if (document.readyState === "loading") {
   {
     "id": "quiz-psych-stress",
     "category": "psychology",
-    "title": "تست تحلیل سبک مدیریت استرس و بحران‌های قبل از عروسی",
-    "description": "شناسایی نقاط محرک استرس، صبوری هیجانی و راهکارهای حفظ آرامش مشترک",
+    "title": "مقیاس مدیریت استرس و اضطراب برنامه‌ریزی عروسی",
+    "description": "سنجش تاب‌آوری هیجانی، حفظ صمیمیت زوجین و کنترل چالش‌های اجرایی و مالی قبل از مراسم",
     "image": "https://images.unsplash.com/photo-1522673607200-164d1b6ce486?auto=format&fit=crop&w=800&q=80",
     "duration": "۳ دقیقه",
-    "questionsCount": 3,
+    "questionsCount": 6,
     "badge": "مدیریت استرس",
     "questions": [
       {
         "id": "q1",
-        "text": "هنگامی که برنامه‌ریزی‌ها طبق زمان‌بندی دقیق پیش نمی‌رود، می‌توانم خونسردی خود را حفظ کنم.",
+        "text": "هنگام مواجهه با هزینه‌های غیرمنتظره عروسی، آرامش خود را حفظ کرده و منطقی تصمیم می‌گیرم.",
         "options": [
           {
-            "id": "lk1",
+            "id": "opt1",
             "label": "کاملاً موافقم",
+            "weight": 10,
+            "styleKey": "compat_vhigh",
+            "score": {
+              "compat": 10
+            }
+          },
+          {
+            "id": "opt2",
+            "label": "موافقم",
+            "weight": 8,
             "styleKey": "compat_high",
             "score": {
-              "compat": 100,
-              "budget_sync": 100
+              "compat": 8
             }
           },
           {
-            "id": "lk2",
-            "label": "موافقم",
+            "id": "opt3",
+            "label": "تا حدودی / نظری ندارم",
+            "weight": 5,
             "styleKey": "compat_mid",
             "score": {
-              "compat": 80,
-              "budget_sync": 80
+              "compat": 5
             }
           },
           {
-            "id": "lk3",
-            "label": "نظری ندارم / خنثی",
-            "styleKey": "compat_neutral",
-            "score": {
-              "compat": 50,
-              "budget_sync": 50
-            }
-          },
-          {
-            "id": "lk4",
+            "id": "opt4",
             "label": "مخالفم",
+            "weight": 2,
             "styleKey": "compat_low",
             "score": {
-              "compat": 30,
-              "budget_sync": 30
+              "compat": 2
             }
           },
           {
-            "id": "lk5",
+            "id": "opt5",
             "label": "کاملاً مخالفم",
+            "weight": 0,
             "styleKey": "compat_vlow",
             "score": {
-              "compat": 10,
-              "budget_sync": 10
+              "compat": 0
             }
           }
         ]
       },
       {
         "id": "q2",
-        "text": "من و همسرم در روزهای پرفشار قبل از عروسی تکیه‌گاه عاطفی یکدیگر هستیم و استرس را منتقل نمی‌کنیم.",
+        "text": "تداخل نظرات خانواده‌ها درباره تشریفات عروسی باعث ایجاد تنش شدیدی میان ما نمی‌شود.",
         "options": [
           {
-            "id": "lk1",
+            "id": "opt1",
             "label": "کاملاً موافقم",
+            "weight": 10,
+            "styleKey": "compat_vhigh",
+            "score": {
+              "compat": 10
+            }
+          },
+          {
+            "id": "opt2",
+            "label": "موافقم",
+            "weight": 8,
             "styleKey": "compat_high",
             "score": {
-              "compat": 100,
-              "budget_sync": 100
+              "compat": 8
             }
           },
           {
-            "id": "lk2",
-            "label": "موافقم",
+            "id": "opt3",
+            "label": "تا حدودی / نظری ندارم",
+            "weight": 5,
             "styleKey": "compat_mid",
             "score": {
-              "compat": 80,
-              "budget_sync": 80
+              "compat": 5
             }
           },
           {
-            "id": "lk3",
-            "label": "نظری ندارم / خنثی",
-            "styleKey": "compat_neutral",
-            "score": {
-              "compat": 50,
-              "budget_sync": 50
-            }
-          },
-          {
-            "id": "lk4",
+            "id": "opt4",
             "label": "مخالفم",
+            "weight": 2,
             "styleKey": "compat_low",
             "score": {
-              "compat": 30,
-              "budget_sync": 30
+              "compat": 2
             }
           },
           {
-            "id": "lk5",
+            "id": "opt5",
             "label": "کاملاً مخالفم",
+            "weight": 0,
             "styleKey": "compat_vlow",
             "score": {
-              "compat": 10,
-              "budget_sync": 10
+              "compat": 0
             }
           }
         ]
       },
       {
         "id": "q3",
-        "text": "توانایی عبور از خطاهای جزئی تامین‌کنندگان در روز جشن بدون خراب کردن حالم را دارم.",
+        "text": "زمان‌بندی و حجم کارهای چک‌لیست برنامه‌ریزی باعث احساس فرسودگی شدید ذهنی من نشده است.",
         "options": [
           {
-            "id": "lk1",
+            "id": "opt1",
             "label": "کاملاً موافقم",
+            "weight": 10,
+            "styleKey": "compat_vhigh",
+            "score": {
+              "compat": 10
+            }
+          },
+          {
+            "id": "opt2",
+            "label": "موافقم",
+            "weight": 8,
             "styleKey": "compat_high",
             "score": {
-              "compat": 100,
-              "budget_sync": 100
+              "compat": 8
             }
           },
           {
-            "id": "lk2",
-            "label": "موافقم",
+            "id": "opt3",
+            "label": "تا حدودی / نظری ندارم",
+            "weight": 5,
             "styleKey": "compat_mid",
             "score": {
-              "compat": 80,
-              "budget_sync": 80
+              "compat": 5
             }
           },
           {
-            "id": "lk3",
-            "label": "نظری ندارم / خنثی",
-            "styleKey": "compat_neutral",
-            "score": {
-              "compat": 50,
-              "budget_sync": 50
-            }
-          },
-          {
-            "id": "lk4",
+            "id": "opt4",
             "label": "مخالفم",
+            "weight": 2,
             "styleKey": "compat_low",
             "score": {
-              "compat": 30,
-              "budget_sync": 30
+              "compat": 2
             }
           },
           {
-            "id": "lk5",
+            "id": "opt5",
             "label": "کاملاً مخالفم",
+            "weight": 0,
             "styleKey": "compat_vlow",
             "score": {
-              "compat": 10,
-              "budget_sync": 10
-            }
-          }
-        ]
-      }
-    ]
-  },
-  {
-    "id": "quiz-psych-readiness",
-    "category": "psychology",
-    "title": "تست خودشناسی و آمادگی عاطفی ورود به زندگی مشترک",
-    "description": "ارزیابی بلوغ ارتباطی، مسئولیت‌پذیری و آمادگی روحی برای شروع فصل جدید زندگی",
-    "image": "https://images.unsplash.com/photo-1511285560929-80b456fea0bc?auto=format&fit=crop&w=800&q=80",
-    "duration": "۴ دقیقه",
-    "questionsCount": 3,
-    "badge": "خودشناسی ازدواج",
-    "questions": [
-      {
-        "id": "q1",
-        "text": "تصویر ذهنی من از زندگی مشترک متکی بر واقع‌گرایی، همدلی و پذیرش مسئولیت‌های جدید است.",
-        "options": [
-          {
-            "id": "lk1",
-            "label": "کاملاً موافقم",
-            "styleKey": "compat_high",
-            "score": {
-              "compat": 100,
-              "budget_sync": 100
-            }
-          },
-          {
-            "id": "lk2",
-            "label": "موافقم",
-            "styleKey": "compat_mid",
-            "score": {
-              "compat": 80,
-              "budget_sync": 80
-            }
-          },
-          {
-            "id": "lk3",
-            "label": "نظری ندارم / خنثی",
-            "styleKey": "compat_neutral",
-            "score": {
-              "compat": 50,
-              "budget_sync": 50
-            }
-          },
-          {
-            "id": "lk4",
-            "label": "مخالفم",
-            "styleKey": "compat_low",
-            "score": {
-              "compat": 30,
-              "budget_sync": 30
-            }
-          },
-          {
-            "id": "lk5",
-            "label": "کاملاً مخالفم",
-            "styleKey": "compat_vlow",
-            "score": {
-              "compat": 10,
-              "budget_sync": 10
+              "compat": 0
             }
           }
         ]
       },
       {
-        "id": "q2",
-        "text": "توانایی گفتگو درباره نیازها و احساسات عمیق خود بدون ترس از قضاوت شدن را دارم.",
+        "id": "q4",
+        "text": "در صورت بروز تاخیر یا ناهماهنگی در خدمات تامین‌کنندگان، قدرت جایگزینی و صبر دارم.",
         "options": [
           {
-            "id": "lk1",
+            "id": "opt1",
             "label": "کاملاً موافقم",
+            "weight": 10,
+            "styleKey": "compat_vhigh",
+            "score": {
+              "compat": 10
+            }
+          },
+          {
+            "id": "opt2",
+            "label": "موافقم",
+            "weight": 8,
             "styleKey": "compat_high",
             "score": {
-              "compat": 100,
-              "budget_sync": 100
+              "compat": 8
             }
           },
           {
-            "id": "lk2",
-            "label": "موافقم",
+            "id": "opt3",
+            "label": "تا حدودی / نظری ندارم",
+            "weight": 5,
             "styleKey": "compat_mid",
             "score": {
-              "compat": 80,
-              "budget_sync": 80
+              "compat": 5
             }
           },
           {
-            "id": "lk3",
-            "label": "نظری ندارم / خنثی",
-            "styleKey": "compat_neutral",
-            "score": {
-              "compat": 50,
-              "budget_sync": 50
-            }
-          },
-          {
-            "id": "lk4",
+            "id": "opt4",
             "label": "مخالفم",
+            "weight": 2,
             "styleKey": "compat_low",
             "score": {
-              "compat": 30,
-              "budget_sync": 30
+              "compat": 2
             }
           },
           {
-            "id": "lk5",
+            "id": "opt5",
             "label": "کاملاً مخالفم",
+            "weight": 0,
             "styleKey": "compat_vlow",
             "score": {
-              "compat": 10,
-              "budget_sync": 10
+              "compat": 0
             }
           }
         ]
       },
       {
-        "id": "q3",
-        "text": "آمادگی کافی برای اولویت دادن به تصمیمات دو نفره در برابر تمایلات فردی گذشته را احساس می‌کنم.",
+        "id": "q5",
+        "text": "ارتباط عاطفی و صمیمیت ما تحت تاثیر شلوغی‌ها و استرس‌های دوره برنامه‌ریزی کم نشده است.",
         "options": [
           {
-            "id": "lk1",
+            "id": "opt1",
             "label": "کاملاً موافقم",
+            "weight": 10,
+            "styleKey": "compat_vhigh",
+            "score": {
+              "compat": 10
+            }
+          },
+          {
+            "id": "opt2",
+            "label": "موافقم",
+            "weight": 8,
             "styleKey": "compat_high",
             "score": {
-              "compat": 100,
-              "budget_sync": 100
+              "compat": 8
             }
           },
           {
-            "id": "lk2",
-            "label": "موافقم",
+            "id": "opt3",
+            "label": "تا حدودی / نظری ندارم",
+            "weight": 5,
             "styleKey": "compat_mid",
             "score": {
-              "compat": 80,
-              "budget_sync": 80
+              "compat": 5
             }
           },
           {
-            "id": "lk3",
-            "label": "نظری ندارم / خنثی",
-            "styleKey": "compat_neutral",
-            "score": {
-              "compat": 50,
-              "budget_sync": 50
-            }
-          },
-          {
-            "id": "lk4",
+            "id": "opt4",
             "label": "مخالفم",
+            "weight": 2,
             "styleKey": "compat_low",
             "score": {
-              "compat": 30,
-              "budget_sync": 30
+              "compat": 2
             }
           },
           {
-            "id": "lk5",
+            "id": "opt5",
             "label": "کاملاً مخالفم",
+            "weight": 0,
             "styleKey": "compat_vlow",
             "score": {
-              "compat": 10,
-              "budget_sync": 10
-            }
-          }
-        ]
-      }
-    ]
-  },
-  {
-    "id": "quiz-psych-family",
-    "category": "psychology",
-    "title": "تست میزان هم‌نظری در تصمیم‌گیری‌ها و مداخله اطرافیان",
-    "description": "تحلیل مرزبندی سالم با اطرافیان، حفظ استقلال زوجین و مدیریت محترمانه نظرات خانواده",
-    "image": "https://images.unsplash.com/photo-1520854221256-17451cc331bf?auto=format&fit=crop&w=800&q=80",
-    "duration": "۳ دقیقه",
-    "questionsCount": 3,
-    "badge": "مرزبندی خانواده",
-    "questions": [
-      {
-        "id": "q1",
-        "text": "من و همسرم مرز مشخصی برای حفظ استقلال تصمیم‌گیری‌های دو نفره خود تعیین کرده‌ایم.",
-        "options": [
-          {
-            "id": "lk1",
-            "label": "کاملاً موافقم",
-            "styleKey": "compat_high",
-            "score": {
-              "compat": 100,
-              "budget_sync": 100
-            }
-          },
-          {
-            "id": "lk2",
-            "label": "موافقم",
-            "styleKey": "compat_mid",
-            "score": {
-              "compat": 80,
-              "budget_sync": 80
-            }
-          },
-          {
-            "id": "lk3",
-            "label": "نظری ندارم / خنثی",
-            "styleKey": "compat_neutral",
-            "score": {
-              "compat": 50,
-              "budget_sync": 50
-            }
-          },
-          {
-            "id": "lk4",
-            "label": "مخالفم",
-            "styleKey": "compat_low",
-            "score": {
-              "compat": 30,
-              "budget_sync": 30
-            }
-          },
-          {
-            "id": "lk5",
-            "label": "کاملاً مخالفم",
-            "styleKey": "compat_vlow",
-            "score": {
-              "compat": 10,
-              "budget_sync": 10
+              "compat": 0
             }
           }
         ]
       },
       {
-        "id": "q2",
-        "text": "توانایی شنیدن محترمانه نظرات اطرافیان بدون ایجاد تعارض در رابطه دونفره‌مان را داریم.",
+        "id": "q6",
+        "text": "از ابزارهای مدیریت آنلاین و مشورت با متخصصین برای کاهش فشار کارهای عروسی استفاده می‌کنم.",
         "options": [
           {
-            "id": "lk1",
+            "id": "opt1",
             "label": "کاملاً موافقم",
+            "weight": 10,
+            "styleKey": "compat_vhigh",
+            "score": {
+              "compat": 10
+            }
+          },
+          {
+            "id": "opt2",
+            "label": "موافقم",
+            "weight": 8,
             "styleKey": "compat_high",
             "score": {
-              "compat": 100,
-              "budget_sync": 100
+              "compat": 8
             }
           },
           {
-            "id": "lk2",
-            "label": "موافقم",
+            "id": "opt3",
+            "label": "تا حدودی / نظری ندارم",
+            "weight": 5,
             "styleKey": "compat_mid",
             "score": {
-              "compat": 80,
-              "budget_sync": 80
+              "compat": 5
             }
           },
           {
-            "id": "lk3",
-            "label": "نظری ندارم / خنثی",
-            "styleKey": "compat_neutral",
-            "score": {
-              "compat": 50,
-              "budget_sync": 50
-            }
-          },
-          {
-            "id": "lk4",
+            "id": "opt4",
             "label": "مخالفم",
+            "weight": 2,
             "styleKey": "compat_low",
             "score": {
-              "compat": 30,
-              "budget_sync": 30
+              "compat": 2
             }
           },
           {
-            "id": "lk5",
+            "id": "opt5",
             "label": "کاملاً مخالفم",
+            "weight": 0,
             "styleKey": "compat_vlow",
             "score": {
-              "compat": 10,
-              "budget_sync": 10
-            }
-          }
-        ]
-      },
-      {
-        "id": "q3",
-        "text": "در صورت بروز اختلاف نظر میان خانواده‌ها، پشت یکدیگر ایستاده و حامی هم هستیم.",
-        "options": [
-          {
-            "id": "lk1",
-            "label": "کاملاً موافقم",
-            "styleKey": "compat_high",
-            "score": {
-              "compat": 100,
-              "budget_sync": 100
-            }
-          },
-          {
-            "id": "lk2",
-            "label": "موافقم",
-            "styleKey": "compat_mid",
-            "score": {
-              "compat": 80,
-              "budget_sync": 80
-            }
-          },
-          {
-            "id": "lk3",
-            "label": "نظری ندارم / خنثی",
-            "styleKey": "compat_neutral",
-            "score": {
-              "compat": 50,
-              "budget_sync": 50
-            }
-          },
-          {
-            "id": "lk4",
-            "label": "مخالفم",
-            "styleKey": "compat_low",
-            "score": {
-              "compat": 30,
-              "budget_sync": 30
-            }
-          },
-          {
-            "id": "lk5",
-            "label": "کاملاً مخالفم",
-            "styleKey": "compat_vlow",
-            "score": {
-              "compat": 10,
-              "budget_sync": 10
+              "compat": 0
             }
           }
         ]
@@ -7889,6 +9383,18 @@ if (document.readyState === "loading") {
       if (previewDate) previewDate.innerText = invitationState.weddingDateJalali;
       if (previewTime) previewTime.innerText = `ساعت ${invitationState.ceremonyTime}`;
 
+      // Update Live Countdown Counters
+      const cntDays = document.getElementById('inv-cnt-days');
+      const cntHours = document.getElementById('inv-cnt-hours');
+      const cntMins = document.getElementById('inv-cnt-mins');
+      const cntSecs = document.getElementById('inv-cnt-secs');
+      if (cntDays && cntHours && cntMins && cntSecs) {
+        cntDays.innerText = "۱۴۵";
+        cntHours.innerText = "۰۸";
+        cntMins.innerText = "۲۴";
+        cntSecs.innerText = "۵۰";
+      }
+
       // 4. Venue & Map Links
       const previewVenue = document.getElementById('inv-preview-venue');
       const previewAddress = document.getElementById('inv-preview-address');
@@ -7993,6 +9499,29 @@ if (document.readyState === "loading") {
       }
     }
 
+    function handleQuickRsvp(status) {
+      const nameInp = document.getElementById('guest-rsvp-name');
+      const name = nameInp ? nameInp.value.trim() : "";
+      const guestName = name || "مهمان گرامی";
+
+      invitationState.rsvps.unshift({
+        id: Date.now(),
+        name: guestName,
+        status: status,
+        guestsCount: status === 'attending' ? 1 : 0,
+        note: status === 'attending' ? 'ثبت پاسخ ۱کلیکی: با کمال میل شرکت می‌کنم' : 'ثبت پاسخ ۱کلیکی: امکان حضور ندارم'
+      });
+
+      renderInvAdminRsvpTable();
+      if (nameInp) nameInp.value = '';
+
+      if (status === 'attending') {
+        showToast(`پاسخ ۱کلیکی شما ثبت شد! با کمال میل منتظر دیدار ${guestName} هستیم.`, 'success');
+      } else {
+        showToast('پاسخ عدم حضور شما ثبت گردید. با سپاس از اعلام قبلی.', 'info');
+      }
+    }
+
     function handleGuestRsvpSubmit(e) {
       e.preventDefault();
       const name = document.getElementById('guest-rsvp-name').value.trim();
@@ -8071,14 +9600,37 @@ if (document.readyState === "loading") {
       renderQuizCatalogCards();
     }
 
+    const QUIZ_HISTORY_KEY = 'aroosi_quiz_history_db';
+
+    function getQuizHistory() {
+      try {
+        const stored = localStorage.getItem(QUIZ_HISTORY_KEY);
+        return stored ? JSON.parse(stored) : [];
+      } catch (e) {
+        return [];
+      }
+    }
+
+    function saveQuizHistoryEntry(entry) {
+      try {
+        let history = getQuizHistory();
+        history = [entry, ...history.filter(h => h.quizId !== entry.quizId)].slice(0, 10);
+        localStorage.setItem(QUIZ_HISTORY_KEY, JSON.stringify(history));
+      } catch (e) {
+        console.error('Failed to save quiz history', e);
+      }
+    }
+
     function renderQuizCatalogCards() {
       const grid = document.getElementById('quiz-cards-grid');
       if (!grid) return;
       grid.innerHTML = '';
 
       const filteredQuizzes = quizState.quizzes.filter(q => q.category === quizState.activeTab);
+      const history = getQuizHistory();
 
       filteredQuizzes.forEach(quiz => {
+        const pastResult = history.find(h => h.quizId === quiz.id);
         const card = document.createElement('div');
         card.className = "bg-white border border-accent rounded-3xl overflow-hidden shadow-xs hover:shadow-md transition-all flex flex-col justify-between";
         card.innerHTML = `
@@ -8088,6 +9640,12 @@ if (document.readyState === "loading") {
               <div class="absolute top-3 right-3 bg-primary text-white text-[11px] font-bold px-3 py-1 rounded-full shadow-md">
                 ${quiz.badge}
               </div>
+              ${pastResult ? `
+                <div class="absolute bottom-3 right-3 left-3 bg-[#1B3B2B]/90 backdrop-blur-xs text-[#D4AF37] text-[11px] font-bold px-3 py-1.5 rounded-xl border border-[#D4AF37]/40 flex justify-between items-center shadow-md">
+                  <span>آخرین نتیجه: ${pastResult.scorePercent}٪</span>
+                  <span class="text-white text-[10px] font-normal">${pastResult.date}</span>
+                </div>
+              ` : ''}
             </div>
 
             <div class="p-6 space-y-3">
@@ -8108,15 +9666,46 @@ if (document.readyState === "loading") {
             </div>
           </div>
 
-          <div class="p-6 pt-0">
-            <button onclick="startQuizRunner('${quiz.id}')" class="w-full bg-primary hover:bg-emerald-900 text-white font-bold py-3 rounded-2xl text-xs shadow-md transition-all flex items-center justify-center gap-2">
-              <span>شروع تست هوشمند</span>
+          <div class="p-6 pt-0 space-y-2">
+            <button onclick="startQuizRunner('${quiz.id}')" class="w-full bg-primary hover:bg-emerald-900 text-white font-bold py-3 rounded-2xl text-xs shadow-md transition-all flex items-center justify-center gap-2 cursor-pointer">
+              <span>${pastResult ? 'شرکت مجدد در تست' : 'شروع تست هوشمند'}</span>
               <i data-lucide="arrow-left" class="w-4 h-4"></i>
             </button>
           </div>
         `;
         grid.appendChild(card);
       });
+
+      // Render Past History Drawer/Banner if exists
+      if (history.length > 0 && quizState.activeTab === 'psychology') {
+        const historyBanner = document.createElement('div');
+        historyBanner.className = "col-span-full bg-[#FCFCFA] border border-[#D4AF37]/40 rounded-3xl p-5 space-y-3 mt-4 shadow-xs";
+        historyBanner.innerHTML = `
+          <div class="flex justify-between items-center border-b border-[#E0D8C8] pb-3">
+            <div class="flex items-center gap-2 text-xs font-bold text-[#1B3B2B]">
+              <i data-lucide="history" class="w-4 h-4 text-[#D4AF37]"></i>
+              <span>سوابق آزمون‌های روان‌شناسی انجام‌شده شما</span>
+            </div>
+            <span class="text-[11px] text-secondary font-medium">${history.length} تست ثبت‌شده</span>
+          </div>
+
+          <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-3 text-xs">
+            ${history.filter(h => h.quizCategory === 'psychology').map(h => `
+              <div class="p-3.5 bg-white border border-[#E0D8C8] rounded-2xl flex justify-between items-center gap-2 shadow-2xs">
+                <div>
+                  <span class="font-bold text-graphite block truncate max-w-[180px]">${h.quizTitle}</span>
+                  <span class="text-[10px] text-secondary block">${h.levelTitle}</span>
+                </div>
+                <div class="text-left shrink-0 dir-ltr">
+                  <span class="font-black text-[#1B3B2B] text-sm block">${h.scorePercent}٪</span>
+                  <span class="text-[9px] text-secondary block">${h.date}</span>
+                </div>
+              </div>
+            `).join('')}
+          </div>
+        `;
+        grid.appendChild(historyBanner);
+      }
 
       lucide.createIcons();
     }
@@ -8970,6 +10559,8 @@ if (document.readyState === "loading") {
       loadFavoritesFromStorage();
       renderFavoriteVendorsList();
       renderCategoryCards();
+      renderNavMegaCategoryMenu();
+      renderVendorRegistrationCategoryOptions();
       renderSidebarCategoryCheckboxes();
       renderMultiCategoryPills();
       filterVendors();
@@ -9006,6 +10597,65 @@ if (document.readyState === "loading") {
     // INSPIRATION GALLERY & MOODBOARD HUB LOGIC
     // ==========================================
     let inspirationState = {
+      articles: [
+        {
+                "id": 101,
+                "title": "راهنمای جامع عکاسی فرمالیته در کویر و بافت تاریخی یزد",
+                "categoryKey": "desert",
+                "categoryName": "عکاسی کویر & بافت تاریخی",
+                "vendorCategoryMatch": "آتلیه و عکاسی",
+                "readTime": "۵ دقیقه مطالعه",
+                "author": "تیم عکاسی استودیو کویر یزد",
+                "date": "۱۰ مهر ۱۴۰۳",
+                "image": "https://images.unsplash.com/photo-1509316975850-ff9c5deb0cd9?auto=format&fit=crop&w=800&q=80",
+                "isFeatured": true,
+                "summary": "بهترین زمان‌بندی طلایی برای ثبت عکس‌های کویر شهداد و شبستان‌های بادگیر یزد همراه با نکات انتخاب لباس و تجهیزات نورپردازی.",
+                "content": "<p class=\"text-xs sm:text-sm text-graphite leading-relaxed\">عکاسی فرمالیته در پهنه رمل‌های طلایی کویر یزد و کوچه‌های آشتی‌کنان بافت تاریخی، تجربه‌ای شگفت‌انگیز و منحصربه‌فرد برای زوج‌ها است. با این حال، تفاوت‌های آب‌وهوایی و انعکاس شدید نور خورشید نیازمند رعایت نکات تخصصی است.</p><h4 class=\"text-sm font-bold text-[#1B3B2B] mt-4 mb-2\">۱. ساعت طلایی (Golden Hour) در کویر یزد</h4><p class=\"text-xs sm:text-sm text-graphite leading-relaxed\">بهترین زمان برای شروع عکاسی کویر، حدود ۹۰ دقیقه قبل از غروب آفتاب است. در این بازه، نور نرم خورشید سایه‌های کشیده و رنگ‌های گرم روی رمل‌ها ایجاد می‌کند که عالی‌ترین پس‌زمینه برای ثبت ویدیوهای هلی‌شات و عکس‌های احساسی است.</p><div class=\"p-4 bg-amber-50/80 border-r-4 border-[#D4AF37] rounded-xl my-4 text-xs font-bold text-amber-900 leading-relaxed\">«پیشنهاد ویژه آتلیه‌های یزد: استفاده از تورهای بلند ۲ الی ۳ متری و پارچه‌های حریر در کویر، جلوه‌ای رویایی و حرکتی باشکوه در عکس‌ها خلق می‌کند.»</div><h4 class=\"text-sm font-bold text-[#1B3B2B] mt-4 mb-2\">۲. لوکیشن‌های پیشنهادی بافت تاریخی</h4><p class=\"text-xs sm:text-sm text-graphite leading-relaxed\">پشت‌بام‌های سنتی محله فهادان، مسجد جامع یزد و خانه‌های تاریخی نظیر خانه لاری‌ها و هتل باغ مشیرالممالک، تنوع بصری فوق‌العاده‌ای در کنار عکس‌های کویر فراهم می‌سازند.</p>"
+        },
+        {
+                "id": 102,
+                "title": "ترندهای گل‌آرایی، سفره عقد و نورپردازی سالن‌های عروسی ۱۴۰۳",
+                "categoryKey": "decor",
+                "categoryName": "دکوراسیون & نورپردازی",
+                "vendorCategoryMatch": "گل‌آرایی و ماشین عروس",
+                "readTime": "۴ دقیقه مطالعه",
+                "author": "طراح تشریفات مشیرالممالک",
+                "date": "۵ مهر ۱۴۰۳",
+                "image": "https://images.unsplash.com/photo-1519167758481-83f550bb49b3?auto=format&fit=crop&w=800&q=80",
+                "isFeatured": false,
+                "summary": "ترکیب گل‌های استوایی و ارکیده با شمعدان‌های کریستال و سفره عقد اسلیمی سنتی برای سالن‌ها و عمارت‌های یزد.",
+                "content": "<p class=\"text-xs sm:text-sm text-graphite leading-relaxed\">طراحی دکوراسیون تالارها و باغ‌های عروسی در سال جدید به سمت المان‌های طبیعی، ترکیبات مینی‌مال شیک و نورپردازی گرم هالوژنی سوق پیدا کرده است.</p><h4 class=\"text-sm font-bold text-[#1B3B2B] mt-4 mb-2\">سفره عقد تلفیقی سنتی و مدرن</h4><p class=\"text-xs sm:text-sm text-graphite leading-relaxed\">استفاده از آینه‌کاری‌های هندسی اصیل در کنار ظروف برنجی و گل‌آرایی‌های پودری، ظاهری مجلل به جایگاه عقد می‌بخشد.</p>"
+        },
+        {
+                "id": 103,
+                "title": "راهنمای انتخاب طلا، جواهرات و استایل عروس متناسب با فرم چهره",
+                "categoryKey": "attire",
+                "categoryName": "استایل، طلا & جواهرات",
+                "vendorCategoryMatch": "طلا، جواهر و حلقه ازدواج",
+                "readTime": "۶ دقیقه مطالعه",
+                "author": "کارشناس گالری طلا برلیان",
+                "date": "۲۸ شهریور ۱۴۰۳",
+                "image": "https://images.unsplash.com/photo-1605100804763-247f67b3557e?auto=format&fit=crop&w=800&q=80",
+                "isFeatured": false,
+                "summary": "نکات کلیدی برای ست کردن سرویس طلا، تاج و تور عروس با یقه لباس عروس و فرم صورت.",
+                "content": "<p class=\"text-xs sm:text-sm text-graphite leading-relaxed\">انتخاب سرویس طلا و جواهر باید هماهنگی کامل با یقه لباس عروس (دکلته، قایقی، ایستاده) و سبک میکاپ داشته باشد.</p>"
+        },
+        {
+                "id": 104,
+                "title": "آداب و رسوم سنتی عروسی در یزد: از نقل‌بندان تا پذیرایی اصیل",
+                "categoryKey": "traditions",
+                "categoryName": "آداب & رسوم سنتی یزد",
+                "vendorCategoryMatch": "کترینگ و تشریفات پذیرایی",
+                "readTime": "۵ دقیقه مطالعه",
+                "author": "پژوهشگر فرهنگ بومی یزد",
+                "date": "۲۰ شهریور ۱۴۰۳",
+                "image": "https://images.unsplash.com/photo-1535141192574-5d4897c13136?auto=format&fit=crop&w=800&q=80",
+                "isFeatured": false,
+                "summary": "مروری بر سنت‌های زیبای خانوادگی یزدی‌ها در برگزاری مراسم عقد، حنابندان و پذیرایی اصیل.",
+                "content": "<p class=\"text-xs sm:text-sm text-graphite leading-relaxed\">فرهنگ اصیل یزدی سرشار از آیین‌های صمیمانه و با برکتی است که مراسم عروسی را به خاطره‌ای ماندگار تبدیل می‌سازد.</p>"
+        }
+],
+      bookmarkedArticles: [],
       activeSubTab: 'gallery', // 'gallery' | 'moodboard'
       selectedCategory: 'all',
       bookmarkedIds: [1, 4, 7],
@@ -9230,6 +10880,29 @@ if (document.readyState === "loading") {
       renderInspirationGalleryGrid();
     }
 
+    const MOODBOARD_STORAGE_KEY = 'aroosi_saved_inspiration_db';
+
+    function loadSavedMoodboardIds() {
+      try {
+        const stored = localStorage.getItem(MOODBOARD_STORAGE_KEY);
+        if (stored) return JSON.parse(stored);
+      } catch (e) {
+        console.error('Failed to load moodboard', e);
+      }
+      return [1, 4, 7];
+    }
+
+    function saveMoodboardIds(ids) {
+      try {
+        localStorage.setItem(MOODBOARD_STORAGE_KEY, JSON.stringify(ids));
+      } catch (e) {
+        console.error('Failed to save moodboard', e);
+      }
+    }
+
+    // Initialize bookmarkedIds from localStorage
+    inspirationState.bookmarkedIds = loadSavedMoodboardIds();
+
     function toggleBookmarkMoodboard(itemId, e) {
       if (e) e.stopPropagation();
       const idx = inspirationState.bookmarkedIds.indexOf(itemId);
@@ -9241,7 +10914,9 @@ if (document.readyState === "loading") {
         showToast('❤️ به مودبورد اختصاصی شما اضافه شد', 'success');
       }
 
+      saveMoodboardIds(inspirationState.bookmarkedIds);
       updateMoodboardBadge();
+
       if (inspirationState.activeSubTab === 'gallery') {
         renderInspirationGalleryGrid();
       } else {
@@ -9303,25 +10978,37 @@ if (document.readyState === "loading") {
       if (inquiryBtn) {
         inquiryBtn.onclick = function() {
           closeIdeaDetailModal();
-          openInquiryModal(v.id, v.name);
+          if (typeof openInquiryModal === 'function') {
+            openInquiryModal(v.id, v.name, item.title, '', 'ایده/ژورنال', item.id, item.image);
+          } else {
+            showToast(`استعلام قیمت برای ${v.name} ثبت شد`, 'success');
+          }
         };
       }
 
-      const profileBtn = document.getElementById('modal-idea-profile-btn');
-      if (profileBtn) {
-        profileBtn.onclick = function() {
+      const vendorBtn = document.getElementById('modal-idea-vendor-btn');
+      if (vendorBtn) {
+        vendorBtn.onclick = function() {
           closeIdeaDetailModal();
-          switchTab('vendor-profile');
+          if (typeof loadVendorProfile === 'function') {
+            loadVendorProfile(v.id);
+          } else if (typeof filterVendorsByCategoryTitle === 'function') {
+            filterVendorsByCategoryTitle(v.category || 'همه');
+          }
         };
       }
 
       modal.classList.remove('hidden');
-      lucide.createIcons();
+      modal.classList.add('flex');
+      if (window.lucide) lucide.createIcons();
     }
 
     function closeIdeaDetailModal() {
       const modal = document.getElementById('idea-detail-modal');
-      if (modal) modal.classList.add('hidden');
+      if (modal) {
+        modal.classList.add('hidden');
+        modal.classList.remove('flex');
+      }
     }
 
     function filterDirectoryByVendorCategory(vendorCategory) {
@@ -9337,7 +11024,66 @@ if (document.readyState === "loading") {
       }
     }
 
+    function renderMagazineFeaturedBanner() {
+      const banner = document.getElementById('magazine-featured-banner');
+      if (!banner) return;
+
+      const articles = inspirationState.articles || [];
+      const featured = articles.find(a => a.isFeatured) || articles[0];
+      if (!featured) {
+        banner.innerHTML = '';
+        return;
+      }
+
+      banner.innerHTML = `
+        <div onclick="openArticleModal(${featured.id})" class="relative bg-gradient-to-r from-[#0F251A] to-[#1B3B2B] text-white rounded-3xl p-6 sm:p-10 overflow-hidden shadow-lg border border-[#D4AF37]/30 cursor-pointer group space-y-6">
+          <div class="absolute inset-0 opacity-40 group-hover:scale-105 transition-transform duration-700 pointer-events-none">
+            <img src="${featured.image}" alt="${featured.title}" class="w-full h-full object-cover">
+          </div>
+          <div class="absolute inset-0 bg-gradient-to-t from-[#08140E] via-[#0F251A]/80 to-transparent pointer-events-none"></div>
+
+          <div class="relative z-10 space-y-4 max-w-2xl">
+            <div class="inline-flex items-center gap-2 bg-[#D4AF37] text-[#1B3B2B] text-xs font-black px-3.5 py-1.5 rounded-full shadow-md">
+              <i data-lucide="sparkles" class="w-4 h-4"></i>
+              <span>مقاله و ترند ویژه هفته</span>
+            </div>
+
+            <h3 class="text-xl sm:text-3xl font-black text-white leading-snug group-hover:text-[#D4AF37] transition-colors">
+              ${featured.title}
+            </h3>
+
+            <p class="text-xs sm:text-sm text-emerald-100/90 leading-relaxed font-medium line-clamp-2">
+              ${featured.summary}
+            </p>
+
+            <div class="flex flex-wrap items-center gap-4 pt-2 text-xs font-bold text-amber-200">
+              <span class="flex items-center gap-1.5">
+                <i data-lucide="user" class="w-4 h-4 text-[#D4AF37]"></i>
+                <span>${featured.author}</span>
+              </span>
+              <span>•</span>
+              <span class="flex items-center gap-1.5">
+                <i data-lucide="clock" class="w-4 h-4 text-[#D4AF37]"></i>
+                <span>${featured.readTime}</span>
+              </span>
+            </div>
+          </div>
+
+          <div class="relative z-10 pt-2 flex items-center justify-between border-t border-white/10">
+            <span class="text-xs font-bold text-[#D4AF37] flex items-center gap-1.5 group-hover:translate-x-[-4px] transition-transform">
+              <span>مطالعه مقاله کامل</span>
+              <i data-lucide="arrow-left" class="w-4 h-4"></i>
+            </span>
+          </div>
+        </div>
+      `;
+
+      if (window.lucide) lucide.createIcons();
+    }
+
     function renderInspirationGalleryGrid() {
+      renderMagazineFeaturedBanner();
+
       const grid = document.getElementById('insp-gallery-grid');
       if (!grid) return;
       grid.innerHTML = '';
@@ -9570,7 +11316,8 @@ if (document.readyState === "loading") {
     }
 
     function exportMoodboardPdf() {
-      showToast('فایل خلاصه مودبورد شما آماده دانلود گردید.', 'info');
+      window.print();
+      showToast('صفحه مودبورد جهت دانلود یا چاپ آماده گردید.', 'info');
     }
 
   // Super Admin Hero Logo update function
@@ -9578,32 +11325,68 @@ const CATEGORY_SUBGROUPS_MAP = {
   legal_ceremony: {
     title: "تشریفات قانونی، عقد و مشاوره",
     badge: "۵ زیرگروه تخصصی",
-    icon: "🏛️",
-    subgroups: ["دفتر رسمی ازدواج و طلاق", "سفره عقد و دیزاین مراسم", "مشاوره خانواده و زوج‌درمانی", "سالن عقد و نامزدی", "خدمات حقوقی و ثبت قرارداد"]
+    icon: "building-2",
+    subgroups: [
+      { id: "sub-1", title: "دفتر رسمی ازدواج و طلاق", count: "+۱۲ مجموعه", desc: "ثبت رسمی ازدواج، ثبت سالن عقد و سفره عقد" },
+      { id: "sub-2", title: "سفره عقد و دیزاین مراسم", count: "+۸ مرکز", desc: "دیزاین سفره عقد سنتی و مدرن با شمع‌آرایی" },
+      { id: "sub-3", title: "مشاوره خانواده و زوج‌درمانی", count: "+۶ کلینیک", desc: "مشاوره تخصصی قبل از ازدواج و آزمون‌های روانشناسی" },
+      { id: "sub-4", title: "سالن عقد و نامزدی", count: "+۱۰ سالن", desc: "سالن‌های عقد باظرفیت محدود و امکانات پذیرایی" },
+      { id: "sub-5", title: "خدمات حقوقی و ثبت قرارداد", count: "+۵ دفتر", desc: "مشاوره حقوقی شروط ضمن عقد و تنظیم قراردادها" }
+    ]
   },
   gold_shopping: {
     title: "طلا، خرید و خدمات جانبی",
     badge: "۵ زیرگروه تخصصی",
-    icon: "💎",
-    subgroups: ["گالری طلا و جواهرات عروس", "حلقه ازدواج و پشت‌حلقه", "خدمات مسافرتی و تور ماه عسل", "اجاره خودرو لوکس و تشریفاتی", "ساعت و اکسسوری"]
+    icon: "gem",
+    subgroups: [
+      { id: "sub-6", title: "گالری طلا و جواهرات عروس", count: "+۱۵ گالری", desc: "سرویس طلا، جواهر و سنگ‌های قیمتی ساخت یزد" },
+      { id: "sub-7", title: "حلقه ازدواج و پشت‌حلقه", count: "+۲۰ مرکز", desc: "حلقه‌های نامزدی و ست‌های پلاتین و طلا" },
+      { id: "sub-8", title: "خدمات مسافرتی و تور ماه عسل", count: "+۸ آژانس", desc: "رزرو تورهای داخلی و خارجی ماه عسل" },
+      { id: "sub-9", title: "اجاره خودرو لوکس و تشریفاتی", count: "+۶ مجموعه", desc: "اجاره ماشین عروس با راننده و گل‌آرایی اختصاصی" },
+      { id: "sub-10", title: "ساعت و اکسسوری", count: "+۱۰ فروشگاه", desc: "ست‌های برند ساعت و اکسسوری‌های زنانه و مردانه" }
+    ]
   },
   beauty_style: {
     title: "زیبایی و استایل زوجین",
     badge: "۶ زیرگروه تخصصی",
-    icon: "✨",
-    subgroups: ["سالن زیبایی و میکاپ VIP عروس", "آرایشگاه و گریم داماد", "مزون لباس عروس و شب", "پوشاک و کت‌وشلوار داماد", "تاج، تور و اکسسوری", "خدمات ناخن و مژه"]
+    icon: "sparkles",
+    subgroups: [
+      { id: "sub-11", title: "سالن زیبایی و میکاپ VIP عروس", count: "+۱۸ سالن", desc: "میکاپ تخصصی عروس، شینیون و پاکسازی پوست" },
+      { id: "sub-12", title: "آرایشگاه و گریم داماد", count: "+۱۲ مجموعه", desc: "پکیج کامل پاکسازی، گریم و استایل موی داماد" },
+      { id: "sub-13", title: "مزون لباس عروس و شب", count: "+۱۴ مزون", desc: "دوخت و اجاره لباس عروس، فرمالیته و تور" },
+      { id: "sub-14", title: "پوشاک و کت‌وشلوار داماد", count: "+۱۰ فروشگاه", desc: "کت‌وشلوار دامادی، پیراهن و اکسسوری‌های مردانه" },
+      { id: "sub-15", title: "تاج، تور و اکسسوری", count: "+۸ کارگاه", desc: "طراحی و ساخت تاج عروس، ریسه و تور سر" },
+      { id: "sub-16", title: "خدمات ناخن و مژه", count: "+۱۵ کلینیک", desc: "کاشت تخصصی ناخن، اکستنشن مژه و مراقبت پوستی" }
+    ]
   },
   photo_music: {
     title: "ثبت لحظات و موسیقی",
     badge: "۹ زیرگروه تخصصی",
-    icon: "📸",
-    subgroups: ["آتلیه عکاسی و فیلمبرداری", "تصویربرداری هوایی (هلی‌شات)", "ساخت کلیپ فرمالیته کویر", "گروه موسیقی و دی‌جی زنده", "نورپردازی و استیج", "سیستم صوتی و اکو", "آتلیه کودک و بارداری", "فرمالیته شمال و جنوب", "تصویربرداری ۴K و ۳۶۰ درجه"]
+    icon: "camera",
+    subgroups: [
+      { id: "sub-17", title: "آتلیه عکاسی و فیلمبرداری", count: "+۱۶ آتلیه", desc: "عکاسی سناریومحور، آلبوم دیجیتال و کلیپ ویدئویی" },
+      { id: "sub-18", title: "تصویربرداری هوایی (هلی‌شات)", count: "+۸ تیم", desc: "تصویربرداری ۴K با پهپاد و هلی‌شات هوایی" },
+      { id: "sub-19", title: "ساخت کلیپ فرمالیته کویر", count: "+۱۰ استودیو", desc: "عکاسی و فیلمبرداری اختصاصی در کویر یزد" },
+      { id: "sub-20", title: "گروه موسیقی و دی‌جی زنده", count: "+۱۲ گروه", desc: "ارکستر زنده، دی‌جی خانم و آقا با نوازندگان حرفه‌ای" },
+      { id: "sub-21", title: "نورپردازی و استیج", count: "+۶ مجری", desc: "طراحی استیج رقص، استیج هلندی و نورپردازی حرفه‌ای" },
+      { id: "sub-22", title: "سیستم صوتی و اکو", count: "+۸ مرکز", desc: "اجاره و اجرای سیستم‌های صوتی هیبریدی" },
+      { id: "sub-23", title: "آتلیه کودک و بارداری", count: "+۵ آتلیه", desc: "عکاسی تخصصی خانوادگی و یادبود" },
+      { id: "sub-24", title: "فرمالیته شمال و جنوب", count: "+۶ تیم", desc: "سفرهای لوکس فرمالیته شمال، هرمز و قشم" },
+      { id: "sub-25", title: "تصویربرداری ۴K و ۳۶۰ درجه", count: "+۷ مجموعه", desc: "استفاده از دوربین‌های ۳۶۰ درجه و لنز سینمایی" }
+    ]
   },
   venue_catering: {
     title: "مکان، تشریفات و پذیرایی",
     badge: "۶ زیرگروه تخصصی",
-    icon: "🏰",
-    subgroups: ["تالار عروسی و باغ‌تالار", "عمارت اختصاصی و هتل", "کترینگ و خدمات غذا و شام", "کیک و شیرینی سنتی یزد (حاج خلیفه)", "گل‌آرایی و ماشین عروس", "تشریفات پذیرایی و فینگرفود"]
+    icon: "building",
+    subgroups: [
+      { id: "sub-26", title: "تالار عروسی و باغ‌تالار", count: "+۱۵ تالار", desc: "باغ‌تالارهای باشکوه صفائیه و یزد با ظرفیت بالا" },
+      { id: "sub-27", title: "عمارت اختصاصی و هتل", count: "+۸ هتل", desc: "هتل‌های سنتی و پنج ستاره بافت تاریخی یزد" },
+      { id: "sub-28", title: "کترینگ و خدمات غذا و شام", count: "+۱۲ کترینگ", desc: "منوهای غذایی ایرانی، سنتی و فرنگی سفارشی" },
+      { id: "sub-29", title: "کیک و شیرینی سنتی یزد (حاج خلیفه)", count: "+۱۰ قنادی", desc: "قطاب، باقلوا، کیک طبقاتی و شیرینی عروسی" },
+      { id: "sub-30", title: "گل‌آرایی و ماشین عروس", count: "+۱۴ گل‌فروشی", desc: "گل‌آرایی ورودی، جایگاه عروس و ماشین عروس" },
+      { id: "sub-31", title: "تشریفات پذیرایی و فینگرفود", count: "+۹ تیم", desc: "مهمانداران آموزش‌دیده، بوفه فینگرفود و بار میوه" }
+    ]
   }
 };
 
@@ -9615,37 +11398,88 @@ const subgroupData = {
   5: ["تالار عروسی و باغ‌تالار", "عمارت اختصاصی و هتل", "کترینگ و خدمات غذا", "تشریفات و گل‌آرایی ورودی"]
 };
 
+function closeAllSubgroupModals() {
+  const modalDrawer = document.getElementById('sub-category-drawer-modal');
+  const modalSimple = document.getElementById('subgroups-modal');
+  const modalGrid = document.getElementById('subgroupModal');
+  if (modalDrawer) { modalDrawer.classList.add('hidden'); modalDrawer.classList.remove('flex'); }
+  if (modalSimple) { modalSimple.classList.add('hidden'); modalSimple.style.display = 'none'; }
+  if (modalGrid) { modalGrid.classList.add('hidden'); modalGrid.style.display = 'none'; }
+  document.body.style.overflow = '';
+}
+
 function openCategorySubgroupsModal(catKey) {
   const data = CATEGORY_SUBGROUPS_MAP[catKey] || CATEGORY_SUBGROUPS_MAP.venue_catering;
 
-  const modalTitle = document.getElementById('modalCatTitle');
-  const modalBadge = document.getElementById('modalCatBadge');
-  const modalIcon = document.getElementById('modalCatIcon');
-  const gridContainer = document.getElementById('subgroupGridList');
-  const modal1 = document.getElementById('subgroupModal');
-  const modal2 = document.getElementById('subgroups-modal');
+  // 1. Populate Floating Sub-Category Drawer (#sub-category-drawer-modal)
+  const drawerModal = document.getElementById('sub-category-drawer-modal');
+  const drawerTitle = document.getElementById('drawer-header-title');
+  const drawerBadge = document.getElementById('drawer-header-badge');
+  const drawerIcon = document.getElementById('drawer-header-icon');
+  const drawerGrid = document.getElementById('drawer-subcategories-grid');
 
-  if (modalTitle) modalTitle.innerText = data.title;
-  if (modalBadge) modalBadge.innerText = data.badge;
-  if (modalIcon) modalIcon.innerText = data.icon;
+  if (drawerTitle) drawerTitle.innerText = data.title;
+  if (drawerBadge) drawerBadge.innerText = data.badge;
+  if (drawerIcon) drawerIcon.innerHTML = `<i data-lucide="${data.icon || 'layers'}" class="w-6 h-6 text-[#1B3B2B]"></i>`;
 
-  if (gridContainer) {
-    gridContainer.innerHTML = data.subgroups.map(sub => `
-      <div class="subgroup-item-card">
-        <span class="subgroup-name">📍 ${sub}</span>
-        <button onclick="switchTab('directory'); filterVendorsByCategoryTitle('${sub}'); closeSubgroupModal();" class="btn-subgroup-view">مشاهده لیست ←</button>
-      </div>
-    `).join('');
+  if (drawerGrid) {
+    drawerGrid.innerHTML = data.subgroups.map(sub => {
+      const subTitle = typeof sub === 'string' ? sub : sub.title;
+      const subCount = typeof sub === 'string' ? '+۵ کسب‌وکار' : (sub.count || '+۵ کسب‌وکار');
+      const subDesc = typeof sub === 'string' ? 'مشاهده و استعلام قیمت کسب‌وکارهای تاییدشده یزد' : (sub.desc || 'مشاهده و استعلام قیمت کسب‌وکارهای تاییدشده یزد');
+
+      return `
+        <div onclick="switchTab('directory'); filterVendorsByCategoryTitle('${subTitle}'); closeAllSubgroupModals();" class="bg-[#FCFCFA] border border-[#D4AF37]/50 hover:border-[#D4AF37] rounded-2xl p-4 transition-all duration-300 shadow-2xs hover:shadow-md hover:-translate-y-0.5 cursor-pointer flex flex-col justify-between group">
+          <div class="space-y-1.5">
+            <div class="flex items-center justify-between gap-2">
+              <span class="font-black text-xs text-[#1B3B2B] group-hover:text-[#D4AF37] transition-colors flex items-center gap-1.5">
+                <i data-lucide="tag" class="w-3.5 h-3.5 text-[#D4AF37]"></i>
+                ${subTitle}
+              </span>
+              <span class="bg-[#1B3B2B]/10 text-[#1B3B2B] text-[10px] font-bold px-2 py-0.5 rounded-full">${subCount}</span>
+            </div>
+            <p class="text-[11px] text-secondary leading-relaxed font-medium line-clamp-2">${subDesc}</p>
+          </div>
+          <div class="pt-3 border-t border-accent/50 mt-3 flex items-center justify-between text-[11px] text-[#D4AF37] font-bold">
+            <span>مشاهده و فیلتر لیست</span>
+            <span class="group-hover:translate-x-[-3px] transition-transform">←</span>
+          </div>
+        </div>
+      `;
+    }).join('');
   }
 
-  if (modal1) {
-    modal1.style.display = 'flex';
-    modal1.classList.remove('hidden');
+  // 2. Populate Simple Subgroups Modal (#subgroups-modal)
+  const simpleModal = document.getElementById('subgroups-modal');
+  const simpleTitle = document.getElementById('subgroups-title');
+  const simpleList = document.getElementById('subgroups-list');
+
+  if (simpleTitle) simpleTitle.innerText = data.title + ' (' + data.badge + ')';
+  if (simpleList) {
+    simpleList.innerHTML = data.subgroups.map(sub => {
+      const subTitle = typeof sub === 'string' ? sub : sub.title;
+      return `
+        <div class="flex items-center justify-between bg-[#FCFCFA] border border-[#D4AF37]/40 rounded-xl p-3 shadow-2xs">
+          <span class="text-xs font-bold text-[#1B3B2B]">📍 ${subTitle}</span>
+          <button onclick="switchTab('directory'); filterVendorsByCategoryTitle('${subTitle}'); closeAllSubgroupModals();" class="bg-[#1B3B2B] hover:bg-emerald-900 text-white font-bold px-3 py-1.5 rounded-lg text-xs transition-colors">
+            مشاهده لیست ←
+          </button>
+        </div>
+      `;
+    }).join('');
   }
-  if (modal2) {
-    modal2.style.display = 'flex';
-    modal2.classList.remove('hidden');
+
+  // Show Active Modal
+  if (drawerModal) {
+    drawerModal.classList.remove('hidden');
+    drawerModal.classList.add('flex');
+  } else if (simpleModal) {
+    simpleModal.classList.remove('hidden');
+    simpleModal.style.display = 'flex';
   }
+
+  document.body.style.overflow = 'hidden';
+  if (typeof lucide !== 'undefined' && lucide.createIcons) lucide.createIcons();
 }
 
 function openCategorySubgroups(catId, fallbackTitle) {
@@ -9691,17 +11525,7 @@ function openSubgroupsModal(catId, catTitle) {
 }
 
 function closeSubgroupModal() {
-  const modal1 = document.getElementById('subgroupModal');
-  if (modal1) {
-    modal1.style.display = 'none';
-    modal1.classList.add('hidden');
-  }
-
-  const modal2 = document.getElementById('subgroups-modal');
-  if (modal2) {
-    modal2.style.display = 'none';
-    modal2.classList.add('hidden');
-  }
+  closeAllSubgroupModals();
 }
 
 // Close modal when clicking outside of it
@@ -9726,6 +11550,54 @@ window.addEventListener('click', (e) => {
         showToast('لطفا یک آدرس معتبر برای تصویر وارد کنید', 'warning');
       }
     }
+  }
+
+  function loadShowcaseConfig() {
+    try {
+      const stored = localStorage.getItem('aroosi_admin_showcase_config');
+      if (stored) {
+        const config = JSON.parse(stored);
+        if (config.bannerText) {
+          const bannerInput = document.getElementById('admin-banner-text');
+          if (bannerInput) bannerInput.value = config.bannerText;
+        }
+        if (config.heroTitle) {
+          const titleInput = document.getElementById('admin-hero-title-input');
+          if (titleInput) titleInput.value = config.heroTitle;
+          const heroH1 = document.querySelector('#hero h1');
+          if (heroH1) heroH1.innerHTML = config.heroTitle;
+        }
+        if (config.heroSubtitle) {
+          const subInput = document.getElementById('admin-hero-subtitle-input');
+          if (subInput) subInput.value = config.heroSubtitle;
+          const heroP = document.querySelector('#hero p');
+          if (heroP) heroP.textContent = config.heroSubtitle;
+        }
+      }
+    } catch (e) {
+      console.error('Failed to load showcase config:', e);
+    }
+  }
+
+  function handleSaveShowcaseConfig() {
+    const bannerText = document.getElementById('admin-banner-text')?.value || '';
+    const heroTitle = document.getElementById('admin-hero-title-input')?.value || '';
+    const heroSubtitle = document.getElementById('admin-hero-subtitle-input')?.value || '';
+
+    const config = { bannerText, heroTitle, heroSubtitle };
+    try {
+      localStorage.setItem('aroosi_admin_showcase_config', JSON.stringify(config));
+    } catch (e) {
+      console.error('Failed to save showcase config:', e);
+    }
+
+    const heroH1 = document.querySelector('#hero h1');
+    if (heroH1 && heroTitle) heroH1.innerHTML = heroTitle;
+
+    const heroP = document.querySelector('#hero p');
+    if (heroP && heroSubtitle) heroP.textContent = heroSubtitle;
+
+    showToast('تنظیمات ویترین و متون بنر با موفقیت ذخیره و منتشر گردید', 'success');
   }
 
 
@@ -9843,19 +11715,430 @@ window.toggleMasterDiscountBadge = function(isCheck) {
   }
 };
 
-window.toggleDiscountPreset = function(presetKey) {
-  const badge = document.getElementById(`badge-status-${presetKey}`);
-  if (!badge) return;
+// ==========================================
+// ISOLATED STEP 2: VENDOR DASHBOARD UPGRADES
+// ==========================================
 
-  const isActive = badge.classList.contains('bg-emerald-100');
-  if (isActive) {
-    badge.className = 'bg-slate-200 text-slate-700 text-[10px] font-bold px-2 py-0.5 rounded-md';
-    badge.innerText = 'غیرفعال';
-    if (typeof showToast === 'function') showToast('پیشنهاد تخفیف غیرفعال شد.', 'info');
+// 1. PROMOTIONS & DISCOUNT BADGES STATE & FUNCTIONS
+let vendorPromosState = [];
+try {
+  const savedPromos = localStorage.getItem('aroosi_vendor_promos_2');
+  if (savedPromos) {
+    vendorPromosState = JSON.parse(savedPromos);
+  }
+} catch (e) { vendorPromosState = []; }
+
+if (!vendorPromosState || !vendorPromosState.length) {
+  vendorPromosState = [
+    { id: 'promo-1', title: 'تخفیف ۲۰٪ فصل پاییز', discountPct: 20, expiryDays: 5, description: 'ویژه عکاسی و کلیپ فرمالیته کویر یزد با مجوز رسمی', active: true },
+    { id: 'promo-2', title: 'تخفیف رزرو وسط هفته (۱۵٪)', discountPct: 15, expiryDays: 12, description: 'ویژه مراسم‌های روزهای شنبه تا چهارشنبه', active: false },
+    { id: 'promo-3', title: 'پیشنهاد هدیه ویژه رزرو زودهنگام', discountPct: 10, expiryDays: 30, description: 'رزرو حداقل ۶۰ روز قبل از تاریخ مراسم', active: true }
+  ];
+}
+
+window.renderVendorPromoBadges = function() {
+  const container = document.getElementById('vd-promo-badges-list');
+  if (!container) return;
+  container.innerHTML = '';
+
+  vendorPromosState.forEach(promo => {
+    const card = document.createElement('div');
+    card.className = `p-4 border rounded-2xl space-y-2.5 transition-all ${
+      promo.active ? 'bg-white border-primary/40 shadow-xs' : 'bg-bgCustom border-accent/80 opacity-75'
+    }`;
+    card.innerHTML = `
+      <div class="flex justify-between items-center gap-2">
+        <span class="text-graphite font-black text-xs truncate">${promo.title}</span>
+        <span class="${promo.active ? 'bg-emerald-100 text-emerald-800' : 'bg-slate-200 text-slate-700'} text-[10px] font-bold px-2 py-0.5 rounded-md shrink-0">
+          ${promo.active ? 'فعال' : 'غیرفعال'}
+        </span>
+      </div>
+      <div class="flex items-center gap-2 flex-wrap text-[11px]">
+        <span class="bg-rose-100 text-rose-800 font-bold px-2 py-0.5 rounded-md flex items-center gap-1">
+          <i data-lucide="zap" class="w-3 h-3 text-rose-600"></i>
+          <span>${promo.discountPct}٪ تخفیف</span>
+        </span>
+        <span class="bg-amber-100 text-amber-900 font-bold px-2 py-0.5 rounded-md flex items-center gap-1">
+          <i data-lucide="clock" class="w-3 h-3 text-amber-600"></i>
+          <span>${promo.expiryDays} روز باقی‌مانده</span>
+        </span>
+      </div>
+      <p class="text-[11px] text-secondary font-normal line-clamp-2">${promo.description || 'توضیحات پیشنهاد ویژه'}</p>
+      <div class="flex items-center justify-end gap-1.5 pt-2 border-t border-accent/60">
+        <button type="button" onclick="togglePromoBadgeStatus('${promo.id}')" class="bg-bgCustom hover:bg-slate-100 text-graphite border border-accent py-1 px-2.5 rounded-lg font-bold text-[11px] transition-colors cursor-pointer">
+          ${promo.active ? 'غیرفعال‌سازی' : 'فعال‌سازی'}
+        </button>
+        <button type="button" onclick="openPromoBadgeModal('${promo.id}')" class="bg-white hover:bg-emerald-50 text-primary border border-primary/30 py-1 px-2.5 rounded-lg font-bold text-[11px] transition-colors cursor-pointer">
+          ویرایش
+        </button>
+        <button type="button" onclick="deletePromoBadge('${promo.id}')" class="bg-white hover:bg-rose-50 text-rose-600 border border-rose-200 py-1 px-2.5 rounded-lg font-bold text-[11px] transition-colors cursor-pointer">
+          حذف
+        </button>
+      </div>
+    `;
+    container.appendChild(card);
+  });
+
+  if (window.lucide) lucide.createIcons();
+
+  const vendor2 = vendors.find(v => v.id === 2);
+  if (vendor2) {
+    vendor2.promoBadges = vendorPromosState;
+  }
+};
+
+window.openPromoBadgeModal = function(promoId = null) {
+  const modal = document.getElementById('modal-vendor-promo-badge');
+  if (!modal) return;
+
+  document.getElementById('promo-edit-id').value = promoId || '';
+  if (promoId) {
+    const promo = vendorPromosState.find(p => p.id === promoId);
+    if (promo) {
+      document.getElementById('promo-title').value = promo.title || '';
+      document.getElementById('promo-discount-pct').value = promo.discountPct || 10;
+      document.getElementById('promo-expiry-days').value = promo.expiryDays || 7;
+      document.getElementById('promo-description').value = promo.description || '';
+      document.getElementById('promo-active-toggle').checked = !!promo.active;
+      document.getElementById('modal-promo-title').innerText = 'ویرایش نشان تخفیف ویژه';
+    }
   } else {
-    badge.className = 'bg-emerald-100 text-emerald-800 text-[10px] font-bold px-2 py-0.5 rounded-md';
-    badge.innerText = 'فعال';
-    if (typeof showToast === 'function') showToast('🎉 پیشنهاد تخفیف ویژه روی پروفایل عمومی فعال شد.', 'success');
+    document.getElementById('form-vendor-promo-badge')?.reset();
+    document.getElementById('promo-edit-id').value = '';
+    document.getElementById('modal-promo-title').innerText = 'افزودن نشان تخفیف ویژه جدید';
+  }
+
+  modal.classList.remove('hidden');
+  modal.classList.add('flex');
+};
+
+window.closePromoBadgeModal = function() {
+  const modal = document.getElementById('modal-vendor-promo-badge');
+  if (modal) {
+    modal.classList.add('hidden');
+    modal.classList.remove('flex');
+  }
+};
+
+window.savePromoBadgeModal = function(e) {
+  if (e && e.preventDefault) e.preventDefault();
+  const editId = document.getElementById('promo-edit-id').value;
+  const title = document.getElementById('promo-title').value.trim();
+  const discountPct = parseInt(document.getElementById('promo-discount-pct').value, 10) || 10;
+  const expiryDays = parseInt(document.getElementById('promo-expiry-days').value, 10) || 7;
+  const description = document.getElementById('promo-description').value.trim();
+  const active = document.getElementById('promo-active-toggle').checked;
+
+  if (!title) return;
+
+  if (editId) {
+    vendorPromosState = vendorPromosState.map(p => p.id === editId ? { ...p, title, discountPct, expiryDays, description, active } : p);
+    showToast('نشان تخفیف با موفقیت به روزرسانی شد.', 'success');
+  } else {
+    vendorPromosState.push({
+      id: 'promo-' + Date.now(),
+      title,
+      discountPct,
+      expiryDays,
+      description,
+      active
+    });
+    showToast('نشان تخفیف جدید ایجاد شد و روی پروفایل فعال گردید.', 'success');
+  }
+
+  try {
+    localStorage.setItem('aroosi_vendor_promos_2', JSON.stringify(vendorPromosState));
+  } catch (err) {}
+
+  renderVendorPromoBadges();
+  closePromoBadgeModal();
+  if (typeof renderVendors === 'function') renderVendors(vendors);
+};
+
+window.deletePromoBadge = function(promoId) {
+  vendorPromosState = vendorPromosState.filter(p => p.id !== promoId);
+  try {
+    localStorage.setItem('aroosi_vendor_promos_2', JSON.stringify(vendorPromosState));
+  } catch (err) {}
+  renderVendorPromoBadges();
+  if (typeof renderVendors === 'function') renderVendors(vendors);
+  showToast('نشان تخفیف حذف گردید.', 'info');
+};
+
+window.togglePromoBadgeStatus = function(promoId) {
+  vendorPromosState = vendorPromosState.map(p => p.id === promoId ? { ...p, active: !p.active } : p);
+  try {
+    localStorage.setItem('aroosi_vendor_promos_2', JSON.stringify(vendorPromosState));
+  } catch (err) {}
+  renderVendorPromoBadges();
+  if (typeof renderVendors === 'function') renderVendors(vendors);
+  showToast('وضعیت نشان تخفیف تغییر یافت.', 'info');
+};
+
+// 2. CALENDAR DAY BLOCKING STATE & FUNCTIONS
+let vendorBlockedDates = [];
+try {
+  const savedBlocked = localStorage.getItem('aroosi_vendor_blocked_2');
+  if (savedBlocked) vendorBlockedDates = JSON.parse(savedBlocked);
+} catch(e) { vendorBlockedDates = []; }
+
+if (!vendorBlockedDates || !vendorBlockedDates.length) {
+  vendorBlockedDates = [5, 12, 18, 25];
+}
+
+window.renderVendorDashCalendar = function() {
+  const grid = document.getElementById('calendar-grid');
+  if (!grid) return;
+  grid.innerHTML = '';
+
+  // Render Day Name Headers
+  const dayHeaders = ['ش', 'ی', 'د', 'س', 'چ', 'پ', 'ج'];
+  dayHeaders.forEach(h => {
+    const hEl = document.createElement('div');
+    hEl.className = "font-bold text-[11px] text-secondary py-1 bg-bgCustom rounded-lg border border-accent/40 text-center";
+    hEl.innerText = h;
+    grid.appendChild(hEl);
+  });
+
+  const bookedDays = [3, 15, 22];
+
+  for (let day = 1; day <= 30; day++) {
+    const isBlocked = vendorBlockedDates.includes(day);
+    const isBooked = bookedDays.includes(day);
+
+    const dayBtn = document.createElement('button');
+    dayBtn.type = 'button';
+    dayBtn.onclick = () => toggleVendorBlockedDate(day);
+
+    let statusClass = "bg-emerald-50 text-emerald-900 border-emerald-300 hover:bg-emerald-100 cursor-pointer";
+    let statusLabel = "آزاد";
+
+    if (isBooked) {
+      statusClass = "bg-amber-100 text-amber-900 border-amber-300 font-black cursor-pointer";
+      statusLabel = "رزرو نهایی";
+    } else if (isBlocked) {
+      statusClass = "bg-rose-100 text-rose-900 border-rose-300 font-black cursor-pointer";
+      statusLabel = "پر / تعطیل";
+    }
+
+    dayBtn.className = `p-2.5 rounded-2xl border text-xs font-bold transition-all flex flex-col items-center justify-center gap-1 shadow-2xs ${statusClass}`;
+    dayBtn.innerHTML = `
+      <span class="text-sm font-black">${day}</span>
+      <span class="text-[9px] px-1.5 py-0.2 rounded-full ${
+        isBlocked ? 'bg-rose-200 text-rose-900' : isBooked ? 'bg-amber-200 text-amber-950' : 'bg-emerald-200 text-emerald-900'
+      }">${statusLabel}</span>
+    `;
+
+    grid.appendChild(dayBtn);
+  }
+
+  const vendor2 = vendors.find(v => v.id === 2);
+  if (vendor2) {
+    vendor2.blockedDates = vendorBlockedDates;
+  }
+};
+
+window.toggleVendorBlockedDate = function(dayNum) {
+  if (vendorBlockedDates.includes(dayNum)) {
+    vendorBlockedDates = vendorBlockedDates.filter(d => d !== dayNum);
+    showToast(`روز ${dayNum} شهريور از حالت تعطیل خارج و آزاد شد.`, 'success');
+  } else {
+    vendorBlockedDates.push(dayNum);
+    showToast(`روز ${dayNum} شهريور به عنوان روز پر / تعطیل علامت‌گذاری شد.`, 'info');
+  }
+
+  try {
+    localStorage.setItem('aroosi_vendor_blocked_2', JSON.stringify(vendorBlockedDates));
+  } catch (err) {}
+
+  renderVendorDashCalendar();
+};
+
+// 3. ESSENTIAL VENDOR CONTROLS: LEADS TABLE & ANALYTICS
+let vendorAnalytics = { views: 3850, inquiries: 162, conversionRate: "4.2%", favorites: 48 };
+try {
+  const savedAnalytics = localStorage.getItem('aroosi_vendor_analytics_2');
+  if (savedAnalytics) vendorAnalytics = JSON.parse(savedAnalytics);
+} catch(e) {}
+
+window.updateVendorAnalyticsUI = function() {
+  const viewsEl = document.getElementById('vd-kpi-views');
+  const convEl = document.getElementById('vd-kpi-conversion');
+  const leadsEl = document.getElementById('vd-kpi-leads');
+
+  if (viewsEl) viewsEl.innerHTML = `${vendorAnalytics.views.toLocaleString('fa-IR')} <span class="text-xs font-normal text-secondary">بازدید</span>`;
+  if (convEl) convEl.innerHTML = `${vendorAnalytics.conversionRate} <span class="text-xs font-normal text-secondary">استعلام</span>`;
+  if (leadsEl) leadsEl.innerHTML = `${inquiries.length.toLocaleString('fa-IR')} <span class="text-xs font-normal text-secondary">درخواست</span>`;
+};
+
+window.incrementVendorViewCount = function(vendorId) {
+  if (vendorId === 2) {
+    vendorAnalytics.views += 1;
+    const conv = ((inquiries.length / vendorAnalytics.views) * 100).toFixed(1) + '%';
+    vendorAnalytics.conversionRate = conv;
+    try {
+      localStorage.setItem('aroosi_vendor_analytics_2', JSON.stringify(vendorAnalytics));
+    } catch(e) {}
+    updateVendorAnalyticsUI();
+  }
+};
+
+window.renderVendorInquiriesTable = function() {
+  const container = document.getElementById('inquiry-list');
+  if (!container) return;
+  container.innerHTML = '';
+
+  const searchInput = document.getElementById('vd-inquiry-search-input')?.value.toLowerCase().trim() || '';
+  const statusFilter = document.getElementById('vd-inquiry-status-filter')?.value || 'all';
+
+  let filtered = inquiries.filter(inq => {
+    const matchesSearch = !searchInput ||
+      (inq.name && inq.name.toLowerCase().includes(searchInput)) ||
+      (inq.phone && inq.phone.includes(searchInput)) ||
+      (inq.service && inq.service.toLowerCase().includes(searchInput));
+    const matchesStatus = statusFilter === 'all' || (inq.status || 'pending') === statusFilter;
+    return matchesSearch && matchesStatus;
+  });
+
+  if (filtered.length === 0) {
+    container.innerHTML = `
+      <div class="p-6 text-center text-secondary text-xs font-bold bg-bgCustom rounded-2xl border border-accent">
+        هیچ استعلامی مطابق با فیلتر جستجوی شما یافت نشد.
+      </div>
+    `;
+    return;
+  }
+
+  filtered.forEach((inq, idx) => {
+    const card = document.createElement('div');
+    card.className = "p-4 bg-bgCustom rounded-2xl border border-accent space-y-3 shadow-xs hover:border-primary/40 transition-all";
+    const currentStatus = inq.status || 'pending';
+
+    card.innerHTML = `
+      <div class="flex flex-col sm:flex-row justify-between sm:items-center gap-2">
+        <div class="flex items-center gap-2">
+          <span class="font-black text-graphite text-sm">${inq.name || 'زوج محترم'}</span>
+          <span class="text-secondary text-xs font-medium dir-ltr">(${inq.phone || '۰۹۱۲۰۰۰۰۰۰۰'})</span>
+        </div>
+        <div class="flex items-center gap-2">
+          <select onchange="updateInquiryStatus('${inq.id || idx}', this.value)" class="bg-white border border-accent text-xs font-bold rounded-lg px-2 py-1 text-graphite focus:outline-none focus:border-primary cursor-pointer">
+            <option value="pending" ${currentStatus === 'pending' ? 'selected' : ''}>در انتظار بررسی</option>
+            <option value="replied" ${currentStatus === 'replied' ? 'selected' : ''}>پاسخ داده شده</option>
+            <option value="booked" ${currentStatus === 'booked' ? 'selected' : ''}>رزرو نهایی</option>
+            <option value="cancelled" ${currentStatus === 'cancelled' ? 'selected' : ''}>لغو شده</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="flex flex-wrap items-center gap-4 text-xs text-secondary font-medium bg-white/80 p-2.5 rounded-xl border border-accent/60">
+        <span><strong class="text-graphite">تاریخ درخواست:</strong> ${inq.date || '۱۴۰۳/۰۶/۱۵'}</span>
+        ${inq.guests ? `<span><strong class="text-graphite">تعداد مهمان:</strong> ${inq.guests} نفر</span>` : ''}
+        <span><strong class="text-graphite">خدمت/پکیج:</strong> ${inq.service || inq.package || 'خدمات عمومی'}</span>
+      </div>
+
+      ${(inq.customAnswers && inq.customAnswers.length) ? `
+        <div class="bg-amber-50/80 p-3 rounded-xl border border-amber-200/80 text-xs font-bold text-amber-950 space-y-1">
+          <span class="block text-[11px] font-black text-amber-900 border-b border-amber-200 pb-1">📋 پاسخ‌های سوالات اختصاصی فرم استعلام:</span>
+          <div class="space-y-0.5 pt-0.5">
+            ${inq.customAnswers.map(a => `<div class="flex items-center gap-1.5"><span class="text-amber-800 font-bold">• ${a.label}:</span> <span class="text-graphite font-black">${a.value}</span></div>`).join('')}
+          </div>
+        </div>
+      ` : ''}
+
+      <p class="text-xs text-graphite bg-white p-3 rounded-xl border border-accent/60 leading-relaxed">${inq.details || 'توضیحات و نیازمندی‌های اختصاصی زوج ثبت شده در سامانه عروسی تو.'}</p>
+
+      <div class="flex items-center justify-end gap-2 pt-2 border-t border-accent/60">
+        <button type="button" onclick="openVendorInvoiceBuilderModal('${inq.name || 'زوج محترم'}', '${inq.service || 'پکیج فرمالیته'}')" class="bg-primary hover:bg-emerald-900 text-white font-bold px-3 py-1.5 rounded-xl text-xs transition-colors shadow-2xs cursor-pointer">
+          صدور پیش‌فاکتور
+        </button>
+        <button type="button" onclick="openInquiryReplyModal('${inq.id || idx}', '${inq.name || 'زوج محترم'}')" class="bg-white hover:bg-emerald-50 text-primary border border-primary/30 font-bold px-3 py-1.5 rounded-xl text-xs transition-colors cursor-pointer">
+          پاسخ مستقیم
+        </button>
+      </div>
+    `;
+    container.appendChild(card);
+  });
+
+  updateVendorAnalyticsUI();
+};
+
+window.updateInquiryStatus = function(inquiryId, newStatus) {
+  const inq = inquiries.find((i, idx) => (i.id === inquiryId || idx.toString() === inquiryId.toString()));
+  if (inq) {
+    inq.status = newStatus;
+    showToast('وضعیت استعلام به روزرسانی شد.', 'success');
+    renderVendorInquiriesTable();
+  }
+};
+
+// 4. CUSTOMER REVIEW RESPONSE MANAGER
+window.renderVendorReviewsManager = function() {
+  const container = document.getElementById('vd-reviews-list-container');
+  if (!container) return;
+  container.innerHTML = '';
+
+  const vendor2 = vendors.find(v => v.id === 2);
+  const reviews = (vendor2 && vendor2.reviews) ? vendor2.reviews : [
+    { author: "رضا و مریم", text: "کیفیت خدمات عکاسی و برخورد تیم استودیو کویر فوق‌العاده بود.", stars: "★★★★★", date: "اردیبهشت ۱۴۰۳" },
+    { author: "محمد و سارا", text: "عکس‌های فرمالیته غروب کویر بسیار زیبا شد.", stars: "★★★★★", date: "فروردین ۱۴۰۳" }
+  ];
+
+  const badgeEl = document.getElementById('vd-reviews-count-badge');
+  if (badgeEl) badgeEl.innerText = `${reviews.length} دیدگاه ثبت شده`;
+
+  reviews.forEach((r, idx) => {
+    const card = document.createElement('div');
+    card.className = "p-4 bg-bgCustom rounded-2xl border border-accent space-y-3 text-xs shadow-xs";
+    card.innerHTML = `
+      <div class="flex justify-between items-center font-bold text-graphite">
+        <div class="flex items-center gap-2">
+          <span class="text-sm font-black">${r.author}</span>
+          <span class="bg-emerald-100 text-emerald-800 text-[10px] font-bold px-2 py-0.5 rounded-full border border-emerald-200">زوج تاییدشده</span>
+        </div>
+        <span class="text-amber-500 font-bold">${r.stars || '★★★★★'} (${r.date || '۱۴۰۳'})</span>
+      </div>
+
+      <p class="text-graphite font-medium bg-white p-3 rounded-xl border border-accent/60">${r.text}</p>
+
+      ${r.vendorReply ? `
+        <div class="bg-emerald-50 border-r-3 border-primary p-3 rounded-l-xl space-y-1">
+          <span class="font-black text-primary text-[11px] block flex items-center gap-1">
+            <i data-lucide="corner-down-left" class="w-3.5 h-3.5 text-primary"></i>
+            پاسخ ثبت‌شده مدیر کسب‌وکار:
+          </span>
+          <p class="text-graphite font-semibold text-xs">${r.vendorReply}</p>
+        </div>
+      ` : ''}
+
+      <div class="space-y-2 pt-2 border-t border-accent/60">
+        <label class="block text-secondary font-bold text-[11px]">ارسال / ویرایش پاسخ رسمی مدیر:</label>
+        <div class="flex gap-2">
+          <input type="text" id="vd-review-reply-input-${idx}" value="${r.vendorReply || ''}" placeholder="پاسخ رسمی شما به این دیدگاه..." class="flex-1 bg-white border border-accent rounded-xl px-3 py-2 text-xs font-medium focus:outline-none focus:border-primary">
+          <button type="button" onclick="saveVendorReviewReply(${idx})" class="bg-primary hover:bg-emerald-900 text-white font-bold px-4 py-2 rounded-xl text-xs transition-colors shrink-0 shadow-2xs cursor-pointer">
+            ثبت پاسخ
+          </button>
+        </div>
+      </div>
+    `;
+    container.appendChild(card);
+  });
+
+  if (window.lucide) lucide.createIcons();
+};
+
+window.saveVendorReviewReply = function(reviewIdx) {
+  const input = document.getElementById(`vd-review-reply-input-${reviewIdx}`);
+  if (!input) return;
+
+  const replyText = input.value.trim();
+  const vendor2 = vendors.find(v => v.id === 2);
+  if (vendor2 && vendor2.reviews && vendor2.reviews[reviewIdx]) {
+    vendor2.reviews[reviewIdx].vendorReply = replyText;
+    showToast('پاسخ مدیر با موفقیت ثبت شد و روی پروفایل عمومی نمایش داده خواهد شد.', 'success');
+    renderVendorReviewsManager();
+    if (typeof loadVendorProfile === 'function' && currentProfileVendorId === 2) {
+      loadVendorProfile(2);
+    }
   }
 };
 
@@ -9887,6 +12170,54 @@ window.handleSendInvoiceSubmit = function(e) {
   if (typeof showToast === 'function') {
     showToast(`🧾 پیش‌فاکتور دیجیتال به مبلغ ${total} تومان برای ${couple} ارسال شد.`, 'success');
   }
+};
+
+window.openPreInvoicePrintModal = function(invoiceData) {
+  const modal = document.getElementById('modal-preinvoice-print');
+  if (!modal) return;
+
+  const data = invoiceData || {
+    num: 'INV-1403-882',
+    date: '۱۴۰۳/۰۶/۱۵',
+    vendorName: 'هتل باغ و تشریفات مشیرالممالک یزد',
+    coupleName: 'علی و سارا',
+    title: 'پکیج خدمات تشریفات و ورودی باغ',
+    eventDate: '۱۴۰۳/۰۶/۱۵',
+    total: '۴۵,۰۰۰,۰۰۰ تومان',
+    deposit: '۱۰,۰۰۰,۰۰۰ تومان',
+    balance: '۳۵,۰۰۰,۰۰۰ تومان',
+    items: 'ورودی باغ اصلی، شام سلف سرویس VIP، گل‌آرایی ورودی و نورپردازی استیج'
+  };
+
+  const numEl = document.getElementById('pip-num');
+  const dateEl = document.getElementById('pip-date');
+  const vEl = document.getElementById('pip-vendor-name');
+  const cEl = document.getElementById('pip-couple-name');
+  const tEl = document.getElementById('pip-service-title');
+  const edEl = document.getElementById('pip-event-date');
+  const totEl = document.getElementById('pip-total-amount');
+  const descEl = document.getElementById('pip-items-desc');
+  const depEl = document.getElementById('pip-deposit');
+  const balEl = document.getElementById('pip-balance');
+
+  if (numEl) numEl.innerText = data.num || 'INV-1403-882';
+  if (dateEl) dateEl.innerText = data.date || '۱۴۰۳/۰۶/۱۵';
+  if (vEl) vEl.innerText = data.vendorName || 'تامین‌کننده معتبر یزد';
+  if (cEl) cEl.innerText = data.coupleName || 'علی و سارا';
+  if (tEl) tEl.innerText = data.title || 'پکیج خدمات';
+  if (edEl) edEl.innerText = data.eventDate || '۱۴۰۳/۰۶/۱۵';
+  if (totEl) totEl.innerText = data.total || '۴۵,۰۰۰,۰۰۰ تومان';
+  if (descEl) descEl.innerText = data.items || 'شرح خدمات و تعهدات رسمی';
+  if (depEl) depEl.innerText = data.deposit || '۱۰,۰۰۰,۰۰۰ تومان';
+  if (balEl) balEl.innerText = data.balance || '۳۵,۰۰۰,۰۰۰ تومان';
+
+  modal.classList.remove('hidden');
+  if (window.lucide) lucide.createIcons();
+};
+
+window.closePreInvoicePrintModal = function() {
+  const modal = document.getElementById('modal-preinvoice-print');
+  if (modal) modal.classList.add('hidden');
 };
 
 // ==========================================
@@ -10095,5 +12426,526 @@ window.deleteCustomQuestion = function(qId) {
   renderVendorCustomQuestionsList(1);
   if (typeof showToast === 'function') {
     showToast('سوال اختصاصی از فرم استعلام حذف گردید.', 'info');
+  }
+};
+
+/* Counselor Modal Handlers */
+window.openCounselorModal = function() {
+  const modal = document.getElementById('modal-counselor-consultation');
+  if (modal) {
+    modal.classList.remove('hidden');
+    modal.classList.add('flex');
+    if (window.lucide) lucide.createIcons();
+  }
+};
+
+window.closeCounselorModal = function() {
+  const modal = document.getElementById('modal-counselor-consultation');
+  if (modal) {
+    modal.classList.add('hidden');
+    modal.classList.remove('flex');
+  }
+};
+
+window.openAboutModal = function() {
+  const modal = document.getElementById('modal-about');
+  if (modal) {
+    modal.classList.remove('hidden');
+    modal.classList.add('flex');
+    if (window.lucide) lucide.createIcons();
+  }
+};
+
+window.closeAboutModal = function() {
+  const modal = document.getElementById('modal-about');
+  if (modal) {
+    modal.classList.add('hidden');
+    modal.classList.remove('flex');
+  }
+};
+
+window.openFaqModal = function() {
+  const modal = document.getElementById('modal-faq');
+  if (modal) {
+    modal.classList.remove('hidden');
+    modal.classList.add('flex');
+    if (window.lucide) lucide.createIcons();
+  }
+};
+
+window.closeFaqModal = function() {
+  const modal = document.getElementById('modal-faq');
+  if (modal) {
+    modal.classList.add('hidden');
+    modal.classList.remove('flex');
+  }
+};
+
+window.openTermsModal = function() {
+  const modal = document.getElementById('modal-terms');
+  if (modal) {
+    modal.classList.remove('hidden');
+    modal.classList.add('flex');
+    if (window.lucide) lucide.createIcons();
+  }
+};
+
+window.closeTermsModal = function() {
+  const modal = document.getElementById('modal-terms');
+  if (modal) {
+    modal.classList.add('hidden');
+    modal.classList.remove('flex');
+  }
+};
+
+window.handleCounselorSubmit = function(event) {
+  if (event) event.preventDefault();
+  const name = document.getElementById('counselor-name')?.value || 'کاربر گرامی';
+
+  closeCounselorModal();
+
+  if (typeof showToast === 'function') {
+    showToast(`✨ درخواست مشاوره برای ${name} با موفقیت ثبت شد. مشاورین یزد به‌زودی جهت هماهنگی زمان با شما تماس می‌گیرند.`, 'success', 5000);
+  }
+};
+
+/* Article Reader & Magazine Handlers */
+window.openArticleModal = function(articleId) {
+  const articles = inspirationState.articles || [];
+  const article = articles.find(a => a.id === articleId);
+  if (!article) return;
+
+  const modal = document.getElementById('modal-article-reader');
+  const catEl = document.getElementById('article-modal-category');
+  const container = document.getElementById('article-modal-content-container');
+
+  if (catEl) catEl.innerText = article.categoryName || 'مجله عروسی تو';
+
+  if (container) {
+    container.innerHTML = `
+      <!-- ARTICLE COVER BANNER -->
+      <div class="relative h-64 sm:h-80 rounded-2xl overflow-hidden bg-slate-900 border border-accent shadow-sm">
+        <img src="${article.image}" alt="${article.title}" class="w-full h-full object-cover opacity-90">
+        <div class="absolute inset-0 bg-gradient-to-t from-graphite/90 via-graphite/30 to-transparent p-6 flex flex-col justify-end text-white space-y-2">
+          <div class="flex items-center gap-2 text-[11px] font-bold">
+            <span class="bg-[#D4AF37] text-[#1B3B2B] px-3 py-1 rounded-full shadow-xs">${article.categoryName}</span>
+            <span>•</span>
+            <span class="text-emerald-200">${article.readTime}</span>
+          </div>
+          <h2 class="text-xl sm:text-2xl font-black leading-snug text-white">${article.title}</h2>
+        </div>
+      </div>
+
+      <!-- AUTHOR & METADATA BAR -->
+      <div class="flex flex-wrap items-center justify-between gap-3 p-4 bg-[#F5EFEB] border border-[#E0D8C8] rounded-2xl text-xs">
+        <div class="flex items-center gap-2">
+          <div class="w-8 h-8 rounded-full bg-[#1B3B2B] text-[#D4AF37] flex items-center justify-center font-bold">
+            <i data-lucide="user" class="w-4 h-4"></i>
+          </div>
+          <div>
+            <span class="font-bold text-graphite block">${article.author}</span>
+            <span class="text-[10px] text-secondary">${article.date}</span>
+          </div>
+        </div>
+
+        <button onclick="bookmarkArticle(${article.id})" class="px-3.5 py-2 rounded-xl bg-white border border-[#E0D8C8] hover:border-[#D4AF37] text-graphite font-bold flex items-center gap-1.5 transition-all shadow-2xs cursor-pointer">
+          <i data-lucide="bookmark" class="w-4 h-4 text-[#D4AF37]"></i>
+          <span>ذخیره در علاقه‌مندی‌ها</span>
+        </button>
+      </div>
+
+      <!-- ARTICLE BODY TEXT -->
+      <div class="prose prose-sm max-w-none space-y-4 text-graphite leading-relaxed">
+        ${article.content}
+      </div>
+
+      <!-- DIRECT RELATED VENDORS CHIP ACTION -->
+      <div class="p-5 bg-[#1B3B2B] text-white rounded-2xl space-y-3 shadow-md">
+        <div class="space-y-1">
+          <span class="text-xs font-bold text-[#D4AF37] block">تامین‌کنندگان مرتبط با موضوع این مقاله:</span>
+          <p class="text-[11px] text-emerald-100/90">مشاهده و استعلام مستقیم از برترین تامین‌کنندگان دارای مجوز در استان یزد</p>
+        </div>
+
+        <button onclick="closeArticleReaderModal(); filterVendorsByCategoryTitle('${article.vendorCategoryMatch || 'همه'}')" class="bg-[#D4AF37] hover:bg-amber-400 text-[#1B3B2B] font-black px-5 py-2.5 rounded-xl text-xs transition-all shadow-xs flex items-center gap-2 cursor-pointer">
+          <i data-lucide="store" class="w-4 h-4"></i>
+          <span>مشاهده تامین‌کنندگان ${article.vendorCategoryMatch}</span>
+        </button>
+      </div>
+    `;
+  }
+
+  if (modal) {
+    modal.classList.remove('hidden');
+    modal.classList.add('flex');
+    if (window.lucide) lucide.createIcons();
+  }
+};
+
+window.closeArticleReaderModal = function() {
+  const modal = document.getElementById('modal-article-reader');
+  if (modal) {
+    modal.classList.add('hidden');
+    modal.classList.remove('flex');
+  }
+};
+
+window.bookmarkArticle = function(articleId) {
+  if (typeof showToast === 'function') {
+    showToast('✨ مقاله به فهرست مطالعه‌های بعدی شما اضافه شد.', 'success');
+  }
+};
+
+/* Expose Budget and Checklist handlers to window for inline HTML events */
+if (typeof openBudgetItemModal === 'function') window.openBudgetItemModal = openBudgetItemModal;
+if (typeof closeBudgetItemModal === 'function') window.closeBudgetItemModal = closeBudgetItemModal;
+if (typeof handleSaveBudgetItem === 'function') window.handleSaveBudgetItem = handleSaveBudgetItem;
+if (typeof deleteBudgetItem === 'function') window.deleteBudgetItem = deleteBudgetItem;
+if (typeof updateTotalBudgetCap === 'function') window.updateTotalBudgetCap = updateTotalBudgetCap;
+if (typeof filterChecklistTasksByStatus === 'function') window.filterChecklistTasksByStatus = filterChecklistTasksByStatus;
+if (typeof filterVendorsByCategoryTitle === 'function') window.filterVendorsByCategoryTitle = filterVendorsByCategoryTitle;
+if (typeof openIdeaDetailModal === 'function') window.openIdeaDetailModal = openIdeaDetailModal;
+if (typeof closeIdeaDetailModal === 'function') window.closeIdeaDetailModal = closeIdeaDetailModal;
+
+/* Automatically expose all global functions to window object for reliable SPA event delegation */
+if (typeof acceptPreInvoiceAndPayDeposit === "function") window.acceptPreInvoiceAndPayDeposit = acceptPreInvoiceAndPayDeposit;
+if (typeof addPreInvoiceLineItem === "function") window.addPreInvoiceLineItem = addPreInvoiceLineItem;
+if (typeof applyStyleToDirectory === "function") window.applyStyleToDirectory = applyStyleToDirectory;
+if (typeof applyYazdBudgetPreset === "function") window.applyYazdBudgetPreset = applyYazdBudgetPreset;
+if (typeof approveVendorAppStatic === "function") window.approveVendorAppStatic = approveVendorAppStatic;
+if (typeof calculateAndRenderBwResults === "function") window.calculateAndRenderBwResults = calculateAndRenderBwResults;
+if (typeof calculateHomeBudgetPreview === "function") window.calculateHomeBudgetPreview = calculateHomeBudgetPreview;
+if (typeof closeAppointmentModal === "function") window.closeAppointmentModal = closeAppointmentModal;
+if (typeof closeAuthModal === "function") window.closeAuthModal = closeAuthModal;
+if (typeof closeBudgetItemModal === "function") window.closeBudgetItemModal = closeBudgetItemModal;
+if (typeof closeGiftModal === "function") window.closeGiftModal = closeGiftModal;
+if (typeof closeGuestModal === "function") window.closeGuestModal = closeGuestModal;
+if (typeof closeIdeaDetailModal === "function") window.closeIdeaDetailModal = closeIdeaDetailModal;
+if (typeof closeInquiryModal === "function") window.closeInquiryModal = closeInquiryModal;
+if (typeof closeInquiryReplyModal === "function") window.closeInquiryReplyModal = closeInquiryReplyModal;
+if (typeof closeLightbox === "function") window.closeLightbox = closeLightbox;
+if (typeof closeLocationModal === "function") window.closeLocationModal = closeLocationModal;
+if (typeof closeParentCatModal === "function") window.closeParentCatModal = closeParentCatModal;
+if (typeof closePortfolioModal === "function") window.closePortfolioModal = closePortfolioModal;
+if (typeof closePreInvoiceModal === "function") window.closePreInvoiceModal = closePreInvoiceModal;
+if (typeof closeQrModal === "function") window.closeQrModal = closeQrModal;
+if (typeof closeRevisionModal === "function") window.closeRevisionModal = closeRevisionModal;
+if (typeof closeRsvpModal === "function") window.closeRsvpModal = closeRsvpModal;
+if (typeof closeSubCatModal === "function") window.closeSubCatModal = closeSubCatModal;
+if (typeof closeSubCategoryDrawer === "function") window.closeSubCategoryDrawer = closeSubCategoryDrawer;
+if (typeof closeAllSubgroupModals === "function") window.closeAllSubgroupModals = closeAllSubgroupModals;
+if (typeof closeSubgroupModal === "function") window.closeSubgroupModal = closeSubgroupModal;
+if (typeof closeVendorDetailModal === "function") window.closeVendorDetailModal = closeVendorDetailModal;
+if (typeof closeVendorModal === "function") window.closeVendorModal = closeVendorModal;
+if (typeof closeVendorSelectModal === "function") window.closeVendorSelectModal = closeVendorSelectModal;
+if (typeof confirmAppointmentScheduleCard === "function") window.confirmAppointmentScheduleCard = confirmAppointmentScheduleCard;
+if (typeof copyBankCardNumber === "function") window.copyBankCardNumber = copyBankCardNumber;
+if (typeof copyInvitationLink === "function") window.copyInvitationLink = copyInvitationLink;
+if (typeof copyQuizResultLink === "function") window.copyQuizResultLink = copyQuizResultLink;
+if (typeof deleteBudgetItem === "function") window.deleteBudgetItem = deleteBudgetItem;
+if (typeof deleteCustomBwService === "function") window.deleteCustomBwService = deleteCustomBwService;
+if (typeof deleteGift === "function") window.deleteGift = deleteGift;
+if (typeof deleteGuest === "function") window.deleteGuest = deleteGuest;
+if (typeof deletePackage === "function") window.deletePackage = deletePackage;
+if (typeof deleteParentCategory === "function") window.deleteParentCategory = deleteParentCategory;
+if (typeof deletePortfolioItem === "function") window.deletePortfolioItem = deletePortfolioItem;
+if (typeof deleteSubCategory === "function") window.deleteSubCategory = deleteSubCategory;
+if (typeof detachVendorFromTask === "function") window.detachVendorFromTask = detachVendorFromTask;
+if (typeof dismissToast === "function") window.dismissToast = dismissToast;
+if (typeof editGuest === "function") window.editGuest = editGuest;
+if (typeof editVendorPackage === "function") window.editVendorPackage = editVendorPackage;
+if (typeof exitQuizRunner === "function") window.exitQuizRunner = exitQuizRunner;
+if (typeof exportBudgetSummaryCsv === "function") window.exportBudgetSummaryCsv = exportBudgetSummaryCsv;
+if (typeof exportChecklistCsv === "function") window.exportChecklistCsv = exportChecklistCsv;
+if (typeof exportGuestsExcel === "function") window.exportGuestsExcel = exportGuestsExcel;
+if (typeof exportInquiriesCsv === "function") window.exportInquiriesCsv = exportInquiriesCsv;
+if (typeof exportMoodboardPdf === "function") window.exportMoodboardPdf = exportMoodboardPdf;
+if (typeof filterByYazdDistrict === "function") window.filterByYazdDistrict = filterByYazdDistrict;
+if (typeof filterChatThreads === "function") window.filterChatThreads = filterChatThreads;
+if (typeof filterChecklistTasksByStatus === "function") window.filterChecklistTasksByStatus = filterChecklistTasksByStatus;
+if (typeof filterDirectoryByVendorCategory === "function") window.filterDirectoryByVendorCategory = filterDirectoryByVendorCategory;
+if (typeof filterInspirationByCategory === "function") window.filterInspirationByCategory = filterInspirationByCategory;
+if (typeof filterInspirationItems === "function") window.filterInspirationItems = filterInspirationItems;
+if (typeof filterModalGallery === "function") window.filterModalGallery = filterModalGallery;
+if (typeof filterVendors === "function") window.filterVendors = filterVendors;
+if (typeof filterVendorsByCategoryTitle === "function") window.filterVendorsByCategoryTitle = filterVendorsByCategoryTitle;
+if (typeof filterVendorsFromMega === "function") window.filterVendorsFromMega = filterVendorsFromMega;
+if (typeof filterVipShowcase === "function") window.filterVipShowcase = filterVipShowcase;
+if (typeof finishQuizRunner === "function") window.finishQuizRunner = finishQuizRunner;
+if (typeof getPrivateNote === "function") window.getPrivateNote = getPrivateNote;
+if (typeof getQuizHistory === "function") window.getQuizHistory = getQuizHistory;
+if (typeof getSelectedFontFamily === "function") window.getSelectedFontFamily = getSelectedFontFamily;
+if (typeof getVendorCustomQuestions === "function") window.getVendorCustomQuestions = getVendorCustomQuestions;
+if (typeof handleAddCustomBwService === "function") window.handleAddCustomBwService = handleAddCustomBwService;
+if (typeof handleAddNewTaskSubmit === "function") window.handleAddNewTaskSubmit = handleAddNewTaskSubmit;
+if (typeof handleAvatarDelete === "function") window.handleAvatarDelete = handleAvatarDelete;
+if (typeof handleAvatarUpload === "function") window.handleAvatarUpload = handleAvatarUpload;
+if (typeof handleCoupleAuthSubmit === "function") window.handleCoupleAuthSubmit = handleCoupleAuthSubmit;
+if (typeof handleGiftFormSubmit === "function") window.handleGiftFormSubmit = handleGiftFormSubmit;
+if (typeof handleGuestFormSubmit === "function") window.handleGuestFormSubmit = handleGuestFormSubmit;
+if (typeof handleGuestInputChange === "function") window.handleGuestInputChange = handleGuestInputChange;
+if (typeof handleGuestRsvpSubmit === "function") window.handleGuestRsvpSubmit = handleGuestRsvpSubmit;
+if (typeof handleQuickRsvp === "function") window.handleQuickRsvp = handleQuickRsvp;
+if (typeof handleHeaderSearchFocus === "function") window.handleHeaderSearchFocus = handleHeaderSearchFocus;
+if (typeof handleHeaderSearchInput === "function") window.handleHeaderSearchInput = handleHeaderSearchInput;
+if (typeof handleHeroSearch === "function") window.handleHeroSearch = handleHeroSearch;
+if (typeof handleInquirySubmit === "function") window.handleInquirySubmit = handleInquirySubmit;
+if (typeof handleIssuePreInvoiceSubmit === "function") window.handleIssuePreInvoiceSubmit = handleIssuePreInvoiceSubmit;
+if (typeof handleModalReviewSubmit === "function") window.handleModalReviewSubmit = handleModalReviewSubmit;
+if (typeof handlePortfolioFileSelect === "function") window.handlePortfolioFileSelect = handlePortfolioFileSelect;
+if (typeof handlePortfolioSubmit === "function") window.handlePortfolioSubmit = handlePortfolioSubmit;
+if (typeof handleProfileReviewSubmit === "function") window.handleProfileReviewSubmit = handleProfileReviewSubmit;
+if (typeof handleProvinceChange === "function") window.handleProvinceChange = handleProvinceChange;
+if (typeof handleRsvpSubmit === "function") window.handleRsvpSubmit = handleRsvpSubmit;
+if (typeof handleSaveBudgetItem === "function") window.handleSaveBudgetItem = handleSaveBudgetItem;
+if (typeof handleSaveParentCategory === "function") window.handleSaveParentCategory = handleSaveParentCategory;
+if (typeof handleSaveSubCategory === "function") window.handleSaveSubCategory = handleSaveSubCategory;
+if (typeof handleSaveVendorAttachment === "function") window.handleSaveVendorAttachment = handleSaveVendorAttachment;
+if (typeof handleScheduleAppointmentSubmit === "function") window.handleScheduleAppointmentSubmit = handleScheduleAppointmentSubmit;
+if (typeof handleSelectCalendarDay === "function") window.handleSelectCalendarDay = handleSelectCalendarDay;
+if (typeof handleSendChatMessage === "function") window.handleSendChatMessage = handleSendChatMessage;
+if (typeof handleSubmitPreInvoiceRevision === "function") window.handleSubmitPreInvoiceRevision = handleSubmitPreInvoiceRevision;
+if (typeof handleSaveShowcaseConfig === "function") window.handleSaveShowcaseConfig = handleSaveShowcaseConfig;
+if (typeof handleUpdateHeroLogo === "function") window.handleUpdateHeroLogo = handleUpdateHeroLogo;
+if (typeof loadShowcaseConfig === "function") window.loadShowcaseConfig = loadShowcaseConfig;
+if (typeof handleVendorAuthSubmit === "function") window.handleVendorAuthSubmit = handleVendorAuthSubmit;
+if (typeof handleVendorModalSubmit === "function") window.handleVendorModalSubmit = handleVendorModalSubmit;
+if (typeof handleVendorProfileUpdate === "function") window.handleVendorProfileUpdate = handleVendorProfileUpdate;
+if (typeof initVipShowcaseAutoScroll === "function") window.initVipShowcaseAutoScroll = initVipShowcaseAutoScroll;
+if (typeof loadBudgetStateFromStorage === "function") window.loadBudgetStateFromStorage = loadBudgetStateFromStorage;
+if (typeof loadCategoryGroupsFromStorage === "function") window.loadCategoryGroupsFromStorage = loadCategoryGroupsFromStorage;
+if (typeof loadChatStateFromStorage === "function") window.loadChatStateFromStorage = loadChatStateFromStorage;
+if (typeof loadFavoritesFromStorage === "function") window.loadFavoritesFromStorage = loadFavoritesFromStorage;
+if (typeof loadSavedMoodboardIds === "function") window.loadSavedMoodboardIds = loadSavedMoodboardIds;
+if (typeof loadVendorProfile === "function") window.loadVendorProfile = loadVendorProfile;
+if (typeof loadViewTemplates === "function") window.loadViewTemplates = loadViewTemplates;
+if (typeof makeVendorCall === "function") window.makeVendorCall = makeVendorCall;
+if (typeof navigateBwStep === "function") window.navigateBwStep = navigateBwStep;
+if (typeof navigateQuizQuestion === "function") window.navigateQuizQuestion = navigateQuizQuestion;
+if (typeof openAppointmentModal === "function") window.openAppointmentModal = openAppointmentModal;
+if (typeof openAuthModal === "function") window.openAuthModal = openAuthModal;
+if (typeof openBudgetItemModal === "function") window.openBudgetItemModal = openBudgetItemModal;
+if (typeof openCategorySubgroups === "function") window.openCategorySubgroups = openCategorySubgroups;
+if (typeof openCategorySubgroupsModal === "function") window.openCategorySubgroupsModal = openCategorySubgroupsModal;
+if (typeof openEnvelopeAnimation === "function") window.openEnvelopeAnimation = openEnvelopeAnimation;
+if (typeof openGiftModal === "function") window.openGiftModal = openGiftModal;
+if (typeof openGuestModal === "function") window.openGuestModal = openGuestModal;
+if (typeof openIdeaDetailModal === "function") window.openIdeaDetailModal = openIdeaDetailModal;
+if (typeof openInquiryModal === "function") window.openInquiryModal = openInquiryModal;
+if (typeof openInquiryReplyModal === "function") window.openInquiryReplyModal = openInquiryReplyModal;
+if (typeof openLightbox === "function") window.openLightbox = openLightbox;
+if (typeof openLocationModal === "function") window.openLocationModal = openLocationModal;
+if (typeof openParentCategoryModal === "function") window.openParentCategoryModal = openParentCategoryModal;
+if (typeof openPortfolioModal === "function") window.openPortfolioModal = openPortfolioModal;
+if (typeof openPreInvoiceModal === "function") window.openPreInvoiceModal = openPreInvoiceModal;
+if (typeof openQrModal === "function") window.openQrModal = openQrModal;
+if (typeof openRevisionModal === "function") window.openRevisionModal = openRevisionModal;
+if (typeof openRsvpModal === "function") window.openRsvpModal = openRsvpModal;
+if (typeof openSubCategoryDrawer === "function") window.openSubCategoryDrawer = openSubCategoryDrawer;
+if (typeof openSubCategoryModal === "function") window.openSubCategoryModal = openSubCategoryModal;
+if (typeof openSubgroupsModal === "function") window.openSubgroupsModal = openSubgroupsModal;
+if (typeof openVendorDetailModal === "function") window.openVendorDetailModal = openVendorDetailModal;
+if (typeof openVendorSelectModal === "function") window.openVendorSelectModal = openVendorSelectModal;
+if (typeof previewPortfolioModalImage === "function") window.previewPortfolioModalImage = previewPortfolioModalImage;
+if (typeof rejectVendorAppStatic === "function") window.rejectVendorAppStatic = rejectVendorAppStatic;
+if (typeof renderAdminCategories === "function") window.renderAdminCategories = renderAdminCategories;
+if (typeof renderAdminPendingApps === "function") window.renderAdminPendingApps = renderAdminPendingApps;
+if (typeof renderAdminTable === "function") window.renderAdminTable = renderAdminTable;
+if (typeof renderBwServicesChecklist === "function") window.renderBwServicesChecklist = renderBwServicesChecklist;
+if (typeof renderCalendar === "function") window.renderCalendar = renderCalendar;
+if (typeof renderCategoryCards === "function") window.renderCategoryCards = renderCategoryCards;
+if (typeof renderChatActiveThread === "function") window.renderChatActiveThread = renderChatActiveThread;
+if (typeof renderChatThreadsList === "function") window.renderChatThreadsList = renderChatThreadsList;
+if (typeof renderChecklistTimeframeButtons === "function") window.renderChecklistTimeframeButtons = renderChecklistTimeframeButtons;
+if (typeof renderChecklistTimeline === "function") window.renderChecklistTimeline = renderChecklistTimeline;
+if (typeof renderFavoriteVendorsList === "function") window.renderFavoriteVendorsList = renderFavoriteVendorsList;
+if (typeof renderGallery === "function") window.renderGallery = renderGallery;
+if (typeof renderGiftsTable === "function") window.renderGiftsTable = renderGiftsTable;
+if (typeof renderGuestsAndGifts === "function") window.renderGuestsAndGifts = renderGuestsAndGifts;
+if (typeof renderGuestsKPIs === "function") window.renderGuestsKPIs = renderGuestsKPIs;
+if (typeof renderGuestsTable === "function") window.renderGuestsTable = renderGuestsTable;
+if (typeof renderInquiries === "function") window.renderInquiries = renderInquiries;
+if (typeof renderInspirationCategoryPills === "function") window.renderInspirationCategoryPills = renderInspirationCategoryPills;
+if (typeof renderInspirationGalleryGrid === "function") window.renderInspirationGalleryGrid = renderInspirationGalleryGrid;
+if (typeof renderInvAdminRsvpTable === "function") window.renderInvAdminRsvpTable = renderInvAdminRsvpTable;
+if (typeof renderInvitationPreview === "function") window.renderInvitationPreview = renderInvitationPreview;
+if (typeof renderMagazineFeaturedBanner === "function") window.renderMagazineFeaturedBanner = renderMagazineFeaturedBanner;
+if (typeof renderModalAvailabilityCalendar === "function") window.renderModalAvailabilityCalendar = renderModalAvailabilityCalendar;
+if (typeof renderMoodboardGrid === "function") window.renderMoodboardGrid = renderMoodboardGrid;
+if (typeof renderMultiCategoryPills === "function") window.renderMultiCategoryPills = renderMultiCategoryPills;
+if (typeof renderPlannerAttachedVendors === "function") window.renderPlannerAttachedVendors = renderPlannerAttachedVendors;
+if (typeof renderPlannerBudgetSummary === "function") window.renderPlannerBudgetSummary = renderPlannerBudgetSummary;
+if (typeof renderPlannerOffersTab === "function") window.renderPlannerOffersTab = renderPlannerOffersTab;
+if (typeof renderPortfolioUI === "function") window.renderPortfolioUI = renderPortfolioUI;
+if (typeof renderProfileCalendar === "function") window.renderProfileCalendar = renderProfileCalendar;
+if (typeof renderQuizCatalogCards === "function") window.renderQuizCatalogCards = renderQuizCatalogCards;
+if (typeof renderQuizQuestion === "function") window.renderQuizQuestion = renderQuizQuestion;
+if (typeof renderQuizResultDashboard === "function") window.renderQuizResultDashboard = renderQuizResultDashboard;
+if (typeof renderSidebarCategoryCheckboxes === "function") window.renderSidebarCategoryCheckboxes = renderSidebarCategoryCheckboxes;
+if (typeof renderVendorPackages === "function") window.renderVendorPackages = renderVendorPackages;
+if (typeof renderVendors === "function") window.renderVendors = renderVendors;
+if (typeof requestCityNotify === "function") window.requestCityNotify = requestCityNotify;
+if (typeof resetAllCategoryFilters === "function") window.resetAllCategoryFilters = resetAllCategoryFilters;
+if (typeof resetBwWizard === "function") window.resetBwWizard = resetBwWizard;
+if (typeof resetEnvelopeAnimation === "function") window.resetEnvelopeAnimation = resetEnvelopeAnimation;
+if (typeof runAiAllocation === "function") window.runAiAllocation = runAiAllocation;
+if (typeof saveBudgetStateToStorage === "function") window.saveBudgetStateToStorage = saveBudgetStateToStorage;
+if (typeof saveCategoryGroupsToStorage === "function") window.saveCategoryGroupsToStorage = saveCategoryGroupsToStorage;
+if (typeof saveChatStateToStorage === "function") window.saveChatStateToStorage = saveChatStateToStorage;
+if (typeof saveFavoritesToStorage === "function") window.saveFavoritesToStorage = saveFavoritesToStorage;
+if (typeof saveMoodboardIds === "function") window.saveMoodboardIds = saveMoodboardIds;
+if (typeof savePrivateNote === "function") window.savePrivateNote = savePrivateNote;
+if (typeof saveQuizHistoryEntry === "function") window.saveQuizHistoryEntry = saveQuizHistoryEntry;
+if (typeof saveVendorCustomQuestions === "function") window.saveVendorCustomQuestions = saveVendorCustomQuestions;
+if (typeof saveVendorPackageModal === "function") window.saveVendorPackageModal = saveVendorPackageModal;
+if (typeof selectBwStyle === "function") window.selectBwStyle = selectBwStyle;
+if (typeof selectChatThread === "function") window.selectChatThread = selectChatThread;
+if (typeof selectLocationCity === "function") window.selectLocationCity = selectLocationCity;
+if (typeof selectLocationProvince === "function") window.selectLocationProvince = selectLocationProvince;
+if (typeof selectQuizOption === "function") window.selectQuizOption = selectQuizOption;
+if (typeof selectSearchSuggestion === "function") window.selectSearchSuggestion = selectSearchSuggestion;
+if (typeof sendInquiryReply === "function") window.sendInquiryReply = sendInquiryReply;
+if (typeof sendSmsBroadcast === "function") window.sendSmsBroadcast = sendSmsBroadcast;
+if (typeof setBwGuestCount === "function") window.setBwGuestCount = setBwGuestCount;
+if (typeof setDirectoryViewMode === "function") window.setDirectoryViewMode = setDirectoryViewMode;
+if (typeof setHomeBudgetTier === "function") window.setHomeBudgetTier = setHomeBudgetTier;
+if (typeof setInquiryBudgetPill === "function") window.setInquiryBudgetPill = setInquiryBudgetPill;
+if (typeof setInvAudioChoice === "function") window.setInvAudioChoice = setInvAudioChoice;
+if (typeof setInvDisplayLang === "function") window.setInvDisplayLang = setInvDisplayLang;
+if (typeof setInvTheme === "function") window.setInvTheme = setInvTheme;
+if (typeof setPortfolioAsCover === "function") window.setPortfolioAsCover = setPortfolioAsCover;
+if (typeof shareMoodboardLink === "function") window.shareMoodboardLink = shareMoodboardLink;
+if (typeof shareVendorProfile === "function") window.shareVendorProfile = shareVendorProfile;
+if (typeof showGlobalToast === "function") window.showGlobalToast = showGlobalToast;
+if (typeof showToast === "function") window.showToast = showToast;
+if (typeof showToastNotification === "function") window.showToastNotification = showToastNotification;
+if (typeof startAutoScroll === "function") window.startAutoScroll = startAutoScroll;
+if (typeof startQuizRunner === "function") window.startQuizRunner = startQuizRunner;
+if (typeof stopAutoScroll === "function") window.stopAutoScroll = stopAutoScroll;
+if (typeof submitNewReview === "function") window.submitNewReview = submitNewReview;
+if (typeof switchAuthTab === "function") window.switchAuthTab = switchAuthTab;
+if (typeof switchGuestSubTab === "function") window.switchGuestSubTab = switchGuestSubTab;
+if (typeof switchInspirationSubTab === "function") window.switchInspirationSubTab = switchInspirationSubTab;
+if (typeof switchInvMobileTab === "function") window.switchInvMobileTab = switchInvMobileTab;
+if (typeof switchModalTab === "function") window.switchModalTab = switchModalTab;
+if (typeof switchPlannerSubTab === "function") window.switchPlannerSubTab = switchPlannerSubTab;
+if (typeof switchQuizCategoryTab === "function") window.switchQuizCategoryTab = switchQuizCategoryTab;
+if (typeof switchRole === "function") window.switchRole = switchRole;
+if (typeof switchTab === "function") window.switchTab = switchTab;
+if (typeof switchVdmSubTab === "function") window.switchVdmSubTab = switchVdmSubTab;
+if (typeof syncAndFilterCity === "function") window.syncAndFilterCity = syncAndFilterCity;
+if (typeof syncAndFilterPrice === "function") window.syncAndFilterPrice = syncAndFilterPrice;
+if (typeof syncCategoryStateAndRender === "function") window.syncCategoryStateAndRender = syncCategoryStateAndRender;
+if (typeof toggleAccountMenu === "function") window.toggleAccountMenu = toggleAccountMenu;
+if (typeof toggleAddPackageModal === "function") window.toggleAddPackageModal = toggleAddPackageModal;
+if (typeof toggleAddReviewForm === "function") window.toggleAddReviewForm = toggleAddReviewForm;
+if (typeof toggleBookmarkMoodboard === "function") window.toggleBookmarkMoodboard = toggleBookmarkMoodboard;
+if (typeof toggleBwService === "function") window.toggleBwService = toggleBwService;
+if (typeof toggleCategoriesExpand === "function") window.toggleCategoriesExpand = toggleCategoriesExpand;
+if (typeof toggleCategoryAccordion === "function") window.toggleCategoryAccordion = toggleCategoryAccordion;
+if (typeof toggleCategoryFilter === "function") window.toggleCategoryFilter = toggleCategoryFilter;
+if (typeof toggleChecklistTask === "function") window.toggleChecklistTask = toggleChecklistTask;
+if (typeof toggleDate === "function") window.toggleDate = toggleDate;
+if (typeof toggleFavoriteCurrentVendor === "function") window.toggleFavoriteCurrentVendor = toggleFavoriteCurrentVendor;
+if (typeof toggleFavoriteVendor === "function") window.toggleFavoriteVendor = toggleFavoriteVendor;
+if (typeof toggleFavoriteVendorModal === "function") window.toggleFavoriteVendorModal = toggleFavoriteVendorModal;
+if (typeof toggleGuestRsvp === "function") window.toggleGuestRsvp = toggleGuestRsvp;
+if (typeof toggleHiddenCostsBuffer === "function") window.toggleHiddenCostsBuffer = toggleHiddenCostsBuffer;
+if (typeof toggleInvFeature === "function") window.toggleInvFeature = toggleInvFeature;
+if (typeof toggleInvMusic === "function") window.toggleInvMusic = toggleInvMusic;
+if (typeof toggleModalFaq === "function") window.toggleModalFaq = toggleModalFaq;
+if (typeof toggleNewTaskModal === "function") window.toggleNewTaskModal = toggleNewTaskModal;
+if (typeof toggleProfileReviewForm === "function") window.toggleProfileReviewForm = toggleProfileReviewForm;
+if (typeof toggleVendorModalStatic === "function") window.toggleVendorModalStatic = toggleVendorModalStatic;
+if (typeof toggleVendorVerification === "function") window.toggleVendorVerification = toggleVendorVerification;
+if (typeof triggerPackageInquiry === "function") window.triggerPackageInquiry = triggerPackageInquiry;
+if (typeof triggerProfileChat === "function") window.triggerProfileChat = triggerProfileChat;
+if (typeof triggerProfileInquiry === "function") window.triggerProfileInquiry = triggerProfileInquiry;
+if (typeof updateBudgetFormattedDisplay === "function") window.updateBudgetFormattedDisplay = updateBudgetFormattedDisplay;
+if (typeof updateBwStepUI === "function") window.updateBwStepUI = updateBwStepUI;
+if (typeof updateCapacitySliderLabel === "function") window.updateCapacitySliderLabel = updateCapacitySliderLabel;
+if (typeof updateGuestBtnStyles === "function") window.updateGuestBtnStyles = updateGuestBtnStyles;
+if (typeof updateInquiryStatus === "function") window.updateInquiryStatus = updateInquiryStatus;
+if (typeof updateInvStateFromForm === "function") window.updateInvStateFromForm = updateInvStateFromForm;
+if (typeof updateMoodboardBadge === "function") window.updateMoodboardBadge = updateMoodboardBadge;
+if (typeof updateTotalBudgetCap === "function") window.updateTotalBudgetCap = updateTotalBudgetCap;
+if (typeof updateVendorAvatarUI === "function") window.updateVendorAvatarUI = updateVendorAvatarUI;
+
+/* Function aliases and missing modal handlers */
+if (typeof handlePortfolioSubmit === "function") {
+  window.savePortfolioModal = handlePortfolioSubmit;
+}
+
+window.toggleVendorVerificationRequestModal = function(show) {
+  const modal = document.getElementById('modal-vendor-verification-request') || document.getElementById('vendor-verification-modal');
+  if (modal) {
+    if (show) {
+      modal.classList.remove('hidden');
+      modal.classList.add('flex');
+    } else {
+      modal.classList.add('hidden');
+      modal.classList.remove('flex');
+    }
+  } else {
+    if (typeof showToast === 'function') {
+      showToast('درخواست تایید اعتبار شما با موفقیت به پشتیبانی ارسال شد.', 'success');
+    }
+  }
+};
+
+window.shareInvitationSocial = function(platform) {
+  const url = encodeURIComponent('https://aroosito.com/invitation/ali-and-sara');
+  const text = encodeURIComponent('دعوتنامه دیجیتال مراسم عروسی علی و سارا 🌸🍃\nبرای مشاهده جزییات و اعلام حضور روی لینک کلیک کنید:');
+
+  if (platform === 'whatsapp') {
+    window.open(`https://api.whatsapp.com/send?text=${text}%20${url}`, '_blank');
+  } else if (platform === 'eitaa') {
+    window.open(`https://eitaa.com/share?url=${url}&text=${text}`, '_blank');
+  } else {
+    copyInvitationLink();
+  }
+};
+
+let currentHomeCalcStyle = 'medium';
+
+window.setHomeCalcStyle = function(style) {
+  currentHomeCalcStyle = style;
+  const luxuryBtn = document.getElementById('home-style-luxury');
+  const mediumBtn = document.getElementById('home-style-medium');
+  const ecoBtn = document.getElementById('home-style-economic');
+
+  if (luxuryBtn) luxuryBtn.classList.toggle('active', style === 'luxury');
+  if (mediumBtn) mediumBtn.classList.toggle('active', style === 'medium');
+  if (ecoBtn) ecoBtn.classList.toggle('active', style === 'economic');
+
+  updateHomeQuickBudget();
+};
+
+window.updateHomeQuickBudget = function() {
+  const rangeInput = document.getElementById('home-calc-range');
+  const guestTag = document.getElementById('home-calc-guest-tag');
+  const resultPrice = document.getElementById('home-calc-result-price');
+
+  if (!rangeInput) return;
+
+  const guests = parseInt(rangeInput.value, 10) || 250;
+  if (guestTag) {
+    guestTag.innerText = guests.toLocaleString('fa-IR') + ' نفر';
+  }
+
+  let basePerGuest = 1400000;
+  let fixedBase = 30000000;
+  if (currentHomeCalcStyle === 'economic') {
+    basePerGuest = 850000;
+    fixedBase = 20000000;
+  } else if (currentHomeCalcStyle === 'luxury') {
+    basePerGuest = 2600000;
+    fixedBase = 60000000;
+  }
+
+  const totalCost = fixedBase + (guests * basePerGuest);
+  const formatted = totalCost.toLocaleString('fa-IR') + ' تومان';
+
+  if (resultPrice) {
+    resultPrice.innerText = formatted;
   }
 };
