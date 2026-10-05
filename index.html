@@ -103,7 +103,7 @@
         <button onclick="loadVendorProfile(1)" id="demo-tab-vendor-profile" class="demo-tab-btn px-3.5 py-1.5 rounded-lg text-xs font-bold transition-all bg-white/10 hover:bg-white/20 text-slate-200">
           <i data-lucide="store" class="w-3.5 h-3.5 inline ml-1"></i>پروفایل اختصاصی تامین‌کننده
         </button>
-        <button onclick="switchTab('admin')" id="nav-admin" class="demo-tab-btn px-3.5 py-1.5 rounded-lg text-xs font-bold transition-all bg-white/10 hover:bg-white/20 text-slate-200">
+        <button onclick="switchTab('admin')" id="nav-admin" class="demo-tab-btn admin-only hidden px-3.5 py-1.5 rounded-lg text-xs font-bold transition-all bg-white/10 hover:bg-white/20 text-slate-200">
           <i data-lucide="shield-check" class="w-3.5 h-3.5 inline ml-1"></i>پنل مدیریت (Admin Panel)
         </button>
         <button onclick="switchTab('vendor-dash')" id="demo-tab-vendor-dash" class="demo-tab-btn px-3.5 py-1.5 rounded-lg text-xs font-bold transition-all bg-white/10 hover:bg-white/20 text-slate-200">
@@ -401,10 +401,9 @@
             </div>
           </div>
 
-          <button onclick="switchTab('messages')" class="px-3 py-1.5 rounded-xl transition-colors hover:text-[#D4AF37] hover:bg-white/10 flex items-center gap-1.5 shrink-0">
-            <i data-lucide="message-square" class="w-4 h-4 text-[#D4AF37]"></i>
-            <span>گفت‌وگوها</span>
-            <span id="nav-chat-unread-badge" class="bg-[#D4AF37] text-[#1B3B2B] text-[10px] font-black px-1.5 py-0.2 rounded-full">1</span>
+          <button onclick="openSupportModal()" class="px-3 py-1.5 rounded-xl transition-colors hover:text-[#D4AF37] hover:bg-white/10 flex items-center gap-1.5 shrink-0">
+            <i data-lucide="headphones" class="w-4 h-4 text-[#D4AF37]"></i>
+            <span>ارتباط با پشتیبانی</span>
           </button>
         </nav>
 
@@ -491,106 +490,106 @@
             </div>
 
             <!-- Vertical Grid / List Showcase Wrapper -->
-            <div id="vip-showcase-container" class="vip-showcase-container grid grid-cols-1 gap-3 p-1 max-h-[380px] overflow-y-auto custom-scrollbar">
+            <div id="vip-showcase-container" class="vip-showcase-container flex flex-col gap-3 p-1 max-h-[380px] overflow-y-auto custom-scrollbar scroll-smooth">
               <!-- Item 1 (Venue) -->
-              <div data-vip-cat="hall" class="vip-vendor-card bg-white border border-accent/80 hover:border-[#D4AF37] p-3 rounded-2xl shadow-2xs hover:shadow-lg transition-all flex flex-col gap-2.5 group relative overflow-hidden">
-                <div class="relative h-28 rounded-xl overflow-hidden bg-slate-900">
-                  <img src="https://images.unsplash.com/photo-1519167758481-83f550bb49b3?auto=format&fit=crop&w=600&q=80" alt="هتل باغ و تشریفات مشیرالممالک" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
-                  <span class="absolute top-2 right-2 bg-[#1B3B2B] text-[#D4AF37] border border-[#D4AF37]/50 text-[10px] font-black px-2.5 py-0.5 rounded-full shadow-md flex items-center gap-1">
-                    <i data-lucide="shield-check" class="w-3 h-3 text-[#D4AF37]"></i>
-                    <span>تأییدشده عروسی‌تو</span>
-                  </span>
-                  <span class="absolute bottom-2 left-2 bg-black/60 backdrop-blur-xs text-[#D4AF37] text-[10px] font-bold px-2 py-0.5 rounded-md flex items-center gap-1">
-                    <i data-lucide="crown" class="w-3 h-3 text-[#D4AF37]"></i> VIP / لوکس
+              <div data-vip-cat="hall" class="vip-vendor-card bg-white border border-[#D4AF37]/30 hover:border-[#D4AF37] p-3 rounded-2xl shadow-xs hover:shadow-md transition-all duration-300 flex items-center gap-3 group relative overflow-hidden shrink-0">
+                <div class="relative w-20 h-20 sm:w-24 sm:h-24 rounded-2xl overflow-hidden bg-slate-900 shrink-0 border border-[#D4AF37]/40 shadow-2xs">
+                  <img src="https://images.unsplash.com/photo-1519167758481-83f550bb49b3?auto=format&fit=crop&w=600&q=80" alt="هتل باغ و تشریفات مشیرالممالک" class="w-full h-full object-cover group-hover:scale-108 transition-transform duration-500">
+                  <span class="absolute top-1 right-1 bg-[#1B3B2B] text-[#D4AF37] border border-[#D4AF37]/50 text-[9px] font-black px-1.5 py-0.5 rounded-md shadow-xs">
+                    VIP
                   </span>
                 </div>
 
-                <div class="space-y-1">
-                  <div class="flex justify-between items-center">
-                    <h4 class="text-xs font-bold text-graphite group-hover:text-primary transition-colors">هتل باغ و تشریفات مشیرالممالک یزد</h4>
-                    <span class="text-amber-500 font-bold text-[11px] flex items-center gap-0.5">۴.۹ <i data-lucide="star" class="w-3 h-3 fill-amber-500 text-amber-500"></i> <span class="text-gray-400 font-normal">(۴۲)</span></span>
+                <div class="flex-1 min-w-0 space-y-1.5">
+                  <div class="flex justify-between items-center gap-1">
+                    <h4 class="text-xs font-bold text-graphite group-hover:text-primary transition-colors truncate">هتل باغ و تشریفات مشیرالممالک</h4>
+                    <span class="text-amber-500 font-bold text-[10px] flex items-center gap-0.5 shrink-0">۴.۹ <i data-lucide="star" class="w-3 h-3 fill-amber-500 text-amber-500"></i> <span class="text-gray-400 font-normal">(۴۲)</span></span>
                   </div>
-                  <p class="text-[10px] text-secondary font-medium flex items-center gap-1">
-                    <i data-lucide="map-pin" class="w-3 h-3 text-emerald-600"></i>
-                    <span>صفائیه، یزد</span>
-                  </p>
-                </div>
-
-                <div class="flex items-center gap-2 pt-1 border-t border-accent/60">
-                  <button onclick="openVendorDetailModal(1)" class="flex-1 bg-[#1B3B2B] hover:bg-emerald-900 text-white text-[11px] font-bold py-1.5 rounded-xl transition-all shadow-xs flex items-center justify-center gap-1 cursor-pointer">
-                    <span>مشاهده پروفایل</span>
-                  </button>
-                  <button onclick="openInquiryModal(1, 'هتل باغ و تشریفات مشیرالممالک یزد')" class="flex-1 bg-[#D4AF37] hover:bg-amber-400 text-[#1B3B2B] text-[11px] font-black py-1.5 rounded-xl transition-all shadow-xs flex items-center justify-center gap-1 cursor-pointer">
-                    <span>استعلام قیمت سریع</span>
-                  </button>
+                  <div class="flex items-center gap-1.5 flex-wrap">
+                    <span class="text-[10px] text-emerald-800 font-semibold bg-emerald-50 border border-emerald-200/60 px-2 py-0.5 rounded-md flex items-center gap-1">
+                      <i data-lucide="map-pin" class="w-3 h-3 text-emerald-600"></i>
+                      <span>صفائیه، یزد</span>
+                    </span>
+                    <span class="text-[10px] text-amber-800 font-bold bg-amber-50 border border-amber-200 px-1.5 py-0.5 rounded-md">
+                      تضمین اصالت
+                    </span>
+                  </div>
+                  <div class="flex items-center gap-2 pt-0.5">
+                    <button onclick="openVendorDetailModal(1)" class="flex-1 bg-[#1B3B2B] hover:bg-emerald-900 text-white text-[10px] font-bold py-1 px-2 rounded-xl transition-all shadow-2xs flex items-center justify-center gap-1 cursor-pointer">
+                      <span>مشاهده</span>
+                    </button>
+                    <button onclick="openInquiryModal(1, 'هتل باغ و تشریفات مشیرالممالک یزد')" class="flex-1 bg-[#D4AF37] hover:bg-amber-400 text-[#1B3B2B] text-[10px] font-black py-1 px-2 rounded-xl transition-all shadow-2xs flex items-center justify-center gap-1 cursor-pointer">
+                      <span>استعلام</span>
+                    </button>
+                  </div>
                 </div>
               </div>
 
               <!-- Item 2 (Studio) -->
-              <div data-vip-cat="studio" class="vip-vendor-card bg-white border border-accent/80 hover:border-[#D4AF37] p-3 rounded-2xl shadow-2xs hover:shadow-lg transition-all flex flex-col gap-2.5 group relative overflow-hidden">
-                <div class="relative h-28 rounded-xl overflow-hidden bg-slate-900">
-                  <img src="https://images.unsplash.com/photo-1537633552985-df8429e8048b?auto=format&fit=crop&w=600&q=80" alt="استودیو و آتلیه تخصصی کویر یزد" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
-                  <span class="absolute top-2 right-2 bg-[#1B3B2B] text-[#D4AF37] border border-[#D4AF37]/50 text-[10px] font-black px-2.5 py-0.5 rounded-full shadow-md flex items-center gap-1">
-                    <i data-lucide="shield-check" class="w-3 h-3 text-[#D4AF37]"></i>
-                    <span>تأییدشده عروسی‌تو</span>
-                  </span>
-                  <span class="absolute bottom-2 left-2 bg-black/60 backdrop-blur-xs text-[#D4AF37] text-[10px] font-bold px-2 py-0.5 rounded-md flex items-center gap-1">
-                    <i data-lucide="sparkles" class="w-3 h-3 text-[#D4AF37]"></i> اقتصادی‌لوکس
+              <div data-vip-cat="studio" class="vip-vendor-card bg-white border border-[#D4AF37]/30 hover:border-[#D4AF37] p-3 rounded-2xl shadow-xs hover:shadow-md transition-all duration-300 flex items-center gap-3 group relative overflow-hidden shrink-0">
+                <div class="relative w-20 h-20 sm:w-24 sm:h-24 rounded-2xl overflow-hidden bg-slate-900 shrink-0 border border-[#D4AF37]/40 shadow-2xs">
+                  <img src="https://images.unsplash.com/photo-1537633552985-df8429e8048b?auto=format&fit=crop&w=600&q=80" alt="استودیو و آتلیه تخصصی کویر یزد" class="w-full h-full object-cover group-hover:scale-108 transition-transform duration-500">
+                  <span class="absolute top-1 right-1 bg-[#1B3B2B] text-[#D4AF37] border border-[#D4AF37]/50 text-[9px] font-black px-1.5 py-0.5 rounded-md shadow-xs">
+                    VIP
                   </span>
                 </div>
 
-                <div class="space-y-1">
-                  <div class="flex justify-between items-center">
-                    <h4 class="text-xs font-bold text-graphite group-hover:text-primary transition-colors">استودیو و آتلیه تخصصی کویر یزد</h4>
-                    <span class="text-amber-500 font-bold text-[11px] flex items-center gap-0.5">۴.۸ <i data-lucide="star" class="w-3 h-3 fill-amber-500 text-amber-500"></i> <span class="text-gray-400 font-normal">(۳۸)</span></span>
+                <div class="flex-1 min-w-0 space-y-1.5">
+                  <div class="flex justify-between items-center gap-1">
+                    <h4 class="text-xs font-bold text-graphite group-hover:text-primary transition-colors truncate">استودیو و آتلیه تخصصی کویر</h4>
+                    <span class="text-amber-500 font-bold text-[10px] flex items-center gap-0.5 shrink-0">۴.۸ <i data-lucide="star" class="w-3 h-3 fill-amber-500 text-amber-500"></i> <span class="text-gray-400 font-normal">(۳۸)</span></span>
                   </div>
-                  <p class="text-[10px] text-secondary font-medium flex items-center gap-1">
-                    <i data-lucide="map-pin" class="w-3 h-3 text-emerald-600"></i>
-                    <span>میدان اطلسی، یزد</span>
-                  </p>
-                </div>
-
-                <div class="flex items-center gap-2 pt-1 border-t border-accent/60">
-                  <button onclick="openVendorDetailModal(2)" class="flex-1 bg-[#1B3B2B] hover:bg-emerald-900 text-white text-[11px] font-bold py-1.5 rounded-xl transition-all shadow-xs flex items-center justify-center gap-1 cursor-pointer">
-                    <span>مشاهده پروفایل</span>
-                  </button>
-                  <button onclick="openInquiryModal(2, 'استودیو و آتلیه تخصصی کویر یزد')" class="flex-1 bg-[#D4AF37] hover:bg-amber-400 text-[#1B3B2B] text-[11px] font-black py-1.5 rounded-xl transition-all shadow-xs flex items-center justify-center gap-1 cursor-pointer">
-                    <span>استعلام قیمت سریع</span>
-                  </button>
+                  <div class="flex items-center gap-1.5 flex-wrap">
+                    <span class="text-[10px] text-emerald-800 font-semibold bg-emerald-50 border border-emerald-200/60 px-2 py-0.5 rounded-md flex items-center gap-1">
+                      <i data-lucide="map-pin" class="w-3 h-3 text-emerald-600"></i>
+                      <span>میدان اطلسی، یزد</span>
+                    </span>
+                    <span class="text-[10px] text-amber-800 font-bold bg-amber-50 border border-amber-200 px-1.5 py-0.5 rounded-md">
+                      فرمالیته کویر
+                    </span>
+                  </div>
+                  <div class="flex items-center gap-2 pt-0.5">
+                    <button onclick="openVendorDetailModal(2)" class="flex-1 bg-[#1B3B2B] hover:bg-emerald-900 text-white text-[10px] font-bold py-1 px-2 rounded-xl transition-all shadow-2xs flex items-center justify-center gap-1 cursor-pointer">
+                      <span>مشاهده</span>
+                    </button>
+                    <button onclick="openInquiryModal(2, 'استودیو و آتلیه تخصصی کویر یزد')" class="flex-1 bg-[#D4AF37] hover:bg-amber-400 text-[#1B3B2B] text-[10px] font-black py-1 px-2 rounded-xl transition-all shadow-2xs flex items-center justify-center gap-1 cursor-pointer">
+                      <span>استعلام</span>
+                    </button>
+                  </div>
                 </div>
               </div>
 
               <!-- Item 3 (Beauty) -->
-              <div data-vip-cat="beauty" class="vip-vendor-card bg-white border border-accent/80 hover:border-[#D4AF37] p-3 rounded-2xl shadow-2xs hover:shadow-lg transition-all flex flex-col gap-2.5 group relative overflow-hidden">
-                <div class="relative h-28 rounded-xl overflow-hidden bg-slate-900">
-                  <img src="https://images.unsplash.com/photo-1487412720507-e7ab37603c6f?auto=format&fit=crop&w=600&q=80" alt="سالن زیبایی تخصصی رویال یزد" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
-                  <span class="absolute top-2 right-2 bg-[#1B3B2B] text-[#D4AF37] border border-[#D4AF37]/50 text-[10px] font-black px-2.5 py-0.5 rounded-full shadow-md flex items-center gap-1">
-                    <i data-lucide="shield-check" class="w-3 h-3 text-[#D4AF37]"></i>
-                    <span>تأییدشده عروسی‌تو</span>
-                  </span>
-                  <span class="absolute bottom-2 left-2 bg-black/60 backdrop-blur-xs text-[#D4AF37] text-[10px] font-bold px-2 py-0.5 rounded-md flex items-center gap-1">
-                    <i data-lucide="crown" class="w-3 h-3 text-[#D4AF37]"></i> VIP / خاص
+              <div data-vip-cat="beauty" class="vip-vendor-card bg-white border border-[#D4AF37]/30 hover:border-[#D4AF37] p-3 rounded-2xl shadow-xs hover:shadow-md transition-all duration-300 flex items-center gap-3 group relative overflow-hidden shrink-0">
+                <div class="relative w-20 h-20 sm:w-24 sm:h-24 rounded-2xl overflow-hidden bg-slate-900 shrink-0 border border-[#D4AF37]/40 shadow-2xs">
+                  <img src="https://images.unsplash.com/photo-1487412720507-e7ab37603c6f?auto=format&fit=crop&w=600&q=80" alt="سالن زیبایی تخصصی رویال یزد" class="w-full h-full object-cover group-hover:scale-108 transition-transform duration-500">
+                  <span class="absolute top-1 right-1 bg-[#1B3B2B] text-[#D4AF37] border border-[#D4AF37]/50 text-[9px] font-black px-1.5 py-0.5 rounded-md shadow-xs">
+                    VIP
                   </span>
                 </div>
 
-                <div class="space-y-1">
-                  <div class="flex justify-between items-center">
-                    <h4 class="text-xs font-bold text-graphite group-hover:text-primary transition-colors">سالن زیبایی تخصصی رویال یزد</h4>
-                    <span class="text-amber-500 font-bold text-[11px] flex items-center gap-0.5">۴.۹ <i data-lucide="star" class="w-3 h-3 fill-amber-500 text-amber-500"></i> <span class="text-gray-400 font-normal">(۵۱)</span></span>
+                <div class="flex-1 min-w-0 space-y-1.5">
+                  <div class="flex justify-between items-center gap-1">
+                    <h4 class="text-xs font-bold text-graphite group-hover:text-primary transition-colors truncate">سالن زیبایی تخصصی رویال</h4>
+                    <span class="text-amber-500 font-bold text-[10px] flex items-center gap-0.5 shrink-0">۴.۹ <i data-lucide="star" class="w-3 h-3 fill-amber-500 text-amber-500"></i> <span class="text-gray-400 font-normal">(۵۱)</span></span>
                   </div>
-                  <p class="text-[10px] text-secondary font-medium flex items-center gap-1">
-                    <i data-lucide="map-pin" class="w-3 h-3 text-emerald-600"></i>
-                    <span>خیابان کاشانی، یزد</span>
-                  </p>
-                </div>
-
-                <div class="flex items-center gap-2 pt-1 border-t border-accent/60">
-                  <button onclick="openVendorDetailModal(4)" class="flex-1 bg-[#1B3B2B] hover:bg-emerald-900 text-white text-[11px] font-bold py-1.5 rounded-xl transition-all shadow-xs flex items-center justify-center gap-1 cursor-pointer">
-                    <span>مشاهده پروفایل</span>
-                  </button>
-                  <button onclick="openInquiryModal(4, 'سالن زیبایی تخصصی رویال یزد')" class="flex-1 bg-[#D4AF37] hover:bg-amber-400 text-[#1B3B2B] text-[11px] font-black py-1.5 rounded-xl transition-all shadow-xs flex items-center justify-center gap-1 cursor-pointer">
-                    <span>استعلام قیمت سریع</span>
-                  </button>
+                  <div class="flex items-center gap-1.5 flex-wrap">
+                    <span class="text-[10px] text-emerald-800 font-semibold bg-emerald-50 border border-emerald-200/60 px-2 py-0.5 rounded-md flex items-center gap-1">
+                      <i data-lucide="map-pin" class="w-3 h-3 text-emerald-600"></i>
+                      <span>خیابان کاشانی، یزد</span>
+                    </span>
+                    <span class="text-[10px] text-amber-800 font-bold bg-amber-50 border border-amber-200 px-1.5 py-0.5 rounded-md">
+                      میکاپ عروس
+                    </span>
+                  </div>
+                  <div class="flex items-center gap-2 pt-0.5">
+                    <button onclick="openVendorDetailModal(3)" class="flex-1 bg-[#1B3B2B] hover:bg-emerald-900 text-white text-[10px] font-bold py-1 px-2 rounded-xl transition-all shadow-2xs flex items-center justify-center gap-1 cursor-pointer">
+                      <span>مشاهده</span>
+                    </button>
+                    <button onclick="openInquiryModal(3, 'سالن زیبایی تخصصی رویال یزد')" class="flex-1 bg-[#D4AF37] hover:bg-amber-400 text-[#1B3B2B] text-[10px] font-black py-1 px-2 rounded-xl transition-all shadow-2xs flex items-center justify-center gap-1 cursor-pointer">
+                      <span>استعلام</span>
+                    </button>
+                  </div>
                 </div>
               </div>
             </div>
@@ -1828,48 +1827,6 @@
           </div>
         </div>
       </div>
-        <div class="flex flex-col sm:flex-row justify-between sm:items-center gap-4 border-b border-accent pb-4">
-          <div>
-            <div class="inline-flex items-center gap-1.5 bg-primary/10 text-primary text-xs font-bold px-3 py-1 rounded-full mb-1">
-              <i data-lucide="shield-check" class="w-3.5 h-3.5"></i>
-              <span>پنل اختصاصی مدیریت ارشد پلتفرم (Super Admin Dashboard)</span>
-            </div>
-            <h2 class="text-2xl font-bold text-graphite">نظارت بر عملکرد استان یزد، اعتبارسنجی و تنظیمات پلتفرم</h2>
-          </div>
-          <span class="bg-emerald-100 text-emerald-800 font-bold text-xs px-4 py-2 rounded-xl border border-emerald-200 shrink-0">
-            وضعیت سیستم: فعال و آنلاین
-          </span>
-        </div>
-
-        <!-- 5 Key Operational Analytics KPI Cards -->
-        <div class="grid grid-cols-2 md:grid-cols-5 gap-4">
-          <div class="bg-bgCustom border border-accent rounded-2xl p-4 space-y-1">
-            <span class="text-xs font-bold text-secondary block">کل زوجین ثبت‌شده</span>
-            <span class="text-2xl font-black text-primary">۱۵,۴۲۰</span>
-            <span class="text-[10px] text-emerald-600 font-bold block">↑ ۱۲٪ ماه اخیر</span>
-          </div>
-          <div class="bg-bgCustom border border-accent rounded-2xl p-4 space-y-1">
-            <span class="text-xs font-bold text-secondary block">تأمین‌کنندگان معتبر</span>
-            <span class="text-2xl font-black text-graphite">۱,۲40</span>
-            <span class="text-[10px] text-primary font-bold block">دارای پروانه کسب</span>
-          </div>
-          <div class="bg-bgCustom border border-accent rounded-2xl p-4 space-y-1">
-            <span class="text-xs font-bold text-secondary block">درخواست‌های معلق</span>
-            <span class="text-2xl font-black text-amber-600">۱۸</span>
-            <span class="text-[10px] text-amber-700 font-bold block">نیازمند بررسی مدارک</span>
-          </div>
-          <div class="bg-bgCustom border border-accent rounded-2xl p-4 space-y-1">
-            <span class="text-xs font-bold text-secondary block">پیش‌فاکتورهای صادر شده</span>
-            <span class="text-2xl font-black text-graphite">۳,۸۵۰</span>
-            <span class="text-[10px] text-emerald-600 font-bold block">در چت آنلاین</span>
-          </div>
-          <div class="bg-bgCustom border border-accent rounded-2xl p-4 space-y-1 col-span-2 md:col-span-1">
-            <span class="text-xs font-bold text-secondary block">حجم معاملات (GMV)</span>
-            <span class="text-xl font-black text-primary">۴۸.۵ میلیارد</span>
-            <span class="text-[10px] text-secondary font-medium block">تومان / یزد</span>
-          </div>
-        </div>
-      </div>
 
       <!-- Platform Settings & Site Branding Panel -->
       <div class="bg-white border border-accent rounded-3xl p-6 shadow-xs space-y-4">
@@ -2139,6 +2096,37 @@
               </tr>
             </thead>
             <tbody id="admin-user-accounts-table" class="divide-y divide-accent/60 font-medium">
+              <!-- Dynamically populated via JS -->
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- Support Inquiries Queue (درخواست‌های پشتیبانی) -->
+      <div class="bg-white border border-accent rounded-3xl p-6 shadow-xs space-y-4">
+        <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-2 border-b border-accent pb-3">
+          <h3 class="text-lg font-bold text-graphite flex items-center gap-2">
+            <i data-lucide="headphones" class="w-5 h-5 text-primary"></i>
+            <span>مدیریت درخواست‌های پشتیبانی و تماس (Support Inquiries Queue)</span>
+          </h3>
+          <span id="admin-support-count" class="bg-primary/10 text-primary text-xs font-bold px-3 py-1 rounded-full">
+            ۰ درخواست
+          </span>
+        </div>
+
+        <div class="overflow-x-auto rounded-2xl border border-accent">
+          <table class="w-full text-right text-xs">
+            <thead class="bg-bgCustom text-graphite font-bold border-b border-accent">
+              <tr>
+                <th class="p-3">نام کاربر</th>
+                <th class="p-3">شماره تماس</th>
+                <th class="p-3">موضوع</th>
+                <th class="p-3">متن پیام / درخواست</th>
+                <th class="p-3">تاریخ ثبت</th>
+                <th class="p-3 text-center">وضعیت / اقدام</th>
+              </tr>
+            </thead>
+            <tbody id="admin-support-inquiries-table" class="divide-y divide-accent/60 font-medium">
               <!-- Dynamically populated via JS -->
             </tbody>
           </table>
@@ -5539,6 +5527,71 @@
           <button type="submit" class="w-full bg-[#1B3B2B] hover:bg-emerald-900 text-white font-black py-3.5 rounded-2xl text-xs shadow-md transition-all flex items-center justify-center gap-2 cursor-pointer">
             <i data-lucide="send" class="w-4 h-4 text-[#D4AF37]"></i>
             <span>ثبت نهایی درخواست مشاوره ازدواج</span>
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- MODAL: DEDICATED SUPPORT (ارتباط با پشتیبانی) -->
+  <div id="modal-support" class="hidden fixed inset-0 bg-black/60 backdrop-blur-xs z-[999999] flex items-center justify-center p-4 transition-all animate-fadeIn" onclick="if(event.target === this) closeSupportModal()">
+    <div class="bg-[#FCFCFA] border border-[#D4AF37]/50 rounded-3xl max-w-xl w-full overflow-hidden shadow-2xl flex flex-col max-h-[90vh]">
+      <!-- MODAL HEADER -->
+      <div class="bg-[#1B3B2B] text-white p-5 flex items-center justify-between border-b border-[#D4AF37]/30 shrink-0">
+        <div class="flex items-center gap-3">
+          <div class="w-10 h-10 rounded-xl bg-[#D4AF37] text-[#1B3B2B] flex items-center justify-center font-bold shadow-xs">
+            <i data-lucide="headphones" class="w-5 h-5"></i>
+          </div>
+          <div>
+            <h3 class="text-base font-bold text-[#D4AF37]">ارتباط با پشتیبانی عروسی‌تو</h3>
+            <p class="text-[11px] text-emerald-100/80 font-medium">پاسخگویی سریع و پیگیری درخواست‌های زوجین و تامین‌کنندگان یزد</p>
+          </div>
+        </div>
+
+        <button onclick="closeSupportModal()" class="w-9 h-9 rounded-xl bg-white/10 hover:bg-white/20 text-white flex items-center justify-center transition-colors cursor-pointer" title="بستن">
+          <i data-lucide="x" class="w-5 h-5"></i>
+        </button>
+      </div>
+
+      <!-- MODAL FORM -->
+      <form id="support-modal-form" onsubmit="handleSupportSubmit(event)" class="p-6 space-y-4 overflow-y-auto text-xs font-bold text-graphite">
+        <div class="bg-[#F5EFEB] border border-[#E0D8C8] p-3.5 rounded-2xl flex items-center gap-3">
+          <i data-lucide="shield-check" class="w-5 h-5 text-[#D4AF37] shrink-0"></i>
+          <span class="text-[11px] text-secondary font-semibold leading-relaxed">
+            تیم پشتیبانی عروسی‌تو همه‌روزه از ساعت ۸ الی ۲۲ در خدمت شماست. پیام شما ثبت شده و در اسرع وقت با شما تماس خواهیم گرفت.
+          </span>
+        </div>
+
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+          <div class="space-y-1">
+            <label class="block text-secondary">نام و نام خانوادگی <span class="text-rose-500">*</span></label>
+            <input type="text" id="supp-name" required placeholder="نام کامل شما..." class="w-full bg-[#F5EFEB] border border-[#E0D8C8] rounded-xl p-3 text-xs font-medium focus:outline-none focus:border-[#D4AF37]">
+          </div>
+          <div class="space-y-1">
+            <label class="block text-secondary">شماره تماس (همراه) <span class="text-rose-500">*</span></label>
+            <input type="tel" id="supp-phone" required placeholder="۰۹۱۲۳۴۵۶۷۸۹" class="w-full bg-[#F5EFEB] border border-[#E0D8C8] rounded-xl p-3 text-xs font-medium focus:outline-none focus:border-[#D4AF37] dir-ltr text-right">
+          </div>
+        </div>
+
+        <div class="space-y-1">
+          <label class="block text-secondary">موضوع درخواست <span class="text-rose-500">*</span></label>
+          <select id="supp-topic" required class="w-full bg-[#F5EFEB] border border-[#E0D8C8] rounded-xl p-3 text-xs font-bold text-graphite focus:outline-none focus:border-[#D4AF37] cursor-pointer">
+            <option value="مشاوره">مشاوره و راهنمایی انتخاب تامین‌کننده</option>
+            <option value="مشکل فنی">مشکل فنی سیستم یا ورود به حساب</option>
+            <option value="مالی/پرداخت">امور مالی، پیش‌فاکتور و اشتراک</option>
+            <option value="گزارش">گزارش یا شکایت از تامین‌کننده</option>
+          </select>
+        </div>
+
+        <div class="space-y-1">
+          <label class="block text-secondary">متن پیام یا توضیحات درخواست <span class="text-rose-500">*</span></label>
+          <textarea id="supp-message" rows="4" required placeholder="لطفاً شرح کامل درخواست یا سوال خود را اینجا بنویسید..." class="w-full bg-[#F5EFEB] border border-[#E0D8C8] rounded-xl p-3 text-xs font-medium focus:outline-none focus:border-[#D4AF37] leading-relaxed"></textarea>
+        </div>
+
+        <div class="pt-2">
+          <button type="submit" class="w-full bg-[#D4AF37] hover:bg-amber-400 text-[#1B3B2B] font-black py-3.5 rounded-2xl text-xs shadow-md transition-all flex items-center justify-center gap-2 cursor-pointer">
+            <i data-lucide="send" class="w-4 h-4"></i>
+            <span>ثبت و ارسال پیام به پشتیبانی</span>
           </button>
         </div>
       </form>
