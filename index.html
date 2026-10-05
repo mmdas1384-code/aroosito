@@ -1757,6 +1757,120 @@
         </div>
       </div>
 
+      <!-- Extended Platform Analytics & Vendor Traffic Metrics Panel -->
+      <div class="bg-white border border-accent rounded-3xl p-6 shadow-xs space-y-6">
+        <div class="flex flex-col sm:flex-row justify-between sm:items-center gap-4 border-b border-accent pb-4">
+          <div>
+            <h3 class="text-lg font-bold text-graphite flex items-center gap-2">
+              <i data-lucide="bar-chart-2" class="w-5 h-5 text-primary"></i>
+              <span>آمار ترافیک پلتفرم و گزارش تحلیل بازدید تامین‌کنندگان (Traffic & Conversion Metrics)</span>
+            </h3>
+            <p class="text-xs text-secondary mt-0.5">پایش آنلاین کل بازدیدهای پلتفرم، تفکیک بازدید صفحات اختصاصی و نرخ تبدیل استعلام‌ها</p>
+          </div>
+          <div class="flex items-center gap-2">
+            <span class="bg-emerald-50 text-emerald-700 border border-emerald-200 px-3 py-1 rounded-xl text-xs font-bold">
+              نرخ تبدیل کلی: ۱۸.۴٪
+            </span>
+          </div>
+        </div>
+
+        <!-- Metrics Grid -->
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+          <div class="bg-slate-50 border border-accent rounded-2xl p-4 space-y-1">
+            <span class="text-xs text-secondary font-bold">کل بازدیدهای یکتای پلتفرم</span>
+            <p id="admin-analytics-total-views" class="text-2xl font-black text-graphite">۱۲۸,۴۵۰</p>
+            <span class="text-[10px] text-emerald-600 font-bold block">↑ ۱۴.۲٪ رشد نسبت به ماه گذشته</span>
+          </div>
+          <div class="bg-slate-50 border border-accent rounded-2xl p-4 space-y-1">
+            <span class="text-xs text-secondary font-bold">تعداد بازدید صفحات تامین‌کنندگان</span>
+            <p id="admin-analytics-vendor-views" class="text-2xl font-black text-graphite">۶۴,۲۰۰</p>
+            <span class="text-[10px] text-primary font-bold block">میانگین ۴۳۰ بازدید به ازای هر تامین‌کننده</span>
+          </div>
+          <div class="bg-slate-50 border border-accent rounded-2xl p-4 space-y-1">
+            <span class="text-xs text-secondary font-bold">تعداد کل لیدهای خروجی (Inquiries)</span>
+            <p id="admin-analytics-leads-count" class="text-2xl font-black text-graphite">۳,۸۲۰</p>
+            <span class="text-[10px] text-emerald-600 font-bold block">موفقیت ثبت پیش‌فاکتور: ۴۲٪</span>
+          </div>
+        </div>
+
+        <!-- Vendor Traffic Leaderboard Table -->
+        <div class="space-y-3">
+          <h4 class="text-xs font-bold text-graphite flex items-center gap-1.5">
+            <i data-lucide="trending-up" class="w-4 h-4 text-primary"></i>
+            <span>تامین‌کنندگان پربازدید پلتفرم (Vendor Traffic Leaderboard)</span>
+          </h4>
+          <div class="overflow-x-auto rounded-2xl border border-accent/80">
+            <table class="w-full text-right text-xs">
+              <thead class="bg-bgCustom text-graphite font-bold border-b border-accent/80">
+                <tr>
+                  <th class="p-3">نام تامین‌کننده</th>
+                  <th class="p-3">دسته‌بندی</th>
+                  <th class="p-3">تعداد بازدید</th>
+                  <th class="p-3">تعداد استعلام</th>
+                  <th class="p-3">نرخ تبدیل</th>
+                </tr>
+              </thead>
+              <tbody id="admin-vendor-traffic-table" class="divide-y divide-accent/60 font-medium">
+                <!-- Dynamically populated via JS -->
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <!-- Real-time System Audit Logs -->
+        <div class="space-y-3 border-t border-accent/60 pt-4">
+          <h4 class="text-xs font-bold text-graphite flex items-center gap-1.5">
+            <i data-lucide="activity" class="w-4 h-4 text-primary"></i>
+            <span>لاگ فعالیت‌ها و وقایع زنده سیستم (System Audit Trail)</span>
+          </h4>
+          <div id="admin-system-logs-container" class="bg-slate-900 text-slate-200 rounded-2xl p-4 font-mono text-[11px] space-y-2 max-h-48 overflow-y-auto custom-scrollbar dir-ltr text-left">
+            <!-- Dynamically populated -->
+          </div>
+        </div>
+      </div>
+        <div class="flex flex-col sm:flex-row justify-between sm:items-center gap-4 border-b border-accent pb-4">
+          <div>
+            <div class="inline-flex items-center gap-1.5 bg-primary/10 text-primary text-xs font-bold px-3 py-1 rounded-full mb-1">
+              <i data-lucide="shield-check" class="w-3.5 h-3.5"></i>
+              <span>پنل اختصاصی مدیریت ارشد پلتفرم (Super Admin Dashboard)</span>
+            </div>
+            <h2 class="text-2xl font-bold text-graphite">نظارت بر عملکرد استان یزد، اعتبارسنجی و تنظیمات پلتفرم</h2>
+          </div>
+          <span class="bg-emerald-100 text-emerald-800 font-bold text-xs px-4 py-2 rounded-xl border border-emerald-200 shrink-0">
+            وضعیت سیستم: فعال و آنلاین
+          </span>
+        </div>
+
+        <!-- 5 Key Operational Analytics KPI Cards -->
+        <div class="grid grid-cols-2 md:grid-cols-5 gap-4">
+          <div class="bg-bgCustom border border-accent rounded-2xl p-4 space-y-1">
+            <span class="text-xs font-bold text-secondary block">کل زوجین ثبت‌شده</span>
+            <span class="text-2xl font-black text-primary">۱۵,۴۲۰</span>
+            <span class="text-[10px] text-emerald-600 font-bold block">↑ ۱۲٪ ماه اخیر</span>
+          </div>
+          <div class="bg-bgCustom border border-accent rounded-2xl p-4 space-y-1">
+            <span class="text-xs font-bold text-secondary block">تأمین‌کنندگان معتبر</span>
+            <span class="text-2xl font-black text-graphite">۱,۲40</span>
+            <span class="text-[10px] text-primary font-bold block">دارای پروانه کسب</span>
+          </div>
+          <div class="bg-bgCustom border border-accent rounded-2xl p-4 space-y-1">
+            <span class="text-xs font-bold text-secondary block">درخواست‌های معلق</span>
+            <span class="text-2xl font-black text-amber-600">۱۸</span>
+            <span class="text-[10px] text-amber-700 font-bold block">نیازمند بررسی مدارک</span>
+          </div>
+          <div class="bg-bgCustom border border-accent rounded-2xl p-4 space-y-1">
+            <span class="text-xs font-bold text-secondary block">پیش‌فاکتورهای صادر شده</span>
+            <span class="text-2xl font-black text-graphite">۳,۸۵۰</span>
+            <span class="text-[10px] text-emerald-600 font-bold block">در چت آنلاین</span>
+          </div>
+          <div class="bg-bgCustom border border-accent rounded-2xl p-4 space-y-1 col-span-2 md:col-span-1">
+            <span class="text-xs font-bold text-secondary block">حجم معاملات (GMV)</span>
+            <span class="text-xl font-black text-primary">۴۸.۵ میلیارد</span>
+            <span class="text-[10px] text-secondary font-medium block">تومان / یزد</span>
+          </div>
+        </div>
+      </div>
+
       <!-- Platform Settings & Site Branding Panel -->
       <div class="bg-white border border-accent rounded-3xl p-6 shadow-xs space-y-4">
         <div class="border-b border-accent pb-3 flex items-center justify-between">
@@ -1787,8 +1901,32 @@
             <label class="block">متن بنر اطلاعیه عمومی بالای سایت:</label>
             <div class="flex gap-2">
               <input type="text" id="admin-banner-text" value="جشنواره تخفیف‌های ویژه خدمات عروسی استان یزد - پاییز ۱۴۰۳" class="w-full bg-slate-50 border border-accent rounded-xl px-3 py-2 text-xs font-medium focus:outline-none focus:border-primary">
-              <button onclick="showToast('متن بنر اطلاع‌رسانی بروزرسانی شد', 'success')" class="bg-primary hover:bg-emerald-900 text-white px-3 py-2 rounded-xl text-xs font-bold transition-all shrink-0">انتشار</button>
+              <button onclick="handleSaveShowcaseConfig()" class="bg-primary hover:bg-emerald-900 text-white px-3 py-2 rounded-xl text-xs font-bold transition-all shrink-0">انتشار</button>
             </div>
+          </div>
+        </div>
+
+        <!-- Showcase Headlines & Promo Blocks Editor -->
+        <div class="border-t border-accent/60 pt-4 space-y-3">
+          <h4 class="text-xs font-black text-primary flex items-center gap-1.5">
+            <i data-lucide="type" class="w-4 h-4"></i>
+            <span>ویرایشگر تیترها و متن‌های ویترین صفحه اصلی (Showcase Headlines & Hero Subtitle)</span>
+          </h4>
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-4 text-xs font-bold text-graphite">
+            <div class="space-y-1.5">
+              <label class="block">عنوان اصلی هیرو (Hero Headline):</label>
+              <input type="text" id="admin-hero-title-input" value="برنامه‌ریزی رویایی‌ترین شب زندگی با عروسی تو" class="w-full bg-slate-50 border border-accent rounded-xl px-3 py-2 text-xs font-medium focus:outline-none focus:border-primary">
+            </div>
+            <div class="space-y-1.5">
+              <label class="block">زیرعنوان و توضیحات هیرو (Hero Subtitle):</label>
+              <input type="text" id="admin-hero-subtitle-input" value="بهترین باغ تالارها، آتلیه‌ها، سالن‌های زیبایی و خدمات مجالس را با تضمین قیمت، تاییدیه رسمی اعتبار و استعلام آنلاین رزرو کنید." class="w-full bg-slate-50 border border-accent rounded-xl px-3 py-2 text-xs font-medium focus:outline-none focus:border-primary">
+            </div>
+          </div>
+          <div class="flex justify-end pt-1">
+            <button onclick="handleSaveShowcaseConfig()" class="bg-primary hover:bg-emerald-900 text-white px-4 py-2 rounded-xl text-xs font-bold transition-all flex items-center gap-1">
+              <i data-lucide="check-circle" class="w-3.5 h-3.5"></i>
+              <span>ذخیره و بروزرسانی ویترین</span>
+            </button>
           </div>
         </div>
       </div>
@@ -1938,6 +2076,70 @@
             </thead>
             <tbody id="admin-vendor-table" class="divide-y divide-accent/60 font-medium">
               <!-- Populated via JS -->
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- Review Moderation Queue & Verified Couple Badges Panel -->
+      <div class="bg-white border border-accent rounded-3xl p-6 shadow-xs space-y-6">
+        <div class="flex flex-col sm:flex-row justify-between sm:items-center gap-4 border-b border-accent pb-4">
+          <div>
+            <h3 class="text-lg font-bold text-graphite flex items-center gap-2">
+              <i data-lucide="star" class="w-5 h-5 text-primary"></i>
+              <span>مدیریت و نظرات کاربران و اعطای نشان "زوج تاییدشده" (Reviews Moderation)</span>
+            </h3>
+            <p class="text-xs text-secondary mt-0.5">تایید نظرات ثبت‌شده توسط زوجین، اعطای نشان زوج تاییدشده و نظارت بر امتیازات تامین‌کنندگان</p>
+          </div>
+          <span class="bg-primary/10 text-primary border border-primary/20 px-3 py-1 rounded-xl text-xs font-bold">
+            در انتظار بررسی: ۲ دیدگاه
+          </span>
+        </div>
+
+        <div class="overflow-x-auto rounded-2xl border border-accent/80">
+          <table class="w-full text-right text-xs">
+            <thead class="bg-bgCustom text-graphite font-bold border-b border-accent/80">
+              <tr>
+                <th class="p-3">نام کاربر / زوج</th>
+                <th class="p-3">تامین‌کننده مربوطه</th>
+                <th class="p-3">امتیاز & متن دیدگاه</th>
+                <th class="p-3">نشان زوج تاییدشده</th>
+                <th class="p-3">وضعیت انتشار</th>
+                <th class="p-3 text-center">عملیات مدیریت</th>
+              </tr>
+            </thead>
+            <tbody id="admin-reviews-moderation-table" class="divide-y divide-accent/60 font-medium">
+              <!-- Dynamically populated via JS -->
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- User Accounts & Registered Couples Directory -->
+      <div class="bg-white border border-accent rounded-3xl p-6 shadow-xs space-y-6">
+        <div class="flex flex-col sm:flex-row justify-between sm:items-center gap-4 border-b border-accent pb-4">
+          <div>
+            <h3 class="text-lg font-bold text-graphite flex items-center gap-2">
+              <i data-lucide="users" class="w-5 h-5 text-primary"></i>
+              <span>مدیریت حساب‌های کاربری زوجین و دسترسی کاربران (User Accounts & Access)</span>
+            </h3>
+            <p class="text-xs text-secondary mt-0.5">مشاهده لیست زوجین عضو پلتفرم، وضعیت فعالیت و مدیریت مسدودی حساب‌ها</p>
+          </div>
+        </div>
+
+        <div class="overflow-x-auto rounded-2xl border border-accent/80">
+          <table class="w-full text-right text-xs">
+            <thead class="bg-bgCustom text-graphite font-bold border-b border-accent/80">
+              <tr>
+                <th class="p-3">نام و نام خانوادگی</th>
+                <th class="p-3">شماره همراه</th>
+                <th class="p-3">تاریخ ازدواج ثبت‌شده</th>
+                <th class="p-3">وضعیت حساب</th>
+                <th class="p-3 text-center">تغییر وضعیت دسترسی</th>
+              </tr>
+            </thead>
+            <tbody id="admin-user-accounts-table" class="divide-y divide-accent/60 font-medium">
+              <!-- Dynamically populated via JS -->
             </tbody>
           </table>
         </div>
@@ -5811,6 +6013,76 @@
           <i data-lucide="printer" class="w-4 h-4"></i>
           <span>چاپ / دانلود PDF پیش‌فاکتور</span>
         </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Parent Category CRUD Modal (#parent-cat-modal) -->
+  <div id="parent-cat-modal" class="hidden fixed inset-0 bg-black/60 backdrop-blur-xs z-[999999] flex items-center justify-center p-4 transition-all animate-fadeIn" onclick="if(event.target === this) closeParentCatModal()">
+    <div class="bg-white border border-accent rounded-3xl max-w-md w-full p-6 shadow-2xl space-y-5 animate-scaleUp">
+      <div class="flex justify-between items-center border-b border-accent pb-3">
+        <h3 id="parent-cat-modal-title" class="text-base font-bold text-graphite flex items-center gap-2">
+          <i data-lucide="layers" class="w-5 h-5 text-primary"></i>
+          <span>افزودن دسته اصلی جدید</span>
+        </h3>
+        <button onclick="closeParentCatModal()" class="text-secondary hover:text-graphite font-bold text-sm">✕</button>
+      </div>
+
+      <input type="hidden" id="parent-cat-edit-id">
+
+      <div class="space-y-4 text-xs font-bold text-graphite">
+        <div class="space-y-1.5">
+          <label class="block">عنوان دسته اصلی *</label>
+          <input type="text" id="parent-cat-title" placeholder="مثلا: تشریفات و خدمات مجالس" class="w-full bg-slate-50 border border-accent rounded-xl p-3 font-medium focus:outline-none focus:border-primary">
+        </div>
+
+        <div class="space-y-1.5">
+          <label class="block">بج و زیرعنوان دسته</label>
+          <input type="text" id="parent-cat-badge" placeholder="مثلا: تالار، غذا و خدمات پذیرایی" class="w-full bg-slate-50 border border-accent rounded-xl p-3 font-medium focus:outline-none focus:border-primary">
+        </div>
+
+        <div class="space-y-1.5">
+          <label class="block">نام آیکون (Lucide Icon Name)</label>
+          <input type="text" id="parent-cat-icon" value="building" class="w-full bg-slate-50 border border-accent rounded-xl p-3 font-medium focus:outline-none focus:border-primary dir-ltr">
+        </div>
+      </div>
+
+      <div class="flex justify-end gap-2 pt-2 border-t border-accent">
+        <button onclick="closeParentCatModal()" class="px-4 py-2 bg-slate-100 hover:bg-slate-200 text-graphite font-bold text-xs rounded-xl transition-colors">انصراف</button>
+        <button onclick="handleSaveParentCategory(event)" class="px-5 py-2 bg-primary hover:bg-emerald-900 text-white font-bold text-xs rounded-xl transition-colors shadow-xs">ذخیره دسته اصلی</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Sub-Category CRUD Modal (#sub-cat-modal) -->
+  <div id="sub-cat-modal" class="hidden fixed inset-0 bg-black/60 backdrop-blur-xs z-[999999] flex items-center justify-center p-4 transition-all animate-fadeIn" onclick="if(event.target === this) closeSubCatModal()">
+    <div class="bg-white border border-accent rounded-3xl max-w-md w-full p-6 shadow-2xl space-y-5 animate-scaleUp">
+      <div class="flex justify-between items-center border-b border-accent pb-3">
+        <h3 id="sub-cat-modal-title" class="text-base font-bold text-graphite flex items-center gap-2">
+          <i data-lucide="tag" class="w-5 h-5 text-primary"></i>
+          <span>افزودن زیرگروه جدید</span>
+        </h3>
+        <button onclick="closeSubCatModal()" class="text-secondary hover:text-graphite font-bold text-sm">✕</button>
+      </div>
+
+      <input type="hidden" id="sub-cat-parent-id">
+      <input type="hidden" id="sub-cat-index">
+
+      <div class="space-y-4 text-xs font-bold text-graphite">
+        <div class="space-y-1.5">
+          <label class="block">عنوان زیرگروه *</label>
+          <input type="text" id="sub-cat-title" placeholder="مثلا: کترینگ و غذای عروسی" class="w-full bg-slate-50 border border-accent rounded-xl p-3 font-medium focus:outline-none focus:border-primary">
+        </div>
+
+        <div class="space-y-1.5">
+          <label class="block">نام آیکون (Lucide Icon Name)</label>
+          <input type="text" id="sub-cat-icon" value="tag" class="w-full bg-slate-50 border border-accent rounded-xl p-3 font-medium focus:outline-none focus:border-primary dir-ltr">
+        </div>
+      </div>
+
+      <div class="flex justify-end gap-2 pt-2 border-t border-accent">
+        <button onclick="closeSubCatModal()" class="px-4 py-2 bg-slate-100 hover:bg-slate-200 text-graphite font-bold text-xs rounded-xl transition-colors">انصراف</button>
+        <button onclick="handleSaveSubCategory(event)" class="px-5 py-2 bg-primary hover:bg-emerald-900 text-white font-bold text-xs rounded-xl transition-colors shadow-xs">ذخیره زیرگروه</button>
       </div>
     </div>
   </div>

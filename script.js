@@ -2897,10 +2897,50 @@ if (document.readyState === "loading") {
       }
     }
 
+    function renderNavMegaCategoryMenu() {
+      const megaContainer = document.getElementById('mega-category-menu');
+      if (!megaContainer) return;
+      const gridContainer = megaContainer.querySelector('.grid');
+      if (!gridContainer) return;
+
+      gridContainer.innerHTML = categoryGroups.map(group => {
+        const subButtons = group.subcategories.map(sub => `
+          <button onclick="filterVendorsFromMega('${sub.title}')" class="text-right text-xs font-medium text-graphite hover:text-primary hover:bg-slate-50 p-1.5 rounded-lg transition-colors flex items-center gap-1.5 cursor-pointer">
+            <span class="w-1.5 h-1.5 rounded-full bg-primary inline-block"></span>
+            <span>${sub.title}</span>
+          </button>
+        `).join('');
+
+        return `
+          <div class="space-y-3">
+            <div class="font-black text-xs text-graphite flex items-center gap-1.5 border-b border-accent/60 pb-1.5 text-emeraldHeader">
+              <i data-lucide="${group.icon || 'folder'}" class="w-4 h-4 text-primary"></i>
+              <span>${group.title}</span>
+            </div>
+            <div class="flex flex-col gap-1.5">
+              ${subButtons || '<span class="text-[11px] text-secondary italic">بدون زیرگروه</span>'}
+            </div>
+          </div>
+        `;
+      }).join('');
+      if (typeof lucide !== 'undefined' && lucide.createIcons) lucide.createIcons();
+    }
+
+    function renderVendorRegistrationCategoryOptions() {
+      const catSelect = document.getElementById('v-cat');
+      if (!catSelect) return;
+      catSelect.innerHTML = categoryGroups.map(cg => `<option value="${cg.title}">${cg.title}</option>`).join('');
+    }
+
     function syncCategoryStateAndRender() {
       saveCategoryGroupsToStorage();
       renderCategoryCards();
       renderAdminCategories();
+      renderNavMegaCategoryMenu();
+      renderVendorRegistrationCategoryOptions();
+      if (typeof renderSidebarCategoryCheckboxes === 'function') {
+        renderSidebarCategoryCheckboxes();
+      }
     }
 
     function renderAdminCategories() {
@@ -4996,17 +5036,212 @@ if (document.readyState === "loading") {
       }
     }
 
+    function renderAdminVendorTrafficTable() {
+      const tbody = document.getElementById('admin-vendor-traffic-table');
+      if (!tbody) return;
+      tbody.innerHTML = '';
+
+      let totalViewsSum = 0;
+      let totalLeadsSum = 0;
+
+      vendors.forEach(v => {
+        const views = v.viewsCount || Math.floor(Math.random() * 800) + 200;
+        const leads = v.leadsCount || Math.floor(views * 0.15) + 5;
+        const convRate = Math.min(((leads / views) * 100), 100).toFixed(1);
+
+        totalViewsSum += views;
+        totalLeadsSum += leads;
+
+        const tr = document.createElement('tr');
+        tr.className = "hover:bg-slate-50 transition-colors";
+        tr.innerHTML = `
+          <td class="p-3 font-bold text-graphite flex items-center gap-2">
+            <img src="${v.image || 'https://images.unsplash.com/photo-1519167758481-83f550bb49b3?auto=format&fit=crop&w=100&q=80'}" class="w-7 h-7 rounded-lg object-cover">
+            <span>${v.name}</span>
+          </td>
+          <td class="p-3 text-secondary">${v.category}</td>
+          <td class="p-3 font-black text-graphite">${views.toLocaleString('fa-IR')}</td>
+          <td class="p-3 font-black text-emerald-700">${leads.toLocaleString('fa-IR')}</td>
+          <td class="p-3">
+            <span class="inline-block bg-primary/10 text-primary border border-primary/20 px-2 py-0.5 rounded-lg text-[11px] font-bold">
+              ${convRate}٪
+            </span>
+          </td>
+        `;
+        tbody.appendChild(tr);
+      });
+
+      const totalViewsEl = document.getElementById('admin-analytics-total-views');
+      if (totalViewsEl) totalViewsEl.textContent = (totalViewsSum * 2).toLocaleString('fa-IR');
+
+      const vendorViewsEl = document.getElementById('admin-analytics-vendor-views');
+      if (vendorViewsEl) vendorViewsEl.textContent = totalViewsSum.toLocaleString('fa-IR');
+
+      const leadsCountEl = document.getElementById('admin-analytics-leads-count');
+      if (leadsCountEl) leadsCountEl.textContent = totalLeadsSum.toLocaleString('fa-IR');
+    }
+
+    function renderAdminSystemLogs() {
+      const container = document.getElementById('admin-system-logs-container');
+      if (!container) return;
+
+      const mockLogs = [
+        `[${new Date().toLocaleTimeString('fa-IR')}] SYSTEM: Syncing categories across Top Nav & Directory Sidebar completed.`,
+        `[${new Date(Date.now() - 120000).toLocaleTimeString('fa-IR')}] VENDOR_APP: Vendor 'آتلیه تخصصی کویر' submitted registration documents for review.`,
+        `[${new Date(Date.now() - 360000).toLocaleTimeString('fa-IR')}] INQUIRY: New inquiry submitted for 'باغ تالار مشیرالممالک' by couple #4082.`,
+        `[${new Date(Date.now() - 720000).toLocaleTimeString('fa-IR')}] SUBSCRIPTION: Vendor 'سالن زیبایی ترمه' renewed Gold VIP subscription plan.`
+      ];
+
+      container.innerHTML = mockLogs.map(log => `<div>> ${log}</div>`).join('');
+    }
+
+    function updateVendorSubscriptionTier(vendorId, newTier) {
+      vendors = vendors.map(v => {
+        if (v.id === vendorId) {
+          const maxPhotosMap = { FREE: 3, BRONZE: 6, SILVER: 12, GOLD_VIP: 24 };
+          return {
+            ...v,
+            tier: newTier,
+            maxPortfolioUploads: maxPhotosMap[newTier] || 6,
+            vipShowcaseBadge: newTier === 'GOLD_VIP',
+            directPhoneVisible: newTier !== 'FREE'
+          };
+        }
+        return v;
+      });
+      showToast(`سطح اشتراک تامین‌کننده بروزرسانی گردید (${newTier})`, 'success');
+      renderAdminTable();
+      renderVendors(vendors);
+    }
+
+    let adminReviewsState = [
+      { id: 101, author: 'علی و سارا', vendorName: 'باغ تالار مشیرالممالک', rating: 5, comment: 'همه چیز فوق‌العاده بود، برخورد پرسنل عالی و کیفیت غذا بی‌نظیر.', verifiedCouple: true, status: 'APPROVED' },
+      { id: 102, author: 'محمدرضا و مریم', vendorName: 'آتلیه تخصصی کویر', rating: 5, comment: 'عکاسی فرمالیته در کویر باکیفیت و بدون نقص انجام شد.', verifiedCouple: true, status: 'APPROVED' },
+      { id: 103, author: 'مهدی و زهرا', vendorName: 'سالن زیبایی ترمه', rating: 4, comment: 'میکاپ عروس عالی بود اما کمی تاخیر داشتند.', verifiedCouple: false, status: 'PENDING' }
+    ];
+
+    let adminUsersState = [
+      { id: 1, name: 'علی ابراهیمی', phone: '۰۹۱۳۱۵۱۰۰۱۱', weddingDate: '۱۴۰۳/۰۸/۲۵', blocked: false },
+      { id: 2, name: 'مریم دهقانی', phone: '۰۹۱۳۲۵۲۰۰۲۲', weddingDate: '۱۴۰۳/۰۹/۱۰', blocked: false },
+      { id: 3, name: 'رضا زارع', phone: '۰۹۱۳۳۵۳۰۰۳۳', weddingDate: '۱۴۰۳/۱۰/۱۵', blocked: false }
+    ];
+
+    function toggleAdminReviewStatus(reviewId) {
+      adminReviewsState = adminReviewsState.map(r => {
+        if (r.id === reviewId) {
+          const nextStatus = r.status === 'APPROVED' ? 'REJECTED' : 'APPROVED';
+          return { ...r, status: nextStatus };
+        }
+        return r;
+      });
+      showToast('وضعیت انتشار دیدگاه بروزرسانی شد', 'info');
+      renderAdminReviewsModerationTable();
+    }
+
+    function toggleAdminReviewVerifiedBadge(reviewId) {
+      adminReviewsState = adminReviewsState.map(r => r.id === reviewId ? { ...r, verifiedCouple: !r.verifiedCouple } : r);
+      showToast('نشان "زوج تاییدشده" بروزرسانی گردید', 'success');
+      renderAdminReviewsModerationTable();
+    }
+
+    function renderAdminReviewsModerationTable() {
+      const tbody = document.getElementById('admin-reviews-moderation-table');
+      if (!tbody) return;
+      tbody.innerHTML = '';
+
+      adminReviewsState.forEach(r => {
+        const tr = document.createElement('tr');
+        tr.className = "hover:bg-slate-50";
+        tr.innerHTML = `
+          <td class="p-3 font-bold text-graphite">${r.author}</td>
+          <td class="p-3 text-secondary">${r.vendorName}</td>
+          <td class="p-3 max-w-xs">
+            <div class="flex items-center gap-1 text-amber-500 font-bold mb-0.5">
+              <span>★ ${r.rating}</span>
+            </div>
+            <p class="text-[11px] text-graphite line-clamp-2">${r.comment}</p>
+          </td>
+          <td class="p-3">
+            <button onclick="toggleAdminReviewVerifiedBadge(${r.id})" class="inline-flex items-center gap-1 px-2.5 py-1 rounded-full text-[10px] font-bold ${
+              r.verifiedCouple ? 'bg-emerald-50 text-emerald-800 border border-emerald-200' : 'bg-slate-100 text-secondary border border-slate-200'
+            }">
+              <i data-lucide="check-circle" class="w-3 h-3"></i>
+              <span>${r.verifiedCouple ? 'زوج تاییدشده' : 'کاربر عادی'}</span>
+            </button>
+          </td>
+          <td class="p-3">
+            <span class="inline-flex items-center gap-1 px-2.5 py-1 rounded-full text-[10px] font-bold ${
+              r.status === 'APPROVED' ? 'bg-primary/10 text-primary' : r.status === 'PENDING' ? 'bg-amber-50 text-amber-700' : 'bg-rose-50 text-rose-700'
+            }">
+              ${r.status === 'APPROVED' ? 'منتشرشده' : r.status === 'PENDING' ? 'در انتظار تایید' : 'ردشده'}
+            </span>
+          </td>
+          <td class="p-3 text-center">
+            <button onclick="toggleAdminReviewStatus(${r.id})" class="text-xs font-bold underline ${r.status === 'APPROVED' ? 'text-rose-600' : 'text-primary'}">
+              ${r.status === 'APPROVED' ? 'عدم تایید / عدم انتشار' : 'تایید و انتشار عمومی'}
+            </button>
+          </td>
+        `;
+        tbody.appendChild(tr);
+      });
+      if (typeof lucide !== 'undefined' && lucide.createIcons) lucide.createIcons();
+    }
+
+    function toggleAdminUserBlockStatus(userId) {
+      adminUsersState = adminUsersState.map(u => u.id === userId ? { ...u, blocked: !u.blocked } : u);
+      showToast('وضعیت دسترسی حساب کاربر بروزرسانی گردید', 'warning');
+      renderAdminUserAccountsTable();
+    }
+
+    function renderAdminUserAccountsTable() {
+      const tbody = document.getElementById('admin-user-accounts-table');
+      if (!tbody) return;
+      tbody.innerHTML = '';
+
+      adminUsersState.forEach(u => {
+        const tr = document.createElement('tr');
+        tr.className = "hover:bg-slate-50";
+        tr.innerHTML = `
+          <td class="p-3 font-bold text-graphite">${u.name}</td>
+          <td class="p-3 text-graphite" dir="ltr">${u.phone}</td>
+          <td class="p-3 text-secondary font-medium">${u.weddingDate}</td>
+          <td class="p-3">
+            <span class="inline-flex items-center gap-1 px-2.5 py-1 rounded-full text-[10px] font-bold ${
+              u.blocked ? 'bg-rose-50 text-rose-700 border border-rose-200' : 'bg-emerald-50 text-emerald-800 border border-emerald-200'
+            }">
+              ${u.blocked ? 'حساب مسدودشده' : 'فعال و تاییدشده'}
+            </span>
+          </td>
+          <td class="p-3 text-center">
+            <button onclick="toggleAdminUserBlockStatus(${u.id})" class="text-xs font-bold underline ${u.blocked ? 'text-emerald-700' : 'text-rose-600'}">
+              ${u.blocked ? 'رفع مسدودی حساب' : 'مسدودسازی حساب'}
+            </button>
+          </td>
+        `;
+        tbody.appendChild(tr);
+      });
+    }
+
     function renderAdminTable() {
       const tbody = document.getElementById('admin-vendor-table');
       if (!tbody) return;
       tbody.innerHTML = '';
 
       vendors.forEach(v => {
+        const currentTier = v.tier || (v.id === 1 ? 'GOLD_VIP' : 'SILVER');
         const tr = document.createElement('tr');
         tr.className = "hover:bg-slate-50";
         tr.innerHTML = `
           <td class="p-3 font-bold text-graphite">${v.name}</td>
           <td class="p-3 text-secondary">${v.category}</td>
+          <td class="p-3">
+            <select onchange="updateVendorSubscriptionTier(${v.id}, this.value)" class="bg-slate-50 border border-accent rounded-xl p-1.5 text-xs font-bold text-graphite focus:outline-none focus:border-primary">
+              <option value="FREE" ${currentTier === 'FREE' ? 'selected' : ''}>برنز رایگان (Free)</option>
+              <option value="BRONZE" ${currentTier === 'BRONZE' ? 'selected' : ''}>برنز اقتصادی (Bronze)</option>
+              <option value="SILVER" ${currentTier === 'SILVER' ? 'selected' : ''}>نقره‌ای استاندارد (Silver)</option>
+              <option value="GOLD_VIP" ${currentTier === 'GOLD_VIP' ? 'selected' : ''}>طلایی ویژه (Gold VIP)</option>
+            </select>
+          </td>
           <td class="p-3 text-graphite" dir="ltr">۰۹۱۲۰۰۰۰۰۰۰</td>
           <td class="p-3">
             <span class="inline-flex items-center gap-1 px-2.5 py-1 rounded-full text-[11px] font-bold ${
@@ -5023,6 +5258,11 @@ if (document.readyState === "loading") {
         `;
         tbody.appendChild(tr);
       });
+
+      renderAdminVendorTrafficTable();
+      renderAdminSystemLogs();
+      renderAdminReviewsModerationTable();
+      renderAdminUserAccountsTable();
     }
 
     function toggleVendorVerification(id) {
@@ -10319,6 +10559,8 @@ if (document.readyState === "loading") {
       loadFavoritesFromStorage();
       renderFavoriteVendorsList();
       renderCategoryCards();
+      renderNavMegaCategoryMenu();
+      renderVendorRegistrationCategoryOptions();
       renderSidebarCategoryCheckboxes();
       renderMultiCategoryPills();
       filterVendors();
@@ -11308,6 +11550,54 @@ window.addEventListener('click', (e) => {
         showToast('لطفا یک آدرس معتبر برای تصویر وارد کنید', 'warning');
       }
     }
+  }
+
+  function loadShowcaseConfig() {
+    try {
+      const stored = localStorage.getItem('aroosi_admin_showcase_config');
+      if (stored) {
+        const config = JSON.parse(stored);
+        if (config.bannerText) {
+          const bannerInput = document.getElementById('admin-banner-text');
+          if (bannerInput) bannerInput.value = config.bannerText;
+        }
+        if (config.heroTitle) {
+          const titleInput = document.getElementById('admin-hero-title-input');
+          if (titleInput) titleInput.value = config.heroTitle;
+          const heroH1 = document.querySelector('#hero h1');
+          if (heroH1) heroH1.innerHTML = config.heroTitle;
+        }
+        if (config.heroSubtitle) {
+          const subInput = document.getElementById('admin-hero-subtitle-input');
+          if (subInput) subInput.value = config.heroSubtitle;
+          const heroP = document.querySelector('#hero p');
+          if (heroP) heroP.textContent = config.heroSubtitle;
+        }
+      }
+    } catch (e) {
+      console.error('Failed to load showcase config:', e);
+    }
+  }
+
+  function handleSaveShowcaseConfig() {
+    const bannerText = document.getElementById('admin-banner-text')?.value || '';
+    const heroTitle = document.getElementById('admin-hero-title-input')?.value || '';
+    const heroSubtitle = document.getElementById('admin-hero-subtitle-input')?.value || '';
+
+    const config = { bannerText, heroTitle, heroSubtitle };
+    try {
+      localStorage.setItem('aroosi_admin_showcase_config', JSON.stringify(config));
+    } catch (e) {
+      console.error('Failed to save showcase config:', e);
+    }
+
+    const heroH1 = document.querySelector('#hero h1');
+    if (heroH1 && heroTitle) heroH1.innerHTML = heroTitle;
+
+    const heroP = document.querySelector('#hero p');
+    if (heroP && heroSubtitle) heroP.textContent = heroSubtitle;
+
+    showToast('تنظیمات ویترین و متون بنر با موفقیت ذخیره و منتشر گردید', 'success');
   }
 
 
@@ -12414,7 +12704,9 @@ if (typeof handleScheduleAppointmentSubmit === "function") window.handleSchedule
 if (typeof handleSelectCalendarDay === "function") window.handleSelectCalendarDay = handleSelectCalendarDay;
 if (typeof handleSendChatMessage === "function") window.handleSendChatMessage = handleSendChatMessage;
 if (typeof handleSubmitPreInvoiceRevision === "function") window.handleSubmitPreInvoiceRevision = handleSubmitPreInvoiceRevision;
+if (typeof handleSaveShowcaseConfig === "function") window.handleSaveShowcaseConfig = handleSaveShowcaseConfig;
 if (typeof handleUpdateHeroLogo === "function") window.handleUpdateHeroLogo = handleUpdateHeroLogo;
+if (typeof loadShowcaseConfig === "function") window.loadShowcaseConfig = loadShowcaseConfig;
 if (typeof handleVendorAuthSubmit === "function") window.handleVendorAuthSubmit = handleVendorAuthSubmit;
 if (typeof handleVendorModalSubmit === "function") window.handleVendorModalSubmit = handleVendorModalSubmit;
 if (typeof handleVendorProfileUpdate === "function") window.handleVendorProfileUpdate = handleVendorProfileUpdate;
