@@ -1718,3 +1718,36 @@ footer {
   color: #991B1B;
   border: 1px solid #FCA5A5;
 }
+
+/* ==========================================
+   OFFICIAL PRE-INVOICE PRINT OPTIMIZATIONS
+   ========================================== */
+@media print {
+  body > *:not(#modal-preinvoice-print) {
+    display: none !important;
+  }
+  #modal-preinvoice-print {
+    position: absolute !important;
+    inset: 0 !important;
+    background: #ffffff !important;
+    padding: 0 !important;
+    margin: 0 !important;
+    display: block !important;
+    overflow: visible !important;
+    z-index: 9999999 !important;
+  }
+  #pip-printable-modal-content {
+    max-width: 100% !important;
+    max-height: none !important;
+    border: none !important;
+    box-shadow: none !important;
+    border-radius: 0 !important;
+  }
+  .no-print {
+    display: none !important;
+  }
+  #pip-printable-area {
+    overflow: visible !important;
+    padding: 0 !important;
+  }
+}

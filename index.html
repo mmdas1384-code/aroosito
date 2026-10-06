@@ -210,6 +210,7 @@
               <div id="account-dropdown-menu" class="dropdown-menu account-menu bg-[#1B3B2B] border border-[#D4AF37] rounded-2xl p-2 shadow-2xl space-y-1 text-xs font-semibold text-white">
                   <button onclick="openAuthModal('couple')" class="dropdown-item w-full text-right block px-3 py-2 rounded-xl hover:bg-white/10 hover:text-[#D4AF37] transition-colors cursor-pointer">ورود / ثبت‌نام زوج‌ها</button>
                   <button onclick="openAuthModal('vendor')" class="dropdown-item w-full text-right block px-3 py-2 rounded-xl hover:bg-white/10 hover:text-[#D4AF37] transition-colors cursor-pointer">ورود تامین‌کنندگان (کسب‌وکارها)</button>
+                  <button onclick="openAuthModal('admin')" class="dropdown-item w-full text-right px-3 py-2 rounded-xl hover:bg-white/10 hover:text-[#D4AF37] transition-colors cursor-pointer text-amber-300 font-bold flex items-center justify-between"><span>ورود مدیریت ارشد (Admin)</span><i data-lucide="shield-check" class="w-3.5 h-3.5 text-[#D4AF37]"></i></button>
                   <div class="dropdown-divider border-t border-[#D4AF37]/30 my-1"></div>
                   <button onclick="switchTab('planner'); document.getElementById('couple-favorites-section')?.scrollIntoView({ behavior: 'smooth' });" class="dropdown-item w-full text-right block px-3 py-2 rounded-xl hover:bg-white/10 hover:text-[#D4AF37] transition-colors cursor-pointer">تامین‌کنندگان ذخیره‌شده ❤️</button>
               </div>
@@ -4512,7 +4513,7 @@
         </div>
 
         <!-- Service Checklist based on offerings -->
-        <div class="space-y-2">
+        <div id="inquiry-services-container" class="space-y-2">
           <label class="block">خدمات مورد نظر شما (چک‌لیست):</label>
           <div id="inquiry-services-checklist" class="grid grid-cols-1 sm:grid-cols-2 gap-2 p-3 bg-bgCustom border border-accent rounded-2xl">
             <label class="flex items-center gap-2 cursor-pointer p-1.5 hover:bg-white rounded-lg">
@@ -4950,12 +4951,15 @@
 
       <!-- Auth Modal Tabs -->
       <div class="p-5 space-y-5">
-        <div class="flex bg-[#F5EFEB] border border-[#E0D8C8] rounded-2xl p-1 text-xs font-bold shadow-2xs">
+        <div class="flex bg-[#F5EFEB] border border-[#E0D8C8] rounded-2xl p-1 text-xs font-bold shadow-2xs gap-1">
           <button id="auth-tab-couple" onclick="switchAuthTab('couple')" class="flex-1 py-2.5 rounded-xl transition-all bg-[#1B3B2B] text-white shadow-xs text-center cursor-pointer">
-            ورود / ثبت‌نام زوج‌ها
+            ورود زوج‌ها
           </button>
           <button id="auth-tab-vendor" onclick="switchAuthTab('vendor')" class="flex-1 py-2.5 rounded-xl transition-all text-secondary hover:text-graphite text-center cursor-pointer">
             ورود کسب‌وکارها
+          </button>
+          <button id="auth-tab-admin" onclick="switchAuthTab('admin')" class="flex-1 py-2.5 rounded-xl transition-all text-secondary hover:text-graphite text-center cursor-pointer">
+            ورود مدیر ارشد
           </button>
         </div>
 
@@ -4963,7 +4967,7 @@
         <form id="auth-form-couple" onsubmit="handleCoupleAuthSubmit(event)" class="space-y-4 text-xs font-bold text-graphite">
           <div class="space-y-1">
             <label class="block text-secondary">شماره همراه (تلفن همراه):</label>
-            <input type="tel" id="auth-couple-phone" required placeholder="۰۹۱۲۳۴۵۶۷۸۹" class="w-full bg-[#F5EFEB] border border-[#E0D8C8] rounded-xl p-3 text-xs font-medium focus:outline-none focus:border-[#D4AF37] dir-ltr">
+            <input type="text" id="auth-couple-phone" required placeholder="۰۹۱۲۳۴۵۶۷۸۹ یا admin" class="w-full bg-[#F5EFEB] border border-[#E0D8C8] rounded-xl p-3 text-xs font-medium focus:outline-none focus:border-[#D4AF37]">
           </div>
 
           <div class="space-y-1">
@@ -4981,7 +4985,7 @@
         <form id="auth-form-vendor" onsubmit="handleVendorAuthSubmit(event)" class="hidden space-y-4 text-xs font-bold text-graphite">
           <div class="space-y-1">
             <label class="block text-secondary">نام کاربری / ایمیل کسب‌وکار:</label>
-            <input type="text" id="auth-vendor-user" required placeholder="نام آتلیه یا تالار..." class="w-full bg-[#F5EFEB] border border-[#E0D8C8] rounded-xl p-3 text-xs font-medium focus:outline-none focus:border-[#D4AF37]">
+            <input type="text" id="auth-vendor-user" required placeholder="نام آتلیه یا admin..." class="w-full bg-[#F5EFEB] border border-[#E0D8C8] rounded-xl p-3 text-xs font-medium focus:outline-none focus:border-[#D4AF37]">
           </div>
 
           <div class="space-y-1">
@@ -4992,6 +4996,37 @@
           <button type="submit" class="w-full bg-[#1B3B2B] hover:bg-emerald-900 text-white font-bold py-3 rounded-2xl text-xs shadow-md transition-all flex items-center justify-center gap-2 cursor-pointer">
             <i data-lucide="store" class="w-4 h-4 text-[#D4AF37]"></i>
             <span>ورود به پنل تامین‌کننده</span>
+          </button>
+        </form>
+
+        <!-- Admin Auth Form -->
+        <form id="auth-form-admin" onsubmit="handleAdminAuthSubmit(event)" class="hidden space-y-4 text-xs font-bold text-graphite">
+          <div class="p-3 bg-amber-50 border border-amber-200/80 rounded-xl text-[11px] text-amber-900 font-medium space-y-1">
+            <div class="font-bold flex items-center gap-1.5 text-amber-900">
+              <i data-lucide="shield-alert" class="w-4 h-4 text-[#D4AF37]"></i>
+              <span>اطلاعات ورود تست مدیریت (Super Admin):</span>
+            </div>
+            <div class="text-[11px]">
+              • نام کاربری: <code class="font-mono bg-amber-100 px-1.5 py-0.5 rounded text-amber-900 font-bold">admin</code>
+            </div>
+            <div class="text-[11px]">
+              • رمز عبور: <code class="font-mono bg-amber-100 px-1.5 py-0.5 rounded text-amber-900 font-bold">admin123</code>
+            </div>
+          </div>
+
+          <div class="space-y-1">
+            <label class="block text-secondary">نام کاربری مدیر ارشد:</label>
+            <input type="text" id="auth-admin-user" required value="admin" placeholder="admin" class="w-full bg-[#F5EFEB] border border-[#E0D8C8] rounded-xl p-3 text-xs font-medium focus:outline-none focus:border-[#D4AF37]">
+          </div>
+
+          <div class="space-y-1">
+            <label class="block text-secondary">رمز عبور پنل مدیریت:</label>
+            <input type="password" id="auth-admin-password" required value="admin123" placeholder="••••••••" class="w-full bg-[#F5EFEB] border border-[#E0D8C8] rounded-xl p-3 text-xs font-medium focus:outline-none focus:border-[#D4AF37]">
+          </div>
+
+          <button type="submit" class="w-full bg-[#1B3B2B] hover:bg-emerald-900 text-[#D4AF37] font-black py-3 rounded-2xl text-xs shadow-md transition-all flex items-center justify-center gap-2 cursor-pointer border border-[#D4AF37]/40">
+            <i data-lucide="shield-check" class="w-4.5 h-4.5 text-[#D4AF37]"></i>
+            <span>ورود به پنل مدیریت ارشد (Admin)</span>
           </button>
         </form>
       </div>
@@ -5989,84 +6024,315 @@
 
   <!-- BRANDED PRE-INVOICE PRINT / VIEW MODAL (#modal-preinvoice-print) -->
   <div id="modal-preinvoice-print" class="hidden fixed inset-0 bg-black/60 backdrop-blur-xs z-[999999] flex items-center justify-center p-4 transition-all animate-fadeIn" onclick="if(event.target === this) closePreInvoicePrintModal()">
-    <div class="bg-white rounded-3xl shadow-2xl max-w-2xl w-full overflow-hidden border border-[#D4AF37]/50 flex flex-col animate-scaleUp relative max-h-[90vh]">
-      <!-- Printable Branded Header -->
-      <div class="bg-[#1B3B2B] text-white p-6 border-b-2 border-[#D4AF37] flex items-center justify-between">
-        <div class="flex items-center gap-3">
-          <div class="w-12 h-12 rounded-2xl bg-[#D4AF37] text-[#1B3B2B] flex items-center justify-center font-black text-xl shadow-md">
+    <div id="pip-printable-modal-content" class="bg-white rounded-3xl shadow-2xl max-w-3xl w-full overflow-hidden border border-[#D4AF37]/50 flex flex-col animate-scaleUp relative max-h-[92vh]">
+
+      <!-- Modal Header (Controls & Title) -->
+      <div class="bg-[#1B3B2B] text-white px-6 py-4 flex items-center justify-between border-b border-[#D4AF37]/30 shrink-0 no-print">
+        <div class="flex items-center gap-2.5">
+          <div class="w-9 h-9 rounded-xl bg-[#D4AF37] text-[#1B3B2B] flex items-center justify-center font-black text-lg shadow-sm">
             👑
           </div>
           <div>
-            <h2 class="text-xl font-black text-[#D4AF37]">پیش‌فاکتور رسمی عروسی نو</h2>
-            <p class="text-xs text-amber-200/80 font-medium">پلتفرم هوشمند خدمات مجالس و تشریفات استان یزد</p>
+            <h3 class="text-base font-bold text-[#D4AF37]">پیش‌فاکتور رسمی و معتبر عروسی نو</h3>
+            <span class="text-[11px] text-amber-200/80 font-medium">سند رسمی رزرو خدمات تشریفات و مجالس استان یزد</span>
           </div>
         </div>
 
-        <div class="text-left text-xs text-slate-200 space-y-1">
-          <div>شماره فاکتور: <span id="pip-num" class="font-bold text-[#D4AF37]">INV-1403-882</span></div>
-          <div>تاریخ صدور: <span id="pip-date" class="font-bold">۱۴۰۳/۰۶/۱۵</span></div>
+        <div class="flex items-center gap-2">
+          <button onclick="window.print()" class="bg-[#D4AF37] hover:bg-amber-400 text-[#1B3B2B] font-black px-4 py-2 rounded-xl text-xs transition-all shadow-md flex items-center gap-1.5 cursor-pointer">
+            <i data-lucide="printer" class="w-4 h-4"></i>
+            <span>چاپ / دانلود PDF</span>
+          </button>
+          <button onclick="closePreInvoicePrintModal()" class="w-9 h-9 rounded-xl bg-white/10 hover:bg-white/20 text-white flex items-center justify-center transition-colors cursor-pointer" title="بستن">
+            <i data-lucide="x" class="w-5 h-5"></i>
+          </button>
         </div>
       </div>
 
-      <!-- Printable Body -->
-      <div id="pip-printable-area" class="p-6 space-y-5 text-xs text-graphite font-medium overflow-y-auto">
-        <div class="bg-slate-50 border border-accent rounded-2xl p-4 grid grid-cols-2 gap-4">
-          <div>
-            <span class="text-secondary block text-[11px]">صادرکننده (تامین‌کننده):</span>
-            <strong id="pip-vendor-name" class="text-sm text-primary block mt-0.5">هتل باغ و تشریفات مشیرالممالک یزد</strong>
-          </div>
-          <div>
-            <span class="text-secondary block text-[11px]">مشتری / خریدار:</span>
-            <strong id="pip-couple-name" class="text-sm text-graphite block mt-0.5">علی و سارا</strong>
+      <!-- Printable Document Container -->
+      <div id="pip-printable-area" class="p-6 sm:p-8 space-y-6 text-xs text-graphite font-medium overflow-y-auto relative bg-white">
+
+        <!-- Subtle Watermark Background -->
+        <div class="absolute inset-0 pointer-events-none flex items-center justify-center opacity-[0.03] select-none z-0">
+          <div class="text-center font-black text-7xl sm:text-9xl text-[#1B3B2B] rotate-[-25deg] tracking-widest">
+            AROOSI NO<br>عروسی نو
           </div>
         </div>
 
-        <div class="border border-accent rounded-2xl overflow-hidden">
-          <table class="w-full text-right text-xs">
-            <thead class="bg-[#1B3B2B] text-white font-bold">
-              <tr>
-                <th class="p-3">شرح خدمت / پکیج</th>
-                <th class="p-3 text-center">تاریخ اجرا</th>
-                <th class="p-3 text-left">مبلغ کل (تومان)</th>
-              </tr>
-            </thead>
-            <tbody class="divide-y divide-accent/60">
-              <tr>
-                <td id="pip-service-title" class="p-3 font-bold">پکیج خدمات تشریفات و ورودی باغ</td>
-                <td id="pip-event-date" class="p-3 text-center">۱۴۰۳/۰۶/۱۵</td>
-                <td id="pip-total-amount" class="p-3 text-left font-black text-primary">۴۵,۰۰۰,۰۰۰</td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
+        <div class="relative z-10 space-y-6">
 
-        <div class="bg-amber-50 border border-amber-200 rounded-2xl p-4 space-y-2">
-          <span class="text-xs font-bold text-amber-900 block">شرح تفصیلی اقلام و تعهدات:</span>
-          <p id="pip-items-desc" class="text-[11px] text-amber-950 leading-relaxed">ورودی باغ اصلی، شام سلف سرویس VIP، گل‌آرایی ورودی و نورپردازی استیج</p>
-        </div>
+          <!-- Document Branded Top Header -->
+          <div class="border-b-2 border-[#D4AF37] pb-5 flex flex-col sm:flex-row sm:items-center justify-between gap-4 bg-[#FAF9F5] p-5 rounded-2xl border border-[#E0D8C8]">
+            <div class="flex items-center gap-3.5">
+              <div class="w-14 h-14 rounded-2xl bg-[#1B3B2B] border-2 border-[#D4AF37] text-[#D4AF37] flex items-center justify-center font-black text-2xl shadow-md shrink-0">
+                👑
+              </div>
+              <div>
+                <div class="flex items-center gap-2">
+                  <h1 class="text-xl font-black text-[#1B3B2B]">پیش‌فاکتور رسمی خدمات مجالس</h1>
+                  <span class="bg-[#1B3B2B] text-[#D4AF37] text-[10px] font-extrabold px-2.5 py-0.5 rounded-full">اصالت تاییدشده</span>
+                </div>
+                <p class="text-xs text-secondary mt-1">سامانه هوشمند برنامه‌ریزی و رزرو تشریفات عروسی استان یزد (عروسی نو)</p>
+                <div class="text-[10px] text-amber-900 mt-0.5 font-bold">www.AroosiNo.ir | پشتیبانی یزد: ۰۳۵-۳۸۲۴۰۰۰۰</div>
+              </div>
+            </div>
 
-        <div class="grid grid-cols-2 gap-3 pt-2">
-          <div class="bg-slate-100 p-3 rounded-xl border border-accent">
-            <span class="text-[11px] text-secondary block">مبلغ بیعانه دریافتی:</span>
-            <span id="pip-deposit" class="text-sm font-black text-emerald-700">۱۰,۰۰۰,۰۰۰ تومان</span>
+            <div class="text-right sm:text-left bg-white p-3 rounded-xl border border-accent shadow-2xs space-y-1 text-xs shrink-0">
+              <div class="flex items-center justify-between sm:justify-end gap-3">
+                <span class="text-secondary text-[11px]">شماره فاکتور:</span>
+                <span id="pip-num" class="font-mono font-black text-primary text-sm">INV-1403-882</span>
+              </div>
+              <div class="flex items-center justify-between sm:justify-end gap-3">
+                <span class="text-secondary text-[11px]">تاریخ صدور:</span>
+                <span id="pip-date" class="font-bold text-graphite">۱۴۰۳/۰۶/۱۵</span>
+              </div>
+              <div class="flex items-center justify-between sm:justify-end gap-3">
+                <span class="text-secondary text-[11px]">مدت اعتبار:</span>
+                <span id="pip-validity" class="font-bold text-rose-700">۷ روز کاری (تا ۱۴۰۳/۰۶/۲۲)</span>
+              </div>
+            </div>
           </div>
-          <div class="bg-slate-100 p-3 rounded-xl border border-accent">
-            <span class="text-[11px] text-secondary block">مانده حساب قابل تسویه:</span>
-            <span id="pip-balance" class="text-sm font-black text-rose-700">۳۵,۰۰۰,۰۰۰ تومان</span>
+
+          <!-- Vendor & Client Two-Column Info Grid -->
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+            <!-- Vendor Info Box -->
+            <div class="bg-emerald-50/60 border border-emerald-200/80 rounded-2xl p-4 space-y-2">
+              <div class="flex items-center justify-between border-b border-emerald-200/80 pb-2">
+                <span class="text-[#1B3B2B] font-black text-xs flex items-center gap-1.5">
+                  <i data-lucide="store" class="w-4 h-4 text-[#D4AF37]"></i>
+                  مشخصات صادرکننده (تامین‌کننده)
+                </span>
+                <span class="text-[10px] font-bold text-emerald-800 bg-emerald-100 px-2 py-0.5 rounded-md">عضو رسمی عروسی نو</span>
+              </div>
+              <div class="space-y-1 text-[11px]">
+                <div class="flex gap-1.5"><span class="text-secondary">نام مجموعه:</span><strong id="pip-vendor-name" class="text-graphite font-bold">هتل باغ و تشریفات مشیرالممالک یزد</strong></div>
+                <div class="flex gap-1.5"><span class="text-secondary">شماره تماس:</span><span id="pip-vendor-phone" class="font-bold text-graphite">۰۳۵-۳۵۲۳۹۷۶۱</span></div>
+                <div class="flex gap-1.5"><span class="text-secondary">آدرس:</span><span id="pip-vendor-address" class="text-graphite">یزد، خیابان انقلاب، بلوار مشیرالممالک</span></div>
+                <div class="flex gap-1.5"><span class="text-secondary">کد اختصاصی کسب‌وکار:</span><span id="pip-vendor-code" class="font-mono text-graphite">YZD-VND-882</span></div>
+              </div>
+            </div>
+
+            <!-- Client Info Box -->
+            <div class="bg-amber-50/60 border border-amber-200/80 rounded-2xl p-4 space-y-2">
+              <div class="flex items-center justify-between border-b border-amber-200/80 pb-2">
+                <span class="text-amber-900 font-black text-xs flex items-center gap-1.5">
+                  <i data-lucide="user-check" class="w-4 h-4 text-[#D4AF37]"></i>
+                  مشخصات خریدار (زوجین / متقاضی)
+                </span>
+                <span class="text-[10px] font-bold text-amber-800 bg-amber-100 px-2 py-0.5 rounded-md">تایید هویت شده</span>
+              </div>
+              <div class="space-y-1 text-[11px]">
+                <div class="flex gap-1.5"><span class="text-secondary">نام خریدار:</span><strong id="pip-couple-name" class="text-graphite font-bold">علی و سارا</strong></div>
+                <div class="flex gap-1.5"><span class="text-secondary">شماره همراه:</span><span id="pip-couple-phone" class="font-bold text-graphite dir-ltr text-right">۰۹۱۳۸۵۵۴۰۰۰</span></div>
+                <div class="flex gap-1.5"><span class="text-secondary">تاریخ برگزاری مراسم:</span><span id="pip-event-date" class="font-bold text-emerald-800">۱۴۰۳/۰۶/۱۵</span></div>
+                <div class="flex gap-1.5"><span class="text-secondary">محل برگزاری:</span><span id="pip-event-location" class="text-graphite">یزد، تالار اصلی مشیرالممالک</span></div>
+              </div>
+            </div>
           </div>
+
+          <!-- Itemized Service Table -->
+          <div class="space-y-2">
+            <h4 class="font-black text-[#1B3B2B] text-xs flex items-center gap-1.5">
+              <i data-lucide="list-checks" class="w-4 h-4 text-[#D4AF37]"></i>
+              جدول جزئیات خدمات و ریز برآورد مالی:
+            </h4>
+            <div class="border border-accent rounded-2xl overflow-hidden shadow-2xs">
+              <table class="w-full text-right text-xs">
+                <thead class="bg-[#1B3B2B] text-white font-bold">
+                  <tr>
+                    <th class="p-3 text-center w-10">ردیف</th>
+                    <th class="p-3">شرح خدمت / آیتم‌های پکیج</th>
+                    <th class="p-3 text-center w-16">تعداد</th>
+                    <th class="p-3 text-left w-28">قیمت واحد (تومان)</th>
+                    <th class="p-3 text-left w-24">تخفیف</th>
+                    <th class="p-3 text-left w-32">مبلغ کل (تومان)</th>
+                  </tr>
+                </thead>
+                <tbody id="pip-items-tbody" class="divide-y divide-accent/60 bg-white">
+                  <!-- Dynamically populated rows -->
+                </tbody>
+              </table>
+            </div>
+          </div>
+
+          <!-- Financial Calculation Breakdown Grid -->
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 items-start">
+            <!-- Payment Schedule & Installment Terms -->
+            <div class="bg-slate-50 border border-accent rounded-2xl p-4 space-y-3">
+              <div class="font-bold text-[#1B3B2B] text-xs flex items-center justify-between border-b border-accent pb-2">
+                <span class="flex items-center gap-1.5">
+                  <i data-lucide="credit-card" class="w-4 h-4 text-[#D4AF37]"></i>
+                  جدول زمان‌بندی و اقساط پرداخت:
+                </span>
+                <span class="text-[10px] text-secondary font-medium">بر اساس قوانین اتحادیه</span>
+              </div>
+              <div class="space-y-2 text-[11px]">
+                <div class="flex justify-between items-center bg-white p-2 rounded-xl border border-accent/60">
+                  <span class="text-secondary font-medium">۱. قسط اول (بیعانه رزرو قطعی ۲۵%):</span>
+                  <strong id="pip-deposit" class="text-emerald-700 font-bold">۱۰,۰۰۰,۰۰۰ تومان</strong>
+                </div>
+                <div class="flex justify-between items-center bg-white p-2 rounded-xl border border-accent/60">
+                  <span class="text-secondary font-medium">۲. قسط دوم (۱۰ روز قبل مراسم ۳۵%):</span>
+                  <strong id="pip-installment-2" class="text-amber-800 font-bold">۱۵,۷۵۰,۰۰۰ تومان</strong>
+                </div>
+                <div class="flex justify-between items-center bg-white p-2 rounded-xl border border-accent/60">
+                  <span class="text-secondary font-medium">۳. تسویه نهایی (روز برگزاری ۴۰%):</span>
+                  <strong id="pip-balance" class="text-rose-700 font-bold">۱۹,۲۵۰,۰۰۰ تومان</strong>
+                </div>
+              </div>
+            </div>
+
+            <!-- Totals & Summary Card -->
+            <div class="bg-[#FAF9F5] border border-[#E0D8C8] rounded-2xl p-4 space-y-2.5">
+              <div class="flex justify-between items-center text-xs text-secondary">
+                <span>جمع کل ریز خدمات:</span>
+                <span id="pip-subtotal" class="font-bold text-graphite">۴۵,۰۰۰,۰۰۰ تومان</span>
+              </div>
+              <div class="flex justify-between items-center text-xs text-secondary">
+                <span>مجموع تخفیفات ویژه عروسی نو:</span>
+                <span id="pip-discount" class="font-bold text-emerald-700">۰ تومان</span>
+              </div>
+              <div class="flex justify-between items-center text-xs text-secondary">
+                <span>مالیات بر ارزش افزوده و عوارض:</span>
+                <span class="font-bold text-graphite">۰ تومان (معاف)</span>
+              </div>
+              <div class="border-t-2 border-[#D4AF37] pt-2 flex justify-between items-center text-sm font-black text-[#1B3B2B]">
+                <span>مبلغ نهایی قابل پرداخت:</span>
+                <span id="pip-total-amount" class="text-base text-primary font-black">۴۵,۰۰۰,۰۰۰ تومان</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Official Stamp and Signatures Section -->
+          <div class="border-t border-accent/80 pt-5 grid grid-cols-2 gap-6 text-center">
+            <!-- Vendor Signature Box -->
+            <div class="space-y-2 bg-slate-50/50 p-4 rounded-2xl border border-accent/60">
+              <span class="text-xs font-bold text-graphite block">مهر و امضای صادرکننده (مدیریت مجموعه)</span>
+              <div class="h-20 flex items-center justify-center relative">
+                <!-- Electronic Stamp Design -->
+                <div class="w-24 h-24 border-2 border-dashed border-emerald-700/60 rounded-full flex flex-col items-center justify-center rotate-[-8deg] p-1 text-[9px] text-emerald-800 font-bold opacity-80 shadow-2xs">
+                  <span class="text-[8px] font-black">تایید شده</span>
+                  <span>هتل مشیرالممالک</span>
+                  <span class="text-[7px]">کد ثبتی YZD-882</span>
+                  <i data-lucide="check-circle-2" class="w-3.5 h-3.5 text-emerald-700 mt-0.5"></i>
+                </div>
+              </div>
+              <span class="text-[10px] text-secondary block">تاریخ امضا: <span id="pip-vendor-sig-date">۱۴۰۳/۰۶/۱۵</span></span>
+            </div>
+
+            <!-- Platform Signature Box -->
+            <div class="space-y-2 bg-slate-50/50 p-4 rounded-2xl border border-accent/60">
+              <span class="text-xs font-bold text-graphite block">تاییدیه و گواهی اصالت سند (سامانه عروسی نو)</span>
+              <div class="h-20 flex items-center justify-center relative">
+                <!-- Platform Official Stamp -->
+                <div class="w-24 h-24 border-2 border-double border-[#D4AF37] rounded-full flex flex-col items-center justify-center rotate-[6deg] p-1 text-[9px] text-[#1B3B2B] font-extrabold bg-amber-50/40 shadow-2xs">
+                  <span class="text-[8px] text-amber-900 font-black">اصالت سنجی</span>
+                  <span class="text-[#1B3B2B]">سامانه عروسی نو</span>
+                  <span class="text-[7px] text-amber-900">تضمین ۰٪ کمیسیون</span>
+                  <i data-lucide="shield-check" class="w-4 h-4 text-[#D4AF37] mt-0.5"></i>
+                </div>
+              </div>
+              <span class="text-[10px] text-secondary block">کد رهگیری سیستم: <span id="pip-track-code" class="font-mono font-bold text-graphite">AROOSI-88219-YZD</span></span>
+            </div>
+          </div>
+
+          <!-- Print Legal Footer -->
+          <div class="border-t border-accent/60 pt-3 text-center text-[10px] text-secondary space-y-1">
+            <p>این سند طبق مقررات سامانه‌های الکترونیکی استان یزد صادر گردیده و پس از تایید نهایی زوجین و پرداخت بیعانه، حکم قرارداد رسمی را خواهد داشت.</p>
+            <p class="font-bold text-graphite">عروسی نو - پلتفرم هوشمند انتخاب و رزرو مستقیم خدمات مجالس استان یزد</p>
+          </div>
+
         </div>
       </div>
 
-      <!-- Action Footer -->
-      <div class="p-4 bg-slate-50 border-t border-accent flex justify-between items-center">
-        <button onclick="closePreInvoicePrintModal()" class="px-4 py-2 bg-slate-200 hover:bg-slate-300 text-graphite font-bold rounded-xl text-xs transition-colors">
-          بستن
+      <!-- Action Footer (Hidden in Print) -->
+      <div class="p-4 bg-slate-50 border-t border-accent flex justify-between items-center no-print">
+        <button onclick="closePreInvoicePrintModal()" class="px-5 py-2.5 bg-slate-200 hover:bg-slate-300 text-graphite font-bold rounded-xl text-xs transition-colors cursor-pointer">
+          انصراف / بستن
         </button>
-        <button onclick="window.print()" class="px-6 py-2.5 bg-primary hover:bg-emerald-900 text-white font-bold rounded-xl text-xs transition-colors shadow-md flex items-center gap-1.5">
-          <i data-lucide="printer" class="w-4 h-4"></i>
+        <button onclick="window.print()" class="px-6 py-2.5 bg-[#1B3B2B] hover:bg-emerald-900 text-[#D4AF37] font-black rounded-xl text-xs transition-all shadow-md flex items-center gap-2 cursor-pointer border border-[#D4AF37]/40">
+          <i data-lucide="printer" class="w-4 h-4 text-[#D4AF37]"></i>
           <span>چاپ / دانلود PDF پیش‌فاکتور</span>
         </button>
       </div>
+
+    </div>
+  </div>
+
+  <!-- SCHEDULE APPOINTMENT MODAL (#modal-schedule-appointment) -->
+  <div id="modal-schedule-appointment" class="hidden fixed inset-0 bg-black/60 backdrop-blur-xs z-[999999] flex items-center justify-center p-4 transition-all animate-fadeIn" onclick="if(event.target === this) closeAppointmentModal()">
+    <div class="bg-white border border-[#E0D8C8] rounded-3xl max-w-md w-full p-6 shadow-2xl space-y-5 animate-scaleUp">
+      <div class="flex items-center justify-between border-b border-[#E0D8C8] pb-3">
+        <h3 class="text-base font-bold text-[#1B3B2B] flex items-center gap-2">
+          <i data-lucide="calendar" class="w-5 h-5 text-[#D4AF37]"></i>
+          <span>درخواست هماهنگی وقت بازدید حضوری</span>
+        </h3>
+        <button onclick="closeAppointmentModal()" class="text-secondary hover:text-graphite transition-colors">
+          <i data-lucide="x" class="w-5 h-5"></i>
+        </button>
+      </div>
+
+      <form onsubmit="handleScheduleAppointmentSubmit(event)" class="space-y-4 text-xs font-bold text-graphite">
+        <div>
+          <label class="block mb-1">تاریخ پیشنهادی بازدید (شمسی) *</label>
+          <input type="text" id="appt-date" required placeholder="مثلاً: ۱۴۰۳/۰۶/۲۰" value="۱۴۰۳/۰۶/۲۰" class="w-full bg-[#F5EFEB] border border-[#E0D8C8] rounded-xl p-2.5 text-xs font-medium focus:outline-none focus:border-[#D4AF37]">
+        </div>
+
+        <div>
+          <label class="block mb-1">ساعت پیشنهادی *</label>
+          <select id="appt-time" class="w-full bg-[#F5EFEB] border border-[#E0D8C8] rounded-xl p-2.5 text-xs font-bold text-graphite focus:outline-none focus:border-[#D4AF37] cursor-pointer">
+            <option value="۱۰:۰۰ صبح">۱۰:۰۰ صبح</option>
+            <option value="۱۲:۰۰ ظهر">۱۲:۰۰ ظهر</option>
+            <option value="۱۷:۰۰ عصر" selected>۱۷:۰۰ عصر</option>
+            <option value="۱۹:۰۰ عصر">۱۹:۰۰ عصر</option>
+          </select>
+        </div>
+
+        <div>
+          <label class="block mb-1">یادداشت و هماهنگی اضافی</label>
+          <textarea id="appt-note" rows="3" placeholder="مثلاً: هماهنگی جهت مشاهده تست آرایش عروس یا نمونه کار آتلیه..." class="w-full bg-[#F5EFEB] border border-[#E0D8C8] rounded-xl p-2.5 text-xs font-medium focus:outline-none focus:border-[#D4AF37]"></textarea>
+        </div>
+
+        <div class="flex items-center justify-end gap-2 pt-2">
+          <button type="button" onclick="closeAppointmentModal()" class="px-4 py-2 bg-slate-100 hover:bg-slate-200 text-graphite font-bold rounded-xl text-xs transition-colors">
+            انصراف
+          </button>
+          <button type="submit" class="px-5 py-2.5 bg-[#1B3B2B] hover:bg-emerald-900 text-white font-bold rounded-xl text-xs transition-colors shadow-xs">
+            ثبت و ارسال درخواست
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- PREINVOICE REVISION MODAL (#modal-preinvoice-revision) -->
+  <div id="modal-preinvoice-revision" class="hidden fixed inset-0 bg-black/60 backdrop-blur-xs z-[999999] flex items-center justify-center p-4 transition-all animate-fadeIn" onclick="if(event.target === this) closeRevisionModal()">
+    <div class="bg-white border border-[#E0D8C8] rounded-3xl max-w-md w-full p-6 shadow-2xl space-y-5 animate-scaleUp">
+      <div class="flex items-center justify-between border-b border-[#E0D8C8] pb-3">
+        <h3 class="text-base font-bold text-[#1B3B2B] flex items-center gap-2">
+          <i data-lucide="edit-3" class="w-5 h-5 text-[#D4AF37]"></i>
+          <span>درخواست تغییرات و اصلاح پیش‌فاکتور</span>
+        </h3>
+        <button onclick="closeRevisionModal()" class="text-secondary hover:text-graphite transition-colors">
+          <i data-lucide="x" class="w-5 h-5"></i>
+        </button>
+      </div>
+
+      <form onsubmit="handleSubmitPreInvoiceRevision(event)" class="space-y-4 text-xs font-bold text-graphite">
+        <div>
+          <label class="block mb-1">شرح تغییرات و اصلاحات مورد نظر *</label>
+          <textarea id="pi-revision-note" required rows="4" placeholder="لطفاً موارد نیازمند تغییر (مانند تخفیف، حذف/افزودن آیتم یا تغییر تاریخ) را مشخص فرمایید..." class="w-full bg-[#F5EFEB] border border-[#E0D8C8] rounded-xl p-2.5 text-xs font-medium focus:outline-none focus:border-[#D4AF37]"></textarea>
+        </div>
+
+        <div class="flex items-center justify-end gap-2 pt-2">
+          <button type="button" onclick="closeRevisionModal()" class="px-4 py-2 bg-slate-100 hover:bg-slate-200 text-graphite font-bold rounded-xl text-xs transition-colors">
+            انصراف
+          </button>
+          <button type="submit" class="px-5 py-2.5 bg-[#D4AF37] hover:bg-amber-600 text-white font-bold rounded-xl text-xs transition-colors shadow-xs">
+            ارسال درخواست اصلاح
+          </button>
+        </div>
+      </form>
     </div>
   </div>
 

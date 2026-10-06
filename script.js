@@ -1158,7 +1158,7 @@ if (document.readyState === "loading") {
     let bookedDates = [5, 12, 19, 26];
 
     // GLOBAL RBAC ROLE STATE
-    let currentUserRole = 'couple';
+    let currentUserRole = localStorage.getItem('currentUserRole') || 'couple';
 
     function updateRoleBasedUIVisibility() {
       const adminElements = document.querySelectorAll('.admin-only');
@@ -1174,6 +1174,7 @@ if (document.readyState === "loading") {
     // ROLE SWITCHER FUNCTION
     function switchRole(role) {
       currentUserRole = role;
+      localStorage.setItem('currentUserRole', role);
       updateRoleBasedUIVisibility();
 
       document.querySelectorAll('.role-btn').forEach(btn => {
@@ -5404,16 +5405,26 @@ if (document.readyState === "loading") {
       lucide.createIcons();
     }
 
-    function openInquiryReplyModal(idx) {
-      const inq = inquiries[idx];
+    function openInquiryReplyModal(targetIdx, fallbackName) {
+      let targetIndex = -1;
+      if (typeof targetIdx === 'number') {
+        targetIndex = targetIdx;
+      } else if (typeof targetIdx === 'string') {
+        targetIndex = inquiries.findIndex((i, index) => i.id === targetIdx || index.toString() === targetIdx);
+        if (targetIndex === -1 && !isNaN(parseInt(targetIdx))) {
+          targetIndex = parseInt(targetIdx);
+        }
+      }
+
+      const inq = inquiries[targetIndex] || inquiries[0];
       if (!inq) return;
       const modal = document.getElementById('modal-inquiry-reply');
       if (!modal) return;
-      document.getElementById('inquiry-reply-id').value = idx;
-      document.getElementById('reply-couple-name').innerText = inq.name || 'زوج محترم';
-      document.getElementById('reply-inquiry-details').innerText = `تاریخ مراسم: ${inq.date || 'نامشخص'} | مهمانان: ${inq.guests || '۲۰۰'} نفر | خدمت: ${inq.service || 'عمومی'}`;
+      document.getElementById('inquiry-reply-id').value = targetIndex >= 0 ? targetIndex : 0;
+      document.getElementById('reply-couple-name').innerText = (inq && inq.name) ? inq.name : (fallbackName || 'زوج محترم');
+      document.getElementById('reply-inquiry-details').innerText = `تاریخ مراسم: ${inq ? (inq.date || 'نامشخص') : 'نامشخص'} | مهمانان: ${inq ? (inq.guests || '۲۰۰') : '۲۰۰'} نفر | خدمت: ${inq ? (inq.service || 'عمومی') : 'عمومی'}`;
       document.getElementById('reply-status-select').value = 'replied';
-      document.getElementById('reply-message-text').value = `سلام ${inq.name || 'گرامی'} عزیز! درخواست استعلام شما برای تاریخ ${inq.date || 'مربوطه'} بررسی شد. پکیج و کاتالوگ قیمت همراه با تخفیف ویژه پلتفرم عروسی تو برای شما فعال گردید.`;
+      document.getElementById('reply-message-text').value = `سلام ${(inq && inq.name) ? inq.name : 'گرامی'} عزیز! درخواست استعلام شما برای تاریخ ${(inq && inq.date) ? inq.date : 'مربوطه'} بررسی شد. پکیج و کاتالوگ قیمت همراه با تخفیف ویژه پلتفرم عروسی تو برای شما فعال گردید.`;
       modal.classList.remove('hidden');
       modal.classList.add('flex');
     }
@@ -6229,21 +6240,31 @@ if (document.readyState === "loading") {
       const beautyFields = document.getElementById('inquiry-fields-beauty');
       const photoFields = document.getElementById('inquiry-fields-photo');
       const maisonFields = document.getElementById('inquiry-fields-maison');
+      const servicesContainer = document.getElementById('inquiry-services-container');
 
-      // Hide all dynamic blocks initially
+      // Check if this inquiry is for a specific Package or Idea/Journal item
+      const isSpecificItemInquiry = Boolean(itemTitle || typeVal === 'پکیج' || typeVal === 'ایده/ژورنال');
+
+      // Hide all dynamic category blocks initially
       if (venueFields) venueFields.classList.add('hidden');
       if (beautyFields) beautyFields.classList.add('hidden');
       if (photoFields) photoFields.classList.add('hidden');
       if (maisonFields) maisonFields.classList.add('hidden');
 
-      if (cat.includes("سالن زیبایی") || cat.includes("میکاپ") || cat.includes("آرایشگاه")) {
-        if (beautyFields) beautyFields.classList.remove('hidden');
-      } else if (cat.includes("آتلیه") || cat.includes("عکاسی") || cat.includes("فیلمبرداری")) {
-        if (photoFields) photoFields.classList.remove('hidden');
-      } else if (cat.includes("مزون") || cat.includes("لباس")) {
-        if (maisonFields) maisonFields.classList.remove('hidden');
+      if (!isSpecificItemInquiry) {
+        if (servicesContainer) servicesContainer.classList.remove('hidden');
+        if (cat.includes("سالن زیبایی") || cat.includes("میکاپ") || cat.includes("آرایشگاه")) {
+          if (beautyFields) beautyFields.classList.remove('hidden');
+        } else if (cat.includes("آتلیه") || cat.includes("عکاسی") || cat.includes("فیلمبرداری")) {
+          if (photoFields) photoFields.classList.remove('hidden');
+        } else if (cat.includes("مزون") || cat.includes("لباس")) {
+          if (maisonFields) maisonFields.classList.remove('hidden');
+        } else {
+          if (venueFields) venueFields.classList.remove('hidden');
+        }
       } else {
-        if (venueFields) venueFields.classList.remove('hidden');
+        // For Package or Idea specific inquiries, streamline form by hiding general category blocks & services checklist
+        if (servicesContainer) servicesContainer.classList.add('hidden');
       }
 
       // Pre-fill Package Details into Note & Budget fields if package requested
@@ -6261,7 +6282,14 @@ if (document.readyState === "loading") {
       // Dynamic Vendor Services Checklist Rendering
       const container = document.getElementById('inquiry-services-checklist');
       if (container && vendor) {
-        let availableServices = vendor.services || [];
+        // Fetch dynamic vendor services stored from vendor dashboard or default vendor profile
+        let customServices = [];
+        try {
+          const storedCust = localStorage.getItem(`aroosi_vendor_services_${vendor.id}`);
+          if (storedCust) customServices = JSON.parse(storedCust);
+        } catch(e) {}
+
+        let availableServices = (customServices && customServices.length > 0) ? customServices : (vendor.services || []);
 
         // If vendor services list is empty, supply category fallback services
         if (!availableServices || availableServices.length === 0) {
@@ -6287,7 +6315,7 @@ if (document.readyState === "loading") {
       // Dynamic Custom Questions Rendering for Vendor
       const customContainer = document.getElementById('inquiry-custom-fields-container');
       if (customContainer) {
-        const customQuestions = (typeof getVendorCustomQuestions === 'function') ? getVendorCustomQuestions(vendor ? vendor.id : 1) : [];
+        const customQuestions = (!isSpecificItemInquiry && typeof getVendorCustomQuestions === 'function') ? getVendorCustomQuestions(vendor ? vendor.id : 1) : [];
         if (customQuestions && customQuestions.length > 0) {
           customContainer.innerHTML = `
             <div class="border-b border-amber-200 pb-1 mb-2 flex items-center justify-between">
@@ -10096,14 +10124,18 @@ if (document.readyState === "loading") {
                 </div>
 
                 <div class="flex flex-col gap-2 pt-1">
+                  <button onclick="openPreInvoicePrintModal()" class="w-full bg-[#1B3B2B] hover:bg-emerald-900 text-[#D4AF37] border border-[#D4AF37]/40 py-2 rounded-xl text-xs font-extrabold transition-all flex items-center justify-center gap-1.5 shadow-2xs cursor-pointer">
+                    <i data-lucide="printer" class="w-3.5 h-3.5 text-[#D4AF37]"></i>
+                    <span>مشاهده و چاپ پیش‌فاکتور رسمی</span>
+                  </button>
                   <div class="flex gap-2">
-                    <button onclick="openAppointmentModal('${activeThread.id}', '${msg.id}')" class="flex-1 bg-primary hover:bg-emerald-900 text-white py-2.5 rounded-xl text-xs font-bold transition-all shadow-xs flex items-center justify-center gap-1 cursor-pointer">
+                    <button onclick="openAppointmentModal('${activeThread.id}', '${msg.id}')" class="flex-1 bg-primary hover:bg-emerald-900 text-white py-2 rounded-xl text-xs font-bold transition-all shadow-xs flex items-center justify-center gap-1 cursor-pointer">
                       <i data-lucide="calendar" class="w-3.5 h-3.5"></i>
-                      <span>درخواست هماهنگی وقت بازدید حضوری</span>
+                      <span>هماهنگی وقت بازدید</span>
                     </button>
-                    <button onclick="openRevisionModal('${activeThread.id}', '${msg.id}')" class="bg-amber-50 hover:bg-amber-100 text-amber-800 border border-amber-200 px-3.5 py-2.5 rounded-xl text-xs font-bold transition-all flex items-center gap-1 cursor-pointer">
+                    <button onclick="openRevisionModal('${activeThread.id}', '${msg.id}')" class="bg-amber-50 hover:bg-amber-100 text-amber-800 border border-amber-200 px-3 py-2 rounded-xl text-xs font-bold transition-all flex items-center gap-1 cursor-pointer">
                       <i data-lucide="edit-3" class="w-3.5 h-3.5"></i>
-                      <span>درخواست تغییرات</span>
+                      <span>تغییرات</span>
                     </button>
                   </div>
                 </div>
@@ -10496,31 +10528,83 @@ if (document.readyState === "loading") {
     function switchAuthTab(tab) {
       const coupleTab = document.getElementById('auth-tab-couple');
       const vendorTab = document.getElementById('auth-tab-vendor');
+      const adminTab = document.getElementById('auth-tab-admin');
       const coupleForm = document.getElementById('auth-form-couple');
       const vendorForm = document.getElementById('auth-form-vendor');
+      const adminForm = document.getElementById('auth-form-admin');
+
+      [coupleTab, vendorTab, adminTab].forEach(t => {
+        if (t) t.className = "flex-1 py-2.5 rounded-xl transition-all text-secondary hover:text-graphite text-center cursor-pointer";
+      });
+      [coupleForm, vendorForm, adminForm].forEach(f => {
+        if (f) f.classList.add('hidden');
+      });
 
       if (tab === 'couple') {
         if (coupleTab) coupleTab.className = "flex-1 py-2.5 rounded-xl transition-all bg-[#1B3B2B] text-white shadow-xs text-center cursor-pointer";
-        if (vendorTab) vendorTab.className = "flex-1 py-2.5 rounded-xl transition-all text-secondary hover:text-graphite text-center cursor-pointer";
         if (coupleForm) coupleForm.classList.remove('hidden');
-        if (vendorForm) vendorForm.classList.add('hidden');
-      } else {
+      } else if (tab === 'vendor') {
         if (vendorTab) vendorTab.className = "flex-1 py-2.5 rounded-xl transition-all bg-[#1B3B2B] text-white shadow-xs text-center cursor-pointer";
-        if (coupleTab) coupleTab.className = "flex-1 py-2.5 rounded-xl transition-all text-secondary hover:text-graphite text-center cursor-pointer";
         if (vendorForm) vendorForm.classList.remove('hidden');
-        if (coupleForm) coupleForm.classList.add('hidden');
+      } else if (tab === 'admin') {
+        if (adminTab) adminTab.className = "flex-1 py-2.5 rounded-xl transition-all bg-[#1B3B2B] text-white shadow-xs text-center cursor-pointer";
+        if (adminForm) adminForm.classList.remove('hidden');
+      }
+    }
+
+    function handleAdminAuthSubmit(e) {
+      if (e && e.preventDefault) e.preventDefault();
+      const user = document.getElementById('auth-admin-user')?.value?.trim();
+      const pass = document.getElementById('auth-admin-password')?.value?.trim();
+
+      if (user === 'admin' && pass === 'admin123') {
+        currentUserRole = 'admin';
+        localStorage.setItem('currentUserRole', 'admin');
+        closeAuthModal();
+        switchRole('admin');
+        showToast('ورود مدیریت ارشد (Super Admin) با موفقیت انجام شد. خوش آمدید!', 'success');
+      } else {
+        showToast('نام کاربری یا رمز عبور مدیر سیستم نادرست است. (نام کاربری: admin | رمز عبور: admin123)', 'danger');
       }
     }
 
     function handleCoupleAuthSubmit(e) {
-      e.preventDefault();
+      if (e && e.preventDefault) e.preventDefault();
+      const phone = document.getElementById('auth-couple-phone')?.value?.trim();
+      const pass = document.getElementById('auth-couple-password')?.value?.trim();
+
+      if (phone === 'admin' && pass === 'admin123') {
+        currentUserRole = 'admin';
+        localStorage.setItem('currentUserRole', 'admin');
+        closeAuthModal();
+        switchRole('admin');
+        showToast('ورود به عنوان مدیریت ارشد سیستم انجام شد.', 'success');
+        return;
+      }
+
+      currentUserRole = 'couple';
+      localStorage.setItem('currentUserRole', 'couple');
       closeAuthModal();
       switchRole('couple');
       showToast('ورود موفقیت‌آمیز! خوش آمدید.', 'success');
     }
 
     function handleVendorAuthSubmit(e) {
-      e.preventDefault();
+      if (e && e.preventDefault) e.preventDefault();
+      const user = document.getElementById('auth-vendor-user')?.value?.trim();
+      const pass = document.getElementById('auth-vendor-password')?.value?.trim();
+
+      if (user === 'admin' && pass === 'admin123') {
+        currentUserRole = 'admin';
+        localStorage.setItem('currentUserRole', 'admin');
+        closeAuthModal();
+        switchRole('admin');
+        showToast('ورود به عنوان مدیریت ارشد سیستم انجام شد.', 'success');
+        return;
+      }
+
+      currentUserRole = 'vendor';
+      localStorage.setItem('currentUserRole', 'vendor');
       closeAuthModal();
       switchRole('vendor');
       showToast('ورود به پنل تامین‌کنندگان با موفقیت انجام شد.', 'success');
@@ -12234,37 +12318,94 @@ window.openPreInvoicePrintModal = function(invoiceData) {
   const data = invoiceData || {
     num: 'INV-1403-882',
     date: '۱۴۰۳/۰۶/۱۵',
+    validity: '۷ روز کاری (تا ۱۴۰۳/۰۶/۲۲)',
     vendorName: 'هتل باغ و تشریفات مشیرالممالک یزد',
+    vendorPhone: '۰۳۵-۳۵۲۳۹۷۶۱',
+    vendorAddress: 'یزد، خیابان انقلاب، بلوار مشیرالممالک',
+    vendorCode: 'YZD-VND-882',
     coupleName: 'علی و سارا',
-    title: 'پکیج خدمات تشریفات و ورودی باغ',
+    couplePhone: '۰۹۱۳۸۵۵۴۰۰۰',
     eventDate: '۱۴۰۳/۰۶/۱۵',
+    eventLocation: 'یزد، تالار اصلی مشیرالممالک',
+    title: 'پکیج خدمات تشریفات و ورودی باغ',
     total: '۴۵,۰۰۰,۰۰۰ تومان',
+    subtotal: '۴۵,۰۰۰,۰۰۰ تومان',
+    discount: '۰ تومان',
     deposit: '۱۰,۰۰۰,۰۰۰ تومان',
-    balance: '۳۵,۰۰۰,۰۰۰ تومان',
-    items: 'ورودی باغ اصلی، شام سلف سرویس VIP، گل‌آرایی ورودی و نورپردازی استیج'
+    installment2: '۱۵,۷۵۰,۰۰۰ تومان',
+    balance: '۱۹,۲۵۰,۰۰۰ تومان',
+    items: [
+      { name: 'ورودی باغ اصلی و فضای باز VIP', qty: 1, unitPrice: '۱۵,۰۰۰,۰۰۰', discount: '۰', total: '۱۵,۰۰۰,۰۰۰' },
+      { name: 'پذیرایی شام سلف‌سرویس ۳ رنگ (۲۵۰ نفر)', qty: 250, unitPrice: '۱۰۰,۰۰۰', discount: '۰', total: '۲۵,۰۰۰,۰۰۰' },
+      { name: 'گل‌آرایی ورودی و نورپردازی حرفه‌ای استیج', qty: 1, unitPrice: '۵,۰۰۰,۰۰۰', discount: '۰', total: '۵,۰۰۰,۰۰۰' }
+    ],
+    trackCode: 'AROOSI-88219-YZD'
   };
 
-  const numEl = document.getElementById('pip-num');
-  const dateEl = document.getElementById('pip-date');
-  const vEl = document.getElementById('pip-vendor-name');
-  const cEl = document.getElementById('pip-couple-name');
-  const tEl = document.getElementById('pip-service-title');
-  const edEl = document.getElementById('pip-event-date');
-  const totEl = document.getElementById('pip-total-amount');
-  const descEl = document.getElementById('pip-items-desc');
-  const depEl = document.getElementById('pip-deposit');
-  const balEl = document.getElementById('pip-balance');
+  const setElText = (id, val) => {
+    const el = document.getElementById(id);
+    if (el) el.innerText = val;
+  };
 
-  if (numEl) numEl.innerText = data.num || 'INV-1403-882';
-  if (dateEl) dateEl.innerText = data.date || '۱۴۰۳/۰۶/۱۵';
-  if (vEl) vEl.innerText = data.vendorName || 'تامین‌کننده معتبر یزد';
-  if (cEl) cEl.innerText = data.coupleName || 'علی و سارا';
-  if (tEl) tEl.innerText = data.title || 'پکیج خدمات';
-  if (edEl) edEl.innerText = data.eventDate || '۱۴۰۳/۰۶/۱۵';
-  if (totEl) totEl.innerText = data.total || '۴۵,۰۰۰,۰۰۰ تومان';
-  if (descEl) descEl.innerText = data.items || 'شرح خدمات و تعهدات رسمی';
-  if (depEl) depEl.innerText = data.deposit || '۱۰,۰۰۰,۰۰۰ تومان';
-  if (balEl) balEl.innerText = data.balance || '۳۵,۰۰۰,۰۰۰ تومان';
+  setElText('pip-num', data.num || 'INV-1403-882');
+  setElText('pip-date', data.date || '۱۴۰۳/۰۶/۱۵');
+  setElText('pip-validity', data.validity || '۷ روز کاری');
+  setElText('pip-vendor-name', data.vendorName || 'تامین‌کننده معتبر یزد');
+  setElText('pip-vendor-phone', data.vendorPhone || '۰۳۵-۳۸۲۴۰۰۰۰');
+  setElText('pip-vendor-address', data.vendorAddress || 'یزد، خیابان اصلی');
+  setElText('pip-vendor-code', data.vendorCode || 'YZD-VND-882');
+  setElText('pip-couple-name', data.coupleName || 'علی و سارا');
+  setElText('pip-couple-phone', data.couplePhone || '۰۹۱۳۰۰۰۰۰۰۰');
+  setElText('pip-event-date', data.eventDate || '۱۴۰۳/۰۶/۱۵');
+  setElText('pip-event-location', data.eventLocation || 'یزد');
+  setElText('pip-subtotal', data.subtotal || data.total || '۴۵,۰۰۰,۰۰۰ تومان');
+  setElText('pip-discount', data.discount || '۰ تومان');
+  setElText('pip-total-amount', data.total || '۴۵,۰۰۰,۰۰۰ تومان');
+  setElText('pip-deposit', data.deposit || '۱۰,۰۰۰,۰۰۰ تومان');
+  setElText('pip-installment-2', data.installment2 || '۱۵,۷۵۰,۰۰۰ تومان');
+  setElText('pip-balance', data.balance || '۱۹,۲۵۰,۰۰۰ تومان');
+  setElText('pip-track-code', data.trackCode || 'AROOSI-88219-YZD');
+  setElText('pip-vendor-sig-date', data.date || '۱۴۰۳/۰۶/۱۵');
+
+  const tbody = document.getElementById('pip-items-tbody');
+  if (tbody) {
+    tbody.innerHTML = '';
+    let itemsList = data.items || [];
+    if (typeof itemsList === 'string') {
+      itemsList = itemsList.split('،').map(s => ({ name: s.trim(), qty: 1, unitPrice: '—', discount: '۰', total: '—' }));
+    }
+    if (itemsList.length === 0) {
+      tbody.innerHTML = `
+        <tr>
+          <td class="p-3 text-center font-bold">۱</td>
+          <td class="p-3 font-bold text-graphite">${data.title || 'پکیج خدمات تشریفات'}</td>
+          <td class="p-3 text-center">۱</td>
+          <td class="p-3 text-left">${data.total || '۴۵,۰۰۰,۰۰۰'}</td>
+          <td class="p-3 text-left">۰</td>
+          <td class="p-3 text-left font-black text-primary">${data.total || '۴۵,۰۰۰,۰۰۰'}</td>
+        </tr>
+      `;
+    } else {
+      itemsList.forEach((it, idx) => {
+        const tr = document.createElement('tr');
+        const itName = typeof it === 'string' ? it : (it.name || it.title || 'خدمت');
+        const itQty = it.qty || 1;
+        const itUnitPrice = it.unitPrice || (it.price ? Number(it.price).toLocaleString('fa-IR') + ' تومان' : '—');
+        const itDisc = it.discount || '۰ تومان';
+        const itTotal = it.total || (it.price ? Number(it.price * (it.qty || 1)).toLocaleString('fa-IR') + ' تومان' : '—');
+
+        tr.innerHTML = `
+          <td class="p-3 text-center font-bold text-secondary">${(idx + 1).toLocaleString('fa-IR')}</td>
+          <td class="p-3 font-bold text-graphite">${itName}</td>
+          <td class="p-3 text-center font-medium">${Number(itQty).toLocaleString('fa-IR')}</td>
+          <td class="p-3 text-left font-medium text-graphite">${itUnitPrice}</td>
+          <td class="p-3 text-left font-medium text-emerald-700">${itDisc}</td>
+          <td class="p-3 text-left font-black text-primary">${itTotal}</td>
+        `;
+        tbody.appendChild(tr);
+      });
+    }
+  }
 
   modal.classList.remove('hidden');
   if (window.lucide) lucide.createIcons();
@@ -12855,6 +12996,7 @@ if (typeof handleAddCustomBwService === "function") window.handleAddCustomBwServ
 if (typeof handleAddNewTaskSubmit === "function") window.handleAddNewTaskSubmit = handleAddNewTaskSubmit;
 if (typeof handleAvatarDelete === "function") window.handleAvatarDelete = handleAvatarDelete;
 if (typeof handleAvatarUpload === "function") window.handleAvatarUpload = handleAvatarUpload;
+if (typeof handleAdminAuthSubmit === "function") window.handleAdminAuthSubmit = handleAdminAuthSubmit;
 if (typeof handleCoupleAuthSubmit === "function") window.handleCoupleAuthSubmit = handleCoupleAuthSubmit;
 if (typeof handleGiftFormSubmit === "function") window.handleGiftFormSubmit = handleGiftFormSubmit;
 if (typeof handleGuestFormSubmit === "function") window.handleGuestFormSubmit = handleGuestFormSubmit;
