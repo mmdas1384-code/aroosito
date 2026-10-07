@@ -5310,72 +5310,183 @@
   </div>
 
   <!-- DIGITAL PRE-INVOICE BUILDER MODAL (#modal-vendor-invoice-builder) -->
-  <div id="modal-vendor-invoice-builder" class="hidden fixed inset-0 bg-black/60 backdrop-blur-xs z-[999999] flex items-center justify-center p-4 transition-all animate-fadeIn" onclick="if(event.target === this) closeVendorInvoiceBuilderModal()">
-    <div class="bg-white rounded-3xl shadow-2xl max-w-lg w-full overflow-hidden border border-[#D4AF37]/50 flex flex-col animate-scaleUp relative max-h-[90vh]">
+  <div id="modal-vendor-invoice-builder" class="hidden fixed inset-0 bg-black/70 backdrop-blur-md z-[999999] flex items-center justify-center p-3 sm:p-4 transition-all animate-fadeIn" onclick="if(event.target === this) closeVendorInvoiceBuilderModal()">
+    <div class="bg-[#0F251A] text-white rounded-3xl shadow-2xl max-w-2xl w-full overflow-hidden border border-[#D4AF37]/60 flex flex-col animate-scaleUp relative max-h-[92vh]">
       <!-- Header -->
-      <div class="bg-[#1B3B2B] text-white p-5 flex items-center justify-between border-b border-[#D4AF37]/30 shrink-0">
-        <div class="flex items-center gap-2.5">
-          <div class="w-10 h-10 rounded-xl bg-[#D4AF37] text-[#1B3B2B] flex items-center justify-center shadow-sm">
+      <div class="bg-[#142E22] px-6 py-4 flex items-center justify-between border-b border-[#D4AF37]/30 shrink-0">
+        <div class="flex items-center gap-3">
+          <div class="w-10 h-10 rounded-2xl bg-gradient-to-tr from-[#D4AF37] to-[#F3E5AB] text-[#0F251A] flex items-center justify-center font-black shadow-md">
             <i data-lucide="receipt" class="w-5 h-5"></i>
           </div>
           <div>
-            <h3 class="text-base font-bold text-[#D4AF37]">صدور پیش‌فاکتور دیجیتال رسمی (Digital Invoice Builder)</h3>
-            <span class="text-[11px] text-amber-200/80 font-medium">ارسال مستقیم فاکتور شیک به چت اختصاصی زوجین</span>
+            <h3 class="text-base font-black text-[#D4AF37]">صدور پیش‌فاکتور دیجیتال رسمی (Invoice Builder)</h3>
+            <span class="text-[11px] text-amber-200/80 font-medium block">تنظیم شرایط پرداخت، بیعانه، اقساط و جدول خدمات</span>
           </div>
         </div>
 
-        <button onclick="closeVendorInvoiceBuilderModal()" class="w-9 h-9 rounded-xl bg-white/10 hover:bg-white/20 text-white flex items-center justify-center transition-colors cursor-pointer" title="بستن">
+        <button type="button" onclick="closeVendorInvoiceBuilderModal()" class="w-9 h-9 rounded-xl bg-white/10 hover:bg-white/20 text-white flex items-center justify-center transition-colors cursor-pointer" title="بستن">
           <i data-lucide="x" class="w-5 h-5"></i>
         </button>
       </div>
 
       <!-- Invoice Form Body -->
-      <form id="vendor-invoice-builder-form" onsubmit="handleSendInvoiceSubmit(event)" class="p-6 space-y-4 text-xs font-bold text-graphite overflow-y-auto">
-        <div class="space-y-1">
-          <label class="block text-secondary">نام زوج / دریافت‌کننده پیش‌فاکتور *</label>
-          <input type="text" id="inv-builder-couple" required value="علی و سارا" class="w-full bg-[#F5EFEB] border border-[#E0D8C8] rounded-xl p-3 text-xs font-medium focus:outline-none focus:border-[#D4AF37]">
-        </div>
+      <form id="vendor-invoice-builder-form" onsubmit="handleSendInvoiceSubmit(event)" class="p-5 sm:p-6 space-y-5 text-xs font-bold overflow-y-auto custom-scrollbar">
 
-        <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
-          <div class="space-y-1">
-            <label class="block text-secondary">عنوان پکیج / خدمت اصلی *</label>
-            <input type="text" id="inv-builder-title" required value="پکیج طلایی عکاسی و فیلمبرداری عروسی" class="w-full bg-[#F5EFEB] border border-[#E0D8C8] rounded-xl p-3 text-xs font-medium focus:outline-none focus:border-[#D4AF37]">
-          </div>
+        <!-- 1. Client & Event Details Section -->
+        <div class="space-y-3 bg-[#142E22] p-4 rounded-2xl border border-[#D4AF37]/30">
+          <h4 class="text-xs font-black text-[#D4AF37] flex items-center gap-1.5 border-b border-[#D4AF37]/20 pb-2">
+            <i data-lucide="user-check" class="w-4 h-4"></i>
+            <span>۱. مشخصات مشتری و مراسم</span>
+          </h4>
 
-          <div class="space-y-1">
-            <label class="block text-secondary">تاریخ برگزاری / رزرو (شمسی) *</label>
-            <input type="text" id="inv-builder-date" required value="۱۴۰۳/۰۶/۱۵" class="w-full bg-[#F5EFEB] border border-[#E0D8C8] rounded-xl p-3 text-xs font-medium focus:outline-none focus:border-[#D4AF37]">
-          </div>
-        </div>
+          <div class="grid grid-cols-1 sm:grid-cols-3 gap-3">
+            <div class="space-y-1">
+              <label class="block text-slate-300">نام کامل زوج / مشتری *</label>
+              <input type="text" id="inv-builder-couple" required value="علی و سارا" class="w-full bg-[#0F251A] border border-[#D4AF37]/40 rounded-xl p-2.5 text-xs font-medium text-white focus:outline-none focus:border-[#D4AF37]">
+            </div>
 
-        <div class="space-y-1">
-          <label class="block text-secondary">اقلام و شرح خدمات تضمین‌شده (با خط جدید جدا کنید) *</label>
-          <textarea id="inv-builder-items" rows="3" required class="w-full bg-[#F5EFEB] border border-[#E0D8C8] rounded-xl p-3 text-xs font-medium focus:outline-none focus:border-[#D4AF37] leading-relaxed">۲ دوربین سونی Alpha 4K
-تصویربرداری هلی‌شات و کرین
-آلبوم ایتالیایی چرمی ۶۰×۳۰
-کلیپ اختصاصی کویر یزد</textarea>
-        </div>
+            <div class="space-y-1">
+              <label class="block text-slate-300">شماره تماس مشتری *</label>
+              <input type="tel" id="inv-builder-phone" required value="۰۹۱۳۸۵۵۴۰۰۰" class="w-full bg-[#0F251A] border border-[#D4AF37]/40 rounded-xl p-2.5 text-xs font-medium text-white focus:outline-none focus:border-[#D4AF37] dir-ltr">
+            </div>
 
-        <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
-          <div class="space-y-1">
-            <label class="block text-secondary">مبلغ کل پیش‌فاکتور (تومان) *</label>
-            <input type="text" id="inv-builder-total" required value="۴۵,۰۰۰,۰۰۰" class="w-full bg-[#F5EFEB] border border-[#E0D8C8] rounded-xl p-3 text-xs font-bold text-primary focus:outline-none focus:border-[#D4AF37]">
-          </div>
-
-          <div class="space-y-1">
-            <label class="block text-secondary">مبلغ بیعانه جهت تثبیت رزرو (تومان) *</label>
-            <input type="text" id="inv-builder-deposit" required value="۱۰,۰۰۰,۰۰۰" class="w-full bg-[#F5EFEB] border border-[#E0D8C8] rounded-xl p-3 text-xs font-bold text-emerald-800 focus:outline-none focus:border-[#D4AF37]">
+            <div class="space-y-1">
+              <label class="block text-slate-300">تاریخ برگزاری مراسم *</label>
+              <input type="text" id="inv-builder-date" required value="۱۴۰۳/۰۶/۱۵" class="w-full bg-[#0F251A] border border-[#D4AF37]/40 rounded-xl p-2.5 text-xs font-medium text-white focus:outline-none focus:border-[#D4AF37]">
+            </div>
           </div>
         </div>
 
-        <div class="p-3 bg-amber-50 border border-amber-200 rounded-xl text-amber-900 text-[11px] font-medium leading-relaxed">
-          💡 این پیش‌فاکتور به‌صورت شیک در گفتگو آنلاین زوج قرار گرفته و پیامک اطلاع‌رسانی برای زوج ارسال می‌شود.
+        <!-- 2. Dynamic Items & Pricing Table -->
+        <div class="space-y-3 bg-[#142E22] p-4 rounded-2xl border border-[#D4AF37]/30">
+          <div class="flex items-center justify-between border-b border-[#D4AF37]/20 pb-2">
+            <h4 class="text-xs font-black text-[#D4AF37] flex items-center gap-1.5">
+              <i data-lucide="list-checks" class="w-4 h-4"></i>
+              <span>۲. جدول خدمات و محاسبه قیمت</span>
+            </h4>
+            <button type="button" onclick="addInvoiceItemRow()" class="bg-[#D4AF37] hover:bg-amber-400 text-[#0F251A] font-black px-2.5 py-1 rounded-lg text-[10.5px] transition-all flex items-center gap-1 cursor-pointer shadow-xs">
+              <i data-lucide="plus" class="w-3.5 h-3.5"></i>
+              <span>افزودن ردیف خدمت</span>
+            </button>
+          </div>
+
+          <div class="overflow-x-auto rounded-xl border border-[#D4AF37]/30">
+            <table class="w-full text-right text-xs">
+              <thead class="bg-[#0F251A] text-amber-200 border-b border-[#D4AF37]/30 font-bold">
+                <tr>
+                  <th class="p-2">شرح خدمت / اقلام</th>
+                  <th class="p-2 w-16 text-center">تعداد</th>
+                  <th class="p-2 w-28">فی (تومان)</th>
+                  <th class="p-2 w-28">جمع (تومان)</th>
+                  <th class="p-2 w-10 text-center">حذف</th>
+                </tr>
+              </thead>
+              <tbody id="inv-builder-items-tbody" class="divide-y divide-[#D4AF37]/20 font-medium">
+                <!-- Dynamically populated via JS -->
+              </tbody>
+            </table>
+          </div>
+
+          <!-- Total Arithmetic Summary -->
+          <div class="grid grid-cols-1 sm:grid-cols-3 gap-3 pt-2 text-xs">
+            <div class="space-y-1">
+              <label class="block text-slate-300">جمع کل خدمات (تومان)</label>
+              <input type="text" id="inv-builder-subtotal" readonly value="۴۵,۰۰۰,۰۰۰" class="w-full bg-[#0F251A] border border-[#D4AF37]/30 rounded-xl p-2 text-xs font-bold text-slate-200 focus:outline-none">
+            </div>
+
+            <div class="space-y-1">
+              <label class="block text-slate-300">تخفیف ویژه (تومان)</label>
+              <input type="text" id="inv-builder-discount" oninput="calcInvoiceTotals()" value="۰" class="w-full bg-[#0F251A] border border-[#D4AF37]/40 rounded-xl p-2 text-xs font-bold text-amber-300 focus:outline-none focus:border-[#D4AF37]">
+            </div>
+
+            <div class="space-y-1">
+              <label class="block text-amber-200 font-extrabold">مبلغ قابل پرداخت نهایی</label>
+              <input type="text" id="inv-builder-total" readonly value="۴۵,۰۰۰,۰۰۰" class="w-full bg-[#0F251A] border border-[#D4AF37] rounded-xl p-2 text-xs font-black text-[#D4AF37] focus:outline-none">
+            </div>
+          </div>
         </div>
 
-        <button type="submit" class="w-full bg-[#D4AF37] hover:bg-amber-400 text-[#1B3B2B] font-black py-3 rounded-2xl text-xs shadow-md transition-all flex items-center justify-center gap-2 cursor-pointer">
-          <i data-lucide="send" class="w-4 h-4"></i>
-          <span>تایید و ارسال پیش‌فاکتور دیجیتال به چت زوج</span>
-        </button>
+        <!-- 3. Payment Terms & Milestone Schedule -->
+        <div class="space-y-3 bg-[#142E22] p-4 rounded-2xl border border-[#D4AF37]/30">
+          <h4 class="text-xs font-black text-[#D4AF37] flex items-center gap-1.5 border-b border-[#D4AF37]/20 pb-2">
+            <i data-lucide="credit-card" class="w-4 h-4"></i>
+            <span>۳. نحوه پرداخت و جدول اقساط / شبا</span>
+          </h4>
+
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+            <div class="space-y-1">
+              <label class="block text-slate-300">مدل پرداخت *</label>
+              <select id="inv-builder-payment-mode" class="w-full bg-[#0F251A] border border-[#D4AF37]/40 rounded-xl p-2.5 text-xs font-bold text-white focus:outline-none focus:border-[#D4AF37]">
+                <option value="اقساطی (بیعانه + مرحله‌ای)" selected>اقساطی (بیعانه + مرحله‌ای)</option>
+                <option value="نقد (یکجا)">نقد (تسویه یکجا)</option>
+                <option value="مرحله‌ای (۳ قسط)">مرحله‌ای (۳ قسط)</option>
+              </select>
+            </div>
+
+            <div class="space-y-1">
+              <label class="block text-slate-300">مبلغ بیعانه تثبیت رزرو (تومان) *</label>
+              <input type="text" id="inv-builder-deposit" oninput="calcInvoiceTotals()" required value="۱۰,۰۰۰,۰۰۰" class="w-full bg-[#0F251A] border border-[#D4AF37]/40 rounded-xl p-2.5 text-xs font-bold text-emerald-400 focus:outline-none focus:border-[#D4AF37]">
+            </div>
+
+            <div class="space-y-1">
+              <label class="block text-slate-300">قسط دوم (روز مراسم) *</label>
+              <input type="text" id="inv-builder-installment2" oninput="calcInvoiceTotals()" value="۱۵,۷۵۰,۰۰۰" class="w-full bg-[#0F251A] border border-[#D4AF37]/40 rounded-xl p-2.5 text-xs font-bold text-amber-200 focus:outline-none focus:border-[#D4AF37]">
+            </div>
+
+            <div class="space-y-1">
+              <label class="block text-slate-300">مانده تسویه نهایی (تحویل کار) *</label>
+              <input type="text" id="inv-builder-balance" readonly value="۱۹,۲۵۰,۰۰۰" class="w-full bg-[#0F251A] border border-[#D4AF37]/30 rounded-xl p-2.5 text-xs font-bold text-slate-300 focus:outline-none">
+            </div>
+
+            <div class="sm:col-span-2 space-y-1">
+              <label class="block text-slate-300">شماره کارت / شبا بانک جهت واریز مستقیم:</label>
+              <input type="text" id="inv-builder-iban" value="IR620170000000112233445566 (بانک ملی - به نام مدیریت)" class="w-full bg-[#0F251A] border border-[#D4AF37]/40 rounded-xl p-2.5 text-xs font-mono text-amber-200 dir-ltr focus:outline-none focus:border-[#D4AF37]">
+            </div>
+          </div>
+        </div>
+
+        <!-- 4. Validity, Terms & Remarks -->
+        <div class="space-y-3 bg-[#142E22] p-4 rounded-2xl border border-[#D4AF37]/30">
+          <h4 class="text-xs font-black text-[#D4AF37] flex items-center gap-1.5 border-b border-[#D4AF37]/20 pb-2">
+            <i data-lucide="file-text" class="w-4 h-4"></i>
+            <span>۴. مهلت اعتبار، قوانین کنسلی و توضیحات</span>
+          </h4>
+
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+            <div class="space-y-1">
+              <label class="block text-slate-300">مهلت اعتبار پیش‌فاکتور *</label>
+              <input type="text" id="inv-builder-validity" value="۳ روز کاری جهت تثبیت بیعانه" class="w-full bg-[#0F251A] border border-[#D4AF37]/40 rounded-xl p-2.5 text-xs font-medium text-white focus:outline-none focus:border-[#D4AF37]">
+            </div>
+
+            <div class="space-y-1">
+              <label class="block text-slate-300">شرایط کنسلی / جابه‌جایی تاریخ *</label>
+              <input type="text" id="inv-builder-cancellation" value="کنسلی تا ۳۰ روز قبل مراسم با کسر ۱۰٪ بیعانه امکان‌پذیر است" class="w-full bg-[#0F251A] border border-[#D4AF37]/40 rounded-xl p-2.5 text-xs font-medium text-white focus:outline-none focus:border-[#D4AF37]">
+            </div>
+
+            <div class="sm:col-span-2 space-y-1">
+              <label class="block text-slate-300">یادداشت و ملاحظات اختصاصی تامین‌کننده:</label>
+              <textarea id="inv-builder-remarks" rows="2" class="w-full bg-[#0F251A] border border-[#D4AF37]/40 rounded-xl p-2.5 text-xs font-medium text-white focus:outline-none focus:border-[#D4AF37] leading-relaxed" placeholder="توضیحات و توافقات خاص خود با زوج را بنویسید...">تمام منوهای پذیرایی و خدمات بر اساس استانداردهای رسمی تاییدشده عروسی‌تو پیاده‌سازی می‌گردد.</textarea>
+            </div>
+          </div>
+        </div>
+
+        <!-- Action Bar Buttons -->
+        <div class="flex flex-col sm:flex-row items-center gap-2 pt-2">
+          <button type="button" onclick="previewPreInvoicePrint()" class="flex-1 w-full bg-[#142E22] hover:bg-[#1B3B2B] text-[#D4AF37] border border-[#D4AF37]/60 font-black py-3 rounded-2xl text-xs shadow-md transition-all flex items-center justify-center gap-2 cursor-pointer">
+            <i data-lucide="eye" class="w-4 h-4 text-[#D4AF37]"></i>
+            <span>پیش‌نمایش رسمی</span>
+          </button>
+
+          <button type="button" onclick="triggerPreInvoicePrint()" class="flex-1 w-full bg-[#142E22] hover:bg-[#1B3B2B] text-white border border-slate-600 font-black py-3 rounded-2xl text-xs shadow-md transition-all flex items-center justify-center gap-2 cursor-pointer">
+            <i data-lucide="printer" class="w-4 h-4 text-emerald-400"></i>
+            <span>دانلود PDF / چاپ</span>
+          </button>
+
+          <button type="submit" class="flex-1 w-full bg-gradient-to-r from-[#D4AF37] to-[#F3E5AB] hover:from-[#e5bd3c] hover:to-[#fceba7] text-[#0F251A] font-black py-3 rounded-2xl text-xs shadow-lg transition-all flex items-center justify-center gap-2 cursor-pointer">
+            <i data-lucide="send" class="w-4 h-4 text-[#0F251A]"></i>
+            <span>تایید و ارسال به چت مشتری</span>
+          </button>
+        </div>
       </form>
     </div>
   </div>

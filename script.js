@@ -11909,24 +11909,188 @@ window.selectSubscriptionPlan = function(planName, priceText) {
   }
 };
 
-// Vendor Invoice Builder Handlers
-window.openVendorInvoiceBuilderModal = function(coupleName = 'علی و سارا', pkgTitle = 'پکیج طلایی خدمات عروسی') {
-  const modal = document.getElementById('modal-vendor-invoice-builder');
-  if (modal) {
-    const coupleInput = document.getElementById('inv-builder-couple');
-    const titleInput = document.getElementById('inv-builder-title');
-    if (coupleInput) coupleInput.value = coupleName;
-    if (titleInput) titleInput.value = pkgTitle;
-    modal.classList.remove('hidden');
-    if (window.lucide) lucide.createIcons();
+// DYNAMIC PRE-INVOICE BUILDER FUNCTIONS
+let invoiceItemsList = [
+  { name: 'پکیج عکاسی و فیلمبرداری VIP 4K', qty: 1, unitPrice: 25000000 },
+  { name: 'تصویربرداری هلی‌شات کویر و کلیپ اسپرت', qty: 1, unitPrice: 12000000 },
+  { name: 'آلبوم ایتالیایی ۶۰×۳۰ جلد چرمی دست‌ساز', qty: 1, unitPrice: 8000000 }
+];
+
+window.renderInvoiceItemRows = function() {
+  const tbody = document.getElementById('inv-builder-items-tbody');
+  if (!tbody) return;
+
+  if (invoiceItemsList.length === 0) {
+    tbody.innerHTML = `<tr><td colspan="5" class="p-3 text-center text-slate-400">ردیفی ثبت نشده است. روی دکمه افزودن کلیک کنید.</td></tr>`;
+    window.calcInvoiceTotals();
+    return;
   }
+
+  tbody.innerHTML = invoiceItemsList.map((item, idx) => {
+    const rowTotal = (Number(item.qty) || 1) * (Number(item.unitPrice) || 0);
+    return `
+      <tr class="hover:bg-white/5 transition-colors">
+        <td class="p-2">
+          <input type="text" value="${item.name || ''}" oninput="updateInvoiceItem(${idx}, 'name', this.value)" placeholder="نام خدمت..." class="w-full bg-[#0F251A] border border-[#D4AF37]/30 rounded-lg p-1.5 text-xs text-white focus:outline-none focus:border-[#D4AF37]">
+        </td>
+        <td class="p-2 text-center">
+          <input type="number" min="1" value="${item.qty || 1}" oninput="updateInvoiceItem(${idx}, 'qty', this.value)" class="w-14 bg-[#0F251A] border border-[#D4AF37]/30 rounded-lg p-1.5 text-xs text-center font-bold text-white focus:outline-none focus:border-[#D4AF37]">
+        </td>
+        <td class="p-2">
+          <input type="text" value="${(item.unitPrice || 0).toLocaleString('fa-IR')}" oninput="updateInvoiceItemPrice(${idx}, this.value)" placeholder="مبلغ فی..." class="w-full bg-[#0F251A] border border-[#D4AF37]/30 rounded-lg p-1.5 text-xs font-bold text-amber-200 focus:outline-none focus:border-[#D4AF37]">
+        </td>
+        <td class="p-2 font-bold text-[#D4AF37] text-xs">
+          ${rowTotal.toLocaleString('fa-IR')}
+        </td>
+        <td class="p-2 text-center">
+          <button type="button" onclick="removeInvoiceItemRow(${idx})" class="w-7 h-7 rounded-lg bg-rose-900/50 hover:bg-rose-800 text-rose-200 flex items-center justify-center transition-colors cursor-pointer" title="حذف ردیف">
+            <i data-lucide="trash-2" class="w-3.5 h-3.5"></i>
+          </button>
+        </td>
+      </tr>
+    `;
+  }).join('');
+
+  if (window.lucide) lucide.createIcons();
+  window.calcInvoiceTotals();
+};
+
+window.addInvoiceItemRow = function(name = '', qty = 1, unitPrice = 0) {
+  invoiceItemsList.push({
+    name: name || 'خدمت اختصاصی جدید',
+    qty: qty || 1,
+    unitPrice: unitPrice || 5000000
+  });
+  window.renderInvoiceItemRows();
+};
+
+window.removeInvoiceItemRow = function(idx) {
+  invoiceItemsList.splice(idx, 1);
+  window.renderInvoiceItemRows();
+};
+
+window.updateInvoiceItem = function(idx, field, val) {
+  if (!invoiceItemsList[idx]) return;
+  if (field === 'qty') {
+    invoiceItemsList[idx].qty = Math.max(1, parseInt(val) || 1);
+  } else {
+    invoiceItemsList[idx][field] = val;
+  }
+  window.renderInvoiceItemRows();
+};
+
+window.updateInvoiceItemPrice = function(idx, val) {
+  if (!invoiceItemsList[idx]) return;
+  const numeric = typeof parsePriceNumeric === 'function' ? parsePriceNumeric(val) : parseInt(val.replace(/\D/g, '')) || 0;
+  invoiceItemsList[idx].unitPrice = numeric;
+  window.renderInvoiceItemRows();
+};
+
+window.calcInvoiceTotals = function() {
+  const subtotal = invoiceItemsList.reduce((acc, item) => acc + ((Number(item.qty) || 1) * (Number(item.unitPrice) || 0)), 0);
+
+  const discountInput = document.getElementById('inv-builder-discount');
+  const discountVal = discountInput ? (typeof parsePriceNumeric === 'function' ? parsePriceNumeric(discountInput.value) : 0) : 0;
+
+  const grandTotal = Math.max(0, subtotal - discountVal);
+
+  const depositInput = document.getElementById('inv-builder-deposit');
+  const depositVal = depositInput ? (typeof parsePriceNumeric === 'function' ? parsePriceNumeric(depositInput.value) : 0) : 0;
+
+  const inst2Input = document.getElementById('inv-builder-installment2');
+  const inst2Val = inst2Input ? (typeof parsePriceNumeric === 'function' ? parsePriceNumeric(inst2Input.value) : 0) : 0;
+
+  const balance = Math.max(0, grandTotal - depositVal - inst2Val);
+
+  const subtotalEl = document.getElementById('inv-builder-subtotal');
+  if (subtotalEl) subtotalEl.value = subtotal.toLocaleString('fa-IR');
+
+  const grandTotalEl = document.getElementById('inv-builder-total');
+  if (grandTotalEl) grandTotalEl.value = grandTotal.toLocaleString('fa-IR');
+
+  const balanceEl = document.getElementById('inv-builder-balance');
+  if (balanceEl) balanceEl.value = balance.toLocaleString('fa-IR');
+};
+
+window.openVendorInvoiceBuilderModal = function(coupleName = 'علی و سارا', pkgTitle = '') {
+  const modal = document.getElementById('modal-vendor-invoice-builder');
+  if (!modal) return;
+
+  const coupleInput = document.getElementById('inv-builder-couple');
+  if (coupleInput) coupleInput.value = coupleName;
+
+  if (pkgTitle && invoiceItemsList.length > 0) {
+    invoiceItemsList[0].name = pkgTitle;
+  }
+
+  window.renderInvoiceItemRows();
+
+  modal.classList.remove('hidden');
+  modal.classList.add('flex');
+  if (window.lucide) lucide.createIcons();
 };
 
 window.closeVendorInvoiceBuilderModal = function() {
   const modal = document.getElementById('modal-vendor-invoice-builder');
   if (modal) {
     modal.classList.add('hidden');
+    modal.classList.remove('flex');
   }
+};
+
+window.previewPreInvoicePrint = function() {
+  const couple = document.getElementById('inv-builder-couple')?.value || 'علی و سارا';
+  const phone = document.getElementById('inv-builder-phone')?.value || '۰۹۱۳۰۰۰۰۰۰۰';
+  const eventDate = document.getElementById('inv-builder-date')?.value || '۱۴۰۳/۰۶/۱۵';
+  const total = document.getElementById('inv-builder-total')?.value || '۴۵,۰۰۰,۰۰۰';
+  const subtotal = document.getElementById('inv-builder-subtotal')?.value || '۴۵,۰۰۰,۰۰۰';
+  const discount = document.getElementById('inv-builder-discount')?.value || '۰';
+  const deposit = document.getElementById('inv-builder-deposit')?.value || '۱۰,۰۰۰,۰۰۰';
+  const inst2 = document.getElementById('inv-builder-installment2')?.value || '۱۵,۷۵۰,۰۰۰';
+  const balance = document.getElementById('inv-builder-balance')?.value || '۱۹,۲۵۰,۰۰۰';
+  const validity = document.getElementById('inv-builder-validity')?.value || '۳ روز کاری';
+
+  const activeVendor = (typeof vendors !== 'undefined' && Array.isArray(vendors)) ? (vendors.find(v => v.id === 2) || vendors[0]) : {};
+
+  const structuredData = {
+    num: 'INV-1403-' + Math.floor(100 + Math.random() * 900),
+    date: new Date().toLocaleDateString('fa-IR'),
+    validity: validity,
+    vendorName: activeVendor.name || 'استودیو و آتلیه تخصصی کویر یزد',
+    vendorPhone: activeVendor.phone || '۰۳۵-۳۸۲۵۲۲۲۲',
+    vendorAddress: activeVendor.address || 'یزد، میدان اطلسی، مجتمع آریا',
+    vendorCode: 'YZD-VND-' + (activeVendor.id || 2),
+    coupleName: couple,
+    couplePhone: phone,
+    eventDate: eventDate,
+    eventLocation: activeVendor.address || 'استان یزد',
+    title: invoiceItemsList[0]?.name || 'پکیج خدمات تشریفات عروسی',
+    total: total + ' تومان',
+    subtotal: subtotal + ' تومان',
+    discount: discount + ' تومان',
+    deposit: deposit + ' تومان',
+    installment2: inst2 + ' تومان',
+    balance: balance + ' تومان',
+    items: invoiceItemsList.map(item => ({
+      name: item.name,
+      qty: item.qty,
+      unitPrice: (item.unitPrice || 0).toLocaleString('fa-IR'),
+      discount: '۰',
+      total: ((item.qty || 1) * (item.unitPrice || 0)).toLocaleString('fa-IR')
+    })),
+    trackCode: 'AROOSI-' + Math.floor(10000 + Math.random() * 90000) + '-YZD'
+  };
+
+  if (typeof window.openPreInvoicePrintModal === 'function') {
+    window.openPreInvoicePrintModal(structuredData);
+  }
+};
+
+window.triggerPreInvoicePrint = function() {
+  window.previewPreInvoicePrint();
+  setTimeout(() => {
+    window.print();
+  }, 300);
 };
 
 window.toggleMasterDiscountBadge = function(isCheck) {
@@ -12443,28 +12607,28 @@ window.saveVendorReviewReply = function(reviewIdx) {
 
 window.handleSendInvoiceSubmit = function(e) {
   if (e && e.preventDefault) e.preventDefault();
-  closeVendorInvoiceBuilderModal();
 
   const couple = document.getElementById('inv-builder-couple')?.value || 'علی و سارا';
-  const title = document.getElementById('inv-builder-title')?.value || 'پکیج خدمات';
-  const date = document.getElementById('inv-builder-date')?.value || '۱۴۰۳/۰۶/۱۵';
   const total = document.getElementById('inv-builder-total')?.value || '۴۵,۰۰۰,۰۰۰';
   const deposit = document.getElementById('inv-builder-deposit')?.value || '۱۰,۰۰۰,۰۰۰';
-  const items = document.getElementById('inv-builder-items')?.value || '';
+  const eventDate = document.getElementById('inv-builder-date')?.value || '۱۴۰۳/۰۶/۱۵';
 
-  // Append new invoice message if chat state exists
+  const itemsSummary = invoiceItemsList.map(i => `• ${i.name} (${i.qty} عدد)`).join('\n');
+
   if (typeof activeChatThreadId !== 'undefined' && typeof chatThreads !== 'undefined') {
     const thread = chatThreads.find(t => t.id === activeChatThreadId) || chatThreads[0];
     if (thread) {
       thread.messages.push({
         id: 'msg-' + Date.now(),
         sender: 'vendor',
-        text: `📄 پیش‌فاکتور دیجیتال رسمی صادر شد:\nعنوان: ${title}\nتاریخ: ${date}\nمبلغ کل: ${total} تومان\nبیعانه: ${deposit} تومان\nشرح خدمات:\n${items}`,
+        text: `📄 پیش‌فاکتور دیجیتال رسمی صادر شد:\nمشتری: ${couple}\nتاریخ مراسم: ${eventDate}\nمبلغ کل: ${total} تومان\nبیعانه: ${deposit} تومان\nریز خدمات:\n${itemsSummary}`,
         time: 'الان'
       });
       if (typeof renderActiveChatThread === 'function') renderActiveChatThread();
     }
   }
+
+  window.closeVendorInvoiceBuilderModal();
 
   if (typeof showToast === 'function') {
     showToast(`🧾 پیش‌فاکتور دیجیتال به مبلغ ${total} تومان برای ${couple} ارسال شد.`, 'success');
