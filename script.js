@@ -3441,19 +3441,68 @@ if (document.readyState === "loading") {
 
     // VENDOR PROFILE EDIT FORM (VENDOR DASHBOARD)
     function handleVendorProfileUpdate(e) {
-      e.preventDefault();
-      const name = document.getElementById('vd-edit-name').value.trim();
-      const hours = document.getElementById('vd-edit-hours').value.trim();
-      const address = document.getElementById('vd-edit-address').value.trim();
-      const insta = document.getElementById('vd-edit-insta').value.trim();
+      if (e && e.preventDefault) e.preventDefault();
+      const name = document.getElementById('vd-edit-name')?.value?.trim() || '';
+      const phone = document.getElementById('vd-edit-phone')?.value?.trim() || '';
+      const landline = document.getElementById('vd-edit-landline')?.value?.trim() || '';
+      const district = document.getElementById('vd-edit-district')?.value || '';
+      const hours = document.getElementById('vd-edit-hours')?.value?.trim() || '';
+      const address = document.getElementById('vd-edit-address')?.value?.trim() || '';
+      const insta = document.getElementById('vd-edit-insta')?.value?.trim() || '';
+      const about = document.getElementById('vd-edit-about')?.value?.trim() || '';
+      const servicesRaw = document.getElementById('vd-edit-services')?.value || '';
+      const tagsRaw = document.getElementById('vd-edit-tags')?.value || '';
 
-      document.getElementById('vp-name').innerText = name;
-      document.getElementById('vp-hours').innerText = hours;
-      document.getElementById('vp-address').innerText = address;
-      document.getElementById('vp-instagram').innerText = insta;
-      document.getElementById('vd-header-name').innerText = "کسب و کار: " + name;
+      const services = servicesRaw.split('\n').map(s => s.trim()).filter(Boolean);
+      const tags = tagsRaw.split(',').map(t => t.trim()).filter(Boolean);
 
-      showToast('اطلاعات پروفایل عمومی کسب‌وکار شما با موفقیت به روزرسانی شد.', 'success');
+      const vendorId = 2; // Default active studio vendor in SaaS dashboard
+      const updatedData = {
+        id: vendorId,
+        name,
+        phone,
+        landline,
+        district,
+        hours,
+        address,
+        instagram: insta,
+        about,
+        customServices: services,
+        capabilityTags: tags
+      };
+
+      localStorage.setItem(`aroosi_vendor_custom_profile_${vendorId}`, JSON.stringify(updatedData));
+
+      if (typeof vendors !== 'undefined' && Array.isArray(vendors)) {
+        const idx = vendors.findIndex(v => v.id === vendorId);
+        if (idx !== -1) {
+          vendors[idx] = {
+            ...vendors[idx],
+            name: name || vendors[idx].name,
+            hours: hours || vendors[idx].hours,
+            address: address || vendors[idx].address,
+            instagram: insta || vendors[idx].instagram,
+            about: about || vendors[idx].about,
+            customServices: services.length > 0 ? services : vendors[idx].customServices,
+            capabilityTags: tags.length > 0 ? tags : vendors[idx].capabilityTags
+          };
+        }
+      }
+
+      const vpName = document.getElementById('vp-name');
+      if (vpName) vpName.innerText = name;
+      const vpHours = document.getElementById('vp-hours');
+      if (vpHours) vpHours.innerText = hours;
+      const vpAddress = document.getElementById('vp-address');
+      if (vpAddress) vpAddress.innerText = address;
+      const vpInsta = document.getElementById('vp-instagram');
+      if (vpInsta) vpInsta.innerText = insta;
+      const vdHeaderName = document.getElementById('vd-header-name');
+      if (vdHeaderName) vdHeaderName.innerText = name;
+
+      if (typeof showToast === 'function') {
+        showToast('اطلاعات بیوگرافی و خدمات اختصاصی پروفایل با موفقیت ذخیره گردید و در کارت شناور عمومی بروز شد.', 'success');
+      }
     }
 
     // CALENDAR & INQUIRIES & DIRECTORY
@@ -5895,8 +5944,25 @@ if (document.readyState === "loading") {
       if (typeof vendorId === 'string' && !isNaN(parseInt(vendorId))) {
         vId = parseInt(vendorId);
       }
-      const vendor = vendors.find(v => v.id === vId) || vendors[0];
+      let vendor = vendors.find(v => v.id === vId) || vendors[0];
       if (!vendor) return;
+
+      try {
+        const savedCustom = localStorage.getItem(`aroosi_vendor_custom_profile_${vendor.id}`);
+        if (savedCustom) {
+          const customObj = JSON.parse(savedCustom);
+          vendor = {
+            ...vendor,
+            ...customObj,
+            name: customObj.name || vendor.name,
+            about: customObj.about || vendor.about,
+            customServices: (customObj.customServices && customObj.customServices.length > 0) ? customObj.customServices : vendor.customServices,
+            capabilityTags: (customObj.capabilityTags && customObj.capabilityTags.length > 0) ? customObj.capabilityTags : vendor.capabilityTags
+          };
+        }
+      } catch (e) {
+        console.error(e);
+      }
 
       currentModalVendor = vendor;
 
@@ -5994,14 +6060,17 @@ if (document.readyState === "loading") {
         `).join('');
       }
 
-      // Populate Amenities Container
+      // Populate Amenities Container inside About Us section
       const amenitiesContainer = document.getElementById('vdm-amenities-container');
       if (amenitiesContainer) {
-        const amenities = vendor.capabilityTags || ["پارکینگ اختصاصی (۳۰۰ خودرو)", "سیستم صوتی و نورپردازی حرفه‌ای", "سفره عقد سنتی و سنتی-مدرن", "ژنراتور برق اضطراری", "اتاق پرو و میکاپ اختصاصی عروس", "کترینگ غذا و پذیرایی یزدی"];
+        let amenities = vendor.customServices || vendor.capabilityTags;
+        if (!amenities || amenities.length === 0) {
+          amenities = ["پارکینگ اختصاصی (۳۰۰ خودرو)", "سیستم صوتی و نورپردازی حرفه‌ای", "سفره عقد سنتی و سنتی-مدرن", "ژنراتور برق اضطراری", "اتاق پرو و میکاپ اختصاصی عروس", "کترینگ غذا و پذیرایی یزدی"];
+        }
         amenitiesContainer.innerHTML = amenities.map(a => `
-          <div class="bg-white border border-stone-200 rounded-xl p-3 flex items-center gap-2 text-xs font-semibold text-stone-800 shadow-2xs">
-            <span class="text-[#D4AF37]">✨</span>
-            <span>${a}</span>
+          <div class="bg-stone-50 hover:bg-stone-100/80 border border-stone-200/90 hover:border-[#D4AF37]/60 rounded-xl p-2.5 flex items-center gap-2 text-xs font-bold text-stone-800 transition-all shadow-2xs">
+            <span class="w-2 h-2 rounded-full bg-[#D4AF37] shrink-0"></span>
+            <span class="truncate">${a}</span>
           </div>
         `).join('');
       }

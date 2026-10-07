@@ -2947,6 +2947,21 @@
             <input type="text" id="vd-edit-maplink" value="https://nishan.ir/maps" class="w-full bg-bgCustom border border-accent rounded-xl p-2.5 text-xs font-medium focus:outline-none focus:border-primary dir-ltr">
           </div>
 
+          <div class="md:col-span-3 space-y-1">
+            <label class="block mb-1">درباره ما / بیوگرافی و معرفی مجموعه *</label>
+            <textarea id="vd-edit-about" rows="3" class="w-full bg-bgCustom border border-accent rounded-xl p-3 text-xs font-medium focus:outline-none focus:border-primary leading-relaxed" placeholder="متن معرفی و تاریخچه مجموعه خود را اینجا بنویسید...">استودیو و آتلیه تخصصی کویر یزد با بیش از ۱۰ سال سابقه درخشان در زمینه تصویربرداری عروسی، فرمالیته کویر و ساخت کلیپ‌های سینمایی عاشقانه با مجهزترین تجهیزات سینمایی در استان یزد.</textarea>
+          </div>
+
+          <div class="md:col-span-3 space-y-1">
+            <label class="block mb-1">خدمات و امکانات اختصاصی (هر خدمت در یک خط) *</label>
+            <textarea id="vd-edit-services" rows="3" class="w-full bg-bgCustom border border-accent rounded-xl p-3 text-xs font-medium focus:outline-none focus:border-primary leading-relaxed" placeholder="مثلا: تصویربرداری هوایی هلی‌شات&#10;تیم اختصاصی بانو&#10;تحویل کامل فایل خام کیفیت ۴K">تصویربرداری هوایی هلی‌شات کویر&#10;تیم مجرب و اختصاصی بانو&#10;تحویل فایل‌های خام با کیفیت ۴K&#10;آلبوم ایتالیایی جلد چرم دست‌ساز&#10;نورپردازی حرفه‌ای سینمایی</textarea>
+          </div>
+
+          <div class="md:col-span-3 space-y-1">
+            <label class="block mb-1">تگ‌ها و بج‌های تخصصی (با ویرگول جدا کنید):</label>
+            <input type="text" id="vd-edit-tags" value="فرمالیته کویر, آتلیه تخصصی, هلی‌شات, آلبوم ایتالیایی" class="w-full bg-bgCustom border border-accent rounded-xl p-2.5 text-xs font-medium focus:outline-none focus:border-primary" placeholder="مثلا: فرمالیته کویر, هلی‌شات, آتلیه VIP">
+          </div>
+
           <div class="md:col-span-3 flex justify-end pt-2 border-t border-accent">
             <button type="submit" class="bg-primary hover:bg-emerald-900 text-white font-bold px-6 py-2.5 rounded-xl text-xs shadow-xs transition-colors flex items-center gap-1.5">
               <i data-lucide="check-circle-2" class="w-4 h-4"></i>
@@ -4537,9 +4552,6 @@
             <span>📅 تقویم روزهای آزاد</span>
           </button>
           <button class="vtab-btn text-[#111827] font-bold" onclick="switchModalTab(3)">
-            <span>✨ خدمات & امکانات</span>
-          </button>
-          <button class="vtab-btn text-[#111827] font-bold" onclick="switchModalTab(4)">
             <span>⭐ نظرات & تجربیات</span>
           </button>
         </div>
@@ -4549,14 +4561,27 @@
 
         <!-- Tab 0: About & Story -->
         <div id="vtab-pane-0" class="vtab-pane space-y-6">
-          <div class="bg-white border border-stone-200 rounded-2xl p-5 shadow-sm space-y-3">
-            <h3 class="text-base font-bold text-[#1B3B2B] flex items-center gap-2">
-              <svg class="w-5 h-5 text-[#D4AF37]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
-              تاریخچه و درباره مجموعه
-            </h3>
-            <p id="vdm-about" class="text-sm text-stone-600 leading-relaxed">
-              هتل باغ مشیرالممالک یزد اولین هتل موزه باغ ایرانی با فضایی کاملاً سنتی، درختان کهنسال، نظرهای جاری و معماری اصیل یزدی است که در کنار امکانات تشریفاتی مدرن و منوهای پذیرایی متنوع، خاطره‌انگیزترین جشن ازدواج را برای شما و مهمانانتان رقم می‌زند.
-            </p>
+          <div class="bg-white border border-stone-200 rounded-2xl p-5 shadow-sm space-y-4">
+            <div class="border-b border-stone-100 pb-3">
+              <h3 class="text-base font-bold text-[#1B3B2B] flex items-center gap-2">
+                <svg class="w-5 h-5 text-[#D4AF37]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+                درباره و معرفی مجموعه
+              </h3>
+              <p id="vdm-about" class="text-sm text-stone-600 leading-relaxed mt-2">
+                هتل باغ مشیرالممالک یزد اولین هتل موزه باغ ایرانی با فضایی کاملاً سنتی، درختان کهنسال، نظرهای جاری و معماری اصیل یزدی است که در کنار امکانات تشریفاتی مدرن و منوهای پذیرایی متنوع، خاطره‌انگیزترین جشن ازدواج را برای شما و مهمانانتان رقم می‌زند.
+              </p>
+            </div>
+
+            <!-- Integrated Specialized Services & Amenities Badges -->
+            <div class="space-y-2.5 pt-1">
+              <h4 class="text-xs font-bold text-[#1B3B2B] flex items-center gap-1.5">
+                <i data-lucide="sparkles" class="w-4 h-4 text-[#D4AF37]"></i>
+                <span>خدمات و امکانات تخصصی</span>
+              </h4>
+              <div id="vdm-amenities-container" class="grid grid-cols-2 sm:grid-cols-3 gap-2.5">
+                <!-- Dynamically populated as rectangular mini-icon badge cards -->
+              </div>
+            </div>
           </div>
 
           <!-- Quick Features & Map Info -->
@@ -4621,18 +4646,8 @@
           </div>
         </div>
 
-        <!-- Tab 3: Amenities & Services -->
+        <!-- Tab 3: Reviews -->
         <div id="vtab-pane-3" class="vtab-pane hidden space-y-4">
-          <h3 class="text-base font-bold text-[#1B3B2B] flex items-center gap-2 mb-2">
-            ✨ امکانات و خدمات ویژه
-          </h3>
-          <div id="vdm-amenities-container" class="grid grid-cols-2 sm:grid-cols-3 gap-3">
-            <!-- Rendered via JS -->
-          </div>
-        </div>
-
-        <!-- Tab 4: Reviews -->
-        <div id="vtab-pane-4" class="vtab-pane hidden space-y-4">
           <div class="flex items-center justify-between">
             <h3 class="text-base font-bold text-[#1B3B2B] flex items-center gap-2">
               ⭐ نظرات و تجربیات واقعی زوجین
