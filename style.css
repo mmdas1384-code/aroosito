@@ -567,12 +567,150 @@ main#directory-view {
   margin: 0.25rem 0;
 }
 
-/* VIP Showcase Clean Vertical Grid Aesthetics */
+/* ========================================== */
+/* ULTRA-LUXURY 3D GLASSMORPHIC VIP SHOWCASE  */
+/* ========================================== */
+
 #vip-showcase-container,
 .vip-showcase-container {
   display: grid !important;
-  overflow-y: auto !important;
+  grid-template-columns: repeat(3, minmax(0, 1fr)) !important;
   gap: 12px !important;
+  height: 380px !important;
+  overflow: hidden !important;
+  position: relative !important;
+  perspective: 1000px !important;
+}
+
+@media (max-width: 768px) {
+  #vip-showcase-container,
+  .vip-showcase-container {
+    grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+  }
+  .vip-col-stream-3 {
+    display: none !important;
+  }
+}
+
+.vip-col-wrapper {
+  overflow: hidden !important;
+  position: relative !important;
+  height: 100% !important;
+  border-radius: 1.25rem !important;
+}
+
+.vip-col-stream {
+  display: flex !important;
+  flex-direction: column !important;
+  gap: 12px !important;
+  will-change: transform !important;
+}
+
+/* Opposing Continuous Motion Keyframes */
+@keyframes vipScrollUp {
+  0% { transform: translateY(0%); }
+  100% { transform: translateY(-50%); }
+}
+
+@keyframes vipScrollDown {
+  0% { transform: translateY(-50%); }
+  100% { transform: translateY(0%); }
+}
+
+.vip-col-stream-up {
+  animation: vipScrollUp 22s linear infinite !important;
+}
+
+.vip-col-stream-down {
+  animation: vipScrollDown 22s linear infinite !important;
+}
+
+/* Pause Motion on Container Hover */
+#vip-showcase-container:hover .vip-col-stream,
+.vip-showcase-container:hover .vip-col-stream {
+  animation-play-state: paused !important;
+}
+
+/* 3D Glassmorphic VIP Vendor Card Base State */
+.vip-3d-card,
+.vip-vendor-card {
+  position: relative !important;
+  aspect-ratio: 1 / 1 !important;
+  border-radius: 1.25rem !important;
+  overflow: hidden !important;
+  background: linear-gradient(135deg, rgba(27, 59, 43, 0.95) 0%, rgba(15, 37, 26, 0.95) 100%) !important;
+  border: 1px solid rgba(212, 175, 55, 0.4) !important;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.25), inset 0 0 15px rgba(212, 175, 55, 0.25) !important;
+  transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1), border-color 0.4s ease, box-shadow 0.4s ease !important;
+  cursor: pointer !important;
+}
+
+/* Minimalist Cover Image Base State */
+.vip-3d-card .vip-cover-img,
+.vip-vendor-card .vip-cover-img {
+  width: 100% !important;
+  height: 100% !important;
+  object-fit: cover !important;
+  transition: transform 0.5s ease !important;
+}
+
+/* Minimal VIP Badge Top Corner */
+.vip-3d-badge {
+  position: absolute !important;
+  top: 8px !important;
+  right: 8px !important;
+  z-index: 10 !important;
+  background: rgba(27, 59, 43, 0.85) !important;
+  color: #D4AF37 !important;
+  border: 1px solid rgba(212, 175, 55, 0.6) !important;
+  backdrop-filter: blur(8px) !important;
+  font-size: 10px !important;
+  font-weight: 900 !important;
+  padding: 3px 8px !important;
+  border-radius: 8px !important;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3) !important;
+  display: flex !important;
+  align-items: center !important;
+  gap: 3px !important;
+}
+
+/* Interactive Hover / Touch Reveal Overlay Layer */
+.vip-3d-card .vip-reveal-overlay,
+.vip-vendor-card .vip-reveal-overlay {
+  position: absolute !important;
+  inset: 0 !important;
+  z-index: 20 !important;
+  background: rgba(27, 59, 43, 0.9) !important;
+  backdrop-filter: blur(12px) !important;
+  -webkit-backdrop-filter: blur(12px) !important;
+  opacity: 0 !important;
+  visibility: hidden !important;
+  padding: 10px !important;
+  display: flex !important;
+  flex-direction: column !important;
+  justify-content: space-between !important;
+  transition: opacity 0.35s ease, visibility 0.35s ease !important;
+}
+
+/* Card Hover 3D Perspective Tilt & Reveal */
+.vip-3d-card:hover,
+.vip-vendor-card:hover {
+  transform: perspective(900px) translateZ(14px) rotateX(2deg) rotateY(-2deg) !important;
+  border-color: #D4AF37 !important;
+  box-shadow: 0 20px 40px rgba(212, 175, 55, 0.35), inset 0 0 20px rgba(212, 175, 55, 0.4) !important;
+}
+
+.vip-3d-card:hover .vip-cover-img,
+.vip-vendor-card:hover .vip-cover-img {
+  transform: scale(1.1) !important;
+}
+
+.vip-3d-card:hover .vip-reveal-overlay,
+.vip-3d-card.active .vip-reveal-overlay,
+.vip-vendor-card:hover .vip-reveal-overlay,
+.vip-vendor-card.active .vip-reveal-overlay {
+  opacity: 1 !important;
+  visibility: visible !important;
 }
 
 .pill-btn {
@@ -586,20 +724,6 @@ main#directory-view {
   background: #1B3B2B !important;
   color: #D4AF37 !important;
   font-weight: bold !important;
-}
-
-/* VIP Vendor Cards & Showcase Styling */
-.vip-vendor-card {
-  min-width: 280px !important;
-  max-width: 320px !important;
-  flex-shrink: 0 !important;
-  transition: transform 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease !important;
-}
-
-.vip-vendor-card:hover {
-  border-color: #D4AF37 !important;
-  transform: translateY(-4px) !important;
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15) !important;
 }
 
 /* Main Category Cards Grid Styling */
