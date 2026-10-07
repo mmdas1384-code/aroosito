@@ -14019,3 +14019,309 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   }, 300);
 });
+
+/* ==========================================================================
+   SMART BOOKING WIZARD MODAL LOGIC
+   ========================================================================== */
+let currentWizardStep = 1;
+let wizardData = {
+  location: 'صفائیه یزد',
+  budget: 'mid',
+  style: 'کلاسیک و مجلل'
+};
+
+window.openSmartWizardModal = function() {
+  currentWizardStep = 1;
+  const modal = document.getElementById('modal-smart-wizard');
+  if (!modal) return;
+  modal.classList.remove('hidden');
+  modal.classList.add('flex');
+  window.renderWizardStep();
+};
+
+window.closeSmartWizardModal = function() {
+  const modal = document.getElementById('modal-smart-wizard');
+  if (modal) {
+    modal.classList.add('hidden');
+    modal.classList.remove('flex');
+  }
+};
+
+window.closeSmartWizardResultsModal = function() {
+  const modal = document.getElementById('modal-smart-wizard-results');
+  if (modal) {
+    modal.classList.add('hidden');
+    modal.classList.remove('flex');
+  }
+};
+
+window.renderWizardStep = function() {
+  const content = document.getElementById('wizard-step-content');
+  const badge = document.getElementById('wizard-step-badge');
+  const progress = document.getElementById('wizard-step-progress');
+  const btnPrev = document.getElementById('wizard-btn-prev');
+  const btnNext = document.getElementById('wizard-btn-next');
+
+  if (!content) return;
+
+  if (currentWizardStep === 1) {
+    if (badge) badge.innerText = "گام ۱ از ۳: زمان و موقعیت مکانی";
+    if (progress) progress.innerText = "33%";
+    if (btnPrev) btnPrev.classList.add('hidden');
+    if (btnNext) btnNext.innerText = "ادامه (گام ۲)";
+
+    content.innerHTML = `
+      <div class="space-y-4">
+        <div>
+          <label class="block text-xs font-bold text-slate-200 mb-1.5">موقعیت مکانی/منطقه برگزاری در یزد:</label>
+          <select id="wiz-location" class="w-full bg-[#1E293B] border border-[#D4AF37]/30 text-white rounded-xl p-2.5 text-xs font-bold focus:outline-none focus:border-[#D4AF37]">
+            <option value="صفائیه یزد" selected>صفائیه و بلوار دانشگاه</option>
+            <option value="بافت تاریخی یزد">بافت تاریخی & خانه‌های سنتی</option>
+            <option value="آزادشهر و امامشهر">آزادشهر & بلوار جمهوری</option>
+            <option value="کویر یزد">کویر و فرمالیته اختصاصی</option>
+          </select>
+        </div>
+        <div>
+          <label class="block text-xs font-bold text-slate-200 mb-1.5">فصل / تاریخ تقریبی برگزاری:</label>
+          <select id="wiz-season" class="w-full bg-[#1E293B] border border-[#D4AF37]/30 text-white rounded-xl p-2.5 text-xs font-bold focus:outline-none focus:border-[#D4AF37]">
+            <option value="پاییز و زمستان ۱۴۰۳">پاییز / زمستان ۱۴۰۳ (فصل طلایی یزد)</option>
+            <option value="بهار و تابستان ۱۴۰۴">بهار / تابستان ۱۴۰۴</option>
+          </select>
+        </div>
+      </div>
+    `;
+  } else if (currentWizardStep === 2) {
+    if (badge) badge.innerText = "گام ۲ از ۳: سقف بودجه کل";
+    if (progress) progress.innerText = "66%";
+    if (btnPrev) btnPrev.classList.remove('hidden');
+    if (btnNext) btnNext.innerText = "ادامه (گام ۳)";
+
+    content.innerHTML = `
+      <div class="space-y-3">
+        <label class="block text-xs font-bold text-slate-200 mb-1.5">محدوده بودجه کل مد نظر برای خدمات عروسی:</label>
+        <div class="grid grid-cols-1 sm:grid-cols-3 gap-3">
+          <button type="button" onclick="selectWizardBudget('economic', this)" class="p-3 bg-[#1E293B] border border-[#D4AF37]/30 rounded-2xl text-right hover:border-[#D4AF37] transition-all wiz-budget-btn cursor-pointer">
+            <span class="text-xs font-black text-[#D4AF37] block mb-1">اقتصادی</span>
+            <span class="text-[11px] text-slate-300 block font-normal">تا ۱۵۰ میلیون تومان</span>
+          </button>
+          <button type="button" onclick="selectWizardBudget('mid', this)" class="p-3 bg-[#1E293B] border-2 border-[#D4AF37] rounded-2xl text-right hover:border-[#D4AF37] transition-all wiz-budget-btn cursor-pointer">
+            <span class="text-xs font-black text-[#D4AF37] block mb-1">متوسط & استاندارد</span>
+            <span class="text-[11px] text-slate-300 block font-normal">۱۵۰ تا ۳۵۰ میلیون</span>
+          </button>
+          <button type="button" onclick="selectWizardBudget('luxury', this)" class="p-3 bg-[#1E293B] border border-[#D4AF37]/30 rounded-2xl text-right hover:border-[#D4AF37] transition-all wiz-budget-btn cursor-pointer">
+            <span class="text-xs font-black text-[#D4AF37] block mb-1">VIP & لاکچری</span>
+            <span class="text-[11px] text-slate-300 block font-normal">بالای ۳۵۰ میلیون</span>
+          </button>
+        </div>
+      </div>
+    `;
+  } else if (currentWizardStep === 3) {
+    if (badge) badge.innerText = "گام ۳ از ۳: سبک و تم مراسم";
+    if (progress) progress.innerText = "100%";
+    if (btnPrev) btnPrev.classList.remove('hidden');
+    if (btnNext) btnNext.innerText = "نمایش ۳ تامین‌کننده برتر ✨";
+
+    content.innerHTML = `
+      <div class="space-y-3">
+        <label class="block text-xs font-bold text-slate-200 mb-1.5">سبک و تم مورد علاقه شما برای عروسی:</label>
+        <div class="grid grid-cols-1 sm:grid-cols-3 gap-3">
+          <label class="p-3 bg-[#1E293B] border border-[#D4AF37]/40 rounded-2xl flex items-center justify-between cursor-pointer hover:border-[#D4AF37]">
+            <div class="space-y-0.5">
+              <span class="text-xs font-black text-white block">کلاسیک & مجلل</span>
+              <span class="text-[10px] text-slate-300 block">سفره اسلیمی و تالار</span>
+            </div>
+            <input type="radio" name="wiz-style" value="کلاسیک و مجلل" checked class="accent-[#D4AF37]">
+          </label>
+          <label class="p-3 bg-[#1E293B] border border-[#D4AF37]/40 rounded-2xl flex items-center justify-between cursor-pointer hover:border-[#D4AF37]">
+            <div class="space-y-0.5">
+              <span class="text-xs font-black text-white block">روستیک & کویری</span>
+              <span class="text-[10px] text-slate-300 block">فرمالیته کویر و فضای باز</span>
+            </div>
+            <input type="radio" name="wiz-style" value="روستیک و کویری" class="accent-[#D4AF37]">
+          </label>
+          <label class="p-3 bg-[#1E293B] border border-[#D4AF37]/40 rounded-2xl flex items-center justify-between cursor-pointer hover:border-[#D4AF37]">
+            <div class="space-y-0.5">
+              <span class="text-xs font-black text-white block">مدرن & مینیمال</span>
+              <span class="text-[10px] text-slate-300 block">طراحی مدرن و شیک</span>
+            </div>
+            <input type="radio" name="wiz-style" value="مدرن و مینیمال" class="accent-[#D4AF37]">
+          </label>
+        </div>
+      </div>
+    `;
+  }
+
+  if (window.lucide) lucide.createIcons();
+};
+
+window.selectWizardBudget = function(tier, el) {
+  wizardData.budget = tier;
+  document.querySelectorAll('.wiz-budget-btn').forEach(btn => {
+    btn.classList.remove('border-2', 'border-[#D4AF37]');
+    btn.classList.add('border', 'border-[#D4AF37]/30');
+  });
+  if (el) {
+    el.classList.remove('border-[#D4AF37]/30');
+    el.classList.add('border-2', 'border-[#D4AF37]');
+  }
+};
+
+window.nextWizardStep = function() {
+  if (currentWizardStep < 3) {
+    currentWizardStep++;
+    window.renderWizardStep();
+  } else {
+    window.finishSmartWizard();
+  }
+};
+
+window.prevWizardStep = function() {
+  if (currentWizardStep > 1) {
+    currentWizardStep--;
+    window.renderWizardStep();
+  }
+};
+
+window.finishSmartWizard = function() {
+  window.closeSmartWizardModal();
+  const resModal = document.getElementById('modal-smart-wizard-results');
+  const container = document.getElementById('wizard-results-container');
+  if (!resModal || !container) return;
+
+  const top3 = (typeof vendors !== 'undefined' && vendors.length > 0) ? vendors.slice(0, 3) : [];
+
+  container.innerHTML = top3.map((v, i) => `
+    <div class="p-4 bg-[#1E293B] border border-[#D4AF37]/40 rounded-2xl flex flex-col sm:flex-row items-center justify-between gap-4 text-right">
+      <div class="flex items-center gap-3.5">
+        <span class="w-8 h-8 rounded-full bg-[#D4AF37] text-[#0F251A] font-black text-xs flex items-center justify-center shrink-0">#${i + 1}</span>
+        <img src="${v.image}" alt="${v.name}" class="w-16 h-16 rounded-xl object-cover border border-[#D4AF37]/40 shrink-0">
+        <div class="space-y-1">
+          <h4 class="text-sm font-black text-white">${v.name}</h4>
+          <span class="text-xs text-amber-200 block font-bold">${v.category} • ${v.district || 'صفائیه یزد'}</span>
+          <span class="text-[11px] text-slate-300 font-medium">پایه قیمت: <strong class="text-[#D4AF37]">${v.priceRange || 'استعلام'}</strong></span>
+        </div>
+      </div>
+      <div class="flex items-center gap-2 self-end sm:self-auto shrink-0">
+        <button type="button" onclick="closeSmartWizardResultsModal(); openVendorDetailModal(${v.id})" class="bg-gradient-to-r from-[#D4AF37] to-[#F3E5AB] text-[#0F251A] text-xs font-black py-2 px-4 rounded-xl shadow-md transition-all hover:scale-105 active:scale-95 cursor-pointer">
+          مشاهده پروفایل
+        </button>
+      </div>
+    </div>
+  `).join('');
+
+  resModal.classList.remove('hidden');
+  resModal.classList.add('flex');
+  if (window.lucide) lucide.createIcons();
+};
+
+/* ==========================================================================
+   PEARL WHITE / DARK LUXURY THEME TOGGLE
+   ========================================================================== */
+window.toggleThemeMode = function() {
+  const body = document.body;
+  const isPearl = body.classList.contains('theme-pearl-white');
+  const btnText = document.getElementById('theme-toggle-text');
+
+  if (isPearl) {
+    body.classList.remove('theme-pearl-white');
+    localStorage.setItem('aroosi_theme_mode', 'dark');
+    if (btnText) btnText.innerText = 'تم دارک';
+    showToast('تم دیداری به دارک اسلیت & طلایی تغییر یافت.', 'info');
+  } else {
+    body.classList.add('theme-pearl-white');
+    localStorage.setItem('aroosi_theme_mode', 'pearl');
+    if (btnText) btnText.innerText = 'تم پرل وب';
+    showToast('تم دیداری به پرل وایت & شامپاین تغییر یافت.', 'info');
+  }
+
+  if (window.lucide) lucide.createIcons();
+};
+
+document.addEventListener('DOMContentLoaded', () => {
+  const savedTheme = localStorage.getItem('aroosi_theme_mode');
+  if (savedTheme === 'pearl') {
+    document.body.classList.add('theme-pearl-white');
+    const btnText = document.getElementById('theme-toggle-text');
+    if (btnText) btnText.innerText = 'تم پرل وب';
+  }
+});
+
+/* ==========================================================================
+   IMMERSIVE STORY LIGHTBOX LOGIC
+   ========================================================================== */
+const storyHighlightsData = {
+  1: {
+    vendorId: 2,
+    vendorName: "استودیو و آتلیه تخصصی کویر یزد",
+    category: "آتلیه عکاسی & فیلمبرداری",
+    image: "https://images.unsplash.com/photo-1519741497674-611481863552?auto=format&fit=crop&w=800&q=80",
+    avatar: "https://images.unsplash.com/photo-1519741497674-611481863552?auto=format&fit=crop&w=200&q=80",
+    caption: "کلیپ اختصاصی فرمالیته کویر یزد با تصویربرداری هلی‌شات و نورپردازی حرفه‌ای"
+  },
+  2: {
+    vendorId: 3,
+    vendorName: "سالن زیبایی رویال یزد",
+    category: "سالن زیبایی & آرایشگاه عروس",
+    image: "https://images.unsplash.com/photo-1583939003579-730e3918a45a?auto=format&fit=crop&w=800&q=80",
+    avatar: "https://images.unsplash.com/photo-1583939003579-730e3918a45a?auto=format&fit=crop&w=200&q=80",
+    caption: "نمونه میکاپ و شینیون VIP عروس با گریم تخصصی و محصولات برند درجه یک"
+  },
+  3: {
+    vendorId: 1,
+    vendorName: "هتل باغ و تشریفات مشیرالممالک یزد",
+    category: "باغ تالار & تشریفات عروسی",
+    image: "https://images.unsplash.com/photo-1511285560929-80b456fea0bc?auto=format&fit=crop&w=800&q=80",
+    avatar: "https://images.unsplash.com/photo-1511285560929-80b456fea0bc?auto=format&fit=crop&w=200&q=80",
+    caption: "فضای مجلل باغ مشیرالممالک با منوی شام VIP و گل‌آرایی طبیعی"
+  },
+  4: {
+    vendorId: 4,
+    vendorName: "مزون عروس لورنت یزد",
+    category: "مزون & لباس عروس",
+    image: "https://images.unsplash.com/photo-1544078751-58fed2d3cdcc?auto=format&fit=crop&w=800&q=80",
+    avatar: "https://images.unsplash.com/photo-1544078751-58fed2d3cdcc?auto=format&fit=crop&w=200&q=80",
+    caption: "کالکشن جدید لباس عروس با دانتل فرانسوی و امکان دوخت سفارشی"
+  },
+  5: {
+    vendorId: 1,
+    vendorName: "تشریفات عقد سنتی مشیر",
+    category: "سفره عقد & تشریفات",
+    image: "https://images.unsplash.com/photo-1465495976277-4387d4b0b4c6?auto=format&fit=crop&w=800&q=80",
+    avatar: "https://images.unsplash.com/photo-1465495976277-4387d4b0b4c6?auto=format&fit=crop&w=200&q=80",
+    caption: "چیدمان سفره عقد اسلیمی سنتی در بافت تاریخی یزد"
+  }
+};
+
+window.openStoryLightbox = function(storyId) {
+  const modal = document.getElementById('modal-story-lightbox');
+  const img = document.getElementById('story-lightbox-img');
+  const avatar = document.getElementById('story-lightbox-avatar');
+  const vendorName = document.getElementById('story-lightbox-vendor-name');
+  const category = document.getElementById('story-lightbox-category');
+  const caption = document.getElementById('story-lightbox-caption');
+  const profileBtn = document.getElementById('story-lightbox-profile-btn');
+
+  if (!modal) return;
+  const data = storyHighlightsData[storyId] || storyHighlightsData[1];
+
+  if (img) img.src = data.image;
+  if (avatar) avatar.src = data.avatar;
+  if (vendorName) vendorName.innerText = data.vendorName;
+  if (category) category.innerText = data.category;
+  if (caption) caption.innerText = data.caption;
+  if (profileBtn) {
+    profileBtn.setAttribute('onclick', `closeStoryLightbox(); openVendorDetailModal(${data.vendorId})`);
+  }
+
+  modal.classList.remove('hidden');
+  modal.classList.add('flex');
+  if (window.lucide) lucide.createIcons();
+};
+
+window.closeStoryLightbox = function() {
+  const modal = document.getElementById('modal-story-lightbox');
+  if (modal) {
+    modal.classList.add('hidden');
+    modal.classList.remove('flex');
+  }
+};

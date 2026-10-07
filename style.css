@@ -1904,3 +1904,27 @@ footer {
     padding: 0 !important;
   }
 }
+
+/* ==========================================================================
+   PEARL WHITE & CHAMPAGNE THEME STYLES
+   ========================================================================== */
+body.theme-pearl-white {
+  background-color: #F8FAFC !important;
+  color: #0F172A !important;
+}
+
+body.theme-pearl-white .bg-\[\#0F172A\],
+body.theme-pearl-white .bg-\[\#1E293B\] {
+  background-color: #FFFFFF !important;
+  color: #0F172A !important;
+  border-color: rgba(212, 175, 55, 0.4) !important;
+}
+
+body.theme-pearl-white .text-white {
+  color: #0F172A !important;
+}
+
+body.theme-pearl-white .text-slate-300,
+body.theme-pearl-white .text-slate-400 {
+  color: #475569 !important;
+}
