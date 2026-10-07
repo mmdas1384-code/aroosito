@@ -397,15 +397,10 @@
               </button>
               <button onclick="openCounselorModal()" class="w-full text-right px-3 py-2 text-xs font-semibold rounded-xl hover:bg-slate-50 hover:text-primary flex items-center gap-2.5 transition-colors">
                 <i data-lucide="headphones" class="w-4 h-4 text-primary shrink-0"></i>
-                <span>ارتباط مستقیم با پشتیبانی</span>
+                <span>مشاوره تخصصی ازدواج</span>
               </button>
             </div>
           </div>
-
-          <button onclick="openSupportModal()" class="px-3 py-1.5 rounded-xl transition-colors hover:text-[#D4AF37] hover:bg-white/10 flex items-center gap-1.5 shrink-0">
-            <i data-lucide="headphones" class="w-4 h-4 text-[#D4AF37]"></i>
-            <span>ارتباط با پشتیبانی</span>
-          </button>
         </nav>
 
         <div class="hidden md:flex items-center gap-2 text-xs text-amber-200/80 font-medium shrink-0">
@@ -6683,6 +6678,21 @@
         <button onclick="handleSaveSubCategory(event)" class="px-5 py-2 bg-primary hover:bg-emerald-900 text-white font-bold text-xs rounded-xl transition-colors shadow-xs">ذخیره زیرگروه</button>
       </div>
     </div>
+  </div>
+
+  <!-- GLOBAL FLOATING ACTION BUTTONS (FABs) -->
+  <div class="fixed bottom-6 left-6 z-[99999] flex flex-col gap-3 items-start pointer-events-auto">
+    <!-- FAB 1: Support Modal -->
+    <button onclick="openSupportModal()" type="button" class="group bg-[#1B3B2B] hover:bg-emerald-900 text-[#D4AF37] border-2 border-[#D4AF37] px-4 py-3 rounded-full shadow-2xl flex items-center gap-2.5 transition-all duration-300 hover:scale-105 active:scale-95 cursor-pointer" title="ارتباط با پشتیبانی">
+      <i data-lucide="headphones" class="w-5 h-5 text-[#D4AF37]"></i>
+      <span class="text-xs font-black text-white hidden sm:inline group-hover:inline">پشتیبانی آنلاین</span>
+    </button>
+
+    <!-- FAB 2: Messages & Chat Center -->
+    <button onclick="switchTab('messages')" type="button" class="group bg-[#D4AF37] hover:bg-amber-400 text-[#1B3B2B] border-2 border-[#1B3B2B] px-4 py-3 rounded-full shadow-2xl flex items-center gap-2.5 transition-all duration-300 hover:scale-105 active:scale-95 cursor-pointer" title="مرکز گفت‌وگو">
+      <i data-lucide="message-square" class="w-5 h-5 text-[#1B3B2B]"></i>
+      <span class="text-xs font-black text-[#1B3B2B] hidden sm:inline group-hover:inline">مرکز گفت‌وگو (چت)</span>
+    </button>
   </div>
 
   <!-- App Script -->
