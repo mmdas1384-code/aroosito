@@ -6473,24 +6473,24 @@ if (document.readyState === "loading") {
         const customQuestions = (!isSpecificItemInquiry && typeof getVendorCustomQuestions === 'function') ? getVendorCustomQuestions(vendor ? vendor.id : 1) : [];
         if (customQuestions && customQuestions.length > 0) {
           customContainer.innerHTML = `
-            <div class="border-b border-amber-200 pb-1 mb-2 flex items-center justify-between">
-              <span class="text-xs font-bold text-amber-900 flex items-center gap-1">
-                <i data-lucide="help-circle" class="w-3.5 h-3.5 text-amber-700"></i>
+            <div class="border-b border-[#D4AF37]/30 pb-1 mb-2 flex items-center justify-between">
+              <span class="text-xs font-bold text-[#D4AF37] flex items-center gap-1">
+                <i data-lucide="help-circle" class="w-3.5 h-3.5 text-[#D4AF37]"></i>
                 <span>سوالات اختصاصی مجموعه ${targetName}:</span>
               </span>
-              <span class="text-[10px] text-amber-800">پاسخ‌های شما جهت ارزیابی دقیق‌تر</span>
+              <span class="text-[10px] text-amber-200">پاسخ‌های شما جهت ارزیابی دقیق‌تر</span>
             </div>
             <div class="space-y-3">
               ${customQuestions.map((q, idx) => {
                 const reqAttr = q.required ? 'required' : '';
-                const reqAsterisk = q.required ? '<span class="text-rose-600 mr-0.5">*</span>' : '';
+                const reqAsterisk = q.required ? '<span class="text-rose-400 mr-0.5">*</span>' : '';
 
                 if (q.type === 'select') {
-                  const optionsHtml = (q.options || []).map(opt => `<option value="${opt}">${opt}</option>`).join('');
+                  const optionsHtml = (q.options || []).map(opt => `<option value="${opt}" class="bg-[#0F172A] text-white">${opt}</option>`).join('');
                   return `
                     <div class="space-y-1">
-                      <label class="block text-xs font-bold text-graphite">${q.label} ${reqAsterisk}</label>
-                      <select data-custom-q-id="${q.id}" data-custom-q-label="${q.label}" ${reqAttr} class="inquiry-custom-input w-full bg-white border border-accent rounded-xl p-2.5 text-xs font-semibold focus:outline-none focus:border-primary cursor-pointer">
+                      <label class="block text-xs font-bold text-slate-200">${q.label} ${reqAsterisk}</label>
+                      <select data-custom-q-id="${q.id}" data-custom-q-label="${q.label}" ${reqAttr} class="inquiry-custom-input w-full bg-[#0F172A] border border-[#D4AF37]/30 text-white rounded-xl p-2.5 text-xs font-bold focus:outline-none focus:border-[#D4AF37] cursor-pointer">
                         ${optionsHtml}
                       </select>
                     </div>
@@ -6498,15 +6498,15 @@ if (document.readyState === "loading") {
                 } else if (q.type === 'number') {
                   return `
                     <div class="space-y-1">
-                      <label class="block text-xs font-bold text-graphite">${q.label} ${reqAsterisk}</label>
-                      <input type="number" data-custom-q-id="${q.id}" data-custom-q-label="${q.label}" ${reqAttr} placeholder="ورود عدد..." class="inquiry-custom-input w-full bg-white border border-accent rounded-xl p-2.5 text-xs font-medium focus:outline-none focus:border-primary">
+                      <label class="block text-xs font-bold text-slate-200">${q.label} ${reqAsterisk}</label>
+                      <input type="number" data-custom-q-id="${q.id}" data-custom-q-label="${q.label}" ${reqAttr} placeholder="ورود عدد..." class="inquiry-custom-input w-full bg-[#0F172A] border border-[#D4AF37]/30 text-white placeholder-slate-400 rounded-xl p-2.5 text-xs font-bold focus:outline-none focus:border-[#D4AF37]">
                     </div>
                   `;
                 } else {
                   return `
                     <div class="space-y-1">
-                      <label class="block text-xs font-bold text-graphite">${q.label} ${reqAsterisk}</label>
-                      <input type="text" data-custom-q-id="${q.id}" data-custom-q-label="${q.label}" ${reqAttr} placeholder="توضیحات شما..." class="inquiry-custom-input w-full bg-white border border-accent rounded-xl p-2.5 text-xs font-medium focus:outline-none focus:border-primary">
+                      <label class="block text-xs font-bold text-slate-200">${q.label} ${reqAsterisk}</label>
+                      <input type="text" data-custom-q-id="${q.id}" data-custom-q-label="${q.label}" ${reqAttr} placeholder="توضیحات شما..." class="inquiry-custom-input w-full bg-[#0F172A] border border-[#D4AF37]/30 text-white placeholder-slate-400 rounded-xl p-2.5 text-xs font-bold focus:outline-none focus:border-[#D4AF37]">
                     </div>
                   `;
                 }
@@ -11409,69 +11409,60 @@ if (document.readyState === "loading") {
       }
 
       if (items.length === 0) {
-        grid.innerHTML = `<div class="col-span-full p-8 text-center text-secondary text-xs font-bold bg-white rounded-3xl border border-accent">هیچ ایده‌ای متناسب با جستجوی شما پیدا نشد.</div>`;
+        grid.innerHTML = `<div class="col-span-full p-8 text-center text-slate-300 text-xs font-bold bg-[#0F172A] rounded-3xl border border-[#D4AF37]/30">هیچ ایده‌ای متناسب با جستجوی شما پیدا نشد.</div>`;
         return;
       }
 
       items.forEach(item => {
         const isBookmarked = inspirationState.bookmarkedIds.includes(item.id);
         const card = document.createElement('div');
-        card.className = "bg-white border border-accent rounded-3xl overflow-hidden shadow-xs hover:shadow-lg transition-all group flex flex-col justify-between";
+        card.className = "bg-[#0F172A] border border-[#D4AF37]/30 hover:border-[#D4AF37] rounded-3xl overflow-hidden shadow-lg hover:shadow-[0_12px_30px_rgba(212,175,55,0.25)] transition-all duration-300 group flex flex-col justify-between hover:-translate-y-1";
 
-        const vendorName = item.vendor ? item.vendor.name : 'تامین‌کننده';
+        const vendorName = item.vendor ? item.vendor.name : 'تامین‌کننده معتبر';
 
         card.innerHTML = `
           <div>
             <div onclick="openIdeaDetailModal(${item.id})" class="relative aspect-4/5 overflow-hidden bg-slate-900 cursor-pointer">
-              <img src="${item.image}" alt="${item.title}" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
-              <div class="absolute inset-0 bg-gradient-to-t from-graphite/80 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity flex flex-col justify-between p-4">
-                <div class="flex justify-between items-center">
-                  <span class="bg-white/90 backdrop-blur-xs text-graphite text-[10px] font-bold px-2.5 py-1 rounded-full shadow-xs">
-                    ${item.categoryName}
-                  </span>
-                  <button onclick="toggleBookmarkMoodboard(${item.id}, event)" class="w-9 h-9 rounded-full bg-white/90 hover:bg-white text-rose-500 flex items-center justify-center shadow-md transition-transform active:scale-95" title="ذخیره در مودبورد">
-                    <i data-lucide="heart" class="w-5 h-5 ${isBookmarked ? 'fill-rose-500 text-rose-500' : 'text-slate-600'}"></i>
-                  </button>
-                </div>
+              <img src="${item.image}" alt="${item.title}" class="w-full h-full object-cover group-hover:scale-108 transition-transform duration-700">
+              <div class="absolute inset-0 bg-gradient-to-t from-[#0F172A] via-[#0F172A]/20 to-transparent"></div>
 
-                <button onclick="event.stopPropagation(); openIdeaDetailModal(${item.id});" class="w-full bg-primary hover:bg-emerald-900 text-white font-bold text-xs py-2.5 rounded-xl shadow-lg transition-all flex items-center justify-center gap-1.5">
-                  <i data-lucide="eye" class="w-3.5 h-3.5"></i>
-                  <span>مشاهده جزییات و استعلام</span>
-                </button>
-              </div>
-
-              <!-- Top Overlay Badges (Always visible) -->
-              <div class="absolute top-3 right-3 group-hover:opacity-0 transition-opacity">
-                <span class="bg-graphite/70 text-white text-[10px] font-bold px-2.5 py-1 rounded-full backdrop-blur-xs">
-                  ${item.categoryName}
+              <div class="absolute top-3 right-3">
+                <span class="bg-black/60 backdrop-blur-md text-amber-200 border border-[#D4AF37]/50 text-[10px] font-bold px-2.5 py-1 rounded-full shadow-md inline-flex items-center gap-1">
+                  <i data-lucide="tag" class="w-3 h-3 text-[#D4AF37]"></i>
+                  <span>${item.categoryName}</span>
                 </span>
               </div>
-              <div class="absolute top-3 left-3 group-hover:opacity-0 transition-opacity">
-                <span class="bg-black/40 text-white text-[10px] font-bold px-2 py-0.5 rounded-full backdrop-blur-xs flex items-center gap-1">
-                  <i data-lucide="eye" class="w-3 h-3 text-emerald-400"></i>
-                  <span>${item.viewsCount}</span>
+
+              <div class="absolute top-3 left-3 flex items-center gap-1.5" onclick="event.stopPropagation()">
+                <button onclick="toggleBookmarkMoodboard(${item.id}, event)" class="w-8 h-8 rounded-full bg-black/60 backdrop-blur-md border border-white/20 flex items-center justify-center text-rose-500 shadow-sm transition-transform active:scale-90 hover:scale-110 cursor-pointer" title="ذخیره در مودبورد">
+                  <i data-lucide="heart" class="w-4 h-4 ${isBookmarked ? 'fill-rose-500 text-rose-500' : 'text-rose-500'}"></i>
+                </button>
+                <span class="bg-black/60 backdrop-blur-md text-slate-200 text-[10px] font-bold px-2 py-1 rounded-full flex items-center gap-1">
+                  <i data-lucide="clock" class="w-3 h-3 text-[#D4AF37]"></i>
+                  <span>خواندن ۳ دقیقه</span>
                 </span>
               </div>
             </div>
 
-            <div onclick="openIdeaDetailModal(${item.id})" class="p-4 space-y-2 cursor-pointer">
-              <h4 class="text-xs font-bold text-graphite line-clamp-2 leading-relaxed hover:text-primary transition-colors">${item.title}</h4>
-              <p class="text-[11px] text-secondary font-medium truncate flex items-center gap-1">
-                <i data-lucide="store" class="w-3 h-3 text-primary"></i>
-                <span>ارائه‌شده توسط: ${vendorName}</span>
+            <div onclick="openIdeaDetailModal(${item.id})" class="p-5 space-y-2 cursor-pointer text-right">
+              <h4 class="text-sm sm:text-base font-black text-white line-clamp-2 leading-relaxed group-hover:text-[#D4AF37] transition-colors">${item.title}</h4>
+              <p class="text-xs text-slate-300 font-medium line-clamp-2 leading-relaxed">مجموعه ایده‌های جدید و جذاب برای برنامه‌ریزی مراسم عروسی در یزد با طراحی اختصاصی.</p>
+              <p class="text-[11px] text-amber-200/90 font-bold truncate flex items-center gap-1 pt-1">
+                <i data-lucide="store" class="w-3.5 h-3.5 text-[#D4AF37]"></i>
+                <span>مجری: ${vendorName}</span>
               </p>
             </div>
           </div>
 
-          <div class="px-4 pb-4 pt-1 flex items-center justify-between border-t border-accent/60">
-            <button onclick="toggleBookmarkMoodboard(${item.id}, event)" class="text-xs font-bold flex items-center gap-1.5 ${isBookmarked ? 'text-rose-600' : 'text-secondary hover:text-rose-600'} transition-colors">
-              <i data-lucide="heart" class="w-4 h-4 ${isBookmarked ? 'fill-rose-600' : ''}"></i>
-              <span>${isBookmarked ? 'ذخیره شده در مودبورد' : 'ذخیره در مودبورد'}</span>
+          <div class="px-5 pb-5 pt-2 flex items-center justify-between border-t border-slate-800/80">
+            <button onclick="toggleBookmarkMoodboard(${item.id}, event)" class="text-xs font-bold flex items-center gap-1.5 ${isBookmarked ? 'text-rose-400' : 'text-slate-300 hover:text-rose-400'} transition-colors cursor-pointer">
+              <i data-lucide="heart" class="w-4 h-4 ${isBookmarked ? 'fill-rose-500 text-rose-500' : ''}"></i>
+              <span>${isBookmarked ? 'ذخیره شده' : 'ذخیره در مودبورد'}</span>
             </button>
 
-            <button onclick="openIdeaDetailModal(${item.id})" class="text-[11px] font-bold text-primary hover:underline flex items-center gap-1">
-              <span>استعلام ایده</span>
-              <i data-lucide="chevron-left" class="w-3.5 h-3.5"></i>
+            <button onclick="openIdeaDetailModal(${item.id})" class="text-xs font-black text-[#D4AF37] hover:text-amber-300 flex items-center gap-1 transition-all group-hover:translate-x-[-3px] cursor-pointer">
+              <span>مطالعه مقاله</span>
+              <i data-lucide="arrow-left" class="w-3.5 h-3.5 text-[#D4AF37]"></i>
             </button>
           </div>
         `;
