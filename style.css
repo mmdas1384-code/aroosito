@@ -296,9 +296,25 @@ header, nav, .header-container, .navbar {
     text-shadow: none !important;
 }
 
-/* Force High Contrast Dark Slate Typography inside #vendor-detail-modal */
-#vendor-detail-modal {
-    color: #111827 !important;
+/* ========================================== */
+/* 3D ULTRA-LUXURY GLASSMORPHIC MODAL THEME  */
+/* ========================================== */
+
+#vendor-detail-modal .clean-vmodal-card,
+#inquiry-modal > div {
+  background: rgba(15, 37, 26, 0.92) !important;
+  backdrop-filter: blur(20px) !important;
+  -webkit-backdrop-filter: blur(20px) !important;
+  color: #FFFFFF !important;
+  border: 1.5px solid rgba(212, 175, 55, 0.5) !important;
+  box-shadow: 0 25px 60px rgba(0, 0, 0, 0.6), inset 0 0 30px rgba(212, 175, 55, 0.15) !important;
+}
+
+#vendor-detail-modal .vmodal-block-header,
+#vendor-detail-modal .clean-vmodal-body,
+#vendor-detail-modal .vmodal-block-tabs,
+#vendor-detail-modal .vmodal-block-gallery {
+  background: transparent !important;
 }
 
 #vendor-detail-modal h1,
@@ -306,21 +322,87 @@ header, nav, .header-container, .navbar {
 #vendor-detail-modal h3,
 #vendor-detail-modal h4,
 #vendor-detail-modal p,
-#vendor-detail-modal span:not(.vmodal-badge-gold):not(.bg-[#1B3B2B]),
+#vendor-detail-modal span,
 #vendor-detail-modal li,
-#vendor-detail-modal label {
-    color: #111827;
+#vendor-detail-modal label,
+#inquiry-modal h1,
+#inquiry-modal h2,
+#inquiry-modal h3,
+#inquiry-modal h4,
+#inquiry-modal p,
+#inquiry-modal span,
+#inquiry-modal label {
+  color: #FFFFFF !important;
 }
 
-#vendor-detail-modal .vtab-pane {
-    color: #111827 !important;
-    background-color: transparent !important;
+#vendor-detail-modal .text-stone-600,
+#vendor-detail-modal .text-stone-500,
+#vendor-detail-modal .text-[#111827],
+#vendor-detail-modal .text-[#1A1A1A],
+#inquiry-modal .text-secondary,
+#inquiry-modal .text-graphite {
+  color: #E2E8F0 !important;
 }
 
-#vendor-detail-modal .vtab-pane p,
-#vendor-detail-modal .vtab-pane span,
-#vendor-detail-modal .vtab-pane li {
-    color: #1F2937 !important;
+#vendor-detail-modal .vmodal-card-box,
+#vendor-detail-modal .vtab-pane > div,
+#vendor-detail-modal #vdm-packages-container > div,
+#vendor-detail-modal #vdm-reviews-container > div,
+#vendor-detail-modal #vdm-amenities-container > div,
+#vendor-detail-modal #vdm-calendar-container > div,
+#inquiry-modal .bg-white,
+#inquiry-modal .bg-bgCustom,
+#inquiry-modal #inquiry-context-banner {
+  background: rgba(255, 255, 255, 0.08) !important;
+  border-radius: 1.25rem !important;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2) !important;
+  border: 1px solid rgba(212, 175, 55, 0.3) !important;
+  backdrop-filter: blur(12px) !important;
+}
+
+#vendor-detail-modal input,
+#vendor-detail-modal textarea,
+#vendor-detail-modal select,
+#inquiry-modal input,
+#inquiry-modal textarea,
+#inquiry-modal select {
+  background: rgba(255, 255, 255, 0.12) !important;
+  border: 1px solid rgba(212, 175, 55, 0.4) !important;
+  color: #FFFFFF !important;
+  border-radius: 0.85rem !important;
+}
+
+#vendor-detail-modal input:focus,
+#vendor-detail-modal textarea:focus,
+#vendor-detail-modal select:focus,
+#inquiry-modal input:focus,
+#inquiry-modal textarea:focus,
+#inquiry-modal select:focus {
+  border-color: #D4AF37 !important;
+  box-shadow: 0 0 14px rgba(212, 175, 55, 0.6) !important;
+  outline: none !important;
+}
+
+#inquiry-modal option,
+#vendor-detail-modal option {
+  background-color: #1B3B2B !important;
+  color: #FFFFFF !important;
+}
+
+#vdm-modal-inquire-cta,
+#inquiry-modal button[type="submit"] {
+  background: linear-gradient(135deg, #F1C40F 0%, #D4AF37 50%, #B88E28 100%) !important;
+  color: #111E16 !important;
+  border: none !important;
+  font-weight: 900 !important;
+  box-shadow: 0 6px 20px rgba(212, 175, 55, 0.5) !important;
+  transition: all 0.25s ease !important;
+}
+
+#vdm-modal-inquire-cta:hover,
+#inquiry-modal button[type="submit"]:hover {
+  box-shadow: 0 8px 25px rgba(212, 175, 55, 0.8) !important;
+  transform: translateY(-2px) !important;
 }
 
 .vtab-btn.active::after {
@@ -654,24 +736,41 @@ main#directory-view {
   transition: transform 0.5s ease !important;
 }
 
-/* Minimal VIP Badge Top Corner */
+/* Minimal VIP Badge Top Corner - Minified & Subtle */
 .vip-3d-badge {
   position: absolute !important;
-  top: 8px !important;
-  right: 8px !important;
+  top: 6px !important;
+  right: 6px !important;
   z-index: 10 !important;
-  background: rgba(27, 59, 43, 0.85) !important;
+  background: rgba(27, 59, 43, 0.9) !important;
   color: #D4AF37 !important;
-  border: 1px solid rgba(212, 175, 55, 0.6) !important;
-  backdrop-filter: blur(8px) !important;
-  font-size: 10px !important;
+  border: 1px solid rgba(212, 175, 55, 0.5) !important;
+  backdrop-filter: blur(6px) !important;
+  font-size: 8px !important;
   font-weight: 900 !important;
-  padding: 3px 8px !important;
-  border-radius: 8px !important;
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3) !important;
+  padding: 2px 6px !important;
+  border-radius: 6px !important;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3) !important;
   display: flex !important;
   align-items: center !important;
-  gap: 3px !important;
+  gap: 2px !important;
+}
+
+/* Default Cover Label Over Photo */
+.vip-default-cover-label {
+  position: absolute !important;
+  bottom: 0 !important;
+  left: 0 !important;
+  right: 0 !important;
+  padding: 8px !important;
+  background: linear-gradient(to top, rgba(0, 0, 0, 0.85) 0%, rgba(0, 0, 0, 0.35) 60%, transparent 100%) !important;
+  pointer-events: none !important;
+  z-index: 10 !important;
+  transition: opacity 0.3s ease !important;
+}
+
+.vip-3d-card:hover .vip-default-cover-label {
+  opacity: 0 !important;
 }
 
 /* Interactive Hover / Touch Reveal Overlay Layer */
