@@ -1081,6 +1081,35 @@
         </div>
       </section>
 
+      <!-- VERIFIED TESTIMONIALS CAROUSEL ("نظرات و تجربیات زوجین تاییدشده یزد") -->
+      <section id="verified-testimonials-section" class="py-10 bg-[#0F251A] text-white my-8 rounded-3xl border border-[#D4AF37]/40 shadow-xl">
+        <div class="max-w-4xl mx-auto px-6 text-center space-y-6">
+          <div class="space-y-2">
+            <span class="bg-[#D4AF37]/20 border border-[#D4AF37]/50 text-[#D4AF37] text-xs font-black px-3.5 py-1 rounded-full inline-flex items-center gap-1.5">
+              <i data-lucide="shield-check" class="w-4 h-4 text-[#D4AF37]"></i>
+              <span>مشتری واقعی / تاییدشده عروسی‌تو</span>
+            </span>
+            <h2 class="text-xl sm:text-2xl font-black text-white">تجربیات و نظرات واقعی زوجین در یزد</h2>
+          </div>
+
+          <!-- Carousel Card Body -->
+          <div id="testimonial-card-container" class="bg-[#142E22] border border-[#D4AF37]/30 rounded-2xl p-6 sm:p-8 space-y-4 shadow-lg text-right relative">
+            <!-- Populated via JS renderTestimonialCard() -->
+          </div>
+
+          <!-- Carousel Navigation Controls -->
+          <div class="flex items-center justify-center gap-3 pt-2">
+            <button type="button" onclick="prevTestimonial()" class="w-10 h-10 rounded-full bg-[#142E22] hover:bg-[#1B3B2B] text-[#D4AF37] border border-[#D4AF37]/50 flex items-center justify-center transition-all cursor-pointer hover:scale-110 active:scale-95">
+              <i data-lucide="chevron-right" class="w-5 h-5"></i>
+            </button>
+            <span id="testimonial-index-badge" class="text-xs font-bold text-amber-200 bg-[#142E22] px-3 py-1 rounded-full border border-[#D4AF37]/30">۱ از ۳</span>
+            <button type="button" onclick="nextTestimonial()" class="w-10 h-10 rounded-full bg-[#142E22] hover:bg-[#1B3B2B] text-[#D4AF37] border border-[#D4AF37]/50 flex items-center justify-center transition-all cursor-pointer hover:scale-110 active:scale-95">
+              <i data-lucide="chevron-left" class="w-5 h-5"></i>
+            </button>
+          </div>
+        </div>
+      </section>
+
       <!-- 9. VENDOR REGISTRATION BANNER ("کسب‌وکار عروسی خود را به ۱۵,۰۰۰+ زوج یزدی معرفی کنید") -->
       <section class="vendor-banner-dark">
         <div class="container flex-banner">
@@ -1342,28 +1371,28 @@
         </div>
 
         <div class="grid grid-cols-1 md:grid-cols-4 gap-6">
-          <!-- Countdown Circle Card -->
-          <div class="bg-gradient-to-br from-emerald-50/80 via-white to-amber-50/50 border border-primary/20 rounded-2xl p-5 flex flex-col items-center justify-center text-center space-y-2 shadow-2xs">
-            <div class="relative w-20 h-20 rounded-full border-4 border-primary/20 flex items-center justify-center bg-white shadow-xs">
-              <span class="text-2xl font-black text-primary">۱۳۵</span>
+          <!-- Countdown Digital Gold Card -->
+          <div class="bg-[#0F172A] border border-[#D4AF37]/50 rounded-2xl p-5 flex flex-col items-center justify-center text-center space-y-2 shadow-lg">
+            <div class="relative w-20 h-20 rounded-full border-4 border-[#D4AF37] flex items-center justify-center bg-[#1E293B] shadow-[0_0_20px_rgba(212,175,55,0.3)]">
+              <span class="text-2xl font-black text-[#D4AF37]">۱۳۵</span>
             </div>
-            <span class="text-xs font-bold text-graphite">روز مانده تا شب عروسی</span>
-            <span class="text-[11px] text-secondary font-medium">تاریخ هدف: ۱۵ مهر ۱۴۰۳</span>
+            <span class="text-xs font-black text-white">روز مانده تا شب عروسی</span>
+            <span class="text-[11px] text-amber-200/90 font-medium">تاریخ هدف: ۱۵ مهر ۱۴۰۳</span>
           </div>
 
-          <!-- Budget Expense Progress -->
-          <div class="bg-bgCustom border border-accent rounded-2xl p-5 space-y-3 flex flex-col justify-between">
+          <!-- Budget Expense Progress Dark Card -->
+          <div class="bg-[#0F172A] border border-[#D4AF37]/50 rounded-2xl p-5 space-y-3 flex flex-col justify-between shadow-lg">
             <div>
-              <span class="text-xs font-bold text-secondary block mb-1">بودجه کل تخصیص‌یافته</span>
-              <span class="text-2xl font-black text-graphite">۳۵۰,۰۰۰,۰۰۰ <span class="text-xs font-normal text-secondary">تومان</span></span>
+              <span class="text-xs font-bold text-slate-300 block mb-1">بودجه کل تخصیص‌یافته</span>
+              <span class="text-2xl font-black text-[#D4AF37]">۳۵۰,۰۰۰,۰۰۰ <span class="text-xs font-normal text-amber-200">تومان</span></span>
             </div>
             <div class="space-y-1.5">
               <div class="flex justify-between text-xs font-bold">
-                <span class="text-emerald-700">پرداخت‌شده: ۱۸۰,۰۰۰,۰۰۰</span>
-                <span class="text-secondary">۵۱٪</span>
+                <span class="text-emerald-400">پرداخت‌شده: ۱۸۰,۰۰۰,۰۰۰</span>
+                <span class="text-amber-300">۵۱٪</span>
               </div>
-              <div class="w-full bg-slate-200 h-2.5 rounded-full overflow-hidden">
-                <div class="bg-primary h-full rounded-full" style="width: 51%;"></div>
+              <div class="w-full bg-[#1E293B] border border-[#D4AF37]/30 h-3 rounded-full overflow-hidden p-0.5">
+                <div class="bg-gradient-to-r from-[#D4AF37] to-[#F3E5AB] h-full rounded-full shadow-md" style="width: 51%;"></div>
               </div>
             </div>
           </div>
@@ -2618,6 +2647,26 @@
             <span>پیامک مشتری</span>
           </label>
         </div>
+      </div>
+
+      <!-- ACTIVE SUBSCRIPTION COUNTDOWN WIDGET -->
+      <div id="vd-sub-countdown-widget" class="bg-gradient-to-r from-[#0F251A] to-[#1B3B2B] text-white p-4 sm:p-5 rounded-2xl border border-[#D4AF37]/40 shadow-md flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
+        <div class="flex items-center gap-3.5">
+          <div class="w-11 h-11 rounded-xl bg-[#D4AF37]/20 border border-[#D4AF37]/50 flex items-center justify-center shrink-0 shadow-sm">
+            <i data-lucide="timer" class="w-6 h-6 text-[#D4AF37]"></i>
+          </div>
+          <div class="space-y-0.5">
+            <span class="text-xs text-amber-200 font-bold block">زمان باقی‌مانده از اشتراک ویژه شما (Gold Tier)</span>
+            <div class="text-base sm:text-lg font-black text-white flex items-center gap-2">
+              <span id="vd-sub-days-counter" class="text-amber-400 font-black text-xl">۱۴۲</span>
+              <span>روز تا انقضای پلن کسب‌وکار</span>
+            </div>
+          </div>
+        </div>
+        <button type="button" onclick="openSubscriptionMatrixModal()" class="bg-[#D4AF37] hover:bg-amber-500 text-[#0F251A] px-4 py-2.5 rounded-xl text-xs font-black transition-all cursor-pointer shadow-md flex items-center gap-1.5 self-end sm:self-auto">
+          <i data-lucide="zap" class="w-4 h-4"></i>
+          <span>تمدید / ارتقاء فوری</span>
+        </button>
       </div>
 
       <!-- My Plan & Subscription Status Card (مدیریت اشتراک) -->
@@ -5003,6 +5052,68 @@
         </div>
       </div>
 
+  <!-- FLOATING COMPARISON BAR (#floating-comparison-bar) -->
+  <div id="floating-comparison-bar" class="fixed bottom-6 left-1/2 -translate-x-1/2 z-[99990] hidden transition-all duration-300 w-[92%] max-w-2xl">
+    <div class="bg-[#0F172A]/95 backdrop-blur-md border-2 border-[#D4AF37]/80 rounded-2xl p-3 sm:p-4 shadow-[0_10px_40px_rgba(0,0,0,0.5)] flex flex-col sm:flex-row items-center justify-between gap-3 text-right">
+      <div class="flex items-center gap-3 overflow-x-auto custom-scrollbar w-full sm:w-auto pb-1 sm:pb-0" id="comparison-bar-items">
+        <!-- Selected vendor thumbnails & names rendered via JS -->
+      </div>
+
+      <div class="flex items-center gap-2 shrink-0 w-full sm:w-auto justify-end border-t sm:border-t-0 border-slate-700/60 pt-2 sm:pt-0">
+        <button type="button" onclick="clearComparisonQueue()" class="text-xs text-rose-300 hover:text-rose-100 font-bold px-3 py-2 rounded-xl transition-colors cursor-pointer bg-rose-950/40 border border-rose-800/40">
+          پاکسازی
+        </button>
+        <button type="button" onclick="triggerComparisonFromBar()" class="bg-gradient-to-r from-[#D4AF37] to-[#F3E5AB] hover:from-[#e5bd3c] hover:to-[#fceba7] text-[#0F251A] text-xs font-black py-2.5 px-5 rounded-xl shadow-lg transition-all duration-200 flex items-center gap-1.5 cursor-pointer hover:scale-105 active:scale-95">
+          <i data-lucide="columns-2" class="w-4 h-4 text-[#0F251A]"></i>
+          <span id="comparison-bar-btn-text">مقایسه تامین‌کنندگان (۰)</span>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- VENDOR SELECT & TASK STATUS MODAL ("اتصال یا ویرایش وضعیت تامین‌کننده") -->
+  <div id="vendor-select-modal" class="fixed inset-0 bg-slate-900/80 backdrop-blur-sm z-[99999] flex items-center justify-center p-4 hidden" onclick="if(event.target === this) closeVendorSelectModal()">
+    <div class="bg-white rounded-3xl max-w-md w-full p-6 space-y-5 border border-accent shadow-2xl relative" onclick="event.stopPropagation()">
+      <button type="button" onclick="closeVendorSelectModal()" class="absolute top-4 left-4 w-9 h-9 rounded-full bg-slate-100 hover:bg-slate-200 text-slate-600 flex items-center justify-center text-sm font-bold transition-all cursor-pointer">
+        ✕
+      </button>
+
+      <div class="space-y-1 text-right">
+        <h3 id="vselect-task-title" class="text-base sm:text-lg font-black text-graphite">اتصال تامین‌کننده به اقدام</h3>
+        <p class="text-xs text-secondary font-medium">تامین‌کننده منتخب را از دایرکتوری انتخاب کنید و وضعیت پیش‌فاکتور/بیعانه را مشخص نمایید.</p>
+      </div>
+
+      <form onsubmit="handleSaveVendorAttachment(event)" class="space-y-4 text-right">
+        <input type="hidden" id="vselect-task-id" value="">
+
+        <div class="space-y-1.5">
+          <label class="block text-xs font-bold text-graphite">انتخاب تامین‌کننده از دایرکتوری</label>
+          <select id="vselect-vendor-id" class="w-full bg-bgCustom border border-accent rounded-xl px-3.5 py-2.5 text-xs font-bold text-graphite focus:ring-2 focus:ring-primary focus:outline-none">
+            <!-- Populated via JS -->
+          </select>
+        </div>
+
+        <div class="space-y-1.5">
+          <label class="block text-xs font-bold text-graphite">وضعیت اقدام و همکاری</label>
+          <select id="vselect-status" class="w-full bg-bgCustom border border-accent rounded-xl px-3.5 py-2.5 text-xs font-bold text-graphite focus:ring-2 focus:ring-primary focus:outline-none">
+            <option value="quote_received">پیش‌فاکتور دریافت شد</option>
+            <option value="deposit_paid">بیعانه پرداخت شد</option>
+            <option value="finalized">نهایی و قرارداد امضا شد</option>
+          </select>
+        </div>
+
+        <div class="flex items-center gap-3 pt-2">
+          <button type="submit" class="flex-1 bg-primary hover:bg-emerald-900 text-white font-bold py-2.5 rounded-xl text-xs transition-all cursor-pointer shadow-md">
+            ثبت و ذخیره تغییرات
+          </button>
+          <button type="button" onclick="closeVendorSelectModal()" class="bg-slate-100 hover:bg-slate-200 text-slate-700 font-bold px-4 py-2.5 rounded-xl text-xs transition-all cursor-pointer">
+            انصراف
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+
       <!-- Copyright Bar -->
       <div class="flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-amber-200/80 font-medium text-center sm:text-right">
         <p>© تمامی حقوق مادی و معنوی این وب‌سایت متعلق به پلتفرم هوشمند عروسی تو می‌باشد.</p>
@@ -6843,6 +6954,33 @@
       <div class="flex justify-end gap-2 pt-2 border-t border-accent">
         <button onclick="closeSubCatModal()" class="px-4 py-2 bg-slate-100 hover:bg-slate-200 text-graphite font-bold text-xs rounded-xl transition-colors">انصراف</button>
         <button onclick="handleSaveSubCategory(event)" class="px-5 py-2 bg-primary hover:bg-emerald-900 text-white font-bold text-xs rounded-xl transition-colors shadow-xs">ذخیره زیرگروه</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- VENDOR COMPARISON MODAL (#modal-vendor-comparison) -->
+  <div id="modal-vendor-comparison" class="hidden fixed inset-0 bg-black/75 backdrop-blur-md z-[999999] flex items-center justify-center p-3 sm:p-4 transition-all animate-fadeIn" onclick="if(event.target === this) closeVendorComparisonModal()">
+    <div class="bg-[#0F172A] text-white rounded-3xl shadow-2xl max-w-4xl w-full overflow-hidden border border-[#D4AF37]/60 flex flex-col animate-scaleUp relative max-h-[92vh]">
+      <!-- Header -->
+      <div class="bg-[#1E293B] px-6 py-4 flex items-center justify-between border-b border-[#D4AF37]/30 shrink-0">
+        <div class="flex items-center gap-3">
+          <div class="w-10 h-10 rounded-2xl bg-gradient-to-tr from-[#D4AF37] to-[#F3E5AB] text-[#0F251A] flex items-center justify-center font-black shadow-md">
+            <i data-lucide="columns-3" class="w-5 h-5"></i>
+          </div>
+          <div>
+            <h3 class="text-base font-black text-[#D4AF37]">جدول مقایسه هوشمند تامین‌کنندگان برتر یزد</h3>
+            <span class="text-[11px] text-amber-200/80 font-medium block">بررسی و مقایسه ویژگی‌ها، قیمت و شرایط پرداخت کنار هم</span>
+          </div>
+        </div>
+
+        <button type="button" onclick="closeVendorComparisonModal()" class="w-9 h-9 rounded-xl bg-white/10 hover:bg-white/20 text-white flex items-center justify-center transition-colors cursor-pointer" title="بستن">
+          <i data-lucide="x" class="w-5 h-5"></i>
+        </button>
+      </div>
+
+      <!-- Comparison Matrix Table Body -->
+      <div id="compare-modal-body" class="p-6 overflow-y-auto space-y-4 text-xs font-bold custom-scrollbar">
+        <!-- Rendered dynamically via renderVendorComparisonTable() -->
       </div>
     </div>
   </div>

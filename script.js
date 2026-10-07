@@ -3350,6 +3350,43 @@ if (document.readyState === "loading") {
 
     // FAVORITE / BOOKMARK SYSTEM STATE & LOGIC
     let favoriteVendorIds = [1, 2, 4];
+    let selectedComparisonVendorIds = [];
+
+    window.toggleVendorComparison = function(vendorId, event) {
+      if (event) event.stopPropagation();
+      const id = parseInt(vendorId, 10);
+      const index = selectedComparisonVendorIds.indexOf(id);
+
+      if (index > -1) {
+        selectedComparisonVendorIds.splice(index, 1);
+        showToast('تامین‌کننده از لیست مقایسه حذف شد.', 'info');
+      } else {
+        if (selectedComparisonVendorIds.length >= 3) {
+          showToast('حداکثر ۳ تامین‌کننده می‌توانید برای مقایسه انتخاب کنید.', 'warning');
+          return;
+        }
+        selectedComparisonVendorIds.push(id);
+        showToast('تامین‌کننده به لیست مقایسه اضافه شد.', 'success');
+      }
+
+      if (typeof renderVendors === 'function' && typeof filteredVendors !== 'undefined') {
+        renderVendors(filteredVendors);
+      }
+      if (typeof window.renderFloatingComparisonBar === 'function') {
+        window.renderFloatingComparisonBar();
+      }
+    };
+
+    window.clearComparisonQueue = function() {
+      selectedComparisonVendorIds = [];
+      if (typeof renderVendors === 'function' && typeof filteredVendors !== 'undefined') {
+        renderVendors(filteredVendors);
+      }
+      if (typeof window.renderFloatingComparisonBar === 'function') {
+        window.renderFloatingComparisonBar();
+      }
+      showToast('لیست مقایسه خالی شد.', 'info');
+    };
 
     function loadFavoritesFromStorage() {
       try {
@@ -3604,11 +3641,16 @@ if (document.readyState === "loading") {
 
       list.forEach(v => {
         const card = document.createElement('div');
+        const isComparing = selectedComparisonVendorIds.includes(v.id);
+
+        const borderClasses = isComparing
+          ? "border-2 border-[#D4AF37] shadow-[0_0_20px_rgba(212,175,55,0.4)]"
+          : "border border-[#D4AF37]/30 hover:border-[#D4AF37]";
 
         if (directoryViewMode === 'list') {
-          card.className = "bg-[#0F172A] border border-[#D4AF37]/30 hover:border-[#D4AF37] rounded-2xl overflow-hidden shadow-lg hover:shadow-[0_12px_30px_rgba(212,175,55,0.25)] transition-all duration-300 flex flex-col md:flex-row group hover:-translate-y-0.5 cursor-pointer";
+          card.className = `bg-[#0F172A] ${borderClasses} rounded-2xl overflow-hidden shadow-lg hover:shadow-[0_12px_30px_rgba(212,175,55,0.25)] transition-all duration-300 flex flex-col md:flex-row group hover:-translate-y-0.5 cursor-pointer`;
         } else {
-          card.className = "bg-[#0F172A] border border-[#D4AF37]/30 hover:border-[#D4AF37] rounded-2xl overflow-hidden shadow-lg hover:shadow-[0_12px_30px_rgba(212,175,55,0.25)] transition-all duration-300 flex flex-col justify-between group hover:-translate-y-1 cursor-pointer";
+          card.className = `bg-[#0F172A] ${borderClasses} rounded-2xl overflow-hidden shadow-lg hover:shadow-[0_12px_30px_rgba(212,175,55,0.25)] transition-all duration-300 flex flex-col justify-between group hover:-translate-y-1 cursor-pointer`;
         }
         card.setAttribute('onclick', `openVendorDetailModal(${v.id})`);
 
@@ -3633,6 +3675,12 @@ if (document.readyState === "loading") {
                 <button type="button" onclick="toggleFavoriteVendor(${v.id}, event)" class="w-8 h-8 rounded-full bg-black/60 backdrop-blur-md border border-white/20 flex items-center justify-center text-rose-500 shadow-sm transition-transform active:scale-90 hover:scale-110 cursor-pointer" title="افزودن به نشان‌شده‌ها">
                   <i data-lucide="heart" class="w-4 h-4 ${isFav ? 'fill-rose-500 text-rose-500' : 'text-rose-500'}"></i>
                 </button>
+
+                <button type="button" onclick="toggleVendorComparison(${v.id}, event)" class="px-2.5 py-1 rounded-full text-[10px] font-bold ${isComparing ? 'bg-[#D4AF37] text-[#0F251A] border border-[#D4AF37]' : 'bg-black/60 text-amber-200 border border-amber-300/40'} backdrop-blur-md flex items-center gap-1 shadow-sm transition-all hover:scale-105 cursor-pointer" title="مقایسه تامین‌کنندگان">
+                  <i data-lucide="columns-2" class="w-3 h-3"></i>
+                  <span>${isComparing ? 'در مقایسه' : 'مقایسه'}</span>
+                </button>
+
                 <div class="bg-black/60 backdrop-blur-md text-[#D4AF37] border border-[#D4AF37]/40 text-xs font-black px-2.5 py-1 rounded-full shadow-sm flex items-center gap-1">
                   <i data-lucide="star" class="w-3.5 h-3.5 fill-amber-400 text-amber-400"></i>
                   <span>${ratingVal}</span>
@@ -3689,6 +3737,12 @@ if (document.readyState === "loading") {
                   <button type="button" onclick="toggleFavoriteVendor(${v.id}, event)" class="w-8 h-8 rounded-full bg-black/60 backdrop-blur-md border border-white/20 flex items-center justify-center text-rose-500 shadow-sm transition-transform active:scale-90 hover:scale-110 cursor-pointer" title="افزودن به نشان‌شده‌ها">
                     <i data-lucide="heart" class="w-4 h-4 ${isFav ? 'fill-rose-500 text-rose-500' : 'text-rose-500'}"></i>
                   </button>
+
+                  <button type="button" onclick="toggleVendorComparison(${v.id}, event)" class="px-2.5 py-1 rounded-full text-[10px] font-bold ${isComparing ? 'bg-[#D4AF37] text-[#0F251A] border border-[#D4AF37]' : 'bg-black/60 text-amber-200 border border-amber-300/40'} backdrop-blur-md flex items-center gap-1 shadow-sm transition-all hover:scale-105 cursor-pointer" title="مقایسه تامین‌کنندگان">
+                    <i data-lucide="columns-2" class="w-3 h-3"></i>
+                    <span>${isComparing ? 'در مقایسه' : 'مقایسه'}</span>
+                  </button>
+
                   <div class="bg-black/60 backdrop-blur-md text-[#D4AF37] border border-[#D4AF37]/40 text-xs font-black px-2.5 py-1 rounded-full shadow-sm flex items-center gap-1">
                     <i data-lucide="star" class="w-3.5 h-3.5 fill-amber-400 text-amber-400"></i>
                     <span>${ratingVal}</span>
@@ -13228,6 +13282,123 @@ window.closeAdminSubPlanModal = function() {
   }
 };
 
+/* ========================================== */
+/* VENDOR COMPARISON MODAL & FLOATING BAR     */
+/* ========================================== */
+
+window.renderFloatingComparisonBar = function() {
+  const bar = document.getElementById('floating-comparison-bar');
+  const container = document.getElementById('comparison-bar-items');
+  const btnText = document.getElementById('comparison-bar-btn-text');
+  if (!bar) return;
+
+  if (selectedComparisonVendorIds.length === 0) {
+    bar.classList.add('hidden');
+    return;
+  }
+
+  bar.classList.remove('hidden');
+
+  if (btnText) {
+    btnText.innerText = `مقایسه تامین‌کنندگان (${selectedComparisonVendorIds.length.toLocaleString('fa-IR')})`;
+  }
+
+  if (container) {
+    const selectedVendors = vendors.filter(v => selectedComparisonVendorIds.includes(v.id));
+    container.innerHTML = selectedVendors.map(v => `
+      <div class="flex items-center gap-2 bg-[#1E293B] border border-[#D4AF37]/30 pl-2.5 pr-1.5 py-1 rounded-xl shrink-0">
+        <img src="${v.image}" alt="${v.name}" class="w-8 h-8 rounded-lg object-cover border border-[#D4AF37]/50">
+        <span class="text-xs font-bold text-white max-w-[100px] truncate">${v.name}</span>
+        <button type="button" onclick="toggleVendorComparison(${v.id}, event)" class="text-slate-400 hover:text-rose-400 text-xs font-bold px-1 transition-colors cursor-pointer" title="حذف">
+          ✕
+        </button>
+      </div>
+    `).join('');
+  }
+
+  if (window.lucide) lucide.createIcons();
+};
+
+window.triggerComparisonFromBar = function() {
+  if (selectedComparisonVendorIds.length === 0) {
+    showToast('لطفا حداقل یک تامین‌کننده برای مقایسه انتخاب کنید.', 'warning');
+    return;
+  }
+  if (typeof window.openVendorComparisonModal === 'function') {
+    window.openVendorComparisonModal(selectedComparisonVendorIds);
+  }
+};
+
+window.openVendorComparisonModal = function(vendorIds = [1, 2, 3]) {
+  const modal = document.getElementById('modal-vendor-comparison');
+  if (!modal) return;
+
+  const compareList = (typeof vendors !== 'undefined' && Array.isArray(vendors)) ?
+    vendors.filter(v => vendorIds.includes(v.id)) : [];
+
+  const bodyEl = document.getElementById('compare-modal-body');
+  if (bodyEl) {
+    if (compareList.length === 0) {
+      bodyEl.innerHTML = `<p class="text-center text-slate-400 py-8">هیچ تامین‌کننده‌ای جهت مقایسه انتخاب نشده است.</p>`;
+    } else {
+      bodyEl.innerHTML = `
+        <div class="grid grid-cols-1 md:grid-cols-${Math.min(compareList.length, 3)} gap-4 text-center divide-y md:divide-y-0 md:divide-x md:divide-x-reverse divide-[#D4AF37]/30">
+          ${compareList.map(v => `
+            <div class="space-y-4 p-4 bg-[#1E293B] border border-[#D4AF37]/30 rounded-2xl flex flex-col justify-between">
+              <div class="space-y-2.5">
+                <img src="${v.image}" alt="${v.name}" class="w-full h-36 object-cover rounded-xl border border-[#D4AF37]/30">
+                <span class="text-[10px] font-bold text-amber-200 bg-[#0F172A] px-2.5 py-0.5 rounded-full inline-block border border-[#D4AF37]/30">${v.category}</span>
+                <h4 class="text-base font-black text-white leading-snug">${v.name}</h4>
+                <p class="text-xs text-slate-300 font-medium">📍 ${v.district || 'صفائیه، یزد'}</p>
+              </div>
+
+              <div class="space-y-2 border-t border-slate-700/80 pt-3 text-xs">
+                <div class="p-2.5 bg-[#0F172A] rounded-xl border border-[#D4AF37]/20 flex justify-between items-center">
+                  <span class="text-slate-400 font-normal text-[11px]">شروع قیمت پایه:</span>
+                  <strong class="text-[#D4AF37] text-xs sm:text-sm font-black">${v.priceRange || 'استعلام'}</strong>
+                </div>
+
+                <div class="p-2.5 bg-[#0F172A] rounded-xl border border-[#D4AF37]/20 flex justify-between items-center">
+                  <span class="text-slate-400 font-normal text-[11px]">امتیاز زوجین:</span>
+                  <strong class="text-amber-300 font-bold">⭐️ ${v.rating || 4.9} (${v.reviewCount || 32} نظر)</strong>
+                </div>
+
+                <div class="p-2.5 bg-[#0F172A] rounded-xl border border-[#D4AF37]/20 flex justify-between items-center">
+                  <span class="text-slate-400 font-normal text-[11px]">اصالت کسب‌وکار:</span>
+                  <span class="text-emerald-400 font-bold">${v.verified ? 'تاییدشده رسمی' : 'مجاز'}</span>
+                </div>
+
+                <div class="space-y-1 text-right pt-2">
+                  <span class="text-[10.5px] text-slate-400 block font-bold">ویژگی‌ها & هایلایت‌ها:</span>
+                  ${(v.capabilityTags || ["تضمین قیمت", "رزرو اقساطی", "پاسخگویی سریع"]).slice(0, 3).map(t => `<div class="text-[11px] text-amber-100 flex items-center gap-1.5"><i data-lucide="check-circle" class="w-3.5 h-3.5 text-[#D4AF37]"></i><span>${t}</span></div>`).join('')}
+                </div>
+              </div>
+
+              <div class="pt-2 flex flex-col gap-2">
+                <button type="button" onclick="closeVendorComparisonModal(); openVendorDetailModal(${v.id})" class="w-full bg-gradient-to-r from-[#D4AF37] to-[#F3E5AB] text-[#0F251A] font-black py-2.5 rounded-xl text-xs shadow-md transition-all hover:scale-105 active:scale-95 cursor-pointer">
+                  مشاهده پروفایل کامل
+                </button>
+              </div>
+            </div>
+          `).join('')}
+        </div>
+      `;
+    }
+  }
+
+  modal.classList.remove('hidden');
+  modal.classList.add('flex');
+  if (window.lucide) lucide.createIcons();
+};
+
+window.closeVendorComparisonModal = function() {
+  const modal = document.getElementById('modal-vendor-comparison');
+  if (modal) {
+    modal.classList.add('hidden');
+    modal.classList.remove('flex');
+  }
+};
+
 /* Counselor Modal Handlers */
 window.openCounselorModal = function() {
   const modal = document.getElementById('modal-counselor-consultation');
@@ -13749,3 +13920,86 @@ window.updateHomeQuickBudget = function() {
     resultPrice.innerText = formatted;
   }
 };
+
+/* ==========================================================================
+   VERIFIED TESTIMONIALS CAROUSEL
+   ========================================================================== */
+const testimonialsList = [
+  {
+    couple: "علی & سارا",
+    date: "مهر ۱۴۰۳ - صفائیه یزد",
+    vendor: "هتل باغ مشیرالممالک & استودیو کویر",
+    text: "برنامه‌ریزی عروسی با پلتفرم عروسی‌تو فوق‌العاده راحت و بی‌دردسر بود. از صدور پیش‌فاکتور شفاف تا هماهنگی عکاسی فرمالیته در کویر، همه چیز دقیقاً طبق توافق انجام شد.",
+    image: "https://images.unsplash.com/photo-1519741497674-611481863552?auto=format&fit=crop&w=300&q=80",
+    rating: "★★★★★"
+  },
+  {
+    couple: "محمد & مریم",
+    date: "شهریور ۱۴۰۳ - میدان اطلسی یزد",
+    vendor: "سالن زیبایی رویال & مزون عروس لورنت",
+    text: "مدل رزرو اقساطی بدون دریافت کمیسیون اضافه بزرگترین کمک به بودجه ما بود. تمام قیمت‌های ثبت شده در سایت ۱۰۰٪ واقعی و تطبیق داده شده بودند.",
+    image: "https://images.unsplash.com/photo-1583939003579-730e3918a45a?auto=format&fit=crop&w=300&q=80",
+    rating: "★★★★★"
+  },
+  {
+    couple: "حسین & زهرا",
+    date: "اردیبهشت ۱۴۰۳ - بافت تاریخی یزد",
+    vendor: "دی‌جی و موزیک آریا & شیرینی‌سرای حاج خلیفه رهبر",
+    text: "پشتیبانی پاسخگوی ۲۴/۷ و ابزارهای رایگان تخمین بودجه عالی بودند. خوشحالم که پلتفرم تخصصی عروسی در یزد را انتخاب کردیم.",
+    image: "https://images.unsplash.com/photo-1511285560929-80b456fea0bc?auto=format&fit=crop&w=300&q=80",
+    rating: "★★★★★"
+  }
+];
+
+let currentTestimonialIdx = 0;
+
+window.renderTestimonialCard = function() {
+  const container = document.getElementById('testimonial-card-container');
+  const badge = document.getElementById('testimonial-index-badge');
+  if (!container) return;
+
+  const item = testimonialsList[currentTestimonialIdx];
+  if (!item) return;
+
+  if (badge) {
+    badge.innerText = `${(currentTestimonialIdx + 1).toLocaleString('fa-IR')} از ${testimonialsList.length.toLocaleString('fa-IR')}`;
+  }
+
+  container.innerHTML = `
+    <div class="flex flex-col sm:flex-row items-center gap-5">
+      <img src="${item.image}" alt="${item.couple}" class="w-20 h-20 sm:w-24 sm:h-24 rounded-2xl object-cover border-2 border-[#D4AF37] shadow-md shrink-0">
+      <div class="space-y-2 flex-1 text-center sm:text-right">
+        <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-1">
+          <div>
+            <h3 class="text-base font-black text-[#D4AF37]">${item.couple}</h3>
+            <span class="text-xs text-slate-300 font-medium block">${item.date} • ${item.vendor}</span>
+          </div>
+          <span class="text-amber-400 font-bold text-sm">${item.rating}</span>
+        </div>
+        <p class="text-xs sm:text-sm text-slate-200 leading-relaxed font-medium italic bg-[#0F251A]/60 p-3.5 rounded-xl border border-[#D4AF37]/20">
+          «${item.text}»
+        </p>
+      </div>
+    </div>
+  `;
+
+  if (window.lucide) lucide.createIcons();
+};
+
+window.nextTestimonial = function() {
+  currentTestimonialIdx = (currentTestimonialIdx + 1) % testimonialsList.length;
+  window.renderTestimonialCard();
+};
+
+window.prevTestimonial = function() {
+  currentTestimonialIdx = (currentTestimonialIdx - 1 + testimonialsList.length) % testimonialsList.length;
+  window.renderTestimonialCard();
+};
+
+document.addEventListener('DOMContentLoaded', () => {
+  setTimeout(() => {
+    if (typeof window.renderTestimonialCard === 'function') {
+      window.renderTestimonialCard();
+    }
+  }, 300);
+});

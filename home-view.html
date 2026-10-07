@@ -532,6 +532,35 @@
         </div>
       </section>
 
+      <!-- VERIFIED TESTIMONIALS CAROUSEL ("نظرات و تجربیات زوجین تاییدشده یزد") -->
+      <section id="verified-testimonials-section" class="py-10 bg-[#0F251A] text-white my-8 rounded-3xl border border-[#D4AF37]/40 shadow-xl">
+        <div class="max-w-4xl mx-auto px-6 text-center space-y-6">
+          <div class="space-y-2">
+            <span class="bg-[#D4AF37]/20 border border-[#D4AF37]/50 text-[#D4AF37] text-xs font-black px-3.5 py-1 rounded-full inline-flex items-center gap-1.5">
+              <i data-lucide="shield-check" class="w-4 h-4 text-[#D4AF37]"></i>
+              <span>مشتری واقعی / تاییدشده عروسی‌تو</span>
+            </span>
+            <h2 class="text-xl sm:text-2xl font-black text-white">تجربیات و نظرات واقعی زوجین در یزد</h2>
+          </div>
+
+          <!-- Carousel Card Body -->
+          <div id="testimonial-card-container" class="bg-[#142E22] border border-[#D4AF37]/30 rounded-2xl p-6 sm:p-8 space-y-4 shadow-lg text-right relative">
+            <!-- Populated via JS renderTestimonialCard() -->
+          </div>
+
+          <!-- Carousel Navigation Controls -->
+          <div class="flex items-center justify-center gap-3 pt-2">
+            <button type="button" onclick="prevTestimonial()" class="w-10 h-10 rounded-full bg-[#142E22] hover:bg-[#1B3B2B] text-[#D4AF37] border border-[#D4AF37]/50 flex items-center justify-center transition-all cursor-pointer hover:scale-110 active:scale-95">
+              <i data-lucide="chevron-right" class="w-5 h-5"></i>
+            </button>
+            <span id="testimonial-index-badge" class="text-xs font-bold text-amber-200 bg-[#142E22] px-3 py-1 rounded-full border border-[#D4AF37]/30">۱ از ۳</span>
+            <button type="button" onclick="nextTestimonial()" class="w-10 h-10 rounded-full bg-[#142E22] hover:bg-[#1B3B2B] text-[#D4AF37] border border-[#D4AF37]/50 flex items-center justify-center transition-all cursor-pointer hover:scale-110 active:scale-95">
+              <i data-lucide="chevron-left" class="w-5 h-5"></i>
+            </button>
+          </div>
+        </div>
+      </section>
+
       <!-- 9. VENDOR REGISTRATION BANNER ("کسب‌وکار عروسی خود را به ۱۵,۰۰۰+ زوج یزدی معرفی کنید") -->
       <section class="vendor-banner-dark">
         <div class="container flex-banner">
