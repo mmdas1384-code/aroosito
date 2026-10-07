@@ -3606,82 +3606,51 @@ if (document.readyState === "loading") {
         const card = document.createElement('div');
 
         if (directoryViewMode === 'list') {
-          card.className = "bg-white border border-[#D4AF37]/30 hover:border-[#D4AF37] rounded-3xl overflow-hidden shadow-xs hover:shadow-lg transition-all duration-300 flex flex-col md:flex-row group hover:-translate-y-0.5";
+          card.className = "bg-[#0F172A] border border-[#D4AF37]/30 hover:border-[#D4AF37] rounded-2xl overflow-hidden shadow-lg hover:shadow-[0_12px_30px_rgba(212,175,55,0.25)] transition-all duration-300 flex flex-col md:flex-row group hover:-translate-y-0.5 cursor-pointer";
         } else {
-          card.className = "bg-white border border-[#D4AF37]/30 hover:border-[#D4AF37] rounded-3xl overflow-hidden shadow-xs hover:shadow-lg transition-all duration-300 flex flex-col justify-between group hover:-translate-y-1";
+          card.className = "bg-[#0F172A] border border-[#D4AF37]/30 hover:border-[#D4AF37] rounded-2xl overflow-hidden shadow-lg hover:shadow-[0_12px_30px_rgba(212,175,55,0.25)] transition-all duration-300 flex flex-col justify-between group hover:-translate-y-1 cursor-pointer";
         }
+        card.setAttribute('onclick', `openVendorDetailModal(${v.id})`);
 
         const localTag = v.district || "صفائیه، یزد";
         const ratingVal = v.rating || 4.9;
-        const reviewCount = v.reviewCount || 32;
         const isFav = favoriteVendorIds.includes(v.id);
-
-        const priceNum = (typeof parsePriceNumeric === 'function') ? parsePriceNumeric(v.priceRange || '') : 0;
-        let priceTierBadge = "اقتصادی 💰";
-        if (priceNum > 80000000) {
-          priceTierBadge = "لوکس 💰💰💰";
-        } else if (priceNum > 30000000) {
-          priceTierBadge = "متوسط 💰💰";
-        }
 
         if (directoryViewMode === 'list') {
           card.innerHTML = `
-            <div class="relative w-full md:w-80 h-56 md:h-auto overflow-hidden bg-slate-900 shrink-0">
+            <div class="relative w-full md:w-80 h-52 md:h-auto overflow-hidden bg-slate-900 shrink-0">
               <img src="${v.image}" alt="${v.name}" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-108">
-              <div class="absolute inset-0 bg-gradient-to-t from-black/70 via-black/10 to-transparent"></div>
+              <div class="absolute inset-0 bg-gradient-to-t from-[#0F172A] via-transparent to-black/30"></div>
 
-              <div class="absolute top-3 right-3 flex flex-col gap-1.5 items-end">
-                ${v.verified ? `
-                  <div class="bg-[#1B3B2B]/90 backdrop-blur-md text-[#D4AF37] border border-[#D4AF37]/60 text-[10px] font-black px-2.5 py-1 rounded-full shadow-md flex items-center gap-1">
-                    <i data-lucide="shield-check" class="w-3.5 h-3.5 text-[#D4AF37]"></i>
-                    <span>تأییدشده عروسی‌تو</span>
-                  </div>
-                ` : `
-                  <div class="bg-slate-900/80 text-slate-200 text-[10px] font-bold px-2.5 py-1 rounded-full backdrop-blur-md border border-white/10">
-                    تأمین‌کننده مجاز
-                  </div>
-                `}
+              <div class="absolute top-3 right-3">
+                <span class="bg-black/60 backdrop-blur-md text-amber-200 border border-[#D4AF37]/50 text-[10px] font-bold px-2.5 py-1 rounded-full shadow-md inline-flex items-center gap-1">
+                  <i data-lucide="tag" class="w-3 h-3 text-[#D4AF37]"></i>
+                  <span>${v.category}</span>
+                </span>
               </div>
 
-              <div class="absolute top-3 left-3 flex items-center gap-2">
-                <button type="button" onclick="toggleFavoriteVendor(${v.id}, event)" class="w-8 h-8 rounded-full bg-white/95 backdrop-blur-md flex items-center justify-center text-rose-500 shadow-sm transition-transform active:scale-90 hover:scale-110 cursor-pointer" title="افزودن به نشان‌شده‌ها">
+              <div class="absolute top-3 left-3 flex items-center gap-1.5" onclick="event.stopPropagation()">
+                <button type="button" onclick="toggleFavoriteVendor(${v.id}, event)" class="w-8 h-8 rounded-full bg-black/60 backdrop-blur-md border border-white/20 flex items-center justify-center text-rose-500 shadow-sm transition-transform active:scale-90 hover:scale-110 cursor-pointer" title="افزودن به نشان‌شده‌ها">
                   <i data-lucide="heart" class="w-4 h-4 ${isFav ? 'fill-rose-500 text-rose-500' : 'text-rose-500'}"></i>
                 </button>
-              </div>
-
-              <div class="absolute bottom-3 right-3 left-3 flex justify-between items-center text-white text-xs">
-                <span class="bg-black/50 backdrop-blur-md px-2.5 py-1 rounded-lg border border-white/15 font-bold flex items-center gap-1 text-[11px]">
-                  <i data-lucide="map-pin" class="w-3.5 h-3.5 text-emerald-400"></i>
-                  <span>${localTag}</span>
-                </span>
-                <span class="bg-[#1B3B2B]/80 backdrop-blur-md text-[#D4AF37] border border-[#D4AF37]/40 font-black px-2.5 py-1 rounded-lg text-[11px]">
-                  ${priceTierBadge}
-                </span>
+                <div class="bg-black/60 backdrop-blur-md text-[#D4AF37] border border-[#D4AF37]/40 text-xs font-black px-2.5 py-1 rounded-full shadow-sm flex items-center gap-1">
+                  <i data-lucide="star" class="w-3.5 h-3.5 fill-amber-400 text-amber-400"></i>
+                  <span>${ratingVal}</span>
+                </div>
               </div>
             </div>
 
-            <div class="p-5 flex-1 flex flex-col justify-between space-y-4">
+            <div class="p-5 flex-1 flex flex-col justify-between space-y-3 text-right">
               <div class="space-y-2">
-                <div class="flex justify-between items-start flex-wrap gap-2">
-                  <div>
-                    <span class="text-[10px] font-extrabold text-[#1B3B2B] bg-[#1B3B2B]/5 border border-[#1B3B2B]/10 px-2.5 py-0.5 rounded-md inline-block mb-1">${v.category}</span>
-                    <h3 class="text-base sm:text-lg font-black text-graphite leading-snug group-hover:text-primary transition-colors">${v.name}</h3>
-                  </div>
-                  <div class="bg-amber-50 border border-amber-200/80 text-amber-700 text-xs font-black px-2.5 py-1 rounded-xl flex items-center gap-1 shadow-2xs">
-                    <i data-lucide="star" class="w-3.5 h-3.5 fill-amber-400 text-amber-400"></i>
-                    <span>${ratingVal}</span>
-                    <span class="text-[10px] text-gray-400 font-normal">(${reviewCount})</span>
-                  </div>
+                <h3 class="text-base sm:text-xl font-black text-white group-hover:text-[#D4AF37] transition-colors leading-snug">${v.name}</h3>
+                <div class="flex items-center gap-1.5 text-xs text-slate-300 font-medium">
+                  <i data-lucide="map-pin" class="w-3.5 h-3.5 text-[#D4AF37]"></i>
+                  <span>${localTag}</span>
                 </div>
 
-                <p class="text-xs text-secondary font-medium line-clamp-2 leading-relaxed">
-                  ${v.description || 'تقديم خدمات تخصصی تشریفات و برگزاری میهمانی‌های فاخر در استان یزد با تضمین اصالت و بهترین قیمت.'}
-                </p>
-
-                <!-- Capability Tags -->
                 <div class="flex flex-wrap gap-1.5 pt-1">
-                  ${(v.capabilityTags || ["تاییدیه کیفیت", "پذیرایی VIP", "پارکینگ اختصاصی"]).map(tag => `
-                    <span class="bg-[#FBF9F5] text-[#1B3B2B] border border-[#E0D8C8] text-[10px] font-bold px-2.5 py-0.5 rounded-md flex items-center gap-1">
+                  ${(v.capabilityTags || ["تضمین قیمت", "پاسخگویی سریع", "رزرو اقساطی"]).slice(0, 3).map(tag => `
+                    <span class="bg-[#1E293B] text-amber-200 border border-[#D4AF37]/30 text-[9.5px] font-bold px-2.5 py-0.5 rounded-md flex items-center gap-1">
                       <i data-lucide="check-circle" class="w-2.5 h-2.5 text-[#D4AF37]"></i>
                       <span>${tag}</span>
                     </span>
@@ -3689,112 +3658,73 @@ if (document.readyState === "loading") {
                 </div>
               </div>
 
-              <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pt-3 border-t border-[#E0D8C8]">
-                <div class="text-xs font-bold text-graphite">
-                  <span class="text-secondary font-normal block text-[10px]">شروع قیمت پایه:</span>
-                  <span class="text-[#1B3B2B] font-black text-base">${v.priceRange || 'استعلام قیمت'}</span>
+              <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pt-3 border-t border-slate-800/80">
+                <div>
+                  <span class="text-[10px] text-slate-400 block font-normal">شروع قیمت پایه:</span>
+                  <span class="text-[#D4AF37] font-black text-sm sm:text-base">${v.priceRange || 'استعلام قیمت'}</span>
                 </div>
 
-                <div class="flex items-center gap-2">
-                  <button onclick="openVendorDetailModal(${v.id})" class="bg-[#1B3B2B] hover:bg-emerald-900 text-white font-bold px-4 py-2.5 rounded-xl text-xs transition-all shadow-xs flex items-center justify-center gap-1.5 cursor-pointer">
-                    <span>مشاهده</span>
-                  </button>
-                  <button onclick="openInquiryModal(${v.id}, '${v.name}')" class="bg-[#D4AF37] hover:bg-amber-400 text-[#1B3B2B] font-black px-4 py-2.5 rounded-xl text-xs transition-all shadow-xs flex items-center justify-center gap-1.5 cursor-pointer">
-                    <span>استعلام</span>
-                  </button>
-                </div>
+                <button type="button" onclick="event.stopPropagation(); openVendorDetailModal(${v.id})" class="bg-gradient-to-r from-[#D4AF37] to-[#F3E5AB] hover:from-[#e5bd3c] hover:to-[#fceba7] text-[#0F251A] text-xs font-black py-2.5 px-4 rounded-full shadow-md hover:shadow-lg transition-all duration-200 flex items-center justify-center gap-1 cursor-pointer hover:scale-105 active:scale-95">
+                  <span>مشاهده & استعلام</span>
+                  <i data-lucide="chevron-left" class="w-3.5 h-3.5 text-[#0F251A]"></i>
+                </button>
               </div>
             </div>
           `;
         } else {
           card.innerHTML = `
             <div>
-              <div class="relative h-52 overflow-hidden bg-slate-100">
-                <img src="${v.image}" alt="${v.name}" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105">
-                <div class="absolute inset-0 bg-gradient-to-t from-graphite/60 via-transparent to-transparent opacity-80"></div>
+              <div class="relative h-52 overflow-hidden bg-slate-900">
+                <img src="${v.image}" alt="${v.name}" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-108">
+                <div class="absolute inset-0 bg-gradient-to-t from-[#0F172A] via-transparent to-black/30"></div>
 
-                <div class="absolute top-3 right-3 flex flex-col gap-1.5 items-end">
-                  ${v.verified ? `
-                    <div class="bg-[#1B3B2B] text-[#D4AF37] border border-[#D4AF37]/50 text-[10px] font-black px-2.5 py-1 rounded-full shadow-md flex items-center gap-1">
-                      <i data-lucide="shield-check" class="w-3.5 h-3.5 text-[#D4AF37]"></i>
-                      <span>تأییدشده عروسی‌تو</span>
-                    </div>
-                  ` : `
-                    <div class="bg-slate-800/80 text-slate-200 text-[10px] font-bold px-2.5 py-0.5 rounded-full backdrop-blur-xs">
-                      تأمین‌کننده مجاز
-                    </div>
-                  `}
+                <div class="absolute top-3 right-3">
+                  <span class="bg-black/60 backdrop-blur-md text-amber-200 border border-[#D4AF37]/50 text-[10px] font-bold px-2.5 py-1 rounded-full shadow-md inline-flex items-center gap-1">
+                    <i data-lucide="tag" class="w-3 h-3 text-[#D4AF37]"></i>
+                    <span>${v.category}</span>
+                  </span>
                 </div>
 
-                <div class="absolute top-3 left-3 flex items-center gap-2">
-                  <button type="button" onclick="toggleFavoriteVendor(${v.id}, event)" class="w-8 h-8 rounded-xl bg-white/90 backdrop-blur-md flex items-center justify-center text-rose-500 shadow-sm transition-transform active:scale-95 hover:bg-white cursor-pointer" title="افزودن به نشان‌شده‌ها">
+                <div class="absolute top-3 left-3 flex items-center gap-1.5" onclick="event.stopPropagation()">
+                  <button type="button" onclick="toggleFavoriteVendor(${v.id}, event)" class="w-8 h-8 rounded-full bg-black/60 backdrop-blur-md border border-white/20 flex items-center justify-center text-rose-500 shadow-sm transition-transform active:scale-90 hover:scale-110 cursor-pointer" title="افزودن به نشان‌شده‌ها">
                     <i data-lucide="heart" class="w-4 h-4 ${isFav ? 'fill-rose-500 text-rose-500' : 'text-rose-500'}"></i>
                   </button>
-                  <div class="bg-white/90 backdrop-blur-md text-amber-600 text-xs font-black px-2.5 py-1 rounded-xl shadow-xs flex items-center gap-1">
+                  <div class="bg-black/60 backdrop-blur-md text-[#D4AF37] border border-[#D4AF37]/40 text-xs font-black px-2.5 py-1 rounded-full shadow-sm flex items-center gap-1">
                     <i data-lucide="star" class="w-3.5 h-3.5 fill-amber-400 text-amber-400"></i>
                     <span>${ratingVal}</span>
-                    <span class="text-[10px] text-secondary font-normal">(${reviewCount})</span>
                   </div>
-                </div>
-
-                <div class="absolute bottom-3 right-3 left-3 flex justify-between items-center text-white text-xs">
-                  <span class="bg-black/40 backdrop-blur-md px-2.5 py-1 rounded-lg border border-white/10 font-bold flex items-center gap-1">
-                    <i data-lucide="map-pin" class="w-3 h-3 text-emerald-400"></i>
-                    <span>${localTag}</span>
-                  </span>
-                  <span class="bg-black/60 backdrop-blur-md text-[#D4AF37] border border-[#D4AF37]/40 font-black px-2.5 py-1 rounded-lg text-[11px]">
-                    ${priceTierBadge}
-                  </span>
                 </div>
               </div>
 
-              <div class="p-5 space-y-3">
+              <div class="p-4 space-y-3 text-right">
                 <div>
-                  <span class="text-[11px] font-bold text-primary bg-primary/10 px-2.5 py-0.5 rounded-md inline-block mb-1">${v.category}</span>
-                  <h3 class="text-base font-bold text-graphite leading-tight group-hover:text-primary transition-colors">${v.name}</h3>
-                  <span class="text-xs text-secondary flex items-center gap-1 mt-1 font-medium">
-                    <i data-lucide="check-circle-2" class="w-3.5 h-3.5 text-primary"></i>
-                    <span>${v.city || 'یزد'}</span>
-                  </span>
+                  <h3 class="text-base sm:text-lg font-black text-white group-hover:text-[#D4AF37] transition-colors leading-tight">${v.name}</h3>
+                  <div class="flex items-center gap-1.5 text-xs text-slate-300 font-medium mt-1">
+                    <i data-lucide="map-pin" class="w-3.5 h-3.5 text-[#D4AF37]"></i>
+                    <span>${localTag}</span>
+                  </div>
                 </div>
 
-                <!-- Capability Tags -->
-                <div class="flex flex-wrap gap-1 pt-1">
-                  ${(v.capabilityTags || ["مجوز رسمی عکاسی کویر", "تجهیزات هلی‌شات", "سرو شیرینی‌های سنتی یزد"]).map(tag => `
-                    <span class="bg-amber-50 text-amber-900 border border-amber-200/80 text-[10px] font-bold px-2 py-0.5 rounded-md flex items-center gap-1">
-                      <i data-lucide="check-circle" class="w-2.5 h-2.5 text-amber-600"></i>
+                <div class="flex flex-wrap gap-1.5 pt-0.5">
+                  ${(v.capabilityTags || ["تضمین قیمت", "پاسخگویی سریع", "رزرو اقساطی"]).slice(0, 3).map(tag => `
+                    <span class="bg-[#1E293B] text-amber-200 border border-[#D4AF37]/30 text-[9.5px] font-bold px-2 py-0.5 rounded-md flex items-center gap-1">
+                      <i data-lucide="check-circle" class="w-2.5 h-2.5 text-[#D4AF37]"></i>
                       <span>${tag}</span>
                     </span>
                   `).join('')}
                 </div>
-
-                <div class="text-xs font-bold text-graphite bg-bgCustom p-3 rounded-2xl border border-accent flex justify-between items-center">
-                  <span class="text-secondary font-normal">قیمت پایه شروع از:</span>
-                  <span class="text-primary font-black text-sm">${v.priceRange || 'استعلام قیمت'}</span>
-                </div>
-
-                <!-- Private Note Block for Couple -->
-                <div class="pt-2 border-t border-accent/60 space-y-1" onclick="event.stopPropagation()">
-                  <label class="block text-[10px] font-bold text-secondary flex items-center gap-1">
-                    <i data-lucide="lock" class="w-3 h-3 text-primary"></i>
-                    <span>یادداشت خصوصی زوجین (فقط شما می‌بینید):</span>
-                  </label>
-                  <div class="flex gap-1.5">
-                    <input type="text" id="private-note-input-${v.id}" value="${getPrivateNote(v.id)}" placeholder="مثلا: هماهنگی جهت تخفیف ۱۰٪..." class="w-full bg-slate-50 border border-accent rounded-xl px-2.5 py-1 text-[11px] font-medium text-graphite focus:outline-none focus:border-primary">
-                    <button onclick="savePrivateNote(${v.id})" class="bg-primary hover:bg-emerald-900 text-white font-bold text-[10px] px-2.5 py-1 rounded-xl shrink-0 transition-colors">ثبت</button>
-                  </div>
-                </div>
               </div>
             </div>
 
-            <div class="p-5 pt-0 flex flex-col sm:flex-row gap-2">
-              <button onclick="openVendorDetailModal(${v.id})" class="flex-1 bg-[#D4AF37] hover:bg-amber-400 text-[#1B3B2B] font-black py-2.5 rounded-xl text-xs transition-all shadow-xs flex items-center justify-center gap-1.5 cursor-pointer">
-                <i data-lucide="user" class="w-3.5 h-3.5"></i>
-                <span>مشاهده پروفایل کامل</span>
-              </button>
-              <button onclick="openInquiryModal(${v.id}, '${v.name}')" class="flex-1 bg-white hover:bg-emerald-50 border border-[#1B3B2B] text-[#1B3B2B] font-bold py-2.5 rounded-xl text-xs transition-all flex items-center justify-center gap-1.5 cursor-pointer">
-                <i data-lucide="message-square-quote" class="w-3.5 h-3.5"></i>
-                <span>استعلام سریع قیمت</span>
+            <div class="p-4 pt-0 border-t border-slate-800/80 flex items-center justify-between gap-2 mt-2">
+              <div class="text-right">
+                <span class="text-[10px] text-slate-400 block font-normal">شروع قیمت پایه:</span>
+                <span class="text-[#D4AF37] font-black text-xs sm:text-sm">${v.priceRange || 'استعلام قیمت'}</span>
+              </div>
+
+              <button type="button" onclick="event.stopPropagation(); openVendorDetailModal(${v.id})" class="bg-gradient-to-r from-[#D4AF37] to-[#F3E5AB] hover:from-[#e5bd3c] hover:to-[#fceba7] text-[#0F251A] text-xs font-black py-2 px-3.5 rounded-full shadow-md hover:shadow-lg transition-all duration-200 flex items-center gap-1 cursor-pointer hover:scale-105 active:scale-95">
+                <span>مشاهده & استعلام</span>
+                <i data-lucide="chevron-left" class="w-3.5 h-3.5 text-[#0F251A]"></i>
               </button>
             </div>
           `;
