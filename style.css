@@ -697,12 +697,12 @@ main#directory-view {
   position: absolute !important;
   inset: 0 !important;
   z-index: 20 !important;
-  background: linear-gradient(to top, rgba(15, 37, 26, 0.95) 0%, rgba(27, 59, 43, 0.72) 65%, rgba(0, 0, 0, 0.2) 100%) !important;
+  background: rgba(15, 23, 42, 0.85) !important;
   backdrop-filter: blur(6px) !important;
   -webkit-backdrop-filter: blur(6px) !important;
   opacity: 0 !important;
   visibility: hidden !important;
-  padding: 8px !important;
+  padding: 12px 10px !important;
   box-sizing: border-box !important;
   max-width: 100% !important;
   max-height: 100% !important;
@@ -713,56 +713,12 @@ main#directory-view {
   transition: opacity 0.35s ease, visibility 0.35s ease !important;
 }
 
-/* Sleek VIP Action Buttons Micro-Interactions */
-.vip-3d-card .vip-btn-view,
-.vip-vendor-card .vip-btn-view {
-  background: rgba(27, 59, 43, 0.9) !important;
-  color: #FFFFFF !important;
-  border: 1px solid rgba(212, 175, 55, 0.6) !important;
-  border-radius: 9999px !important;
-  font-size: 8.5px !important;
-  font-weight: 700 !important;
-  padding: 4px 6px !important;
-  min-width: 0 !important;
-  box-sizing: border-box !important;
-  white-space: nowrap !important;
-  overflow: hidden !important;
-  text-overflow: ellipsis !important;
-  transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1) !important;
-  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2) !important;
-}
-
-.vip-3d-card .vip-btn-view:hover,
-.vip-vendor-card .vip-btn-view:hover {
-  background: #1B3B2B !important;
-  border-color: #D4AF37 !important;
-  box-shadow: 0 0 10px rgba(212, 175, 55, 0.4) !important;
-  transform: translateY(-1px) scale(1.03) !important;
-}
-
-.vip-3d-card .vip-btn-inquire,
-.vip-vendor-card .vip-btn-inquire {
-  background: linear-gradient(135deg, #D4AF37 0%, #F3E5AB 100%) !important;
-  color: #0F251A !important;
-  border: 1px solid rgba(212, 175, 55, 0.9) !important;
-  border-radius: 9999px !important;
-  font-size: 8.5px !important;
-  font-weight: 900 !important;
-  padding: 4px 6px !important;
-  min-width: 0 !important;
-  box-sizing: border-box !important;
-  white-space: nowrap !important;
-  overflow: hidden !important;
-  text-overflow: ellipsis !important;
-  transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1) !important;
-  box-shadow: 0 4px 10px rgba(212, 175, 55, 0.35) !important;
-}
-
-.vip-3d-card .vip-btn-inquire:hover,
-.vip-vendor-card .vip-btn-inquire:hover {
-  background: linear-gradient(135deg, #E5BD3C 0%, #FFF3C4 100%) !important;
-  box-shadow: 0 0 14px rgba(212, 175, 55, 0.6) !important;
-  transform: translateY(-1px) scale(1.03) !important;
+/* Floating Icon Modules Styling */
+.vip-icon-module {
+  background: transparent !important;
+  border: none !important;
+  padding: 0 !important;
+  outline: none !important;
 }
 
 /* Card Hover 3D Perspective Tilt & Reveal */
