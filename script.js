@@ -5400,6 +5400,9 @@ if (document.readyState === "loading") {
       renderAdminReviewsModerationTable();
       renderAdminUserAccountsTable();
       renderAdminSupportInquiriesTable();
+      if (typeof window.renderAdminSubscriptionPlansTable === 'function') {
+        window.renderAdminSubscriptionPlansTable();
+      }
     }
 
     function toggleVendorVerification(id) {
@@ -12030,6 +12033,81 @@ window.closePromoBadgeModal = function() {
   }
 };
 
+window.saveAdminSubPlan = function(e) {
+  if (e && e.preventDefault) e.preventDefault();
+
+  const idInput = document.getElementById('sub-plan-id');
+  const titleInput = document.getElementById('sub-plan-title');
+  const durationInput = document.getElementById('sub-plan-duration');
+  const priceInput = document.getElementById('sub-plan-price');
+  const badgeInput = document.getElementById('sub-plan-badge');
+  const featuresInput = document.getElementById('sub-plan-features');
+  const activeInput = document.getElementById('sub-plan-active');
+
+  const title = titleInput ? titleInput.value.trim() : '';
+  const duration = durationInput ? durationInput.value.trim() : '';
+  const price = priceInput ? priceInput.value.trim() : '';
+  const badge = badgeInput ? badgeInput.value.trim() : '';
+  const features = featuresInput ? featuresInput.value.trim() : '';
+  const active = activeInput ? activeInput.checked : true;
+
+  if (!title || !duration || !price) {
+    if (typeof showToast === 'function') {
+      showToast('لطفا فیلدهای ضروری (عنوان، مدت اعتبار و قیمت) را تکمیل نمایید.', 'warning');
+    }
+    return;
+  }
+
+  let plans = window.getAdminSubPlans();
+  const planId = idInput ? idInput.value : '';
+
+  if (planId) {
+    plans = plans.map(p => p.id === Number(planId) ? {
+      ...p,
+      title,
+      duration,
+      price,
+      badge,
+      features,
+      active
+    } : p);
+    if (typeof showToast === 'function') {
+      showToast(`پلن اشتراک «${title}» با موفقیت بروزرسانی شد.`, 'success');
+    }
+  } else {
+    const newId = plans.length > 0 ? Math.max(...plans.map(p => p.id || 0)) + 1 : 1;
+    plans.push({
+      id: newId,
+      title,
+      duration,
+      price,
+      badge,
+      features,
+      active
+    });
+    if (typeof showToast === 'function') {
+      showToast(`پلن اشتراک جدید «${title}» با موفقیت ثبت شد.`, 'success');
+    }
+  }
+
+  window.saveAdminSubPlans(plans);
+  window.closeAdminSubPlanModal();
+  window.renderAdminSubscriptionPlansTable();
+};
+
+window.deleteAdminSubPlan = function(planId) {
+  if (!confirm('آیا از حذف این پلن اشتراک اطمینان دارید؟')) return;
+
+  let plans = window.getAdminSubPlans();
+  plans = plans.filter(p => p.id !== Number(planId));
+  window.saveAdminSubPlans(plans);
+  window.renderAdminSubscriptionPlansTable();
+
+  if (typeof showToast === 'function') {
+    showToast('پلن اشتراک با موفقیت حذف گردید.', 'info');
+  }
+};
+
 window.savePromoBadgeModal = function(e) {
   if (e && e.preventDefault) e.preventDefault();
   const editId = document.getElementById('promo-edit-id').value;
@@ -12814,6 +12892,163 @@ window.resolveSupportInquiry = function(id) {
   window.renderAdminSupportInquiriesTable();
   if (typeof showToast === 'function') {
     showToast('وضعیت درخواست پشتیبانی به پاسخ داده شده تغییر یافت.', 'success');
+  }
+};
+
+/* ========================================== */
+/* ADMIN SUBSCRIPTION PLANS CRUD MODULE       */
+/* ========================================== */
+
+const defaultAdminSubPlans = [
+  {
+    id: 1,
+    title: "پلن برنز (رایگان)",
+    duration: "نامحدود",
+    price: "۰ (رایگان)",
+    badge: "پایه",
+    features: "حضور در دایرکتوری عمومی\nدریافت لیدهای عمومی\nپروفایل پایه کسب‌وکار",
+    active: true
+  },
+  {
+    id: 2,
+    title: "پلن نقره‌ای استاندارد",
+    duration: "۶ ماهه",
+    price: "۶,۵۰۰,۰۰۰",
+    badge: "محبوب",
+    features: "حضور در ۵ نتایج اول جستجو\nنمونه‌کار تا ۳۰ تصویر\nصدور پیش‌فاکتور دیجیتال\nپاسخگوی هوشمند ۲۴/۷",
+    active: true
+  },
+  {
+    id: 3,
+    title: "پلن طلایی VIP",
+    duration: "۱ ساله (۳۶۵ روز)",
+    price: "۱۲,۵۰۰,۰۰۰",
+    badge: "👑 VIP",
+    features: "نمایش در ویترین VIP صفحه اصلی\nنشان رسمی تایید اصالت یزد\nآلبوم نمونه‌کار نامحدود\nلیدهای اختصاصی فوری + SMS\nصدور پیش‌فاکتور اقساطی",
+    active: true
+  }
+];
+
+window.getAdminSubPlans = function() {
+  try {
+    const stored = localStorage.getItem('aroosi_admin_sub_plans_db');
+    if (stored) {
+      const parsed = JSON.parse(stored);
+      if (Array.isArray(parsed) && parsed.length > 0) return parsed;
+    }
+  } catch (e) {
+    console.error(e);
+  }
+  localStorage.setItem('aroosi_admin_sub_plans_db', JSON.stringify(defaultAdminSubPlans));
+  return defaultAdminSubPlans;
+};
+
+window.saveAdminSubPlans = function(plans) {
+  localStorage.setItem('aroosi_admin_sub_plans_db', JSON.stringify(plans));
+};
+
+window.renderAdminSubscriptionPlansTable = function() {
+  const tbody = document.getElementById('admin-sub-plans-table-body');
+  if (!tbody) return;
+
+  const plans = window.getAdminSubPlans();
+  if (!plans || plans.length === 0) {
+    tbody.innerHTML = `<tr><td colspan="6" class="p-4 text-center text-slate-400">هیچ پلن اشتراکی ثبت نشده است.</td></tr>`;
+    return;
+  }
+
+  tbody.innerHTML = plans.map(plan => {
+    const featureLines = (plan.features || '').split('\n').filter(f => f.trim()).map(f => `• ${f}`).join('<br>');
+    return `
+      <tr class="hover:bg-slate-50/80 transition-colors">
+        <td class="p-3 font-bold text-graphite">
+          <div class="flex items-center gap-2">
+            <i data-lucide="crown" class="w-4 h-4 text-primary shrink-0"></i>
+            <span>${plan.title}</span>
+          </div>
+        </td>
+        <td class="p-3 text-secondary font-medium">${plan.duration}</td>
+        <td class="p-3 font-black text-emerald-800">${plan.price}</td>
+        <td class="p-3">
+          <span class="bg-amber-100 border border-amber-300 text-amber-900 text-[10px] font-bold px-2 py-0.5 rounded-full inline-block">
+            ${plan.badge || 'استاندارد'}
+          </span>
+        </td>
+        <td class="p-3 text-[11px] text-slate-600 leading-relaxed font-medium">
+          ${featureLines}
+        </td>
+        <td class="p-3 text-center">
+          <div class="flex items-center justify-center gap-2">
+            <button type="button" onclick="openAdminSubPlanModal(${plan.id})" class="bg-slate-100 hover:bg-slate-200 text-graphite font-bold px-2.5 py-1 rounded-lg text-[11px] transition-colors flex items-center gap-1 cursor-pointer">
+              <i data-lucide="edit-3" class="w-3.5 h-3.5 text-primary"></i>
+              <span>ویرایش</span>
+            </button>
+            <button type="button" onclick="deleteAdminSubPlan(${plan.id})" class="bg-rose-50 hover:bg-rose-100 text-rose-600 font-bold px-2.5 py-1 rounded-lg text-[11px] transition-colors flex items-center gap-1 cursor-pointer">
+              <i data-lucide="trash-2" class="w-3.5 h-3.5"></i>
+              <span>حذف</span>
+            </button>
+          </div>
+        </td>
+      </tr>
+    `;
+  }).join('');
+
+  if (window.lucide) lucide.createIcons();
+};
+
+window.openAdminSubPlanModal = function(planId = null) {
+  const modal = document.getElementById('admin-sub-plan-modal');
+  if (!modal) return;
+
+  const titleEl = document.getElementById('admin-sub-plan-modal-title');
+  const idInput = document.getElementById('sub-plan-id');
+  const titleInput = document.getElementById('sub-plan-title');
+  const durationInput = document.getElementById('sub-plan-duration');
+  const priceInput = document.getElementById('sub-plan-price');
+  const badgeInput = document.getElementById('sub-plan-badge');
+  const featuresInput = document.getElementById('sub-plan-features');
+  const activeInput = document.getElementById('sub-plan-active');
+
+  if (planId) {
+    const plans = window.getAdminSubPlans();
+    const plan = plans.find(p => p.id === Number(planId));
+    if (plan) {
+      if (titleEl) {
+        const span = titleEl.querySelector('span');
+        if (span) span.textContent = 'ویرایش پلن اشتراک';
+      }
+      if (idInput) idInput.value = plan.id;
+      if (titleInput) titleInput.value = plan.title || '';
+      if (durationInput) durationInput.value = plan.duration || '';
+      if (priceInput) priceInput.value = plan.price || '';
+      if (badgeInput) badgeInput.value = plan.badge || '';
+      if (featuresInput) featuresInput.value = plan.features || '';
+      if (activeInput) activeInput.checked = plan.active !== false;
+    }
+  } else {
+    if (titleEl) {
+      const span = titleEl.querySelector('span');
+      if (span) span.textContent = 'افزودن پلن اشتراک جدید';
+    }
+    if (idInput) idInput.value = '';
+    if (titleInput) titleInput.value = '';
+    if (durationInput) durationInput.value = '';
+    if (priceInput) priceInput.value = '';
+    if (badgeInput) badgeInput.value = '';
+    if (featuresInput) featuresInput.value = '';
+    if (activeInput) activeInput.checked = true;
+  }
+
+  modal.classList.remove('hidden');
+  modal.classList.add('flex');
+  if (window.lucide) lucide.createIcons();
+};
+
+window.closeAdminSubPlanModal = function() {
+  const modal = document.getElementById('admin-sub-plan-modal');
+  if (modal) {
+    modal.classList.add('hidden');
+    modal.classList.remove('flex');
   }
 };
 
