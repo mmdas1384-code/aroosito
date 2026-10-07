@@ -156,38 +156,57 @@
           </a>
         </div>
 
-        <!-- CENTER ENLARGED SMART SEARCH BAR CONTAINER -->
-        <div class="hidden lg:flex items-center gap-2 bg-white/10 border border-[#D4AF37]/40 rounded-2xl p-1.5 shadow-md relative flex-1 max-w-2xl mx-4 focus-within:border-[#D4AF37] focus-within:ring-2 focus-within:ring-[#D4AF37]/50 transition-all">
-          <div class="relative flex-1 flex items-center">
-            <i data-lucide="search" class="w-5 h-5 text-amber-300 absolute right-3 pointer-events-none"></i>
-            <input id="header-search-input" type="text" oninput="handleHeaderSearchInput()" onfocus="handleHeaderSearchFocus()" placeholder="جستجوی سریع خدمات، تالار، آتلیه، مزون یا عکاسی..." class="w-full bg-transparent text-white placeholder-slate-300 border-none pr-10 pl-3 py-2 text-sm sm:text-base font-medium focus:outline-none">
+        <!-- CENTER ENLARGED SMART SEARCH BAR CONTAINER & FAST FILTERS -->
+        <div class="hidden lg:flex flex-col gap-1.5 flex-1 max-w-2xl mx-4">
+          <div class="flex items-center gap-2 bg-[#0F172A]/90 backdrop-blur-md border border-[#D4AF37]/60 rounded-full p-1.5 shadow-[0_8px_25px_rgba(0,0,0,0.35)] relative focus-within:border-[#D4AF37] focus-within:ring-2 focus-within:ring-[#D4AF37]/50 transition-all">
+            <div class="relative flex-1 flex items-center">
+              <i data-lucide="search" class="w-4.5 h-4.5 text-[#D4AF37] absolute right-3.5 pointer-events-none"></i>
+              <input id="header-search-input" type="text" oninput="handleHeaderSearchInput()" onfocus="handleHeaderSearchFocus()" placeholder="جستجوی سریع خدمات، تالار، آتلیه، مزون یا عکاسی..." class="w-full bg-transparent text-white placeholder-slate-400 border-none pr-10 pl-3 py-1.5 text-xs sm:text-sm font-medium focus:outline-none">
 
-            <!-- SMART SEARCH LIVE SUGGESTIONS DROPDOWN -->
-            <div id="search-suggestions-dropdown" class="hidden absolute top-full right-0 left-0 mt-3 bg-white text-graphite border border-[#D4AF37]/50 rounded-2xl shadow-2xl z-50 overflow-hidden max-h-80 overflow-y-auto divide-y divide-accent/60">
-              <!-- Dynamically populated via JS -->
+              <!-- SMART SEARCH LIVE SUGGESTIONS DROPDOWN -->
+              <div id="search-suggestions-dropdown" class="hidden absolute top-full right-0 left-0 mt-3 bg-[#0F172A] text-white border border-[#D4AF37]/50 rounded-2xl shadow-2xl z-50 overflow-hidden max-h-80 overflow-y-auto divide-y divide-slate-800">
+                <!-- Dynamically populated via JS -->
+              </div>
             </div>
+
+            <!-- City/Region Dropdown -->
+            <select id="header-city-select" onchange="syncAndFilterCity(this.value)" class="bg-[#1E293B] border border-[#D4AF37]/40 rounded-full px-3 py-1.5 text-xs font-bold text-amber-200 focus:outline-none focus:border-[#D4AF37] cursor-pointer max-w-[105px]">
+              <option value="استان یزد" class="bg-[#0F172A] text-white" selected>یزد 📍</option>
+              <option value="صفائیه" class="bg-[#0F172A] text-white">صفائیه</option>
+              <option value="میدان اطلسی" class="bg-[#0F172A] text-white">میدان اطلسی</option>
+              <option value="خیابان کاشانی" class="bg-[#0F172A] text-white">خیابان کاشانی</option>
+              <option value="بافت تاریخی" class="bg-[#0F172A] text-white">بافت تاریخی</option>
+              <option value="میبد" class="bg-[#0F172A] text-white">میبد</option>
+              <option value="اردکان" class="bg-[#0F172A] text-white">اردکان</option>
+              <option value="تفت" class="bg-[#0F172A] text-white">تفت</option>
+              <option value="سایر" class="bg-[#0F172A] text-white">سایر</option>
+            </select>
+
+            <!-- Price Range Filter Dropdown -->
+            <select id="header-price-select" onchange="filterVendors()" class="bg-[#1E293B] border border-[#D4AF37]/40 rounded-full px-3 py-1.5 text-xs font-bold text-amber-200 focus:outline-none focus:border-[#D4AF37] cursor-pointer max-w-[105px]">
+              <option value="all" class="bg-[#0F172A] text-white" selected>قیمت‌ها</option>
+              <option value="economic" class="bg-[#0F172A] text-white">اقتصادی 💰</option>
+              <option value="mid" class="bg-[#0F172A] text-white">متوسط 💰💰</option>
+              <option value="luxury" class="bg-[#0F172A] text-white">لوکس 💰💰💰</option>
+            </select>
           </div>
 
-          <!-- City/Region Dropdown -->
-          <select id="header-city-select" onchange="syncAndFilterCity(this.value)" class="bg-white/15 border border-[#D4AF37]/40 rounded-xl px-2 py-1.5 text-xs font-bold text-white focus:outline-none focus:bg-[#1B3B2B] cursor-pointer max-w-[105px]">
-            <option value="استان یزد" class="bg-[#1B3B2B] text-white" selected>یزد 📍</option>
-            <option value="صفائیه" class="bg-[#1B3B2B] text-white">صفائیه</option>
-            <option value="میدان اطلسی" class="bg-[#1B3B2B] text-white">میدان اطلسی</option>
-            <option value="خیابان کاشانی" class="bg-[#1B3B2B] text-white">خیابان کاشانی</option>
-            <option value="بافت تاریخی" class="bg-[#1B3B2B] text-white">بافت تاریخی</option>
-            <option value="میبد" class="bg-[#1B3B2B] text-white">میبد</option>
-            <option value="اردکان" class="bg-[#1B3B2B] text-white">اردکان</option>
-            <option value="تفت" class="bg-[#1B3B2B] text-white">تفت</option>
-            <option value="سایر" class="bg-[#1B3B2B] text-white">سایر</option>
-          </select>
-
-          <!-- Price Range Filter Dropdown -->
-          <select id="header-price-select" onchange="filterVendors()" class="bg-white/15 border border-[#D4AF37]/40 rounded-xl px-2 py-1.5 text-xs font-bold text-white focus:outline-none focus:bg-[#1B3B2B] cursor-pointer max-w-[105px]">
-            <option value="all" class="bg-[#1B3B2B] text-white" selected>قیمت‌ها</option>
-            <option value="economic" class="bg-[#1B3B2B] text-white">اقتصادی 💰</option>
-            <option value="mid" class="bg-[#1B3B2B] text-white">متوسط 💰💰</option>
-            <option value="luxury" class="bg-[#1B3B2B] text-white">لوکس 💰💰💰</option>
-          </select>
+          <!-- Fast Filters Micro-Badges Row -->
+          <div class="flex items-center gap-1.5 overflow-x-auto no-scrollbar px-2 text-[10px] font-bold text-slate-300">
+            <span class="text-amber-300 shrink-0 flex items-center gap-1"><i data-lucide="sparkles" class="w-3 h-3 text-[#D4AF37]"></i> فیلتر سریع:</span>
+            <button type="button" onclick="filterVendorsByCategoryTitle('تالار و باغ تالار عروسی')" class="bg-[#0F172A]/80 hover:bg-[#1E293B] text-amber-200 border border-[#D4AF37]/30 hover:border-[#D4AF37] px-2.5 py-0.5 rounded-md transition-all shrink-0 cursor-pointer">
+              🏛️ تالار VIP
+            </button>
+            <button type="button" onclick="filterVendorsByCategoryTitle('آتلیه عکاسی و فیلمبرداری')" class="bg-[#0F172A]/80 hover:bg-[#1E293B] text-amber-200 border border-[#D4AF37]/30 hover:border-[#D4AF37] px-2.5 py-0.5 rounded-md transition-all shrink-0 cursor-pointer">
+              📸 عکاسی فرمالیته
+            </button>
+            <button type="button" onclick="filterVendorsByCategoryTitle('سالن زیبایی و آرایشگاه عروس')" class="bg-[#0F172A]/80 hover:bg-[#1E293B] text-amber-200 border border-[#D4AF37]/30 hover:border-[#D4AF37] px-2.5 py-0.5 rounded-md transition-all shrink-0 cursor-pointer">
+              💄 میکاپ VIP
+            </button>
+            <button type="button" onclick="filterVendorsByCategoryTitle('مزون لباس عروس')" class="bg-[#0F172A]/80 hover:bg-[#1E293B] text-amber-200 border border-[#D4AF37]/30 hover:border-[#D4AF37] px-2.5 py-0.5 rounded-md transition-all shrink-0 cursor-pointer">
+              💳 پرداخت اقساطی
+            </button>
+          </div>
         </div>
 
         <!-- Left Controls & CTA -->
@@ -6845,15 +6864,15 @@
   <!-- GLOBAL FLOATING ACTION BUTTONS (FABs) - SLEEK & COMPACT -->
   <div class="fixed bottom-5 left-5 z-[99999] flex flex-col gap-2.5 items-start pointer-events-auto">
     <!-- FAB 1: Support Modal -->
-    <button onclick="openSupportModal()" type="button" class="group bg-[#1B3B2B] hover:bg-emerald-900 text-[#D4AF37] border border-[#D4AF37]/60 px-3 py-2 sm:px-3.5 sm:py-2.5 rounded-full shadow-xl flex items-center gap-2 transition-all duration-300 hover:scale-105 active:scale-95 cursor-pointer text-[11px]" title="ارتباط با پشتیبانی">
-      <i data-lucide="headphones" class="w-4 h-4 text-[#D4AF37]"></i>
-      <span class="font-bold text-white hidden sm:inline group-hover:inline">پشتیبانی آنلاین</span>
+    <button onclick="openSupportModal()" type="button" class="group w-10 h-10 rounded-full bg-[#0F172A] hover:bg-[#1E293B] text-[#D4AF37] border border-[#D4AF37]/80 shadow-[0_4px_20px_rgba(212,175,55,0.35)] flex items-center justify-center transition-all duration-300 hover:scale-110 active:scale-95 cursor-pointer relative" title="ارتباط با پشتیبانی آنلاین">
+      <i data-lucide="headphones" class="w-4.5 h-4.5 text-[#D4AF37]"></i>
+      <span class="absolute right-full mr-2 bg-[#0F172A] text-amber-200 border border-[#D4AF37]/50 px-2 py-0.5 rounded-lg text-[10px] font-bold whitespace-nowrap opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none shadow-md">پشتیبانی آنلاین</span>
     </button>
 
     <!-- FAB 2: Messages & Chat Center -->
-    <button onclick="switchTab('messages')" type="button" class="group bg-[#D4AF37] hover:bg-amber-400 text-[#1B3B2B] border border-[#1B3B2B]/60 px-3 py-2 sm:px-3.5 sm:py-2.5 rounded-full shadow-xl flex items-center gap-2 transition-all duration-300 hover:scale-105 active:scale-95 cursor-pointer text-[11px]" title="مرکز گفت‌وگو">
-      <i data-lucide="message-square" class="w-4 h-4 text-[#1B3B2B]"></i>
-      <span class="font-bold text-[#1B3B2B] hidden sm:inline group-hover:inline">مرکز گفت‌وگو</span>
+    <button onclick="switchTab('messages')" type="button" class="group w-10 h-10 rounded-full bg-gradient-to-tr from-[#D4AF37] to-[#F3E5AB] text-[#0F251A] shadow-[0_4px_20px_rgba(212,175,55,0.35)] flex items-center justify-center transition-all duration-300 hover:scale-110 active:scale-95 cursor-pointer relative" title="مرکز گفت‌وگو">
+      <i data-lucide="message-square" class="w-4.5 h-4.5 text-[#0F251A]"></i>
+      <span class="absolute right-full mr-2 bg-[#0F172A] text-amber-200 border border-[#D4AF37]/50 px-2 py-0.5 rounded-lg text-[10px] font-bold whitespace-nowrap opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none shadow-md">مرکز گفت‌وگو</span>
     </button>
   </div>
 
