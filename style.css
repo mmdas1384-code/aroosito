@@ -702,7 +702,11 @@ main#directory-view {
   -webkit-backdrop-filter: blur(6px) !important;
   opacity: 0 !important;
   visibility: hidden !important;
-  padding: 10px !important;
+  padding: 8px !important;
+  box-sizing: border-box !important;
+  max-width: 100% !important;
+  max-height: 100% !important;
+  overflow: hidden !important;
   display: flex !important;
   flex-direction: column !important;
   justify-content: space-between !important;
@@ -716,8 +720,14 @@ main#directory-view {
   color: #FFFFFF !important;
   border: 1px solid rgba(212, 175, 55, 0.6) !important;
   border-radius: 9999px !important;
-  font-size: 9.5px !important;
+  font-size: 8.5px !important;
   font-weight: 700 !important;
+  padding: 4px 6px !important;
+  min-width: 0 !important;
+  box-sizing: border-box !important;
+  white-space: nowrap !important;
+  overflow: hidden !important;
+  text-overflow: ellipsis !important;
   transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1) !important;
   box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2) !important;
 }
@@ -727,7 +737,7 @@ main#directory-view {
   background: #1B3B2B !important;
   border-color: #D4AF37 !important;
   box-shadow: 0 0 10px rgba(212, 175, 55, 0.4) !important;
-  transform: translateY(-1px) scale(1.04) !important;
+  transform: translateY(-1px) scale(1.03) !important;
 }
 
 .vip-3d-card .vip-btn-inquire,
@@ -736,8 +746,14 @@ main#directory-view {
   color: #0F251A !important;
   border: 1px solid rgba(212, 175, 55, 0.9) !important;
   border-radius: 9999px !important;
-  font-size: 9.5px !important;
+  font-size: 8.5px !important;
   font-weight: 900 !important;
+  padding: 4px 6px !important;
+  min-width: 0 !important;
+  box-sizing: border-box !important;
+  white-space: nowrap !important;
+  overflow: hidden !important;
+  text-overflow: ellipsis !important;
   transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1) !important;
   box-shadow: 0 4px 10px rgba(212, 175, 55, 0.35) !important;
 }
@@ -746,7 +762,7 @@ main#directory-view {
 .vip-vendor-card .vip-btn-inquire:hover {
   background: linear-gradient(135deg, #E5BD3C 0%, #FFF3C4 100%) !important;
   box-shadow: 0 0 14px rgba(212, 175, 55, 0.6) !important;
-  transform: translateY(-1px) scale(1.04) !important;
+  transform: translateY(-1px) scale(1.03) !important;
 }
 
 /* Card Hover 3D Perspective Tilt & Reveal */
