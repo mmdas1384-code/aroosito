@@ -4475,91 +4475,77 @@
     <div class="clean-vmodal-card relative text-right flex flex-col bg-[#FAF9F5] text-[#111827] rounded-2xl overflow-hidden shadow-2xl border border-stone-200" onclick="event.stopPropagation()">
 
       <!-- BLOCK 1: Top Header & Title Section -->
-      <div class="vmodal-block-header sticky top-0 z-30 bg-white/95 backdrop-blur-md px-6 py-4 border-b border-stone-200 flex flex-col gap-3 shadow-xs">
-        <div class="flex items-center justify-between text-[#111827]">
+      <div class="vmodal-block-header sticky top-0 z-30 bg-[#0F172A] text-white px-6 py-4 border-b border-[#D4AF37]/40 flex flex-col gap-3 shadow-lg">
+        <div class="flex items-center justify-between text-white">
           <div class="flex items-center gap-3">
-            <div id="vdm-avatar" class="w-12 h-12 rounded-full border-2 border-[#D4AF37] overflow-hidden bg-white shadow-sm flex-shrink-0">
+            <div id="vdm-avatar" class="w-12 h-12 rounded-full border-2 border-[#D4AF37] overflow-hidden bg-slate-900 shadow-md flex-shrink-0">
               <img src="https://images.unsplash.com/photo-1519741497674-611481863552?w=150" alt="Vendor Avatar" class="w-full h-full object-cover">
             </div>
             <div>
               <div class="flex items-center gap-2">
-                <h2 id="vdm-title" class="text-xl font-black text-[#111827]">هتل باغ و تشریفات مشیرالممالک یزد</h2>
-                <span id="vdm-verified" class="bg-[#D4AF37]/20 text-[#1B3B2B] border border-[#D4AF37]/50 text-xs px-2.5 py-0.5 rounded-full flex items-center gap-1 font-extrabold">
-                  <svg class="w-3.5 h-3.5 fill-[#D4AF37]" viewBox="0 0 24 24"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg>
+                <h2 id="vdm-title" class="text-lg sm:text-xl font-black text-white">هتل باغ و تشریفات مشیرالممالک یزد</h2>
+                <span id="vdm-verified" class="bg-[#D4AF37]/20 text-[#D4AF37] border border-[#D4AF37]/50 text-xs px-2.5 py-0.5 rounded-full flex items-center gap-1 font-black">
+                  <i data-lucide="shield-check" class="w-3.5 h-3.5 text-[#D4AF37]"></i>
                   تاییدشده عروسی تو
                 </span>
               </div>
-              <p id="vdm-subtitle" class="text-xs text-[#111827] font-bold mt-0.5 flex items-center gap-2">
-                <span id="vdm-category" class="font-bold text-[#1B3B2B]">تالار و باغ تالار عروسی</span> •
-                <span id="vdm-address" class="flex items-center gap-1 text-[#111827] font-bold">
-                  <svg class="w-3.5 h-3.5 text-[#D4AF37]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"/></svg>
+              <p id="vdm-subtitle" class="text-xs text-slate-300 font-bold mt-0.5 flex items-center gap-2">
+                <span id="vdm-category" class="font-bold text-amber-200">تالار و باغ تالار عروسی</span> •
+                <span id="vdm-address" class="flex items-center gap-1 text-slate-300 font-bold">
+                  <i data-lucide="map-pin" class="w-3.5 h-3.5 text-[#D4AF37]"></i>
                   یزد، صفائیه & اطلسی
                 </span>
               </p>
             </div>
           </div>
 
-          <button onclick="closeVendorDetailModal()" class="w-9 h-9 rounded-full bg-stone-100 hover:bg-stone-200 text-[#111827] flex items-center justify-center transition-colors border border-stone-300" title="بستن">
-            <svg class="w-5 h-5 text-[#111827]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>
+          <button onclick="closeVendorDetailModal()" class="w-9 h-9 rounded-full bg-white/10 hover:bg-white/20 text-white flex items-center justify-center transition-colors border border-white/20 cursor-pointer" title="بستن">
+            <i data-lucide="x" class="w-5 h-5"></i>
           </button>
         </div>
 
-        <!-- Key Metrics Row -->
-        <div class="flex items-center justify-between flex-wrap gap-2 text-xs pt-1 border-t border-stone-200/60">
+        <!-- Key Metrics & Compact Action CTAs Row -->
+        <div class="flex items-center justify-between flex-wrap gap-2 text-xs pt-2 border-t border-slate-800">
           <div class="flex items-center gap-2 flex-wrap">
-            <span id="vdm-rating" class="bg-stone-100 text-[#111827] border border-stone-300 text-xs px-3 py-1 rounded-full font-black flex items-center gap-1.5 shadow-xs">
+            <span id="vdm-rating" class="bg-[#1E293B] text-amber-200 border border-[#D4AF37]/40 text-xs px-3 py-1 rounded-full font-black flex items-center gap-1.5 shadow-xs">
               ⭐️ 4.9 (۳۸ نظر ثبت‌شده)
             </span>
-            <span class="bg-stone-100 text-[#111827] text-xs px-3 py-1 rounded-full border border-stone-300 font-bold shadow-xs">
+            <span class="bg-[#1E293B] text-slate-200 text-xs px-3 py-1 rounded-full border border-slate-700 font-bold shadow-xs">
               💳 اقتصادی / VIP
             </span>
-            <span class="bg-emerald-100 text-emerald-950 text-xs px-3 py-1 rounded-full border border-emerald-300 font-bold flex items-center gap-1 shadow-xs">
+            <span class="bg-emerald-950/80 text-emerald-300 text-xs px-3 py-1 rounded-full border border-emerald-500/40 font-bold flex items-center gap-1 shadow-xs">
               ⚡ پاسخگویی زیر ۲ ساعت
             </span>
           </div>
 
           <div class="flex items-center gap-2">
-            <button onclick="toggleFavoriteVendorModal(event)" class="w-8 h-8 rounded-full bg-stone-100 border border-stone-300 text-[#111827] hover:text-red-500 flex items-center justify-center transition-colors shadow-xs" title="افزودن به علاقه‌مندی‌ها">
-              <svg class="w-4 h-4 fill-current text-stone-700 hover:text-red-500" viewBox="0 0 24 24"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>
+            <button onclick="openInquireFromVendorModal()" class="bg-gradient-to-r from-[#D4AF37] to-[#F3E5AB] hover:from-[#e5bd3c] hover:to-[#fceba7] text-[#0F251A] font-black px-3.5 py-1.5 rounded-full text-xs transition-all shadow-md flex items-center gap-1 cursor-pointer hover:scale-105 active:scale-95">
+              <i data-lucide="file-plus" class="w-3.5 h-3.5 text-[#0F251A]"></i>
+              <span>درخواست پیش‌فاکتور</span>
             </button>
-            <button onclick="shareVendorModal(event)" class="w-8 h-8 rounded-full bg-stone-100 border border-stone-300 text-[#111827] hover:text-[#D4AF37] flex items-center justify-center transition-colors shadow-xs" title="اشتراک‌گذاری">
-              <svg class="w-4 h-4 text-[#111827]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8.684 13.342C8.886 12.938 9 12.482 9 12c0-.482-.114-.938-.316-1.342m0 2.684a3 3 0 110-2.684m0 2.684l6.632 3.316m-6.632-6l6.632-3.316m0 0a3 3 0 105.367-2.684 3 3 0 00-5.367 2.684zm0 9.316a3 3 0 105.368 2.684 3 3 0 00-5.368-2.684z"/></svg>
+            <button onclick="makeVendorCall()" class="bg-[#1E293B] hover:bg-slate-700 text-amber-200 border border-[#D4AF37]/50 font-bold px-3.5 py-1.5 rounded-full text-xs transition-all flex items-center gap-1 cursor-pointer">
+              <i data-lucide="phone-call" class="w-3.5 h-3.5 text-[#D4AF37]"></i>
+              <span>تماس مستقیم</span>
             </button>
           </div>
         </div>
       </div>
 
-      <!-- BLOCK 2: Photo Gallery Grid -->
-      <div class="vmodal-block-gallery px-6 pt-4 pb-2 bg-[#FAF9F5]">
-        <div id="vdm-gallery-grid" class="grid grid-cols-1 md:grid-cols-4 gap-2.5 rounded-2xl overflow-hidden h-64 sm:h-72 relative shadow-md border border-stone-200">
-          <!-- Main Large Photo (Right in RTL) -->
-          <div class="md:col-span-2 md:row-span-2 relative group overflow-hidden cursor-pointer" onclick="openLightbox(document.getElementById('vdm-cover').src)">
+      <!-- BLOCK 2: Photo Gallery Showcase (Clean 3-Column Grid) -->
+      <div class="vmodal-block-gallery px-6 pt-3 pb-1 bg-[#FAF9F5]">
+        <div id="vdm-gallery-grid" class="grid grid-cols-1 sm:grid-cols-3 gap-3 rounded-2xl overflow-hidden shadow-md border border-stone-200 relative bg-slate-900">
+          <div class="relative group overflow-hidden cursor-pointer h-48 sm:h-56" onclick="openLightbox(document.getElementById('vdm-cover').src)">
             <img id="vdm-cover" src="https://images.unsplash.com/photo-1519167758481-83f550bb49b3?w=1200" alt="Vendor Cover" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105">
-            <div class="absolute inset-0 bg-black/10 group-hover:bg-black/0 transition-colors"></div>
+            <div class="absolute inset-0 bg-black/20 group-hover:bg-black/0 transition-colors"></div>
           </div>
-          <!-- 4 Smaller Stacked Photos -->
-          <div class="hidden md:block relative group overflow-hidden cursor-pointer" onclick="switchModalTab(3)">
+          <div class="relative group overflow-hidden cursor-pointer h-48 sm:h-56" onclick="openLightbox('https://images.unsplash.com/photo-1519741497674-611481863552?w=600')">
             <img src="https://images.unsplash.com/photo-1519741497674-611481863552?w=600" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105" alt="Gallery Photo 2">
-            <div class="absolute inset-0 bg-black/10 group-hover:bg-black/0 transition-colors"></div>
+            <div class="absolute inset-0 bg-black/20 group-hover:bg-black/0 transition-colors"></div>
           </div>
-          <div class="hidden md:block relative group overflow-hidden cursor-pointer" onclick="switchModalTab(3)">
+          <div class="relative group overflow-hidden cursor-pointer h-48 sm:h-56" onclick="openLightbox('https://images.unsplash.com/photo-1511285560929-80b456fea0bc?w=600')">
             <img src="https://images.unsplash.com/photo-1511285560929-80b456fea0bc?w=600" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105" alt="Gallery Photo 3">
-            <div class="absolute inset-0 bg-black/10 group-hover:bg-black/0 transition-colors"></div>
+            <div class="absolute inset-0 bg-black/20 group-hover:bg-black/0 transition-colors"></div>
           </div>
-          <div class="hidden md:block relative group overflow-hidden cursor-pointer" onclick="switchModalTab(3)">
-            <img src="https://images.unsplash.com/photo-1520854221256-17451cc331bf?w=600" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105" alt="Gallery Photo 4">
-            <div class="absolute inset-0 bg-black/10 group-hover:bg-black/0 transition-colors"></div>
-          </div>
-          <div class="hidden md:block relative group overflow-hidden cursor-pointer" onclick="switchModalTab(3)">
-            <img src="https://images.unsplash.com/photo-1465495976277-4387d4b0b4c6?w=600" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105" alt="Gallery Photo 5">
-            <div class="absolute inset-0 bg-black/10 group-hover:bg-black/0 transition-colors"></div>
-          </div>
-
-          <!-- Gallery Overlay Badge -->
-          <button onclick="switchModalTab(3)" class="absolute bottom-3 left-3 bg-white/95 hover:bg-white text-[#111827] text-xs font-bold px-3 py-1.5 rounded-xl shadow-md border border-stone-200 flex items-center gap-1.5 transition-all z-10">
-            <svg class="w-4 h-4 text-[#D4AF37]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"/></svg>
-            مشاهده تمام تصاویر (۱۲+)
-          </button>
         </div>
       </div>
 

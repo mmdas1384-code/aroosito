@@ -6025,18 +6025,19 @@ if (document.readyState === "loading") {
           { author: "محمد و سارا", text: "فضای باغ سنتی بسیار شیک و عکس‌ها رویایی شدند.", stars: "★★★★★", date: "فروردین ۱۴۰۳" }
         ];
         reviewsContainer.innerHTML = reviews.map(r => `
-          <div class="bg-white border border-stone-200 rounded-xl p-4 space-y-1.5 shadow-2xs">
+          <div class="bg-white border border-stone-200/90 rounded-2xl p-4 space-y-2 shadow-2xs text-right">
             <div class="flex justify-between items-center text-xs">
               <div class="flex items-center gap-2">
-                <strong class="text-[#1B3B2B]">${r.author}</strong>
-                <span class="bg-emerald-100 text-emerald-800 text-[9px] font-bold px-2 py-0.5 rounded-full border border-emerald-200 inline-flex items-center gap-1">
-                  <i data-lucide="check-circle" class="w-2.5 h-2.5 text-emerald-700"></i>
-                  <span>زوج تاییدشده</span>
+                <strong class="text-[#1B3B2B] font-bold text-sm">${r.author}</strong>
+                <span class="bg-emerald-50 text-emerald-800 text-[10px] font-bold px-2.5 py-0.5 rounded-full border border-emerald-200/80 inline-flex items-center gap-1">
+                  <i data-lucide="check-circle" class="w-3 h-3 text-emerald-600"></i>
+                  <span>تاییدشده توسط عروسی نو</span>
                 </span>
               </div>
-              <span class="text-amber-500 font-bold">${r.stars || '★★★★★'} (${r.date || '۱۴۰۳'})</span>
+              <span class="text-amber-500 font-bold">${r.stars || '★★★★★'}</span>
             </div>
-            <p class="text-xs text-stone-600 leading-relaxed">${r.text}</p>
+            <p class="text-xs text-stone-600 leading-relaxed font-medium">${r.text}</p>
+            <span class="text-[10px] text-stone-400 block">${r.date || '۱۴۰۳'}</span>
           </div>
         `).join('');
       }
