@@ -6521,8 +6521,40 @@ if (document.readyState === "loading") {
         }
       }
 
+      if (typeof window.checkInquiryDateAvailability === 'function') {
+        window.checkInquiryDateAvailability();
+      }
+
       document.getElementById('inquiry-modal').classList.remove('hidden');
     }
+
+    window.checkInquiryDateAvailability = function() {
+      const dateInp = document.getElementById('inquiry-date');
+      const badge = document.getElementById('inquiry-date-availability-badge');
+      const vendorIdVal = parseInt(document.getElementById('inquiry-vendor-id').value) || 1;
+      if (!dateInp || !badge) return;
+
+      const dateVal = dateInp.value.trim();
+      if (!dateVal) {
+        badge.classList.add('hidden');
+        return;
+      }
+
+      badge.classList.remove('hidden');
+
+      const matched = dateVal.match(/(\d+)/);
+      const dayNum = matched ? parseInt(matched[1], 10) : null;
+
+      const isBlocked = (dayNum && typeof vendorBlockedDates !== 'undefined' && vendorBlockedDates.includes(dayNum)) || (dayNum === 15 || dayNum === 22);
+
+      if (isBlocked) {
+        badge.className = "mt-1 text-[11px] font-bold p-2 rounded-xl flex items-center gap-1.5 bg-rose-950/60 border border-rose-600/50 text-rose-300";
+        badge.innerText = "⚠️ توجه: تاریخ انتخابی شما توسط این تامین‌کننده پر / رزرو شده گزارش شده است.";
+      } else {
+        badge.className = "mt-1 text-[11px] font-bold p-2 rounded-xl flex items-center gap-1.5 bg-emerald-950/60 border border-emerald-500/50 text-emerald-300";
+        badge.innerText = "✓ وضعیت تاریخ انتخابی: آزاد و آماده پذیرش استعلام رزرو.";
+      }
+    };
 
     function closeInquiryModal() {
       document.getElementById('inquiry-modal').classList.add('hidden');
@@ -12096,6 +12128,32 @@ window.closeVendorInvoiceBuilderModal = function() {
   }
 };
 
+/* ==========================================================================
+   DIGITAL ACCEPTANCE & SIGNATURE ON PRE-INVOICE LOGIC
+   ========================================================================== */
+window.confirmPreInvoiceSignature = function() {
+  const container = document.getElementById('pip-client-stamp-container');
+  const status = document.getElementById('pip-client-sig-status');
+
+  if (container) {
+    container.innerHTML = `
+      <div class="w-24 h-24 border-2 border-dashed border-emerald-700 rounded-full flex flex-col items-center justify-center rotate-[4deg] p-1 text-[9px] text-emerald-800 font-bold bg-emerald-100/80 shadow-sm animate-scaleUp">
+        <span class="text-[8px] font-black text-emerald-900">امضای دیجیتال</span>
+        <span>تایید خریدار</span>
+        <span class="text-[7px] font-mono text-emerald-900">کد: ${Math.floor(100000 + Math.random() * 900000)}</span>
+        <i data-lucide="check-circle-2" class="w-3.5 h-3.5 text-emerald-700 mt-0.5"></i>
+      </div>
+    `;
+  }
+  if (status) {
+    status.innerText = "وضعیت: امضا و ثبت نهایی شد ✓";
+    status.className = "text-[10px] text-emerald-800 font-black block";
+  }
+
+  showToast('پیش‌فاکتور با موفقیت و امضای دیجیتال تایید و ثبت نهایی گردید!', 'success', 4000);
+  if (window.lucide) lucide.createIcons();
+};
+
 window.previewPreInvoicePrint = function() {
   const couple = document.getElementById('inv-builder-couple')?.value || 'علی و سارا';
   const phone = document.getElementById('inv-builder-phone')?.value || '۰۹۱۳۰۰۰۰۰۰۰';
@@ -13314,6 +13372,16 @@ window.renderFloatingComparisonBar = function() {
   }
 
   bar.classList.remove('hidden');
+
+  const mobileBadge = document.getElementById('mobile-nav-comp-badge');
+  if (mobileBadge) {
+    if (selectedComparisonVendorIds.length > 0) {
+      mobileBadge.innerText = selectedComparisonVendorIds.length.toLocaleString('fa-IR');
+      mobileBadge.classList.remove('hidden');
+    } else {
+      mobileBadge.classList.add('hidden');
+    }
+  }
 
   if (btnText) {
     btnText.innerText = `مقایسه تامین‌کنندگان (${selectedComparisonVendorIds.length.toLocaleString('fa-IR')})`;

@@ -4881,7 +4881,8 @@
         <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
           <div>
             <label id="inquiry-date-label" class="block mb-1.5 text-slate-200">تاریخ تقریبی مراسم / مراجعه (شمسی) *</label>
-            <input type="text" required id="inquiry-date" value="۱۴۰۳/۰۶/۱۵" placeholder="مثلاً: ۱۴۰۳/۰۶/۱۵" class="w-full bg-[#1E293B] border border-[#D4AF37]/30 text-white placeholder-slate-400 rounded-xl p-2.5 text-xs font-bold focus:outline-none focus:border-[#D4AF37]">
+            <input type="text" required id="inquiry-date" oninput="checkInquiryDateAvailability()" value="۱۴۰۳/۰۶/۱۵" placeholder="مثلاً: ۱۴۰۳/۰۶/۱۵" class="w-full bg-[#1E293B] border border-[#D4AF37]/30 text-white placeholder-slate-400 rounded-xl p-2.5 text-xs font-bold focus:outline-none focus:border-[#D4AF37]">
+            <div id="inquiry-date-availability-badge" class="mt-1 text-[11px] font-bold p-2 rounded-xl flex items-center gap-1.5 hidden"></div>
           </div>
 
           <!-- Dynamic Guest Count / Package Specifics -->
@@ -6810,12 +6811,11 @@
           </div>
 
           <!-- Official Stamp and Signatures Section -->
-          <div class="border-t border-accent/80 pt-5 grid grid-cols-2 gap-6 text-center">
+          <div class="border-t border-accent/80 pt-5 grid grid-cols-1 sm:grid-cols-3 gap-4 text-center">
             <!-- Vendor Signature Box -->
             <div class="space-y-2 bg-slate-50/50 p-4 rounded-2xl border border-accent/60">
-              <span class="text-xs font-bold text-graphite block">مهر و امضای صادرکننده (مدیریت مجموعه)</span>
+              <span class="text-xs font-bold text-graphite block">مهر و امضای صادرکننده (تامین‌کننده)</span>
               <div class="h-20 flex items-center justify-center relative">
-                <!-- Electronic Stamp Design -->
                 <div class="w-24 h-24 border-2 border-dashed border-emerald-700/60 rounded-full flex flex-col items-center justify-center rotate-[-8deg] p-1 text-[9px] text-emerald-800 font-bold opacity-80 shadow-2xs">
                   <span class="text-[8px] font-black">تایید شده</span>
                   <span>هتل مشیرالممالک</span>
@@ -6826,19 +6826,29 @@
               <span class="text-[10px] text-secondary block">تاریخ امضا: <span id="pip-vendor-sig-date">۱۴۰۳/۰۶/۱۵</span></span>
             </div>
 
+            <!-- Client Digital Acceptance Stamp Box -->
+            <div class="space-y-2 bg-emerald-50/40 p-4 rounded-2xl border border-emerald-300">
+              <span class="text-xs font-bold text-emerald-900 block">امضا و تایید آنلاین خریدار (زوجین)</span>
+              <div class="h-20 flex items-center justify-center relative" id="pip-client-stamp-container">
+                <button type="button" onclick="confirmPreInvoiceSignature()" id="pip-sign-btn" class="bg-gradient-to-r from-[#D4AF37] to-[#F3E5AB] text-[#0F251A] text-xs font-black py-2 px-3.5 rounded-xl shadow-md transition-all hover:scale-105 active:scale-95 cursor-pointer">
+                  تایید و ثبت نهایی رزرو (امضای دیجیتال)
+                </button>
+              </div>
+              <span id="pip-client-sig-status" class="text-[10px] text-emerald-800 font-bold block">وضعیت: منتظر تایید خریدار</span>
+            </div>
+
             <!-- Platform Signature Box -->
             <div class="space-y-2 bg-slate-50/50 p-4 rounded-2xl border border-accent/60">
-              <span class="text-xs font-bold text-graphite block">تاییدیه و گواهی اصالت سند (سامانه عروسی نو)</span>
+              <span class="text-xs font-bold text-graphite block">گواهی اصالت سند (عروسی تو)</span>
               <div class="h-20 flex items-center justify-center relative">
-                <!-- Platform Official Stamp -->
                 <div class="w-24 h-24 border-2 border-double border-[#D4AF37] rounded-full flex flex-col items-center justify-center rotate-[6deg] p-1 text-[9px] text-[#1B3B2B] font-extrabold bg-amber-50/40 shadow-2xs">
                   <span class="text-[8px] text-amber-900 font-black">اصالت سنجی</span>
-                  <span class="text-[#1B3B2B]">سامانه عروسی نو</span>
+                  <span class="text-[#1B3B2B]">سامانه عروسی تو</span>
                   <span class="text-[7px] text-amber-900">تضمین ۰٪ کمیسیون</span>
                   <i data-lucide="shield-check" class="w-4 h-4 text-[#D4AF37] mt-0.5"></i>
                 </div>
               </div>
-              <span class="text-[10px] text-secondary block">کد رهگیری سیستم: <span id="pip-track-code" class="font-mono font-bold text-graphite">AROOSI-88219-YZD</span></span>
+              <span class="text-[10px] text-secondary block">کد رهگیری: <span id="pip-track-code" class="font-mono font-bold text-graphite">AROOSI-88219-YZD</span></span>
             </div>
           </div>
 
@@ -7156,6 +7166,40 @@
       </div>
     </div>
   </div>
+
+  <!-- MOBILE BOTTOM NAVIGATION BAR (#mobile-bottom-nav) -->
+  <nav id="mobile-bottom-nav" class="md:hidden fixed bottom-0 left-0 right-0 z-[99998] bg-[#0F172A]/95 backdrop-blur-md border-t border-[#D4AF37]/40 px-3 py-2 text-white shadow-[0_-10px_25px_rgba(0,0,0,0.5)]">
+    <div class="grid grid-cols-4 gap-1 text-center">
+
+      <!-- 1. Search / Home -->
+      <button type="button" onclick="switchTab('directory')" class="flex flex-col items-center justify-center gap-1 p-1 text-slate-300 hover:text-[#D4AF37] transition-colors cursor-pointer">
+        <i data-lucide="search" class="w-5 h-5 text-[#D4AF37]"></i>
+        <span class="text-[10px] font-bold">جستجو</span>
+      </button>
+
+      <!-- 2. Compare -->
+      <button type="button" onclick="triggerComparisonFromBar()" class="flex flex-col items-center justify-center gap-1 p-1 text-slate-300 hover:text-[#D4AF37] transition-colors relative cursor-pointer">
+        <div class="relative">
+          <i data-lucide="columns-2" class="w-5 h-5 text-[#D4AF37]"></i>
+          <span id="mobile-nav-comp-badge" class="absolute -top-1.5 -right-2 bg-rose-600 text-white text-[9px] font-black rounded-full w-4 h-4 flex items-center justify-center hidden">0</span>
+        </div>
+        <span class="text-[10px] font-bold">مقایسه</span>
+      </button>
+
+      <!-- 3. Inquiries / Messages -->
+      <button type="button" onclick="switchTab('messages')" class="flex flex-col items-center justify-center gap-1 p-1 text-slate-300 hover:text-[#D4AF37] transition-colors cursor-pointer">
+        <i data-lucide="message-square" class="w-5 h-5 text-[#D4AF37]"></i>
+        <span class="text-[10px] font-bold">استعلام‌ها</span>
+      </button>
+
+      <!-- 4. User Panel / Dashboard -->
+      <button type="button" onclick="switchTab('vendor-dash')" class="flex flex-col items-center justify-center gap-1 p-1 text-slate-300 hover:text-[#D4AF37] transition-colors cursor-pointer">
+        <i data-lucide="user" class="w-5 h-5 text-[#D4AF37]"></i>
+        <span class="text-[10px] font-bold">پنل کاربری</span>
+      </button>
+
+    </div>
+  </nav>
 
   <!-- App Script -->
 
