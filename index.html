@@ -2000,6 +2000,41 @@
         </div>
       </div>
 
+      <!-- Admin Subscription Plans Management Module -->
+      <div id="admin-subscription-plans-management" class="bg-white border border-accent rounded-3xl p-6 shadow-xs space-y-6">
+        <div class="flex flex-col sm:flex-row justify-between sm:items-center gap-4 border-b border-accent pb-4">
+          <div>
+            <h3 class="text-lg font-bold text-graphite flex items-center gap-2">
+              <i data-lucide="crown" class="w-5 h-5 text-primary"></i>
+              <span>مدیریت پلن‌های اشتراک تامین‌کنندگان (Subscription Plans CRUD)</span>
+            </h3>
+            <p class="text-xs text-secondary mt-0.5">تعریف، ویرایش، بروزرسانی قیمت، مدت اعتبار و ویژگی‌های سطوح اشتراک کسب‌وکارها (مدل ۰٪ کمیسیون)</p>
+          </div>
+          <button onclick="openAdminSubPlanModal()" class="bg-primary hover:bg-emerald-900 text-white font-bold px-4 py-2.5 rounded-xl text-xs transition-all shadow-xs flex items-center gap-2 cursor-pointer shrink-0">
+            <i data-lucide="plus-circle" class="w-4 h-4"></i>
+            <span>افزودن پلن اشتراک جدید</span>
+          </button>
+        </div>
+
+        <div class="overflow-x-auto rounded-2xl border border-accent/80">
+          <table class="w-full text-right text-xs">
+            <thead class="bg-bgCustom text-graphite font-bold border-b border-accent/80">
+              <tr>
+                <th class="p-3">عنوان پلن</th>
+                <th class="p-3">مدت اعتبار</th>
+                <th class="p-3">قیمت (تومان)</th>
+                <th class="p-3">نشان / بج</th>
+                <th class="p-3">امکانات اصلی</th>
+                <th class="p-3 text-center">عملیات</th>
+              </tr>
+            </thead>
+            <tbody id="admin-sub-plans-table-body" class="divide-y divide-accent/60 font-medium">
+              <!-- Dynamically populated via renderAdminSubscriptionPlansTable() -->
+            </tbody>
+          </table>
+        </div>
+      </div>
+
       <!-- Platform Settings & Site Branding Panel -->
       <div class="bg-white border border-accent rounded-3xl p-6 shadow-xs space-y-4">
         <div class="border-b border-accent pb-3 flex items-center justify-between">
@@ -4879,6 +4914,7 @@
         <div class="space-y-3">
           <h4 class="text-xs font-black text-[#D4AF37] uppercase tracking-wider">راهنما & پشتیبانی</h4>
           <ul class="space-y-2 text-xs font-medium text-slate-200">
+            <li><button onclick="openSupportModal()" class="hover:text-[#D4AF37] text-[#D4AF37] font-bold transition-colors flex items-center gap-1.5"><i data-lucide="headphones" class="w-3.5 h-3.5"></i> ارتباط با پشتیبانی آنلاین</button></li>
             <li><button onclick="openAboutModal()" class="hover:text-[#D4AF37] transition-colors">درباره عروسی‌تو</button></li>
             <li><button onclick="openFaqModal()" class="hover:text-[#D4AF37] transition-colors">سوالات متداول (FAQ)</button></li>
             <li><button onclick="openTermsModal()" class="hover:text-[#D4AF37] transition-colors">قوانین و حریم خصوصی</button></li>
@@ -5437,6 +5473,60 @@
           <i data-lucide="check" class="w-4 h-4"></i>
           <span>ذخیره نمونه‌کار</span>
         </button>
+      </form>
+    </div>
+  </div>
+
+  <!-- Admin Subscription Plan CRUD Modal (#admin-sub-plan-modal) -->
+  <div id="admin-sub-plan-modal" class="hidden fixed inset-0 bg-black/60 backdrop-blur-xs z-[999999] flex items-center justify-center p-4 transition-all animate-fadeIn" onclick="if(event.target === this) closeAdminSubPlanModal()">
+    <div class="bg-white border border-accent rounded-3xl max-w-lg w-full p-6 shadow-2xl space-y-5 animate-scaleUp relative">
+      <div class="flex justify-between items-center border-b border-accent pb-3">
+        <h3 id="admin-sub-plan-modal-title" class="text-base font-bold text-graphite flex items-center gap-2">
+          <i data-lucide="crown" class="w-5 h-5 text-primary"></i>
+          <span>افزودن / ویرایش پلن اشتراک</span>
+        </h3>
+        <button type="button" onclick="closeAdminSubPlanModal()" class="text-secondary hover:text-graphite font-bold text-sm">✕</button>
+      </div>
+
+      <form id="admin-sub-plan-form" onsubmit="saveAdminSubPlan(event)" class="space-y-4 text-xs font-bold text-graphite">
+        <input type="hidden" id="sub-plan-id" value="">
+
+        <div class="space-y-1">
+          <label class="block">عنوان پلن اشتراک *</label>
+          <input type="text" id="sub-plan-title" required placeholder="مثلا: طلایی ۱ ساله" class="w-full bg-slate-50 border border-accent rounded-xl p-3 font-medium focus:outline-none focus:border-primary">
+        </div>
+
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+          <div class="space-y-1">
+            <label class="block">مدت اعتبار (روز / ماه) *</label>
+            <input type="text" id="sub-plan-duration" required placeholder="مثلا: ۳۶۵ روز (۱ ساله)" class="w-full bg-slate-50 border border-accent rounded-xl p-3 font-medium focus:outline-none focus:border-primary">
+          </div>
+
+          <div class="space-y-1">
+            <label class="block">قیمت (تومان) *</label>
+            <input type="text" id="sub-plan-price" required placeholder="مثلا: ۱۲,۵۰۰,۰۰۰" class="w-full bg-slate-50 border border-accent rounded-xl p-3 font-medium focus:outline-none focus:border-primary">
+          </div>
+        </div>
+
+        <div class="space-y-1">
+          <label class="block">نشان / بج ویژه‌سازی (Badge Text)</label>
+          <input type="text" id="sub-plan-badge" placeholder="مثلا: محبوب‌ترین / VIP" class="w-full bg-slate-50 border border-accent rounded-xl p-3 font-medium focus:outline-none focus:border-primary">
+        </div>
+
+        <div class="space-y-1">
+          <label class="block">ویژگی‌ها و دسترسی‌های این پلن (هر ویژگی در یک خط) *</label>
+          <textarea id="sub-plan-features" rows="4" required placeholder="حضور در ویترین VIP صفحه اصلی&#10;نمونه‌کار نامحدود + لایت‌باکس&#10;صدور پیش‌فاکتور دیجیتال&#10;ارسال SMS آنی به مشتری" class="w-full bg-slate-50 border border-accent rounded-xl p-3 font-medium focus:outline-none focus:border-primary leading-relaxed"></textarea>
+        </div>
+
+        <div class="flex items-center gap-2 pt-1">
+          <input type="checkbox" id="sub-plan-active" checked class="rounded text-primary focus:ring-primary w-4 h-4 cursor-pointer">
+          <label for="sub-plan-active" class="cursor-pointer text-xs font-bold text-graphite">پلن فعال و آماده فروش می‌باشد</label>
+        </div>
+
+        <div class="flex justify-end gap-2 pt-2 border-t border-accent">
+          <button type="button" onclick="closeAdminSubPlanModal()" class="px-4 py-2 bg-slate-100 hover:bg-slate-200 text-graphite font-bold text-xs rounded-xl transition-colors">انصراف</button>
+          <button type="submit" class="px-5 py-2 bg-primary hover:bg-emerald-900 text-white font-bold text-xs rounded-xl transition-colors shadow-xs">ذخیره پلن اشتراک</button>
+        </div>
       </form>
     </div>
   </div>
