@@ -6457,9 +6457,12 @@ if (document.readyState === "loading") {
         }
 
         container.innerHTML = availableServices.map((service, index) => `
-          <label class="flex items-center gap-2 cursor-pointer p-1.5 hover:bg-white rounded-lg transition-colors">
-            <input type="checkbox" value="${service}" ${index < 3 ? 'checked' : ''} class="rounded text-primary focus:ring-primary w-4 h-4 cursor-pointer">
-            <span class="text-xs text-graphite font-medium">${service}</span>
+          <label class="flex items-center justify-between gap-2 cursor-pointer p-2.5 bg-[#0F172A] border border-[#D4AF37]/30 hover:border-[#D4AF37] rounded-xl transition-all hover:bg-[#1B2A4A] group">
+            <div class="flex items-center gap-2">
+              <input type="checkbox" value="${service}" ${index < 3 ? 'checked' : ''} class="accent-[#D4AF37] w-4 h-4 rounded cursor-pointer">
+              <span class="text-xs font-bold text-white group-hover:text-[#D4AF37] transition-colors">${service}</span>
+            </div>
+            <i data-lucide="check" class="w-3.5 h-3.5 text-[#D4AF37]"></i>
           </label>
         `).join('');
       }
@@ -12793,6 +12796,19 @@ window.openPreInvoicePrintModal = function(invoiceData) {
 window.closePreInvoicePrintModal = function() {
   const modal = document.getElementById('modal-preinvoice-print');
   if (modal) modal.classList.add('hidden');
+};
+
+window.handlePreInvoiceDepositConfirmation = function() {
+  const modal = document.getElementById('modal-preinvoice-print');
+  if (modal) modal.classList.add('hidden');
+  if (typeof showToast === 'function') {
+    showToast('پیش‌فاکتور توسط شما تایید گردید! در حال انتقال به بخش گفت‌وگو و درگاه پرداخت...', 'success', 4000);
+  }
+  if (typeof switchTab === 'function') {
+    setTimeout(() => {
+      switchTab('messages');
+    }, 1000);
+  }
 };
 
 // ==========================================
