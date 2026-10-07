@@ -296,27 +296,9 @@ header, nav, .header-container, .navbar {
     text-shadow: none !important;
 }
 
-/* ========================================== */
-/* 3D ULTRA-LUXURY GLASSMORPHIC MODAL THEME  */
-/* ========================================== */
-
-#vendor-detail-modal .clean-vmodal-card,
-#inquiry-modal > div {
-  background: #0F251A !important;
-  color: #FFFFFF !important;
-  border: 1.5px solid #D4AF37 !important;
-  box-shadow: 0 25px 60px rgba(0, 0, 0, 0.7) !important;
-}
-
-#vendor-detail-modal .vmodal-block-header {
-  background: #142E22 !important;
-  border-bottom: 1px solid rgba(212, 175, 55, 0.4) !important;
-}
-
-#vendor-detail-modal .clean-vmodal-body,
-#vendor-detail-modal .vmodal-block-tabs,
-#vendor-detail-modal .vmodal-block-gallery {
-  background: #0F251A !important;
+/* Force High Contrast Dark Slate Typography inside #vendor-detail-modal */
+#vendor-detail-modal {
+    color: #111827 !important;
 }
 
 #vendor-detail-modal h1,
@@ -324,86 +306,21 @@ header, nav, .header-container, .navbar {
 #vendor-detail-modal h3,
 #vendor-detail-modal h4,
 #vendor-detail-modal p,
-#vendor-detail-modal span,
+#vendor-detail-modal span:not(.vmodal-badge-gold):not(.bg-[#1B3B2B]),
 #vendor-detail-modal li,
-#vendor-detail-modal label,
-#inquiry-modal h1,
-#inquiry-modal h2,
-#inquiry-modal h3,
-#inquiry-modal h4,
-#inquiry-modal p,
-#inquiry-modal span,
-#inquiry-modal label {
-  color: #FFFFFF !important;
+#vendor-detail-modal label {
+    color: #111827;
 }
 
-#vendor-detail-modal .text-stone-600,
-#vendor-detail-modal .text-stone-500,
-#vendor-detail-modal .text-[#111827],
-#vendor-detail-modal .text-[#1A1A1A],
-#inquiry-modal .text-secondary,
-#inquiry-modal .text-graphite {
-  color: #E2E8F0 !important;
+#vendor-detail-modal .vtab-pane {
+    color: #111827 !important;
+    background-color: transparent !important;
 }
 
-#vendor-detail-modal .vmodal-card-box,
-#vendor-detail-modal .vtab-pane > div,
-#vendor-detail-modal #vdm-packages-container > div,
-#vendor-detail-modal #vdm-reviews-container > div,
-#vendor-detail-modal #vdm-amenities-container > div,
-#vendor-detail-modal #vdm-calendar-container > div,
-#inquiry-modal .bg-white,
-#inquiry-modal .bg-bgCustom,
-#inquiry-modal #inquiry-context-banner {
-  background: #142E22 !important;
-  border-radius: 1.25rem !important;
-  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3) !important;
-  border: 1px solid rgba(212, 175, 55, 0.35) !important;
-}
-
-#vendor-detail-modal input,
-#vendor-detail-modal textarea,
-#vendor-detail-modal select,
-#inquiry-modal input,
-#inquiry-modal textarea,
-#inquiry-modal select {
-  background: #1B3B2B !important;
-  border: 1px solid rgba(212, 175, 55, 0.5) !important;
-  color: #FFFFFF !important;
-  border-radius: 0.85rem !important;
-}
-
-#vendor-detail-modal input:focus,
-#vendor-detail-modal textarea:focus,
-#vendor-detail-modal select:focus,
-#inquiry-modal input:focus,
-#inquiry-modal textarea:focus,
-#inquiry-modal select:focus {
-  border-color: #D4AF37 !important;
-  box-shadow: 0 0 14px rgba(212, 175, 55, 0.6) !important;
-  outline: none !important;
-}
-
-#inquiry-modal option,
-#vendor-detail-modal option {
-  background-color: #1B3B2B !important;
-  color: #FFFFFF !important;
-}
-
-#vdm-modal-inquire-cta,
-#inquiry-modal button[type="submit"] {
-  background: linear-gradient(135deg, #F1C40F 0%, #D4AF37 50%, #B88E28 100%) !important;
-  color: #111E16 !important;
-  border: none !important;
-  font-weight: 900 !important;
-  box-shadow: 0 6px 20px rgba(212, 175, 55, 0.5) !important;
-  transition: all 0.25s ease !important;
-}
-
-#vdm-modal-inquire-cta:hover,
-#inquiry-modal button[type="submit"]:hover {
-  box-shadow: 0 8px 25px rgba(212, 175, 55, 0.8) !important;
-  transform: translateY(-2px) !important;
+#vendor-detail-modal .vtab-pane p,
+#vendor-detail-modal .vtab-pane span,
+#vendor-detail-modal .vtab-pane li {
+    color: #1F2937 !important;
 }
 
 .vtab-btn.active::after {
