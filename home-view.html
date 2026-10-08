@@ -78,8 +78,8 @@
               </button>
             </div>
 
-            <!-- 3-Column Parallax Glassmorphic VIP Showcase Container -->
-            <div id="vip-showcase-container" class="vip-showcase-container grid grid-cols-2 lg:grid-cols-3 gap-3 h-[380px] overflow-hidden relative p-1">
+            <!-- 4-Column Parallax Glassmorphic VIP Showcase Container -->
+            <div id="vip-showcase-container" class="vip-showcase-container grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-3 h-[380px] overflow-hidden relative p-1">
 
               <!-- Column 1 (Scroll Up Stream) -->
               <div class="vip-col-wrapper overflow-hidden relative h-full">
@@ -293,6 +293,111 @@
                   </div>
                 </div>
               </div>
+
+              <!-- Column 4 (Scroll Down Stream - hidden on mobile/tablet) -->
+              <div class="vip-col-wrapper hidden lg:block overflow-hidden relative h-full">
+                <div class="vip-col-stream vip-col-stream-down flex flex-col gap-3">
+
+                  <!-- Card 7: Photography -->
+                  <div data-vip-cat="studio" class="vip-3d-card group cursor-pointer" onclick="openVendorDetailModal(2)">
+                    <img src="https://images.unsplash.com/photo-1519741497674-611481863552?auto=format&fit=crop&w=600&q=80" alt="تشریفات و عکاسی کویر" class="vip-cover-img">
+                    <div class="vip-3d-badge">👑 VIP</div>
+                    <div class="vip-default-cover-label">
+                      <span class="text-[10px] font-black text-white block truncate drop-shadow-sm">تشریفات کویر یزد</span>
+                    </div>
+
+                    <div class="vip-reveal-overlay">
+                      <div class="flex items-center gap-1.5 w-full min-w-0">
+                        <img src="https://images.unsplash.com/photo-1519741497674-611481863552?auto=format&fit=crop&w=150" alt="لوگو" class="w-7 h-7 sm:w-8 sm:h-8 rounded-full border border-[#D4AF37] object-cover shrink-0">
+                        <div class="min-w-0 flex-1">
+                          <h4 class="text-[10.5px] sm:text-[11px] font-black text-white truncate leading-tight">تشریفات کویر یزد</h4>
+                          <span class="text-[8.5px] sm:text-[9px] text-amber-200/90 font-medium block truncate">تشریفات & دیزاین • صفائیه</span>
+                        </div>
+                      </div>
+
+                      <div class="flex items-center justify-around w-full max-w-full px-1 py-1" onclick="event.stopPropagation()">
+                        <button type="button" onclick="openVendorDetailModal(2)" class="vip-icon-module flex flex-col items-center gap-1 cursor-pointer group/icon">
+                          <div class="w-9 h-9 rounded-full bg-[#1B3B2B]/90 text-[#D4AF37] border border-[#D4AF37]/70 shadow-md flex items-center justify-center group-hover/icon:scale-110 group-hover/icon:border-[#D4AF37] transition-all duration-200">
+                            <i data-lucide="eye" class="w-4 h-4"></i>
+                          </div>
+                          <span class="text-[9.5px] font-bold text-white group-hover/icon:text-[#D4AF37] transition-colors whitespace-nowrap">مشاهده</span>
+                        </button>
+
+                        <button type="button" onclick="openInquiryModal(2, 'تشریفات کویر یزد')" class="vip-icon-module flex flex-col items-center gap-1 cursor-pointer group/icon">
+                          <div class="w-9 h-9 rounded-full bg-gradient-to-tr from-[#D4AF37] to-[#F3E5AB] text-[#0F251A] shadow-md flex items-center justify-center group-hover/icon:scale-110 transition-all duration-200">
+                            <i data-lucide="tag" class="w-4 h-4"></i>
+                          </div>
+                          <span class="text-[9.5px] font-bold text-amber-200 group-hover/icon:text-white transition-colors whitespace-nowrap">استعلام قیمت</span>
+                        </button>
+                      </div>
+                    </div>
+                  </div>
+
+                  <!-- Card 8: Luxury Venue -->
+                  <div data-vip-cat="hall" class="vip-3d-card group cursor-pointer" onclick="openVendorDetailModal(1)">
+                    <img src="https://images.unsplash.com/photo-1545232979-fbfd42e000b5?auto=format&fit=crop&w=600&q=80" alt="باغ‌تالار سنتی یزد" class="vip-cover-img">
+                    <div class="vip-3d-badge">👑 VIP</div>
+                    <div class="vip-default-cover-label">
+                      <span class="text-[10px] font-black text-white block truncate drop-shadow-sm">باغ‌تالار سنتی یزد</span>
+                    </div>
+
+                    <div class="vip-reveal-overlay">
+                      <div class="flex items-center gap-1.5 w-full min-w-0">
+                        <img src="https://images.unsplash.com/photo-1545232979-fbfd42e000b5?auto=format&fit=crop&w=150" alt="لوگو" class="w-7 h-7 sm:w-8 sm:h-8 rounded-full border border-[#D4AF37] object-cover shrink-0">
+                        <div class="min-w-0 flex-1">
+                          <h4 class="text-[10.5px] sm:text-[11px] font-black text-white truncate leading-tight">باغ‌تالار سنتی یزد</h4>
+                          <span class="text-[8.5px] sm:text-[9px] text-amber-200/90 font-medium block truncate">باغ‌تالار VIP • بافت تاریخی</span>
+                        </div>
+                      </div>
+
+                      <div class="flex items-center justify-around w-full max-w-full px-1 py-1" onclick="event.stopPropagation()">
+                        <button type="button" onclick="openVendorDetailModal(1)" class="vip-icon-module flex flex-col items-center gap-1 cursor-pointer group/icon">
+                          <div class="w-9 h-9 rounded-full bg-[#1B3B2B]/90 text-[#D4AF37] border border-[#D4AF37]/70 shadow-md flex items-center justify-center group-hover/icon:scale-110 group-hover/icon:border-[#D4AF37] transition-all duration-200">
+                            <i data-lucide="eye" class="w-4 h-4"></i>
+                          </div>
+                          <span class="text-[9.5px] font-bold text-white group-hover/icon:text-[#D4AF37] transition-colors whitespace-nowrap">مشاهده</span>
+                        </button>
+
+                        <button type="button" onclick="openInquiryModal(1, 'باغ‌تالار سنتی یزد')" class="vip-icon-module flex flex-col items-center gap-1 cursor-pointer group/icon">
+                          <div class="w-9 h-9 rounded-full bg-gradient-to-tr from-[#D4AF37] to-[#F3E5AB] text-[#0F251A] shadow-md flex items-center justify-center group-hover/icon:scale-110 transition-all duration-200">
+                            <i data-lucide="tag" class="w-4 h-4"></i>
+                          </div>
+                          <span class="text-[9.5px] font-bold text-amber-200 group-hover/icon:text-white transition-colors whitespace-nowrap">استعلام قیمت</span>
+                        </button>
+                      </div>
+                    </div>
+                  </div>
+
+                  <!-- Loop duplicates for Column 4 -->
+                  <div data-vip-cat="studio" class="vip-3d-card group cursor-pointer" onclick="openVendorDetailModal(2)">
+                    <img src="https://images.unsplash.com/photo-1519741497674-611481863552?auto=format&fit=crop&w=600&q=80" alt="تشریفات و عکاسی کویر" class="vip-cover-img">
+                    <div class="vip-3d-badge">👑 VIP</div>
+                    <div class="vip-reveal-overlay">
+                      <div class="flex items-center gap-1.5 w-full min-w-0">
+                        <img src="https://images.unsplash.com/photo-1519741497674-611481863552?auto=format&fit=crop&w=150" alt="لوگو" class="w-7 h-7 sm:w-8 sm:h-8 rounded-full border border-[#D4AF37] object-cover shrink-0">
+                        <div class="min-w-0 flex-1">
+                          <h4 class="text-[10.5px] sm:text-[11px] font-black text-white truncate leading-tight">تشریفات کویر یزد</h4>
+                          <span class="text-[8.5px] sm:text-[9px] text-amber-200/90 font-medium block truncate">تشریفات & دیزاین • صفائیه</span>
+                        </div>
+                      </div>
+
+                      <div class="flex items-center justify-around w-full max-w-full px-1 py-1" onclick="event.stopPropagation()">
+                        <button type="button" onclick="openVendorDetailModal(2)" class="vip-icon-module flex flex-col items-center gap-1 cursor-pointer group/icon">
+                          <div class="w-9 h-9 rounded-full bg-[#1B3B2B]/90 text-[#D4AF37] border border-[#D4AF37]/70 shadow-md flex items-center justify-center group-hover/icon:scale-110 group-hover/icon:border-[#D4AF37] transition-all duration-200">
+                            <i data-lucide="eye" class="w-4 h-4"></i>
+                          </div>
+                          <span class="text-[9.5px] font-bold text-white group-hover/icon:text-[#D4AF37] transition-colors whitespace-nowrap">مشاهده</span>
+                        </button>
+
+                        <button type="button" onclick="openInquiryModal(2, 'تشریفات کویر یزد')" class="vip-icon-module flex flex-col items-center gap-1 cursor-pointer group/icon">
+                          <div class="w-9 h-9 rounded-full bg-gradient-to-tr from-[#D4AF37] to-[#F3E5AB] text-[#0F251A] shadow-md flex items-center justify-center group-hover/icon:scale-110 transition-all duration-200">
+                            <i data-lucide="tag" class="w-4 h-4"></i>
+                          </div>
+                          <span class="text-[9.5px] font-bold text-amber-200 group-hover/icon:text-white transition-colors whitespace-nowrap">استعلام قیمت</span>
+                        </button>
+                      </div>
+                    </div>
+                  </div>
 
             </div>
           </div>
