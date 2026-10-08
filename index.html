@@ -448,59 +448,33 @@
       <section id="hero" class="relative bg-gradient-to-br from-[#0F172A] via-[#1E293B] to-[#0F172A] border border-[#D4AF37]/50 rounded-3xl p-6 lg:p-8 shadow-2xl overflow-hidden hero-section text-white">
         <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-stretch relative z-10">
 
-          <!-- Left Column: Glassmorphism Hero Intro & Smart Search Bar -->
+          <!-- Left Column: Editorial Luxury Intro & Glassmorphism Side-by-Side CTAs -->
           <div class="lg:col-span-7 bg-[#0F172A]/80 backdrop-blur-xl border border-[#D4AF37]/30 rounded-3xl p-6 sm:p-8 flex flex-col justify-between space-y-6 shadow-2xl relative overflow-hidden">
-            <div class="space-y-4">
+            <div class="space-y-5">
               <div class="inline-flex items-center gap-2 bg-[#D4AF37]/20 text-[#D4AF37] border border-[#D4AF37]/50 px-3.5 py-1.5 rounded-full text-xs font-black">
                 <i data-lucide="sparkles" class="w-4 h-4 text-[#D4AF37]"></i>
-                <span>پلتفرم تخصصی و هوشمند برنامه‌ریزی عروسی</span>
+                <span>Aroosi No — پلتفرم برنامه‌ریزی عروسی‌های لوکس</span>
               </div>
 
-              <h1 class="text-2xl sm:text-3xl lg:text-4xl font-black text-white leading-tight">
-                تجربه لوکس‌ترین برنامه‌ریزی عروسی با <span class="text-[#D4AF37] underline decoration-[#D4AF37]/60 underline-offset-8">هوش مصنوعی</span>
+              <h1 class="text-2xl sm:text-3xl lg:text-4xl font-black text-white leading-snug">
+                Aroosi No — <span class="text-[#D4AF37] underline decoration-[#D4AF37]/60 underline-offset-8">آفرینش خاطره‌انگیزترین لحظات لوکس</span>
               </h1>
 
               <p class="text-xs sm:text-sm text-slate-300 leading-relaxed max-w-xl font-medium">
-                رزرو مستقیم برترین باغ‌تالارها، آتلیه‌ها و سالن‌های زیبایی یزد همراه با تست مجازی تاج و میکاپ، مناقصه معکوس و زمان‌بندی دقیق روز عروسی.
+                پلتفرم جامع و هوشمند مدیریت، رزرو و برنامه‌ریزی عروسی‌های مجلل
               </p>
 
-              <!-- Integrated Glassmorphism Smart Search Bar -->
-              <div class="bg-[#1E293B]/90 border border-[#D4AF37]/40 rounded-2xl p-2.5 shadow-xl space-y-2">
-                <div class="grid grid-cols-1 sm:grid-cols-3 gap-2">
-                  <select id="hero-cat-select" onchange="syncAndFilterCity()" class="bg-[#0F172A] border border-slate-700 text-white rounded-xl px-3 py-2 text-xs font-bold focus:outline-none focus:border-[#D4AF37] cursor-pointer">
-                    <option value="">همه دسته‌بندی‌ها</option>
-                    <option value="تالار">تالار و باغ‌تالار</option>
-                    <option value="عکاسی">عکاسی و آتلیه</option>
-                    <option value="زیبایی">سالن زیبایی و میکاپ</option>
-                    <option value="مزون">مزون و لباس عروس</option>
-                  </select>
+              <!-- Side-by-Side Glassmorphism Action CTAs -->
+              <div class="flex flex-wrap sm:flex-nowrap items-center gap-3 pt-2">
+                <button type="button" onclick="switchTab('directory')" class="flex-1 bg-gradient-to-r from-[#D4AF37] to-[#F3E5AB] hover:from-amber-400 hover:to-amber-200 text-[#0F251A] font-black py-3.5 px-5 rounded-2xl shadow-lg transition-all hover:scale-105 active:scale-95 flex items-center justify-center gap-2 cursor-pointer text-xs sm:text-sm">
+                  <i data-lucide="compass" class="w-4.5 h-4.5 text-[#0F251A]"></i>
+                  <span>کشف تامین‌کنندگان و تالارها</span>
+                </button>
 
-                  <select id="hero-city-select" onchange="syncAndFilterCity()" class="bg-[#0F172A] border border-slate-700 text-white rounded-xl px-3 py-2 text-xs font-bold focus:outline-none focus:border-[#D4AF37] cursor-pointer">
-                    <option value="all">همه مناطق یزد</option>
-                    <option value="صفائیه">صفائیه</option>
-                    <option value="بافت تاریخی">بافت تاریخی</option>
-                    <option value="میدان اطلسی">میدان اطلسی</option>
-                  </select>
-
-                  <button type="button" onclick="switchTab('directory')" class="bg-gradient-to-r from-[#D4AF37] to-[#F3E5AB] text-[#0F251A] font-black py-2 rounded-xl text-xs shadow-md transition-all hover:scale-[1.02] cursor-pointer flex items-center justify-center gap-1.5">
-                    <i data-lucide="search" class="w-4 h-4 text-[#0F251A]"></i>
-                    <span>جستجوی هوشمند</span>
-                  </button>
-                </div>
-
-                <!-- Quick Tool Launchers -->
-                <div class="flex items-center gap-2 flex-wrap pt-1 border-t border-slate-800">
-                  <span class="text-[10px] font-bold text-slate-400">دسترسی سریع:</span>
-                  <button type="button" onclick="openAiTryOnModal()" class="bg-[#D4AF37]/20 hover:bg-[#D4AF37]/30 text-[#D4AF37] border border-[#D4AF37]/50 px-3 py-1 rounded-xl text-[11px] font-black transition-all flex items-center gap-1 cursor-pointer">
-                    🔮 پرو مجازی AI
-                  </button>
-                  <button type="button" onclick="openReverseBiddingModal()" class="bg-emerald-950/80 hover:bg-emerald-900 text-emerald-300 border border-emerald-500/40 px-3 py-1 rounded-xl text-[11px] font-black transition-all flex items-center gap-1 cursor-pointer">
-                    🏷️ ثبت درخواست / مناقصه
-                  </button>
-                  <button type="button" onclick="switchTab('planner')" class="bg-amber-950/80 hover:bg-amber-900 text-amber-300 border border-amber-500/40 px-3 py-1 rounded-xl text-[11px] font-black transition-all flex items-center gap-1 cursor-pointer">
-                    📋 روزشمار و چک‌لیست
-                  </button>
-                </div>
+                <button type="button" onclick="openSmartWizardModal()" class="flex-1 bg-[#1E293B]/90 hover:bg-slate-800 text-[#D4AF37] border border-[#D4AF37]/50 font-black py-3.5 px-5 rounded-2xl shadow-lg transition-all hover:scale-105 active:scale-95 flex items-center justify-center gap-2 cursor-pointer text-xs sm:text-sm">
+                  <i data-lucide="sparkles" class="w-4.5 h-4.5 text-[#D4AF37]"></i>
+                  <span>توصیه هوشمند عروسی نو</span>
+                </button>
               </div>
 
             </div>

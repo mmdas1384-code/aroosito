@@ -3705,68 +3705,51 @@ if (document.readyState === "loading") {
         } else {
           card.innerHTML = `
             <div>
-              <div class="relative h-52 overflow-hidden bg-slate-900">
-                <img src="${v.image}" alt="${v.name}" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-108">
+              <div class="card-img-container relative overflow-hidden bg-slate-900">
+                <img src="${v.image}" alt="${v.name}" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-108">
                 <div class="absolute inset-0 bg-gradient-to-t from-[#0F172A] via-transparent to-black/30"></div>
 
-                <div class="absolute top-3 right-3">
-                  <span class="bg-black/60 backdrop-blur-md text-amber-200 border border-[#D4AF37]/50 text-[10px] font-bold px-2.5 py-1 rounded-full shadow-md inline-flex items-center gap-1">
-                    <i data-lucide="tag" class="w-3 h-3 text-[#D4AF37]"></i>
-                    <span>${v.category}</span>
+                <!-- Corner Floating Micro-Pills -->
+                <div class="absolute top-2 right-2 flex items-center gap-1 z-10">
+                  <span class="bg-black/60 backdrop-blur-md text-amber-200 border border-[#D4AF37]/40 text-[9px] font-bold px-2 py-0.5 rounded-full shadow-xs">
+                    ${v.category}
                   </span>
                 </div>
 
-                <div class="absolute top-3 left-3 flex items-center gap-1.5" onclick="event.stopPropagation()">
-                  <button type="button" onclick="toggleFavoriteVendor(${v.id}, event)" class="w-8 h-8 rounded-full bg-black/60 backdrop-blur-md border border-white/20 flex items-center justify-center text-rose-500 shadow-sm transition-transform active:scale-90 hover:scale-110 cursor-pointer" title="افزودن به نشان‌شده‌ها">
-                    <i data-lucide="heart" class="w-4 h-4 ${isFav ? 'fill-rose-500 text-rose-500' : 'text-rose-500'}"></i>
+                <div class="absolute top-2 left-2 flex items-center gap-1 z-10" onclick="event.stopPropagation()">
+                  <button type="button" onclick="open360TourModal(${v.id})" class="px-2 py-0.5 rounded-full text-[9px] font-bold bg-[#1E293B]/90 text-amber-200 border border-[#D4AF37]/50 backdrop-blur-md flex items-center gap-0.5 shadow-xs hover:scale-105 cursor-pointer" title="تور ۳۶۰°">
+                    <i data-lucide="compass" class="w-2.5 h-2.5 text-[#D4AF37]"></i>
+                    <span>۳۶۰°</span>
                   </button>
 
-                  <button type="button" onclick="toggleVendorComparison(${v.id}, event)" class="px-2.5 py-1 rounded-full text-[10px] font-bold ${isComparing ? 'bg-[#D4AF37] text-[#0F251A] border border-[#D4AF37]' : 'bg-black/60 text-amber-200 border border-amber-300/40'} backdrop-blur-md flex items-center gap-1 shadow-sm transition-all hover:scale-105 cursor-pointer" title="مقایسه تامین‌کنندگان">
-                    <i data-lucide="columns-2" class="w-3 h-3"></i>
-                    <span>${isComparing ? 'در مقایسه' : 'مقایسه'}</span>
-                  </button>
-
-                <button type="button" onclick="open360TourModal(${v.id})" class="px-2.5 py-1 rounded-full text-[10px] font-bold bg-[#1E293B] text-amber-200 border border-[#D4AF37]/50 backdrop-blur-md flex items-center gap-1 shadow-sm transition-all hover:scale-105 cursor-pointer" title="تور ۳۶۰ درجه">
-                  <i data-lucide="compass" class="w-3 h-3 text-[#D4AF37]"></i>
-                  <span>تور ۳۶۰°</span>
-                </button>
-
-                  <div class="bg-black/60 backdrop-blur-md text-[#D4AF37] border border-[#D4AF37]/40 text-xs font-black px-2.5 py-1 rounded-full shadow-sm flex items-center gap-1">
-                    <i data-lucide="star" class="w-3.5 h-3.5 fill-amber-400 text-amber-400"></i>
+                  <div class="bg-black/70 backdrop-blur-md text-[#D4AF37] border border-[#D4AF37]/40 text-[9.5px] font-black px-2 py-0.5 rounded-full flex items-center gap-0.5">
+                    <i data-lucide="star" class="w-2.5 h-2.5 fill-amber-400 text-amber-400"></i>
                     <span>${ratingVal}</span>
                   </div>
                 </div>
               </div>
 
-              <div class="p-4 space-y-3 text-right">
-                <div>
-                  <h3 class="text-base sm:text-lg font-black text-white group-hover:text-[#D4AF37] transition-colors leading-tight">${v.name}</h3>
-                  <div class="flex items-center gap-1.5 text-xs text-slate-300 font-medium mt-1">
-                    <i data-lucide="map-pin" class="w-3.5 h-3.5 text-[#D4AF37]"></i>
-                    <span>${localTag}</span>
-                  </div>
+              <!-- Compact Body Content -->
+              <div class="p-3 space-y-1.5 text-right">
+                <div class="flex justify-between items-start gap-1">
+                  <h3 class="text-xs sm:text-sm font-black text-white group-hover:text-[#D4AF37] transition-colors leading-snug truncate">${v.name}</h3>
+                  <button type="button" onclick="toggleFavoriteVendor(${v.id}, event)" class="text-rose-500 hover:scale-110 transition-transform cursor-pointer shrink-0" title="نشان‌شده">
+                    <i data-lucide="heart" class="w-3.5 h-3.5 ${isFav ? 'fill-rose-500' : ''}"></i>
+                  </button>
                 </div>
 
-                <div class="flex flex-wrap gap-1.5 pt-0.5">
-                  ${(v.capabilityTags || ["تضمین قیمت", "پاسخگویی سریع", "رزرو اقساطی"]).slice(0, 3).map(tag => `
-                    <span class="bg-[#1E293B] text-amber-200 border border-[#D4AF37]/30 text-[9.5px] font-bold px-2 py-0.5 rounded-md flex items-center gap-1">
-                      <i data-lucide="check-circle" class="w-2.5 h-2.5 text-[#D4AF37]"></i>
-                      <span>${tag}</span>
-                    </span>
-                  `).join('')}
+                <div class="flex justify-between items-center text-[10.5px] text-slate-300 font-medium">
+                  <span>📍 ${localTag}</span>
+                  <span class="text-[#D4AF37] font-black text-xs">${v.priceRange || 'استعلام قیمت'}</span>
                 </div>
               </div>
             </div>
 
-            <div class="p-4 pt-0 border-t border-slate-800/80 flex items-center justify-between gap-2 mt-2">
-              <div class="text-right">
-                <span class="text-[10px] text-slate-400 block font-normal">شروع قیمت پایه:</span>
-                <span class="text-[#D4AF37] font-black text-xs sm:text-sm">${v.priceRange || 'استعلام قیمت'}</span>
-              </div>
-
-              <button type="button" onclick="event.stopPropagation(); openVendorDetailModal(${v.id})" class="bg-gradient-to-r from-[#D4AF37] to-[#F3E5AB] hover:from-[#e5bd3c] hover:to-[#fceba7] text-[#0F251A] text-xs font-black py-2 px-3.5 rounded-full shadow-md hover:shadow-lg transition-all duration-200 flex items-center gap-1 cursor-pointer hover:scale-105 active:scale-95">
-                <span>مشاهده & استعلام</span>
-                <i data-lucide="chevron-left" class="w-3.5 h-3.5 text-[#0F251A]"></i>
+            <!-- Single Minimal Hover Trigger -->
+            <div class="p-3 pt-0 text-right">
+              <button type="button" onclick="event.stopPropagation(); openVendorDetailModal(${v.id})" class="hover-reveal-btn w-full bg-gradient-to-r from-[#D4AF37] to-[#F3E5AB] text-[#0F251A] text-[11px] font-black py-1.5 px-3 rounded-xl shadow-md transition-all flex items-center justify-center gap-1 cursor-pointer">
+                <span>مشاهده و رزرو</span>
+                <i data-lucide="chevron-left" class="w-3 h-3 text-[#0F251A]"></i>
               </button>
             </div>
           `;

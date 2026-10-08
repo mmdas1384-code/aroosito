@@ -2025,17 +2025,33 @@ body.theme-pearl-white .text-slate-400 {
 }
 
 /* ==========================================================================
-   SLEEK MINIMAL VENDOR DIRECTORY CARDS
+   SLEEK MINIMAL & COMPACT VENDOR DIRECTORY CARDS (STRICT OVERWRITE)
    ========================================================================== */
 .minimal-vendor-card {
   transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  background-color: #0F172A !important;
+  border-radius: 1rem !important;
+  max-width: 100%;
 }
 
 .minimal-vendor-card:hover {
-  transform: translateY(-3px);
-  box-shadow: 0 12px 35px -5px rgba(212, 175, 55, 0.2);
+  transform: translateY(-2px);
+  box-shadow: 0 10px 30px -5px rgba(212, 175, 55, 0.25);
+  border-color: #D4AF37 !important;
 }
 
-.hover-reveal-overlay {
-  transition: opacity 0.25s ease, transform 0.25s ease;
+.minimal-vendor-card .card-img-container {
+  height: 135px !important;
+  position: relative;
+  overflow: hidden;
+}
+
+.minimal-vendor-card .hover-reveal-btn {
+  transition: all 0.25s ease;
+  opacity: 0.9;
+}
+
+.minimal-vendor-card:hover .hover-reveal-btn {
+  opacity: 1;
+  transform: scale(1.02);
 }
