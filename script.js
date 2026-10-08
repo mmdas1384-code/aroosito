@@ -12150,8 +12150,10 @@ window.confirmPreInvoiceSignature = function() {
    ========================================================================== */
 let vendorStoriesList = JSON.parse(localStorage.getItem('aroosi_vendor_stories_2') || '[]');
 
+let vendorArticlesList = JSON.parse(localStorage.getItem('aroosi_vendor_articles_2') || '[]');
+
 window.switchVendorPanelTab = function(tabName) {
-  const tabs = ['overview', 'inquiries', 'stories', 'calendar'];
+  const tabs = ['overview', 'inquiries', 'calendar', 'stories', 'articles', 'profile'];
   tabs.forEach(t => {
     const pane = document.getElementById(`vpanel-pane-${t}`);
     const btn = document.getElementById(`vpanel-tab-btn-${t}`);
@@ -12164,9 +12166,9 @@ window.switchVendorPanelTab = function(tabName) {
     }
     if (btn) {
       if (t === tabName) {
-        btn.className = "px-4 py-2.5 rounded-2xl text-xs font-black transition-all bg-[#D4AF37] text-[#0F251A] shadow-md cursor-pointer flex items-center gap-1.5";
+        btn.className = "px-3.5 py-2 rounded-2xl text-xs font-black transition-all bg-[#D4AF37] text-[#0F251A] shadow-md cursor-pointer flex items-center gap-1.5";
       } else {
-        btn.className = "px-4 py-2.5 rounded-2xl text-xs font-bold transition-all bg-slate-800 text-slate-300 hover:text-white border border-slate-700 cursor-pointer flex items-center gap-1.5";
+        btn.className = "px-3.5 py-2 rounded-2xl text-xs font-bold transition-all bg-slate-800 text-slate-300 hover:text-white border border-slate-700 cursor-pointer flex items-center gap-1.5";
       }
     }
   });
@@ -12180,8 +12182,81 @@ window.switchVendorPanelTab = function(tabName) {
   if (tabName === 'stories' && typeof renderVendorStoriesList === 'function') {
     renderVendorStoriesList();
   }
+  if (tabName === 'articles' && typeof renderVendorArticlesList === 'function') {
+    renderVendorArticlesList();
+  }
 
   if (window.lucide) lucide.createIcons();
+};
+
+window.handleCreateVendorArticle = function(e) {
+  e.preventDefault();
+  const title = document.getElementById('varticle-title')?.value.trim();
+  const category = document.getElementById('varticle-category')?.value || 'عکاسی و فیلمبرداری';
+  const cover = document.getElementById('varticle-cover')?.value.trim();
+  const summary = document.getElementById('varticle-summary')?.value.trim();
+  const content = document.getElementById('varticle-content')?.value.trim();
+
+  if (!title || !cover || !summary || !content) {
+    showToast('لطفا تمامی فیلدهای مقاله را تکمیل کنید.', 'warning');
+    return;
+  }
+
+  const newArticle = {
+    id: Date.now(),
+    title: title,
+    categoryName: category,
+    image: cover,
+    summary: summary,
+    content: content,
+    author: 'استودیو کویر یزد',
+    viewsCount: '۱۲۴',
+    date: 'امروز'
+  };
+
+  vendorArticlesList.unshift(newArticle);
+  try {
+    localStorage.setItem('aroosi_vendor_articles_2', JSON.stringify(vendorArticlesList));
+  } catch(err) {}
+
+  showToast('مقاله/ایده جدید با موفقیت جهت بررسی هیئت تحریریه ثبت گردید!', 'success');
+  document.getElementById('varticle-form')?.reset();
+  window.renderVendorArticlesList();
+};
+
+window.renderVendorArticlesList = function() {
+  const container = document.getElementById('vpanel-articles-list');
+  if (!container) return;
+
+  if (vendorArticlesList.length === 0) {
+    container.innerHTML = `<div class="p-6 text-center text-slate-400 text-xs font-bold bg-[#1E293B] rounded-2xl border border-slate-700">هنوز مقاله‌ای ثبت نکرده‌اید. با فرم بالا اولین ایده/مقاله تخصصی خود را منتشر کنید!</div>`;
+    return;
+  }
+
+  container.innerHTML = vendorArticlesList.map(a => `
+    <div class="p-3.5 bg-[#1E293B] border border-[#D4AF37]/30 rounded-2xl flex items-center justify-between gap-3 text-right">
+      <div class="flex items-center gap-3">
+        <img src="${a.image}" alt="${a.title}" class="w-12 h-12 rounded-xl object-cover border border-[#D4AF37]/40 shrink-0">
+        <div class="space-y-0.5">
+          <h4 class="text-xs font-black text-white">${a.title}</h4>
+          <span class="text-[10px] text-amber-200 font-bold block">${a.categoryName} • ${a.date}</span>
+        </div>
+      </div>
+      <button type="button" onclick="deleteVendorArticle(${a.id})" class="text-rose-400 hover:text-rose-200 text-xs font-bold p-1.5 rounded-lg bg-rose-950/40 border border-rose-800/40 cursor-pointer" title="حذف">
+        حذف
+      </button>
+    </div>
+  `).join('');
+};
+
+window.deleteVendorArticle = function(articleId) {
+  vendorArticlesList = vendorArticlesList.filter(a => a.id !== articleId);
+  try {
+    localStorage.setItem('aroosi_vendor_articles_2', JSON.stringify(vendorArticlesList));
+  } catch(err) {}
+
+  showToast('مقاله با موفقیت حذف شد.', 'info');
+  window.renderVendorArticlesList();
 };
 
 window.handleCreateVendorStory = function(e) {
@@ -12253,7 +12328,7 @@ window.deleteVendorStory = function(storyId) {
    SUPER ADMIN PANEL REDESIGN
    ========================================================================== */
 window.switchAdminPanelTab = function(tabName) {
-  const tabs = ['vendors', 'content', 'financial'];
+  const tabs = ['analytics', 'vendors', 'content', 'subscriptions', 'reviews', 'settings'];
   tabs.forEach(t => {
     const pane = document.getElementById(`apanel-pane-${t}`);
     const btn = document.getElementById(`apanel-tab-btn-${t}`);
@@ -12266,9 +12341,9 @@ window.switchAdminPanelTab = function(tabName) {
     }
     if (btn) {
       if (t === tabName) {
-        btn.className = "px-4 py-2.5 rounded-2xl text-xs font-black transition-all bg-[#D4AF37] text-[#0F251A] shadow-md cursor-pointer flex items-center gap-1.5";
+        btn.className = "px-3.5 py-2 rounded-2xl text-xs font-black transition-all bg-[#D4AF37] text-[#0F251A] shadow-md cursor-pointer flex items-center gap-1.5";
       } else {
-        btn.className = "px-4 py-2.5 rounded-2xl text-xs font-bold transition-all bg-slate-800 text-slate-300 hover:text-white border border-slate-700 cursor-pointer flex items-center gap-1.5";
+        btn.className = "px-3.5 py-2 rounded-2xl text-xs font-bold transition-all bg-slate-800 text-slate-300 hover:text-white border border-slate-700 cursor-pointer flex items-center gap-1.5";
       }
     }
   });
@@ -12276,7 +12351,7 @@ window.switchAdminPanelTab = function(tabName) {
   if (tabName === 'vendors' && typeof renderAdminPendingApps === 'function') {
     renderAdminPendingApps();
   }
-  if (tabName === 'financial' && typeof renderAdminSubscriptionPlansTable === 'function') {
+  if (tabName === 'subscriptions' && typeof renderAdminSubscriptionPlansTable === 'function') {
     renderAdminSubscriptionPlansTable();
   }
 
