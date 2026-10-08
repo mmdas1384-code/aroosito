@@ -3612,6 +3612,7 @@ if (document.readyState === "loading") {
       const about = document.getElementById('vd-edit-about')?.value?.trim() || '';
       const servicesRaw = document.getElementById('vd-edit-services')?.value || '';
       const tagsRaw = document.getElementById('vd-edit-tags')?.value || '';
+      const tour360Link = document.getElementById('vd-edit-tour360')?.value?.trim() || '';
 
       const services = servicesRaw.split('\n').map(s => s.trim()).filter(Boolean);
       const tags = tagsRaw.split(',').map(t => t.trim()).filter(Boolean);
@@ -3627,6 +3628,7 @@ if (document.readyState === "loading") {
         address,
         instagram: insta,
         about,
+        tour360Link,
         customServices: services,
         capabilityTags: tags
       };
@@ -13472,10 +13474,10 @@ window.renderVendorDashCalendar = function() {
   grid.innerHTML = '';
 
   // Render Day Name Headers
-  const dayHeaders = ['ش', 'ی', 'د', 'س', 'چ', 'پ', 'ج'];
+  const dayHeaders = ['شنبه', 'یکشنبه', 'دوشنبه', 'سه‌شنبه', 'چهارشنبه', 'پنج‌شنبه', 'جمعه'];
   dayHeaders.forEach(h => {
     const hEl = document.createElement('div');
-    hEl.className = "font-bold text-[11px] text-secondary py-1 bg-bgCustom rounded-lg border border-accent/40 text-center";
+    hEl.className = "font-black text-[11px] text-[#D4AF37] py-2 bg-[#1E293B] rounded-xl border border-[#D4AF37]/30 text-center shadow-xs";
     hEl.innerText = h;
     grid.appendChild(hEl);
   });

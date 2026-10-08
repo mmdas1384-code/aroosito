@@ -3225,23 +3225,51 @@
           </button>
         </div>
 
-        <!-- Vendor Analytics KPI Micro-Widgets Grid -->
+        <!-- Vendor Glassmorphism Analytics KPI Micro-Widgets Grid -->
         <div class="grid grid-cols-2 lg:grid-cols-4 gap-4">
-          <div class="bg-[#0F172A] border border-[#D4AF37]/30 rounded-2xl p-4 text-right space-y-1 shadow-md">
-            <span class="text-xs text-slate-300 font-bold block">بازدید کل پروفایل:</span>
+          <div class="bg-white/5 backdrop-blur-xl border border-[#D4AF37]/40 rounded-2xl p-4 text-right space-y-2 shadow-lg relative overflow-hidden">
+            <div class="flex justify-between items-center">
+              <span class="text-xs text-slate-300 font-bold">بازدید کل پروفایل:</span>
+              <span class="text-[10px] font-black text-emerald-400 bg-emerald-950/80 border border-emerald-500/40 px-2 py-0.5 rounded-full">+۱۲٪</span>
+            </div>
             <p id="vd-kpi-views" class="text-2xl font-black text-white">۳,۸۵۰ <span class="text-xs font-normal text-slate-400">بازدید</span></p>
+            <!-- Sparkline SVG -->
+            <svg class="w-full h-8 text-[#D4AF37] opacity-60" viewBox="0 0 100 25" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M0 20 L20 15 L40 18 L60 8 L80 12 L100 4" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
           </div>
-          <div class="bg-[#0F172A] border border-[#D4AF37]/30 rounded-2xl p-4 text-right space-y-1 shadow-md">
-            <span class="text-xs text-slate-300 font-bold block">نرخ تبدیل به لید:</span>
+
+          <div class="bg-white/5 backdrop-blur-xl border border-[#D4AF37]/40 rounded-2xl p-4 text-right space-y-2 shadow-lg relative overflow-hidden">
+            <div class="flex justify-between items-center">
+              <span class="text-xs text-slate-300 font-bold">نرخ تبدیل به لید:</span>
+              <span class="text-[10px] font-black text-emerald-400 bg-emerald-950/80 border border-emerald-500/40 px-2 py-0.5 rounded-full">+۴.۸٪</span>
+            </div>
             <p id="vd-kpi-conversion" class="text-2xl font-black text-[#D4AF37]">۴.۲٪ <span class="text-xs font-normal text-slate-400">استعلام</span></p>
+            <svg class="w-full h-8 text-emerald-400 opacity-60" viewBox="0 0 100 25" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M0 22 L25 18 L50 12 L75 8 L100 3" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
           </div>
-          <div class="bg-[#0F172A] border border-[#D4AF37]/30 rounded-2xl p-4 text-right space-y-1 shadow-md">
-            <span class="text-xs text-slate-300 font-bold block">استعلام‌های فعال:</span>
+
+          <div class="bg-white/5 backdrop-blur-xl border border-[#D4AF37]/40 rounded-2xl p-4 text-right space-y-2 shadow-lg relative overflow-hidden">
+            <div class="flex justify-between items-center">
+              <span class="text-xs text-slate-300 font-bold">استعلام‌های فعال:</span>
+              <span class="text-[10px] font-black text-amber-300 bg-amber-950/80 border border-amber-500/40 px-2 py-0.5 rounded-full">+۱۸ جدید</span>
+            </div>
             <p id="vd-kpi-leads" class="text-2xl font-black text-white">۱۶۲ <span class="text-xs font-normal text-slate-400">درخواست</span></p>
+            <svg class="w-full h-8 text-[#D4AF37] opacity-60" viewBox="0 0 100 25" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M0 18 L20 12 L40 16 L60 6 L80 10 L100 2" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
           </div>
-          <div class="bg-[#0F172A] border border-[#D4AF37]/30 rounded-2xl p-4 text-right space-y-1 shadow-md">
-            <span class="text-xs text-slate-300 font-bold block">نشان‌شده‌ها (مودبورد):</span>
+
+          <div class="bg-white/5 backdrop-blur-xl border border-[#D4AF37]/40 rounded-2xl p-4 text-right space-y-2 shadow-lg relative overflow-hidden">
+            <div class="flex justify-between items-center">
+              <span class="text-xs text-slate-300 font-bold">نشان‌شده‌ها (مودبورد):</span>
+              <span class="text-[10px] font-black text-rose-300 bg-rose-950/80 border border-rose-500/40 px-2 py-0.5 rounded-full">❤️ محبوب</span>
+            </div>
             <p class="text-2xl font-black text-white">۴۸ <span class="text-xs font-normal text-slate-400">ذخیره</span></p>
+            <svg class="w-full h-8 text-rose-400 opacity-60" viewBox="0 0 100 25" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M0 20 L25 15 L50 18 L75 8 L100 5" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
           </div>
         </div>
 
@@ -3689,6 +3717,16 @@
             <div>
               <label class="block text-slate-200 mb-1">لینک مسیریابی بلد / نشان / گوگل‌مپ:</label>
               <input type="text" id="vd-edit-maplink" value="https://nishan.ir/maps" class="w-full bg-[#1E293B] border border-[#D4AF37]/30 text-white rounded-xl p-2.5 text-xs font-medium focus:outline-none focus:border-[#D4AF37] dir-ltr">
+            </div>
+
+            <div>
+              <label class="block text-slate-200 mb-1">لینک تور مجازی ۳۶۰ درجه (Panorama Tour Link):</label>
+              <div class="flex gap-2">
+                <input type="text" id="vd-edit-tour360" value="https://aroosi.no/tour360/kavir" placeholder="https://..." class="flex-1 bg-[#1E293B] border border-[#D4AF37]/30 text-white rounded-xl p-2.5 text-xs font-medium focus:outline-none focus:border-[#D4AF37] dir-ltr">
+                <button type="button" onclick="open360TourModal(1)" class="bg-[#D4AF37] hover:bg-amber-500 text-[#0F251A] font-black px-3 py-2 rounded-xl text-xs shadow transition-all cursor-pointer shrink-0">
+                  پیش‌نمایش تور
+                </button>
+              </div>
             </div>
 
             <div class="md:col-span-3">

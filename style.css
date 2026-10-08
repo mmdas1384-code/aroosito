@@ -530,6 +530,20 @@ main#directory-view {
 }
 
 /* ==========================================================================
+   VENDOR DASHBOARD GLASSMORPHISM & CALENDAR STYLES
+   ========================================================================== */
+.vpanel-pane {
+  transition: all 0.3s ease;
+}
+
+.vpanel-pane input:focus,
+.vpanel-pane select:focus,
+.vpanel-pane textarea:focus {
+  border-color: #D4AF37 !important;
+  box-shadow: 0 0 10px rgba(212, 175, 55, 0.25) !important;
+}
+
+/* ==========================================================================
    BORDERLESS FLOATING STORY CIRCLES
    ========================================================================== */
 .gold-gradient-border {
