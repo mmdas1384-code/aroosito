@@ -4303,14 +4303,14 @@ if (document.readyState === "loading") {
     function switchPlannerSubTab(subTabKey) {
       activePlannerSubTab = subTabKey;
 
-      ['checklist', 'vendors', 'budget', 'offers'].forEach(key => {
+      ['checklist', 'schedule', 'party', 'forum', 'vendors', 'budget', 'offers'].forEach(key => {
         const btn = document.getElementById('planner-subtab-' + key);
         const panel = document.getElementById('planner-panel-' + key);
         if (btn) {
           if (key === subTabKey) {
-            btn.className = "flex-1 py-3 px-4 rounded-xl transition-all bg-primary text-white text-center flex items-center justify-center gap-2 shadow-xs";
+            btn.className = "flex-1 py-3 px-3 rounded-xl transition-all bg-primary text-white text-center flex items-center justify-center gap-1.5 shadow-xs cursor-pointer min-w-[120px]";
           } else {
-            btn.className = "flex-1 py-3 px-4 rounded-xl transition-all text-secondary hover:text-graphite hover:bg-slate-50 text-center flex items-center justify-center gap-2";
+            btn.className = "flex-1 py-3 px-3 rounded-xl transition-all text-secondary hover:text-graphite hover:bg-slate-50 text-center flex items-center justify-center gap-1.5 cursor-pointer min-w-[120px]";
           }
         }
         if (panel) {
@@ -4325,6 +4325,12 @@ if (document.readyState === "loading") {
         renderPlannerBudgetSummary();
       } else if (subTabKey === 'offers') {
         renderPlannerOffersTab();
+      } else if (subTabKey === 'schedule' && typeof renderMasterDaySchedule === 'function') {
+        renderMasterDaySchedule();
+      } else if (subTabKey === 'party' && typeof renderBridalParty === 'function') {
+        renderBridalParty();
+      } else if (subTabKey === 'forum' && typeof renderBridalForum === 'function') {
+        renderBridalForum();
       }
 
       lucide.createIcons();
@@ -12143,6 +12149,400 @@ window.closeVendorInvoiceBuilderModal = function() {
   }
 };
 
+// ==========================================================================
+// PHASE 3: AI VIRTUAL TRY-ON STUDIO LOGIC
+// ==========================================================================
+window.openAiTryOnModal = function() {
+  const modal = document.getElementById('modal-ai-tryon');
+  if (modal) {
+    modal.classList.remove('hidden');
+    modal.classList.add('flex');
+  }
+};
+
+window.closeAiTryOnModal = function() {
+  const modal = document.getElementById('modal-ai-tryon');
+  if (modal) {
+    modal.classList.add('hidden');
+    modal.classList.remove('flex');
+  }
+};
+
+window.handleTryOnPhotoUpload = function(event) {
+  const file = event.target.files[0];
+  if (!file) return;
+  const reader = new FileReader();
+  reader.onload = function(e) {
+    const userImg = document.getElementById('ai-tryon-user-img');
+    if (userImg) userImg.src = e.target.result;
+    showToast('تصویر جدید با موفقیت بارگذاری گردید.', 'success');
+  };
+  reader.readAsDataURL(file);
+};
+
+window.applyTryOnPreset = function(presetKey, titleLabel, overlaySrc) {
+  const overlayImg = document.getElementById('ai-tryon-overlay-img');
+  const badge = document.getElementById('ai-tryon-preset-badge');
+
+  if (badge) badge.textContent = `پرو: ${titleLabel}`;
+
+  if (overlayImg) {
+    if (overlaySrc) {
+      overlayImg.src = overlaySrc;
+      overlayImg.classList.remove('hidden');
+    } else {
+      overlayImg.classList.add('hidden');
+    }
+  }
+  showToast(`پرو مجازی ${titleLabel} اعمال شد!`, 'info');
+};
+
+// ==========================================================================
+// PHASE 3: WEDDING DAY MASTER SCHEDULE BUILDER
+// ==========================================================================
+let masterScheduleItems = [
+  { id: 's1', time: '۰۸:۰۰', title: 'حضور عروس در سالن زیبایی و گریم', responsible: 'عروس & ساقدوش' },
+  { id: 's2', time: '۱۱:۰۰', title: 'حضور داماد در پیرایشگاه و تحویل ماشین عروس', responsible: 'داماد' },
+  { id: 's3', time: '۱۳:۳۰', title: 'ورود داماد به سالن زیبایی جهت دیدار نهایی (First Look)', responsible: 'عکاس & فیلمبردار' },
+  { id: 's4', time: '۱۴:۳۰', title: 'حرکت به سمت باغ و آتلیه اختصاصی جهت عکاسی فرمالیته', responsible: 'تیم فیلمبرداری' },
+  { id: 's5', time: '۱۹:۰۰', title: 'ورود باشکوه به سالن و استقبال از مهمانان', responsible: 'تشریفات & ساقدوش‌ها' },
+  { id: 's6', time: '۲۱:۰۰', title: 'مراسم رقص تن tango و برش کیک عروسی', responsible: 'دی‌جی & تشریفات' }
+];
+
+window.renderMasterDaySchedule = function() {
+  const feed = document.getElementById('master-schedule-feed');
+  if (!feed) return;
+  feed.innerHTML = '';
+
+  let items = [];
+  try {
+    items = JSON.parse(localStorage.getItem('aroosi_day_schedule_db') || 'null');
+  } catch (e) { items = null; }
+
+  if (!items || items.length === 0) {
+    items = masterScheduleItems;
+    try { localStorage.setItem('aroosi_day_schedule_db', JSON.stringify(items)); } catch(e) {}
+  } else {
+    masterScheduleItems = items;
+  }
+
+  items.forEach((item, idx) => {
+    const card = document.createElement('div');
+    card.className = "schedule-item-card rounded-2xl p-3.5 sm:p-4 text-white text-right flex flex-col sm:flex-row justify-between sm:items-center gap-2 shadow-md";
+    card.innerHTML = `
+      <div class="flex items-center gap-3">
+        <span class="text-xs sm:text-sm font-black text-[#D4AF37] bg-[#1E293B] border border-[#D4AF37]/30 px-3 py-1 rounded-xl dir-ltr font-mono">${item.time}</span>
+        <div>
+          <h4 class="text-xs sm:text-sm font-black text-white">${item.title}</h4>
+          ${item.responsible ? `<span class="text-[11px] text-slate-400">👤 مسئول: <strong class="text-amber-200">${item.responsible}</strong></span>` : ''}
+        </div>
+      </div>
+
+      <button type="button" onclick="deleteScheduleTask('${item.id || idx}')" class="text-rose-400 hover:text-rose-300 text-xs font-bold bg-rose-950/60 border border-rose-800/50 px-2.5 py-1 rounded-lg self-end sm:self-center transition-colors cursor-pointer">
+        حذف
+      </button>
+    `;
+    feed.appendChild(card);
+  });
+};
+
+window.addScheduleTask = function(event) {
+  event.preventDefault();
+  const time = document.getElementById('sched-time')?.value.trim();
+  const title = document.getElementById('sched-title')?.value.trim();
+  const responsible = document.getElementById('sched-responsible')?.value.trim();
+
+  if (!time || !title) {
+    showToast('لطفاً زمان و عنوان برنامه را وارد نمایید.', 'warning');
+    return;
+  }
+
+  const newItem = {
+    id: 's_' + Date.now(),
+    time,
+    title,
+    responsible: responsible || 'همراهان'
+  };
+
+  masterScheduleItems.push(newItem);
+  try {
+    localStorage.setItem('aroosi_day_schedule_db', JSON.stringify(masterScheduleItems));
+  } catch(e) {}
+
+  document.getElementById('sched-time').value = '';
+  document.getElementById('sched-title').value = '';
+  document.getElementById('sched-responsible').value = '';
+
+  showToast('آیتم جدید به زمان‌بندی روز عروسی افزوده شد.', 'success');
+  renderMasterDaySchedule();
+};
+
+window.deleteScheduleTask = function(taskId) {
+  masterScheduleItems = masterScheduleItems.filter((i, idx) => (i.id !== taskId && idx.toString() !== taskId.toString()));
+  try {
+    localStorage.setItem('aroosi_day_schedule_db', JSON.stringify(masterScheduleItems));
+  } catch(e) {}
+  showToast('آیتم زمانی حذف شد.', 'info');
+  renderMasterDaySchedule();
+};
+
+window.exportSchedulePrint = function() {
+  window.print();
+};
+
+// ==========================================================================
+// PHASE 3: BRIDAL PARTY & TASK DELEGATOR LOGIC
+// ==========================================================================
+let bridalPartyMembers = [
+  {
+    id: 'p1',
+    name: 'سارا رضایی',
+    role: 'ساقدوش اصلی عروس (Maid of Honor)',
+    tasks: [
+      { text: 'هماهنگی زمان تحویل دسته گل عروس', completed: true },
+      { text: 'همراهی در سالن زیبایی و نگهداری وسایل شخص', completed: false }
+    ]
+  },
+  {
+    id: 'p2',
+    name: 'علی حسینی',
+    role: 'ساقدوش اصلی داماد (Best Man)',
+    tasks: [
+      { text: 'تحویل ماشین عروس تزئین شده از گل‌فروشی', completed: true },
+      { text: 'همراهی داماد در اتلیه و نگهداری حلقه معامله', completed: false }
+    ]
+  }
+];
+
+window.renderBridalParty = function() {
+  const feed = document.getElementById('bridal-party-feed');
+  if (!feed) return;
+  feed.innerHTML = '';
+
+  let members = [];
+  try {
+    members = JSON.parse(localStorage.getItem('aroosi_bridal_party_db') || 'null');
+  } catch (e) { members = null; }
+
+  if (!members || members.length === 0) {
+    members = bridalPartyMembers;
+    try { localStorage.setItem('aroosi_bridal_party_db', JSON.stringify(members)); } catch(e) {}
+  } else {
+    bridalPartyMembers = members;
+  }
+
+  members.forEach((m, mIdx) => {
+    const card = document.createElement('div');
+    card.className = "party-member-card rounded-2xl p-4 text-[#FFFFFF] text-right space-y-3 shadow-md";
+
+    const completedCount = (m.tasks || []).filter(t => t.completed).length;
+    const totalCount = (m.tasks || []).length;
+    const percent = totalCount > 0 ? Math.round((completedCount / totalCount) * 100) : 0;
+
+    card.innerHTML = `
+      <div class="flex justify-between items-start border-b border-slate-800 pb-2">
+        <div>
+          <h4 class="text-sm font-black text-[#D4AF37]">${m.name}</h4>
+          <span class="text-[11px] font-bold text-slate-300">${m.role}</span>
+        </div>
+        <span class="text-xs font-black text-emerald-400 bg-emerald-950/80 border border-emerald-500/40 px-2.5 py-0.5 rounded-full">${percent}% پیشرفت</span>
+      </div>
+
+      <!-- Tasks List -->
+      <div class="space-y-1.5">
+        <span class="text-[11px] font-black text-slate-400 block">لیست وظایف محوله:</span>
+        ${(m.tasks && m.tasks.length) ? m.tasks.map((t, tIdx) => `
+          <div class="flex items-center justify-between bg-[#0F172A] p-2 rounded-xl border border-slate-800 text-xs">
+            <label class="flex items-center gap-2 cursor-pointer select-none">
+              <input type="checkbox" ${t.completed ? 'checked' : ''} onchange="togglePartyTaskComplete(${mIdx}, ${tIdx})" class="w-4 h-4 accent-[#D4AF37] cursor-pointer">
+              <span class="${t.completed ? 'line-through text-slate-500' : 'text-slate-200 font-medium'}">${t.text}</span>
+            </label>
+          </div>
+        `).join('') : '<span class="text-xs text-slate-500">هیچ وظیفه‌ای تعریف نشده است.</span>'}
+      </div>
+
+      <!-- Assign New Task Input -->
+      <div class="flex gap-2 pt-2 border-t border-slate-800/80">
+        <input type="text" id="party-task-input-${mIdx}" placeholder="افزودن وظیفه جدید..." class="flex-1 bg-[#0F172A] border border-slate-700 text-xs text-white rounded-xl px-3 py-1.5 focus:outline-none focus:border-[#D4AF37]">
+        <button type="button" onclick="assignPartyTask(${mIdx})" class="bg-[#D4AF37] text-[#0F251A] text-xs font-black px-3 py-1.5 rounded-xl hover:bg-amber-500 transition-all cursor-pointer">
+          ثبت
+        </button>
+      </div>
+    `;
+    feed.appendChild(card);
+  });
+};
+
+window.addPartyMember = function(event) {
+  event.preventDefault();
+  const name = document.getElementById('party-member-name')?.value.trim();
+  const role = document.getElementById('party-member-role')?.value;
+
+  if (!name) {
+    showToast('لطفاً نام همراه را وارد کنید.', 'warning');
+    return;
+  }
+
+  bridalPartyMembers.push({
+    id: 'p_' + Date.now(),
+    name,
+    role,
+    tasks: []
+  });
+
+  try { localStorage.setItem('aroosi_bridal_party_db', JSON.stringify(bridalPartyMembers)); } catch(e) {}
+  document.getElementById('party-member-name').value = '';
+  showToast('همراه جدید افزوده شد.', 'success');
+  renderBridalParty();
+};
+
+window.assignPartyTask = function(memberIdx) {
+  const input = document.getElementById(`party-task-input-${memberIdx}`);
+  const text = input?.value.trim();
+  if (!text || !bridalPartyMembers[memberIdx]) return;
+
+  if (!bridalPartyMembers[memberIdx].tasks) bridalPartyMembers[memberIdx].tasks = [];
+  bridalPartyMembers[memberIdx].tasks.push({ text, completed: false });
+
+  try { localStorage.setItem('aroosi_bridal_party_db', JSON.stringify(bridalPartyMembers)); } catch(e) {}
+  showToast('وظیفه جدید محول گردید.', 'success');
+  renderBridalParty();
+};
+
+window.togglePartyTaskComplete = function(memberIdx, taskIdx) {
+  if (bridalPartyMembers[memberIdx] && bridalPartyMembers[memberIdx].tasks[taskIdx]) {
+    bridalPartyMembers[memberIdx].tasks[taskIdx].completed = !bridalPartyMembers[memberIdx].tasks[taskIdx].completed;
+    try { localStorage.setItem('aroosi_bridal_party_db', JSON.stringify(bridalPartyMembers)); } catch(e) {}
+    renderBridalParty();
+  }
+};
+
+// ==========================================================================
+// PHASE 3: BRIDAL COMMUNITY & FORUM LOGIC
+// ==========================================================================
+let bridalForumThreads = [
+  {
+    id: 'f1',
+    author: 'مریم ک.',
+    title: 'تجربه رزرو باغ‌تالار در فصل پاییز یزد',
+    content: 'دوستان عزیز کسانی که در بافت تاریخی یا صفائیه عروسی پاییزه داشتید، سرمای شب باغ اذیت‌کننده بود یا سیستم گرمایشی قارچی جوابگوئه؟',
+    timestamp: '۲ ساعت پیش',
+    likes: 12,
+    comments: [
+      { author: 'زهرا م.', text: 'ما آبان ماه باغ مشیر بودیم هیترهای قارچی عالی عمل کردن اصلاً احساس سرما نکردیم.' }
+    ]
+  },
+  {
+    id: 'f2',
+    author: 'نیلوفر',
+    title: 'پیشنهاد آتلیه فرمالیته برای عکاسی در کویر شباهنگ',
+    content: 'دنبال یک آتلیه با سابقه تصویربرداری هلی‌شات هوایی در کویر یزد هستم، ممنون میشم تجربه‌هاتون رو بگید.',
+    timestamp: 'دیروز',
+    likes: 8,
+    comments: []
+  }
+];
+
+window.renderBridalForum = function() {
+  const feed = document.getElementById('bridal-forum-feed');
+  if (!feed) return;
+  feed.innerHTML = '';
+
+  let threads = [];
+  try {
+    threads = JSON.parse(localStorage.getItem('aroosi_forum_threads_db') || 'null');
+  } catch (e) { threads = null; }
+
+  if (!threads || threads.length === 0) {
+    threads = bridalForumThreads;
+    try { localStorage.setItem('aroosi_forum_threads_db', JSON.stringify(threads)); } catch(e) {}
+  } else {
+    bridalForumThreads = threads;
+  }
+
+  threads.forEach((t, tIdx) => {
+    const card = document.createElement('div');
+    card.className = "forum-thread-card rounded-2xl p-4 text-white text-right space-y-3 shadow-md";
+    card.innerHTML = `
+      <div class="flex justify-between items-center border-b border-slate-800 pb-2">
+        <div class="flex items-center gap-2">
+          <span class="w-7 h-7 rounded-full bg-[#D4AF37]/20 border border-[#D4AF37] text-[#D4AF37] font-black text-xs flex items-center justify-center">👤</span>
+          <span class="text-xs font-black text-white">${t.author}</span>
+        </div>
+        <span class="text-[10px] text-slate-400">${t.timestamp}</span>
+      </div>
+
+      <h4 class="text-xs sm:text-sm font-black text-[#D4AF37] leading-snug">${t.title}</h4>
+      <p class="text-xs text-slate-200 leading-relaxed">${t.content}</p>
+
+      <!-- Comments List -->
+      <div class="space-y-2 pt-2 border-t border-slate-800/80">
+        <span class="text-[11px] font-black text-slate-400 block">💬 پاسخ‌های عروس‌ها:</span>
+        ${(t.comments && t.comments.length) ? t.comments.map(c => `
+          <div class="bg-[#1E293B] p-2.5 rounded-xl border border-slate-700/80 text-xs space-y-0.5">
+            <span class="font-bold text-amber-300 text-[11px] block">${c.author}:</span>
+            <span class="text-slate-200">${c.text}</span>
+          </div>
+        `).join('') : '<span class="text-xs text-slate-500">اولین پاسخی باشید که نظر می‌دهید...</span>'}
+      </div>
+
+      <!-- Add Comment Form -->
+      <div class="flex gap-2 pt-2">
+        <input type="text" id="forum-comment-input-${tIdx}" placeholder="ارسال پاسخ یا نظر..." class="flex-1 bg-[#1E293B] border border-slate-700 text-xs text-white rounded-xl px-3 py-1.5 focus:outline-none focus:border-[#D4AF37]">
+        <button type="button" onclick="addForumComment(${tIdx})" class="bg-[#D4AF37] text-[#0F251A] text-xs font-black px-3 py-1.5 rounded-xl hover:bg-amber-500 transition-all cursor-pointer">
+          ارسال نظر
+        </button>
+      </div>
+    `;
+    feed.appendChild(card);
+  });
+};
+
+window.handleCreateForumThread = function(event) {
+  event.preventDefault();
+  const title = document.getElementById('forum-thread-title')?.value.trim();
+  const content = document.getElementById('forum-thread-content')?.value.trim();
+
+  if (!title || !content) {
+    showToast('لطفاً عنوان و متن مبحث را تکمیل کنید.', 'warning');
+    return;
+  }
+
+  bridalForumThreads.unshift({
+    id: 'f_' + Date.now(),
+    author: 'عروس یزدی',
+    title,
+    content,
+    timestamp: 'هم‌اکنون',
+    likes: 0,
+    comments: []
+  });
+
+  try { localStorage.setItem('aroosi_forum_threads_db', JSON.stringify(bridalForumThreads)); } catch(e) {}
+
+  document.getElementById('forum-thread-title').value = '';
+  document.getElementById('forum-thread-content').value = '';
+
+  showToast('مبحث جدید با موفقیت در تالار گفت‌وگو ثبت شد.', 'success');
+  renderBridalForum();
+};
+
+window.addForumComment = function(threadIdx) {
+  const input = document.getElementById(`forum-comment-input-${threadIdx}`);
+  const text = input?.value.trim();
+  if (!text || !bridalForumThreads[threadIdx]) return;
+
+  if (!bridalForumThreads[threadIdx].comments) bridalForumThreads[threadIdx].comments = [];
+  bridalForumThreads[threadIdx].comments.push({
+    author: 'عروس کاربر',
+    text
+  });
+
+  try { localStorage.setItem('aroosi_forum_threads_db', JSON.stringify(bridalForumThreads)); } catch(e) {}
+  showToast('نظر شما ثبت گردید.', 'success');
+  renderBridalForum();
+};
+
 /* ==========================================================================
    SMART WEDDING COUNTDOWN CHECKLIST WIDGET HANDLER
    ========================================================================== */
@@ -12191,6 +12591,24 @@ window.openVendorSelectModal = typeof openVendorSelectModal !== 'undefined' ? op
   const titleEl = document.getElementById('vselect-task-title');
   if (idEl) idEl.value = task.id;
   if (titleEl) titleEl.innerText = `اتصال تأمین‌کننده به اقدام: ${task.title}`;
+
+  const vendorSelect = document.getElementById('vselect-vendor-id');
+  if (vendorSelect) {
+    vendorSelect.innerHTML = '';
+    (typeof vendors !== 'undefined' ? vendors : []).forEach(v => {
+      const opt = document.createElement('option');
+      opt.value = v.id;
+      opt.innerText = `${v.name} (${v.category}) - ${v.priceRange}`;
+      if (task.attachedVendorId === v.id) opt.selected = true;
+      vendorSelect.appendChild(opt);
+    });
+  }
+
+  const statusSelect = document.getElementById('vselect-status');
+  if (statusSelect) {
+    statusSelect.value = task.vendorStatus || 'quote_received';
+  }
+
   const modal = document.getElementById('vendor-select-modal');
   if (modal) modal.classList.remove('hidden');
 };
@@ -12200,12 +12618,30 @@ window.closeVendorSelectModal = typeof closeVendorSelectModal !== 'undefined' ? 
   if (modal) modal.classList.add('hidden');
 };
 
+window.handleSaveVendorAttachment = typeof handleSaveVendorAttachment !== 'undefined' ? handleSaveVendorAttachment : function(e) {
+  if (e && e.preventDefault) e.preventDefault();
+  const taskId = document.getElementById('vselect-task-id')?.value;
+  const vendorId = parseInt(document.getElementById('vselect-vendor-id')?.value);
+  const status = document.getElementById('vselect-status')?.value;
+
+  const task = (typeof staticChecklist !== 'undefined' ? staticChecklist : []).find(t => t.id === taskId);
+  if (task) {
+    task.attachedVendorId = vendorId;
+    task.vendorStatus = status;
+    if (typeof renderChecklistTimeline === 'function') renderChecklistTimeline();
+    if (typeof showToast === 'function') showToast('تامین‌کننده با موفقیت به اقدام متصل شد.', 'success');
+  }
+
+  if (typeof closeVendorSelectModal === 'function') closeVendorSelectModal();
+};
+
 window.detachVendorFromTask = typeof detachVendorFromTask !== 'undefined' ? detachVendorFromTask : function(taskId) {
   const task = (typeof staticChecklist !== 'undefined' ? staticChecklist : []).find(t => t.id === taskId);
   if (task) {
     task.attachedVendorId = null;
     task.vendorStatus = null;
     if (typeof renderChecklistTimeline === 'function') renderChecklistTimeline();
+    if (typeof showToast === 'function') showToast('اتصال تامین‌کننده حذف گردید.', 'info');
   }
 };
 

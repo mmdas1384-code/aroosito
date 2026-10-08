@@ -1977,3 +1977,33 @@ body.theme-pearl-white .text-slate-400 {
   box-shadow: 0 10px 25px rgba(212, 175, 55, 0.15);
   transform: translateY(-2px);
 }
+
+/* ==========================================================================
+   PHASE 3: AI TRY-ON, TIMELINE SCHEDULE & FORUM STYLES
+   ========================================================================== */
+.schedule-item-card {
+  background: linear-gradient(135deg, #0F172A 0%, #1E293B 100%);
+  border-left: 4px solid #D4AF37;
+  transition: all 0.25s ease;
+}
+
+.schedule-item-card:hover {
+  transform: translateX(-3px);
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);
+}
+
+.forum-thread-card {
+  background-color: #0F172A;
+  border: 1px solid rgba(212, 175, 55, 0.3);
+  transition: all 0.3s ease;
+}
+
+.forum-thread-card:hover {
+  border-color: #D4AF37;
+  box-shadow: 0 8px 25px rgba(212, 175, 55, 0.1);
+}
+
+.party-member-card {
+  background: linear-gradient(145deg, #1E293B 0%, #0F172A 100%);
+  border: 1px solid rgba(212, 175, 55, 0.3);
+}

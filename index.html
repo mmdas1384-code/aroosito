@@ -1497,7 +1497,13 @@
               <i data-lucide="heart" class="w-4.5 h-4.5 text-rose-500 fill-rose-500"></i>
               <span>تأمین‌کنندگان منتخب من (My Favorite Vendors)</span>
             </h3>
-            <span class="text-xs text-secondary">ذخیره‌شده در مرورگر جهت دسترسی سریع</span>
+            <div class="flex items-center gap-2">
+              <button onclick="openAiTryOnModal()" class="bg-gradient-to-r from-[#D4AF37] to-[#F3E5AB] hover:from-amber-400 hover:to-amber-200 text-[#0F251A] font-black px-3.5 py-1.5 rounded-xl text-xs shadow transition-all flex items-center gap-1.5 cursor-pointer">
+                <i data-lucide="sparkles" class="w-4 h-4 text-[#0F251A]"></i>
+                <span>✨ پرو مجازی AI (تاج و میکاپ)</span>
+              </button>
+              <span class="text-xs text-secondary hidden sm:inline">ذخیره‌شده در مرورگر جهت دسترسی سریع</span>
+            </div>
           </div>
 
           <div id="couple-favorites-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
@@ -1507,23 +1513,145 @@
       </section>
 
       <!-- PLANNER SUB-TABS TOOLBAR -->
-      <div class="flex bg-white border border-accent rounded-2xl p-1.5 text-xs sm:text-sm font-bold shadow-xs flex-wrap sm:flex-nowrap gap-1">
-        <button id="planner-subtab-checklist" onclick="switchPlannerSubTab('checklist')" class="flex-1 py-3 px-4 rounded-xl transition-all bg-primary text-white text-center flex items-center justify-center gap-2 shadow-xs">
+      <div class="flex bg-white border border-accent rounded-2xl p-1.5 text-xs sm:text-sm font-bold shadow-xs flex-wrap gap-1">
+        <button id="planner-subtab-checklist" onclick="switchPlannerSubTab('checklist')" class="flex-1 py-3 px-3 rounded-xl transition-all bg-primary text-white text-center flex items-center justify-center gap-1.5 shadow-xs cursor-pointer min-w-[120px]">
           <i data-lucide="check-square" class="w-4 h-4"></i>
-          <span>📋 چک‌لیست کارهای ضروری</span>
+          <span>📋 چک‌لیست</span>
         </button>
-        <button id="planner-subtab-vendors" onclick="switchPlannerSubTab('vendors')" class="flex-1 py-3 px-4 rounded-xl transition-all text-secondary hover:text-graphite hover:bg-slate-50 text-center flex items-center justify-center gap-2">
+        <button id="planner-subtab-schedule" onclick="switchPlannerSubTab('schedule')" class="flex-1 py-3 px-3 rounded-xl transition-all text-secondary hover:text-graphite hover:bg-slate-50 text-center flex items-center justify-center gap-1.5 cursor-pointer min-w-[120px]">
+          <i data-lucide="clock" class="w-4 h-4 text-[#D4AF37]"></i>
+          <span>⏱️ زمان‌بندی روز عروسی</span>
+        </button>
+        <button id="planner-subtab-party" onclick="switchPlannerSubTab('party')" class="flex-1 py-3 px-3 rounded-xl transition-all text-secondary hover:text-graphite hover:bg-slate-50 text-center flex items-center justify-center gap-1.5 cursor-pointer min-w-[120px]">
+          <i data-lucide="users" class="w-4 h-4 text-[#D4AF37]"></i>
+          <span>👥 تیم همراهان (Bridal Party)</span>
+        </button>
+        <button id="planner-subtab-forum" onclick="switchPlannerSubTab('forum')" class="flex-1 py-3 px-3 rounded-xl transition-all text-secondary hover:text-graphite hover:bg-slate-50 text-center flex items-center justify-center gap-1.5 cursor-pointer min-w-[120px]">
+          <i data-lucide="messages-square" class="w-4 h-4 text-[#D4AF37]"></i>
+          <span>💬 تالار گفت‌وگو</span>
+        </button>
+        <button id="planner-subtab-vendors" onclick="switchPlannerSubTab('vendors')" class="flex-1 py-3 px-3 rounded-xl transition-all text-secondary hover:text-graphite hover:bg-slate-50 text-center flex items-center justify-center gap-1.5 cursor-pointer min-w-[120px]">
           <i data-lucide="store" class="w-4 h-4"></i>
-          <span>🤝 تأمین‌کنندگان منتخب من</span>
+          <span>🤝 تامین‌کنندگان من</span>
         </button>
-        <button id="planner-subtab-budget" onclick="switchPlannerSubTab('budget')" class="flex-1 py-3 px-4 rounded-xl transition-all text-secondary hover:text-graphite hover:bg-slate-50 text-center flex items-center justify-center gap-2">
+        <button id="planner-subtab-budget" onclick="switchPlannerSubTab('budget')" class="flex-1 py-3 px-3 rounded-xl transition-all text-secondary hover:text-graphite hover:bg-slate-50 text-center flex items-center justify-center gap-1.5 cursor-pointer min-w-[120px]">
           <i data-lucide="coins" class="w-4 h-4"></i>
-          <span>💰 خلاصه بودجه و هزینه‌ها</span>
+          <span>💰 خلاصه بودجه</span>
         </button>
-        <button id="planner-subtab-offers" onclick="switchPlannerSubTab('offers')" class="flex-1 py-3 px-4 rounded-xl transition-all text-secondary hover:text-graphite hover:bg-slate-50 text-center flex items-center justify-center gap-2">
+        <button id="planner-subtab-offers" onclick="switchPlannerSubTab('offers')" class="flex-1 py-3 px-3 rounded-xl transition-all text-secondary hover:text-graphite hover:bg-slate-50 text-center flex items-center justify-center gap-1.5 cursor-pointer min-w-[120px]">
           <i data-lucide="message-square" class="w-4 h-4"></i>
-          <span>📩 استعلام‌ها و پیشنهادهای دریافتی</span>
+          <span>📩 استعلام‌ها</span>
         </button>
+      </div>
+
+      <!-- SUB-TAB: WEDDING DAY MASTER SCHEDULE BUILDER -->
+      <div id="planner-panel-schedule" class="planner-panel hidden space-y-6">
+        <section class="bg-white border border-accent rounded-3xl p-6 sm:p-8 shadow-xs space-y-6">
+          <div class="flex flex-col sm:flex-row justify-between sm:items-center gap-4 border-b border-accent pb-4">
+            <div>
+              <h2 class="text-xl font-bold text-graphite flex items-center gap-2">
+                <i data-lucide="clock" class="w-6 h-6 text-[#D4AF37]"></i>
+                <span>زمان‌بندی دقیقه به دقیقه روز عروسی (Master Day Schedule)</span>
+              </h2>
+              <p class="text-xs text-secondary mt-1">برنامه‌ریزی دقیق از زمان بیداری تا پایان مراسم همراه با خروجی چاپی جهت ارائه به تشریفات</p>
+            </div>
+
+            <div class="flex items-center gap-2 flex-wrap">
+              <button onclick="exportSchedulePrint()" class="bg-[#1B3B2B] hover:bg-emerald-900 text-white px-4 py-2 rounded-xl text-xs font-bold transition-all flex items-center gap-1.5 shadow-xs cursor-pointer">
+                <i data-lucide="printer" class="w-4 h-4"></i>
+                <span>چاپ و دریافت PDF برنامه</span>
+              </button>
+            </div>
+          </div>
+
+          <!-- Add Schedule Item Form -->
+          <form onsubmit="addScheduleTask(event)" class="bg-[#0F172A] p-4 rounded-2xl border border-[#D4AF37]/40 text-white space-y-3">
+            <span class="text-xs font-black text-[#D4AF37] block">➕ افزودن آیتم زمانی جدید به برنامه روز عروسی:</span>
+            <div class="grid grid-cols-1 sm:grid-cols-4 gap-3">
+              <div>
+                <input type="text" id="sched-time" required placeholder="زمان (مثلاً ۰۸:۳۰)" class="w-full bg-[#1E293B] border border-[#D4AF37]/30 text-white rounded-xl px-3 py-2 text-xs font-bold focus:outline-none focus:border-[#D4AF37]">
+              </div>
+              <div class="sm:col-span-2">
+                <input type="text" id="sched-title" required placeholder="عنوان برنامه (مثلاً حرکت به سمت آتلیه)..." class="w-full bg-[#1E293B] border border-[#D4AF37]/30 text-white rounded-xl px-3 py-2 text-xs font-medium focus:outline-none focus:border-[#D4AF37]">
+              </div>
+              <div>
+                <input type="text" id="sched-responsible" placeholder="مسئول (مثلاً ساقدوش / داماد)" class="w-full bg-[#1E293B] border border-[#D4AF37]/30 text-white rounded-xl px-3 py-2 text-xs font-medium focus:outline-none focus:border-[#D4AF37]">
+              </div>
+            </div>
+            <button type="submit" class="w-full bg-gradient-to-r from-[#D4AF37] to-[#F3E5AB] text-[#0F251A] font-black py-2 rounded-xl text-xs shadow transition-all hover:scale-[1.01] cursor-pointer">
+              ثبت آیتم در زمان‌بندی روز عروسی
+            </button>
+          </form>
+
+          <!-- Timeline Items Feed -->
+          <div id="master-schedule-feed" class="space-y-3">
+            <!-- Populated dynamically via JS renderMasterDaySchedule() -->
+          </div>
+        </section>
+      </div>
+
+      <!-- SUB-TAB: BRIDAL PARTY & TASK DELEGATOR -->
+      <div id="planner-panel-party" class="planner-panel hidden space-y-6">
+        <section class="bg-white border border-accent rounded-3xl p-6 sm:p-8 shadow-xs space-y-6">
+          <div class="border-b border-accent pb-4">
+            <h2 class="text-xl font-bold text-graphite flex items-center gap-2">
+              <i data-lucide="users" class="w-6 h-6 text-[#D4AF37]"></i>
+              <span>مدیریت همراهان و تفویض وظایف (Bridal Party & Delegator)</span>
+            </h2>
+            <p class="text-xs text-secondary mt-1">تعیین ساقدوش‌ها و همراهان، واگذاری مسئولیت‌ها و پیگیری درصد پیشرفت وظایف</p>
+          </div>
+
+          <!-- Add Party Member Form -->
+          <form onsubmit="addPartyMember(event)" class="bg-[#0F172A] p-4 rounded-2xl border border-[#D4AF37]/40 text-white space-y-3">
+            <span class="text-xs font-black text-[#D4AF37] block">➕ افزودن همراه / ساقدوش جدید:</span>
+            <div class="grid grid-cols-1 sm:grid-cols-3 gap-3">
+              <input type="text" id="party-member-name" required placeholder="نام و نام خانوادگی..." class="bg-[#1E293B] border border-[#D4AF37]/30 text-white rounded-xl px-3 py-2 text-xs font-medium focus:outline-none focus:border-[#D4AF37]">
+              <select id="party-member-role" required class="bg-[#1E293B] border border-[#D4AF37]/30 text-white rounded-xl px-3 py-2 text-xs font-bold focus:outline-none focus:border-[#D4AF37] cursor-pointer">
+                <option value="ساقدوش اصلی عروس (Maid of Honor)">ساقدوش اصلی عروس (Maid of Honor)</option>
+                <option value="ساقدوش عروس (Bridesmaid)">ساقدوش عروس (Bridesmaid)</option>
+                <option value="ساقدوش اصلی داماد (Best Man)">ساقدوش اصلی داماد (Best Man)</option>
+                <option value="ساقدوش داماد (Groomsman)">ساقدوش داماد (Groomsman)</option>
+                <option value="مدیر تشریفات فامیلی">مدیر تشریفات فامیلی</option>
+              </select>
+              <button type="submit" class="bg-gradient-to-r from-[#D4AF37] to-[#F3E5AB] text-[#0F251A] font-black py-2 rounded-xl text-xs shadow transition-all cursor-pointer">
+                افزودن همراه
+              </button>
+            </div>
+          </form>
+
+          <div id="bridal-party-feed" class="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <!-- Populated dynamically via JS renderBridalParty() -->
+          </div>
+        </section>
+      </div>
+
+      <!-- SUB-TAB: BRIDAL COMMUNITY & FORUM WIDGET -->
+      <div id="planner-panel-forum" class="planner-panel hidden space-y-6">
+        <section class="bg-white border border-accent rounded-3xl p-6 sm:p-8 shadow-xs space-y-6">
+          <div class="flex flex-col sm:flex-row justify-between sm:items-center gap-4 border-b border-accent pb-4">
+            <div>
+              <h2 class="text-xl font-bold text-graphite flex items-center gap-2">
+                <i data-lucide="messages-square" class="w-6 h-6 text-[#D4AF37]"></i>
+                <span>تالار گفت‌وگو و تبادل تجربیات عروس‌ها (Bridal Forum)</span>
+              </h2>
+              <p class="text-xs text-secondary mt-1">پرسش و پاسخ در مورد سالن‌های زیبایی، تشریفات یزد، بودجه‌بندی و تجربیات واقعی</p>
+            </div>
+          </div>
+
+          <!-- Create Forum Thread Form -->
+          <form onsubmit="handleCreateForumThread(event)" class="bg-[#0F172A] p-4 rounded-2xl border border-[#D4AF37]/40 text-white space-y-3">
+            <span class="text-xs font-black text-[#D4AF37] block">✍️ ایجاد مبحث گفت‌وگوی جدید:</span>
+            <input type="text" id="forum-thread-title" required placeholder="عنوان پرسش یا موضوع گفت‌وگو (مثلاً: تجربه میکاپ در سالن‌های صفائیه)..." class="w-full bg-[#1E293B] border border-[#D4AF37]/30 text-white rounded-xl px-3.5 py-2 text-xs font-medium focus:outline-none focus:border-[#D4AF37]">
+            <textarea id="forum-thread-content" rows="2" required placeholder="شرح سوال یا تجربه خود را بنویسید..." class="w-full bg-[#1E293B] border border-[#D4AF37]/30 text-white rounded-xl p-3 text-xs font-medium focus:outline-none focus:border-[#D4AF37]"></textarea>
+            <button type="submit" class="bg-gradient-to-r from-[#D4AF37] to-[#F3E5AB] text-[#0F251A] font-black px-4 py-2 rounded-xl text-xs shadow transition-all cursor-pointer">
+              انتشار گفت‌وگو
+            </button>
+          </form>
+
+          <div id="bridal-forum-feed" class="space-y-4">
+            <!-- Populated dynamically via JS renderBridalForum() -->
+          </div>
+        </section>
       </div>
 
       <!-- SUB-TAB 1: CHRONOLOGICAL CHECKLIST WORKSPACE -->
@@ -7469,6 +7597,81 @@
 
       <div id="wizard-results-container" class="space-y-4">
         <!-- Rendered dynamically via JS -->
+      </div>
+    </div>
+  </div>
+
+  <!-- AI & AR VIRTUAL TRY-ON MODAL (#modal-ai-tryon) -->
+  <div id="modal-ai-tryon" class="hidden fixed inset-0 bg-slate-950/85 backdrop-blur-md z-[999999] flex items-center justify-center p-4 animate-fadeIn" onclick="if(event.target === this) closeAiTryOnModal()">
+    <div class="bg-[#0F172A] text-white border border-[#D4AF37]/60 rounded-3xl max-w-2xl w-full p-6 sm:p-8 shadow-[0_25px_70px_rgba(0,0,0,0.8)] space-y-6 relative max-h-[90vh] overflow-y-auto custom-scrollbar" onclick="event.stopPropagation()">
+      <button type="button" onclick="closeAiTryOnModal()" class="absolute top-5 left-5 text-slate-400 hover:text-white transition-colors cursor-pointer" title="بستن">
+        <i data-lucide="x" class="w-6 h-6"></i>
+      </button>
+
+      <div class="space-y-1 text-right border-b border-slate-700/80 pb-4">
+        <div class="inline-flex items-center gap-1.5 bg-[#D4AF37]/20 border border-[#D4AF37]/50 text-[#D4AF37] text-xs font-bold px-3.5 py-1 rounded-full">
+          <i data-lucide="sparkles" class="w-4 h-4 text-[#D4AF37]"></i>
+          <span>استودیوی هوش مصنوعی و پرو مجازی (AI Try-On Studio)</span>
+        </div>
+        <h3 class="text-lg sm:text-xl font-black text-[#D4AF37]">تست مجازی تاج عروس، تور و سبک میکاپ</h3>
+        <p class="text-xs text-slate-300">تصویر خود را بارگذاری کنید و اکسسوری‌های مختلف عروس را به صورت انیمیشن هوشمند تست کنید.</p>
+      </div>
+
+      <!-- Preview Canvas Area -->
+      <div class="relative w-full h-80 bg-[#1E293B] border-2 border-dashed border-[#D4AF37]/40 rounded-2xl flex items-center justify-center overflow-hidden group">
+        <img id="ai-tryon-user-img" src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=600&q=80" alt="پیش‌نمایش چهره" class="w-full h-full object-cover">
+
+        <!-- Overlay Layer for Crowns/Veils -->
+        <div id="ai-tryon-overlay-layer" class="absolute inset-0 pointer-events-none flex items-center justify-center transition-all duration-300">
+          <img id="ai-tryon-overlay-img" src="" alt="اکسسوری" class="max-w-[70%] max-h-[70%] object-contain hidden animate-pulse">
+        </div>
+
+        <!-- Floating Badge -->
+        <span id="ai-tryon-preset-badge" class="absolute top-3 right-3 bg-black/70 backdrop-blur-md text-[#D4AF37] border border-[#D4AF37]/50 px-3 py-1 rounded-full text-[10px] font-black">
+          پرو: تاج سلطنتی زمرد
+        </span>
+
+        <!-- Upload Trigger Overlay -->
+        <label for="ai-tryon-file-input" class="absolute bottom-3 left-3 bg-[#0F172A]/90 hover:bg-[#0F172A] border border-[#D4AF37] text-white px-3.5 py-1.5 rounded-xl text-xs font-bold flex items-center gap-1.5 cursor-pointer shadow-lg backdrop-blur-sm transition-all">
+          <i data-lucide="upload" class="w-4 h-4 text-[#D4AF37]"></i>
+          <span>تغییر تصویر چهره</span>
+        </label>
+        <input type="file" id="ai-tryon-file-input" accept="image/*" onchange="handleTryOnPhotoUpload(event)" class="hidden">
+      </div>
+
+      <!-- Presets Carousel / Selector -->
+      <div class="space-y-3 text-right">
+        <h4 class="text-xs font-black text-slate-300">انتخاب اکسسوری و سبک پرو هوشمند:</h4>
+        <div class="grid grid-cols-2 sm:grid-cols-4 gap-2.5">
+          <button type="button" onclick="applyTryOnPreset('crown_royal', 'تاج کریستالی کاتالوگ ۱', 'https://images.unsplash.com/photo-1599643478518-a784e5dc4c8f?auto=format&fit=crop&w=300&q=80')" class="p-2.5 bg-[#1E293B] border border-[#D4AF37]/30 hover:border-[#D4AF37] rounded-xl text-center space-y-1 transition-all hover:scale-105 cursor-pointer">
+            <span class="block text-lg">👑</span>
+            <span class="block text-[11px] font-bold text-slate-200">تاج سلطنتی</span>
+          </button>
+
+          <button type="button" onclick="applyTryOnPreset('veil_pearl', 'تور مرواریدی شاین', 'https://images.unsplash.com/photo-1546804784-896d0dca3814?auto=format&fit=crop&w=300&q=80')" class="p-2.5 bg-[#1E293B] border border-[#D4AF37]/30 hover:border-[#D4AF37] rounded-xl text-center space-y-1 transition-all hover:scale-105 cursor-pointer">
+            <span class="block text-lg">👰</span>
+            <span class="block text-[11px] font-bold text-slate-200">تور مروارید</span>
+          </button>
+
+          <button type="button" onclick="applyTryOnPreset('makeup_nude', 'میکاپ لایت نود یزدی', '')" class="p-2.5 bg-[#1E293B] border border-[#D4AF37]/30 hover:border-[#D4AF37] rounded-xl text-center space-y-1 transition-all hover:scale-105 cursor-pointer">
+            <span class="block text-lg">💄</span>
+            <span class="block text-[11px] font-bold text-slate-200">میکاپ لایت</span>
+          </button>
+
+          <button type="button" onclick="applyTryOnPreset('earrings_gold', 'گوشواره جواهر زرد', 'https://images.unsplash.com/photo-1535632066927-ab7c9ab60908?auto=format&fit=crop&w=300&q=80')" class="p-2.5 bg-[#1E293B] border border-[#D4AF37]/30 hover:border-[#D4AF37] rounded-xl text-center space-y-1 transition-all hover:scale-105 cursor-pointer">
+            <span class="block text-lg">✨</span>
+            <span class="block text-[11px] font-bold text-slate-200">جواهرات زرد</span>
+          </button>
+        </div>
+      </div>
+
+      <div class="pt-2 flex gap-2">
+        <button type="button" onclick="showToast('تصویر پرو هوشمند ذخیره گردید.', 'success')" class="flex-1 bg-gradient-to-r from-[#D4AF37] to-[#F3E5AB] text-[#0F251A] font-black py-3 rounded-xl text-xs shadow-lg hover:scale-[1.02] cursor-pointer">
+          💾 ذخیره تصویر پرو در گالری
+        </button>
+        <button type="button" onclick="closeAiTryOnModal()" class="bg-[#1E293B] text-slate-300 font-bold px-4 py-3 rounded-xl text-xs border border-slate-700 hover:text-white cursor-pointer">
+          بستن
+        </button>
       </div>
     </div>
   </div>
