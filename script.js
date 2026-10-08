@@ -11417,6 +11417,7 @@ if (document.readyState === "loading") {
 
     function renderInspirationGalleryGrid() {
       renderMagazineFeaturedBanner();
+      if (typeof renderHomeMagazineHighlights === 'function') renderHomeMagazineHighlights();
 
       const grid = document.getElementById('insp-gallery-grid');
       if (!grid) return;
@@ -12541,6 +12542,65 @@ window.addForumComment = function(threadIdx) {
   try { localStorage.setItem('aroosi_forum_threads_db', JSON.stringify(bridalForumThreads)); } catch(e) {}
   showToast('نظر شما ثبت گردید.', 'success');
   renderBridalForum();
+};
+
+// ==========================================================================
+// HOMEPAGE MAGAZINE HIGHLIGHTS RENDERER
+// ==========================================================================
+window.renderHomeMagazineHighlights = function() {
+  const feed = document.getElementById('home-magazine-highlights-feed');
+  if (!feed) return;
+  feed.innerHTML = '';
+
+  const articles = (typeof inspirationState !== 'undefined' && inspirationState.articles) ? inspirationState.articles : [
+    {
+      id: 1,
+      title: 'راهنمای انتخاب باغ‌تالار لوکس در یزد با بودجه‌بندی هوشمند',
+      summary: 'نکات کلیدی رزرو باغ‌تالار، بررسی منوی غذا، تخفیف وسط هفته و مدیریت ظرفیت مهمانان.',
+      image: 'https://images.unsplash.com/photo-1519741497674-611481863552?auto=format&fit=crop&w=600&q=80',
+      readTime: 'خواندن ۴ دقیقه',
+      category: 'تالار و تشریفات'
+    },
+    {
+      id: 2,
+      title: 'ترندهای عکاسی فرمالیته عروسی در کویر شباهنگ یزد',
+      summary: 'آشنایی با بهترین ساعت عکاسی غروب، ژست‌های دونفره و تصویربرداری هوایی هلی‌شات.',
+      image: 'https://images.unsplash.com/photo-1537633552985-df8429e8048b?auto=format&fit=crop&w=600&q=80',
+      readTime: 'خواندن ۳ دقیقه',
+      category: 'عکاسی & فیلم‌برداری'
+    },
+    {
+      id: 3,
+      title: 'جدیدترین سبک‌های میکاپ لایت عروس و تور مرواریدی ۱۴۰۳',
+      summary: 'مرور سبک‌های میکاپ ضدآب، گریم هالیوودی و هماهنگی تور مروارید با تاج زمرد.',
+      image: 'https://images.unsplash.com/photo-1487412720507-e7ab37603c6f?auto=format&fit=crop&w=600&q=80',
+      readTime: 'خواندن ۵ دقیقه',
+      category: 'زیبایی & میکاپ'
+    }
+  ];
+
+  articles.slice(0, 3).forEach(art => {
+    const card = document.createElement('div');
+    card.className = "bg-[#1E293B] border border-slate-700 hover:border-[#D4AF37] rounded-2xl overflow-hidden shadow-lg space-y-3 cursor-pointer group transition-all hover:scale-[1.02]";
+    card.setAttribute('onclick', `switchTab('inspiration'); if(typeof openArticleModal==='function') openArticleModal(${art.id});`);
+    card.innerHTML = `
+      <div class="relative h-44 overflow-hidden">
+        <img src="${art.image}" alt="${art.title}" class="w-full h-full object-cover group-hover:scale-108 transition-transform duration-500">
+        <span class="absolute top-3 right-3 bg-black/70 backdrop-blur-md text-[#D4AF37] border border-[#D4AF37]/40 text-[10px] font-black px-2.5 py-1 rounded-full">
+          ${art.category || 'ژورنال'}
+        </span>
+      </div>
+      <div class="p-4 space-y-2 text-right">
+        <h3 class="text-xs font-black text-white group-hover:text-[#D4AF37] transition-colors leading-snug">${art.title}</h3>
+        <p class="text-[11px] text-slate-300 line-clamp-2 leading-relaxed">${art.summary}</p>
+        <div class="pt-2 border-t border-slate-800 flex justify-between items-center text-[10px] text-amber-200">
+          <span>⏱️ ${art.readTime || 'خواندن ۳ دقیقه'}</span>
+          <span class="text-[#D4AF37] font-bold">مطالعه کامل ←</span>
+        </div>
+      </div>
+    `;
+    feed.appendChild(card);
+  });
 };
 
 /* ==========================================================================

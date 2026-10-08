@@ -2007,3 +2007,19 @@ body.theme-pearl-white .text-slate-400 {
   background: linear-gradient(145deg, #1E293B 0%, #0F172A 100%);
   border: 1px solid rgba(212, 175, 55, 0.3);
 }
+
+/* ==========================================================================
+   ULTRA-LUXURY HERO & HOMEPAGE LAUNCHER STYLES
+   ========================================================================== */
+.hero-section {
+  box-shadow: 0 25px 60px -15px rgba(15, 23, 42, 0.7);
+}
+
+.hero-quick-pill {
+  transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.hero-quick-pill:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 15px rgba(212, 175, 55, 0.25);
+}
