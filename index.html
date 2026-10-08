@@ -1865,96 +1865,6 @@
         </div>
       </div>
 
-      <!-- TAB PANE 5: ARTICLES & IDEAS CREATOR -->
-      <div id="vpanel-pane-articles" class="hidden space-y-6">
-        <div class="bg-[#0F172A] border border-[#D4AF37]/40 rounded-3xl p-6 shadow-xl space-y-5 text-white text-right">
-          <div class="border-b border-slate-800 pb-3">
-            <h3 class="text-base font-black text-[#D4AF37] flex items-center gap-2">
-              <i data-lucide="file-text" class="w-5 h-5 text-[#D4AF37]"></i>
-              <span>ایجاد و ارسال ایده/مقاله جدید برای مجله عروسی تو</span>
-            </h3>
-            <p class="text-xs text-slate-300 mt-1">با نگارش مقالات تخصصی و ارائه ایده‌های خلاقانه، برند خود را در مجله پلتفرم مطرح کنید.</p>
-          </div>
-
-          <form id="varticle-form" onsubmit="handleCreateVendorArticle(event)" class="space-y-4 text-xs font-bold">
-            <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
-              <div>
-                <label class="block text-slate-200 mb-1.5">عنوان مقاله / ایده *</label>
-                <input type="text" required id="varticle-title" placeholder="مثلاً: راهنمای انتخاب پکیج فرمالیته کویر" class="w-full bg-[#1E293B] border border-[#D4AF37]/30 text-white placeholder-slate-400 rounded-xl p-2.5 text-xs font-bold focus:outline-none focus:border-[#D4AF37]">
-              </div>
-              <div>
-                <label class="block text-slate-200 mb-1.5">دسته‌بندی موضوعی *</label>
-                <select id="varticle-category" class="w-full bg-[#1E293B] border border-[#D4AF37]/30 text-white rounded-xl p-2.5 text-xs font-bold focus:outline-none focus:border-[#D4AF37]">
-                  <option value="عکاسی و فیلمبرداری" class="bg-[#0F172A] text-white">عکاسی & فیلمبرداری</option>
-                  <option value="تشریفات و دکوراسیون" class="bg-[#0F172A] text-white">تشریفات & دکوراسیون</option>
-                  <option value="آرایش و میکاپ" class="bg-[#0F172A] text-white">آرایش & میکاپ</option>
-                  <option value="لباس و مزون" class="bg-[#0F172A] text-white">لباس & مزون</option>
-                </select>
-              </div>
-            </div>
-
-            <div>
-              <label class="block text-slate-200 mb-1.5">آدرس تصویر کاور اصلی (Cover Image URL) *</label>
-              <input type="url" required id="varticle-cover" value="https://images.unsplash.com/photo-1519741497674-611481863552?auto=format&fit=crop&w=800&q=80" class="w-full bg-[#1E293B] border border-[#D4AF37]/30 text-white placeholder-slate-400 rounded-xl p-2.5 text-xs font-bold focus:outline-none focus:border-[#D4AF37] dir-ltr">
-            </div>
-
-            <div>
-              <label class="block text-slate-200 mb-1.5">خلاصه کوتاه مقاله (Excerpt) *</label>
-              <input type="text" required id="varticle-summary" placeholder="خلاصه ۲ خطی جهت نمایش در کارت‌های مجله..." class="w-full bg-[#1E293B] border border-[#D4AF37]/30 text-white placeholder-slate-400 rounded-xl p-2.5 text-xs font-bold focus:outline-none focus:border-[#D4AF37]">
-            </div>
-
-            <div>
-              <label class="block text-slate-200 mb-1.5">متن کامل مقاله / توضیحات ایده *</label>
-              <textarea required id="varticle-content" rows="4" placeholder="متن کامل مقاله، نکات کاربردی و جزئیات ایده..." class="w-full bg-[#1E293B] border border-[#D4AF37]/30 text-white placeholder-slate-400 rounded-xl p-2.5 text-xs font-bold focus:outline-none focus:border-[#D4AF37] custom-scrollbar"></textarea>
-            </div>
-
-            <button type="submit" class="bg-gradient-to-r from-[#D4AF37] to-[#F3E5AB] text-[#0F251A] font-black py-3 px-6 rounded-2xl text-xs shadow-md transition-all hover:scale-105 active:scale-95 cursor-pointer">
-              📝 ارسال مقاله جهت بررسی و انتشار
-            </button>
-          </form>
-
-          <div class="space-y-3 pt-3 border-t border-slate-800">
-            <h4 class="text-xs font-black text-white">مقالات و ایده‌های ثبت‌شده شما:</h4>
-            <div id="vpanel-articles-list" class="space-y-2">
-              <!-- Rendered via JS -->
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <!-- TAB PANE 6: BUSINESS PROFILE EDITOR -->
-      <div id="vpanel-pane-profile" class="hidden space-y-6">
-        <div class="bg-[#0F172A] border border-[#D4AF37]/40 rounded-3xl p-6 shadow-xl space-y-5 text-white text-right">
-          <div class="border-b border-slate-800 pb-3">
-            <h3 class="text-base font-black text-[#D4AF37] flex items-center gap-2">
-              <i data-lucide="edit" class="w-5 h-5 text-[#D4AF37]"></i>
-              <span>ویرایش مشخصات کسب‌وکار و پروفایل عمومی</span>
-            </h3>
-            <p class="text-xs text-slate-300 mt-1">توضیحات معرفی، خدمات اختصاصی و برچسب‌های هایلایت مجموعه خود را بروزرسانی کنید.</p>
-          </div>
-
-          <form onsubmit="handleVendorProfileUpdate(event)" class="space-y-4 text-xs font-bold">
-            <div>
-              <label class="block text-slate-200 mb-1.5">متن معرفی و درباره ما *</label>
-              <textarea id="vd-edit-about" rows="3" class="w-full bg-[#1E293B] border border-[#D4AF37]/30 text-white p-2.5 rounded-xl text-xs font-bold focus:outline-none focus:border-[#D4AF37] custom-scrollbar">استودیو کویر یزد با ۱۰ سال سابقه درخشان در زمینه ثبت لحظات رویایی عروسی، عکس‌برداری فرمالیته در کویر یزد و آلبوم‌های ایتالیایی VIP.</textarea>
-            </div>
-
-            <div>
-              <label class="block text-slate-200 mb-1.5">خدمات اختصاصی (با ویرگول جدا کنید):</label>
-              <input type="text" id="vd-edit-services" value="عکاسی و فیلمبرداری روز عروسی, کلیپ فرمالیته کویر یزد, آلبوم ایتالیایی 80x40, تصویربرداری هلی‌شات & کرین" class="w-full bg-[#1E293B] border border-[#D4AF37]/30 text-white p-2.5 rounded-xl text-xs font-bold focus:outline-none focus:border-[#D4AF37]">
-            </div>
-
-            <div>
-              <label class="block text-slate-200 mb-1.5">برچسب‌های هایلایت & ویژگی‌ها (با ویرگول جدا کنید):</label>
-              <input type="text" id="vd-edit-tags" value="تضمین قیمت پایه, پاسخگویی فوری, رزرو اقساطی بدون کمیسیون" class="w-full bg-[#1E293B] border border-[#D4AF37]/30 text-white p-2.5 rounded-xl text-xs font-bold focus:outline-none focus:border-[#D4AF37]">
-            </div>
-
-            <button type="submit" class="bg-gradient-to-r from-[#D4AF37] to-[#F3E5AB] text-[#0F251A] font-black py-2.5 px-5 rounded-xl text-xs shadow-md transition-all hover:scale-105 active:scale-95 cursor-pointer">
-              ذخیره تغییرات پروفایل
-            </button>
-          </form>
-        </div>
-      </div>
 
       <!-- MAIN PROFILE SECTIONS CONTAINER -->
       <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
@@ -3188,7 +3098,68 @@
 
       <!-- TAB PANE 5: ARTICLES / IDEAS CREATOR -->
       <div id="vpanel-pane-articles" class="hidden space-y-6">
-        <!-- Rendered dynamically -->
+        <div class="bg-[#0F172A] border border-[#D4AF37]/40 rounded-3xl p-6 shadow-xl space-y-5 text-white text-right">
+          <div class="border-b border-slate-800 pb-3">
+            <h3 class="text-base font-black text-[#D4AF37] flex items-center gap-2">
+              <i data-lucide="file-text" class="w-5 h-5 text-[#D4AF37]"></i>
+              <span>ایجاد و ارسال ایده / مقاله جدید برای مجله عروسی تو</span>
+            </h3>
+            <p class="text-xs text-slate-300 mt-1">با نگارش مقالات تخصصی و ارائه ایده‌های خلاقانه، برند خود را در مجله پلتفرم مطرح کنید.</p>
+          </div>
+
+          <!-- Article & Idea Creation Form -->
+          <form id="varticle-form" onsubmit="handleCreateVendorArticle(event)" class="space-y-4 text-xs font-bold">
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+              <div>
+                <label class="block text-slate-200 mb-1.5">عنوان مقاله / ایده *</label>
+                <input type="text" required id="varticle-title" placeholder="مثلاً: راهنمای انتخاب پکیج فرمالیته کویر یزد" class="w-full bg-[#1E293B] border border-[#D4AF37]/30 text-white placeholder-slate-400 rounded-xl p-2.5 text-xs font-bold focus:outline-none focus:border-[#D4AF37]">
+              </div>
+              <div>
+                <label class="block text-slate-200 mb-1.5">دسته‌بندی موضوعی *</label>
+                <select id="varticle-category" class="w-full bg-[#1E293B] border border-[#D4AF37]/30 text-white rounded-xl p-2.5 text-xs font-bold focus:outline-none focus:border-[#D4AF37]">
+                  <option value="عکاسی و فیلمبرداری" class="bg-[#0F172A] text-white">عکاسی & فیلمبرداری</option>
+                  <option value="تشریفات و دکوراسیون" class="bg-[#0F172A] text-white">تشریفات & دکوراسیون</option>
+                  <option value="آرایش و میکاپ" class="bg-[#0F172A] text-white">آرایش & میکاپ</option>
+                  <option value="لباس و مزون" class="bg-[#0F172A] text-white">لباس & مزون</option>
+                  <option value="سنت‌های یزد" class="bg-[#0F172A] text-white">سنت‌های یزد</option>
+                </select>
+              </div>
+            </div>
+
+            <div>
+              <label class="block text-slate-200 mb-1.5">خلاصه / چکیده مقاله (Short Excerpt) *</label>
+              <textarea id="varticle-summary" required rows="2" placeholder="توضیح کوتاه و جذاب مقاله برای نمایش در کارت‌های مجله..." class="w-full bg-[#1E293B] border border-[#D4AF37]/30 text-white placeholder-slate-400 rounded-xl p-2.5 text-xs font-medium focus:outline-none focus:border-[#D4AF37] leading-relaxed"></textarea>
+            </div>
+
+            <div>
+              <label class="block text-slate-200 mb-1.5">آدرس پوستر یا تصویر شاخص مقاله (Cover Image URL) *</label>
+              <input type="url" required id="varticle-cover" value="https://images.unsplash.com/photo-1519741497674-611481863552?auto=format&fit=crop&w=800&q=80" class="w-full bg-[#1E293B] border border-[#D4AF37]/30 text-white placeholder-slate-400 rounded-xl p-2.5 text-xs font-bold focus:outline-none focus:border-[#D4AF37] dir-ltr">
+            </div>
+
+            <div>
+              <label class="block text-slate-200 mb-1.5">متن کامل مقاله / ایده (Rich Content Editor) *</label>
+              <textarea id="varticle-content" required rows="6" placeholder="متن کامل و مفصل مقاله آموزشی یا ایده جدید خود را بنویسید..." class="w-full bg-[#1E293B] border border-[#D4AF37]/30 text-white placeholder-slate-400 rounded-xl p-3 text-xs font-medium focus:outline-none focus:border-[#D4AF37] leading-relaxed custom-scrollbar"></textarea>
+            </div>
+
+            <div class="flex justify-end pt-2">
+              <button type="submit" class="bg-gradient-to-r from-[#D4AF37] to-[#F3E5AB] text-[#0F251A] font-black py-3 px-6 rounded-2xl text-xs shadow-md transition-all hover:scale-105 active:scale-95 cursor-pointer flex items-center gap-1.5">
+                <i data-lucide="send" class="w-4 h-4 text-[#0F251A]"></i>
+                <span>ارسال مقاله جهت بررسی و انتشار</span>
+              </button>
+            </div>
+          </form>
+
+          <!-- My Submitted Articles & Ideas List/Table -->
+          <div class="space-y-3 pt-4 border-t border-slate-800">
+            <h4 class="text-xs font-black text-[#D4AF37] flex items-center gap-1.5">
+              <i data-lucide="list" class="w-4 h-4 text-[#D4AF37]"></i>
+              <span>مقالات و ایده‌های ارسالی اخیر شما:</span>
+            </h4>
+            <div id="vpanel-articles-list" class="space-y-3">
+              <!-- Rendered via JS renderVendorArticlesList() -->
+            </div>
+          </div>
+        </div>
       </div>
 
       <!-- TAB PANE 6: PROFILE EDITOR -->
