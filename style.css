@@ -2068,3 +2068,14 @@ body.theme-pearl-white .text-slate-400 {
   border-color: #D4AF37;
   box-shadow: 0 25px 60px rgba(212, 175, 55, 0.2);
 }
+
+/* ==========================================================================
+   DYNAMIC CATEGORY CAROUSEL BAR STYLES
+   ========================================================================== */
+#directory-category-carousel::-webkit-scrollbar {
+  display: none;
+}
+#directory-category-carousel {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}

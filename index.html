@@ -1218,38 +1218,65 @@
     <!-- ISOLATED VENDOR DIRECTORY CONTENT MODULE -->
     <div id="tab-directory" class="space-y-8">
 
+      <!-- DYNAMIC CATEGORY PILL-TABS CAROUSEL BAR -->
+      <div class="bg-[#0F172A] border border-[#D4AF37]/40 rounded-2xl p-2.5 shadow-xl text-white">
+        <div id="directory-category-carousel" class="flex items-center gap-2 overflow-x-auto custom-scrollbar pb-1 text-xs font-black">
+          <button type="button" onclick="filterVendorsByCategoryTitle('all')" class="bg-gradient-to-r from-[#D4AF37] to-[#F3E5AB] text-[#0F251A] px-4 py-2 rounded-xl shrink-0 cursor-pointer shadow-md">
+            همه تامین‌کنندگان
+          </button>
+          <button type="button" onclick="filterVendorsByCategoryTitle('تالار و باغ‌تالار')" class="bg-[#1E293B] hover:bg-slate-800 text-amber-200 border border-[#D4AF37]/30 px-3.5 py-2 rounded-xl shrink-0 cursor-pointer">
+            🏰 تالار و باغ
+          </button>
+          <button type="button" onclick="filterVendorsByCategoryTitle('عکاسی و فیلم‌برداری')" class="bg-[#1E293B] hover:bg-slate-800 text-amber-200 border border-[#D4AF37]/30 px-3.5 py-2 rounded-xl shrink-0 cursor-pointer">
+            📸 عکس و فیلم
+          </button>
+          <button type="button" onclick="filterVendorsByCategoryTitle('میکاپ و سالن زیبایی')" class="bg-[#1E293B] hover:bg-slate-800 text-amber-200 border border-[#D4AF37]/30 px-3.5 py-2 rounded-xl shrink-0 cursor-pointer">
+            💄 میکاپ و زیبایی
+          </button>
+          <button type="button" onclick="filterVendorsByCategoryTitle('مزون و لباس عروس')" class="bg-[#1E293B] hover:bg-slate-800 text-amber-200 border border-[#D4AF37]/30 px-3.5 py-2 rounded-xl shrink-0 cursor-pointer">
+            👗 مزون و لباس
+          </button>
+          <button type="button" onclick="filterVendorsByCategoryTitle('تشریفات و گل‌آرایی')" class="bg-[#1E293B] hover:bg-slate-800 text-amber-200 border border-[#D4AF37]/30 px-3.5 py-2 rounded-xl shrink-0 cursor-pointer">
+            🔮 تشریفات و دیزاین
+          </button>
+        </div>
+      </div>
+
       <!-- HEADER BREADCRUMB & TOP CONTROL BAR -->
-      <div class="bg-white border border-accent rounded-3xl p-6 sm:p-8 shadow-xs space-y-4">
-        <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-accent pb-4">
+      <div class="bg-[#0F172A] border border-[#D4AF37]/40 rounded-3xl p-5 sm:p-6 shadow-xl space-y-4 text-white">
+        <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-slate-800 pb-4">
           <div class="space-y-1">
-            <nav class="flex items-center gap-2 text-xs text-secondary font-bold mb-1">
-              <button onclick="switchTab('home')" class="hover:text-primary transition-colors cursor-pointer">خانه</button>
+            <nav class="flex items-center gap-2 text-xs text-slate-400 font-bold mb-1">
+              <button onclick="switchTab('home')" class="hover:text-[#D4AF37] transition-colors cursor-pointer">خانه</button>
               <span>/</span>
-              <span class="text-graphite">دایرکتوری جامع تامین‌کنندگان یزد</span>
+              <span class="text-amber-200">دایرکتوری جامع تامین‌کنندگان یزد</span>
             </nav>
-            <h1 class="text-2xl sm:text-3xl font-black text-graphite flex items-center gap-2.5">
-              <i data-lucide="building-2" class="w-7 h-7 text-primary"></i>
+            <h1 class="text-xl sm:text-2xl font-black text-white flex items-center gap-2">
+              <i data-lucide="building-2" class="w-6 h-6 text-[#D4AF37]"></i>
               <span>دایرکتوری جامع تامین‌کنندگان و خدمات عروسی استان یزد</span>
             </h1>
-            <p class="text-xs text-secondary font-medium">بررسی پروفایل رسمی، گالری تصاویر، لیست قیمت و استعلام آنلاین رزرو</p>
           </div>
 
-          <button onclick="switchTab('home')" class="bg-bgCustom hover:bg-slate-100 text-graphite border border-accent px-4 py-2.5 rounded-2xl text-xs font-bold transition-all flex items-center gap-2 shadow-xs shrink-0 cursor-pointer">
-            <i data-lucide="arrow-right" class="w-4 h-4 text-primary"></i>
-            <span>بازگشت به صفحه اصلی</span>
-          </button>
+          <div class="flex items-center gap-2">
+            <button onclick="toggleAdvancedFiltersDrawer()" class="bg-[#1E293B] hover:bg-slate-800 text-[#D4AF37] border border-[#D4AF37]/40 px-3.5 py-2 rounded-xl text-xs font-black transition-all flex items-center gap-1.5 shadow-sm cursor-pointer">
+              <span>فیلترهای پیشرفته ⚙️</span>
+            </button>
+            <button onclick="switchTab('home')" class="bg-[#1E293B] hover:bg-slate-800 text-slate-300 border border-slate-700 px-3.5 py-2 rounded-xl text-xs font-bold transition-all flex items-center gap-1 cursor-pointer">
+              <span>بازگشت به اصلی</span>
+            </button>
+          </div>
         </div>
 
         <!-- Active Filter Chips Container -->
-        <div class="flex items-center justify-between gap-3 pt-2 text-xs font-bold flex-wrap">
+        <div class="flex items-center justify-between gap-3 text-xs font-bold flex-wrap">
           <div class="flex items-center gap-2 flex-wrap" id="active-category-chips">
-            <span class="text-secondary">فیلترهای فعال:</span>
+            <span class="text-slate-400">فیلترهای فعال:</span>
             <div id="active-category-pills" class="flex items-center gap-1.5 flex-wrap">
               <!-- Dynamic Category Pills rendered by renderMultiCategoryPills() -->
             </div>
           </div>
 
-          <button onclick="resetAllCategoryFilters()" class="text-xs font-bold text-rose-600 hover:text-rose-800 transition-colors flex items-center gap-1 cursor-pointer">
+          <button onclick="resetAllCategoryFilters()" class="text-xs font-bold text-rose-400 hover:text-rose-300 transition-colors flex items-center gap-1 cursor-pointer">
             <i data-lucide="rotate-ccw" class="w-3.5 h-3.5"></i>
             <span>پاک کردن همه فیلترها</span>
           </button>

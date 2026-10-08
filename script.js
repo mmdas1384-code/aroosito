@@ -3710,22 +3710,28 @@ if (document.readyState === "loading") {
                 <div class="absolute inset-0 bg-gradient-to-t from-[#0F172A] via-transparent to-black/30"></div>
 
                 <!-- Corner Floating Micro-Pills -->
-                <div class="absolute top-2 right-2 flex items-center gap-1 z-10">
-                  <span class="bg-black/60 backdrop-blur-md text-amber-200 border border-[#D4AF37]/40 text-[9px] font-bold px-2 py-0.5 rounded-full shadow-xs">
-                    ${v.category}
-                  </span>
+                <!-- Top-Right: Gold Star Rating Badge -->
+                <div class="absolute top-2.5 right-2.5 flex items-center gap-1 z-10">
+                  <div class="bg-black/75 backdrop-blur-md text-[#D4AF37] border border-[#D4AF37]/50 text-[10px] font-black px-2.5 py-0.5 rounded-full flex items-center gap-1 shadow-md">
+                    <i data-lucide="star" class="w-3 h-3 fill-amber-400 text-amber-400"></i>
+                    <span>⭐ ${ratingVal}</span>
+                  </div>
                 </div>
 
-                <div class="absolute top-2 left-2 flex items-center gap-1 z-10" onclick="event.stopPropagation()">
-                  <button type="button" onclick="open360TourModal(${v.id})" class="px-2 py-0.5 rounded-full text-[9px] font-bold bg-[#1E293B]/90 text-amber-200 border border-[#D4AF37]/50 backdrop-blur-md flex items-center gap-0.5 shadow-xs hover:scale-105 cursor-pointer" title="تور ۳۶۰°">
+                <!-- Top-Left: Heart, Scales/Compare, and 360 Tour Micro-Icons -->
+                <div class="absolute top-2.5 left-2.5 flex items-center gap-1.5 z-10" onclick="event.stopPropagation()">
+                  <button type="button" onclick="toggleFavoriteVendor(${v.id}, event)" class="w-7 h-7 rounded-full bg-black/70 backdrop-blur-md border border-white/20 flex items-center justify-center text-rose-500 shadow-sm transition-transform hover:scale-110 active:scale-95 cursor-pointer" title="نشان‌شده">
+                    <i data-lucide="heart" class="w-3.5 h-3.5 ${isFav ? 'fill-rose-500 text-rose-500' : 'text-rose-500'}"></i>
+                  </button>
+
+                  <button type="button" onclick="toggleVendorComparison(${v.id}, event)" class="w-7 h-7 rounded-full ${isComparing ? 'bg-[#D4AF37] text-[#0F251A]' : 'bg-black/70 text-amber-200 border border-amber-300/40'} backdrop-blur-md flex items-center justify-center shadow-sm transition-transform hover:scale-110 active:scale-95 cursor-pointer" title="مقایسه تامین‌کننده">
+                    <i data-lucide="columns-2" class="w-3.5 h-3.5"></i>
+                  </button>
+
+                  <button type="button" onclick="open360TourModal(${v.id})" class="px-2 py-0.5 rounded-full text-[9px] font-black bg-[#1E293B]/90 text-amber-200 border border-[#D4AF37]/50 backdrop-blur-md flex items-center gap-0.5 shadow-xs hover:scale-105 cursor-pointer" title="تور ۳۶۰°">
                     <i data-lucide="compass" class="w-2.5 h-2.5 text-[#D4AF37]"></i>
                     <span>۳۶۰°</span>
                   </button>
-
-                  <div class="bg-black/70 backdrop-blur-md text-[#D4AF37] border border-[#D4AF37]/40 text-[9.5px] font-black px-2 py-0.5 rounded-full flex items-center gap-0.5">
-                    <i data-lucide="star" class="w-2.5 h-2.5 fill-amber-400 text-amber-400"></i>
-                    <span>${ratingVal}</span>
-                  </div>
                 </div>
               </div>
 
@@ -12508,6 +12514,14 @@ window.addForumComment = function(threadIdx) {
 // ==========================================================================
 // HOMEPAGE MAGAZINE HIGHLIGHTS RENDERER
 // ==========================================================================
+window.toggleAdvancedFiltersDrawer = function() {
+  const sidebar = document.querySelector('.directory-sidebar');
+  if (sidebar) {
+    sidebar.classList.toggle('hidden');
+    showToast('وضعیت فیلترهای پیشرفته تغییر یافت.', 'info');
+  }
+};
+
 window.renderHomeMagazineHighlights = function() {
   const feed = document.getElementById('home-magazine-highlights-feed');
   if (!feed) return;
