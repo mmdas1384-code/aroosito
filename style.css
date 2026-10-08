@@ -1928,3 +1928,21 @@ body.theme-pearl-white .text-slate-300,
 body.theme-pearl-white .text-slate-400 {
   color: #475569 !important;
 }
+
+/* ==========================================================================
+   STRICT ROOT PANEL ISOLATION (ADMIN vs VENDOR DASHBOARD)
+   ========================================================================== */
+.tab-content.hidden {
+  display: none !important;
+}
+
+.vpanel-pane.hidden,
+.apanel-pane.hidden {
+  display: none !important;
+}
+
+#tab-admin.hidden,
+#tab-vendor-dash.hidden,
+#tab-vendor-profile.hidden {
+  display: none !important;
+}
