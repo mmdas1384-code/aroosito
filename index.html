@@ -3193,92 +3193,143 @@
 
       <!-- TAB PANE 6: PROFILE EDITOR -->
       <div id="vpanel-pane-profile" class="hidden space-y-6">
-        <!-- Profile Avatar / Logo Management -->
-        <section class="bg-white border border-accent rounded-3xl p-6 shadow-xs space-y-4 text-right">
-          <div class="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 border-b border-accent pb-4">
+        <!-- Profile Avatar & Cover Branding Management -->
+        <section class="bg-[#0F172A] border border-[#D4AF37]/40 rounded-3xl p-6 shadow-xl space-y-4 text-right text-white">
+          <div class="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 border-b border-slate-800 pb-4">
             <div class="flex items-center gap-4">
               <div class="relative group shrink-0">
-                <div id="vd-avatar-container" class="w-24 h-24 sm:w-28 sm:h-28 rounded-full border-4 border-accent overflow-hidden bg-bgCustom flex items-center justify-center shadow-md text-primary font-black text-2xl">
+                <div id="vd-avatar-container" class="w-24 h-24 sm:w-28 sm:h-28 rounded-full border-4 border-[#D4AF37] overflow-hidden bg-slate-900 flex items-center justify-center shadow-lg text-[#D4AF37] font-black text-2xl">
                   <img id="vd-avatar-img" src="https://images.unsplash.com/photo-1519167758481-83f550bb49b3?auto=format&fit=crop&w=400&q=80" alt="لوگوی کسب‌وکار" class="w-full h-full object-cover">
                 </div>
               </div>
 
               <div class="space-y-1">
-                <h3 class="text-base font-bold text-graphite flex items-center gap-2">
-                  <span>لوگو و عکس پروفایل کسب‌وکار</span>
+                <h3 class="text-base font-black text-[#D4AF37] flex items-center gap-2">
+                  <i data-lucide="image" class="w-5 h-5 text-[#D4AF37]"></i>
+                  <span>لوگو و نشان رسمی برند در یزد</span>
                 </h3>
-                <p class="text-xs text-secondary max-w-md">این عکس به عنوان لوگوی اصلی برند شما در دایرکتوری و بالای صفحه اختصاصی نمایش داده می‌شود.</p>
+                <p class="text-xs text-slate-300 max-w-md">این عکس به عنوان لوگوی اصلی برند شما در دایرکتوری و بالای پروفایل عمومی نمایش داده می‌شود.</p>
               </div>
             </div>
 
             <div class="flex items-center gap-2.5 shrink-0">
               <input type="file" id="vd-avatar-input" accept="image/*" class="hidden" onchange="handleAvatarUpload(event)">
-              <button type="button" onclick="document.getElementById('vd-avatar-input').click()" class="bg-primary hover:bg-emerald-900 text-white font-bold px-4 py-2.5 rounded-xl text-xs shadow-xs transition-colors flex items-center gap-1.5">
+              <button type="button" onclick="document.getElementById('vd-avatar-input').click()" class="bg-[#D4AF37] hover:bg-amber-500 text-[#0F251A] font-black px-4 py-2.5 rounded-xl text-xs shadow-md transition-all cursor-pointer flex items-center gap-1.5">
                 <i data-lucide="upload-cloud" class="w-4 h-4"></i>
-                <span>تغییر / آپلود عکس پروفایل</span>
+                <span>تغییر / آپلود عکس لوگو</span>
+              </button>
+              <button type="button" onclick="handleAvatarDelete()" class="bg-slate-800 hover:bg-rose-950 text-rose-400 border border-slate-700 font-bold px-3.5 py-2.5 rounded-xl text-xs transition-colors cursor-pointer flex items-center gap-1.5">
+                <i data-lucide="trash-2" class="w-4 h-4"></i>
+                <span>حذف</span>
               </button>
             </div>
           </div>
         </section>
 
-        <!-- Business Profile Editor Form -->
-        <section class="bg-white border border-accent rounded-3xl p-6 shadow-xs space-y-4 text-right">
-          <h3 class="text-lg font-bold text-graphite border-b border-accent pb-3 flex items-center gap-2">
-            <i data-lucide="edit-3" class="w-5 h-5 text-primary"></i>
-            <span>ویرایش اطلاعات و پروفایل عمومی کسب‌وکار در یزد (Profile & Contact Editor)</span>
+        <!-- Comprehensive Business Profile Editor Form -->
+        <section class="bg-[#0F172A] border border-[#D4AF37]/40 rounded-3xl p-6 shadow-xl space-y-4 text-right text-white">
+          <h3 class="text-base sm:text-lg font-black text-[#D4AF37] border-b border-slate-800 pb-3 flex items-center gap-2">
+            <i data-lucide="edit-3" class="w-5 h-5 text-[#D4AF37]"></i>
+            <span>ویرایش جامع مشخصات، تماس و بیوگرافی کسب‌وکار (Profile & Contact Editor)</span>
           </h3>
 
-          <form onsubmit="handleVendorProfileUpdate(event)" class="grid grid-cols-1 md:grid-cols-3 gap-4 text-xs font-bold text-graphite">
+          <form onsubmit="handleVendorProfileUpdate(event)" class="grid grid-cols-1 md:grid-cols-3 gap-4 text-xs font-bold">
             <div>
-              <label class="block mb-1">نام برند / کسب‌وکار *</label>
-              <input type="text" id="vd-edit-name" value="استودیو و آتلیه تخصصی کویر یزد" class="w-full bg-bgCustom border border-accent rounded-xl p-2.5 text-xs font-medium focus:outline-none focus:border-primary">
-            </div>
-
-            <div>
-              <label class="block mb-1">موبایل مدیریت / واتس‌اپ *</label>
-              <input type="tel" id="vd-edit-phone" value="۰۹۱۲۳۴۵۶۷۸۹" class="w-full bg-bgCustom border border-accent rounded-xl p-2.5 text-xs font-medium focus:outline-none focus:border-primary dir-ltr">
+              <label class="block text-slate-200 mb-1">نام برند / کسب‌وکار *</label>
+              <input type="text" id="vd-edit-name" value="استودیو و آتلیه تخصصی کویر یزد" class="w-full bg-[#1E293B] border border-[#D4AF37]/30 text-white rounded-xl p-2.5 text-xs font-medium focus:outline-none focus:border-[#D4AF37]">
             </div>
 
             <div>
-              <label class="block mb-1">تلفن ثابت یزد *</label>
-              <input type="tel" id="vd-edit-landline" value="۰۳۵-۳۸۲۵۲۲۲۲" class="w-full bg-bgCustom border border-accent rounded-xl p-2.5 text-xs font-medium focus:outline-none focus:border-primary dir-ltr">
+              <label class="block text-slate-200 mb-1">دسته‌بندی اصلی کسب‌وکار *</label>
+              <select id="vd-edit-category" class="w-full bg-[#1E293B] border border-[#D4AF37]/30 text-white rounded-xl p-2.5 text-xs font-bold focus:outline-none focus:border-[#D4AF37] cursor-pointer">
+                <option value="آتلیه و عکاسی" class="bg-[#0F172A] text-white" selected>آتلیه & خدمات تصویربرداری</option>
+                <option value="باغ و تالار عروسی" class="bg-[#0F172A] text-white">باغ و تالار تشریفاتی</option>
+                <option value="سالن زیبایی و میکاپ" class="bg-[#0F172A] text-white">سالن زیبایی & میکاپ</option>
+                <option value="مزون و لباس عروس" class="bg-[#0F172A] text-white">مزون & لباس عروس</option>
+                <option value="تشریفات و خدمات مجالس" class="bg-[#0F172A] text-white">تشریفات & خدمات مجالس</option>
+              </select>
+            </div>
+
+            <div>
+              <label class="block text-slate-200 mb-1">موبایل مدیریت / واتس‌اپ *</label>
+              <input type="tel" id="vd-edit-phone" value="۰۹۱۲۳۴۵۶۷۸۹" class="w-full bg-[#1E293B] border border-[#D4AF37]/30 text-white rounded-xl p-2.5 text-xs font-medium focus:outline-none focus:border-[#D4AF37] dir-ltr">
+            </div>
+
+            <div>
+              <label class="block text-slate-200 mb-1">تلفن ثابت یزد *</label>
+              <input type="tel" id="vd-edit-landline" value="۰۳۵-۳۸۲۵۲۲۲۲" class="w-full bg-[#1E293B] border border-[#D4AF37]/30 text-white rounded-xl p-2.5 text-xs font-medium focus:outline-none focus:border-[#D4AF37] dir-ltr">
+            </div>
+
+            <div>
+              <label class="block text-slate-200 mb-1">منطقه / محله در استان یزد *</label>
+              <select id="vd-edit-district" class="w-full bg-[#1E293B] border border-[#D4AF37]/30 text-white rounded-xl p-2.5 text-xs font-bold focus:outline-none focus:border-[#D4AF37] cursor-pointer">
+                <option value="صفائیه & اطلسی" class="bg-[#0F172A] text-white" selected>صفائیه & میدان اطلسی</option>
+                <option value="بلوار جمهوری" class="bg-[#0F172A] text-white">بلوار جمهوری</option>
+                <option value="خیابان کاشانی & ملاصدرا" class="bg-[#0F172A] text-white">خیابان کاشانی & ملاصدرا</option>
+                <option value="بافت تاریخی & آزادشهر" class="bg-[#0F172A] text-white">بافت تاریخی & آزادشهر</option>
+              </select>
+            </div>
+
+            <div>
+              <label class="block text-slate-200 mb-1">ساعات کاری و پذیرش حضوری *</label>
+              <input type="text" id="vd-edit-hours" value="شنبه تا پنجشنبه ۹:۰۰ الی ۲۰:۰۰" class="w-full bg-[#1E293B] border border-[#D4AF37]/30 text-white rounded-xl p-2.5 text-xs font-medium focus:outline-none focus:border-[#D4AF37]">
+            </div>
+
+            <div>
+              <label class="block text-slate-200 mb-1">شناسه اینستاگرام *</label>
+              <input type="text" id="vd-edit-insta" value="@kavir_studio_yazd" class="w-full bg-[#1E293B] border border-[#D4AF37]/30 text-white rounded-xl p-2.5 text-xs font-medium focus:outline-none focus:border-[#D4AF37] dir-ltr">
+            </div>
+
+            <div>
+              <label class="block text-slate-200 mb-1">آدرس پوستر هدر (Cover Image URL):</label>
+              <input type="url" id="vd-edit-cover" value="https://images.unsplash.com/photo-1519167758481-83f550bb49b3?auto=format&fit=crop&w=1200&q=80" class="w-full bg-[#1E293B] border border-[#D4AF37]/30 text-white rounded-xl p-2.5 text-xs font-medium focus:outline-none focus:border-[#D4AF37] dir-ltr">
+            </div>
+
+            <div>
+              <label class="block text-slate-200 mb-1">لینک مسیریابی بلد / نشان / گوگل‌مپ:</label>
+              <input type="text" id="vd-edit-maplink" value="https://nishan.ir/maps" class="w-full bg-[#1E293B] border border-[#D4AF37]/30 text-white rounded-xl p-2.5 text-xs font-medium focus:outline-none focus:border-[#D4AF37] dir-ltr">
+            </div>
+
+            <div class="md:col-span-3">
+              <label class="block text-slate-200 mb-1">آدرس کامل فیزیکی در یزد *</label>
+              <input type="text" id="vd-edit-address" value="یزد، میدان اطلسی، مجتمع آریا، طبقه ۳" class="w-full bg-[#1E293B] border border-[#D4AF37]/30 text-white rounded-xl p-2.5 text-xs font-medium focus:outline-none focus:border-[#D4AF37]">
             </div>
 
             <div class="md:col-span-3 space-y-1">
-              <label class="block mb-1">درباره ما / بیوگرافی و معرفی مجموعه *</label>
-              <textarea id="vd-edit-about" rows="3" class="w-full bg-bgCustom border border-accent rounded-xl p-3 text-xs font-medium focus:outline-none focus:border-primary leading-relaxed" placeholder="متن معرفی و تاریخچه مجموعه خود را اینجا بنویسید...">استودیو و آتلیه تخصصی کویر یزد با بیش از ۱۰ سال سابقه درخشان در زمینه تصویربرداری عروسی، فرمالیته کویر و ساخت کلیپ‌های سینمایی عاشقانه با مجهزترین تجهیزات سینمایی در استان یزد.</textarea>
+              <label class="block text-slate-200 mb-1">درباره ما / بیوگرافی و معرفی جامع مجموعه *</label>
+              <textarea id="vd-edit-about" rows="3" class="w-full bg-[#1E293B] border border-[#D4AF37]/30 text-white rounded-xl p-3 text-xs font-medium focus:outline-none focus:border-[#D4AF37] leading-relaxed placeholder-slate-400" placeholder="متن معرفی و تاریخچه مجموعه خود را بنویسید...">استودیو و آتلیه تخصصی کویر یزد با بیش از ۱۰ سال سابقه درخشان در زمینه تصویربرداری عروسی، فرمالیته کویر و ساخت کلیپ‌های سینمایی عاشقانه با مجهزترین تجهیزات سینمایی در استان یزد.</textarea>
             </div>
 
             <div class="md:col-span-3 space-y-1">
-              <label class="block mb-1">خدمات و امکانات اختصاصی (هر خدمت در یک خط) *</label>
-              <textarea id="vd-edit-services" rows="3" class="w-full bg-bgCustom border border-accent rounded-xl p-3 text-xs font-medium focus:outline-none focus:border-primary leading-relaxed" placeholder="مثلا: تصویربرداری هوایی هلی‌شات&#10;تیم اختصاصی بانو&#10;تحویل کامل فایل خام کیفیت ۴K">تصویربرداری هوایی هلی‌شات کویر&#10;تیم مجرب و اختصاصی بانو&#10;تحویل فایل‌های خام با کیفیت ۴K&#10;آلبوم ایتالیایی جلد چرم دست‌ساز&#10;نورپردازی حرفه‌ای سینمایی</textarea>
+              <label class="block text-slate-200 mb-1">خدمات و امکانات اختصاصی (هر خدمت در یک خط) *</label>
+              <textarea id="vd-edit-services" rows="3" class="w-full bg-[#1E293B] border border-[#D4AF37]/30 text-white rounded-xl p-3 text-xs font-medium focus:outline-none focus:border-[#D4AF37] leading-relaxed placeholder-slate-400" placeholder="هر خدمت را در یک خط جداگانه بنویسید...">تصویربرداری هوایی هلی‌شات کویر&#10;تیم مجرب و اختصاصی بانو&#10;تحویل فایل‌های خام با کیفیت ۴K&#10;آلبوم ایتالیایی جلد چرم دست‌ساز&#10;نورپردازی حرفه‌ای سینمایی</textarea>
             </div>
 
             <div class="md:col-span-3 space-y-1">
-              <label class="block mb-1">تگ‌ها و بج‌های تخصصی (با ویرگول جدا کنید):</label>
-              <input type="text" id="vd-edit-tags" value="فرمالیته کویر, آتلیه تخصصی, هلی‌شات, آلبوم ایتالیایی" class="w-full bg-bgCustom border border-accent rounded-xl p-2.5 text-xs font-medium focus:outline-none focus:border-primary" placeholder="مثلا: فرمالیته کویر, هلی‌شات, آتلیه VIP">
+              <label class="block text-slate-200 mb-1">تگ‌ها و بج‌های تخصصی (با ویرگول جدا کنید):</label>
+              <input type="text" id="vd-edit-tags" value="فرمالیته کویر, آتلیه تخصصی, هلی‌شات, آلبوم ایتالیایی" class="w-full bg-[#1E293B] border border-[#D4AF37]/30 text-white rounded-xl p-2.5 text-xs font-medium focus:outline-none focus:border-[#D4AF37]" placeholder="مثلا: فرمالیته کویر, هلی‌شات, آتلیه VIP">
             </div>
 
-            <div class="md:col-span-3 flex justify-end pt-2 border-t border-accent">
-              <button type="submit" class="bg-primary hover:bg-emerald-900 text-white font-bold px-6 py-2.5 rounded-xl text-xs shadow-xs transition-colors flex items-center gap-1.5">
-                <i data-lucide="check-circle-2" class="w-4 h-4"></i>
-                <span>ذخیره تغییرات پروفایل کسب‌وکار</span>
+            <div class="md:col-span-3 flex justify-end pt-3 border-t border-slate-800">
+              <button type="submit" class="bg-gradient-to-r from-[#D4AF37] to-[#F3E5AB] text-[#0F251A] font-black px-6 py-3 rounded-2xl text-xs shadow-lg transition-all hover:scale-105 active:scale-95 cursor-pointer flex items-center gap-1.5">
+                <i data-lucide="check-circle-2" class="w-4 h-4 text-[#0F251A]"></i>
+                <span>ثبت و به‌روزرسانی پروفایل کسب‌وکار</span>
               </button>
             </div>
           </form>
         </section>
 
         <!-- Portfolio Gallery CRUD Manager -->
-        <section class="bg-white border border-accent rounded-3xl p-6 shadow-xs space-y-6 text-right">
-          <div class="flex flex-col sm:flex-row justify-between sm:items-center gap-4 border-b border-accent pb-4">
+        <section class="bg-[#0F172A] border border-[#D4AF37]/40 rounded-3xl p-6 shadow-xl space-y-6 text-right text-white">
+          <div class="flex flex-col sm:flex-row justify-between sm:items-center gap-4 border-b border-slate-800 pb-4">
             <div>
-              <h3 class="text-lg font-bold text-graphite flex items-center gap-2">
-                <i data-lucide="image" class="w-5 h-5 text-primary"></i>
+              <h3 class="text-base sm:text-lg font-black text-[#D4AF37] flex items-center gap-2">
+                <i data-lucide="image" class="w-5 h-5 text-[#D4AF37]"></i>
                 <span>مدیریت گالری نمونه‌کارها (Portfolio Gallery Manager)</span>
               </h3>
-              <p class="text-xs text-secondary mt-1">تصاویر نمونه‌کار خود را مدیریت کنید.</p>
+              <p class="text-xs text-slate-300 mt-1">تصاویر نمونه‌کار خود را آپلود و حذف کنید. تغییرات بلافاصله در پروفایل عمومی شما ثبت می‌شوند.</p>
             </div>
-            <button type="button" onclick="openPortfolioModal()" class="bg-primary hover:bg-emerald-900 text-white font-bold px-4 py-2.5 rounded-xl text-xs shadow-xs transition-colors flex items-center gap-1.5 shrink-0">
+            <button type="button" onclick="openPortfolioModal()" class="bg-[#D4AF37] text-[#0F251A] font-black px-4 py-2.5 rounded-xl text-xs shadow-md transition-all cursor-pointer flex items-center gap-1.5 shrink-0">
               <i data-lucide="plus-circle" class="w-4 h-4"></i>
               <span>افزودن نمونه‌کار جدید</span>
             </button>
@@ -3291,13 +3342,16 @@
         </section>
 
         <!-- Portfolio & Service Packages Manager -->
-        <section class="bg-white border border-accent rounded-3xl p-6 shadow-xs space-y-6 text-right">
-          <div class="flex justify-between items-center border-b border-accent pb-4">
-            <h3 class="text-lg font-bold text-graphite flex items-center gap-2">
-              <i data-lucide="package-plus" class="w-5 h-5 text-primary"></i>
-              <span>مدیریت پکیج‌های قیمت و نمونه‌کارها (Package Editor & Manager)</span>
-            </h3>
-            <button onclick="toggleAddPackageModal(true)" class="bg-primary text-white font-bold px-4 py-2 rounded-xl text-xs hover:bg-emerald-900 transition-colors flex items-center gap-1.5 shadow-xs">
+        <section class="bg-[#0F172A] border border-[#D4AF37]/40 rounded-3xl p-6 shadow-xl space-y-6 text-right text-white">
+          <div class="flex justify-between items-center border-b border-slate-800 pb-4">
+            <div>
+              <h3 class="text-base sm:text-lg font-black text-[#D4AF37] flex items-center gap-2">
+                <i data-lucide="package-plus" class="w-5 h-5 text-[#D4AF37]"></i>
+                <span>مدیریت پکیج‌های قیمت و خدمات (Package Editor & Manager)</span>
+              </h3>
+              <p class="text-xs text-slate-300 mt-1">پکیج‌های قیمتی متناسب با خدمات خود تعریف کنید.</p>
+            </div>
+            <button onclick="toggleAddPackageModal(true)" class="bg-[#D4AF37] text-[#0F251A] font-black px-4 py-2 rounded-xl text-xs shadow-md transition-all cursor-pointer flex items-center gap-1.5">
               <i data-lucide="plus" class="w-4 h-4"></i>
               <span>افزودن پکیج خدمات جدید</span>
             </button>
@@ -3309,28 +3363,29 @@
         </section>
 
         <!-- My Plan & Subscription Status Card -->
-        <div class="bg-white border border-accent rounded-3xl p-6 shadow-xs space-y-4 relative overflow-hidden text-right">
+        <div class="bg-[#0F172A] border border-[#D4AF37]/40 rounded-3xl p-6 shadow-xl space-y-4 relative overflow-hidden text-right text-white">
           <div class="flex flex-col md:flex-row items-start md:items-center justify-between gap-6">
             <div class="space-y-2">
               <div class="flex items-center gap-2 flex-wrap">
-                <span class="bg-amber-100 text-amber-900 border border-amber-300 text-xs font-bold px-3 py-1 rounded-full flex items-center gap-1">
-                  <i data-lucide="crown" class="w-3.5 h-3.5 text-amber-600"></i>
+                <span class="bg-[#D4AF37]/20 text-[#D4AF37] border border-[#D4AF37]/50 text-xs font-black px-3 py-1 rounded-full flex items-center gap-1">
+                  <i data-lucide="crown" class="w-3.5 h-3.5 text-[#D4AF37]"></i>
                   <span id="vd-active-plan-title">اشتراک فعال: طلایی ۱ ساله (Gold Tier)</span>
                 </span>
-                <span class="bg-emerald-100 text-emerald-800 text-[11px] font-bold px-2.5 py-0.5 rounded-md">وضعیت: فعال</span>
+                <span class="bg-emerald-950 text-emerald-400 border border-emerald-800 text-[11px] font-bold px-2.5 py-0.5 rounded-md">وضعیت: فعال</span>
+                <span class="bg-amber-950 text-amber-300 border border-amber-800 text-[11px] font-extrabold px-2.5 py-0.5 rounded-md">کمیسیون ۰٪</span>
               </div>
 
-              <h3 class="text-lg font-black text-graphite flex items-center gap-2">
+              <h3 class="text-base sm:text-lg font-black text-[#D4AF37] flex items-center gap-2">
                 <span>مدیریت پلن و عضویت ویژه کسب‌وکار (Subscription Management)</span>
               </h3>
             </div>
 
             <div class="flex items-center gap-3 shrink-0 flex-wrap">
-              <button type="button" onclick="toggleBillingHistoryDrawer()" class="bg-bgCustom hover:bg-slate-100 text-graphite border border-accent px-4 py-3 rounded-2xl text-xs font-bold transition-all shadow-xs flex items-center gap-1.5 cursor-pointer">
-                <i data-lucide="receipt" class="w-4 h-4 text-primary"></i>
+              <button type="button" onclick="toggleBillingHistoryDrawer()" class="bg-[#1E293B] hover:bg-slate-800 text-white border border-slate-700 px-4 py-2.5 rounded-xl text-xs font-bold transition-all shadow-sm cursor-pointer flex items-center gap-1.5">
+                <i data-lucide="receipt" class="w-4 h-4 text-[#D4AF37]"></i>
                 <span>تاریخچه پرداخت‌ها</span>
               </button>
-              <button type="button" onclick="openSubscriptionMatrixModal()" class="bg-primary hover:bg-emerald-900 text-white px-5 py-3 rounded-2xl text-xs font-bold transition-all shadow-md flex items-center gap-2 cursor-pointer">
+              <button type="button" onclick="openSubscriptionMatrixModal()" class="bg-[#D4AF37] text-[#0F251A] font-black px-5 py-2.5 rounded-xl text-xs shadow-md transition-all cursor-pointer flex items-center gap-2">
                 <i data-lucide="zap" class="w-4 h-4"></i>
                 <span>ارتقا / تمدید اشتراک</span>
               </button>
@@ -3338,10 +3393,10 @@
           </div>
 
           <!-- Billing History Drawer -->
-          <div id="vd-billing-history-drawer" class="hidden border-t border-accent/70 pt-4 space-y-3">
+          <div id="vd-billing-history-drawer" class="hidden border-t border-slate-800 pt-4 space-y-3">
             <div class="overflow-x-auto">
               <table class="w-full text-right text-xs">
-                <thead class="bg-bgCustom text-secondary border-b border-accent font-bold">
+                <thead class="bg-[#1E293B] text-amber-200 border-b border-[#D4AF37]/30 font-bold">
                   <tr>
                     <th class="p-2.5">عنوان فاکتور</th>
                     <th class="p-2.5">تاریخ ثبت</th>
@@ -3350,13 +3405,13 @@
                     <th class="p-2.5 text-center">وضعیت</th>
                   </tr>
                 </thead>
-                <tbody class="divide-y divide-accent/60 font-medium">
+                <tbody class="divide-y divide-slate-800 font-medium text-slate-200">
                   <tr>
-                    <td class="p-2.5 font-bold text-graphite">اشتراک طلایی ۱ ساله (تخفیف رونمایی)</td>
-                    <td class="p-2.5 text-secondary">۱۵ اسفند ۱۴۰۲</td>
-                    <td class="p-2.5 font-bold text-primary">۱۲,۵۰۰,۰۰۰ تومان</td>
+                    <td class="p-2.5 font-bold text-white">اشتراک طلایی ۱ ساله (تخفیف رونمایی)</td>
+                    <td class="p-2.5 text-slate-300">۱۵ اسفند ۱۴۰۲</td>
+                    <td class="p-2.5 font-bold text-[#D4AF37]">۱۲,۵۰۰,۰۰۰ تومان</td>
                     <td class="p-2.5 font-mono dir-ltr">TRX-984210</td>
-                    <td class="p-2.5 text-center"><span class="bg-emerald-100 text-emerald-800 text-[10px] font-bold px-2 py-0.5 rounded-full">موفق / فعال</span></td>
+                    <td class="p-2.5 text-center"><span class="bg-emerald-950 text-emerald-400 border border-emerald-800 text-[10px] font-bold px-2 py-0.5 rounded-full">موفق / فعال</span></td>
                   </tr>
                 </tbody>
               </table>
