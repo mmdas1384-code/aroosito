@@ -529,6 +529,19 @@ main#directory-view {
   scrollbar-width: none;
 }
 
+/* ==========================================================================
+   BORDERLESS FLOATING STORY CIRCLES
+   ========================================================================== */
+.gold-gradient-border {
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  box-shadow: 0 4px 15px rgba(212, 175, 55, 0.15);
+}
+
+.gold-gradient-border:hover {
+  box-shadow: 0 6px 20px rgba(212, 175, 55, 0.35);
+  transform: scale(1.05);
+}
+
 /* User Account Profile Dropdown Styling */
 .user-account-dropdown {
   position: relative;
