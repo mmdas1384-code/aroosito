@@ -1946,3 +1946,34 @@ body.theme-pearl-white .text-slate-400 {
 #tab-vendor-profile.hidden {
   display: none !important;
 }
+
+/* ==========================================================================
+   KANBAN BOARD & REVERSE BIDDING LUXURY STYLES
+   ========================================================================== */
+.kanban-card {
+  transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+  cursor: grab;
+}
+
+.kanban-card:active {
+  cursor: grabbing;
+  transform: scale(0.98) rotate(-1deg);
+  opacity: 0.9;
+}
+
+.kanban-card.dragging {
+  opacity: 0.4;
+  border-style: dashed;
+}
+
+.reverse-bid-card {
+  background: linear-gradient(145deg, #1E293B 0%, #0F172A 100%);
+  border: 1px solid rgba(212, 175, 55, 0.3);
+  transition: all 0.3s ease;
+}
+
+.reverse-bid-card:hover {
+  border-color: #D4AF37;
+  box-shadow: 0 10px 25px rgba(212, 175, 55, 0.15);
+  transform: translateY(-2px);
+}

@@ -12038,7 +12038,7 @@ window.renderInvoiceItemRows = function() {
         <td class="p-2">
           <input type="text" value="${(item.unitPrice || 0).toLocaleString('fa-IR')}" oninput="updateInvoiceItemPrice(${idx}, this.value)" placeholder="مبلغ فی..." class="w-full bg-[#0F251A] border border-[#D4AF37]/30 rounded-lg p-1.5 text-xs font-bold text-amber-200 focus:outline-none focus:border-[#D4AF37]">
         </td>
-        <td class="p-2 font-bold text-[#D4AF37] text-xs">
+        <td id="inv-row-total-${idx}" class="p-2 font-bold text-[#D4AF37] text-xs">
           ${rowTotal.toLocaleString('fa-IR')}
         </td>
         <td class="p-2 text-center">
@@ -12075,14 +12075,20 @@ window.updateInvoiceItem = function(idx, field, val) {
   } else {
     invoiceItemsList[idx][field] = val;
   }
-  window.renderInvoiceItemRows();
+  const rowTotal = (Number(invoiceItemsList[idx].qty) || 1) * (Number(invoiceItemsList[idx].unitPrice) || 0);
+  const totalEl = document.getElementById(`inv-row-total-${idx}`);
+  if (totalEl) totalEl.textContent = rowTotal.toLocaleString('fa-IR');
+  window.calcInvoiceTotals();
 };
 
 window.updateInvoiceItemPrice = function(idx, val) {
   if (!invoiceItemsList[idx]) return;
   const numeric = typeof parsePriceNumeric === 'function' ? parsePriceNumeric(val) : parseInt(val.replace(/\D/g, '')) || 0;
   invoiceItemsList[idx].unitPrice = numeric;
-  window.renderInvoiceItemRows();
+  const rowTotal = (Number(invoiceItemsList[idx].qty) || 1) * (Number(invoiceItemsList[idx].unitPrice) || 0);
+  const totalEl = document.getElementById(`inv-row-total-${idx}`);
+  if (totalEl) totalEl.textContent = rowTotal.toLocaleString('fa-IR');
+  window.calcInvoiceTotals();
 };
 
 window.calcInvoiceTotals = function() {
@@ -12384,8 +12390,9 @@ window.switchVendorPanelTab = function(tabName) {
   if (tabName === 'calendar' && typeof renderVendorDashCalendar === 'function') {
     renderVendorDashCalendar();
   }
-  if (tabName === 'inquiries' && typeof renderVendorInquiriesTable === 'function') {
-    renderVendorInquiriesTable();
+  if (tabName === 'inquiries' && typeof renderVendorInquiriesDynamic === 'function') {
+    renderVendorInquiriesDynamic();
+    if (typeof renderVendorReverseBids === 'function') renderVendorReverseBids();
   }
   if (tabName === 'stories' && typeof renderVendorStoriesList === 'function') {
     renderVendorStoriesList();
@@ -12974,6 +12981,163 @@ window.incrementVendorViewCount = function(vendorId) {
   }
 };
 
+// ==========================================================================
+// VENDOR KANBAN CRM BOARD & REVERSE BIDDING SYSTEM
+// ==========================================================================
+let vendorInquiryViewMode = 'kanban';
+
+window.setVendorInquiryViewMode = function(mode) {
+  vendorInquiryViewMode = mode;
+  const kanbanContainer = document.getElementById('vpanel-kanban-board-container');
+  const listContainer = document.getElementById('inquiry-list');
+  const kanbanBtn = document.getElementById('vpanel-view-kanban-btn');
+  const listBtn = document.getElementById('vpanel-view-list-btn');
+
+  if (mode === 'kanban') {
+    if (kanbanContainer) kanbanContainer.classList.remove('hidden');
+    if (listContainer) listContainer.classList.add('hidden');
+    if (kanbanBtn) {
+      kanbanBtn.className = "px-3 py-1 rounded-lg text-xs font-bold transition-all bg-[#D4AF37] text-[#0F251A] shadow cursor-pointer";
+    }
+    if (listBtn) {
+      listBtn.className = "px-3 py-1 rounded-lg text-xs font-bold transition-all text-slate-300 hover:text-white cursor-pointer";
+    }
+  } else {
+    if (kanbanContainer) kanbanContainer.classList.add('hidden');
+    if (listContainer) listContainer.classList.remove('hidden');
+    if (listBtn) {
+      listBtn.className = "px-3 py-1 rounded-lg text-xs font-bold transition-all bg-[#D4AF37] text-[#0F251A] shadow cursor-pointer";
+    }
+    if (kanbanBtn) {
+      kanbanBtn.className = "px-3 py-1 rounded-lg text-xs font-bold transition-all text-slate-300 hover:text-white cursor-pointer";
+    }
+  }
+  renderVendorInquiriesDynamic();
+};
+
+window.renderVendorInquiriesDynamic = function() {
+  if (vendorInquiryViewMode === 'kanban') {
+    renderVendorInquiriesKanban();
+  } else {
+    renderVendorInquiriesTable();
+  }
+};
+
+window.renderVendorInquiriesKanban = function() {
+  const colPending = document.getElementById('kanban-col-pending');
+  const colReplied = document.getElementById('kanban-col-replied');
+  const colDeposit = document.getElementById('kanban-col-deposit_paid');
+  const colBooked = document.getElementById('kanban-col-booked');
+
+  if (!colPending || !colReplied || !colDeposit || !colBooked) return;
+
+  colPending.innerHTML = '';
+  colReplied.innerHTML = '';
+  colDeposit.innerHTML = '';
+  colBooked.innerHTML = '';
+
+  const searchInput = document.getElementById('vd-inquiry-search-input')?.value.toLowerCase().trim() || '';
+  const statusFilter = document.getElementById('vd-inquiry-status-filter')?.value || 'all';
+
+  const cols = {
+    pending: { el: colPending, countEl: document.getElementById('kanban-cnt-pending'), items: 0 },
+    replied: { el: colReplied, countEl: document.getElementById('kanban-cnt-replied'), items: 0 },
+    deposit_paid: { el: colDeposit, countEl: document.getElementById('kanban-cnt-deposit_paid'), items: 0 },
+    booked: { el: colBooked, countEl: document.getElementById('kanban-cnt-booked'), items: 0 }
+  };
+
+  inquiries.forEach((inq, idx) => {
+    const status = inq.status || 'pending';
+    const matchesSearch = !searchInput ||
+      (inq.name && inq.name.toLowerCase().includes(searchInput)) ||
+      (inq.phone && inq.phone.includes(searchInput)) ||
+      (inq.service && inq.service.toLowerCase().includes(searchInput));
+    const matchesFilter = statusFilter === 'all' || status === statusFilter;
+
+    if (!matchesSearch || !matchesFilter) return;
+
+    const targetCol = cols[status] || cols['pending'];
+    targetCol.items++;
+
+    const inqId = inq.id || `inq_${idx}`;
+    const card = document.createElement('div');
+    card.className = "kanban-card bg-[#0F172A] border border-[#D4AF37]/30 hover:border-[#D4AF37] rounded-xl p-3 space-y-2.5 text-white text-right shadow-md";
+    card.setAttribute('draggable', 'true');
+    card.setAttribute('ondragstart', `handleKanbanDragStart(event, '${inqId}')`);
+
+    card.innerHTML = `
+      <div class="flex justify-between items-center border-b border-slate-800 pb-1.5">
+        <span class="font-black text-xs text-[#D4AF37]">${inq.name || 'زوج محترم'}</span>
+        <span class="text-[10px] text-slate-400 font-mono dir-ltr">${inq.phone || '۰۹۱۲۰۰۰۰۰۰۰'}</span>
+      </div>
+
+      <div class="text-[11px] text-slate-200 space-y-1">
+        <div class="flex justify-between items-center">
+          <span class="text-slate-400">خدمت:</span>
+          <span class="font-bold text-emerald-300">${inq.service || inq.package || 'خدمات عمومی'}</span>
+        </div>
+        <div class="flex justify-between items-center">
+          <span class="text-slate-400">تاریخ مراسم:</span>
+          <span class="font-bold text-amber-200">${inq.date || '۱۴۰۳/۰۶/۱۵'}</span>
+        </div>
+      </div>
+
+      ${(inq.customAnswers && inq.customAnswers.length) ? `
+        <div class="bg-amber-950/60 p-1.5 rounded-lg border border-amber-500/30 text-[10px] text-amber-200 space-y-0.5">
+          <span class="font-bold text-amber-400 block border-b border-amber-500/20 pb-0.5">📋 فرم سفارشی:</span>
+          ${inq.customAnswers.slice(0, 2).map(a => `<div class="truncate">• ${a.label}: ${a.value}</div>`).join('')}
+        </div>
+      ` : ''}
+
+      <div class="pt-1.5 border-t border-slate-800/80 flex items-center justify-between gap-1">
+        <select onchange="updateInquiryStatus('${inqId}', this.value)" class="bg-[#1E293B] border border-slate-700 text-[10px] text-slate-200 font-bold rounded-md px-1.5 py-1 focus:outline-none focus:border-[#D4AF37] cursor-pointer">
+          <option value="pending" ${status === 'pending' ? 'selected' : ''}>درخواست جدید</option>
+          <option value="replied" ${status === 'replied' ? 'selected' : ''}>پیش‌فاکتور صادرشده</option>
+          <option value="deposit_paid" ${status === 'deposit_paid' ? 'selected' : ''}>بیعانه پرداخت‌شده</option>
+          <option value="booked" ${status === 'booked' ? 'selected' : ''}>رزرو نهایی</option>
+        </select>
+
+        <button type="button" onclick="openVendorInvoiceBuilderModal('${inq.name || 'زوج محترم'}', '${inq.service || 'پکیج مراسم'}')" class="bg-[#D4AF37] hover:bg-amber-500 text-[#0F251A] text-[10px] font-black px-2 py-1 rounded-md transition-all shadow-xs cursor-pointer">
+          پیش‌فاکتور
+        </button>
+      </div>
+    `;
+
+    targetCol.el.appendChild(card);
+  });
+
+  Object.keys(cols).forEach(k => {
+    if (cols[k].countEl) cols[k].countEl.textContent = cols[k].items;
+    if (cols[k].items === 0) {
+      cols[k].el.innerHTML = `
+        <div class="h-24 flex items-center justify-center text-[11px] font-bold text-slate-500 border border-dashed border-slate-700 rounded-xl">
+          خالی
+        </div>
+      `;
+    }
+  });
+
+  updateVendorAnalyticsUI();
+};
+
+window.handleKanbanDragStart = function(event, id) {
+  event.dataTransfer.setData('text/plain', id);
+  event.target.classList.add('dragging');
+};
+
+window.handleKanbanDragOver = function(event) {
+  event.preventDefault();
+  event.dataTransfer.dropEffect = 'move';
+};
+
+window.handleKanbanDrop = function(event, targetStatus) {
+  event.preventDefault();
+  const inquiryId = event.dataTransfer.getData('text/plain');
+  if (inquiryId) {
+    updateInquiryStatus(inquiryId, targetStatus);
+  }
+};
+
 window.renderVendorInquiriesTable = function() {
   const container = document.getElementById('inquiry-list');
   if (!container) return;
@@ -12993,7 +13157,7 @@ window.renderVendorInquiriesTable = function() {
 
   if (filtered.length === 0) {
     container.innerHTML = `
-      <div class="p-6 text-center text-secondary text-xs font-bold bg-bgCustom rounded-2xl border border-accent">
+      <div class="p-6 text-center text-slate-400 text-xs font-bold bg-[#1E293B] rounded-2xl border border-slate-700">
         هیچ استعلامی مطابق با فیلتر جستجوی شما یافت نشد.
       </div>
     `;
@@ -13002,47 +13166,48 @@ window.renderVendorInquiriesTable = function() {
 
   filtered.forEach((inq, idx) => {
     const card = document.createElement('div');
-    card.className = "p-4 bg-bgCustom rounded-2xl border border-accent space-y-3 shadow-xs hover:border-primary/40 transition-all";
+    card.className = "p-4 bg-[#1E293B] rounded-2xl border border-slate-700 space-y-3 shadow-md text-white text-right";
     const currentStatus = inq.status || 'pending';
+    const inqId = inq.id || `inq_${idx}`;
 
     card.innerHTML = `
       <div class="flex flex-col sm:flex-row justify-between sm:items-center gap-2">
         <div class="flex items-center gap-2">
-          <span class="font-black text-graphite text-sm">${inq.name || 'زوج محترم'}</span>
-          <span class="text-secondary text-xs font-medium dir-ltr">(${inq.phone || '۰۹۱۲۰۰۰۰۰۰۰'})</span>
+          <span class="font-black text-[#D4AF37] text-sm">${inq.name || 'زوج محترم'}</span>
+          <span class="text-slate-300 text-xs font-medium dir-ltr">(${inq.phone || '۰۹۱۲۰۰۰۰۰۰۰'})</span>
         </div>
         <div class="flex items-center gap-2">
-          <select onchange="updateInquiryStatus('${inq.id || idx}', this.value)" class="bg-white border border-accent text-xs font-bold rounded-lg px-2 py-1 text-graphite focus:outline-none focus:border-primary cursor-pointer">
-            <option value="pending" ${currentStatus === 'pending' ? 'selected' : ''}>در انتظار بررسی</option>
-            <option value="replied" ${currentStatus === 'replied' ? 'selected' : ''}>پاسخ داده شده</option>
+          <select onchange="updateInquiryStatus('${inqId}', this.value)" class="bg-[#0F172A] border border-[#D4AF37]/30 text-xs font-bold rounded-lg px-2 py-1 text-white focus:outline-none focus:border-[#D4AF37] cursor-pointer">
+            <option value="pending" ${currentStatus === 'pending' ? 'selected' : ''}>درخواست جدید</option>
+            <option value="replied" ${currentStatus === 'replied' ? 'selected' : ''}>پیش‌فاکتور صادرشده</option>
+            <option value="deposit_paid" ${currentStatus === 'deposit_paid' ? 'selected' : ''}>بیعانه پرداخت‌شده</option>
             <option value="booked" ${currentStatus === 'booked' ? 'selected' : ''}>رزرو نهایی</option>
-            <option value="cancelled" ${currentStatus === 'cancelled' ? 'selected' : ''}>لغو شده</option>
           </select>
         </div>
       </div>
 
-      <div class="flex flex-wrap items-center gap-4 text-xs text-secondary font-medium bg-white/80 p-2.5 rounded-xl border border-accent/60">
-        <span><strong class="text-graphite">تاریخ درخواست:</strong> ${inq.date || '۱۴۰۳/۰۶/۱۵'}</span>
-        ${inq.guests ? `<span><strong class="text-graphite">تعداد مهمان:</strong> ${inq.guests} نفر</span>` : ''}
-        <span><strong class="text-graphite">خدمت/پکیج:</strong> ${inq.service || inq.package || 'خدمات عمومی'}</span>
+      <div class="flex flex-wrap items-center gap-4 text-xs text-slate-300 font-medium bg-[#0F172A] p-2.5 rounded-xl border border-slate-800">
+        <span><strong class="text-[#D4AF37]">تاریخ درخواست:</strong> ${inq.date || '۱۴۰۳/۰۶/۱۵'}</span>
+        ${inq.guests ? `<span><strong class="text-[#D4AF37]">تعداد مهمان:</strong> ${inq.guests} نفر</span>` : ''}
+        <span><strong class="text-[#D4AF37]">خدمت/پکیج:</strong> ${inq.service || inq.package || 'خدمات عمومی'}</span>
       </div>
 
       ${(inq.customAnswers && inq.customAnswers.length) ? `
-        <div class="bg-amber-50/80 p-3 rounded-xl border border-amber-200/80 text-xs font-bold text-amber-950 space-y-1">
-          <span class="block text-[11px] font-black text-amber-900 border-b border-amber-200 pb-1">📋 پاسخ‌های سوالات اختصاصی فرم استعلام:</span>
+        <div class="bg-amber-950/60 p-3 rounded-xl border border-amber-500/30 text-xs font-bold text-amber-200 space-y-1">
+          <span class="block text-[11px] font-black text-amber-400 border-b border-amber-500/20 pb-1">📋 پاسخ‌های سوالات اختصاصی فرم استعلام:</span>
           <div class="space-y-0.5 pt-0.5">
-            ${inq.customAnswers.map(a => `<div class="flex items-center gap-1.5"><span class="text-amber-800 font-bold">• ${a.label}:</span> <span class="text-graphite font-black">${a.value}</span></div>`).join('')}
+            ${inq.customAnswers.map(a => `<div class="flex items-center gap-1.5"><span class="text-amber-300 font-bold">• ${a.label}:</span> <span class="text-white font-black">${a.value}</span></div>`).join('')}
           </div>
         </div>
       ` : ''}
 
-      <p class="text-xs text-graphite bg-white p-3 rounded-xl border border-accent/60 leading-relaxed">${inq.details || 'توضیحات و نیازمندی‌های اختصاصی زوج ثبت شده در سامانه عروسی تو.'}</p>
+      <p class="text-xs text-slate-200 bg-[#0F172A] p-3 rounded-xl border border-slate-800 leading-relaxed">${inq.details || 'توضیحات و نیازمندی‌های اختصاصی زوج ثبت شده در سامانه عروسی تو.'}</p>
 
-      <div class="flex items-center justify-end gap-2 pt-2 border-t border-accent/60">
-        <button type="button" onclick="openVendorInvoiceBuilderModal('${inq.name || 'زوج محترم'}', '${inq.service || 'پکیج فرمالیته'}')" class="bg-primary hover:bg-emerald-900 text-white font-bold px-3 py-1.5 rounded-xl text-xs transition-colors shadow-2xs cursor-pointer">
+      <div class="flex items-center justify-end gap-2 pt-2 border-t border-slate-800">
+        <button type="button" onclick="openVendorInvoiceBuilderModal('${inq.name || 'زوج محترم'}', '${inq.service || 'پکیج فرمالیته'}')" class="bg-[#D4AF37] hover:bg-amber-500 text-[#0F251A] font-black px-3 py-1.5 rounded-xl text-xs transition-colors shadow-2xs cursor-pointer">
           صدور پیش‌فاکتور
         </button>
-        <button type="button" onclick="openInquiryReplyModal('${inq.id || idx}', '${inq.name || 'زوج محترم'}')" class="bg-white hover:bg-emerald-50 text-primary border border-primary/30 font-bold px-3 py-1.5 rounded-xl text-xs transition-colors cursor-pointer">
+        <button type="button" onclick="openInquiryReplyModal('${inqId}', '${inq.name || 'زوج محترم'}')" class="bg-[#0F172A] hover:bg-slate-800 text-[#D4AF37] border border-[#D4AF37]/30 font-bold px-3 py-1.5 rounded-xl text-xs transition-colors cursor-pointer">
           پاسخ مستقیم
         </button>
       </div>
@@ -13054,11 +13219,166 @@ window.renderVendorInquiriesTable = function() {
 };
 
 window.updateInquiryStatus = function(inquiryId, newStatus) {
-  const inq = inquiries.find((i, idx) => (i.id === inquiryId || idx.toString() === inquiryId.toString()));
+  const inq = inquiries.find((i, idx) => (i.id === inquiryId || `inq_${idx}` === inquiryId || idx.toString() === inquiryId.toString()));
   if (inq) {
     inq.status = newStatus;
-    showToast('وضعیت استعلام به روزرسانی شد.', 'success');
-    renderVendorInquiriesTable();
+    try {
+      localStorage.setItem('aroosi_inquiries_db', JSON.stringify(inquiries));
+    } catch (e) {}
+    showToast('وضعیت کانبان استعلام به‌روزرسانی شد.', 'success');
+    renderVendorInquiriesDynamic();
+  }
+};
+
+// ==========================================================================
+// REVERSE BIDDING / SPECIAL REQUESTS BOARD
+// ==========================================================================
+window.openReverseBiddingModal = function() {
+  const modal = document.getElementById('modal-reverse-bidding');
+  if (modal) {
+    modal.classList.remove('hidden');
+    modal.classList.add('flex');
+  }
+};
+
+window.closeReverseBiddingModal = function() {
+  const modal = document.getElementById('modal-reverse-bidding');
+  if (modal) {
+    modal.classList.add('hidden');
+    modal.classList.remove('flex');
+  }
+};
+
+window.handleReverseBiddingSubmit = function(event) {
+  event.preventDefault();
+  const title = document.getElementById('rb-title')?.value.trim();
+  const category = document.getElementById('rb-category')?.value;
+  const budget = document.getElementById('rb-budget')?.value.trim();
+  const date = document.getElementById('rb-date')?.value.trim() || '۱۴۰۳/۰۸/۱۵';
+  const location = document.getElementById('rb-location')?.value.trim() || 'یزد';
+  const phone = document.getElementById('rb-phone')?.value.trim();
+  const details = document.getElementById('rb-details')?.value.trim();
+
+  if (!title || !budget || !phone) {
+    showToast('لطفاً عنوان، بودجه و شماره تماس را تکمیل فرمایید.', 'warning');
+    return;
+  }
+
+  let bids = [];
+  try {
+    bids = JSON.parse(localStorage.getItem('aroosi_reverse_bids_db') || '[]');
+  } catch (e) { bids = []; }
+
+  const newBid = {
+    id: 'rb_' + Date.now(),
+    title,
+    category,
+    budget,
+    date,
+    location,
+    phone,
+    details: details || 'درخواست خدمات اختصاصی و استعلام قیمت رقابتی.',
+    timestamp: new Date().toLocaleDateString('fa-IR'),
+    quotesCount: 0
+  };
+
+  bids.unshift(newBid);
+  try {
+    localStorage.setItem('aroosi_reverse_bids_db', JSON.stringify(bids));
+  } catch (e) {}
+
+  closeReverseBiddingModal();
+  showToast('درخواست شما در میز مناقصه معکوس به تامین‌کنندگان ثبت شد!', 'success');
+  renderVendorReverseBids();
+};
+
+window.renderVendorReverseBids = function() {
+  const feed = document.getElementById('vendor-reverse-bids-feed');
+  if (!feed) return;
+  feed.innerHTML = '';
+
+  let bids = [];
+  try {
+    bids = JSON.parse(localStorage.getItem('aroosi_reverse_bids_db') || '[]');
+  } catch (e) { bids = []; }
+
+  // Fallback initial mock bids if empty
+  if (!bids || bids.length === 0) {
+    bids = [
+      {
+        id: 'rb_mock_1',
+        title: 'عکاسی و فیلم‌برداری فرمالیته در کویر یزد',
+        category: 'عکاسی و فیلم‌برداری',
+        budget: '۴۵,۰۰۰,۰۰۰ تومان',
+        date: '۱۴۰۳/۰۸/۲۰',
+        location: 'یزد / کویر شباهنگ',
+        phone: '۰۹۱۳۱۱۱۰۰۰۰',
+        details: 'نیازمند تیم حرفه‌ای همراه با تصویربرداری هوایی (هلی‌شات) و آلبوم دیجیتال ۳۰ در ۶۰.',
+        timestamp: 'امروز',
+        quotesCount: 2
+      },
+      {
+        id: 'rb_mock_2',
+        title: 'خدمات تشریفات و گل‌آرایی ورودی باغ‌تالار',
+        category: 'گل‌آرایی و تشریفات',
+        budget: '۶۰,۰۰۰,۰۰۰ تومان',
+        date: '۱۴۰۳/۰۹/۰۵',
+        location: 'صفائیه یزد',
+        phone: '۰۹۱۳۲۲۲۰۰۰۰',
+        details: 'دکوراسیون مدرن، گل‌آرایی طبیعی و نورپردازی حرفه‌ای مسیر ورود عروس و داماد.',
+        timestamp: 'دیروز',
+        quotesCount: 1
+      }
+    ];
+    try {
+      localStorage.setItem('aroosi_reverse_bids_db', JSON.stringify(bids));
+    } catch (e) {}
+  }
+
+  bids.forEach(bid => {
+    const card = document.createElement('div');
+    card.className = "reverse-bid-card rounded-2xl p-4 text-right space-y-3 shadow-lg";
+    card.innerHTML = `
+      <div class="flex justify-between items-start gap-2 border-b border-slate-800 pb-2">
+        <div>
+          <span class="inline-block text-[10px] font-black bg-[#D4AF37]/20 text-[#D4AF37] border border-[#D4AF37]/40 px-2.5 py-0.5 rounded-full mb-1">${bid.category}</span>
+          <h4 class="text-xs font-black text-white leading-snug">${bid.title}</h4>
+        </div>
+        <span class="text-[11px] font-black text-emerald-400 bg-emerald-950/80 border border-emerald-500/40 px-2.5 py-1 rounded-xl shrink-0">${bid.budget}</span>
+      </div>
+
+      <p class="text-xs text-slate-300 leading-relaxed">${bid.details}</p>
+
+      <div class="flex flex-wrap items-center justify-between text-[11px] text-slate-400 bg-[#0F172A] p-2 rounded-xl border border-slate-800">
+        <span>📍 ${bid.location}</span>
+        <span>📅 ${bid.date}</span>
+        <span>📩 ${bid.quotesCount || 0} پیشنهاد ارسالی</span>
+      </div>
+
+      <div class="flex items-center justify-between pt-1">
+        <span class="text-[10px] text-slate-400">تماس: <strong class="text-white dir-ltr font-mono">${bid.phone}</strong></span>
+        <button type="button" onclick="sendReverseBidQuote('${bid.id}', '${bid.title}')" class="bg-gradient-to-r from-[#D4AF37] to-[#F3E5AB] hover:from-amber-400 hover:to-amber-200 text-[#0F251A] text-xs font-black px-3.5 py-1.5 rounded-xl shadow-md transition-all cursor-pointer">
+          ارسال پیش‌فاکتور اختصاصی
+        </button>
+      </div>
+    `;
+    feed.appendChild(card);
+  });
+};
+
+window.sendReverseBidQuote = function(bidId, bidTitle) {
+  openVendorInvoiceBuilderModal('مشتری مناقصه معکوس', bidTitle);
+  let bids = [];
+  try {
+    bids = JSON.parse(localStorage.getItem('aroosi_reverse_bids_db') || '[]');
+  } catch (e) { bids = []; }
+  const bid = bids.find(b => b.id === bidId);
+  if (bid) {
+    bid.quotesCount = (bid.quotesCount || 0) + 1;
+    try {
+      localStorage.setItem('aroosi_reverse_bids_db', JSON.stringify(bids));
+    } catch (e) {}
+    renderVendorReverseBids();
   }
 };
 

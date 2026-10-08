@@ -1708,10 +1708,16 @@
               <p class="text-xs text-secondary mt-1">مشاهده تمام درخواست‌های قیمت ارسالی برای تامین‌کنندگان یزد و کاتالوگ‌ها/پیشنهادهای دریافتی</p>
             </div>
 
-            <button onclick="switchTab('directory')" class="bg-primary hover:bg-emerald-900 text-white px-4 py-2 rounded-xl text-xs font-bold transition-all flex items-center gap-1.5 shadow-xs shrink-0">
-              <i data-lucide="plus" class="w-4 h-4"></i>
-              <span>استعلام از تامین‌کنندگان جدید</span>
-            </button>
+            <div class="flex items-center gap-2 flex-wrap shrink-0">
+              <button onclick="openReverseBiddingModal()" class="bg-[#D4AF37] hover:bg-amber-500 text-[#0F251A] px-4 py-2 rounded-xl text-xs font-black transition-all flex items-center gap-1.5 shadow-xs cursor-pointer">
+                <i data-lucide="gavel" class="w-4 h-4"></i>
+                <span>ثبت درخواست در میز مناقصه معکوس</span>
+              </button>
+              <button onclick="switchTab('directory')" class="bg-primary hover:bg-emerald-900 text-white px-4 py-2 rounded-xl text-xs font-bold transition-all flex items-center gap-1.5 shadow-xs cursor-pointer">
+                <i data-lucide="plus" class="w-4 h-4"></i>
+                <span>استعلام از تامین‌کنندگان جدید</span>
+              </button>
+            </div>
           </div>
 
           <div id="planner-offers-list" class="space-y-4">
@@ -2931,35 +2937,126 @@
         </div>
       </div>
 
-      <!-- TAB PANE 2: INQUIRIES & PRE-INVOICES -->
+      <!-- TAB PANE 2: INQUIRIES & PRE-INVOICES (KANBAN CRM BOARD & LIST TOGGLE) -->
       <div id="vpanel-pane-inquiries" class="hidden space-y-6">
-        <div class="bg-[#0F172A] border border-[#D4AF37]/40 rounded-3xl p-6 shadow-xl space-y-4 text-white">
-          <div class="flex flex-col sm:flex-row justify-between sm:items-center gap-3 border-b border-slate-800 pb-3">
+        <div class="bg-[#0F172A] border border-[#D4AF37]/40 rounded-3xl p-6 shadow-xl space-y-5 text-white">
+          <div class="flex flex-col sm:flex-row justify-between sm:items-center gap-3 border-b border-slate-800 pb-4">
             <div>
               <h3 class="text-base font-black text-[#D4AF37] flex items-center gap-2">
-                <i data-lucide="message-square" class="w-5 h-5 text-[#D4AF37]"></i>
-                <span>لیست استعلام‌های دریافتی و صدور پیش‌فاکتور</span>
+                <i data-lucide="kanban" class="w-5 h-5 text-[#D4AF37]"></i>
+                <span>کانبان مدیریت استعلام‌ها و لایف‌سایکل مشتریان (CRM Board)</span>
               </h3>
-              <p class="text-xs text-slate-300 mt-0.5">پاسخ‌دهی به درخواست‌های زوجین، صدور پیش‌فاکتور اقساطی و پیگیری وضعیت</p>
+              <p class="text-xs text-slate-300 mt-0.5">مدیریت مراحل استعلام، صدور پیش‌فاکتور، دریافت بیعانه و ثبت رزرو نهایی</p>
             </div>
 
             <div class="flex items-center gap-2 flex-wrap shrink-0">
-              <input type="text" id="vd-inquiry-search-input" oninput="renderVendorInquiriesTable()" placeholder="جستجو نام یا شماره..." class="bg-[#1E293B] border border-[#D4AF37]/30 text-white placeholder-slate-400 rounded-xl px-3 py-1.5 text-xs font-medium focus:outline-none focus:border-[#D4AF37]">
-              <select id="vd-inquiry-status-filter" onchange="renderVendorInquiriesTable()" class="bg-[#1E293B] border border-[#D4AF37]/30 text-white rounded-xl px-3 py-1.5 text-xs font-bold focus:outline-none focus:border-[#D4AF37] cursor-pointer">
+              <!-- View Mode Switcher -->
+              <div class="flex items-center bg-[#1E293B] border border-[#D4AF37]/30 rounded-xl p-1">
+                <button type="button" id="vpanel-view-kanban-btn" onclick="setVendorInquiryViewMode('kanban')" class="px-3 py-1 rounded-lg text-xs font-bold transition-all bg-[#D4AF37] text-[#0F251A] shadow cursor-pointer">
+                  برد کانبان
+                </button>
+                <button type="button" id="vpanel-view-list-btn" onclick="setVendorInquiryViewMode('list')" class="px-3 py-1 rounded-lg text-xs font-bold transition-all text-slate-300 hover:text-white cursor-pointer">
+                  لیست متنی
+                </button>
+              </div>
+
+              <input type="text" id="vd-inquiry-search-input" oninput="renderVendorInquiriesDynamic()" placeholder="جستجو نام یا شماره..." class="bg-[#1E293B] border border-[#D4AF37]/30 text-white placeholder-slate-400 rounded-xl px-3 py-1.5 text-xs font-medium focus:outline-none focus:border-[#D4AF37]">
+              <select id="vd-inquiry-status-filter" onchange="renderVendorInquiriesDynamic()" class="bg-[#1E293B] border border-[#D4AF37]/30 text-white rounded-xl px-3 py-1.5 text-xs font-bold focus:outline-none focus:border-[#D4AF37] cursor-pointer">
                 <option value="all" class="bg-[#0F172A] text-white">همه وضعیت‌ها</option>
-                <option value="pending" class="bg-[#0F172A] text-white">در انتظار بررسی</option>
-                <option value="replied" class="bg-[#0F172A] text-white">پاسخ داده شده</option>
+                <option value="pending" class="bg-[#0F172A] text-white">درخواست جدید</option>
+                <option value="replied" class="bg-[#0F172A] text-white">پیش‌فاکتور صادرشده</option>
+                <option value="deposit_paid" class="bg-[#0F172A] text-white">بیعانه پرداخت‌شده</option>
                 <option value="booked" class="bg-[#0F172A] text-white">رزرو نهایی</option>
-                <option value="cancelled" class="bg-[#0F172A] text-white">لغو شده</option>
               </select>
+
               <button type="button" onclick="openVendorInvoiceBuilderModal()" class="bg-gradient-to-r from-[#D4AF37] to-[#F3E5AB] text-[#0F251A] font-black px-4 py-2 rounded-xl text-xs shadow-md transition-all cursor-pointer">
                 + صدور پیش‌فاکتور جدید
               </button>
             </div>
           </div>
 
-          <div id="inquiry-list" class="space-y-3">
+          <!-- KANBAN BOARD CONTAINER -->
+          <div id="vpanel-kanban-board-container" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 pt-2">
+            <!-- 1. درخواست‌های جدید (New Inquiries) -->
+            <div class="bg-[#1E293B]/80 border border-amber-500/30 rounded-2xl p-3 flex flex-col min-h-[320px]" ondragover="handleKanbanDragOver(event)" ondrop="handleKanbanDrop(event, 'pending')">
+              <div class="flex justify-between items-center border-b border-amber-500/20 pb-2 mb-3">
+                <span class="text-xs font-black text-amber-300 flex items-center gap-1.5">
+                  <span class="w-2.5 h-2.5 rounded-full bg-amber-400 animate-pulse"></span>
+                  <span>درخواست‌های جدید</span>
+                </span>
+                <span id="kanban-cnt-pending" class="text-[11px] font-black bg-amber-500/20 text-amber-300 px-2 py-0.5 rounded-full border border-amber-500/40">۰</span>
+              </div>
+              <div id="kanban-col-pending" class="space-y-3 flex-1 overflow-y-auto max-h-[500px] custom-scrollbar p-1">
+                <!-- Cards populated via JS -->
+              </div>
+            </div>
+
+            <!-- 2. پیش‌فاکتور صادرشده (Invoices Sent / Replied) -->
+            <div class="bg-[#1E293B]/80 border border-blue-500/30 rounded-2xl p-3 flex flex-col min-h-[320px]" ondragover="handleKanbanDragOver(event)" ondrop="handleKanbanDrop(event, 'replied')">
+              <div class="flex justify-between items-center border-b border-blue-500/20 pb-2 mb-3">
+                <span class="text-xs font-black text-blue-300 flex items-center gap-1.5">
+                  <span class="w-2.5 h-2.5 rounded-full bg-blue-400"></span>
+                  <span>پیش‌فاکتور صادرشده</span>
+                </span>
+                <span id="kanban-cnt-replied" class="text-[11px] font-black bg-blue-500/20 text-blue-300 px-2 py-0.5 rounded-full border border-blue-500/40">۰</span>
+              </div>
+              <div id="kanban-col-replied" class="space-y-3 flex-1 overflow-y-auto max-h-[500px] custom-scrollbar p-1">
+                <!-- Cards populated via JS -->
+              </div>
+            </div>
+
+            <!-- 3. بیعانه پرداخت‌شده (Deposit Paid) -->
+            <div class="bg-[#1E293B]/80 border border-purple-500/30 rounded-2xl p-3 flex flex-col min-h-[320px]" ondragover="handleKanbanDragOver(event)" ondrop="handleKanbanDrop(event, 'deposit_paid')">
+              <div class="flex justify-between items-center border-b border-purple-500/20 pb-2 mb-3">
+                <span class="text-xs font-black text-purple-300 flex items-center gap-1.5">
+                  <span class="w-2.5 h-2.5 rounded-full bg-purple-400"></span>
+                  <span>بیعانه پرداخت‌شده</span>
+                </span>
+                <span id="kanban-cnt-deposit_paid" class="text-[11px] font-black bg-purple-500/20 text-purple-300 px-2 py-0.5 rounded-full border border-purple-500/40">۰</span>
+              </div>
+              <div id="kanban-col-deposit_paid" class="space-y-3 flex-1 overflow-y-auto max-h-[500px] custom-scrollbar p-1">
+                <!-- Cards populated via JS -->
+              </div>
+            </div>
+
+            <!-- 4. رزرو نهایی (Confirmed Events) -->
+            <div class="bg-[#1E293B]/80 border border-emerald-500/30 rounded-2xl p-3 flex flex-col min-h-[320px]" ondragover="handleKanbanDragOver(event)" ondrop="handleKanbanDrop(event, 'booked')">
+              <div class="flex justify-between items-center border-b border-emerald-500/20 pb-2 mb-3">
+                <span class="text-xs font-black text-emerald-300 flex items-center gap-1.5">
+                  <span class="w-2.5 h-2.5 rounded-full bg-emerald-400"></span>
+                  <span>رزرو نهایی</span>
+                </span>
+                <span id="kanban-cnt-booked" class="text-[11px] font-black bg-emerald-500/20 text-emerald-300 px-2 py-0.5 rounded-full border border-emerald-500/40">۰</span>
+              </div>
+              <div id="kanban-col-booked" class="space-y-3 flex-1 overflow-y-auto max-h-[500px] custom-scrollbar p-1">
+                <!-- Cards populated via JS -->
+              </div>
+            </div>
+          </div>
+
+          <!-- LIST VIEW CONTAINER (Hidden by default) -->
+          <div id="inquiry-list" class="space-y-3 hidden">
             <!-- Populated via JS renderVendorInquiriesTable() -->
+          </div>
+        </div>
+
+        <!-- REVERSE BIDDING / SPECIAL REQUEST BOARD (FEED FOR VENDORS) -->
+        <div class="bg-[#0F172A] border border-[#D4AF37]/40 rounded-3xl p-6 shadow-xl space-y-4 text-white text-right">
+          <div class="flex flex-col sm:flex-row justify-between sm:items-center gap-3 border-b border-slate-800 pb-3">
+            <div>
+              <h3 class="text-base font-black text-[#D4AF37] flex items-center gap-2">
+                <i data-lucide="gavel" class="w-5 h-5 text-[#D4AF37]"></i>
+                <span>میز مناقصه و درخواست‌های سفارشی زوجین (Reverse Bidding Board)</span>
+              </h3>
+              <p class="text-xs text-slate-300 mt-0.5">مشاهده بودجه و نیازمندی‌های ویژه زوج‌ها و ارسال پیشنهاد قیمت یا پیش‌فاکتور مستقیم</p>
+            </div>
+            <button type="button" onclick="renderVendorReverseBids()" class="bg-[#1E293B] border border-[#D4AF37]/30 text-xs font-bold text-[#D4AF37] px-3 py-1.5 rounded-xl hover:border-[#D4AF37] cursor-pointer">
+              بروزرسانی لیست درخواست‌ها
+            </button>
+          </div>
+
+          <div id="vendor-reverse-bids-feed" class="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <!-- Populated via JS renderVendorReverseBids() -->
           </div>
         </div>
 
@@ -7373,6 +7470,81 @@
       <div id="wizard-results-container" class="space-y-4">
         <!-- Rendered dynamically via JS -->
       </div>
+    </div>
+  </div>
+
+  <!-- REVERSE BIDDING / SPECIAL REQUEST MODAL (#modal-reverse-bidding) -->
+  <div id="modal-reverse-bidding" class="hidden fixed inset-0 bg-slate-950/80 backdrop-blur-md z-[999999] flex items-center justify-center p-4 animate-fadeIn" onclick="if(event.target === this) closeReverseBiddingModal()">
+    <div class="bg-[#0F172A] text-white border border-[#D4AF37]/60 rounded-3xl max-w-xl w-full p-6 sm:p-8 shadow-[0_20px_60px_rgba(0,0,0,0.6)] space-y-6 relative max-h-[90vh] overflow-y-auto custom-scrollbar" onclick="event.stopPropagation()">
+      <button type="button" onclick="closeReverseBiddingModal()" class="absolute top-5 left-5 text-slate-400 hover:text-white transition-colors cursor-pointer" title="بستن">
+        <i data-lucide="x" class="w-6 h-6"></i>
+      </button>
+
+      <div class="space-y-1 text-right border-b border-slate-700/80 pb-4">
+        <div class="inline-flex items-center gap-1.5 bg-[#D4AF37]/20 border border-[#D4AF37]/50 text-[#D4AF37] text-xs font-bold px-3.5 py-1 rounded-full">
+          <i data-lucide="gavel" class="w-4 h-4 text-[#D4AF37]"></i>
+          <span>مناقصه معکوس و درخواست سفارشی</span>
+        </div>
+        <h3 class="text-lg sm:text-xl font-black text-[#D4AF37]">ثبت درخواست خدمات ویژه به تامین‌کنندگان</h3>
+        <p class="text-xs text-slate-300">بودجه و شرایط اختصاصی مراسم خود را ثبت کنید تا تامین‌کنندگان تاییدشده بهترین پیشنهاد را ارسال کنند.</p>
+      </div>
+
+      <form onsubmit="handleReverseBiddingSubmit(event)" class="space-y-4 text-right">
+        <div>
+          <label class="block text-xs font-bold text-slate-300 mb-1">عنوان درخواست (مثلاً: عکاسی فرمالیته شمال یا تشریفات ۳۰۰ نفره):</label>
+          <input type="text" id="rb-title" required placeholder="عنوان کوتاه و واضح خدمات مدنظر..." class="w-full bg-[#1E293B] border border-[#D4AF37]/30 text-white placeholder-slate-400 rounded-xl px-3.5 py-2.5 text-xs font-medium focus:outline-none focus:border-[#D4AF37]">
+        </div>
+
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+          <div>
+            <label class="block text-xs font-bold text-slate-300 mb-1">دسته‌بندی اصلی خدمات:</label>
+            <select id="rb-category" required class="w-full bg-[#1E293B] border border-[#D4AF37]/30 text-white rounded-xl px-3 py-2.5 text-xs font-bold focus:outline-none focus:border-[#D4AF37] cursor-pointer">
+              <option value="تالار و باغ‌تالار" class="bg-[#0F172A]">تالار و باغ‌تالار</option>
+              <option value="عکاسی و فیلم‌برداری" class="bg-[#0F172A]">عکاسی و فیلم‌برداری</option>
+              <option value="میکاپ و سالن زیبایی" class="bg-[#0F172A]">میکاپ و سالن زیبایی</option>
+              <option value="مزون و لباس عروس" class="bg-[#0F172A]">مزون و لباس عروس</option>
+              <option value="موسیقی و دی‌جی" class="bg-[#0F172A]">موسیقی و دی‌جی</option>
+              <option value="گل‌آرایی و تشریفات" class="bg-[#0F172A]">گل‌آرایی و تشریفات</option>
+            </select>
+          </div>
+
+          <div>
+            <label class="block text-xs font-bold text-slate-300 mb-1">بودجه پیشنهادی (تومان):</label>
+            <input type="text" id="rb-budget" required placeholder="مثلاً: ۵۰,۰۰۰,۰۰۰" class="w-full bg-[#1E293B] border border-[#D4AF37]/30 text-white placeholder-slate-400 rounded-xl px-3.5 py-2.5 text-xs font-medium focus:outline-none focus:border-[#D4AF37]">
+          </div>
+        </div>
+
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+          <div>
+            <label class="block text-xs font-bold text-slate-300 mb-1">تاریخ تقریبی برگزاری:</label>
+            <input type="text" id="rb-date" placeholder="۱۴۰۳/۰۸/۱۵" class="w-full bg-[#1E293B] border border-[#D4AF37]/30 text-white placeholder-slate-400 rounded-xl px-3.5 py-2.5 text-xs font-medium focus:outline-none focus:border-[#D4AF37]">
+          </div>
+
+          <div>
+            <label class="block text-xs font-bold text-slate-300 mb-1">شهر / منطقه:</label>
+            <input type="text" id="rb-location" value="یزد" class="w-full bg-[#1E293B] border border-[#D4AF37]/30 text-white placeholder-slate-400 rounded-xl px-3.5 py-2.5 text-xs font-medium focus:outline-none focus:border-[#D4AF37]">
+          </div>
+        </div>
+
+        <div>
+          <label class="block text-xs font-bold text-slate-300 mb-1">شماره موبایل جهت دریافت پیشنهاد و پیامک:</label>
+          <input type="tel" id="rb-phone" required placeholder="۰۹۱۲۳۴۵۶۷۸۹" class="w-full bg-[#1E293B] border border-[#D4AF37]/30 text-white placeholder-slate-400 rounded-xl px-3.5 py-2.5 text-xs font-medium focus:outline-none focus:border-[#D4AF37]">
+        </div>
+
+        <div>
+          <label class="block text-xs font-bold text-slate-300 mb-1">شرح جزئیات و انتظارات ویژه:</label>
+          <textarea id="rb-details" rows="3" placeholder="توضیح کامل در مورد تعداد مهمان، پکیج مورد نیاز، سبک عکاسی یا تشریفات..." class="w-full bg-[#1E293B] border border-[#D4AF37]/30 text-white placeholder-slate-400 rounded-xl p-3 text-xs font-medium focus:outline-none focus:border-[#D4AF37]"></textarea>
+        </div>
+
+        <div class="pt-2 flex gap-2">
+          <button type="submit" class="flex-1 bg-gradient-to-r from-[#D4AF37] to-[#F3E5AB] text-[#0F251A] font-black py-3 rounded-xl text-xs shadow-lg hover:scale-[1.02] active:scale-95 transition-all cursor-pointer">
+            ثبت و انتشار درخواست در میز مناقصه
+          </button>
+          <button type="button" onclick="closeReverseBiddingModal()" class="bg-[#1E293B] text-slate-300 font-bold px-4 py-3 rounded-xl text-xs border border-slate-700 hover:text-white cursor-pointer">
+            انصراف
+          </button>
+        </div>
+      </form>
     </div>
   </div>
 
