@@ -3681,6 +3681,11 @@ if (document.readyState === "loading") {
                   <span>${isComparing ? 'در مقایسه' : 'مقایسه'}</span>
                 </button>
 
+                <button type="button" onclick="open360TourModal(${v.id})" class="px-2.5 py-1 rounded-full text-[10px] font-bold bg-[#1E293B] text-amber-200 border border-[#D4AF37]/50 backdrop-blur-md flex items-center gap-1 shadow-sm transition-all hover:scale-105 cursor-pointer" title="تور ۳۶۰ درجه">
+                  <i data-lucide="compass" class="w-3 h-3 text-[#D4AF37]"></i>
+                  <span>تور ۳۶۰°</span>
+                </button>
+
                 <div class="bg-black/60 backdrop-blur-md text-[#D4AF37] border border-[#D4AF37]/40 text-xs font-black px-2.5 py-1 rounded-full shadow-sm flex items-center gap-1">
                   <i data-lucide="star" class="w-3.5 h-3.5 fill-amber-400 text-amber-400"></i>
                   <span>${ratingVal}</span>
@@ -3742,6 +3747,11 @@ if (document.readyState === "loading") {
                     <i data-lucide="columns-2" class="w-3 h-3"></i>
                     <span>${isComparing ? 'در مقایسه' : 'مقایسه'}</span>
                   </button>
+
+                <button type="button" onclick="open360TourModal(${v.id})" class="px-2.5 py-1 rounded-full text-[10px] font-bold bg-[#1E293B] text-amber-200 border border-[#D4AF37]/50 backdrop-blur-md flex items-center gap-1 shadow-sm transition-all hover:scale-105 cursor-pointer" title="تور ۳۶۰ درجه">
+                  <i data-lucide="compass" class="w-3 h-3 text-[#D4AF37]"></i>
+                  <span>تور ۳۶۰°</span>
+                </button>
 
                   <div class="bg-black/60 backdrop-blur-md text-[#D4AF37] border border-[#D4AF37]/40 text-xs font-black px-2.5 py-1 rounded-full shadow-sm flex items-center gap-1">
                     <i data-lucide="star" class="w-3.5 h-3.5 fill-amber-400 text-amber-400"></i>
@@ -4913,6 +4923,10 @@ if (document.readyState === "loading") {
       const container = document.getElementById('checklist-timeline-container');
       if (!container) return;
 
+      if (typeof renderSmartCountdownWidget === 'function') {
+        renderSmartCountdownWidget(currentSmartChecklistPhase || 0);
+      }
+
       // Update progress & stats
       const total = staticChecklist.length;
       const completedCount = staticChecklist.filter(t => t.completed).length;
@@ -5739,6 +5753,10 @@ if (document.readyState === "loading") {
             <span class="absolute top-2.5 right-2.5 bg-black/60 text-white text-[10px] font-bold px-2.5 py-0.5 rounded-lg backdrop-blur-md">${item.tag || 'تصویر'}</span>
           </div>
         `).join('');
+      }
+
+      if (typeof renderVendorPortfolioTimeline === 'function') {
+        renderVendorPortfolioTimeline(vendor, 0);
       }
 
       // Packages
@@ -12117,6 +12135,196 @@ window.closeVendorInvoiceBuilderModal = function() {
     modal.classList.add('hidden');
     modal.classList.remove('flex');
   }
+};
+
+/* ==========================================================================
+   SMART WEDDING COUNTDOWN CHECKLIST WIDGET HANDLER
+   ========================================================================== */
+let currentSmartChecklistPhase = 0;
+
+window.renderSmartCountdownWidget = function(phaseIndex = 0) {
+  currentSmartChecklistPhase = phaseIndex;
+  const tabsContainer = document.getElementById('smart-checklist-phase-tabs');
+  const tasksContainer = document.getElementById('smart-checklist-tasks-container');
+  const milestoneBadge = document.getElementById('smart-checklist-milestone-badge');
+  if (!tabsContainer || !tasksContainer) return;
+
+  const phases = [
+    { name: "۶ ماه تا عروسی", desc: "انتخاب باغ تالار & عکاس", tasks: ["رزرو باغ تالار و کترینگ", "انتخاب آتلیه عکاسی و فیلمبرداری", "برآورد اولیه بودجه مراسم"] },
+    { name: "۳ ماه تا عروسی", desc: "لباس، آرایشگاه & سفره عقد", tasks: ["پرو و سفارش لباس عروس و داماد", "رزرو سالن زیبایی و میکاپ", "انتخاب دکوراسیون و سفره عقد"] },
+    { name: "۱ ماه تا عروسی", desc: "کارت دعوت & هماهنگی نهایی", tasks: ["طراحی و ارسال کارت دعوت دیجیتال", "هماهنگی ماشین عروس و گل‌آرایی", "نهایی‌سازی لیست مهمانان"] },
+    { name: "۱ هفته تا عروسی", desc: "تست نهایی & استراحت", tasks: ["پرو نهایی لباس عروس", "تست منوی غذا و پذیرایی", "تحویل مدارک تشریفات"] }
+  ];
+
+  const currentPhase = phases[phaseIndex] || phases[0];
+  if (milestoneBadge) milestoneBadge.innerText = currentPhase.name;
+
+  tabsContainer.innerHTML = phases.map((p, idx) => `
+    <button type="button" onclick="renderSmartCountdownWidget(${idx})" class="px-3.5 py-2 rounded-xl transition-all cursor-pointer shrink-0 ${idx === phaseIndex ? 'bg-[#D4AF37] text-[#0F251A] font-black shadow-md' : 'bg-[#1E293B]/80 text-slate-300 hover:text-white border border-[#D4AF37]/20'}">
+      <span>${p.name}</span>
+    </button>
+  `).join('');
+
+  tasksContainer.innerHTML = currentPhase.tasks.map((tsk, tIdx) => `
+    <div class="p-3 bg-[#1E293B]/90 border border-[#D4AF37]/30 rounded-xl flex items-center justify-between gap-3 text-xs font-bold text-white shadow-xs">
+      <div class="flex items-center gap-2">
+        <span class="w-5 h-5 rounded-md bg-[#D4AF37]/20 border border-[#D4AF37]/50 text-[#D4AF37] flex items-center justify-center text-[10px] shrink-0">✓</span>
+        <span>${tsk}</span>
+      </div>
+      <span class="text-[10px] text-emerald-400 bg-emerald-950/80 px-2 py-0.5 rounded-md border border-emerald-500/30 shrink-0">اولویت بالارتبه</span>
+    </div>
+  `).join('');
+
+  if (window.lucide) lucide.createIcons();
+};
+
+window.openVendorSelectModal = typeof openVendorSelectModal !== 'undefined' ? openVendorSelectModal : function(taskId) {
+  const task = (typeof staticChecklist !== 'undefined' ? staticChecklist : []).find(t => t.id === taskId);
+  if (!task) return;
+  const idEl = document.getElementById('vselect-task-id');
+  const titleEl = document.getElementById('vselect-task-title');
+  if (idEl) idEl.value = task.id;
+  if (titleEl) titleEl.innerText = `اتصال تأمین‌کننده به اقدام: ${task.title}`;
+  const modal = document.getElementById('vendor-select-modal');
+  if (modal) modal.classList.remove('hidden');
+};
+
+window.closeVendorSelectModal = typeof closeVendorSelectModal !== 'undefined' ? closeVendorSelectModal : function() {
+  const modal = document.getElementById('vendor-select-modal');
+  if (modal) modal.classList.add('hidden');
+};
+
+window.detachVendorFromTask = typeof detachVendorFromTask !== 'undefined' ? detachVendorFromTask : function(taskId) {
+  const task = (typeof staticChecklist !== 'undefined' ? staticChecklist : []).find(t => t.id === taskId);
+  if (task) {
+    task.attachedVendorId = null;
+    task.vendorStatus = null;
+    if (typeof renderChecklistTimeline === 'function') renderChecklistTimeline();
+  }
+};
+
+/* ==========================================================================
+   LIVE EVENT PORTFOLIO TIMELINE HANDLER FOR VENDOR PROFILE MODAL
+   ========================================================================== */
+window.renderVendorPortfolioTimeline = function(vendor, activeStageIndex = 0) {
+  const container = document.getElementById('vdm-portfolio-timeline');
+  if (!container) return;
+
+  const stages = [
+    { title: "۱. آماده‌سازی & گریم", time: "۱۴:۰۰ الی ۱۶:۳۰", desc: "گریم، جامه و هماهنگی نهایی تشریفات", img: "https://images.unsplash.com/photo-1519741497674-611481863552?auto=format&fit=crop&w=600&q=80" },
+    { title: "۲. مراسم عقد & سفره", time: "۱۷:۰۰ الی ۱۸:۳۰", desc: "اجرای عقد رسمی، پذیرایی چای و شیرینی سنتی", img: "https://images.unsplash.com/photo-1511285560929-80b456fea0bc?auto=format&fit=crop&w=600&q=80" },
+    { title: "۳. ورود به سالن & استقبال", time: "۱۹:۰۰ الی ۲۰:۰۰", desc: "فرش قرمز، نورپردازی VIP و ورود عروس و داماد", img: "https://images.unsplash.com/photo-1519167758481-83f550bb49b3?auto=format&fit=crop&w=600&q=80" },
+    { title: "۴. رقص تانگو & کیک", time: "۲۰:۳۰ الی ۲۱:۳۰", desc: "اجرای تانگو با مه سرد و برش کیک تشریفاتی", img: "https://images.unsplash.com/photo-1520854221256-17451cc331bf?auto=format&fit=crop&w=600&q=80" },
+    { title: "۵. آتش‌بازی & بدرقه", time: "۲۲:۰۰ الی ۲۳:۰۰", desc: "نورافشانی صحنه، آتش‌بازی سرد و بدرقه مهمانان", img: "https://images.unsplash.com/photo-1492684223066-81342ee5ff30?auto=format&fit=crop&w=600&q=80" }
+  ];
+
+  const current = stages[activeStageIndex] || stages[0];
+
+  container.innerHTML = `
+    <div class="space-y-4 text-right">
+      <div class="flex items-center justify-between border-b border-slate-800 pb-3">
+        <h4 class="text-xs sm:text-sm font-black text-[#D4AF37] flex items-center gap-2">
+          <i data-lucide="clock" class="w-4 h-4 text-[#D4AF37]"></i>
+          <span>تایم‌لاین زنده مراحل برگزاری مراسم</span>
+        </h4>
+        <span class="text-[10px] text-amber-200 bg-[#1E293B] border border-[#D4AF37]/30 px-2.5 py-0.5 rounded-full font-bold">
+          ${current.time}
+        </span>
+      </div>
+
+      <!-- Pills for selecting stage -->
+      <div class="flex items-center gap-1.5 overflow-x-auto pb-1 custom-scrollbar">
+        ${stages.map((stg, idx) => `
+          <button type="button" onclick="renderVendorPortfolioTimeline(currentModalVendor, ${idx})" class="px-3 py-1.5 rounded-xl text-[11px] font-bold shrink-0 transition-all cursor-pointer ${idx === activeStageIndex ? 'bg-[#D4AF37] text-[#0F251A] shadow-md' : 'bg-[#1E293B] text-slate-300 hover:text-white border border-slate-700'}">
+            ${stg.title}
+          </button>
+        `).join('')}
+      </div>
+
+      <!-- Stage Detail Box -->
+      <div class="p-4 bg-[#1E293B] border border-[#D4AF37]/30 rounded-2xl flex flex-col sm:flex-row items-center gap-4">
+        <img src="${current.img}" alt="${current.title}" class="w-full sm:w-44 h-28 rounded-xl object-cover border border-[#D4AF37]/40 shrink-0">
+        <div class="space-y-1.5 text-right w-full">
+          <div class="flex items-center justify-between">
+            <h5 class="text-sm font-black text-white">${current.title}</h5>
+            <span class="text-xs font-black text-[#D4AF37]">${current.time}</span>
+          </div>
+          <p class="text-xs text-slate-300 leading-relaxed">${current.desc}</p>
+          <div class="pt-1 flex items-center gap-2 text-[10px] text-emerald-400 font-bold">
+            <i data-lucide="check-circle" class="w-3.5 h-3.5"></i>
+            <span>مرحله استاندارد تاییدشده توسط تشریفات پلتفرم</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  `;
+  if (window.lucide) lucide.createIcons();
+};
+
+/* ==========================================================================
+   VIRTUAL 360 VENUE TOUR PANORAMA MODAL HANDLERS
+   ========================================================================== */
+let current360PanOffset = 0;
+
+window.open360TourModal = function(vendorId) {
+  const modal = document.getElementById('modal-360-tour');
+  const vendorObj = (typeof vendors !== 'undefined' ? vendors : []).find(v => v && v.id === vendorId) || { name: 'تالار و باغ تشریفات عروسی یزد' };
+
+  const nameEl = document.getElementById('m360-vendor-name');
+  if (nameEl) nameEl.innerText = vendorObj.name;
+
+  current360PanOffset = 0;
+  const container = document.getElementById('m360-pano-container');
+  if (container) {
+    container.style.transform = `scale(1.1) translateX(${current360PanOffset}px)`;
+  }
+
+  if (modal) {
+    modal.classList.remove('hidden');
+    modal.classList.add('flex');
+  }
+  if (window.lucide) lucide.createIcons();
+};
+
+window.close360TourModal = function() {
+  const modal = document.getElementById('modal-360-tour');
+  if (modal) {
+    modal.classList.add('hidden');
+    modal.classList.remove('flex');
+  }
+};
+
+window.rotate360Panorama = function(direction) {
+  const container = document.getElementById('m360-pano-container');
+  if (!container) return;
+  const step = direction === 'left' ? -120 : 120;
+  current360PanOffset += step;
+  if (current360PanOffset > 360) current360PanOffset = -360;
+  if (current360PanOffset < -360) current360PanOffset = 360;
+  container.style.transform = `scale(1.15) translateX(${current360PanOffset}px)`;
+};
+
+window.switch360Scene = function(sceneKey) {
+  const img = document.getElementById('m360-pano-image');
+  const scenes = {
+    main: "https://images.unsplash.com/photo-1519167758481-83f550bb49b3?auto=format&fit=crop&w=1800&q=80",
+    garden: "https://images.unsplash.com/photo-1519741497674-611481863552?auto=format&fit=crop&w=1800&q=80",
+    sofreh: "https://images.unsplash.com/photo-1511285560929-80b456fea0bc?auto=format&fit=crop&w=1800&q=80"
+  };
+  if (img && scenes[sceneKey]) {
+    img.src = scenes[sceneKey];
+  }
+
+  ['main', 'garden', 'sofreh'].forEach(s => {
+    const btn = document.getElementById(`m360-scene-btn-${s}`);
+    if (btn) {
+      if (s === sceneKey) {
+        btn.className = "px-3.5 py-1.5 rounded-xl text-xs font-bold transition-all bg-[#D4AF37] text-[#0F251A] shadow-md cursor-pointer";
+      } else {
+        btn.className = "px-3.5 py-1.5 rounded-xl text-xs font-bold transition-all text-slate-300 hover:text-white hover:bg-white/10 cursor-pointer";
+      }
+    }
+  });
 };
 
 /* ==========================================================================

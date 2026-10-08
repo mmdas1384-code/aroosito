@@ -1612,6 +1612,35 @@
             </div>
           </div>
 
+          <!-- Smart Wedding Countdown Checklist Widget -->
+          <div id="smart-countdown-checklist" class="bg-gradient-to-br from-[#0F251A] to-[#1B3B2B] text-white rounded-2xl p-5 border border-[#D4AF37]/40 shadow-xl space-y-4">
+            <div class="flex flex-col sm:flex-row justify-between sm:items-center gap-3 border-b border-white/10 pb-3">
+              <div class="flex items-center gap-2.5">
+                <div class="w-9 h-9 rounded-xl bg-[#D4AF37]/20 border border-[#D4AF37]/50 flex items-center justify-center text-[#D4AF37]">
+                  <i data-lucide="timer" class="w-5 h-5"></i>
+                </div>
+                <div>
+                  <h3 class="text-sm sm:text-base font-black text-[#D4AF37]">روزشمار هوشمند برنامه‌ریزی عروسی (Milestone Countdown)</h3>
+                  <p class="text-[11px] text-slate-300 font-medium">پایش خودکار اقدامات بر اساس فاصله‌ زمانی تا روز برگزاری مراسم</p>
+                </div>
+              </div>
+              <div class="flex items-center gap-2 bg-[#0F172A]/80 px-3 py-1.5 rounded-xl border border-[#D4AF37]/30 text-xs font-bold text-amber-200">
+                <i data-lucide="sparkles" class="w-4 h-4 text-[#D4AF37]"></i>
+                <span id="smart-checklist-milestone-badge">۶ ماه تا عروسی</span>
+              </div>
+            </div>
+
+            <!-- Countdown Phase Tabs -->
+            <div id="smart-checklist-phase-tabs" class="flex items-center gap-2 overflow-x-auto pb-1 text-xs font-bold custom-scrollbar">
+              <!-- Populated via JS renderSmartCountdownWidget() -->
+            </div>
+
+            <!-- Phase Tasks Progress Grid -->
+            <div id="smart-checklist-tasks-container" class="grid grid-cols-1 sm:grid-cols-2 gap-3 pt-1">
+              <!-- Populated via JS -->
+            </div>
+          </div>
+
           <!-- Task Timeline Render -->
           <div id="checklist-timeline-container" class="space-y-8">
             <!-- Rendered via JS -->
@@ -4962,6 +4991,82 @@
   </main>
 
   <!-- ========================================== -->
+  <!-- MODAL: VIRTUAL 360 VENUE TOUR PANORAMA     -->
+  <!-- ========================================== -->
+  <div id="modal-360-tour" class="fixed inset-0 z-[100000] hidden bg-black/90 backdrop-blur-xl flex items-center justify-center p-4 sm:p-6" onclick="if(event.target===this) close360TourModal()">
+    <div class="relative w-full max-w-5xl bg-[#0F172A] border border-[#D4AF37]/50 rounded-3xl overflow-hidden shadow-2xl text-white flex flex-col max-h-[90vh]" onclick="event.stopPropagation()">
+
+      <!-- Top Modal Bar -->
+      <div class="bg-[#1E293B] px-6 py-4 border-b border-[#D4AF37]/30 flex items-center justify-between">
+        <div class="flex items-center gap-3">
+          <div class="w-10 h-10 rounded-2xl bg-[#D4AF37]/20 border border-[#D4AF37]/50 flex items-center justify-center text-[#D4AF37]">
+            <i data-lucide="compass" class="w-5 h-5"></i>
+          </div>
+          <div>
+            <div class="flex items-center gap-2">
+              <h3 id="m360-title" class="text-base sm:text-lg font-black text-white">بازدید مجازی ۳۶۰ درجه پانوراما</h3>
+              <span class="bg-[#D4AF37]/20 text-[#D4AF37] border border-[#D4AF37]/40 text-[10px] font-bold px-2.5 py-0.5 rounded-full">360° VR Tour</span>
+            </div>
+            <p id="m360-vendor-name" class="text-xs text-amber-200 font-bold mt-0.5">تالار و باغ عروسی مشیرالممالک یزد</p>
+          </div>
+        </div>
+
+        <button type="button" onclick="close360TourModal()" class="w-9 h-9 rounded-full bg-white/10 hover:bg-white/20 text-white flex items-center justify-center transition-colors border border-white/20 cursor-pointer">
+          <i data-lucide="x" class="w-5 h-5"></i>
+        </button>
+      </div>
+
+      <!-- 360 Panorama Viewer Canvas & Controls Wrapper -->
+      <div class="relative flex-1 bg-slate-950 overflow-hidden min-h-[350px] sm:min-h-[480px] flex items-center justify-center select-none group">
+        <!-- Background Panorama Image -->
+        <div id="m360-pano-container" class="absolute inset-0 w-full h-full transition-transform duration-300 ease-out flex items-center justify-center" style="transform: scale(1.1) translateX(0px);">
+          <img id="m360-pano-image" src="https://images.unsplash.com/photo-1519167758481-83f550bb49b3?auto=format&fit=crop&w=1800&q=80" alt="360 Panorama View" class="w-full h-full object-cover">
+          <div class="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-black/30 pointer-events-none"></div>
+        </div>
+
+        <!-- Center Interactive Motion Hint Badge -->
+        <div class="absolute top-6 left-1/2 -translate-x-1/2 bg-black/70 backdrop-blur-md border border-[#D4AF37]/40 text-amber-200 px-4 py-1.5 rounded-full text-xs font-bold shadow-lg flex items-center gap-2 pointer-events-none">
+          <i data-lucide="move" class="w-4 h-4 text-[#D4AF37]"></i>
+          <span>برای چرخش زاویه دید، دکمه‌های کنترلی یا درگ را استفاده کنید</span>
+        </div>
+
+        <!-- Directional Overlay Rotation Controls -->
+        <div class="absolute inset-x-4 top-1/2 -translate-y-1/2 flex items-center justify-between pointer-events-none">
+          <button type="button" onclick="rotate360Panorama('right')" class="pointer-events-auto w-12 h-12 rounded-full bg-black/70 hover:bg-[#D4AF37] hover:text-[#0F251A] text-white border border-[#D4AF37]/50 flex items-center justify-center transition-all shadow-xl cursor-pointer hover:scale-110 active:scale-95" title="چرخش به راست">
+            <i data-lucide="chevron-right" class="w-6 h-6"></i>
+          </button>
+          <button type="button" onclick="rotate360Panorama('left')" class="pointer-events-auto w-12 h-12 rounded-full bg-black/70 hover:bg-[#D4AF37] hover:text-[#0F251A] text-white border border-[#D4AF37]/50 flex items-center justify-center transition-all shadow-xl cursor-pointer hover:scale-110 active:scale-95" title="چرخش به چپ">
+            <i data-lucide="chevron-left" class="w-6 h-6"></i>
+          </button>
+        </div>
+
+        <!-- Scene Switcher Pills Bottom Overlay -->
+        <div class="absolute bottom-4 inset-x-4 flex flex-wrap items-center justify-between gap-3 pointer-events-none">
+          <div class="pointer-events-auto flex items-center gap-2 bg-black/80 backdrop-blur-md p-1.5 rounded-2xl border border-[#D4AF37]/40 shadow-xl">
+            <button type="button" onclick="switch360Scene('main')" id="m360-scene-btn-main" class="px-3.5 py-1.5 rounded-xl text-xs font-bold transition-all bg-[#D4AF37] text-[#0F251A] shadow-md cursor-pointer">
+              سالن اصلی VIP
+            </button>
+            <button type="button" onclick="switch360Scene('garden')" id="m360-scene-btn-garden" class="px-3.5 py-1.5 rounded-xl text-xs font-bold transition-all text-slate-300 hover:text-white hover:bg-white/10 cursor-pointer">
+              فضای سبز & محوطه
+            </button>
+            <button type="button" onclick="switch360Scene('sofreh')" id="m360-scene-btn-sofreh" class="px-3.5 py-1.5 rounded-xl text-xs font-bold transition-all text-slate-300 hover:text-white hover:bg-white/10 cursor-pointer">
+              جایگاه سفره عقد
+            </button>
+          </div>
+
+          <!-- Direct Inquiry CTA inside 360 View -->
+          <div class="pointer-events-auto">
+            <button type="button" onclick="close360TourModal(); openInquireFromVendorModal()" class="bg-gradient-to-r from-[#D4AF37] to-[#F3E5AB] text-[#0F251A] font-black px-4 py-2 rounded-xl text-xs shadow-lg transition-all hover:scale-105 flex items-center gap-1.5 cursor-pointer">
+              <i data-lucide="file-plus" class="w-4 h-4 text-[#0F251A]"></i>
+              <span>درخواست پیش‌فاکتور این تالار</span>
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ========================================== -->
   <!-- MODAL: FULL COMPREHENSIVE VENDOR DETAIL    -->
   <!-- ========================================== -->
 <div id="vendor-detail-modal" class="clean-vmodal-overlay hidden" onclick="if(event.target === this) closeVendorDetailModal()">
@@ -5085,6 +5190,11 @@
               <div id="vdm-amenities-container" class="grid grid-cols-2 sm:grid-cols-3 gap-2.5">
                 <!-- Dynamically populated as rectangular mini-icon badge cards -->
               </div>
+            </div>
+
+            <!-- Live Event Portfolio Timeline -->
+            <div id="vdm-portfolio-timeline" class="bg-[#0F172A] border border-[#D4AF37]/30 rounded-2xl p-4 shadow-md space-y-3">
+              <!-- Rendered dynamically via renderVendorPortfolioTimeline() -->
             </div>
           </div>
 
