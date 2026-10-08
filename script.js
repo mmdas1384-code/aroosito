@@ -12145,6 +12145,144 @@ window.confirmPreInvoiceSignature = function() {
   if (window.lucide) lucide.createIcons();
 };
 
+/* ==========================================================================
+   VENDOR PANEL REDESIGN & STORY MANAGEMENT
+   ========================================================================== */
+let vendorStoriesList = JSON.parse(localStorage.getItem('aroosi_vendor_stories_2') || '[]');
+
+window.switchVendorPanelTab = function(tabName) {
+  const tabs = ['overview', 'inquiries', 'stories', 'calendar'];
+  tabs.forEach(t => {
+    const pane = document.getElementById(`vpanel-pane-${t}`);
+    const btn = document.getElementById(`vpanel-tab-btn-${t}`);
+    if (pane) {
+      if (t === tabName) {
+        pane.classList.remove('hidden');
+      } else {
+        pane.classList.add('hidden');
+      }
+    }
+    if (btn) {
+      if (t === tabName) {
+        btn.className = "px-4 py-2.5 rounded-2xl text-xs font-black transition-all bg-[#D4AF37] text-[#0F251A] shadow-md cursor-pointer flex items-center gap-1.5";
+      } else {
+        btn.className = "px-4 py-2.5 rounded-2xl text-xs font-bold transition-all bg-slate-800 text-slate-300 hover:text-white border border-slate-700 cursor-pointer flex items-center gap-1.5";
+      }
+    }
+  });
+
+  if (tabName === 'calendar' && typeof renderVendorDashCalendar === 'function') {
+    renderVendorDashCalendar();
+  }
+  if (tabName === 'inquiries' && typeof renderVendorInquiriesTable === 'function') {
+    renderVendorInquiriesTable();
+  }
+  if (tabName === 'stories' && typeof renderVendorStoriesList === 'function') {
+    renderVendorStoriesList();
+  }
+
+  if (window.lucide) lucide.createIcons();
+};
+
+window.handleCreateVendorStory = function(e) {
+  e.preventDefault();
+  const title = document.getElementById('vstory-title')?.value.trim();
+  const imageUrl = document.getElementById('vstory-url')?.value.trim();
+  const category = document.getElementById('vstory-category')?.value || 'کویر فرمالیته';
+
+  if (!title || !imageUrl) {
+    showToast('لطفا عنوان و آدرس تصویر/ویدیو را وارد کنید.', 'warning');
+    return;
+  }
+
+  const newStory = {
+    id: Date.now(),
+    title: title,
+    image: imageUrl,
+    category: category,
+    date: 'امروز'
+  };
+
+  vendorStoriesList.unshift(newStory);
+  try {
+    localStorage.setItem('aroosi_vendor_stories_2', JSON.stringify(vendorStoriesList));
+  } catch(err) {}
+
+  showToast('استوری/هایلایت جدید با موفقیت منتشر شد و در نوار هایلایت دایرکتوری قرار گرفت!', 'success');
+
+  document.getElementById('vstory-form')?.reset();
+  window.renderVendorStoriesList();
+};
+
+window.renderVendorStoriesList = function() {
+  const container = document.getElementById('vpanel-stories-list');
+  if (!container) return;
+
+  if (vendorStoriesList.length === 0) {
+    container.innerHTML = `<div class="p-6 text-center text-slate-400 text-xs font-bold bg-[#1E293B] rounded-2xl border border-slate-700">هنوز استوری ثبت نکرده‌اید. با فرم بالا اولین نمونه‌کار خود را منتشر کنید!</div>`;
+    return;
+  }
+
+  container.innerHTML = vendorStoriesList.map(s => `
+    <div class="p-3.5 bg-[#1E293B] border border-[#D4AF37]/30 rounded-2xl flex items-center justify-between gap-3 text-right">
+      <div class="flex items-center gap-3">
+        <img src="${s.image}" alt="${s.title}" class="w-12 h-12 rounded-xl object-cover border border-[#D4AF37]/40 shrink-0">
+        <div class="space-y-0.5">
+          <h4 class="text-xs font-black text-white">${s.title}</h4>
+          <span class="text-[10px] text-amber-200 font-bold block">${s.category} • ${s.date}</span>
+        </div>
+      </div>
+      <button type="button" onclick="deleteVendorStory(${s.id})" class="text-rose-400 hover:text-rose-200 text-xs font-bold p-1.5 rounded-lg bg-rose-950/40 border border-rose-800/40 cursor-pointer" title="حذف">
+        حذف
+      </button>
+    </div>
+  `).join('');
+};
+
+window.deleteVendorStory = function(storyId) {
+  vendorStoriesList = vendorStoriesList.filter(s => s.id !== storyId);
+  try {
+    localStorage.setItem('aroosi_vendor_stories_2', JSON.stringify(vendorStoriesList));
+  } catch(err) {}
+
+  showToast('استوری با موفقیت حذف گردید.', 'info');
+  window.renderVendorStoriesList();
+};
+
+/* ==========================================================================
+   SUPER ADMIN PANEL REDESIGN
+   ========================================================================== */
+window.switchAdminPanelTab = function(tabName) {
+  const tabs = ['vendors', 'content', 'financial'];
+  tabs.forEach(t => {
+    const pane = document.getElementById(`apanel-pane-${t}`);
+    const btn = document.getElementById(`apanel-tab-btn-${t}`);
+    if (pane) {
+      if (t === tabName) {
+        pane.classList.remove('hidden');
+      } else {
+        pane.classList.add('hidden');
+      }
+    }
+    if (btn) {
+      if (t === tabName) {
+        btn.className = "px-4 py-2.5 rounded-2xl text-xs font-black transition-all bg-[#D4AF37] text-[#0F251A] shadow-md cursor-pointer flex items-center gap-1.5";
+      } else {
+        btn.className = "px-4 py-2.5 rounded-2xl text-xs font-bold transition-all bg-slate-800 text-slate-300 hover:text-white border border-slate-700 cursor-pointer flex items-center gap-1.5";
+      }
+    }
+  });
+
+  if (tabName === 'vendors' && typeof renderAdminPendingApps === 'function') {
+    renderAdminPendingApps();
+  }
+  if (tabName === 'financial' && typeof renderAdminSubscriptionPlansTable === 'function') {
+    renderAdminSubscriptionPlansTable();
+  }
+
+  if (window.lucide) lucide.createIcons();
+};
+
 window.previewPreInvoicePrint = function() {
   const couple = document.getElementById('inv-builder-couple')?.value || 'علی و سارا';
   const phone = document.getElementById('inv-builder-phone')?.value || '۰۹۱۳۰۰۰۰۰۰۰';

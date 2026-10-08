@@ -2047,50 +2047,132 @@
     <!-- ========================================== -->
     <!-- VIEW 3: SUPER ADMIN DASHBOARD VIEW         -->
     <!-- ========================================== -->
-    <div id="tab-admin" class="tab-content hidden space-y-8">
+    <div id="tab-admin" class="tab-content hidden space-y-6">
 
       <!-- Header & System Analytics Overview KPI Cards -->
-      <div class="bg-white border border-accent rounded-3xl p-6 sm:p-8 shadow-xs space-y-6">
-        <div class="flex flex-col sm:flex-row justify-between sm:items-center gap-4 border-b border-accent pb-4">
+      <div class="bg-[#0F172A] border border-[#D4AF37]/50 rounded-3xl p-6 shadow-xl space-y-6 text-white text-right">
+        <div class="flex flex-col sm:flex-row justify-between sm:items-center gap-4 border-b border-slate-800 pb-4">
           <div>
-            <div class="inline-flex items-center gap-1.5 bg-primary/10 text-primary text-xs font-bold px-3 py-1 rounded-full mb-1">
-              <i data-lucide="shield-check" class="w-3.5 h-3.5"></i>
+            <div class="inline-flex items-center gap-1.5 bg-[#D4AF37]/20 border border-[#D4AF37]/50 text-[#D4AF37] text-xs font-bold px-3 py-1 rounded-full mb-1">
+              <i data-lucide="shield-check" class="w-3.5 h-3.5 text-[#D4AF37]"></i>
               <span>پنل اختصاصی مدیریت ارشد پلتفرم (Super Admin Dashboard)</span>
             </div>
-            <h2 class="text-2xl font-bold text-graphite">نظارت بر عملکرد استان یزد، اعتبارسنجی و تنظیمات پلتفرم</h2>
+            <h2 class="text-xl sm:text-2xl font-black text-[#D4AF37]">نظارت بر عملکرد استان یزد، اعتبارسنجی و تنظیمات پلتفرم</h2>
           </div>
-          <span class="bg-emerald-100 text-emerald-800 font-bold text-xs px-4 py-2 rounded-xl border border-emerald-200 shrink-0">
+          <span class="bg-emerald-950 text-emerald-400 font-bold text-xs px-4 py-2 rounded-xl border border-emerald-500/50 shrink-0">
             وضعیت سیستم: فعال و آنلاین
           </span>
         </div>
 
         <!-- 5 Key Operational Analytics KPI Cards -->
         <div class="grid grid-cols-2 md:grid-cols-5 gap-4">
-          <div class="bg-bgCustom border border-accent rounded-2xl p-4 space-y-1">
-            <span class="text-xs font-bold text-secondary block">کل زوجین ثبت‌شده</span>
-            <span class="text-2xl font-black text-primary">۱۵,۴۲۰</span>
-            <span class="text-[10px] text-emerald-600 font-bold block">↑ ۱۲٪ ماه اخیر</span>
+          <div class="bg-[#1E293B] border border-[#D4AF37]/30 rounded-2xl p-4 space-y-1">
+            <span class="text-xs font-bold text-slate-300 block">کل زوجین ثبت‌شده</span>
+            <span class="text-2xl font-black text-[#D4AF37]">۱۵,۴۲۰</span>
+            <span class="text-[10px] text-emerald-400 font-bold block">↑ ۱۲٪ ماه اخیر</span>
           </div>
-          <div class="bg-bgCustom border border-accent rounded-2xl p-4 space-y-1">
-            <span class="text-xs font-bold text-secondary block">تأمین‌کنندگان معتبر</span>
-            <span class="text-2xl font-black text-graphite">۱,۲40</span>
-            <span class="text-[10px] text-primary font-bold block">دارای پروانه کسب</span>
+          <div class="bg-[#1E293B] border border-[#D4AF37]/30 rounded-2xl p-4 space-y-1">
+            <span class="text-xs font-bold text-slate-300 block">تأمین‌کنندگان معتبر</span>
+            <span class="text-2xl font-black text-white">۱,۲۴۰</span>
+            <span class="text-[10px] text-amber-200 font-bold block">دارای پروانه کسب</span>
           </div>
-          <div class="bg-bgCustom border border-accent rounded-2xl p-4 space-y-1">
-            <span class="text-xs font-bold text-secondary block">درخواست‌های معلق</span>
-            <span class="text-2xl font-black text-amber-600">۱۸</span>
-            <span class="text-[10px] text-amber-700 font-bold block">نیازمند بررسی مدارک</span>
+          <div class="bg-[#1E293B] border border-[#D4AF37]/30 rounded-2xl p-4 space-y-1">
+            <span class="text-xs font-bold text-slate-300 block">درخواست‌های معلق</span>
+            <span class="text-2xl font-black text-amber-400">۱۸</span>
+            <span class="text-[10px] text-amber-200 font-bold block">نیازمند بررسی</span>
           </div>
-          <div class="bg-bgCustom border border-accent rounded-2xl p-4 space-y-1">
-            <span class="text-xs font-bold text-secondary block">پیش‌فاکتورهای صادر شده</span>
-            <span class="text-2xl font-black text-graphite">۳,۸۵۰</span>
-            <span class="text-[10px] text-emerald-600 font-bold block">در چت آنلاین</span>
+          <div class="bg-[#1E293B] border border-[#D4AF37]/30 rounded-2xl p-4 space-y-1">
+            <span class="text-xs font-bold text-slate-300 block">پیش‌فاکتورها</span>
+            <span class="text-2xl font-black text-white">۳,۸۵۰</span>
+            <span class="text-[10px] text-emerald-400 font-bold block">در چت آنلاین</span>
           </div>
-          <div class="bg-bgCustom border border-accent rounded-2xl p-4 space-y-1 col-span-2 md:col-span-1">
-            <span class="text-xs font-bold text-secondary block">حجم معاملات (GMV)</span>
-            <span class="text-xl font-black text-primary">۴۸.۵ میلیارد</span>
-            <span class="text-[10px] text-secondary font-medium block">تومان / یزد</span>
+          <div class="bg-[#1E293B] border border-[#D4AF37]/30 rounded-2xl p-4 space-y-1 col-span-2 md:col-span-1">
+            <span class="text-xs font-bold text-slate-300 block">حجم معاملات (GMV)</span>
+            <span class="text-xl font-black text-[#D4AF37]">۴۸.۵ میلیارد</span>
+            <span class="text-[10px] text-slate-300 font-medium block">تومان / یزد</span>
           </div>
+        </div>
+      </div>
+
+      <!-- ADMIN PANEL COMPACT SUB-TAB SWITCHER -->
+      <div class="bg-[#0F172A] border border-[#D4AF37]/50 rounded-3xl p-3 sm:p-4 shadow-xl flex flex-wrap items-center justify-between gap-3 text-right">
+        <div class="flex items-center gap-2 overflow-x-auto custom-scrollbar w-full sm:w-auto pb-1 sm:pb-0">
+          <button type="button" id="apanel-tab-btn-vendors" onclick="switchAdminPanelTab('vendors')" class="px-4 py-2.5 rounded-2xl text-xs font-black transition-all bg-[#D4AF37] text-[#0F251A] shadow-md cursor-pointer flex items-center gap-1.5">
+            <i data-lucide="building-2" class="w-4 h-4"></i>
+            <span>مدیریت تامین‌کنندگان</span>
+          </button>
+          <button type="button" id="apanel-tab-btn-content" onclick="switchAdminPanelTab('content')" class="px-4 py-2.5 rounded-2xl text-xs font-bold transition-all bg-slate-800 text-slate-300 hover:text-white border border-slate-700 cursor-pointer flex items-center gap-1.5">
+            <i data-lucide="play-circle" class="w-4 h-4 text-[#D4AF37]"></i>
+            <span>تایید استوری‌ها و محتوا</span>
+          </button>
+          <button type="button" id="apanel-tab-btn-financial" onclick="switchAdminPanelTab('financial')" class="px-4 py-2.5 rounded-2xl text-xs font-bold transition-all bg-slate-800 text-slate-300 hover:text-white border border-slate-700 cursor-pointer flex items-center gap-1.5">
+            <i data-lucide="receipt" class="w-4 h-4 text-[#D4AF37]"></i>
+            <span>گزارشات مالی و اشتراک‌ها</span>
+          </button>
+        </div>
+      </div>
+
+      <!-- ADMIN TAB PANE 1: VENDORS MANAGEMENT -->
+      <div id="apanel-pane-vendors" class="space-y-6">
+        <div class="bg-[#0F172A] border border-[#D4AF37]/40 rounded-3xl p-6 shadow-xl space-y-4 text-white text-right">
+          <div class="flex items-center justify-between border-b border-slate-800 pb-3">
+            <h3 class="text-base font-black text-[#D4AF37] flex items-center gap-2">
+              <i data-lucide="user-check" class="w-5 h-5 text-[#D4AF37]"></i>
+              <span>صف اعتبارسنجی و درخواست‌های ثبت‌نام تامین‌کنندگان جدید</span>
+            </h3>
+            <span class="text-xs text-amber-200 font-bold">۱۸ درخواست معلق</span>
+          </div>
+
+          <div class="overflow-x-auto">
+            <table class="w-full text-right text-xs">
+              <thead class="bg-[#1E293B] text-amber-200 border-b border-[#D4AF37]/30 font-bold">
+                <tr>
+                  <th class="p-3">نام مجموعه / کسب‌وکار</th>
+                  <th class="p-3">دسته‌بندی</th>
+                  <th class="p-3">مدیر / شماره تماس</th>
+                  <th class="p-3">تاریخ درخواست</th>
+                  <th class="p-3 text-center">اقدام اعتبارسنجی</th>
+                </tr>
+              </thead>
+              <tbody id="admin-pending-apps-table" class="divide-y divide-slate-800 font-medium text-slate-200">
+                <!-- Rendered dynamically via renderAdminPendingApps() -->
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+
+      <!-- ADMIN TAB PANE 2: CONTENT & STORIES APPROVAL -->
+      <div id="apanel-pane-content" class="hidden space-y-6">
+        <div class="bg-[#0F172A] border border-[#D4AF37]/40 rounded-3xl p-6 shadow-xl space-y-4 text-white text-right">
+          <div class="border-b border-slate-800 pb-3">
+            <h3 class="text-base font-black text-[#D4AF37] flex items-center gap-2">
+              <i data-lucide="play-circle" class="w-5 h-5 text-[#D4AF37]"></i>
+              <span>تایید استوری‌ها و نمونه‌کارهای ارسالی تامین‌کنندگان</span>
+            </h3>
+            <p class="text-xs text-slate-300 mt-1">نمونه‌کارهای ارسالی جهت نمایش در نوار استوری بالای دایرکتوری جامع</p>
+          </div>
+
+          <div class="space-y-3">
+            <div class="p-4 bg-[#1E293B] border border-[#D4AF37]/30 rounded-2xl flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3">
+              <div class="flex items-center gap-3">
+                <img src="https://images.unsplash.com/photo-1519741497674-611481863552?auto=format&fit=crop&w=200&q=80" alt="استوری" class="w-12 h-12 rounded-xl object-cover border border-[#D4AF37]/40 shrink-0">
+                <div class="space-y-0.5">
+                  <h4 class="text-xs font-black text-white">کلیپ فرمالیته کویر یزد</h4>
+                  <span class="text-[10px] text-slate-300 block">ارسال توسط: استودیو کویر • وضعیت: <strong class="text-emerald-400">تایید شده ✓</strong></span>
+                </div>
+              </div>
+              <span class="text-xs text-emerald-400 font-bold bg-emerald-950 px-3 py-1 rounded-xl border border-emerald-800">فعال در دایرکتوری</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ADMIN TAB PANE 3: FINANCIAL & SUBSCRIPTIONS -->
+      <div id="apanel-pane-financial" class="hidden space-y-6">
+        <!-- Subscription Plans CRUD Module Container -->
+        <div id="admin-subscription-plans-management">
+          <!-- Rendered dynamically -->
         </div>
       </div>
 
@@ -2691,10 +2773,201 @@
     <!-- ========================================== -->
     <!-- VIEW 4: VENDOR DASHBOARD VIEW             -->
     <!-- ========================================== -->
-    <div id="tab-vendor-dash" class="tab-content hidden space-y-8">
+    <div id="tab-vendor-dash" class="tab-content hidden space-y-6">
 
-      <!-- Dynamic Application & Verification Status Banner -->
-      <div id="vd-status-banner" class="bg-emerald-50 border border-emerald-200 rounded-3xl p-6 shadow-xs flex flex-col sm:flex-row justify-between sm:items-center gap-4">
+      <!-- VENDOR PANEL COMPACT SUB-TAB SWITCHER -->
+      <div class="bg-[#0F172A] border border-[#D4AF37]/50 rounded-3xl p-3 sm:p-4 shadow-xl flex flex-wrap items-center justify-between gap-3 text-right">
+        <div class="flex items-center gap-2 overflow-x-auto custom-scrollbar w-full sm:w-auto pb-1 sm:pb-0">
+          <button type="button" id="vpanel-tab-btn-overview" onclick="switchVendorPanelTab('overview')" class="px-4 py-2.5 rounded-2xl text-xs font-black transition-all bg-[#D4AF37] text-[#0F251A] shadow-md cursor-pointer flex items-center gap-1.5">
+            <i data-lucide="layout-dashboard" class="w-4 h-4"></i>
+            <span>داشبورد و آمار</span>
+          </button>
+          <button type="button" id="vpanel-tab-btn-inquiries" onclick="switchVendorPanelTab('inquiries')" class="px-4 py-2.5 rounded-2xl text-xs font-bold transition-all bg-slate-800 text-slate-300 hover:text-white border border-slate-700 cursor-pointer flex items-center gap-1.5">
+            <i data-lucide="message-square" class="w-4 h-4 text-[#D4AF37]"></i>
+            <span>استعلام‌ها و پیش‌فاکتورها</span>
+          </button>
+          <button type="button" id="vpanel-tab-btn-stories" onclick="switchVendorPanelTab('stories')" class="px-4 py-2.5 rounded-2xl text-xs font-bold transition-all bg-slate-800 text-slate-300 hover:text-white border border-slate-700 cursor-pointer flex items-center gap-1.5">
+            <i data-lucide="play-circle" class="w-4 h-4 text-[#D4AF37]"></i>
+            <span>مدیریت استوری و ایده‌ها</span>
+          </button>
+          <button type="button" id="vpanel-tab-btn-calendar" onclick="switchVendorPanelTab('calendar')" class="px-4 py-2.5 rounded-2xl text-xs font-bold transition-all bg-slate-800 text-slate-300 hover:text-white border border-slate-700 cursor-pointer flex items-center gap-1.5">
+            <i data-lucide="calendar" class="w-4 h-4 text-[#D4AF37]"></i>
+            <span>تقویم رزرو و خدمات</span>
+          </button>
+        </div>
+
+        <button type="button" onclick="openVendorInvoiceBuilderModal()" class="bg-gradient-to-r from-[#D4AF37] to-[#F3E5AB] hover:from-[#e5bd3c] hover:to-[#fceba7] text-[#0F251A] text-xs font-black py-2.5 px-4 rounded-2xl shadow-md transition-all flex items-center gap-1.5 cursor-pointer hover:scale-105 active:scale-95">
+          <i data-lucide="plus-circle" class="w-4 h-4 text-[#0F251A]"></i>
+          <span>صدور پیش‌فاکتور جدید</span>
+        </button>
+      </div>
+
+      <!-- TAB PANE 1: OVERVIEW & PROFILE -->
+      <div id="vpanel-pane-overview" class="space-y-6">
+        <!-- Dynamic Application & Verification Status Banner -->
+        <div id="vd-status-banner" class="bg-[#0F172A] border border-[#D4AF37]/50 rounded-3xl p-6 shadow-xl flex flex-col sm:flex-row justify-between sm:items-center gap-4 text-white">
+          <div class="flex items-center gap-3.5">
+            <div class="w-12 h-12 rounded-2xl bg-[#D4AF37] text-[#0F251A] flex items-center justify-center shrink-0 shadow-md">
+              <i data-lucide="shield-check" class="w-6 h-6"></i>
+            </div>
+            <div>
+              <span class="text-xs font-bold text-emerald-300 bg-emerald-950 px-2.5 py-0.5 rounded-md inline-block mb-1 border border-emerald-800">کسب‌وکار معتبر و تایید شده</span>
+              <h2 id="vd-header-name" class="text-xl sm:text-2xl font-black text-[#D4AF37]">استودیو و آتلیه تخصصی کویر یزد</h2>
+              <p class="text-xs text-slate-300 mt-0.5">دارای مجوز رسمی عکاسی کویر & تاییدیه رسمی کیفیت عروسی تو</p>
+            </div>
+          </div>
+
+          <div class="flex items-center gap-3 shrink-0">
+            <button onclick="toggleVendorVerificationRequestModal(true)" class="bg-[#1E293B] hover:bg-slate-700 text-amber-200 border border-[#D4AF37]/40 px-4 py-2.5 rounded-xl text-xs font-bold transition-all flex items-center gap-2 cursor-pointer shadow-sm">
+              <i data-lucide="award" class="w-4 h-4 text-[#D4AF37]"></i>
+              <span>درخواست نشان اختصاصی کویر / VIP</span>
+            </button>
+          </div>
+        </div>
+
+        <!-- ACTIVE SUBSCRIPTION COUNTDOWN WIDGET -->
+        <div id="vd-sub-countdown-widget" class="bg-gradient-to-r from-[#0F251A] to-[#1B3B2B] text-white p-4 sm:p-5 rounded-2xl border border-[#D4AF37]/40 shadow-md flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
+          <div class="flex items-center gap-3.5">
+            <div class="w-11 h-11 rounded-xl bg-[#D4AF37]/20 border border-[#D4AF37]/50 flex items-center justify-center shrink-0 shadow-sm">
+              <i data-lucide="timer" class="w-6 h-6 text-[#D4AF37]"></i>
+            </div>
+            <div class="space-y-0.5">
+              <span class="text-xs text-amber-200 font-bold block">زمان باقی‌مانده از اشتراک ویژه شما (Gold Tier)</span>
+              <div class="text-base sm:text-lg font-black text-white flex items-center gap-2">
+                <span id="vd-sub-days-counter" class="text-amber-400 font-black text-xl">۱۴۲</span>
+                <span>روز تا انقضای پلن کسب‌وکار</span>
+              </div>
+            </div>
+          </div>
+          <button type="button" onclick="openSubscriptionMatrixModal()" class="bg-[#D4AF37] hover:bg-amber-500 text-[#0F251A] px-4 py-2.5 rounded-xl text-xs font-black transition-all cursor-pointer shadow-md flex items-center gap-1.5 self-end sm:self-auto">
+            <i data-lucide="zap" class="w-4 h-4"></i>
+            <span>تمدید / ارتقاء فوری</span>
+          </button>
+        </div>
+
+        <!-- Vendor Analytics KPI Micro-Widgets Grid -->
+        <div class="grid grid-cols-2 lg:grid-cols-4 gap-4">
+          <div class="bg-[#0F172A] border border-[#D4AF37]/30 rounded-2xl p-4 text-right space-y-1 shadow-md">
+            <span class="text-xs text-slate-300 font-bold block">بازدید کل پروفایل:</span>
+            <p id="vd-kpi-views" class="text-2xl font-black text-white">۳,۸۵۰ <span class="text-xs font-normal text-slate-400">بازدید</span></p>
+          </div>
+          <div class="bg-[#0F172A] border border-[#D4AF37]/30 rounded-2xl p-4 text-right space-y-1 shadow-md">
+            <span class="text-xs text-slate-300 font-bold block">نرخ تبدیل به لید:</span>
+            <p id="vd-kpi-conversion" class="text-2xl font-black text-[#D4AF37]">۴.۲٪ <span class="text-xs font-normal text-slate-400">استعلام</span></p>
+          </div>
+          <div class="bg-[#0F172A] border border-[#D4AF37]/30 rounded-2xl p-4 text-right space-y-1 shadow-md">
+            <span class="text-xs text-slate-300 font-bold block">استعلام‌های فعال:</span>
+            <p id="vd-kpi-leads" class="text-2xl font-black text-white">۱۶۲ <span class="text-xs font-normal text-slate-400">درخواست</span></p>
+          </div>
+          <div class="bg-[#0F172A] border border-[#D4AF37]/30 rounded-2xl p-4 text-right space-y-1 shadow-md">
+            <span class="text-xs text-slate-300 font-bold block">نشان‌شده‌ها (مودبورد):</span>
+            <p class="text-2xl font-black text-white">۴۸ <span class="text-xs font-normal text-slate-400">ذخیره</span></p>
+          </div>
+        </div>
+      </div>
+
+      <!-- TAB PANE 2: INQUIRIES & PRE-INVOICES -->
+      <div id="vpanel-pane-inquiries" class="hidden space-y-6">
+        <div class="bg-[#0F172A] border border-[#D4AF37]/40 rounded-3xl p-6 shadow-xl space-y-4 text-white">
+          <div class="flex flex-col sm:flex-row justify-between sm:items-center gap-3 border-b border-slate-800 pb-3">
+            <div>
+              <h3 class="text-base font-black text-[#D4AF37] flex items-center gap-2">
+                <i data-lucide="message-square" class="w-5 h-5 text-[#D4AF37]"></i>
+                <span>لیست استعلام‌های دریافتی و صدور پیش‌فاکتور</span>
+              </h3>
+              <p class="text-xs text-slate-300 mt-0.5">پاسخ‌دهی به درخواست‌های زوجین، صدور پیش‌فاکتور اقساطی و پیگیری وضعیت</p>
+            </div>
+            <button type="button" onclick="openVendorInvoiceBuilderModal()" class="bg-gradient-to-r from-[#D4AF37] to-[#F3E5AB] text-[#0F251A] font-black px-4 py-2 rounded-xl text-xs shadow-md transition-all cursor-pointer">
+              + صدور پیش‌فاکتور جدید
+            </button>
+          </div>
+
+          <div class="space-y-3">
+            <div class="p-4 bg-[#1E293B] border border-[#D4AF37]/30 rounded-2xl flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3">
+              <div class="space-y-1 text-right">
+                <h4 class="text-xs font-black text-white">علی & سارا (استعلام پکیج فرمالیته)</h4>
+                <p class="text-xs text-slate-300">تاریخ برگزاری: ۱۵ مهر ۱۴۰۳ • بودجه مد نظر: ۷۰ تا ۱۲۰ میلیون تومان</p>
+              </div>
+              <div class="flex items-center gap-2">
+                <button type="button" onclick="openVendorInvoiceBuilderModal('علی و سارا', 'پکیج فرمالیته کویر')" class="bg-[#D4AF37] text-[#0F251A] font-black px-3.5 py-1.5 rounded-xl text-xs cursor-pointer shadow-sm">
+                  صدور پیش‌فاکتور
+                </button>
+                <button type="button" onclick="switchTab('messages')" class="bg-slate-800 text-slate-200 hover:text-white px-3 py-1.5 rounded-xl text-xs border border-slate-700 cursor-pointer">
+                  چت مستقیم
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- TAB PANE 3: STORIES & HIGHLIGHTS CREATOR -->
+      <div id="vpanel-pane-stories" class="hidden space-y-6">
+        <div class="bg-[#0F172A] border border-[#D4AF37]/40 rounded-3xl p-6 shadow-xl space-y-5 text-white">
+          <div class="border-b border-slate-800 pb-3 text-right">
+            <h3 class="text-base font-black text-[#D4AF37] flex items-center gap-2">
+              <i data-lucide="play-circle" class="w-5 h-5 text-[#D4AF37]"></i>
+              <span>انتشار استوری و نمونه‌کار جدید در نوار هایلایت دایرکتوری</span>
+            </h3>
+            <p class="text-xs text-slate-300 mt-1">ویدیو و عکس‌های نمونه کار واقعی خود را منتشر کنید تا در بالای دایرکتوری به ۱۵,۰۰۰+ زوج یزدی نمایش داده شود.</p>
+          </div>
+
+          <!-- New Story Upload Form -->
+          <form id="vstory-form" onsubmit="handleCreateVendorStory(event)" class="space-y-4 text-right text-xs font-bold">
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+              <div>
+                <label class="block text-slate-200 mb-1.5">عنوان استوری / نمونه‌کار *</label>
+                <input type="text" required id="vstory-title" placeholder="مثلاً: کلیپ فرمالیته غروب کویر یزد" class="w-full bg-[#1E293B] border border-[#D4AF37]/30 text-white placeholder-slate-400 rounded-xl p-2.5 text-xs font-bold focus:outline-none focus:border-[#D4AF37]">
+              </div>
+              <div>
+                <label class="block text-slate-200 mb-1.5">دسته‌بندی نمونه‌کار *</label>
+                <select id="vstory-category" class="w-full bg-[#1E293B] border border-[#D4AF37]/30 text-white rounded-xl p-2.5 text-xs font-bold focus:outline-none focus:border-[#D4AF37]">
+                  <option value="کویر فرمالیته" class="bg-[#0F172A] text-white">کویر فرمالیته</option>
+                  <option value="سالن میکاپ VIP" class="bg-[#0F172A] text-white">سالن میکاپ VIP</option>
+                  <option value="باغ‌تالار و تشریفات" class="bg-[#0F172A] text-white">باغ‌تالار و تشریفات</option>
+                  <option value="مزون و لباس عروس" class="bg-[#0F172A] text-white">مزون و لباس عروس</option>
+                  <option value="سفره عقد سنتی" class="bg-[#0F172A] text-white">سفره عقد سنتی</option>
+                </select>
+              </div>
+            </div>
+
+            <div>
+              <label class="block text-slate-200 mb-1.5">آدرس تصویر یا پوستر نمونه کار (Image / Cover URL) *</label>
+              <input type="url" required id="vstory-url" value="https://images.unsplash.com/photo-1519741497674-611481863552?auto=format&fit=crop&w=800&q=80" class="w-full bg-[#1E293B] border border-[#D4AF37]/30 text-white placeholder-slate-400 rounded-xl p-2.5 text-xs font-bold focus:outline-none focus:border-[#D4AF37] dir-ltr">
+            </div>
+
+            <button type="submit" class="bg-gradient-to-r from-[#D4AF37] to-[#F3E5AB] text-[#0F251A] font-black py-3 px-6 rounded-2xl text-xs shadow-md transition-all hover:scale-105 active:scale-95 cursor-pointer">
+              🚀 انتشار فوری استوری در دایرکتوری
+            </button>
+          </form>
+
+          <!-- Published Stories List -->
+          <div class="space-y-3 pt-3 border-t border-slate-800">
+            <h4 class="text-xs font-black text-white text-right">استوری‌ها و نمونه‌کارهای فعال شما:</h4>
+            <div id="vpanel-stories-list" class="space-y-2">
+              <!-- Rendered via JS -->
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- TAB PANE 4: CALENDAR & SERVICES -->
+      <div id="vpanel-pane-calendar" class="hidden space-y-6">
+        <div class="bg-[#0F172A] border border-[#D4AF37]/40 rounded-3xl p-6 shadow-xl space-y-5 text-white text-right">
+          <div class="border-b border-slate-800 pb-3">
+            <h3 class="text-base font-black text-[#D4AF37] flex items-center gap-2">
+              <i data-lucide="calendar" class="w-5 h-5 text-[#D4AF37]"></i>
+              <span>مدیریت تقویم رزرو و روزهای پر/تعطیل</span>
+            </h3>
+            <p class="text-xs text-slate-300 mt-1">با کلیک روی روزهای ماه، تاریخ‌های پر شده را بسته‌بندی کنید تا مشتریان هنگام استعلام از وضعیت مطلع شوند.</p>
+          </div>
+
+          <!-- Calendar Grid -->
+          <div id="calendar-grid" class="grid grid-cols-7 gap-2">
+            <!-- Rendered via JS renderVendorDashCalendar() -->
+          </div>
+        </div>
+      </div>
         <div class="flex items-center gap-3.5">
           <div class="w-12 h-12 rounded-2xl bg-primary text-white flex items-center justify-center shrink-0 shadow-sm">
             <i data-lucide="shield-check" class="w-6 h-6"></i>
