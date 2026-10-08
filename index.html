@@ -1799,6 +1799,41 @@
             </div>
           </div>
         </div>
+
+        <!-- Vendor Traffic Leaderboard Table -->
+        <div class="bg-[#0F172A] border border-[#D4AF37]/40 rounded-3xl p-6 shadow-xl space-y-3 text-white text-right">
+          <h4 class="text-xs font-bold text-[#D4AF37] flex items-center gap-1.5">
+            <i data-lucide="trending-up" class="w-4 h-4 text-[#D4AF37]"></i>
+            <span>تامین‌کنندگان پربازدید پلتفرم (Vendor Traffic Leaderboard)</span>
+          </h4>
+          <div class="overflow-x-auto rounded-2xl border border-[#D4AF37]/30">
+            <table class="w-full text-right text-xs">
+              <thead class="bg-[#1E293B] text-amber-200 font-bold border-b border-[#D4AF37]/30">
+                <tr>
+                  <th class="p-3">نام تامین‌کننده</th>
+                  <th class="p-3">دسته‌بندی</th>
+                  <th class="p-3">تعداد بازدید</th>
+                  <th class="p-3">تعداد استعلام</th>
+                  <th class="p-3">نرخ تبدیل</th>
+                </tr>
+              </thead>
+              <tbody id="admin-vendor-traffic-table" class="divide-y divide-slate-800 font-medium text-slate-200">
+                <!-- Dynamically populated via JS -->
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <!-- Real-time System Audit Logs -->
+        <div class="bg-[#0F172A] border border-[#D4AF37]/40 rounded-3xl p-6 shadow-xl space-y-3 text-white text-right">
+          <h4 class="text-xs font-bold text-[#D4AF37] flex items-center gap-1.5">
+            <i data-lucide="activity" class="w-4 h-4 text-[#D4AF37]"></i>
+            <span>لاگ فعالیت‌ها و وقایع زنده سیستم (System Audit Trail)</span>
+          </h4>
+          <div id="admin-system-logs-container" class="bg-slate-950 text-slate-200 rounded-2xl p-4 font-mono text-[11px] space-y-2 max-h-48 overflow-y-auto custom-scrollbar dir-ltr text-left border border-slate-800">
+            <!-- Dynamically populated -->
+          </div>
+        </div>
       </div>
 
       <!-- TAB PANE 5: ARTICLES & IDEAS CREATOR -->
@@ -2240,6 +2275,151 @@
             </div>
           </div>
         </div>
+
+        <!-- Extended Platform Analytics & Vendor Traffic Metrics Panel -->
+        <div class="bg-white border border-accent rounded-3xl p-6 shadow-xs space-y-6">
+          <div class="flex flex-col sm:flex-row justify-between sm:items-center gap-4 border-b border-accent pb-4">
+            <div>
+              <h3 class="text-lg font-bold text-graphite flex items-center gap-2">
+                <i data-lucide="bar-chart-2" class="w-5 h-5 text-primary"></i>
+                <span>آمار ترافیک پلتفرم و گزارش تحلیل بازدید تامین‌کنندگان (Traffic & Conversion Metrics)</span>
+              </h3>
+              <p class="text-xs text-secondary mt-0.5">پایش آنلاین کل بازدیدهای پلتفرم، تفکیک بازدید صفحات اختصاصی و نرخ تبدیل استعلام‌ها</p>
+            </div>
+            <div class="flex items-center gap-2">
+              <span class="bg-emerald-50 text-emerald-700 border border-emerald-200 px-3 py-1 rounded-xl text-xs font-bold">
+                نرخ تبدیل کلی: ۱۸.۴٪
+              </span>
+            </div>
+          </div>
+
+          <!-- Metrics Grid -->
+          <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+            <div class="bg-slate-50 border border-accent rounded-2xl p-4 space-y-1">
+              <span class="text-xs text-secondary font-bold">کل بازدیدهای یکتای پلتفرم</span>
+              <p id="admin-analytics-total-views" class="text-2xl font-black text-graphite">۱۲۸,۴۵۰</p>
+              <span class="text-[10px] text-emerald-600 font-bold block">↑ ۱۴.۲٪ رشد نسبت به ماه گذشته</span>
+            </div>
+            <div class="bg-slate-50 border border-accent rounded-2xl p-4 space-y-1">
+              <span class="text-xs text-secondary font-bold">تعداد بازدید صفحات تامین‌کنندگان</span>
+              <p id="admin-analytics-vendor-views" class="text-2xl font-black text-graphite">۶۴,۲۰۰</p>
+              <span class="text-[10px] text-primary font-bold block">میانگین ۴۳۰ بازدید به ازای هر تامین‌کننده</span>
+            </div>
+            <div class="bg-slate-50 border border-accent rounded-2xl p-4 space-y-1">
+              <span class="text-xs text-secondary font-bold">تعداد کل لیدهای خروجی (Inquiries)</span>
+              <p id="admin-analytics-leads-count" class="text-2xl font-black text-graphite">۳,۸۲۰</p>
+              <span class="text-[10px] text-emerald-600 font-bold block">موفقیت ثبت پیش‌فاکتور: ۴۲٪</span>
+            </div>
+          </div>
+
+          <!-- Vendor Traffic Leaderboard Table -->
+          <div class="space-y-3">
+            <h4 class="text-xs font-bold text-graphite flex items-center gap-1.5">
+              <i data-lucide="trending-up" class="w-4 h-4 text-primary"></i>
+              <span>تامین‌کنندگان پربازدید پلتفرم (Vendor Traffic Leaderboard)</span>
+            </h4>
+            <div class="overflow-x-auto rounded-2xl border border-accent/80">
+              <table class="w-full text-right text-xs">
+                <thead class="bg-bgCustom text-graphite font-bold border-b border-accent/80">
+                  <tr>
+                    <th class="p-3">نام تامین‌کننده</th>
+                    <th class="p-3">دسته‌بندی</th>
+                    <th class="p-3">تعداد بازدید</th>
+                    <th class="p-3">تعداد استعلام</th>
+                    <th class="p-3">نرخ تبدیل</th>
+                  </tr>
+                </thead>
+                <tbody id="admin-vendor-traffic-table" class="divide-y divide-accent/60 font-medium">
+                  <!-- Dynamically populated via JS -->
+                </tbody>
+              </table>
+            </div>
+          </div>
+
+          <!-- Real-time System Audit Logs -->
+          <div class="space-y-3 border-t border-accent/60 pt-4">
+            <h4 class="text-xs font-bold text-graphite flex items-center gap-1.5">
+              <i data-lucide="activity" class="w-4 h-4 text-primary"></i>
+              <span>لاگ فعالیت‌ها و وقایع زنده سیستم (System Audit Trail)</span>
+            </h4>
+            <div id="admin-system-logs-container" class="bg-slate-900 text-slate-200 rounded-2xl p-4 font-mono text-[11px] space-y-2 max-h-48 overflow-y-auto custom-scrollbar dir-ltr text-left">
+              <!-- Dynamically populated -->
+            </div>
+          </div>
+        </div>
+
+        <!-- Dynamic Subscription & Membership Revenue Logs Section -->
+        <div class="bg-white border border-accent rounded-3xl p-6 shadow-xs space-y-4">
+          <div class="flex justify-between items-center border-b border-accent pb-3">
+            <h3 class="text-lg font-bold text-graphite flex items-center gap-2">
+              <i data-lucide="award" class="w-5 h-5 text-primary"></i>
+              <span>گزارش درآمد حاصل از اشتراک تامین‌کنندگان یزد (Subscription & Membership Revenue Logs)</span>
+            </h3>
+            <span class="bg-emerald-50 text-emerald-800 text-xs font-bold px-3 py-1 rounded-full border border-emerald-200">مدل حق اشتراک ثابت (۰٪ کمیسیون)</span>
+          </div>
+
+          <div class="grid grid-cols-1 md:grid-cols-3 gap-4 text-xs">
+            <div class="bg-bgCustom border border-accent rounded-2xl p-4 space-y-1">
+              <span class="text-secondary font-bold">تعداد کل اشتراک‌های فعال:</span>
+              <span class="block text-xl font-black text-graphite">۱۲۸ تامین‌کننده</span>
+            </div>
+
+            <div class="bg-bgCustom border border-accent rounded-2xl p-4 space-y-1">
+              <span class="text-secondary font-bold">درآمد کل حاصل از اشتراک‌ها (سالانه):</span>
+              <span class="block text-xl font-black text-primary">۱,۴۵۰,۰۰۰,۰۰۰ تومان</span>
+            </div>
+
+            <div class="bg-bgCustom border border-accent rounded-2xl p-4 space-y-1">
+              <span class="text-secondary font-bold">اشتراک‌های در آستانه انقضا (۳۰ روز):</span>
+              <span class="block text-xl font-black text-amber-700">۱۴ تامین‌کننده</span>
+            </div>
+          </div>
+
+          <div class="space-y-3 pt-2">
+            <h4 class="text-xs font-bold text-graphite">تفکیک درآمد و توزیع پلن‌های اشتراک فعال (Subscription Tiers):</h4>
+            <div id="admin-revenue-breakdown" class="space-y-2.5 text-xs font-bold">
+              <div class="space-y-1">
+                <div class="flex justify-between text-graphite">
+                  <span>پلن طلایی / Gold Tier (۵۵٪) — ۷۰ تامین‌کننده</span>
+                  <span>۷۹۷,۵۰۰,۰۰۰ تومان</span>
+                </div>
+                <div class="w-full bg-slate-100 h-2 rounded-full overflow-hidden">
+                  <div class="bg-primary h-full rounded-full" style="width: 55%;"></div>
+                </div>
+              </div>
+
+              <div class="space-y-1">
+                <div class="flex justify-between text-graphite">
+                  <span>پلن VIP کویر / VIP Tier (۲۵٪) — ۳۲ تامین‌کننده</span>
+                  <span>۵۰۷,۵۰۰,۰۰۰ تومان</span>
+                </div>
+                <div class="w-full bg-slate-100 h-2 rounded-full overflow-hidden">
+                  <div class="bg-amber-500 h-full rounded-full" style="width: 25%;"></div>
+                </div>
+              </div>
+
+              <div class="space-y-1">
+                <div class="flex justify-between text-graphite">
+                  <span>پلن نقره‌ای / Silver Tier (۱۵٪) — ۱۹ تامین‌کننده</span>
+                  <span>۱۱۵,۰۰۰,۰۰۰ تومان</span>
+                </div>
+                <div class="w-full bg-slate-100 h-2 rounded-full overflow-hidden">
+                  <div class="bg-emerald-600 h-full rounded-full" style="width: 15%;"></div>
+                </div>
+              </div>
+
+              <div class="space-y-1">
+                <div class="flex justify-between text-graphite">
+                  <span>پلن برنز / Bronze Tier (۵٪) — ۷ تامین‌کننده</span>
+                  <span>۳۰,۰۰۰,۰۰۰ تومان</span>
+                </div>
+                <div class="w-full bg-slate-100 h-2 rounded-full overflow-hidden">
+                  <div class="bg-slate-400 h-full rounded-full" style="width: 5%;"></div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
 
       <!-- ADMIN TAB PANE 2: VENDORS MANAGEMENT -->
@@ -2266,6 +2446,60 @@
               </thead>
               <tbody id="admin-pending-apps-table" class="divide-y divide-slate-800 font-medium text-slate-200">
                 <!-- Rendered dynamically via renderAdminPendingApps() -->
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <!-- Vendor Verification Badge Management Table -->
+        <div class="bg-white border border-accent rounded-3xl p-6 shadow-xs space-y-4">
+          <div class="flex justify-between items-center border-b border-accent pb-3">
+            <h3 class="text-lg font-bold text-graphite">لیست کامل تامین‌کنندگان و اعطای "تاییدیه رسمی اعتبار"</h3>
+          </div>
+
+          <div class="overflow-x-auto">
+            <table class="w-full text-right text-xs">
+              <thead class="bg-bgCustom text-secondary border-b border-accent font-bold">
+                <tr>
+                  <th class="p-3">نام برند</th>
+                  <th class="p-3">دسته‌بندی</th>
+                  <th class="p-3">تلفن همراه</th>
+                  <th class="p-3">وضعیت تاییدیه رسمی</th>
+                  <th class="p-3 text-center">تغییر نشان</th>
+                </tr>
+              </thead>
+              <tbody id="admin-vendor-table" class="divide-y divide-accent/60 font-medium">
+                <!-- Populated via JS -->
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <!-- User Accounts & Registered Couples Directory -->
+        <div class="bg-white border border-accent rounded-3xl p-6 shadow-xs space-y-6">
+          <div class="flex flex-col sm:flex-row justify-between sm:items-center gap-4 border-b border-accent pb-4">
+            <div>
+              <h3 class="text-lg font-bold text-graphite flex items-center gap-2">
+                <i data-lucide="users" class="w-5 h-5 text-primary"></i>
+                <span>مدیریت حساب‌های کاربری زوجین و دسترسی کاربران (User Accounts & Access)</span>
+              </h3>
+              <p class="text-xs text-secondary mt-0.5">مشاهده لیست زوجین عضو پلتفرم، وضعیت فعالیت و مدیریت مسدودی حساب‌ها</p>
+            </div>
+          </div>
+
+          <div class="overflow-x-auto rounded-2xl border border-accent/80">
+            <table class="w-full text-right text-xs">
+              <thead class="bg-bgCustom text-graphite font-bold border-b border-accent/80">
+                <tr>
+                  <th class="p-3">نام و نام خانوادگی</th>
+                  <th class="p-3">شماره همراه</th>
+                  <th class="p-3">تاریخ ازدواج ثبت‌شده</th>
+                  <th class="p-3">وضعیت حساب</th>
+                  <th class="p-3 text-center">تغییر وضعیت دسترسی</th>
+                </tr>
+              </thead>
+              <tbody id="admin-user-accounts-table" class="divide-y divide-accent/60 font-medium">
+                <!-- Dynamically populated via JS -->
               </tbody>
             </table>
           </div>
@@ -2304,525 +2538,230 @@
 
       <!-- ADMIN TAB PANE 4: SUBSCRIPTION PLANS MANAGEMENT -->
       <div id="apanel-pane-subscriptions" class="hidden space-y-6">
-        <div id="admin-subscription-plans-management">
-          <!-- Rendered dynamically -->
+        <!-- Admin Subscription Plans Management Module -->
+        <div id="admin-subscription-plans-management" class="bg-white border border-accent rounded-3xl p-6 shadow-xs space-y-6">
+          <div class="flex flex-col sm:flex-row justify-between sm:items-center gap-4 border-b border-accent pb-4">
+            <div>
+              <h3 class="text-lg font-bold text-graphite flex items-center gap-2">
+                <i data-lucide="crown" class="w-5 h-5 text-primary"></i>
+                <span>مدیریت پلن‌های اشتراک تامین‌کنندگان (Subscription Plans CRUD)</span>
+              </h3>
+              <p class="text-xs text-secondary mt-0.5">تعریف، ویرایش، بروزرسانی قیمت، مدت اعتبار و ویژگی‌های سطوح اشتراک کسب‌وکارها (مدل ۰٪ کمیسیون)</p>
+            </div>
+            <button onclick="openAdminSubPlanModal()" class="bg-primary hover:bg-emerald-900 text-white font-bold px-4 py-2.5 rounded-xl text-xs transition-all shadow-xs flex items-center gap-2 cursor-pointer shrink-0">
+              <i data-lucide="plus-circle" class="w-4 h-4"></i>
+              <span>افزودن پلن اشتراک جدید</span>
+            </button>
+          </div>
+
+          <div class="overflow-x-auto rounded-2xl border border-accent/80">
+            <table class="w-full text-right text-xs">
+              <thead class="bg-bgCustom text-graphite font-bold border-b border-accent/80">
+                <tr>
+                  <th class="p-3">عنوان پلن</th>
+                  <th class="p-3">مدت اعتبار</th>
+                  <th class="p-3">قیمت (تومان)</th>
+                  <th class="p-3">نشان / بج</th>
+                  <th class="p-3">امکانات اصلی</th>
+                  <th class="p-3 text-center">عملیات</th>
+                </tr>
+              </thead>
+              <tbody id="admin-sub-plans-table-body" class="divide-y divide-accent/60 font-medium">
+                <!-- Dynamically populated via renderAdminSubscriptionPlansTable() -->
+              </tbody>
+            </table>
+          </div>
         </div>
       </div>
 
       <!-- ADMIN TAB PANE 5: REVIEWS MODERATION -->
       <div id="apanel-pane-reviews" class="hidden space-y-6">
-        <div class="bg-[#0F172A] border border-[#D4AF37]/40 rounded-3xl p-6 shadow-xl space-y-4 text-white text-right">
-          <h3 class="text-base font-black text-[#D4AF37] flex items-center gap-2">
-            <i data-lucide="star" class="w-5 h-5 text-[#D4AF37]"></i>
-            <span>مدیریت و نظارت بر نظرات زوجین (Review Moderation)</span>
-          </h3>
-          <p class="text-xs text-slate-300">بررسی کیفیت نظرات ثبت‌شده و اعطای نشان تاییدیه «زوج واقعی».</p>
+        <!-- Review Moderation Queue & Verified Couple Badges Panel -->
+        <div class="bg-white border border-accent rounded-3xl p-6 shadow-xs space-y-6">
+          <div class="flex flex-col sm:flex-row justify-between sm:items-center gap-4 border-b border-accent pb-4">
+            <div>
+              <h3 class="text-lg font-bold text-graphite flex items-center gap-2">
+                <i data-lucide="star" class="w-5 h-5 text-primary"></i>
+                <span>مدیریت و نظرات کاربران و اعطای نشان "زوج تاییدشده" (Reviews Moderation)</span>
+              </h3>
+              <p class="text-xs text-secondary mt-0.5">تایید نظرات ثبت‌شده توسط زوجین، اعطای نشان زوج تاییدشده و نظارت بر امتیازات تامین‌کنندگان</p>
+            </div>
+            <span class="bg-primary/10 text-primary border border-primary/20 px-3 py-1 rounded-xl text-xs font-bold">
+              در انتظار بررسی: ۲ دیدگاه
+            </span>
+          </div>
+
+          <div class="overflow-x-auto rounded-2xl border border-accent/80">
+            <table class="w-full text-right text-xs">
+              <thead class="bg-bgCustom text-graphite font-bold border-b border-accent/80">
+                <tr>
+                  <th class="p-3">نام کاربر / زوج</th>
+                  <th class="p-3">تامین‌کننده مربوطه</th>
+                  <th class="p-3">امتیاز & متن دیدگاه</th>
+                  <th class="p-3">نشان زوج تاییدشده</th>
+                  <th class="p-3">وضعیت انتشار</th>
+                  <th class="p-3 text-center">عملیات مدیریت</th>
+                </tr>
+              </thead>
+              <tbody id="admin-reviews-moderation-table" class="divide-y divide-accent/60 font-medium">
+                <!-- Dynamically populated via JS -->
+              </tbody>
+            </table>
+          </div>
         </div>
       </div>
 
       <!-- ADMIN TAB PANE 6: GENERAL SETTINGS -->
       <div id="apanel-pane-settings" class="hidden space-y-6">
-        <div class="bg-[#0F172A] border border-[#D4AF37]/40 rounded-3xl p-6 shadow-xl space-y-4 text-white text-right">
-          <h3 class="text-base font-black text-[#D4AF37] flex items-center gap-2">
-            <i data-lucide="settings" class="w-5 h-5 text-[#D4AF37]"></i>
-            <span>تنظیمات عمومی پلتفرم، دسته‌بندی‌ها و بنرهای هیرو</span>
-          </h3>
-          <p class="text-xs text-slate-300">مدیریت دسته‌بندی‌های اصلی، زیرگروه‌ها و بنرهای تبلیغاتی صفحه اصلی.</p>
-        </div>
-      </div>
-
-      <!-- Extended Platform Analytics & Vendor Traffic Metrics Panel -->
-      <div class="bg-white border border-accent rounded-3xl p-6 shadow-xs space-y-6">
-        <div class="flex flex-col sm:flex-row justify-between sm:items-center gap-4 border-b border-accent pb-4">
-          <div>
-            <h3 class="text-lg font-bold text-graphite flex items-center gap-2">
-              <i data-lucide="bar-chart-2" class="w-5 h-5 text-primary"></i>
-              <span>آمار ترافیک پلتفرم و گزارش تحلیل بازدید تامین‌کنندگان (Traffic & Conversion Metrics)</span>
+        <!-- Platform Settings & Site Branding Panel -->
+        <div class="bg-white border border-accent rounded-3xl p-6 shadow-xs space-y-4">
+          <div class="border-b border-accent pb-3 flex items-center justify-between">
+            <h3 class="text-base font-bold text-graphite flex items-center gap-2">
+              <i data-lucide="settings" class="w-5 h-5 text-primary"></i>
+              <span>تنظیمات عمومی پلتفرم و بنرهای اطلاع‌رسانی (Platform Settings)</span>
             </h3>
-            <p class="text-xs text-secondary mt-0.5">پایش آنلاین کل بازدیدهای پلتفرم، تفکیک بازدید صفحات اختصاصی و نرخ تبدیل استعلام‌ها</p>
           </div>
-          <div class="flex items-center gap-2">
-            <span class="bg-emerald-50 text-emerald-700 border border-emerald-200 px-3 py-1 rounded-xl text-xs font-bold">
-              نرخ تبدیل کلی: ۱۸.۴٪
+
+          <div class="grid grid-cols-1 md:grid-cols-3 gap-4 text-xs font-bold text-graphite">
+            <div class="space-y-1.5">
+              <label class="block">آدرس لوگوی اصلی پلتفرم (Site Hero Logo):</label>
+              <div class="flex gap-2">
+                <input id="admin-hero-logo-url-input" type="text" value="https://images.unsplash.com/photo-1519167758481-83f550bb49b3?auto=format&fit=crop&w=600&q=80" class="w-full bg-slate-50 border border-accent rounded-xl px-3 py-2 text-xs font-medium focus:outline-none focus:border-primary dir-ltr">
+                <button onclick="handleUpdateHeroLogo()" class="bg-primary hover:bg-emerald-900 text-white px-3 py-2 rounded-xl text-xs font-bold transition-all shrink-0">ذخیره</button>
+              </div>
+            </div>
+
+            <div class="space-y-1.5">
+              <label class="block">نرخ اشتراک پایه ماهانه تامین‌کنندگان (تومان):</label>
+              <div class="flex gap-2">
+                <input type="text" id="admin-subscription-base" value="۲,۵۰۰,۰۰۰" class="w-full bg-slate-50 border border-accent rounded-xl px-3 py-2 text-xs font-medium focus:outline-none focus:border-primary">
+                <button onclick="showToast('تعرفه اشتراک پلتفرم با موفقیت بروزرسانی شد', 'success')" class="bg-primary hover:bg-emerald-900 text-white px-3 py-2 rounded-xl text-xs font-bold transition-all shrink-0">ثبت</button>
+              </div>
+            </div>
+
+            <div class="space-y-1.5">
+              <label class="block">متن بنر اطلاعیه عمومی بالای سایت:</label>
+              <div class="flex gap-2">
+                <input type="text" id="admin-banner-text" value="جشنواره تخفیف‌های ویژه خدمات عروسی استان یزد - پاییز ۱۴۰۳" class="w-full bg-slate-50 border border-accent rounded-xl px-3 py-2 text-xs font-medium focus:outline-none focus:border-primary">
+                <button onclick="handleSaveShowcaseConfig()" class="bg-primary hover:bg-emerald-900 text-white px-3 py-2 rounded-xl text-xs font-bold transition-all shrink-0">انتشار</button>
+              </div>
+            </div>
+          </div>
+
+          <!-- Showcase Headlines & Promo Blocks Editor -->
+          <div class="border-t border-accent/60 pt-4 space-y-3">
+            <h4 class="text-xs font-black text-primary flex items-center gap-1.5">
+              <i data-lucide="type" class="w-4 h-4"></i>
+              <span>ویرایشگر تیترها و متن‌های ویترین صفحه اصلی (Showcase Headlines & Hero Subtitle)</span>
+            </h4>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4 text-xs font-bold text-graphite">
+              <div class="space-y-1.5">
+                <label class="block">عنوان اصلی هیرو (Hero Headline):</label>
+                <input type="text" id="admin-hero-title-input" value="برنامه‌ریزی رویایی‌ترین شب زندگی با عروسی تو" class="w-full bg-slate-50 border border-accent rounded-xl px-3 py-2 text-xs font-medium focus:outline-none focus:border-primary">
+              </div>
+              <div class="space-y-1.5">
+                <label class="block">زیرعنوان و توضیحات هیرو (Hero Subtitle):</label>
+                <input type="text" id="admin-hero-subtitle-input" value="بهترین باغ تالارها، آتلیه‌ها، سالن‌های زیبایی و خدمات مجالس را با تضمین قیمت، تاییدیه رسمی اعتبار و استعلام آنلاین رزرو کنید." class="w-full bg-slate-50 border border-accent rounded-xl px-3 py-2 text-xs font-medium focus:outline-none focus:border-primary">
+              </div>
+            </div>
+            <div class="flex justify-end pt-1">
+              <button onclick="handleSaveShowcaseConfig()" class="bg-primary hover:bg-emerald-900 text-white px-4 py-2 rounded-xl text-xs font-bold transition-all flex items-center gap-1">
+                <i data-lucide="check-circle" class="w-3.5 h-3.5"></i>
+                <span>ذخیره و بروزرسانی ویترین</span>
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Dynamic Parent & Sub-Category Editor (مدیریت کامل دسته‌بندی‌ها و زیرگروه‌ها) -->
+        <div class="bg-white border border-accent rounded-3xl p-6 shadow-xs space-y-6">
+          <div class="flex flex-col sm:flex-row justify-between sm:items-center gap-4 border-b border-accent pb-4">
+            <div>
+              <h3 class="text-lg font-bold text-graphite flex items-center gap-2">
+                <i data-lucide="layers" class="w-5 h-5 text-primary"></i>
+                <span>ویرایشگر پویا دسته‌های اصلی و زیرگروه‌ها (Category & Sub-Category CRUD)</span>
+              </h3>
+              <p class="text-xs text-secondary mt-0.5">افزودن، ویرایش، حذف دسته‌های اصلی و مدیریت پیل‌های زیرگروه به همراه همگام‌سازی لحظه‌ای</p>
+            </div>
+
+            <button onclick="openParentCategoryModal()" class="bg-primary text-white px-4 py-2 rounded-xl text-xs font-bold hover:bg-emerald-900 transition-colors flex items-center gap-1.5">
+              <i data-lucide="plus" class="w-4 h-4"></i>
+              <span>افزودن دسته اصلی جدید</span>
+            </button>
+          </div>
+
+          <!-- Parent Category & Nested Sub-categories Hierarchy Management View -->
+          <div id="admin-category-groups-list" class="space-y-4">
+            <!-- Populated dynamically via JS -->
+          </div>
+        </div>
+
+        <!-- Support Inquiries Queue (درخواست‌های پشتیبانی) -->
+        <div class="bg-white border border-accent rounded-3xl p-6 shadow-xs space-y-4">
+          <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-2 border-b border-accent pb-3">
+            <h3 class="text-lg font-bold text-graphite flex items-center gap-2">
+              <i data-lucide="headphones" class="w-5 h-5 text-primary"></i>
+              <span>مدیریت درخواست‌های پشتیبانی و تماس (Support Inquiries Queue)</span>
+            </h3>
+            <span id="admin-support-count" class="bg-primary/10 text-primary text-xs font-bold px-3 py-1 rounded-full">
+              ۰ درخواست
             </span>
           </div>
-        </div>
 
-        <!-- Metrics Grid -->
-        <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
-          <div class="bg-slate-50 border border-accent rounded-2xl p-4 space-y-1">
-            <span class="text-xs text-secondary font-bold">کل بازدیدهای یکتای پلتفرم</span>
-            <p id="admin-analytics-total-views" class="text-2xl font-black text-graphite">۱۲۸,۴۵۰</p>
-            <span class="text-[10px] text-emerald-600 font-bold block">↑ ۱۴.۲٪ رشد نسبت به ماه گذشته</span>
-          </div>
-          <div class="bg-slate-50 border border-accent rounded-2xl p-4 space-y-1">
-            <span class="text-xs text-secondary font-bold">تعداد بازدید صفحات تامین‌کنندگان</span>
-            <p id="admin-analytics-vendor-views" class="text-2xl font-black text-graphite">۶۴,۲۰۰</p>
-            <span class="text-[10px] text-primary font-bold block">میانگین ۴۳۰ بازدید به ازای هر تامین‌کننده</span>
-          </div>
-          <div class="bg-slate-50 border border-accent rounded-2xl p-4 space-y-1">
-            <span class="text-xs text-secondary font-bold">تعداد کل لیدهای خروجی (Inquiries)</span>
-            <p id="admin-analytics-leads-count" class="text-2xl font-black text-graphite">۳,۸۲۰</p>
-            <span class="text-[10px] text-emerald-600 font-bold block">موفقیت ثبت پیش‌فاکتور: ۴۲٪</span>
-          </div>
-        </div>
-
-        <!-- Vendor Traffic Leaderboard Table -->
-        <div class="space-y-3">
-          <h4 class="text-xs font-bold text-graphite flex items-center gap-1.5">
-            <i data-lucide="trending-up" class="w-4 h-4 text-primary"></i>
-            <span>تامین‌کنندگان پربازدید پلتفرم (Vendor Traffic Leaderboard)</span>
-          </h4>
-          <div class="overflow-x-auto rounded-2xl border border-accent/80">
+          <div class="overflow-x-auto rounded-2xl border border-accent">
             <table class="w-full text-right text-xs">
-              <thead class="bg-bgCustom text-graphite font-bold border-b border-accent/80">
+              <thead class="bg-bgCustom text-graphite font-bold border-b border-accent">
                 <tr>
-                  <th class="p-3">نام تامین‌کننده</th>
-                  <th class="p-3">دسته‌بندی</th>
-                  <th class="p-3">تعداد بازدید</th>
-                  <th class="p-3">تعداد استعلام</th>
-                  <th class="p-3">نرخ تبدیل</th>
+                  <th class="p-3">نام کاربر</th>
+                  <th class="p-3">شماره تماس</th>
+                  <th class="p-3">موضوع</th>
+                  <th class="p-3">متن پیام / درخواست</th>
+                  <th class="p-3">تاریخ ثبت</th>
+                  <th class="p-3 text-center">وضعیت / اقدام</th>
                 </tr>
               </thead>
-              <tbody id="admin-vendor-traffic-table" class="divide-y divide-accent/60 font-medium">
+              <tbody id="admin-support-inquiries-table" class="divide-y divide-accent/60 font-medium">
                 <!-- Dynamically populated via JS -->
               </tbody>
             </table>
           </div>
         </div>
 
-        <!-- Real-time System Audit Logs -->
-        <div class="space-y-3 border-t border-accent/60 pt-4">
-          <h4 class="text-xs font-bold text-graphite flex items-center gap-1.5">
-            <i data-lucide="activity" class="w-4 h-4 text-primary"></i>
-            <span>لاگ فعالیت‌ها و وقایع زنده سیستم (System Audit Trail)</span>
-          </h4>
-          <div id="admin-system-logs-container" class="bg-slate-900 text-slate-200 rounded-2xl p-4 font-mono text-[11px] space-y-2 max-h-48 overflow-y-auto custom-scrollbar dir-ltr text-left">
-            <!-- Dynamically populated -->
-          </div>
-        </div>
-      </div>
+        <!-- SMS Broadcast Panel -->
+        <div class="bg-white border border-accent rounded-3xl p-6 shadow-xs space-y-4">
+          <h3 class="text-lg font-bold text-graphite border-b border-accent pb-3">پنل ارسال پیامک اطلاع‌رسانی و تبلیغاتی</h3>
 
-      <!-- Admin Subscription Plans Management Module -->
-      <div id="admin-subscription-plans-management" class="bg-white border border-accent rounded-3xl p-6 shadow-xs space-y-6">
-        <div class="flex flex-col sm:flex-row justify-between sm:items-center gap-4 border-b border-accent pb-4">
-          <div>
-            <h3 class="text-lg font-bold text-graphite flex items-center gap-2">
-              <i data-lucide="crown" class="w-5 h-5 text-primary"></i>
-              <span>مدیریت پلن‌های اشتراک تامین‌کنندگان (Subscription Plans CRUD)</span>
-            </h3>
-            <p class="text-xs text-secondary mt-0.5">تعریف، ویرایش، بروزرسانی قیمت، مدت اعتبار و ویژگی‌های سطوح اشتراک کسب‌وکارها (مدل ۰٪ کمیسیون)</p>
-          </div>
-          <button onclick="openAdminSubPlanModal()" class="bg-primary hover:bg-emerald-900 text-white font-bold px-4 py-2.5 rounded-xl text-xs transition-all shadow-xs flex items-center gap-2 cursor-pointer shrink-0">
-            <i data-lucide="plus-circle" class="w-4 h-4"></i>
-            <span>افزودن پلن اشتراک جدید</span>
-          </button>
-        </div>
-
-        <div class="overflow-x-auto rounded-2xl border border-accent/80">
-          <table class="w-full text-right text-xs">
-            <thead class="bg-bgCustom text-graphite font-bold border-b border-accent/80">
-              <tr>
-                <th class="p-3">عنوان پلن</th>
-                <th class="p-3">مدت اعتبار</th>
-                <th class="p-3">قیمت (تومان)</th>
-                <th class="p-3">نشان / بج</th>
-                <th class="p-3">امکانات اصلی</th>
-                <th class="p-3 text-center">عملیات</th>
-              </tr>
-            </thead>
-            <tbody id="admin-sub-plans-table-body" class="divide-y divide-accent/60 font-medium">
-              <!-- Dynamically populated via renderAdminSubscriptionPlansTable() -->
-            </tbody>
-          </table>
-        </div>
-      </div>
-
-      <!-- Platform Settings & Site Branding Panel -->
-      <div class="bg-white border border-accent rounded-3xl p-6 shadow-xs space-y-4">
-        <div class="border-b border-accent pb-3 flex items-center justify-between">
-          <h3 class="text-base font-bold text-graphite flex items-center gap-2">
-            <i data-lucide="settings" class="w-5 h-5 text-primary"></i>
-            <span>تنظیمات عمومی پلتفرم و بنرهای اطلاع‌رسانی (Platform Settings)</span>
-          </h3>
-        </div>
-
-        <div class="grid grid-cols-1 md:grid-cols-3 gap-4 text-xs font-bold text-graphite">
-          <div class="space-y-1.5">
-            <label class="block">آدرس لوگوی اصلی پلتفرم (Site Hero Logo):</label>
-            <div class="flex gap-2">
-              <input id="admin-hero-logo-url-input" type="text" value="https://images.unsplash.com/photo-1519167758481-83f550bb49b3?auto=format&fit=crop&w=600&q=80" class="w-full bg-slate-50 border border-accent rounded-xl px-3 py-2 text-xs font-medium focus:outline-none focus:border-primary dir-ltr">
-              <button onclick="handleUpdateHeroLogo()" class="bg-primary hover:bg-emerald-900 text-white px-3 py-2 rounded-xl text-xs font-bold transition-all shrink-0">ذخیره</button>
-            </div>
-          </div>
-
-          <div class="space-y-1.5">
-            <label class="block">نرخ اشتراک پایه ماهانه تامین‌کنندگان (تومان):</label>
-            <div class="flex gap-2">
-              <input type="text" id="admin-subscription-base" value="۲,۵۰۰,۰۰۰" class="w-full bg-slate-50 border border-accent rounded-xl px-3 py-2 text-xs font-medium focus:outline-none focus:border-primary">
-              <button onclick="showToast('تعرفه اشتراک پلتفرم با موفقیت بروزرسانی شد', 'success')" class="bg-primary hover:bg-emerald-900 text-white px-3 py-2 rounded-xl text-xs font-bold transition-all shrink-0">ثبت</button>
-            </div>
-          </div>
-
-          <div class="space-y-1.5">
-            <label class="block">متن بنر اطلاعیه عمومی بالای سایت:</label>
-            <div class="flex gap-2">
-              <input type="text" id="admin-banner-text" value="جشنواره تخفیف‌های ویژه خدمات عروسی استان یزد - پاییز ۱۴۰۳" class="w-full bg-slate-50 border border-accent rounded-xl px-3 py-2 text-xs font-medium focus:outline-none focus:border-primary">
-              <button onclick="handleSaveShowcaseConfig()" class="bg-primary hover:bg-emerald-900 text-white px-3 py-2 rounded-xl text-xs font-bold transition-all shrink-0">انتشار</button>
-            </div>
-          </div>
-        </div>
-
-        <!-- Showcase Headlines & Promo Blocks Editor -->
-        <div class="border-t border-accent/60 pt-4 space-y-3">
-          <h4 class="text-xs font-black text-primary flex items-center gap-1.5">
-            <i data-lucide="type" class="w-4 h-4"></i>
-            <span>ویرایشگر تیترها و متن‌های ویترین صفحه اصلی (Showcase Headlines & Hero Subtitle)</span>
-          </h4>
-          <div class="grid grid-cols-1 md:grid-cols-2 gap-4 text-xs font-bold text-graphite">
-            <div class="space-y-1.5">
-              <label class="block">عنوان اصلی هیرو (Hero Headline):</label>
-              <input type="text" id="admin-hero-title-input" value="برنامه‌ریزی رویایی‌ترین شب زندگی با عروسی تو" class="w-full bg-slate-50 border border-accent rounded-xl px-3 py-2 text-xs font-medium focus:outline-none focus:border-primary">
-            </div>
-            <div class="space-y-1.5">
-              <label class="block">زیرعنوان و توضیحات هیرو (Hero Subtitle):</label>
-              <input type="text" id="admin-hero-subtitle-input" value="بهترین باغ تالارها، آتلیه‌ها، سالن‌های زیبایی و خدمات مجالس را با تضمین قیمت، تاییدیه رسمی اعتبار و استعلام آنلاین رزرو کنید." class="w-full bg-slate-50 border border-accent rounded-xl px-3 py-2 text-xs font-medium focus:outline-none focus:border-primary">
-            </div>
-          </div>
-          <div class="flex justify-end pt-1">
-            <button onclick="handleSaveShowcaseConfig()" class="bg-primary hover:bg-emerald-900 text-white px-4 py-2 rounded-xl text-xs font-bold transition-all flex items-center gap-1">
-              <i data-lucide="check-circle" class="w-3.5 h-3.5"></i>
-              <span>ذخیره و بروزرسانی ویترین</span>
-            </button>
-          </div>
-        </div>
-      </div>
-
-      <!-- Dynamic Parent & Sub-Category Editor (مدیریت کامل دسته‌بندی‌ها و زیرگروه‌ها) -->
-      <div class="bg-white border border-accent rounded-3xl p-6 shadow-xs space-y-6">
-        <div class="flex flex-col sm:flex-row justify-between sm:items-center gap-4 border-b border-accent pb-4">
-          <div>
-            <h3 class="text-lg font-bold text-graphite flex items-center gap-2">
-              <i data-lucide="layers" class="w-5 h-5 text-primary"></i>
-              <span>ویرایشگر پویا دسته‌های اصلی و زیرگروه‌ها (Category & Sub-Category CRUD)</span>
-            </h3>
-            <p class="text-xs text-secondary mt-0.5">افزودن، ویرایش، حذف دسته‌های اصلی و مدیریت پیل‌های زیرگروه به همراه همگام‌سازی لحظه‌ای</p>
-          </div>
-
-          <button onclick="openParentCategoryModal()" class="bg-primary text-white px-4 py-2 rounded-xl text-xs font-bold hover:bg-emerald-900 transition-colors flex items-center gap-1.5">
-            <i data-lucide="plus" class="w-4 h-4"></i>
-            <span>افزودن دسته اصلی جدید</span>
-          </button>
-        </div>
-
-        <!-- Parent Category & Nested Sub-categories Hierarchy Management View -->
-        <div id="admin-category-groups-list" class="space-y-4">
-          <!-- Populated dynamically via JS -->
-        </div>
-      </div>
-
-      <!-- Pending Vendor Onboarding Applications Table -->
-      <div class="bg-white border border-accent rounded-3xl p-6 shadow-xs space-y-4">
-        <div class="flex justify-between items-center border-b border-accent pb-3">
-          <h3 class="text-lg font-bold text-graphite flex items-center gap-2">
-            <i data-lucide="user-check" class="w-5 h-5 text-primary"></i>
-            <span>صف بررسی و اعتبارسنجی تامین‌کنندگان جدید (Vendor Verification Queue)</span>
-          </h3>
-          <span class="bg-amber-50 text-amber-800 text-xs font-bold px-3 py-1 rounded-full border border-amber-200">
-            بررسی مدارک و اعطای نشان تایید
-          </span>
-        </div>
-
-        <div class="overflow-x-auto">
-          <table class="w-full text-right text-xs">
-            <thead class="bg-bgCustom text-secondary border-b border-accent font-bold">
-              <tr>
-                <th class="p-3">نام برند / مجموعه</th>
-                <th class="p-3">دسته‌بندی</th>
-                <th class="p-3">مدیریت & موبایل</th>
-                <th class="p-3">شهر</th>
-                <th class="p-3 text-center">عملیات تایید / رد</th>
-              </tr>
-            </thead>
-            <tbody id="admin-pending-apps-table" class="divide-y divide-accent/60 font-medium">
-              <!-- Populated via JS -->
-            </tbody>
-          </table>
-        </div>
-      </div>
-
-      <!-- Dynamic Subscription & Membership Revenue Logs Section -->
-      <div class="bg-white border border-accent rounded-3xl p-6 shadow-xs space-y-4">
-        <div class="flex justify-between items-center border-b border-accent pb-3">
-          <h3 class="text-lg font-bold text-graphite flex items-center gap-2">
-            <i data-lucide="award" class="w-5 h-5 text-primary"></i>
-            <span>گزارش درآمد حاصل از اشتراک تامین‌کنندگان یزد (Subscription & Membership Revenue Logs)</span>
-          </h3>
-          <span class="bg-emerald-50 text-emerald-800 text-xs font-bold px-3 py-1 rounded-full border border-emerald-200">مدل حق اشتراک ثابت (۰٪ کمیسیون)</span>
-        </div>
-
-        <div class="grid grid-cols-1 md:grid-cols-3 gap-4 text-xs">
-          <div class="bg-bgCustom border border-accent rounded-2xl p-4 space-y-1">
-            <span class="text-secondary font-bold">تعداد کل اشتراک‌های فعال:</span>
-            <span class="block text-xl font-black text-graphite">۱۲۸ تامین‌کننده</span>
-          </div>
-
-          <div class="bg-bgCustom border border-accent rounded-2xl p-4 space-y-1">
-            <span class="text-secondary font-bold">درآمد کل حاصل از اشتراک‌ها (سالانه):</span>
-            <span class="block text-xl font-black text-primary">۱,۴۵۰,۰۰۰,۰۰۰ تومان</span>
-          </div>
-
-          <div class="bg-bgCustom border border-accent rounded-2xl p-4 space-y-1">
-            <span class="text-secondary font-bold">اشتراک‌های در آستانه انقضا (۳۰ روز):</span>
-            <span class="block text-xl font-black text-amber-700">۱۴ تامین‌کننده</span>
-          </div>
-        </div>
-
-        <div class="space-y-3 pt-2">
-          <h4 class="text-xs font-bold text-graphite">تفکیک درآمد و توزیع پلن‌های اشتراک فعال (Subscription Tiers):</h4>
-          <div id="admin-revenue-breakdown" class="space-y-2.5 text-xs font-bold">
-            <div class="space-y-1">
-              <div class="flex justify-between text-graphite">
-                <span>پلن طلایی / Gold Tier (۵۵٪) — ۷۰ تامین‌کننده</span>
-                <span>۷۹۷,۵۰۰,۰۰۰ تومان</span>
-              </div>
-              <div class="w-full bg-slate-100 h-2 rounded-full overflow-hidden">
-                <div class="bg-primary h-full rounded-full" style="width: 55%;"></div>
-              </div>
-            </div>
-
-            <div class="space-y-1">
-              <div class="flex justify-between text-graphite">
-                <span>پلن VIP کویر / VIP Tier (۲۵٪) — ۳۲ تامین‌کننده</span>
-                <span>۵۰۷,۵۰۰,۰۰۰ تومان</span>
-              </div>
-              <div class="w-full bg-slate-100 h-2 rounded-full overflow-hidden">
-                <div class="bg-amber-500 h-full rounded-full" style="width: 25%;"></div>
-              </div>
-            </div>
-
-            <div class="space-y-1">
-              <div class="flex justify-between text-graphite">
-                <span>پلن نقره‌ای / Silver Tier (۱۵٪) — ۱۹ تامین‌کننده</span>
-                <span>۱۱۵,۰۰۰,۰۰۰ تومان</span>
-              </div>
-              <div class="w-full bg-slate-100 h-2 rounded-full overflow-hidden">
-                <div class="bg-emerald-600 h-full rounded-full" style="width: 15%;"></div>
-              </div>
-            </div>
-
-            <div class="space-y-1">
-              <div class="flex justify-between text-graphite">
-                <span>پلن برنز / Bronze Tier (۵٪) — ۷ تامین‌کننده</span>
-                <span>۳۰,۰۰۰,۰۰۰ تومان</span>
-              </div>
-              <div class="w-full bg-slate-100 h-2 rounded-full overflow-hidden">
-                <div class="bg-slate-400 h-full rounded-full" style="width: 5%;"></div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <!-- Vendor Verification Badge Management -->
-      <div class="bg-white border border-accent rounded-3xl p-6 shadow-xs space-y-4">
-        <div class="flex justify-between items-center border-b border-accent pb-3">
-          <h3 class="text-lg font-bold text-graphite">لیست کامل تامین‌کنندگان و اعطای "تاییدیه رسمی اعتبار"</h3>
-        </div>
-
-        <div class="overflow-x-auto">
-          <table class="w-full text-right text-xs">
-            <thead class="bg-bgCustom text-secondary border-b border-accent font-bold">
-              <tr>
-                <th class="p-3">نام برند</th>
-                <th class="p-3">دسته‌بندی</th>
-                <th class="p-3">تلفن همراه</th>
-                <th class="p-3">وضعیت تاییدیه رسمی</th>
-                <th class="p-3 text-center">تغییر نشان</th>
-              </tr>
-            </thead>
-            <tbody id="admin-vendor-table" class="divide-y divide-accent/60 font-medium">
-              <!-- Populated via JS -->
-            </tbody>
-          </table>
-        </div>
-      </div>
-
-      <!-- Review Moderation Queue & Verified Couple Badges Panel -->
-      <div class="bg-white border border-accent rounded-3xl p-6 shadow-xs space-y-6">
-        <div class="flex flex-col sm:flex-row justify-between sm:items-center gap-4 border-b border-accent pb-4">
-          <div>
-            <h3 class="text-lg font-bold text-graphite flex items-center gap-2">
-              <i data-lucide="star" class="w-5 h-5 text-primary"></i>
-              <span>مدیریت و نظرات کاربران و اعطای نشان "زوج تاییدشده" (Reviews Moderation)</span>
-            </h3>
-            <p class="text-xs text-secondary mt-0.5">تایید نظرات ثبت‌شده توسط زوجین، اعطای نشان زوج تاییدشده و نظارت بر امتیازات تامین‌کنندگان</p>
-          </div>
-          <span class="bg-primary/10 text-primary border border-primary/20 px-3 py-1 rounded-xl text-xs font-bold">
-            در انتظار بررسی: ۲ دیدگاه
-          </span>
-        </div>
-
-        <div class="overflow-x-auto rounded-2xl border border-accent/80">
-          <table class="w-full text-right text-xs">
-            <thead class="bg-bgCustom text-graphite font-bold border-b border-accent/80">
-              <tr>
-                <th class="p-3">نام کاربر / زوج</th>
-                <th class="p-3">تامین‌کننده مربوطه</th>
-                <th class="p-3">امتیاز & متن دیدگاه</th>
-                <th class="p-3">نشان زوج تاییدشده</th>
-                <th class="p-3">وضعیت انتشار</th>
-                <th class="p-3 text-center">عملیات مدیریت</th>
-              </tr>
-            </thead>
-            <tbody id="admin-reviews-moderation-table" class="divide-y divide-accent/60 font-medium">
-              <!-- Dynamically populated via JS -->
-            </tbody>
-          </table>
-        </div>
-      </div>
-
-      <!-- User Accounts & Registered Couples Directory -->
-      <div class="bg-white border border-accent rounded-3xl p-6 shadow-xs space-y-6">
-        <div class="flex flex-col sm:flex-row justify-between sm:items-center gap-4 border-b border-accent pb-4">
-          <div>
-            <h3 class="text-lg font-bold text-graphite flex items-center gap-2">
-              <i data-lucide="users" class="w-5 h-5 text-primary"></i>
-              <span>مدیریت حساب‌های کاربری زوجین و دسترسی کاربران (User Accounts & Access)</span>
-            </h3>
-            <p class="text-xs text-secondary mt-0.5">مشاهده لیست زوجین عضو پلتفرم، وضعیت فعالیت و مدیریت مسدودی حساب‌ها</p>
-          </div>
-        </div>
-
-        <div class="overflow-x-auto rounded-2xl border border-accent/80">
-          <table class="w-full text-right text-xs">
-            <thead class="bg-bgCustom text-graphite font-bold border-b border-accent/80">
-              <tr>
-                <th class="p-3">نام و نام خانوادگی</th>
-                <th class="p-3">شماره همراه</th>
-                <th class="p-3">تاریخ ازدواج ثبت‌شده</th>
-                <th class="p-3">وضعیت حساب</th>
-                <th class="p-3 text-center">تغییر وضعیت دسترسی</th>
-              </tr>
-            </thead>
-            <tbody id="admin-user-accounts-table" class="divide-y divide-accent/60 font-medium">
-              <!-- Dynamically populated via JS -->
-            </tbody>
-          </table>
-        </div>
-      </div>
-
-      <!-- Support Inquiries Queue (درخواست‌های پشتیبانی) -->
-      <div class="bg-white border border-accent rounded-3xl p-6 shadow-xs space-y-4">
-        <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-2 border-b border-accent pb-3">
-          <h3 class="text-lg font-bold text-graphite flex items-center gap-2">
-            <i data-lucide="headphones" class="w-5 h-5 text-primary"></i>
-            <span>مدیریت درخواست‌های پشتیبانی و تماس (Support Inquiries Queue)</span>
-          </h3>
-          <span id="admin-support-count" class="bg-primary/10 text-primary text-xs font-bold px-3 py-1 rounded-full">
-            ۰ درخواست
-          </span>
-        </div>
-
-        <div class="overflow-x-auto rounded-2xl border border-accent">
-          <table class="w-full text-right text-xs">
-            <thead class="bg-bgCustom text-graphite font-bold border-b border-accent">
-              <tr>
-                <th class="p-3">نام کاربر</th>
-                <th class="p-3">شماره تماس</th>
-                <th class="p-3">موضوع</th>
-                <th class="p-3">متن پیام / درخواست</th>
-                <th class="p-3">تاریخ ثبت</th>
-                <th class="p-3 text-center">وضعیت / اقدام</th>
-              </tr>
-            </thead>
-            <tbody id="admin-support-inquiries-table" class="divide-y divide-accent/60 font-medium">
-              <!-- Dynamically populated via JS -->
-            </tbody>
-          </table>
-        </div>
-      </div>
-
-      <!-- SMS Broadcast Panel -->
-      <div class="bg-white border border-accent rounded-3xl p-6 shadow-xs space-y-4">
-        <h3 class="text-lg font-bold text-graphite border-b border-accent pb-3">پنل ارسال پیامک اطلاع‌رسانی و تبلیغاتی</h3>
-
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-          <div class="space-y-3">
-            <div>
-              <label class="block text-xs font-bold text-graphite mb-1">گیرندگان:</label>
-              <select id="sms-target" class="w-full bg-bgCustom border border-accent rounded-xl p-2.5 text-xs font-semibold">
-                <option value="all-vendors">همه تامین‌کنندگان (۱,۲۰۰ شماره)</option>
-                <option value="all-couples">زوج‌های ثبت‌نام شده (۱۵,۰۰۰ شماره)</option>
-              </select>
-            </div>
-
-            <div>
-              <label class="block text-xs font-bold text-graphite mb-1">متن پیامک:</label>
-              <textarea id="sms-text" rows="4" class="w-full bg-bgCustom border border-accent rounded-xl p-3 text-xs font-medium focus:outline-none focus:border-primary" placeholder="متن پیامک خود را وارد کنید..."></textarea>
-            </div>
-
-            <button onclick="sendSmsBroadcast()" class="bg-primary text-white font-bold text-xs px-6 py-2.5 rounded-xl hover:bg-primary-hover transition-colors flex items-center gap-2">
-              <i data-lucide="send" class="w-4 h-4"></i>
-              <span>ارسال انبوه پیامک</span>
-            </button>
-          </div>
-
-          <div class="bg-bgCustom border border-accent rounded-2xl p-4 space-y-2">
-            <span class="text-xs font-bold text-secondary">تاریخچه پیامک‌های ارسالی اخیر:</span>
-            <div id="sms-history" class="space-y-2 text-xs font-medium text-graphite max-h-48 overflow-y-auto">
-              <div class="p-2 bg-white rounded-lg border border-accent/60">
-                <span class="text-primary font-bold">ارسال شد:</span> یادآوری تکمیل مدارک رسمی به تامین‌کنندگان جدید
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <!-- SUB-TAB 5: CONTACT & ADDRESS -->
-        <div id="vdm-subpanel-contact" class="hidden space-y-4 text-xs font-bold text-graphite">
-          <div class="p-4 bg-bgCustom rounded-2xl border border-accent space-y-3">
-            <div class="flex items-center gap-3 border-b border-accent pb-2.5">
-              <div class="w-8 h-8 rounded-xl bg-primary/10 text-primary flex items-center justify-center shrink-0">
-                <i data-lucide="phone" class="w-4 h-4"></i>
-              </div>
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div class="space-y-3">
               <div>
-                <span class="text-secondary block text-[11px]">شماره تماس رزرو و هماهنگی:</span>
-                <span id="vdm-contact-phone" class="text-sm font-black text-primary dir-ltr">۰۳۵-۳۸۲۴۰۰۰۰</span>
+                <label class="block text-xs font-bold text-graphite mb-1">گیرندگان:</label>
+                <select id="sms-target" class="w-full bg-bgCustom border border-accent rounded-xl p-2.5 text-xs font-semibold">
+                  <option value="all-vendors">همه تامین‌کنندگان (۱,۲۰۰ شماره)</option>
+                  <option value="all-couples">زوج‌های ثبت‌نام شده (۱۵,۰۰۰ شماره)</option>
+                </select>
               </div>
+
+              <div>
+                <label class="block text-xs font-bold text-graphite mb-1">متن پیامک:</label>
+                <textarea id="sms-text" rows="4" class="w-full bg-bgCustom border border-accent rounded-xl p-3 text-xs font-medium focus:outline-none focus:border-primary" placeholder="متن پیامک خود را وارد کنید..."></textarea>
+              </div>
+
+              <button onclick="sendSmsBroadcast()" class="bg-primary text-white font-bold text-xs px-6 py-2.5 rounded-xl hover:bg-primary-hover transition-colors flex items-center gap-2">
+                <i data-lucide="send" class="w-4 h-4"></i>
+                <span>ارسال انبوه پیامک</span>
+              </button>
             </div>
 
-            <div class="flex items-center gap-3 border-b border-accent pb-2.5">
-              <div class="w-8 h-8 rounded-xl bg-primary/10 text-primary flex items-center justify-center shrink-0">
-                <i data-lucide="map-pin" class="w-4 h-4"></i>
-              </div>
-              <div>
-                <span class="text-secondary block text-[11px]">آدرس کامل در استان یزد:</span>
-                <span id="vdm-contact-address" class="text-graphite font-bold">یزد، صفائیه، خیابان دانشگاه، نرسیده به میدان اطلسی</span>
-              </div>
-            </div>
-
-            <div class="flex items-center gap-3 border-b border-accent pb-2.5">
-              <div class="w-8 h-8 rounded-xl bg-primary/10 text-primary flex items-center justify-center shrink-0">
-                <i data-lucide="clock" class="w-4 h-4"></i>
-              </div>
-              <div>
-                <span class="text-secondary block text-[11px]">ساعات کاری و پذیرش حضوری:</span>
-                <span id="vdm-contact-hours" class="text-graphite font-bold">همه روزه (حتی روزهای تعطیل) از ساعت ۱۰:۰۰ الی ۲۱:۰۰</span>
-              </div>
-            </div>
-
-            <div class="flex items-center gap-3">
-              <div class="w-8 h-8 rounded-xl bg-primary/10 text-primary flex items-center justify-center shrink-0">
-                <i data-lucide="instagram" class="w-4 h-4"></i>
-              </div>
-              <div>
-                <span class="text-secondary block text-[11px]">صفحه رسمی اینستاگرام:</span>
-                <span id="vdm-contact-insta" class="text-primary font-bold dir-ltr">@yazd_wedding_studio</span>
+            <div class="bg-bgCustom border border-accent rounded-2xl p-4 space-y-2">
+              <span class="text-xs font-bold text-secondary">تاریخچه پیامک‌های ارسالی اخیر:</span>
+              <div id="sms-history" class="space-y-2 text-xs font-medium text-graphite max-h-48 overflow-y-auto">
+                <div class="p-2 bg-white rounded-lg border border-accent/60">
+                  <span class="text-primary font-bold">ارسال شد:</span> یادآوری تکمیل مدارک رسمی به تامین‌کنندگان جدید
+                </div>
               </div>
             </div>
           </div>
         </div>
-
       </div>
 
     </div>
