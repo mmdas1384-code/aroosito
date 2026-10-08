@@ -2055,3 +2055,16 @@ body.theme-pearl-white .text-slate-400 {
   opacity: 1;
   transform: scale(1.02);
 }
+
+/* ==========================================================================
+   CINEMATIC DARK SPLIT HERO STYLES
+   ========================================================================== */
+.cinematic-hero-frame {
+  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.6);
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.cinematic-hero-frame:hover {
+  border-color: #D4AF37;
+  box-shadow: 0 25px 60px rgba(212, 175, 55, 0.2);
+}
