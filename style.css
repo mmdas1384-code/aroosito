@@ -551,6 +551,27 @@ main#directory-view {
 }
 
 /* ==========================================================================
+   BRIDAL PLANNER & BUDGET HUB SCOPED STYLES
+   ========================================================================== */
+#tab-planner .bridal-planner-countdown {
+  box-shadow: 0 10px 30px rgba(15, 23, 42, 0.5);
+  transition: transform 0.3s ease, border-color 0.3s ease;
+}
+
+#tab-planner .bridal-planner-countdown:hover {
+  border-color: #D4AF37;
+  transform: translateY(-2px);
+}
+
+#tab-planner .bridal-planner-group {
+  transition: all 0.3s ease;
+}
+
+#tab-planner .bridal-planner-group:hover {
+  border-color: rgba(212, 175, 55, 0.6);
+}
+
+/* ==========================================================================
    VENDOR DASHBOARD GLASSMORPHISM & CALENDAR STYLES
    ========================================================================== */
 .vpanel-pane {

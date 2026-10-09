@@ -1645,13 +1645,39 @@
         </div>
 
         <div class="grid grid-cols-1 md:grid-cols-4 gap-6">
-          <!-- Countdown Digital Gold Card -->
-          <div class="bg-[#0F172A] border border-[#D4AF37]/50 rounded-2xl p-5 flex flex-col items-center justify-center text-center space-y-2 shadow-lg">
-            <div class="relative w-20 h-20 rounded-full border-4 border-[#D4AF37] flex items-center justify-center bg-[#1E293B] shadow-[0_0_20px_rgba(212,175,55,0.3)]">
-              <span class="text-2xl font-black text-[#D4AF37]">۱۳۵</span>
+          <!-- Countdown Digital Gold Card (Translucent Dark Glass Grid) -->
+          <div class="bridal-planner-countdown bg-[#0F172A]/90 backdrop-blur-md border border-[#D4AF37]/60 rounded-2xl p-5 flex flex-col justify-between space-y-3 shadow-xl">
+            <div class="flex items-center justify-between border-b border-[#D4AF37]/30 pb-2">
+              <span class="text-xs font-black text-[#D4AF37] flex items-center gap-1.5">
+                <i data-lucide="timer" class="w-4 h-4 text-[#D4AF37]"></i>
+                <span>روزشماری تا شب مراسم</span>
+              </span>
+              <span class="text-[10px] text-amber-200 bg-[#1E293B] border border-[#D4AF37]/30 px-2 py-0.5 rounded-full font-bold">۱۵ مهر ۱۴۰۳</span>
             </div>
-            <span class="text-xs font-black text-white">روز مانده تا شب عروسی</span>
-            <span class="text-[11px] text-amber-200/90 font-medium">تاریخ هدف: ۱۵ مهر ۱۴۰۳</span>
+
+            <!-- Live 4-Unit Glass Grid -->
+            <div id="bridal-countdown-clock" class="grid grid-cols-4 gap-2 text-center my-1">
+              <div class="bg-[#1E293B] border border-[#D4AF37]/40 rounded-xl p-2 flex flex-col items-center justify-center shadow-inner">
+                <span id="bridal-cnt-days" class="text-xl sm:text-2xl font-black text-[#D4AF37]">۱۳۵</span>
+                <span class="text-[9.5px] font-bold text-slate-300">روز</span>
+              </div>
+              <div class="bg-[#1E293B] border border-[#D4AF37]/40 rounded-xl p-2 flex flex-col items-center justify-center shadow-inner">
+                <span id="bridal-cnt-hours" class="text-xl sm:text-2xl font-black text-white">۱۴</span>
+                <span class="text-[9.5px] font-bold text-slate-300">ساعت</span>
+              </div>
+              <div class="bg-[#1E293B] border border-[#D4AF37]/40 rounded-xl p-2 flex flex-col items-center justify-center shadow-inner">
+                <span id="bridal-cnt-mins" class="text-xl sm:text-2xl font-black text-white">۲۲</span>
+                <span class="text-[9.5px] font-bold text-slate-300">دقیقه</span>
+              </div>
+              <div class="bg-[#1E293B] border border-[#D4AF37]/40 rounded-xl p-2 flex flex-col items-center justify-center shadow-inner">
+                <span id="bridal-cnt-secs" class="text-xl sm:text-2xl font-black text-amber-300">۴۵</span>
+                <span class="text-[9.5px] font-bold text-slate-300">ثانیه</span>
+              </div>
+            </div>
+
+            <div class="text-[10.5px] text-slate-300 text-center font-medium">
+              ✨ تا آفرینش خاطره‌انگیزترین شب زندگی شما
+            </div>
           </div>
 
           <!-- Budget Expense Progress Dark Card -->

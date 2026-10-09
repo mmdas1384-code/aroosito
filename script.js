@@ -4829,20 +4829,45 @@ if (document.readyState === "loading") {
 
             <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
               ${categoryCalculations.map(cat => `
-                <div class="p-4 bg-[#FCFCFA] border border-accent/80 rounded-2xl space-y-2.5 hover:border-[#D4AF37]/60 transition-all">
+                <div class="p-4 bg-[#FCFCFA] border border-accent/80 rounded-2xl space-y-3 hover:border-[#D4AF37] transition-all shadow-2xs hover:shadow-md">
                   <div class="flex justify-between items-center text-xs font-bold">
-                    <span class="text-[#111827] font-black">${cat.name} (${Math.round(cat.defaultSplit * 100)}٪)</span>
+                    <span class="text-[#111827] font-black flex items-center gap-1.5">
+                      <i data-lucide="folder" class="w-4 h-4 text-[#D4AF37]"></i>
+                      <span>${cat.name} (${Math.round(cat.defaultSplit * 100)}٪)</span>
+                    </span>
                     <span class="${cat.diffColorClass} font-black text-[11px]">${cat.diffText}</span>
                   </div>
 
-                  <div class="space-y-1">
-                    <div class="w-full bg-slate-200 h-2.5 rounded-full overflow-hidden border border-accent/40">
-                      <div class="${cat.progressBgClass} h-full rounded-full transition-all duration-500" style="width: ${cat.pct}%;"></div>
+                  <!-- High-Contrast Visual Dual Bar Meter: Estimated vs Paid -->
+                  <div class="space-y-1.5 bg-[#0F172A] p-3 rounded-xl border border-[#D4AF37]/30 text-white">
+                    <div class="space-y-1">
+                      <div class="flex justify-between text-[10.5px] font-bold">
+                        <span class="text-amber-200">برآورد: ${cat.estimatedTotal.toLocaleString('fa-IR')} تومان</span>
+                        <span class="text-slate-400">سهم: ${cat.targetBudget.toLocaleString('fa-IR')} تومان</span>
+                      </div>
+                      <div class="w-full bg-[#1E293B] h-2 rounded-full overflow-hidden border border-[#D4AF37]/30">
+                        <div class="bg-gradient-to-r from-[#D4AF37] to-[#F3E5AB] h-full rounded-full transition-all duration-500" style="width: ${cat.pct}%;"></div>
+                      </div>
                     </div>
-                    <div class="flex justify-between text-[11px] text-secondary font-medium pt-0.5">
-                      <span>برآورد: ${cat.estimatedTotal.toLocaleString('fa-IR')} تومان</span>
-                      <span>سهم مصوب: ${cat.targetBudget.toLocaleString('fa-IR')} تومان</span>
+
+                    <div class="space-y-1 pt-1 border-t border-slate-700/60">
+                      <div class="flex justify-between text-[10.5px] font-bold">
+                        <span class="text-emerald-400">واقعی (پرداختی): ${cat.paidTotal.toLocaleString('fa-IR')} تومان</span>
+                        <span class="text-emerald-400">${cat.estimatedTotal > 0 ? Math.round((cat.paidTotal / cat.estimatedTotal) * 100) : 0}٪ پرداخت شد</span>
+                      </div>
+                      <div class="w-full bg-[#1E293B] h-2 rounded-full overflow-hidden border border-emerald-500/30">
+                        <div class="bg-emerald-500 h-full rounded-full transition-all duration-500" style="width: ${cat.estimatedTotal > 0 ? Math.min(100, Math.round((cat.paidTotal / cat.estimatedTotal) * 100)) : 0}%;"></div>
+                      </div>
                     </div>
+                  </div>
+
+                  <!-- Sleek Recommendation Trigger -->
+                  <div class="pt-1 flex items-center justify-between gap-2">
+                    <span class="text-[10px] text-slate-500 font-bold">${cat.itemsCount} قلم ثبت‌شده</span>
+                    <button type="button" onclick="filterVendorsByCategoryTitle('${cat.name}')" class="text-[11px] font-bold text-[#0F251A] bg-gradient-to-r from-[#D4AF37] to-[#F3E5AB] hover:from-amber-400 hover:to-amber-200 px-3 py-1.5 rounded-xl shadow-xs transition-all flex items-center gap-1 cursor-pointer">
+                      <i data-lucide="store" class="w-3.5 h-3.5"></i>
+                      <span>پیشنهاد تامین‌کننده متناسب با این بودجه</span>
+                    </button>
                   </div>
                 </div>
               `).join('')}
@@ -5025,12 +5050,15 @@ if (document.readyState === "loading") {
       const countdownText = document.getElementById('checklist-countdown-text');
       const plannerCountdownBadge = document.getElementById('planner-countdown-badge');
 
-      if (progressBar) progressBar.style.width = percent + '%';
-      if (progressText) progressText.innerText = `${percent}٪ آمادگی کارهای عروسی انجام شده`;
-      if (completedCountText) completedCountText.innerText = `${completedCount} از ${total} مورد`;
+      if (progressBar) {
+        progressBar.style.width = percent + '%';
+        progressBar.className = "bg-gradient-to-r from-[#D4AF37] to-[#F3E5AB] h-full transition-all duration-500 rounded-full shadow-[0_0_12px_rgba(212,175,55,0.4)]";
+      }
+      if (progressText) progressText.innerText = `${percent}٪ آمادگی کامل کارهای عروسی`;
+      if (completedCountText) completedCountText.innerText = `${completedCount} از ${total} مورد تکمیلی`;
 
       const urgentUncompleted = staticChecklist.filter(t => (t.priority === 'urgent' || t.isUrgent) && !t.completed).length;
-      if (urgentCountText) urgentCountText.innerText = `${urgentUncompleted} کار ضروری`;
+      if (urgentCountText) urgentCountText.innerText = `${urgentUncompleted} کار ضروری باقی‌مانده`;
       if (countdownText) countdownText.innerText = `${weddingDateDaysRemaining} روز باقی‌مانده`;
       if (plannerCountdownBadge) plannerCountdownBadge.innerText = `${weddingDateDaysRemaining} روز تا مراسم عروسی شما`;
 
@@ -10987,6 +11015,7 @@ if (document.readyState === "loading") {
       renderInquiries();
       renderChecklistTimeline();
       renderChecklistTimeframeButtons();
+      initBridalCountdownTimer();
 
       // Initialize Budget Wizard
       updateBudgetFormattedDisplay();
@@ -15235,6 +15264,38 @@ if (typeof renderCategoryCards === "function") window.renderCategoryCards = rend
 if (typeof renderChatActiveThread === "function") window.renderChatActiveThread = renderChatActiveThread;
 if (typeof renderChatThreadsList === "function") window.renderChatThreadsList = renderChatThreadsList;
 if (typeof renderChecklistTimeframeButtons === "function") window.renderChecklistTimeframeButtons = renderChecklistTimeframeButtons;
+window.initBridalCountdownTimer = function() {
+  if (window.bridalCountdownInterval) clearInterval(window.bridalCountdownInterval);
+
+  let targetDate = new Date();
+  targetDate.setDate(targetDate.getDate() + 135);
+
+  function updateTimer() {
+    const now = new Date();
+    const diff = targetDate - now;
+
+    if (diff <= 0) return;
+
+    const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+    const hours = Math.floor((diff / (1000 * 60 * 60)) % 24);
+    const mins = Math.floor((diff / 1000 / 60) % 60);
+    const secs = Math.floor((diff / 1000) % 60);
+
+    const daysEl = document.getElementById('bridal-cnt-days');
+    const hoursEl = document.getElementById('bridal-cnt-hours');
+    const minsEl = document.getElementById('bridal-cnt-mins');
+    const secsEl = document.getElementById('bridal-cnt-secs');
+
+    if (daysEl) daysEl.innerText = days.toLocaleString('fa-IR');
+    if (hoursEl) hoursEl.innerText = hours.toLocaleString('fa-IR');
+    if (minsEl) minsEl.innerText = mins.toLocaleString('fa-IR');
+    if (secsEl) secsEl.innerText = secs.toLocaleString('fa-IR');
+  }
+
+  updateTimer();
+  window.bridalCountdownInterval = setInterval(updateTimer, 1000);
+};
+
 if (typeof renderChecklistTimeline === "function") window.renderChecklistTimeline = renderChecklistTimeline;
 if (typeof renderFavoriteVendorsList === "function") window.renderFavoriteVendorsList = renderFavoriteVendorsList;
 if (typeof renderGallery === "function") window.renderGallery = renderGallery;
