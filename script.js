@@ -6496,25 +6496,63 @@ if (document.readyState === "loading") {
       const nextBtn = document.getElementById('inquiry-next-btn');
       const submitBtn = document.getElementById('inquiry-submit-btn');
 
-      if (s1) s1.classList.toggle('hidden', step !== 1);
-      if (s2) s2.classList.toggle('hidden', step !== 2);
-      if (s3) s3.classList.toggle('hidden', step !== 3);
+      if (s1) {
+        if (step === 1) {
+          s1.classList.remove('hidden');
+          s1.style.display = 'block';
+        } else {
+          s1.classList.add('hidden');
+          s1.style.display = 'none';
+        }
+      }
+      if (s2) {
+        if (step === 2) {
+          s2.classList.remove('hidden');
+          s2.style.display = 'block';
+        } else {
+          s2.classList.add('hidden');
+          s2.style.display = 'none';
+        }
+      }
+      if (s3) {
+        if (step === 3) {
+          s3.classList.remove('hidden');
+          s3.style.display = 'block';
+        } else {
+          s3.classList.add('hidden');
+          s3.style.display = 'none';
+        }
+      }
 
-      if (ind1) ind1.className = step === 1 ? "flex-1 text-center py-2 rounded-xl bg-[#D4AF37] text-[#0F251A] font-black text-xs shadow-md" : "flex-1 text-center py-2 rounded-xl bg-[#1E293B] text-slate-300 font-bold text-xs border border-[#D4AF37]/30";
-      if (ind2) ind2.className = step === 2 ? "flex-1 text-center py-2 rounded-xl bg-[#D4AF37] text-[#0F251A] font-black text-xs shadow-md" : "flex-1 text-center py-2 rounded-xl bg-[#1E293B] text-slate-300 font-bold text-xs border border-[#D4AF37]/30";
-      if (ind3) ind3.className = step === 3 ? "flex-1 text-center py-2 rounded-xl bg-[#D4AF37] text-[#0F251A] font-black text-xs shadow-md" : "flex-1 text-center py-2 rounded-xl bg-[#1E293B] text-slate-300 font-bold text-xs border border-[#D4AF37]/30";
+      if (ind1) ind1.className = step === 1 ? "flex-1 text-center py-2 rounded-xl bg-[#D4AF37] text-[#0F251A] font-black text-xs shadow-md border border-[#D4AF37]" : "flex-1 text-center py-2 rounded-xl bg-[#1E293B] text-slate-300 font-bold text-xs border border-[#D4AF37]/30 opacity-70";
+      if (ind2) ind2.className = step === 2 ? "flex-1 text-center py-2 rounded-xl bg-[#D4AF37] text-[#0F251A] font-black text-xs shadow-md border border-[#D4AF37]" : "flex-1 text-center py-2 rounded-xl bg-[#1E293B] text-slate-300 font-bold text-xs border border-[#D4AF37]/30 opacity-70";
+      if (ind3) ind3.className = step === 3 ? "flex-1 text-center py-2 rounded-xl bg-[#D4AF37] text-[#0F251A] font-black text-xs shadow-md border border-[#D4AF37]" : "flex-1 text-center py-2 rounded-xl bg-[#1E293B] text-slate-300 font-bold text-xs border border-[#D4AF37]/30 opacity-70";
 
       if (prevBtn) prevBtn.classList.toggle('hidden', step === 1);
       if (nextBtn) nextBtn.classList.toggle('hidden', step === 3);
       if (submitBtn) submitBtn.classList.toggle('hidden', step !== 3);
+
+      if (window.lucide) lucide.createIcons();
     };
 
     window.nextInquiryStep = function() {
-      if (currentInquiryStep < 3) switchInquiryStep(currentInquiryStep + 1);
+      if (currentInquiryStep === 1) {
+        const dateInput = document.getElementById('inquiry-date');
+        if (dateInput && !dateInput.value.trim()) {
+          if (typeof showToast === 'function') showToast('لطفاً تاریخ تقریبی مراسم را وارد کنید.', 'warning');
+          dateInput.focus();
+          return;
+        }
+      }
+      if (currentInquiryStep < 3) {
+        switchInquiryStep(currentInquiryStep + 1);
+      }
     };
 
     window.prevInquiryStep = function() {
-      if (currentInquiryStep > 1) switchInquiryStep(currentInquiryStep - 1);
+      if (currentInquiryStep > 1) {
+        switchInquiryStep(currentInquiryStep - 1);
+      }
     };
 
     function openInquiryModal(vendorId, vendorName, itemTitle, itemPrice, itemType, itemId, itemThumb) {

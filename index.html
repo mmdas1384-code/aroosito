@@ -5744,10 +5744,6 @@
               </select>
             </div>
 
-            <div>
-              <label class="block mb-1.5 text-slate-200">توضیحات و پیام اختصاصی برای تامین‌کننده:</label>
-              <input type="text" id="inquiry-note" value="سلام، درخواست استعلام قیمت و دریافت پیش‌فاکتور را دارم." class="w-full bg-[#1E293B] border border-[#D4AF37]/30 text-white placeholder-slate-400 rounded-xl p-2.5 text-xs font-bold focus:outline-none focus:border-[#D4AF37]">
-            </div>
           </div>
 
           <!-- Manual Budget Input & Quick Selector Pills -->
@@ -5777,10 +5773,19 @@
           </div>
         </div>
 
-        <button type="submit" class="w-full bg-gradient-to-r from-[#D4AF37] to-[#F3E5AB] hover:from-[#e5bd3c] hover:to-[#fceba7] text-[#0F251A] font-black py-3.5 rounded-2xl text-xs shadow-lg transition-all duration-200 flex items-center justify-center gap-2 mt-2 cursor-pointer hover:scale-102 active:scale-98">
-          <i data-lucide="send" class="w-4 h-4 text-[#0F251A]"></i>
-          <span>ارسال استعلام و دریافت پیش‌فاکتور</span>
-        </button>
+        <!-- NAVIGATION STEP FOOTER BUTTONS -->
+        <div class="flex items-center justify-between pt-3 border-t border-slate-700/80 gap-3">
+          <button type="button" id="inquiry-prev-btn" onclick="prevInquiryStep()" class="hidden px-4 py-2.5 rounded-xl bg-[#1E293B] hover:bg-slate-700 text-slate-200 border border-[#D4AF37]/30 font-bold text-xs transition-all cursor-pointer">
+            ← قبلی
+          </button>
+          <div class="flex-1"></div>
+          <button type="button" id="inquiry-next-btn" onclick="nextInquiryStep()" class="px-5 py-2.5 rounded-xl bg-gradient-to-r from-[#D4AF37] to-[#F3E5AB] hover:from-[#e5bd3c] hover:to-[#fceba7] text-[#0F251A] font-black text-xs shadow-md transition-all cursor-pointer">
+            مرحله بعدی →
+          </button>
+          <button type="submit" id="inquiry-submit-btn" class="hidden px-6 py-2.5 rounded-xl bg-gradient-to-r from-[#D4AF37] to-[#F3E5AB] hover:from-[#e5bd3c] hover:to-[#fceba7] text-[#0F251A] font-black text-xs shadow-md transition-all cursor-pointer">
+            ثبت نهایی استعلام & دریافت پیش‌فاکتور 🚀
+          </button>
+        </div>
       </form>
     </div>
   </div>

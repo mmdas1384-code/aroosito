@@ -623,6 +623,17 @@ main#directory-view {
 }
 
 /* ==========================================================================
+   MULTI-STEP DIRECT INQUIRY MODAL STEP PANE SCOPED STYLES
+   ========================================================================== */
+#inquiry-modal .inquiry-step-pane {
+  transition: opacity 0.3s ease;
+}
+
+#inquiry-modal .inquiry-step-pane.hidden {
+  display: none !important;
+}
+
+/* ==========================================================================
    SUPER ADMIN PANEL & KPI CARDS SCOPED STYLES
    ========================================================================== */
 #tab-admin .admin-kpi-card {
