@@ -4720,50 +4720,53 @@ if (document.readyState === "loading") {
       });
 
       container.innerHTML = `
-        <div class="space-y-8">
+        <div class="budget-tracker budget-module space-y-8">
 
-          <!-- TOP HERO SUMMARY BANNER (4 KEY METRIC COUNTERS) -->
-          <div class="ivory-card rounded-3xl p-6 sm:p-8 space-y-6">
+          <!-- TOP HERO SUMMARY BANNER (HIGH-DENSITY GLASSMORPHISM STATS CARDS) -->
+          <div class="bg-[#0F172A]/90 backdrop-blur-md rounded-3xl p-6 sm:p-8 space-y-6 border border-[#D4AF37]/50 shadow-2xl text-white">
             <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 border-b border-[#D4AF37]/30 pb-4">
               <div class="space-y-1">
-                <span class="text-xs font-bold text-primary bg-primary/10 px-3 py-1 rounded-full border border-primary/20">خلاصه مالی کل جشن</span>
-                <h3 class="text-xl font-black text-[#111827] mt-1">بودجه‌ریز هوشمند پیشرفته عروسی در یزد</h3>
+                <span class="text-xs font-bold text-[#D4AF37] bg-[#1E293B] px-3 py-1 rounded-full border border-[#D4AF37]/30 flex items-center gap-1.5 w-fit">
+                  <i data-lucide="calculator" class="w-3.5 h-3.5 text-[#D4AF37]"></i>
+                  <span>داشبورد مالی هوشمند و بودجه‌ریز عروسی</span>
+                </span>
+                <h3 class="text-xl font-black text-white mt-1">مدیریت اعتبارات، پرداختی‌ها و انحراف مالی</h3>
               </div>
 
               <div class="flex items-center gap-2">
                 <span class="px-3.5 py-1.5 rounded-full text-xs font-black ${healthBadgeClass}">
                   وضعیت بودجه: ${healthBadgeText}
                 </span>
-                <button onclick="openBudgetItemModal()" class="bg-[#1B3B2B] hover:bg-emerald-900 text-[#D4AF37] border border-[#D4AF37]/40 px-4 py-2.5 rounded-xl text-xs font-bold transition-all shadow-md flex items-center gap-1.5 cursor-pointer">
-                  <i data-lucide="plus" class="w-4 h-4 text-[#D4AF37]"></i>
+                <button onclick="openBudgetItemModal()" class="bg-gradient-to-r from-[#D4AF37] to-[#F3E5AB] hover:from-amber-400 hover:to-amber-200 text-[#0F251A] font-black px-4 py-2.5 rounded-xl text-xs shadow-md transition-all flex items-center gap-1.5 cursor-pointer">
+                  <i data-lucide="plus" class="w-4 h-4 text-[#0F251A]"></i>
                   <span>+ ثبت هزینه جدید</span>
                 </button>
               </div>
             </div>
 
-            <!-- 4 METRIC COUNTERS -->
+            <!-- 4 HIGH-DENSITY GLASSMORPHISM FINANCIAL STATS CARDS -->
             <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
-              <div class="bg-white/80 p-4 rounded-2xl border border-[#D4AF37]/30 shadow-2xs space-y-1.5">
-                <span class="text-xs font-bold text-secondary flex items-center justify-between">
-                  <span>بودجه کل مصوب:</span>
-                  <button onclick="const b = prompt('سقف جدید بودجه کل (تومان):', '${totalBudget}'); if(b) updateTotalBudgetCap(b);" class="text-[10px] text-primary hover:underline font-bold">تغییر سقف</button>
+              <div class="budget-tracker-card bg-[#1E293B]/80 p-4 rounded-2xl border border-[#D4AF37]/40 shadow-inner space-y-1.5">
+                <span class="text-xs font-bold text-amber-200/90 flex items-center justify-between">
+                  <span>💵 بودجه کل مصوب:</span>
+                  <button onclick="const b = prompt('سقف جدید بودجه کل (تومان):', '${totalBudget}'); if(b) updateTotalBudgetCap(b);" class="text-[10px] text-[#D4AF37] hover:underline font-bold cursor-pointer">تغییر سقف</button>
                 </span>
-                <span class="block text-xl font-black text-[#111827]">${totalBudget.toLocaleString('fa-IR')} <span class="text-xs font-normal text-secondary">تومان</span></span>
+                <span class="block text-xl sm:text-2xl font-black text-[#D4AF37]">${totalBudget.toLocaleString('fa-IR')} <span class="text-xs font-normal text-amber-200">تومان</span></span>
               </div>
 
-              <div class="bg-white/80 p-4 rounded-2xl border border-[#D4AF37]/30 shadow-2xs space-y-1.5">
-                <span class="text-xs font-bold text-secondary">پرداخت شده (تسویه + بیعانه):</span>
-                <span class="block text-xl font-black text-[#1B3B2B]">${totalPaid.toLocaleString('fa-IR')} <span class="text-xs font-normal text-secondary">تومان</span></span>
+              <div class="budget-tracker-card bg-[#1E293B]/80 p-4 rounded-2xl border border-[#D4AF37]/40 shadow-inner space-y-1.5">
+                <span class="text-xs font-bold text-emerald-300">✅ پرداخت‌شده (تسویه + بیعانه):</span>
+                <span class="block text-xl sm:text-2xl font-black text-emerald-400">${totalPaid.toLocaleString('fa-IR')} <span class="text-xs font-normal text-emerald-200">تومان</span></span>
               </div>
 
-              <div class="bg-white/80 p-4 rounded-2xl border border-[#D4AF37]/30 shadow-2xs space-y-1.5">
-                <span class="text-xs font-bold text-secondary">باقیمانده تا سقف بودجه:</span>
-                <span class="block text-xl font-black ${remaining < 0 ? 'text-rose-600' : 'text-emerald-700'}">${remaining.toLocaleString('fa-IR')} <span class="text-xs font-normal text-secondary">تومان</span></span>
+              <div class="budget-tracker-card bg-[#1E293B]/80 p-4 rounded-2xl border border-[#D4AF37]/40 shadow-inner space-y-1.5">
+                <span class="text-xs font-bold ${remaining < 0 ? 'text-rose-300' : 'text-amber-200'}">📊 انحراف / باقیمانده تا سقف:</span>
+                <span class="block text-xl sm:text-2xl font-black ${remaining < 0 ? 'text-rose-400' : 'text-amber-300'}">${remaining.toLocaleString('fa-IR')} <span class="text-xs font-normal text-slate-300">تومان</span></span>
               </div>
 
-              <div class="bg-white/80 p-4 rounded-2xl border border-[#D4AF37]/30 shadow-2xs space-y-1.5">
-                <span class="text-xs font-bold text-secondary">ارزیابی سلامت بودجه:</span>
-                <span class="block text-xs font-bold text-graphite leading-relaxed">${healthDesc}</span>
+              <div class="budget-tracker-card bg-[#1E293B]/80 p-4 rounded-2xl border border-[#D4AF37]/40 shadow-inner space-y-1.5">
+                <span class="text-xs font-bold text-slate-300">💡 ارزیابی سلامت مالی:</span>
+                <span class="block text-xs font-bold text-slate-200 leading-relaxed">${healthDesc}</span>
               </div>
             </div>
           </div>
@@ -4923,7 +4926,7 @@ if (document.readyState === "loading") {
                     }
 
                     return `
-                      <tr class="hover:bg-slate-50/80 transition-colors">
+                      <tr class="hover:bg-slate-50/90 transition-colors border-b border-accent/40">
                         <td class="p-3.5">
                           <span class="font-bold text-[#111827] block">${item.title}</span>
                           ${item.notes ? `<span class="text-[10px] text-secondary block mt-0.5">${item.notes}</span>` : ''}
@@ -4934,11 +4937,11 @@ if (document.readyState === "loading") {
                         <td class="p-3.5 text-center font-black text-primary">${Number(item.paid).toLocaleString('fa-IR')}</td>
                         <td class="p-3.5 text-center">${statusBadge}</td>
                         <td class="p-3.5 text-center">
-                          <div class="flex items-center justify-center gap-2">
-                            <button onclick="openBudgetItemModal('${item.id}')" title="ویرایش" class="p-1.5 rounded-lg bg-bgCustom hover:bg-slate-200 border border-accent text-primary">
-                              <i data-lucide="edit-3" class="w-3.5 h-3.5"></i>
+                          <div class="flex items-center justify-center gap-1.5">
+                            <button onclick="openBudgetItemModal('${item.id}')" title="ویرایش قلم" class="p-1.5 rounded-xl bg-slate-100 hover:bg-[#D4AF37]/20 border border-accent hover:border-[#D4AF37] text-graphite transition-all cursor-pointer">
+                              <i data-lucide="edit-3" class="w-3.5 h-3.5 text-[#D4AF37]"></i>
                             </button>
-                            <button onclick="deleteBudgetItem('${item.id}')" title="حذف" class="p-1.5 rounded-lg bg-rose-50 hover:bg-rose-100 border border-rose-200 text-rose-600">
+                            <button onclick="deleteBudgetItem('${item.id}')" title="حذف قلم" class="p-1.5 rounded-xl bg-rose-50 hover:bg-rose-100 border border-rose-200 text-rose-600 transition-all cursor-pointer">
                               <i data-lucide="trash-2" class="w-3.5 h-3.5"></i>
                             </button>
                           </div>
