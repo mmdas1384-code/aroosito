@@ -530,6 +530,27 @@ main#directory-view {
 }
 
 /* ==========================================================================
+   VENDOR COMPARISON MATRIX SCOPED STYLES
+   ========================================================================== */
+.comparison-modal .comparison-matrix table {
+  border-spacing: 0;
+}
+
+.comparison-modal .comparison-matrix th,
+.comparison-modal .comparison-matrix td {
+  border-color: rgba(212, 175, 55, 0.25);
+}
+
+.comparison-modal .comparison-matrix tr:hover td {
+  background-color: rgba(30, 41, 59, 0.5);
+}
+
+.comparison-modal .comparison-matrix .best-spec-highlight {
+  background-color: rgba(212, 175, 55, 0.08) !important;
+  border-color: rgba(212, 175, 55, 0.4) !important;
+}
+
+/* ==========================================================================
    VENDOR DASHBOARD GLASSMORPHISM & CALENDAR STYLES
    ========================================================================== */
 .vpanel-pane {

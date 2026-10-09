@@ -3472,8 +3472,8 @@ if (document.readyState === "loading") {
         selectedComparisonVendorIds.splice(index, 1);
         showToast('تامین‌کننده از لیست مقایسه حذف شد.', 'info');
       } else {
-        if (selectedComparisonVendorIds.length >= 3) {
-          showToast('حداکثر ۳ تامین‌کننده می‌توانید برای مقایسه انتخاب کنید.', 'warning');
+        if (selectedComparisonVendorIds.length >= 4) {
+          showToast('حداکثر ۴ تامین‌کننده می‌توانید همزمان مقایسه کنید.', 'warning');
           return;
         }
         selectedComparisonVendorIds.push(id);
@@ -14729,58 +14729,166 @@ window.triggerComparisonFromBar = function() {
   }
 };
 
-window.openVendorComparisonModal = function(vendorIds = [1, 2, 3]) {
+window.openVendorComparisonModal = function(vendorIds) {
   const modal = document.getElementById('modal-vendor-comparison');
   if (!modal) return;
 
+  const targetIds = (Array.isArray(vendorIds) && vendorIds.length > 0)
+    ? vendorIds
+    : (selectedComparisonVendorIds.length > 0 ? selectedComparisonVendorIds : [1, 2, 3]);
+
   const compareList = (typeof vendors !== 'undefined' && Array.isArray(vendors)) ?
-    vendors.filter(v => vendorIds.includes(v.id)) : [];
+    vendors.filter(v => targetIds.includes(v.id)) : [];
 
   const bodyEl = document.getElementById('compare-modal-body');
   if (bodyEl) {
     if (compareList.length === 0) {
-      bodyEl.innerHTML = `<p class="text-center text-slate-400 py-8">هیچ تامین‌کننده‌ای جهت مقایسه انتخاب نشده است.</p>`;
-    } else {
       bodyEl.innerHTML = `
-        <div class="grid grid-cols-1 md:grid-cols-${Math.min(compareList.length, 3)} gap-4 text-center divide-y md:divide-y-0 md:divide-x md:divide-x-reverse divide-[#D4AF37]/30">
-          ${compareList.map(v => `
-            <div class="space-y-4 p-4 bg-[#1E293B] border border-[#D4AF37]/30 rounded-2xl flex flex-col justify-between">
-              <div class="space-y-2.5">
-                <img src="${v.image}" alt="${v.name}" class="w-full h-36 object-cover rounded-xl border border-[#D4AF37]/30">
-                <span class="text-[10px] font-bold text-amber-200 bg-[#0F172A] px-2.5 py-0.5 rounded-full inline-block border border-[#D4AF37]/30">${v.category}</span>
-                <h4 class="text-base font-black text-white leading-snug">${v.name}</h4>
-                <p class="text-xs text-slate-300 font-medium">📍 ${v.district || 'صفائیه، یزد'}</p>
-              </div>
+        <div class="py-12 text-center space-y-3">
+          <i data-lucide="scale-off" class="w-12 h-12 mx-auto text-[#D4AF37]/50"></i>
+          <p class="text-sm font-bold text-slate-300">هیچ تامین‌کننده‌ای جهت مقایسه انتخاب نشده است.</p>
+          <p class="text-xs text-slate-400">با کلیک روی آیکون مقایسه (⚖️) کارت تامین‌کنندگان، تا ۴ گزینه را همزمان بررسی کنید.</p>
+        </div>
+      `;
+    } else {
+      const pricesNum = compareList.map(v => parsePriceNumeric(v.priceRange) || 0).filter(p => p > 0);
+      const minPrice = pricesNum.length > 0 ? Math.min(...pricesNum) : null;
+      const maxRating = Math.max(...compareList.map(v => parseFloat(v.rating) || 0));
 
-              <div class="space-y-2 border-t border-slate-700/80 pt-3 text-xs">
-                <div class="p-2.5 bg-[#0F172A] rounded-xl border border-[#D4AF37]/20 flex justify-between items-center">
-                  <span class="text-slate-400 font-normal text-[11px]">شروع قیمت پایه:</span>
-                  <strong class="text-[#D4AF37] text-xs sm:text-sm font-black">${v.priceRange || 'استعلام'}</strong>
-                </div>
+      bodyEl.innerHTML = `
+        <div class="comparison-matrix overflow-x-auto custom-scrollbar pb-2">
+          <table class="w-full text-right border-collapse min-w-[650px]">
+            <!-- Table Header: Vendor Cover, Name, Category & Removal -->
+            <thead>
+              <tr class="border-b border-[#D4AF37]/30 bg-[#1E293B]/80">
+                <th class="p-3 w-36 text-xs font-black text-[#D4AF37] align-middle border-l border-[#D4AF37]/20">
+                  معیار مقایسه
+                </th>
+                ${compareList.map(v => `
+                  <th class="p-3 text-center align-top border-l border-[#D4AF37]/20 min-w-[180px] relative group">
+                    <button type="button" onclick="toggleVendorComparison(${v.id}, event)" class="absolute top-2 left-2 w-6 h-6 rounded-full bg-rose-500/20 hover:bg-rose-500/40 text-rose-300 flex items-center justify-center text-xs transition-colors cursor-pointer" title="حذف از مقایسه (✖)">
+                      ✕
+                    </button>
+                    <img src="${v.image}" alt="${v.name}" class="w-full h-28 object-cover rounded-xl border border-[#D4AF37]/40 mb-2 shadow-sm">
+                    <span class="text-[10px] font-bold text-amber-200 bg-[#0F172A] px-2 py-0.5 rounded-full border border-[#D4AF37]/30 inline-block mb-1">${v.category}</span>
+                    <h4 class="text-xs sm:text-sm font-black text-white line-clamp-1">${v.name}</h4>
+                    <span class="text-[10.5px] text-slate-300 block font-normal mt-0.5">📍 ${v.district || 'صفائیه، یزد'}</span>
+                  </th>
+                `).join('')}
+              </tr>
+            </thead>
+            <tbody class="divide-y divide-[#D4AF37]/20 text-xs font-bold text-slate-200">
+              <!-- Row 1: قیمت پایه -->
+              <tr class="hover:bg-[#1E293B]/40 transition-colors">
+                <td class="p-3 text-slate-400 font-bold bg-[#0F172A] border-l border-[#D4AF37]/20">
+                  💵 قیمت پایه
+                </td>
+                ${compareList.map(v => {
+                  const numP = parsePriceNumeric(v.priceRange);
+                  const isBestPrice = minPrice && numP === minPrice;
+                  return `
+                    <td class="p-3 text-center border-l border-[#D4AF37]/20 ${isBestPrice ? 'best-spec-highlight text-[#D4AF37] font-black' : ''}">
+                      <span class="text-sm font-black">${v.priceRange || 'استعلام'}</span>
+                      ${isBestPrice ? `<span class="block text-[9.5px] text-amber-300 font-bold mt-0.5">⭐ اقتصادی‌ترین</span>` : ''}
+                    </td>
+                  `;
+                }).join('')}
+              </tr>
 
-                <div class="p-2.5 bg-[#0F172A] rounded-xl border border-[#D4AF37]/20 flex justify-between items-center">
-                  <span class="text-slate-400 font-normal text-[11px]">امتیاز زوجین:</span>
-                  <strong class="text-amber-300 font-bold">⭐️ ${v.rating || 4.9} (${v.reviewCount || 32} نظر)</strong>
-                </div>
+              <!-- Row 2: ظرفیت مهمانان -->
+              <tr class="hover:bg-[#1E293B]/40 transition-colors">
+                <td class="p-3 text-slate-400 font-bold bg-[#0F172A] border-l border-[#D4AF37]/20">
+                  👥 ظرفیت مهمانان
+                </td>
+                ${compareList.map(v => `
+                  <td class="p-3 text-center border-l border-[#D4AF37]/20">
+                    <span>${v.capacity ? `${v.capacity} نفر` : '۵۰ الی ۸۰۰ نفر'}</span>
+                  </td>
+                `).join('')}
+              </tr>
 
-                <div class="p-2.5 bg-[#0F172A] rounded-xl border border-[#D4AF37]/20 flex justify-between items-center">
-                  <span class="text-slate-400 font-normal text-[11px]">اصالت کسب‌وکار:</span>
-                  <span class="text-emerald-400 font-bold">${v.verified ? 'تاییدشده رسمی' : 'مجاز'}</span>
-                </div>
+              <!-- Row 3: امتیاز و نظرات -->
+              <tr class="hover:bg-[#1E293B]/40 transition-colors">
+                <td class="p-3 text-slate-400 font-bold bg-[#0F172A] border-l border-[#D4AF37]/20">
+                  ⭐️ امتیاز و رضایت
+                </td>
+                ${compareList.map(v => {
+                  const r = parseFloat(v.rating) || 4.9;
+                  const isTopRating = r === maxRating;
+                  return `
+                    <td class="p-3 text-center border-l border-[#D4AF37]/20 ${isTopRating ? 'best-spec-highlight' : ''}">
+                      <span class="text-amber-300 font-black">⭐️ ${r}</span>
+                      <span class="text-[10px] text-slate-400 block">(${v.reviewCount || 32} نظر ثبت‌شده)</span>
+                    </td>
+                  `;
+                }).join('')}
+              </tr>
 
-                <div class="space-y-1 text-right pt-2">
-                  <span class="text-[10.5px] text-slate-400 block font-bold">ویژگی‌ها & هایلایت‌ها:</span>
-                  ${(v.capabilityTags || ["تضمین قیمت", "رزرو اقساطی", "پاسخگویی سریع"]).slice(0, 3).map(t => `<div class="text-[11px] text-amber-100 flex items-center gap-1.5"><i data-lucide="check-circle" class="w-3.5 h-3.5 text-[#D4AF37]"></i><span>${t}</span></div>`).join('')}
-                </div>
-              </div>
+              <!-- Row 4: امکانات ویژه -->
+              <tr class="hover:bg-[#1E293B]/40 transition-colors">
+                <td class="p-3 text-slate-400 font-bold bg-[#0F172A] border-l border-[#D4AF37]/20">
+                  ✨ امکانات ویژه
+                </td>
+                ${compareList.map(v => `
+                  <td class="p-3 text-center border-l border-[#D4AF37]/20">
+                    <div class="flex flex-wrap justify-center gap-1">
+                      ${(v.capabilityTags || ["پارکینگ اختصاصی", "سیستم صوت حرفه‌ای", "نورپردازی ۳D"]).map(t => `
+                        <span class="text-[10px] bg-[#1E293B] text-amber-100 border border-[#D4AF37]/30 px-2 py-0.5 rounded-md">${t}</span>
+                      `).join('')}
+                    </div>
+                  </td>
+                `).join('')}
+              </tr>
 
-              <div class="pt-2 flex flex-col gap-2">
-                <button type="button" onclick="closeVendorComparisonModal(); openVendorDetailModal(${v.id})" class="w-full bg-gradient-to-r from-[#D4AF37] to-[#F3E5AB] text-[#0F251A] font-black py-2.5 rounded-xl text-xs shadow-md transition-all hover:scale-105 active:scale-95 cursor-pointer">
-                  مشاهده پروفایل کامل
-                </button>
-              </div>
-            </div>
-          `).join('')}
+              <!-- Row 5: تور ۳۶۰° -->
+              <tr class="hover:bg-[#1E293B]/40 transition-colors">
+                <td class="p-3 text-slate-400 font-bold bg-[#0F172A] border-l border-[#D4AF37]/20">
+                  🎥 بازدید و تور ۳۶۰°
+                </td>
+                ${compareList.map(v => `
+                  <td class="p-3 text-center border-l border-[#D4AF37]/20">
+                    <button type="button" onclick="open360TourModal(${v.id})" class="inline-flex items-center gap-1 px-2.5 py-1 rounded-lg bg-[#1E293B] hover:bg-[#D4AF37]/20 text-amber-200 border border-[#D4AF37]/40 text-[10.5px] transition-colors cursor-pointer">
+                      <i data-lucide="compass" class="w-3.5 h-3.5 text-[#D4AF37]"></i>
+                      <span>تور VR فعال</span>
+                    </button>
+                  </td>
+                `).join('')}
+              </tr>
+
+              <!-- Row 6: موقعیت مکانی -->
+              <tr class="hover:bg-[#1E293B]/40 transition-colors">
+                <td class="p-3 text-slate-400 font-bold bg-[#0F172A] border-l border-[#D4AF37]/20">
+                  📍 موقعیت مکانی
+                </td>
+                ${compareList.map(v => `
+                  <td class="p-3 text-center border-l border-[#D4AF37]/20 text-[11px] font-normal text-slate-300">
+                    ${v.address || `${v.district || 'یزد'}، خیابان اصلی`}
+                  </td>
+                `).join('')}
+              </tr>
+
+              <!-- Footer Row: Quick CTAs -->
+              <tr class="bg-[#1E293B]/90">
+                <td class="p-3 text-slate-400 font-bold bg-[#0F172A] border-l border-[#D4AF37]/20 align-middle">
+                  🚀 اقدام سریع
+                </td>
+                ${compareList.map(v => `
+                  <td class="p-3 border-l border-[#D4AF37]/20 text-center">
+                    <div class="flex flex-col gap-2">
+                      <button type="button" onclick="closeVendorComparisonModal(); openInquiryModal(${v.id})" class="w-full bg-gradient-to-r from-[#D4AF37] to-[#F3E5AB] text-[#0F251A] font-black py-2 rounded-xl text-xs shadow-md transition-all hover:scale-105 active:scale-95 cursor-pointer flex items-center justify-center gap-1">
+                        <i data-lucide="send" class="w-3.5 h-3.5"></i>
+                        <span>استعلام قیمت سریع</span>
+                      </button>
+                      <button type="button" onclick="closeVendorComparisonModal(); openVendorDetailModal(${v.id})" class="w-full bg-[#0F172A] hover:bg-[#1E293B] text-white border border-[#D4AF37]/50 font-bold py-1.5 rounded-xl text-[11px] transition-all cursor-pointer flex items-center justify-center gap-1">
+                        <i data-lucide="eye" class="w-3.5 h-3.5 text-[#D4AF37]"></i>
+                        <span>مشاهده پروفایل</span>
+                      </button>
+                    </div>
+                  </td>
+                `).join('')}
+              </tr>
+            </tbody>
+          </table>
         </div>
       `;
     }
