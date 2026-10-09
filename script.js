@@ -9703,12 +9703,16 @@ if (document.readyState === "loading") {
       invitationState.isPlayingAudio = !invitationState.isPlayingAudio;
       const text = document.getElementById('inv-music-text');
       const icon = document.getElementById('inv-music-icon');
+      const indicator = document.getElementById('inv-music-indicator');
+
       if (invitationState.isPlayingAudio) {
-        if (text) text.innerText = 'پخش موزیک...';
-        if (icon) icon.className = "w-3 h-3 text-rose-400 animate-spin";
+        if (text) text.innerText = 'در حال پخش...';
+        if (icon) icon.className = "w-3 h-3 text-[#D4AF37] animate-spin";
+        if (indicator) indicator.className = "w-2 h-2 rounded-full bg-[#D4AF37] animate-ping inline-block shadow-[0_0_8px_#D4AF37]";
       } else {
-        if (text) text.innerText = 'موزیک';
-        if (icon) icon.className = "w-3 h-3 text-emerald-400";
+        if (text) text.innerText = 'موزیک آنلاین';
+        if (icon) icon.className = "w-3 h-3 text-[#D4AF37]";
+        if (indicator) indicator.className = "w-2 h-2 rounded-full bg-slate-500 inline-block";
       }
     }
 
@@ -15391,6 +15395,36 @@ if (typeof toggleFavoriteVendorModal === "function") window.toggleFavoriteVendor
 if (typeof toggleGuestRsvp === "function") window.toggleGuestRsvp = toggleGuestRsvp;
 if (typeof toggleHiddenCostsBuffer === "function") window.toggleHiddenCostsBuffer = toggleHiddenCostsBuffer;
 if (typeof toggleInvFeature === "function") window.toggleInvFeature = toggleInvFeature;
+window.addToCalendar = function() {
+  const eventTitle = "جشن عروسی " + (document.getElementById('inv-preview-names')?.innerText || "علی و سارا");
+  const eventDate = document.getElementById('inv-preview-date')?.innerText || "۱۴۰۳/۰۶/۱۵";
+  const venue = document.getElementById('inv-preview-venue')?.innerText || "باغ تالار تشریفاتی";
+
+  const icsContent = `BEGIN:VCALENDAR
+VERSION:2.0
+PRODID:-//Aroosi No Wedding Platform//FA
+BEGIN:VEVENT
+SUMMARY:${eventTitle}
+DESCRIPTION:مراسم جشن عروسی در ${venue} - تاریخ: ${eventDate}
+LOCATION:${venue}
+STATUS:CONFIRMED
+END:VEVENT
+END:VCALENDAR`;
+
+  const blob = new Blob([icsContent], { type: 'text/calendar;charset=utf-8' });
+  const url = URL.createObjectURL(blob);
+  const link = document.createElement('a');
+  link.href = url;
+  link.setAttribute('download', 'wedding-event.ics');
+  document.body.appendChild(link);
+  link.click();
+  document.body.removeChild(link);
+
+  if (typeof showToast === 'function') {
+    showToast('رویداد عروسی جهت افزودن به تقویم با موفقیت دریافت گردید!', 'success');
+  }
+};
+
 if (typeof toggleInvMusic === "function") window.toggleInvMusic = toggleInvMusic;
 if (typeof toggleModalFaq === "function") window.toggleModalFaq = toggleModalFaq;
 if (typeof toggleNewTaskModal === "function") window.toggleNewTaskModal = toggleNewTaskModal;

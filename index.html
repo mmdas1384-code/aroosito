@@ -4496,23 +4496,27 @@
         </div>
 
         <!-- RIGHT COLUMN: LIVE INTERACTIVE CARD PREVIEW (پیش‌نمایش زنده در فریم موبایل) -->
-        <div id="inv-preview-panel" class="lg:col-span-5 border-2 border-accent rounded-[2.5rem] bg-slate-900 p-4 shadow-2xl lg:sticky lg:top-24">
-          <div class="text-center pb-2 text-xs font-bold text-accent flex items-center justify-center gap-1.5">
-            <i data-lucide="smartphone" class="w-4 h-4 text-emerald-400"></i>
-            <span>پیش‌نمایش زنده نمای موبایل مهمان (Live Preview)</span>
+        <div id="inv-preview-panel" class="lg:col-span-5 border-2 border-[#D4AF37]/60 rounded-[2.5rem] bg-[#0F172A] p-4 shadow-2xl lg:sticky lg:top-24 shadow-[0_10px_40px_rgba(212,175,55,0.15)]">
+          <div class="text-center pb-2 text-xs font-black text-[#D4AF37] flex items-center justify-center gap-1.5">
+            <i data-lucide="smartphone" class="w-4 h-4 text-[#D4AF37]"></i>
+            <span>پیش‌نمایش زنده کارت دعوت دیجیتال مهمان (Live Luxury Preview)</span>
           </div>
 
           <!-- MOBILE FRAME CONTAINER -->
-          <div id="inv-phone-container" class="max-w-sm mx-auto bg-bgCustom rounded-[2rem] overflow-hidden shadow-2xl relative border-4 border-slate-800 min-h-[640px] max-h-[720px] overflow-y-auto custom-scrollbar flex flex-col transition-all">
+          <div id="inv-phone-container" class="invitation-container max-w-sm mx-auto bg-[#0F172A] rounded-[2rem] overflow-hidden shadow-2xl relative border-2 border-[#D4AF37]/50 min-h-[640px] max-h-[720px] overflow-y-auto custom-scrollbar flex flex-col transition-all">
 
-            <!-- PHONE TOP NOTCH HEADER -->
-            <div class="bg-slate-900 text-white px-4 py-2 flex justify-between items-center text-[10px] font-bold sticky top-0 z-30 opacity-90 backdrop-blur-xs">
-              <span class="text-emerald-400 font-mono">عروسی تو • آنلاین</span>
+            <!-- PHONE TOP NOTCH HEADER WITH GLASSMORPHISM MUSIC PLAYER -->
+            <div class="bg-[#1E293B]/90 text-white px-4 py-2.5 flex justify-between items-center text-[10px] font-bold sticky top-0 z-30 backdrop-blur-md border-b border-[#D4AF37]/30">
+              <span class="text-[#D4AF37] font-black flex items-center gap-1">
+                <i data-lucide="sparkles" class="w-3 h-3 text-[#D4AF37]"></i>
+                <span>عروسی تو • کارت اختصاصی</span>
+              </span>
               <div class="flex items-center gap-2">
                 <!-- Music Audio Toggle Button -->
-                <button id="inv-music-toggle-btn" onclick="toggleInvMusic()" class="bg-white/20 hover:bg-white/30 text-white px-2 py-0.5 rounded-full flex items-center gap-1 text-[10px] transition-colors">
-                  <i id="inv-music-icon" data-lucide="music" class="w-3 h-3 text-emerald-400"></i>
-                  <span id="inv-music-text">موزیک</span>
+                <button id="inv-music-toggle-btn" onclick="toggleInvMusic()" class="bg-[#0F172A]/80 hover:bg-[#0F172A] text-amber-200 border border-[#D4AF37]/50 px-2.5 py-1 rounded-full flex items-center gap-1.5 text-[10px] transition-all shadow-xs cursor-pointer">
+                  <span id="inv-music-indicator" class="w-2 h-2 rounded-full bg-slate-500 inline-block"></span>
+                  <i id="inv-music-icon" data-lucide="music" class="w-3 h-3 text-[#D4AF37]"></i>
+                  <span id="inv-music-text" class="font-bold">موزیک آنلاین</span>
                 </button>
               </div>
             </div>
@@ -4568,48 +4572,60 @@
               </div>
 
               <!-- COUNTDOWN TIMER MODULE -->
-              <div id="inv-mod-countdown" class="p-4 rounded-2xl border bg-white/80 space-y-2">
-                <span class="text-[11px] font-bold opacity-80 block">زمان باقی‌مانده تا آغاز جشن:</span>
+              <div id="inv-mod-countdown" class="p-4 rounded-2xl border border-[#D4AF37]/40 bg-[#0F172A]/90 backdrop-blur-md shadow-lg space-y-2.5 text-white">
+                <span class="text-[11px] font-black text-[#D4AF37] block flex items-center justify-center gap-1">
+                  <i data-lucide="timer" class="w-3.5 h-3.5 text-[#D4AF37]"></i>
+                  <span>زمان باقی‌مانده تا آغاز مراسم:</span>
+                </span>
                 <div class="grid grid-cols-4 gap-1.5 text-center dir-ltr">
-                  <div class="bg-slate-900 text-white rounded-xl p-2">
-                    <span id="inv-cnt-days" class="block text-base font-black">۱۴۵</span>
-                    <span class="text-[9px] block text-slate-300">روز</span>
+                  <div class="bg-[#1E293B] border border-[#D4AF37]/30 text-white rounded-xl p-2 shadow-inner">
+                    <span id="inv-cnt-days" class="block text-base sm:text-lg font-black text-[#D4AF37]">۱۴۵</span>
+                    <span class="text-[9px] block text-slate-300 font-bold">روز</span>
                   </div>
-                  <div class="bg-slate-900 text-white rounded-xl p-2">
-                    <span id="inv-cnt-hours" class="block text-base font-black">۰۸</span>
-                    <span class="text-[9px] block text-slate-300">ساعت</span>
+                  <div class="bg-[#1E293B] border border-[#D4AF37]/30 text-white rounded-xl p-2 shadow-inner">
+                    <span id="inv-cnt-hours" class="block text-base sm:text-lg font-black text-white">۰۸</span>
+                    <span class="text-[9px] block text-slate-300 font-bold">ساعت</span>
                   </div>
-                  <div class="bg-slate-900 text-white rounded-xl p-2">
-                    <span id="inv-cnt-mins" class="block text-base font-black">۲۴</span>
-                    <span class="text-[9px] block text-slate-300">دقیقه</span>
+                  <div class="bg-[#1E293B] border border-[#D4AF37]/30 text-white rounded-xl p-2 shadow-inner">
+                    <span id="inv-cnt-mins" class="block text-base sm:text-lg font-black text-white">۲۴</span>
+                    <span class="text-[9px] block text-slate-300 font-bold">دقیقه</span>
                   </div>
-                  <div class="bg-slate-900 text-white rounded-xl p-2">
-                    <span id="inv-cnt-secs" class="block text-base font-black">۵۰</span>
-                    <span class="text-[9px] block text-slate-300">ثانیه</span>
+                  <div class="bg-[#1E293B] border border-[#D4AF37]/30 text-white rounded-xl p-2 shadow-inner">
+                    <span id="inv-cnt-secs" class="block text-base sm:text-lg font-black text-amber-300">۵۰</span>
+                    <span class="text-[9px] block text-slate-300 font-bold">ثانیه</span>
                   </div>
                 </div>
               </div>
 
               <!-- VENUE LOCATION & NAVIGATION BUTTONS -->
-              <div class="p-4 rounded-2xl border bg-white/80 space-y-3 text-right">
-                <div class="flex items-center gap-2">
-                  <i data-lucide="map-pin" class="w-5 h-5 text-rose-600 shrink-0"></i>
-                  <div>
-                    <h4 id="inv-preview-venue" class="text-xs font-bold text-graphite">باغ تالار تشریفاتی زمرد</h4>
-                    <p id="inv-preview-address" class="text-[11px] text-secondary font-medium">تهران، احمدآباد مستوفی، خیابان صنوبر، پلاک ۴۵</p>
+              <div class="p-4 rounded-2xl border border-[#D4AF37]/40 bg-[#0F172A]/90 backdrop-blur-md space-y-3 text-right text-white shadow-lg">
+                <div class="flex items-center justify-between border-b border-[#D4AF37]/30 pb-2">
+                  <div class="flex items-center gap-2">
+                    <i data-lucide="map-pin" class="w-5 h-5 text-[#D4AF37] shrink-0"></i>
+                    <div>
+                      <h4 id="inv-preview-venue" class="text-xs font-black text-white">باغ تالار تشریفاتی زمرد</h4>
+                      <p id="inv-preview-address" class="text-[10.5px] text-slate-300 font-medium">تهران، احمدآباد مستوفی، خیابان صنوبر، پلاک ۴۵</p>
+                    </div>
                   </div>
+                  <button type="button" onclick="addToCalendar()" class="bg-[#D4AF37]/20 hover:bg-[#D4AF37]/30 text-[#D4AF37] border border-[#D4AF37]/50 text-[10px] font-bold px-2.5 py-1 rounded-xl transition-all cursor-pointer flex items-center gap-1 shrink-0" title="افزودن به تقویم">
+                    <i data-lucide="calendar-plus" class="w-3.5 h-3.5"></i>
+                    <span>افزودن به تقویم</span>
+                  </button>
                 </div>
 
-                <div class="grid grid-cols-3 gap-1.5 pt-1">
-                  <a id="inv-link-gmaps" href="https://maps.google.com" target="_blank" class="bg-white border border-accent hover:border-primary text-graphite py-2 rounded-xl text-[10px] font-bold text-center block shadow-xs">
-                    گوگل مپ
-                  </a>
-                  <a id="inv-link-neshan" href="https://neshan.org" target="_blank" class="bg-white border border-accent hover:border-primary text-graphite py-2 rounded-xl text-[10px] font-bold text-center block shadow-xs">
-                    مسیریاب نشان
-                  </a>
-                  <a id="inv-link-balad" href="https://balad.ir" target="_blank" class="bg-white border border-accent hover:border-primary text-graphite py-2 rounded-xl text-[10px] font-bold text-center block shadow-xs">
-                    مسیریاب بلد
-                  </a>
+                <div class="space-y-1.5 pt-1">
+                  <span class="text-[10px] font-bold text-amber-200 block">🗺️ مسیریابی هوشمند تا محل مراسم:</span>
+                  <div class="grid grid-cols-3 gap-1.5">
+                    <a id="inv-link-gmaps" href="https://maps.google.com" target="_blank" class="bg-[#1E293B] border border-[#D4AF37]/30 hover:border-[#D4AF37] text-white py-2 rounded-xl text-[10px] font-bold text-center block shadow-xs transition-all">
+                      گوگل مپ
+                    </a>
+                    <a id="inv-link-neshan" href="https://neshan.org" target="_blank" class="bg-[#1E293B] border border-[#D4AF37]/30 hover:border-[#D4AF37] text-white py-2 rounded-xl text-[10px] font-bold text-center block shadow-xs transition-all">
+                      مسیریاب نشان
+                    </a>
+                    <a id="inv-link-balad" href="https://balad.ir" target="_blank" class="bg-[#1E293B] border border-[#D4AF37]/30 hover:border-[#D4AF37] text-white py-2 rounded-xl text-[10px] font-bold text-center block shadow-xs transition-all">
+                      مسیریاب بلد
+                    </a>
+                  </div>
                 </div>
               </div>
 
@@ -4649,57 +4665,60 @@
               </div>
 
               <!-- RSVP FORM MODULE -->
-              <div id="inv-mod-rsvp" class="p-4 rounded-2xl border bg-white/90 text-right space-y-3">
-                <div class="border-b border-accent pb-2">
-                  <h4 class="text-xs font-bold text-graphite flex items-center gap-1.5">
-                    <i data-lucide="check-circle-2" class="w-4 h-4 text-primary"></i>
-                    <span>تأیید حضور مهمانان (RSVP)</span>
-                  </h4>
-                  <p class="text-[10px] text-secondary">لطفاً وضعیت حضور خود را اعلام بفرمایید</p>
+              <div id="inv-mod-rsvp" class="p-4 rounded-2xl border border-[#D4AF37]/40 bg-[#0F172A]/90 backdrop-blur-md text-right space-y-3 text-white shadow-lg">
+                <div class="border-b border-[#D4AF37]/30 pb-2 flex justify-between items-center">
+                  <div>
+                    <h4 class="text-xs font-black text-[#D4AF37] flex items-center gap-1.5">
+                      <i data-lucide="check-circle-2" class="w-4 h-4 text-[#D4AF37]"></i>
+                      <span>تأیید حضور مهمانان (RSVP)</span>
+                    </h4>
+                    <p class="text-[10px] text-slate-300">لطفاً وضعیت حضور خود را جهت هماهنگی تالار اعلام بفرمایید</p>
+                  </div>
+                  <span class="text-[9.5px] bg-[#1E293B] text-amber-200 border border-[#D4AF37]/30 px-2 py-0.5 rounded-full font-bold">پاسخ آنلاین</span>
                 </div>
 
                 <div class="grid grid-cols-2 gap-2">
-                  <button type="button" onclick="handleQuickRsvp('attending')" class="bg-emerald-600 hover:bg-emerald-700 text-white font-bold py-2 px-3 rounded-xl text-[11px] shadow-sm transition-all flex items-center justify-center gap-1 cursor-pointer">
+                  <button type="button" onclick="handleQuickRsvp('attending')" class="bg-gradient-to-r from-emerald-600 to-emerald-700 hover:from-emerald-500 hover:to-emerald-600 text-white font-bold py-2 px-3 rounded-xl text-[11px] shadow-md transition-all flex items-center justify-center gap-1 cursor-pointer">
                     <i data-lucide="check" class="w-3.5 h-3.5"></i>
                     <span>با کمال میل شرکت می‌کنم</span>
                   </button>
-                  <button type="button" onclick="handleQuickRsvp('declined')" class="bg-rose-600 hover:bg-rose-700 text-white font-bold py-2 px-3 rounded-xl text-[11px] shadow-sm transition-all flex items-center justify-center gap-1 cursor-pointer">
+                  <button type="button" onclick="handleQuickRsvp('declined')" class="bg-rose-900/80 hover:bg-rose-800 text-rose-200 border border-rose-500/40 font-bold py-2 px-3 rounded-xl text-[11px] shadow-md transition-all flex items-center justify-center gap-1 cursor-pointer">
                     <i data-lucide="x" class="w-3.5 h-3.5"></i>
                     <span>امکان حضور ندارم</span>
                   </button>
                 </div>
 
-                <form onsubmit="handleGuestRsvpSubmit(event)" class="space-y-3 text-xs font-bold text-graphite pt-1">
+                <form onsubmit="handleGuestRsvpSubmit(event)" class="space-y-3 text-xs font-bold text-white pt-1">
                   <div>
-                    <label class="block mb-1 text-[11px]">نام و نام خانوادگی شما:</label>
-                    <input type="text" id="guest-rsvp-name" required placeholder="مثلاً: محمد حسینی" class="w-full bg-bgCustom border border-accent rounded-xl p-2 text-xs font-medium focus:outline-none focus:border-primary">
+                    <label class="block mb-1 text-[11px] text-slate-300">نام و نام خانوادگی شما:</label>
+                    <input type="text" id="guest-rsvp-name" required placeholder="مثلاً: محمد حسینی" class="inv-rsvp-input w-full bg-[#1E293B]/80 border border-[#D4AF37]/30 rounded-xl p-2.5 text-xs font-medium text-white focus:outline-none focus:border-[#D4AF37] focus:ring-1 focus:ring-[#D4AF37]/50">
                   </div>
 
                   <div class="space-y-1">
-                    <label class="block text-[11px]">وضعیت حضور:</label>
+                    <label class="block text-[11px] text-slate-300">وضعیت حضور:</label>
                     <div class="grid grid-cols-2 gap-2">
-                      <label class="flex items-center gap-1.5 p-2 bg-bgCustom border border-accent rounded-xl cursor-pointer text-[11px]">
-                        <input type="radio" name="guest-rsvp-status" value="attending" checked class="text-primary focus:ring-primary w-3.5 h-3.5">
+                      <label class="flex items-center gap-1.5 p-2 bg-[#1E293B] border border-[#D4AF37]/30 rounded-xl cursor-pointer text-[11px] text-slate-200">
+                        <input type="radio" name="guest-rsvp-status" value="attending" checked class="text-[#D4AF37] focus:ring-[#D4AF37] w-3.5 h-3.5">
                         <span>شرکت می‌کنم</span>
                       </label>
-                      <label class="flex items-center gap-1.5 p-2 bg-bgCustom border border-accent rounded-xl cursor-pointer text-[11px]">
-                        <input type="radio" name="guest-rsvp-status" value="declined" class="text-primary focus:ring-primary w-3.5 h-3.5">
+                      <label class="flex items-center gap-1.5 p-2 bg-[#1E293B] border border-[#D4AF37]/30 rounded-xl cursor-pointer text-[11px] text-slate-200">
+                        <input type="radio" name="guest-rsvp-status" value="declined" class="text-[#D4AF37] focus:ring-[#D4AF37] w-3.5 h-3.5">
                         <span>نمی‌توانم بیایم</span>
                       </label>
                     </div>
                   </div>
 
                   <div>
-                    <label class="block mb-1 text-[11px]">تعداد همراهان (شامل خودتان):</label>
-                    <input type="number" id="guest-rsvp-count" value="1" min="1" max="10" class="w-full bg-bgCustom border border-accent rounded-xl p-2 text-xs font-bold text-primary">
+                    <label class="block mb-1 text-[11px] text-slate-300">تعداد همراهان (شامل خودتان):</label>
+                    <input type="number" id="guest-rsvp-count" value="1" min="1" max="10" class="inv-rsvp-input w-full bg-[#1E293B]/80 border border-[#D4AF37]/30 rounded-xl p-2.5 text-xs font-bold text-[#D4AF37] focus:outline-none focus:border-[#D4AF37]">
                   </div>
 
                   <div>
-                    <label class="block mb-1 text-[11px]">ترجیح منوی غذایی (Menu Preference):</label>
-                    <select id="guest-rsvp-menu" class="w-full bg-bgCustom border border-accent rounded-xl p-2 text-xs font-bold text-graphite focus:outline-none focus:border-primary cursor-pointer">
-                      <option value="کباب و جوجه کلاسیک" selected>🍖 منوی کباب & جوجه کلاسیک</option>
-                      <option value="خورش سنتی یزدی (قیمه یزدی)">🍲 منوی خورش سنتی یزدی (قیمه یزدی)</option>
-                      <option value="گیاه‌خواری / وگان">🥗 منوی گیاه‌خواری / وگان</option>
+                    <label class="block mb-1 text-[11px] text-slate-300">ترجیح منوی غذایی (Menu Preference):</label>
+                    <select id="guest-rsvp-menu" class="inv-rsvp-input w-full bg-[#1E293B]/80 border border-[#D4AF37]/30 rounded-xl p-2.5 text-xs font-bold text-white focus:outline-none focus:border-[#D4AF37] cursor-pointer">
+                      <option value="کباب و جوجه کلاسیک" class="bg-[#0F172A] text-white" selected>🍖 منوی کباب & جوجه کلاسیک</option>
+                      <option value="خورش سنتی یزدی (قیمه یزدی)" class="bg-[#0F172A] text-white">🍲 منوی خورش سنتی یزدی (قیمه یزدی)</option>
+                      <option value="گیاه‌خواری / وگان" class="bg-[#0F172A] text-white">🥗 منوی گیاه‌خواری / وگان</option>
                     </select>
                   </div>
 
