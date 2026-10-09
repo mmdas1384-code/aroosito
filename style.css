@@ -606,6 +606,23 @@ main#directory-view {
 }
 
 /* ==========================================================================
+   MULTI-STEP DIRECT INQUIRY & BOOKING MODAL SCOPED STYLES
+   ========================================================================== */
+#inquiry-modal.inquiry-modal .inquiry-form-control {
+  transition: all 0.3s ease;
+}
+
+#inquiry-modal.inquiry-modal .inquiry-form-control:focus {
+  border-color: #D4AF37 !important;
+  box-shadow: 0 0 10px rgba(212, 175, 55, 0.3) !important;
+}
+
+#inquiry-modal.inquiry-modal #inquiry-services-checklist label:hover {
+  border-color: #D4AF37;
+  background-color: rgba(212, 175, 55, 0.1);
+}
+
+/* ==========================================================================
    VENDOR DASHBOARD GLASSMORPHISM & CALENDAR STYLES
    ========================================================================== */
 .vpanel-pane {

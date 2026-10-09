@@ -5585,19 +5585,31 @@
   <!-- ========================================== -->
 
 
-  <div id="inquiry-modal" class="fixed inset-0 z-[9999999] bg-slate-950/80 backdrop-blur-md flex items-center justify-center p-4 hidden">
+  <div id="inquiry-modal" class="inquiry-modal booking-modal-container fixed inset-0 z-[9999999] bg-slate-950/80 backdrop-blur-md flex items-center justify-center p-4 hidden">
     <div class="bg-[#0F172A]/95 text-white border border-[#D4AF37]/60 rounded-3xl max-w-xl w-full p-6 sm:p-8 shadow-[0_20px_60px_rgba(0,0,0,0.6)] space-y-5 relative max-h-[90vh] overflow-y-auto custom-scrollbar">
       <button onclick="closeInquiryModal()" class="absolute top-5 left-5 text-slate-400 hover:text-white transition-colors cursor-pointer" title="بستن">
         <i data-lucide="x" class="w-6 h-6"></i>
       </button>
 
-      <div class="border-b border-slate-700/80 pb-4">
-        <div class="inline-flex items-center gap-1.5 bg-[#D4AF37]/20 border border-[#D4AF37]/50 text-[#D4AF37] text-xs font-bold px-3 py-1 rounded-full mb-2">
+      <div class="border-b border-slate-700/80 pb-3 space-y-2">
+        <div class="inline-flex items-center gap-1.5 bg-[#D4AF37]/20 border border-[#D4AF37]/50 text-[#D4AF37] text-xs font-bold px-3 py-1 rounded-full">
           <i data-lucide="message-square-quote" class="w-3.5 h-3.5 text-[#D4AF37]"></i>
           <span>استعلام قیمت آنلاین و صدور پیش‌فاکتور</span>
         </div>
         <h3 id="modal-vendor-name" class="text-xl font-black text-[#D4AF37]">درخواست استعلام قیمت از تامین‌کننده</h3>
-        <p class="text-xs text-slate-300 mt-1">پس از ارسال، استعلام شما در پنل مدیریت پیام‌ها ثبت شده و پیش‌فاکتور برای شما صادر می‌گردد.</p>
+      </div>
+
+      <!-- STEP INDICATORS BAR -->
+      <div id="inquiry-step-indicators" class="flex items-center gap-2">
+        <div id="inquiry-step-ind-1" class="flex-1 text-center py-2 rounded-xl bg-[#D4AF37] text-[#0F251A] font-black text-xs shadow-md">
+          ۱. تاریخ & زمان
+        </div>
+        <div id="inquiry-step-ind-2" class="flex-1 text-center py-2 rounded-xl bg-[#1E293B] text-slate-300 font-bold text-xs border border-[#D4AF37]/30">
+          ۲. خدمات & جزئیات
+        </div>
+        <div id="inquiry-step-ind-3" class="flex-1 text-center py-2 rounded-xl bg-[#1E293B] text-slate-300 font-bold text-xs border border-[#D4AF37]/30">
+          ۳. تماس & ثبت
+        </div>
       </div>
 
       <!-- DYNAMIC CONTEXT BANNER CARD -->
@@ -5624,59 +5636,71 @@
         <input type="hidden" id="inquiry-item-id" value="">
         <input type="hidden" id="inquiry-item-title" value="">
 
-        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
-          <div>
-            <label class="block mb-1.5 text-slate-200">نام و نام خانوادگی شما *</label>
-            <input type="text" required id="inquiry-name" value="علی و سارا" class="w-full bg-[#1E293B] border border-[#D4AF37]/30 text-white placeholder-slate-400 rounded-xl p-2.5 text-xs font-bold focus:outline-none focus:border-[#D4AF37]">
-          </div>
-
-          <div>
-            <label class="block mb-1.5 text-slate-200">شماره تماس (جهت دریافت پیامک/پیش‌فاکتور) *</label>
-            <input type="tel" required id="inquiry-phone" value="09121234567" placeholder="۰۹۱۲..." class="w-full bg-[#1E293B] border border-[#D4AF37]/30 text-white placeholder-slate-400 rounded-xl p-2.5 text-xs font-bold focus:outline-none focus:border-[#D4AF37] dir-ltr">
-          </div>
-        </div>
-
-        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
-          <div>
-            <label id="inquiry-date-label" class="block mb-1.5 text-slate-200">تاریخ تقریبی مراسم / مراجعه (شمسی) *</label>
-            <input type="text" required id="inquiry-date" oninput="checkInquiryDateAvailability()" value="۱۴۰۳/۰۶/۱۵" placeholder="مثلاً: ۱۴۰۳/۰۶/۱۵" class="w-full bg-[#1E293B] border border-[#D4AF37]/30 text-white placeholder-slate-400 rounded-xl p-2.5 text-xs font-bold focus:outline-none focus:border-[#D4AF37]">
-            <div id="inquiry-date-availability-badge" class="mt-1 text-[11px] font-bold p-2 rounded-xl flex items-center gap-1.5 hidden"></div>
-          </div>
-
-          <!-- Dynamic Guest Count / Package Specifics -->
-          <div id="inquiry-guests-container">
-            <label class="block mb-1.5 text-slate-200">تعداد تقریبی مهمانان *</label>
-            <input type="number" id="inquiry-guests" value="250" min="1" max="2000" class="w-full bg-[#1E293B] border border-[#D4AF37]/30 text-white placeholder-slate-400 rounded-xl p-2.5 text-xs font-bold focus:outline-none focus:border-[#D4AF37]">
-          </div>
-
-          <div id="inquiry-nonvenue-container" class="hidden">
-            <label class="block mb-1.5 text-slate-200">نوع پکیج / نیاز اختصاصی *</label>
-            <select id="inquiry-package-type" class="w-full bg-[#1E293B] border border-[#D4AF37]/30 text-white rounded-xl p-2.5 text-xs font-bold focus:outline-none focus:border-[#D4AF37]">
-              <option value="فرمالیته کویر یزد" class="bg-[#0F172A] text-white">پکیج اختصاصی فرمالیته کویر یزد</option>
-              <option value="مراسم اصلی عروسی" class="bg-[#0F172A] text-white">خدمات کامل روز عروسی</option>
-              <option value="پرو و مشاوره اختصاصی" class="bg-[#0F172A] text-white">مشاوره حضوری و تست پکیج</option>
-            </select>
-          </div>
-        </div>
-
-        <!-- Vendor Specific Custom Inquiry Questions Container -->
-        <div id="inquiry-custom-fields-container" class="space-y-3 p-3.5 bg-[#1E293B] border border-[#D4AF37]/50 rounded-2xl hidden">
-          <!-- Dynamically populated via JS when vendor has customQuestions -->
-        </div>
-
-        <!-- Service Checklist based on offerings -->
-        <div id="inquiry-services-container" class="space-y-2">
-          <label class="block text-slate-200">خدمات مورد نظر شما (چک‌لیست اختصاصی تامین‌کننده):</label>
-          <div id="inquiry-services-checklist" class="grid grid-cols-1 sm:grid-cols-2 gap-2 p-3 bg-[#1E293B] border border-[#D4AF37]/30 rounded-2xl">
-            <!-- Dynamically populated via JS openInquiryModal() as rectangular mini-cards -->
-          </div>
-        </div>
-
-        <div class="space-y-3">
+        <!-- STEP 1: DATE, AVAILABILITY & GUEST COUNT -->
+        <div id="inquiry-step-1" class="space-y-4">
           <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
             <div>
+              <label id="inquiry-date-label" class="block mb-1.5 text-slate-200">تاریخ تقریبی مراسم (شمسی) *</label>
+              <input type="text" required id="inquiry-date" oninput="checkInquiryDateAvailability()" value="۱۴۰۳/۰۶/۱۵" placeholder="مثلاً: ۱۴۰۳/۰۶/۱۵" class="inquiry-form-control w-full bg-[#1E293B] border border-[#D4AF37]/30 text-white placeholder-slate-400 rounded-xl p-2.5 text-xs font-bold focus:outline-none focus:border-[#D4AF37]">
+              <div id="inquiry-date-availability-badge" class="mt-1 text-[11px] font-bold p-2 rounded-xl flex items-center gap-1.5 hidden"></div>
+            </div>
+
+            <!-- Dynamic Guest Count / Package Specifics -->
+            <div id="inquiry-guests-container">
+              <label class="block mb-1.5 text-slate-200">تعداد تقریبی مهمانان *</label>
+              <input type="number" id="inquiry-guests" value="250" min="1" max="2000" class="inquiry-form-control w-full bg-[#1E293B] border border-[#D4AF37]/30 text-white placeholder-slate-400 rounded-xl p-2.5 text-xs font-bold focus:outline-none focus:border-[#D4AF37]">
+            </div>
+
+            <div id="inquiry-nonvenue-container" class="hidden">
+              <label class="block mb-1.5 text-slate-200">نوع پکیج / نیاز اختصاصی *</label>
+              <select id="inquiry-package-type" class="inquiry-form-control w-full bg-[#1E293B] border border-[#D4AF37]/30 text-white rounded-xl p-2.5 text-xs font-bold focus:outline-none focus:border-[#D4AF37]">
+                <option value="فرمالیته کویر یزد" class="bg-[#0F172A] text-white">پکیج اختصاصی فرمالیته کویر یزد</option>
+                <option value="مراسم اصلی عروسی" class="bg-[#0F172A] text-white">خدمات کامل روز عروسی</option>
+                <option value="پرو و مشاوره اختصاصی" class="bg-[#0F172A] text-white">مشاوره حضوری و تست پکیج</option>
+              </select>
+            </div>
+          </div>
+        </div>
+
+        <!-- STEP 2: SERVICES CHECKLIST & CUSTOM QUESTIONS -->
+        <div id="inquiry-step-2" class="space-y-4 hidden">
+          <!-- Vendor Specific Custom Inquiry Questions Container -->
+          <div id="inquiry-custom-fields-container" class="space-y-3 p-3.5 bg-[#1E293B] border border-[#D4AF37]/50 rounded-2xl hidden">
+            <!-- Dynamically populated via JS -->
+          </div>
+
+          <!-- Service Checklist -->
+          <div id="inquiry-services-container" class="space-y-2">
+            <label class="block text-slate-200">انتخاب خدمات مورد نظر شما:</label>
+            <div id="inquiry-services-checklist" class="grid grid-cols-1 sm:grid-cols-2 gap-2 p-3 bg-[#1E293B] border border-[#D4AF37]/30 rounded-2xl">
+              <!-- Dynamically populated via JS -->
+            </div>
+          </div>
+
+          <div>
+            <label class="block mb-1.5 text-slate-200">توضیحات و یادداشت اختصاصی:</label>
+            <input type="text" id="inquiry-note" value="سلام، درخواست استعلام قیمت و دریافت پیش‌فاکتور را دارم." class="inquiry-form-control w-full bg-[#1E293B] border border-[#D4AF37]/30 text-white placeholder-slate-400 rounded-xl p-2.5 text-xs font-bold focus:outline-none focus:border-[#D4AF37]">
+          </div>
+        </div>
+
+        <!-- STEP 3: CONTACT & BUDGET CONFIRMATION -->
+        <div id="inquiry-step-3" class="space-y-4 hidden">
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+            <div>
+              <label class="block mb-1.5 text-slate-200">نام و نام خانوادگی شما *</label>
+              <input type="text" required id="inquiry-name" value="علی و سارا" class="inquiry-form-control w-full bg-[#1E293B] border border-[#D4AF37]/30 text-white placeholder-slate-400 rounded-xl p-2.5 text-xs font-bold focus:outline-none focus:border-[#D4AF37]">
+            </div>
+
+            <div>
+              <label class="block mb-1.5 text-slate-200">شماره تماس (دریافت پیش‌فاکتور) *</label>
+              <input type="tel" required id="inquiry-phone" value="09121234567" placeholder="۰۹۱۲..." class="inquiry-form-control w-full bg-[#1E293B] border border-[#D4AF37]/30 text-white placeholder-slate-400 rounded-xl p-2.5 text-xs font-bold focus:outline-none focus:border-[#D4AF37] dir-ltr">
+            </div>
+          </div>
+
+          <div class="space-y-3">
+            <div>
               <label class="block mb-1.5 text-slate-200">محدوده بودجه مد نظر:</label>
-              <select id="inquiry-budget-range" class="w-full bg-[#1E293B] border border-[#D4AF37]/30 text-white rounded-xl p-2.5 text-xs font-bold focus:outline-none focus:border-[#D4AF37] cursor-pointer">
+              <select id="inquiry-budget-range" class="inquiry-form-control w-full bg-[#1E293B] border border-[#D4AF37]/30 text-white rounded-xl p-2.5 text-xs font-bold focus:outline-none focus:border-[#D4AF37] cursor-pointer">
                 <option value="۱۰ تا ۲۰ میلیون تومان" class="bg-[#0F172A] text-white">۱۰ تا ۲۰ میلیون تومان</option>
                 <option value="۲۰ تا ۴۰ میلیون تومان" class="bg-[#0F172A] text-white">۲۰ تا ۴۰ میلیون تومان</option>
                 <option value="۴۰ تا ۷۰ میلیون تومان" class="bg-[#0F172A] text-white">۴۰ تا ۷۰ میلیون تومان</option>
@@ -5924,6 +5948,68 @@
           </button>
         </div>
       </form>
+
+      <!-- INSTANT RECEIPT & DIGITAL PRE-INVOICE CARD CONTAINER (Hidden initially) -->
+      <div id="inquiry-receipt-container" class="hidden space-y-5 text-white">
+        <div class="text-center space-y-2 border-b border-slate-700/80 pb-4">
+          <div class="w-14 h-14 rounded-full bg-emerald-500/20 border-2 border-emerald-400 text-emerald-400 flex items-center justify-center mx-auto shadow-[0_0_20px_rgba(52,211,153,0.3)]">
+            <i data-lucide="check-circle-2" class="w-8 h-8"></i>
+          </div>
+          <h3 class="text-xl font-black text-[#D4AF37]">استعلام شما با موفقیت ثبت شد!</h3>
+          <p class="text-xs text-slate-300">پیش‌فاکتور دیجیتال اولیه صادر گردید و در مرکز پیام‌های شما قرار گرفت.</p>
+        </div>
+
+        <!-- DIGITAL RECEIPT CARD -->
+        <div class="bg-[#1E293B] border border-[#D4AF37]/50 rounded-2xl p-4 sm:p-5 space-y-3 shadow-xl">
+          <div class="flex justify-between items-center border-b border-slate-700 pb-2 text-xs font-bold">
+            <span class="text-slate-400">شناسه پیگیری استعلام:</span>
+            <span id="receipt-inquiry-id" class="font-mono text-[#D4AF37] font-black text-sm">#INQ-2024-88421</span>
+          </div>
+
+          <div class="grid grid-cols-2 gap-3 text-xs">
+            <div>
+              <span class="text-slate-400 block text-[11px]">تامین‌کننده:</span>
+              <strong id="receipt-vendor-name" class="text-white font-black"></strong>
+            </div>
+            <div>
+              <span class="text-slate-400 block text-[11px]">تاریخ مراسم:</span>
+              <strong id="receipt-event-date" class="text-amber-200 font-bold"></strong>
+            </div>
+            <div>
+              <span class="text-slate-400 block text-[11px]">تعداد مهمانان:</span>
+              <strong id="receipt-guests-count" class="text-white font-bold"></strong>
+            </div>
+            <div>
+              <span class="text-slate-400 block text-[11px]">محدوده بودجه:</span>
+              <strong id="receipt-budget-str" class="text-[#D4AF37] font-bold"></strong>
+            </div>
+          </div>
+
+          <div class="border-t border-slate-700/80 pt-2 space-y-1">
+            <span class="text-slate-400 text-[11px] block font-bold">خدمات انتخابی:</span>
+            <span id="receipt-services-list" class="text-xs text-amber-100 font-medium block"></span>
+          </div>
+        </div>
+
+        <!-- ACTIONS FOOTER -->
+        <div class="space-y-2">
+          <div class="grid grid-cols-2 gap-2">
+            <button type="button" onclick="downloadReceiptPdf()" class="bg-[#1B3B2B] hover:bg-emerald-900 text-[#D4AF37] border border-[#D4AF37]/40 py-2.5 px-3 rounded-xl text-xs font-bold transition-all flex items-center justify-center gap-1.5 shadow-md cursor-pointer">
+              <i data-lucide="printer" class="w-4 h-4 text-[#D4AF37]"></i>
+              <span>دانلود / چاپ پیش‌فاکتور</span>
+            </button>
+            <button type="button" onclick="shareReceiptWhatsApp()" class="bg-emerald-600 hover:bg-emerald-700 text-white font-bold py-2.5 px-3 rounded-xl text-xs transition-all flex items-center justify-center gap-1.5 shadow-md cursor-pointer">
+              <i data-lucide="message-circle" class="w-4 h-4"></i>
+              <span>ارسال در واتس‌اپ</span>
+            </button>
+          </div>
+
+          <button type="button" onclick="closeInquiryModal(); switchTab('messages');" class="w-full bg-gradient-to-r from-[#D4AF37] to-[#F3E5AB] text-[#0F251A] font-black py-2.5 rounded-xl text-xs shadow-md transition-all hover:scale-[1.01] cursor-pointer flex items-center justify-center gap-2">
+            <i data-lucide="message-square" class="w-4 h-4"></i>
+            <span>ورود به مرکز گفت‌وگو و پیگیری مستقیم</span>
+          </button>
+        </div>
+      </div>
     </div>
   </div>
 

@@ -6456,7 +6456,45 @@ if (document.readyState === "loading") {
     }
 
 
+    let currentInquiryStep = 1;
+
+    window.switchInquiryStep = function(step) {
+      currentInquiryStep = step;
+      const s1 = document.getElementById('inquiry-step-1');
+      const s2 = document.getElementById('inquiry-step-2');
+      const s3 = document.getElementById('inquiry-step-3');
+
+      const ind1 = document.getElementById('inquiry-step-ind-1');
+      const ind2 = document.getElementById('inquiry-step-ind-2');
+      const ind3 = document.getElementById('inquiry-step-ind-3');
+
+      const prevBtn = document.getElementById('inquiry-prev-btn');
+      const nextBtn = document.getElementById('inquiry-next-btn');
+      const submitBtn = document.getElementById('inquiry-submit-btn');
+
+      if (s1) s1.classList.toggle('hidden', step !== 1);
+      if (s2) s2.classList.toggle('hidden', step !== 2);
+      if (s3) s3.classList.toggle('hidden', step !== 3);
+
+      if (ind1) ind1.className = step === 1 ? "flex-1 text-center py-2 rounded-xl bg-[#D4AF37] text-[#0F251A] font-black text-xs shadow-md" : "flex-1 text-center py-2 rounded-xl bg-[#1E293B] text-slate-300 font-bold text-xs border border-[#D4AF37]/30";
+      if (ind2) ind2.className = step === 2 ? "flex-1 text-center py-2 rounded-xl bg-[#D4AF37] text-[#0F251A] font-black text-xs shadow-md" : "flex-1 text-center py-2 rounded-xl bg-[#1E293B] text-slate-300 font-bold text-xs border border-[#D4AF37]/30";
+      if (ind3) ind3.className = step === 3 ? "flex-1 text-center py-2 rounded-xl bg-[#D4AF37] text-[#0F251A] font-black text-xs shadow-md" : "flex-1 text-center py-2 rounded-xl bg-[#1E293B] text-slate-300 font-bold text-xs border border-[#D4AF37]/30";
+
+      if (prevBtn) prevBtn.classList.toggle('hidden', step === 1);
+      if (nextBtn) nextBtn.classList.toggle('hidden', step === 3);
+      if (submitBtn) submitBtn.classList.toggle('hidden', step !== 3);
+    };
+
+    window.nextInquiryStep = function() {
+      if (currentInquiryStep < 3) switchInquiryStep(currentInquiryStep + 1);
+    };
+
+    window.prevInquiryStep = function() {
+      if (currentInquiryStep > 1) switchInquiryStep(currentInquiryStep - 1);
+    };
+
     function openInquiryModal(vendorId, vendorName, itemTitle, itemPrice, itemType, itemId, itemThumb) {
+      if (typeof switchInquiryStep === 'function') switchInquiryStep(1);
       let vId = vendorId;
       if (typeof vendorId === 'string' && !isNaN(parseInt(vendorId))) {
         vId = parseInt(vendorId);
@@ -6861,11 +6899,71 @@ if (document.readyState === "loading") {
       chatState.activeThreadId = thread.id;
 
       renderInquiries();
-      closeInquiryModal();
 
-      showToast('استعلام قیمت با موفقیت برای تامین‌کننده ارسال شد. در حال انتقال به صفحه گفت‌وگوها...', 'success');
-      switchTab('messages');
+      const randomInquiryNum = "INQ-2024-" + Math.floor(10000 + Math.random() * 90000);
+
+      window.currentReceiptInvoiceData = {
+        num: randomInquiryNum,
+        date: date,
+        validity: '۷ روز کاری (تا ' + date + ')',
+        vendorName: vendor.name,
+        vendorPhone: vendor.phone || '۰۳۵-۳۵۲۳۹۷۶۱',
+        vendorAddress: vendor.address || 'یزد، خیابان اصلی',
+        vendorCode: 'YZD-VND-' + vendor.id,
+        coupleName: name,
+        couplePhone: phone,
+        eventDate: date,
+        eventLocation: vendor.name + ' - ' + (vendor.district || 'یزد'),
+        title: 'استعلام قیمت آنلاین ' + (itemTitle || vendor.category),
+        total: finalBudgetStr,
+        subtotal: finalBudgetStr,
+        discount: '۰ تومان',
+        deposit: 'پیش‌پرداخت توافقی',
+        installment2: 'سهم دوم',
+        balance: 'تسویه نهایی',
+        items: checkedServices.map(s => ({ name: s, qty: 1, unitPrice: 'طبق پکیج', discount: '۰', total: 'استعلام' })),
+        trackCode: 'AROOSI-' + Math.floor(10000 + Math.random() * 90000) + '-YZD'
+      };
+
+      // Show Receipt Container in Modal
+      const formEl = document.getElementById('inquiry-form');
+      const stepIndicators = document.getElementById('inquiry-step-indicators');
+      const receiptContainer = document.getElementById('inquiry-receipt-container');
+
+      const receiptIdEl = document.getElementById('receipt-inquiry-id');
+      const receiptVendorEl = document.getElementById('receipt-vendor-name');
+      const receiptDateEl = document.getElementById('receipt-event-date');
+      const receiptGuestsEl = document.getElementById('receipt-guests-count');
+      const receiptBudgetEl = document.getElementById('receipt-budget-str');
+      const receiptServicesEl = document.getElementById('receipt-services-list');
+
+      if (receiptIdEl) receiptIdEl.innerText = "#" + randomInquiryNum;
+      if (receiptVendorEl) receiptVendorEl.innerText = vendor.name + " (" + vendor.category + ")";
+      if (receiptDateEl) receiptDateEl.innerText = date;
+      if (receiptGuestsEl) receiptGuestsEl.innerText = guestsNum + " نفر";
+      if (receiptBudgetEl) receiptBudgetEl.innerText = finalBudgetStr;
+      if (receiptServicesEl) receiptServicesEl.innerText = checkedServices.length > 0 ? checkedServices.join('، ') : 'خدمات عمومی پکیج';
+
+      if (formEl) formEl.classList.add('hidden');
+      if (stepIndicators) stepIndicators.classList.add('hidden');
+      if (receiptContainer) receiptContainer.classList.remove('hidden');
+
+      if (window.lucide) lucide.createIcons();
+      showToast('پیش‌فاکتور دیجیتال استعلام شما صادر شد!', 'success');
     }
+
+window.downloadReceiptPdf = function() {
+  if (typeof openPreInvoicePrintModal === 'function') {
+    openPreInvoicePrintModal(window.currentReceiptInvoiceData);
+  }
+};
+
+window.shareReceiptWhatsApp = function() {
+  const d = window.currentReceiptInvoiceData;
+  if (!d) return;
+  const msgText = encodeURIComponent(`سلام، درخواست استعلام قیمت #${d.num} برای ${d.vendorName}\nتاریخ: ${d.eventDate}\nخدمات: ${d.title}\nتماس: ${d.couplePhone}`);
+  window.open(`https://wa.me/?text=${msgText}`, '_blank');
+};
 
     function openRsvpModal() {
       document.getElementById('rsvp-modal').classList.remove('hidden');
