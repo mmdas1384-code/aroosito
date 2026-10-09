@@ -3184,18 +3184,19 @@ if (document.readyState === "loading") {
 
       categoryGroups.forEach((group) => {
         const card = document.createElement('div');
-        card.className = "bg-bgCustom border border-accent rounded-2xl p-4 space-y-3";
+        card.className = "bg-bgCustom border border-accent rounded-2xl p-4 space-y-3 hover:border-[#D4AF37]/60 transition-all shadow-xs";
 
         let subPillsHtml = '';
         group.subcategories.forEach((sub, idx) => {
           subPillsHtml += `
             <div class="inline-flex items-center gap-1.5 bg-white border border-accent rounded-lg px-2.5 py-1 text-xs font-medium text-graphite shadow-2xs">
+              <i data-lucide="grip-vertical" class="w-3 h-3 text-slate-400 cursor-grab"></i>
               <i data-lucide="${sub.icon || 'tag'}" class="w-3 h-3 text-primary"></i>
-              <span>${sub.title}</span>
-              <button type="button" onclick="openSubCategoryModal('${group.id}', ${idx})" class="text-primary hover:text-emerald-900 ml-1 font-bold">
+              <span class="font-bold">${sub.title}</span>
+              <button type="button" onclick="openSubCategoryModal('${group.id}', ${idx})" class="text-primary hover:text-emerald-900 ml-1 font-bold cursor-pointer" title="ویرایش">
                 <i data-lucide="edit-2" class="w-3 h-3"></i>
               </button>
-              <button type="button" onclick="deleteSubCategory('${group.id}', ${idx})" class="text-rose-500 hover:text-rose-700 font-bold">
+              <button type="button" onclick="deleteSubCategory('${group.id}', ${idx})" class="text-rose-500 hover:text-rose-700 font-bold cursor-pointer" title="حذف">
                 <i data-lucide="trash-2" class="w-3 h-3"></i>
               </button>
             </div>
@@ -3205,23 +3206,26 @@ if (document.readyState === "loading") {
         card.innerHTML = `
           <div class="flex flex-col sm:flex-row justify-between sm:items-center gap-3 border-b border-accent/60 pb-3">
             <div class="flex items-center gap-3">
-              <div class="w-8 h-8 rounded-xl bg-primary text-white flex items-center justify-center shrink-0">
-                <i data-lucide="${group.icon}" class="w-4 h-4"></i>
+              <i data-lucide="grip-vertical" class="w-4 h-4 text-slate-400 cursor-grab"></i>
+              <div class="w-9 h-9 rounded-xl bg-[#1B3B2B] text-[#D4AF37] border border-[#D4AF37]/40 flex items-center justify-center shrink-0 font-bold shadow-xs">
+                <i data-lucide="${group.icon}"></i>
               </div>
               <div>
-                <h4 class="text-sm font-bold text-graphite">${group.title}</h4>
-                <span class="text-[11px] text-secondary">${group.badge || 'بدون زیرعنوان'}</span>
+                <h4 class="text-sm font-black text-graphite flex items-center gap-1.5">
+                  <span>${group.title}</span>
+                  <span class="text-[10px] bg-primary/10 text-primary border border-primary/20 px-2 py-0.5 rounded-full font-bold">${group.badge || 'اصلی'}</span>
+                </h4>
               </div>
             </div>
             <div class="flex items-center gap-2">
-              <button type="button" onclick="openSubCategoryModal('${group.id}')" class="bg-primary/10 text-primary border border-primary/20 hover:bg-primary/20 px-3 py-1.5 rounded-xl text-xs font-bold transition-all flex items-center gap-1">
+              <button type="button" onclick="openSubCategoryModal('${group.id}')" class="bg-primary/10 text-primary border border-primary/20 hover:bg-primary/20 px-3 py-1.5 rounded-xl text-xs font-bold transition-all flex items-center gap-1 cursor-pointer">
                 <i data-lucide="plus" class="w-3.5 h-3.5"></i>
                 <span>افزودن زیرگروه</span>
               </button>
-              <button type="button" onclick="openParentCategoryModal('${group.id}')" class="bg-white border border-accent hover:border-primary px-3 py-1.5 rounded-xl text-xs font-bold text-graphite transition-all">
+              <button type="button" onclick="openParentCategoryModal('${group.id}')" class="bg-white border border-accent hover:border-primary px-3 py-1.5 rounded-xl text-xs font-bold text-graphite transition-all cursor-pointer">
                 ویرایش دسته
               </button>
-              <button type="button" onclick="deleteParentCategory('${group.id}')" class="bg-rose-50 border border-rose-200 hover:bg-rose-100 text-rose-600 px-3 py-1.5 rounded-xl text-xs font-bold transition-all">
+              <button type="button" onclick="deleteParentCategory('${group.id}')" class="bg-rose-50 border border-rose-200 hover:bg-rose-100 text-rose-600 px-3 py-1.5 rounded-xl text-xs font-bold transition-all cursor-pointer">
                 حذف دسته
               </button>
             </div>
@@ -5273,32 +5277,52 @@ if (document.readyState === "loading") {
 
       const pending = staticVendorApplications.filter(a => a.status === 'pending');
       if (pending.length === 0) {
-        tbody.innerHTML = '<tr><td colspan="5" class="p-4 text-center text-secondary">هیچ درخواست معلقی وجود ندارد.</td></tr>';
+        tbody.innerHTML = '<tr><td colspan="5" class="p-6 text-center text-slate-400 font-bold bg-[#1E293B]">هیچ درخواست معلقی برای اعتبارسنجی وجود ندارد.</td></tr>';
         return;
       }
 
       pending.forEach(app => {
         const tr = document.createElement('tr');
-        tr.className = "hover:bg-slate-50";
+        tr.className = "hover:bg-[#1E293B]/80 transition-colors border-b border-[#D4AF37]/20";
         tr.innerHTML = `
-          <td class="p-3 font-bold text-graphite">${app.name}</td>
-          <td class="p-3 text-primary font-semibold">${app.category}</td>
-          <td class="p-3 font-semibold text-graphite">${app.manager} (${app.phone})</td>
-          <td class="p-3 text-secondary font-medium">${app.city}</td>
-          <td class="p-3 text-center">
-            <div class="flex items-center justify-center gap-1.5">
-              <button onclick="approveVendorAppStatic('${app.id}')" class="bg-primary hover:bg-emerald-900 text-white font-bold text-xs px-3 py-1.5 rounded-xl transition-colors shadow-xs flex items-center gap-1">
-                <i data-lucide="check" class="w-3.5 h-3.5"></i> تایید و اعطا
+          <td class="p-3.5 font-black text-white">
+            <div class="flex items-center gap-2">
+              <div class="w-8 h-8 rounded-lg bg-[#D4AF37]/20 border border-[#D4AF37]/40 flex items-center justify-center text-[#D4AF37] font-bold">
+                <i data-lucide="building-2" class="w-4 h-4"></i>
+              </div>
+              <div>
+                <span class="block text-xs font-black text-white">${app.name}</span>
+                <span class="text-[10px] text-amber-200/90 font-medium">📍 ${app.city}</span>
+              </div>
+            </div>
+          </td>
+          <td class="p-3.5 text-[#D4AF37] font-bold text-xs">${app.category}</td>
+          <td class="p-3.5 font-bold text-slate-200 text-xs">
+            <span class="block">${app.manager}</span>
+            <span class="text-[10px] font-mono dir-ltr text-slate-400">${app.phone}</span>
+          </td>
+          <td class="p-3.5 text-center">
+            <span class="bg-amber-500/20 text-amber-300 border border-amber-500/40 text-[10px] font-bold px-2.5 py-1 rounded-full">
+              📄 مدرک جواز کسب ارسال‌شده
+            </span>
+          </td>
+          <td class="p-3.5 text-center">
+            <div class="flex items-center justify-center gap-2">
+              <button onclick="approveVendorAppStatic('${app.id}')" class="bg-gradient-to-r from-emerald-600 to-emerald-700 hover:from-emerald-500 hover:to-emerald-600 text-white font-black text-xs px-3.5 py-1.5 rounded-xl transition-all shadow-md flex items-center gap-1 cursor-pointer">
+                <i data-lucide="check-circle-2" class="w-3.5 h-3.5"></i>
+                <span>تایید تامین‌کننده</span>
               </button>
-              <button onclick="rejectVendorAppStatic('${app.id}')" class="bg-white hover:bg-rose-50 text-rose-600 border border-rose-200 font-bold text-xs px-2.5 py-1.5 rounded-xl transition-colors flex items-center gap-1">
-                <i data-lucide="x" class="w-3.5 h-3.5"></i> عدم تایید
+              <button onclick="rejectVendorAppStatic('${app.id}')" class="bg-rose-900/60 hover:bg-rose-800 text-rose-200 border border-rose-500/40 font-bold text-xs px-2.5 py-1.5 rounded-xl transition-all flex items-center gap-1 cursor-pointer">
+                <i data-lucide="x-circle" class="w-3.5 h-3.5"></i>
+                <span>رد درخواست</span>
               </button>
             </div>
           </td>
         `;
         tbody.appendChild(tr);
       });
-      lucide.createIcons();
+
+      if (window.lucide) lucide.createIcons();
     }
 
     function approveVendorAppStatic(appId) {

@@ -2496,30 +2496,64 @@
 
         <!-- 5 Key Operational Analytics KPI Cards -->
         <div class="grid grid-cols-2 md:grid-cols-5 gap-4">
-          <div class="bg-[#1E293B] border border-[#D4AF37]/30 rounded-2xl p-4 space-y-1">
-            <span class="text-xs font-bold text-slate-300 block">کل زوجین ثبت‌شده</span>
-            <span class="text-2xl font-black text-[#D4AF37]">۱۵,۴۲۰</span>
-            <span class="text-[10px] text-emerald-400 font-bold block">↑ ۱۲٪ ماه اخیر</span>
+          <div class="admin-kpi-card bg-[#1E293B] border border-[#D4AF37]/40 rounded-2xl p-4 space-y-1 relative overflow-hidden shadow-inner">
+            <div class="flex justify-between items-center text-xs font-bold text-slate-300">
+              <span>کل زوجین ثبت‌شده</span>
+              <i data-lucide="users" class="w-4 h-4 text-[#D4AF37]"></i>
+            </div>
+            <span class="text-2xl font-black text-[#D4AF37] block">۱۵,۴۲۰</span>
+            <div class="flex items-center justify-between text-[10px]">
+              <span class="text-emerald-400 font-bold">↑ ۱۲٪ ماه اخیر</span>
+              <div class="admin-sparkline w-12 h-3 bg-[#D4AF37]/20 rounded-full border border-[#D4AF37]/40"></div>
+            </div>
           </div>
-          <div class="bg-[#1E293B] border border-[#D4AF37]/30 rounded-2xl p-4 space-y-1">
-            <span class="text-xs font-bold text-slate-300 block">تأمین‌کنندگان معتبر</span>
-            <span class="text-2xl font-black text-white">۱,۲۴۰</span>
-            <span class="text-[10px] text-amber-200 font-bold block">دارای پروانه کسب</span>
+
+          <div class="admin-kpi-card bg-[#1E293B] border border-[#D4AF37]/40 rounded-2xl p-4 space-y-1 relative overflow-hidden shadow-inner">
+            <div class="flex justify-between items-center text-xs font-bold text-slate-300">
+              <span>تأمین‌کنندگان معتبر</span>
+              <i data-lucide="building-2" class="w-4 h-4 text-[#D4AF37]"></i>
+            </div>
+            <span class="text-2xl font-black text-white block">۱,۲۴۰</span>
+            <div class="flex items-center justify-between text-[10px]">
+              <span class="text-amber-200 font-bold">دارای پروانه کسب</span>
+              <div class="admin-sparkline w-12 h-3 bg-emerald-500/20 rounded-full border border-emerald-500/40"></div>
+            </div>
           </div>
-          <div class="bg-[#1E293B] border border-[#D4AF37]/30 rounded-2xl p-4 space-y-1">
-            <span class="text-xs font-bold text-slate-300 block">درخواست‌های معلق</span>
-            <span class="text-2xl font-black text-amber-400">۱۸</span>
-            <span class="text-[10px] text-amber-200 font-bold block">نیازمند بررسی</span>
+
+          <div class="admin-kpi-card bg-[#1E293B] border border-[#D4AF37]/40 rounded-2xl p-4 space-y-1 relative overflow-hidden shadow-inner">
+            <div class="flex justify-between items-center text-xs font-bold text-slate-300">
+              <span>درخواست‌های معلق</span>
+              <i data-lucide="clock" class="w-4 h-4 text-amber-400"></i>
+            </div>
+            <span class="text-2xl font-black text-amber-400 block">۱۸</span>
+            <div class="flex items-center justify-between text-[10px]">
+              <span class="text-amber-200 font-bold">نیازمند بررسی</span>
+              <div class="admin-sparkline w-12 h-3 bg-amber-500/20 rounded-full border border-amber-500/40"></div>
+            </div>
           </div>
-          <div class="bg-[#1E293B] border border-[#D4AF37]/30 rounded-2xl p-4 space-y-1">
-            <span class="text-xs font-bold text-slate-300 block">پیش‌فاکتورها</span>
-            <span class="text-2xl font-black text-white">۳,۸۵۰</span>
-            <span class="text-[10px] text-emerald-400 font-bold block">در چت آنلاین</span>
+
+          <div class="admin-kpi-card bg-[#1E293B] border border-[#D4AF37]/40 rounded-2xl p-4 space-y-1 relative overflow-hidden shadow-inner">
+            <div class="flex justify-between items-center text-xs font-bold text-slate-300">
+              <span>پیش‌فاکتورها</span>
+              <i data-lucide="file-text" class="w-4 h-4 text-emerald-400"></i>
+            </div>
+            <span class="text-2xl font-black text-white block">۳,۸۵۰</span>
+            <div class="flex items-center justify-between text-[10px]">
+              <span class="text-emerald-400 font-bold">در چت آنلاین</span>
+              <div class="admin-sparkline w-12 h-3 bg-emerald-500/20 rounded-full border border-emerald-500/40"></div>
+            </div>
           </div>
-          <div class="bg-[#1E293B] border border-[#D4AF37]/30 rounded-2xl p-4 space-y-1 col-span-2 md:col-span-1">
-            <span class="text-xs font-bold text-slate-300 block">حجم معاملات (GMV)</span>
-            <span class="text-xl font-black text-[#D4AF37]">۴۸.۵ میلیارد</span>
-            <span class="text-[10px] text-slate-300 font-medium block">تومان / یزد</span>
+
+          <div class="admin-kpi-card bg-[#1E293B] border border-[#D4AF37]/40 rounded-2xl p-4 space-y-1 col-span-2 md:col-span-1 relative overflow-hidden shadow-inner">
+            <div class="flex justify-between items-center text-xs font-bold text-slate-300">
+              <span>حجم معاملات (GMV)</span>
+              <i data-lucide="coins" class="w-4 h-4 text-[#D4AF37]"></i>
+            </div>
+            <span class="text-xl font-black text-[#D4AF37] block">۴۸.۵ میلیارد</span>
+            <div class="flex items-center justify-between text-[10px]">
+              <span class="text-slate-300 font-medium">تومان / یزد</span>
+              <div class="admin-sparkline w-12 h-3 bg-[#D4AF37]/20 rounded-full border border-[#D4AF37]/40"></div>
+            </div>
           </div>
         </div>
       </div>
