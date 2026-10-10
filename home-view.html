@@ -296,132 +296,201 @@
       </section>
 
       <!-- 4. MAIN CATEGORIES GRID ("دسته‌بندی جامع خدمات و تشریفات عروسی") -->
-      <section class="main-categories-section">
-        <div class="categories-header">
-          <div class="categories-title-wrapper">
-            <h2 class="categories-main-title">
-              <svg class="title-icon" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#D4AF37" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                <rect x="3" y="3" width="7" height="7"></rect>
-                <rect x="14" y="3" width="7" height="7"></rect>
-                <rect x="14" y="14" width="7" height="7"></rect>
-                <rect x="3" y="14" width="7" height="7"></rect>
-              </svg>
-              <span>دسته‌بندی‌های اصلی خدمات و تشریفات عروسی</span>
-            </h2>
-            <p class="categories-sub-title">بررسی و انتخاب از بین ۵ رسته اصلی با دسترسی سریع به تمامی زیرگروه‌ها</p>
+            <!-- 4. BENTO CATEGORY GALLERY -->
+      <section class="main-categories-section space-y-4">
+        <!-- Section Header Bar -->
+        <div class="flex items-center justify-between border-b border-[#C5A059]/20 pb-3 flex-wrap gap-3">
+          <div class="space-y-1 text-right">
+            <span class="text-[11px] font-black text-[#D4AF37] tracking-wider block">🏛️ دسته‌بندی‌های تخصصی</span>
+            <h2 class="text-xl font-black text-[#F7F5F0]">دسته‌بندی‌های اصلی خدمات و تشریفات عروسی</h2>
           </div>
-          <div class="categories-action">
-            <button onclick="switchTab('directory')" class="btn-all-categories">
-              <span>مشاهده همه خدمات</span>
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
-            </button>
+
+          <!-- Fast-Filter Pills Row -->
+          <div class="flex items-center gap-2 overflow-x-auto no-scrollbar text-xs font-bold text-slate-300">
+            <button type="button" onclick="switchTab('directory')" class="bg-[#1E293B]/80 hover:bg-[#0F172A] text-amber-200 border border-[#D4AF37]/30 px-3 py-1 rounded-full transition-all cursor-pointer shrink-0">🔥 محبوب‌ترین‌ها</button>
+            <button type="button" onclick="filterVendorsByCategoryTitle('تالار و باغ تالار عروسی')" class="bg-[#1E293B]/80 hover:bg-[#0F172A] text-amber-200 border border-[#D4AF37]/30 px-3 py-1 rounded-full transition-all cursor-pointer shrink-0">🏰 عمارت‌ها</button>
+            <button type="button" onclick="filterVendorsByCategoryTitle('آتلیه عکاسی و فیلمبرداری')" class="bg-[#1E293B]/80 hover:bg-[#0F172A] text-amber-200 border border-[#D4AF37]/30 px-3 py-1 rounded-full transition-all cursor-pointer shrink-0">📸 فرمالیته</button>
+            <button type="button" onclick="filterVendorsByCategoryTitle('مزون لباس عروس')" class="bg-[#1E293B]/80 hover:bg-[#0F172A] text-amber-200 border border-[#D4AF37]/30 px-3 py-1 rounded-full transition-all cursor-pointer shrink-0">👗 مزون و میکاپ</button>
           </div>
         </div>
 
-        <div class="categories-grid">
-          <!-- Card 1 -->
-          <div class="category-card" onclick="openCategorySubgroupsModal('legal_ceremony')">
-            <div class="category-badge">۵ زیرگروه</div>
-            <div class="category-icon-box">
-              <svg width="28" height="24" viewBox="0 0 24 24" fill="none" stroke="#D4AF37" stroke-width="2"><path d="M3 21h18M3 10h18M5 6l7-3 7 3M4 10v11M20 10v11M8 14v3M12 14v3M16 14v3"/></svg>
-            </div>
-            <h3 class="category-title">تشریفات قانونی، عقد و مشاوره</h3>
-            <p class="category-desc">دفتر ازدواج، مشاوره و سفره عقد</p>
-            <div class="category-card-footer">
-              <span class="vendor-count">+۵ کسب‌وکار</span>
-              <span class="subgroups-link">مشاهده زیرگروه‌ها ←</span>
+        <!-- Bento Grid Gallery -->
+        <div class="grid grid-cols-1 md:grid-cols-12 gap-4">
+
+          <!-- Bento Item 1: Venue & Catering (Featured Wide Bento 7 cols) -->
+          <div onclick="openCategorySubgroupsModal('venue_catering')" class="md:col-span-7 group relative h-64 sm:h-72 rounded-3xl overflow-hidden border border-[#C5A059]/25 hover:border-[#D4AF37]/70 transition-all duration-300 shadow-2xl cursor-pointer bg-slate-900 flex flex-col justify-end p-6">
+            <img src="https://images.unsplash.com/photo-1519167758481-83f550bb49b3?auto=format&fit=crop&w=800&q=80" alt="مکان، تشریفات و پذیرایی" class="absolute inset-0 w-full h-full object-cover group-hover:scale-108 transition-transform duration-700">
+            <div class="absolute inset-0 bg-gradient-to-t from-[#07090E] via-[#07090E]/60 to-transparent"></div>
+
+            <div class="relative z-10 space-y-2 text-right">
+              <div class="flex items-center justify-between">
+                <span class="text-[11px] font-black text-[#0F251A] bg-gradient-to-r from-[#D4AF37] to-[#F3E5AB] px-3 py-1 rounded-full border border-[#D4AF37] shadow-md">
+                  ۴۵ مجموعه فعال
+                </span>
+                <span class="text-xs font-bold text-[#D4AF37] group-hover:translate-x-[-4px] transition-transform">مشاهده همه ➔</span>
+              </div>
+              <h3 class="text-xl font-black text-[#F7F5F0]">مکان، تشریفات و پذیرایی</h3>
+              <p class="text-xs text-slate-300 font-medium">باغ‌تالار، تالار تشریفاتی، کترینگ و شام عروسی، سفره عقد و گل‌آرایی</p>
             </div>
           </div>
 
-          <!-- Card 2 -->
-          <div class="category-card" onclick="openCategorySubgroupsModal('gold_shopping')">
-            <div class="category-badge">۵ زیرگروه</div>
-            <div class="category-icon-box">
-              <svg width="28" height="24" viewBox="0 0 24 24" fill="none" stroke="#D4AF37" stroke-width="2"><path d="M6 3h12l4 6-10 12L2 9z"/><path d="M11 3v6M2 9h20"/></svg>
-            </div>
-            <h3 class="category-title">طلا، خرید و خدمات جانبی</h3>
-            <p class="category-desc">حلقه، طلا و خدمات مسافرتی</p>
-            <div class="category-card-footer">
-              <span class="vendor-count">+۱۰ کسب‌وکار</span>
-              <span class="subgroups-link">مشاهده زیرگروه‌ها ←</span>
+          <!-- Bento Item 2: Photography & Music (Featured 5 cols) -->
+          <div onclick="openCategorySubgroupsModal('photo_music')" class="md:col-span-5 group relative h-64 sm:h-72 rounded-3xl overflow-hidden border border-[#C5A059]/25 hover:border-[#D4AF37]/70 transition-all duration-300 shadow-2xl cursor-pointer bg-slate-900 flex flex-col justify-end p-6">
+            <img src="https://images.unsplash.com/photo-1537633552985-df8429e8048b?auto=format&fit=crop&w=800&q=80" alt="ثبت لحظات و موسیقی" class="absolute inset-0 w-full h-full object-cover group-hover:scale-108 transition-transform duration-700">
+            <div class="absolute inset-0 bg-gradient-to-t from-[#07090E] via-[#07090E]/60 to-transparent"></div>
+
+            <div class="relative z-10 space-y-2 text-right">
+              <div class="flex items-center justify-between">
+                <span class="text-[11px] font-black text-[#0F251A] bg-gradient-to-r from-[#D4AF37] to-[#F3E5AB] px-3 py-1 rounded-full border border-[#D4AF37] shadow-md">
+                  ۳۲ مجموعه فعال
+                </span>
+                <span class="text-xs font-bold text-[#D4AF37] group-hover:translate-x-[-4px] transition-transform">مشاهده همه ➔</span>
+              </div>
+              <h3 class="text-xl font-black text-[#F7F5F0]">ثبت لحظات و موسیقی</h3>
+              <p class="text-xs text-slate-300 font-medium">آتلیه تخصصی، عکاسی فرمالیته، هلی‌شات، دی‌جی و بند موزیک زنده</p>
             </div>
           </div>
 
-          <!-- Card 3 -->
-          <div class="category-card" onclick="openCategorySubgroupsModal('beauty_style')">
-            <div class="category-badge">۶ زیرگروه</div>
-            <div class="category-icon-box">
-              <svg width="28" height="24" viewBox="0 0 24 24" fill="none" stroke="#D4AF37" stroke-width="2"><path d="M12 2a5 5 0 0 1 5 5v3a5 5 0 0 1-10 0V7a5 5 0 0 1 5-2z"/><path d="M19 11v1a7 7 0 0 1-14 0v-1M12 19v3"/></svg>
-            </div>
-            <h3 class="category-title">زیبایی و استایل زوجین</h3>
-            <p class="category-desc">آرایشگاه زنانه، مزون و پوشاک</p>
-            <div class="category-card-footer">
-              <span class="vendor-count">+۱۵ کسب‌وکار</span>
-              <span class="subgroups-link">مشاهده زیرگروه‌ها ←</span>
+          <!-- Bento Item 3: Beauty & Style (4 cols) -->
+          <div onclick="openCategorySubgroupsModal('beauty_style')" class="md:col-span-4 group relative h-56 rounded-3xl overflow-hidden border border-[#C5A059]/25 hover:border-[#D4AF37]/70 transition-all duration-300 shadow-2xl cursor-pointer bg-slate-900 flex flex-col justify-end p-5">
+            <img src="https://images.unsplash.com/photo-1487412720507-e7ab37603c6f?auto=format&fit=crop&w=600&q=80" alt="زیبایی و استایل زوجین" class="absolute inset-0 w-full h-full object-cover group-hover:scale-108 transition-transform duration-700">
+            <div class="absolute inset-0 bg-gradient-to-t from-[#07090E] via-[#07090E]/60 to-transparent"></div>
+
+            <div class="relative z-10 space-y-1.5 text-right">
+              <div class="flex items-center justify-between">
+                <span class="text-[10px] font-black text-[#0F251A] bg-gradient-to-r from-[#D4AF37] to-[#F3E5AB] px-2.5 py-0.5 rounded-full border border-[#D4AF37]">
+                  ۲۸ مجموعه
+                </span>
+                <span class="text-xs font-bold text-[#D4AF37]">مشاهده ➔</span>
+              </div>
+              <h3 class="text-base font-black text-[#F7F5F0]">زیبایی و استایل زوجین</h3>
+              <p class="text-[11px] text-slate-300 font-medium">سالن زیبایی، مزون لباس عروس و کت‌وشلوار دامادی</p>
             </div>
           </div>
 
-          <!-- Card 4 -->
-          <div class="category-card" onclick="openCategorySubgroupsModal('photo_music')">
-            <div class="category-badge">۹ زیرگروه</div>
-            <div class="category-icon-box">
-              <svg width="28" height="24" viewBox="0 0 24 24" fill="none" stroke="#D4AF37" stroke-width="2"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/><circle cx="12" cy="13" r="4"/></svg>
-            </div>
-            <h3 class="category-title">ثبت لحظات و موسیقی</h3>
-            <p class="category-desc">عکاسی، فیلمبرداری و موزیک</p>
-            <div class="category-card-footer">
-              <span class="vendor-count">+۱۲ کسب‌وکار</span>
-              <span class="subgroups-link">مشاهده زیرگروه‌ها ←</span>
+          <!-- Bento Item 4: Gold & Shopping (4 cols) -->
+          <div onclick="openCategorySubgroupsModal('gold_shopping')" class="md:col-span-4 group relative h-56 rounded-3xl overflow-hidden border border-[#C5A059]/25 hover:border-[#D4AF37]/70 transition-all duration-300 shadow-2xl cursor-pointer bg-slate-900 flex flex-col justify-end p-5">
+            <img src="https://images.unsplash.com/photo-1605100804763-247f67b3557e?auto=format&fit=crop&w=600&q=80" alt="طلا، خرید و خدمات جانبی" class="absolute inset-0 w-full h-full object-cover group-hover:scale-108 transition-transform duration-700">
+            <div class="absolute inset-0 bg-gradient-to-t from-[#07090E] via-[#07090E]/60 to-transparent"></div>
+
+            <div class="relative z-10 space-y-1.5 text-right">
+              <div class="flex items-center justify-between">
+                <span class="text-[10px] font-black text-[#0F251A] bg-gradient-to-r from-[#D4AF37] to-[#F3E5AB] px-2.5 py-0.5 rounded-full border border-[#D4AF37]">
+                  ۱۹ مجموعه
+                </span>
+                <span class="text-xs font-bold text-[#D4AF37]">مشاهده ➔</span>
+              </div>
+              <h3 class="text-base font-black text-[#F7F5F0]">طلا، خرید & خدمات</h3>
+              <p class="text-[11px] text-slate-300 font-medium">حلقه و طلافروشی، آژانس مسافرتی ماه عسل و تزئینات</p>
             </div>
           </div>
 
-          <!-- Card 5 -->
-          <div class="category-card" onclick="openCategorySubgroupsModal('venue_catering')">
-            <div class="category-badge">۶ زیرگروه</div>
-            <div class="category-icon-box">
-              <svg width="28" height="24" viewBox="0 0 24 24" fill="none" stroke="#D4AF37" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M9 3v18M15 3v18M3 9h18M3 15h18"/></svg>
+          <!-- Bento Item 5: Legal & Ceremony (4 cols) -->
+          <div onclick="openCategorySubgroupsModal('legal_ceremony')" class="md:col-span-4 group relative h-56 rounded-3xl overflow-hidden border border-[#C5A059]/25 hover:border-[#D4AF37]/70 transition-all duration-300 shadow-2xl cursor-pointer bg-slate-900 flex flex-col justify-end p-5">
+            <img src="https://images.unsplash.com/photo-1583939003579-730e3918a45a?auto=format&fit=crop&w=600&q=80" alt="تشریفات قانونی، عقد و مشاوره" class="absolute inset-0 w-full h-full object-cover group-hover:scale-108 transition-transform duration-700">
+            <div class="absolute inset-0 bg-gradient-to-t from-[#07090E] via-[#07090E]/60 to-transparent"></div>
+
+            <div class="relative z-10 space-y-1.5 text-right">
+              <div class="flex items-center justify-between">
+                <span class="text-[10px] font-black text-[#0F251A] bg-gradient-to-r from-[#D4AF37] to-[#F3E5AB] px-2.5 py-0.5 rounded-full border border-[#D4AF37]">
+                  ۱۵ مجموعه
+                </span>
+                <span class="text-xs font-bold text-[#D4AF37]">مشاهده ➔</span>
+              </div>
+              <h3 class="text-base font-black text-[#F7F5F0]">عقد، مشاوره & تشریفات</h3>
+              <p class="text-[11px] text-slate-300 font-medium">دفتر ازدواج و طلاق، مشاوره قبل از ازدواج و سفره عقد</p>
             </div>
-            <h3 class="category-title">مکان، تشریفات و پذیرایی</h3>
-            <p class="category-desc">تالار، خدمات غذا و پذیرایی</p>
-            <div class="category-card-footer">
-              <span class="vendor-count">+۴ کسب‌وکار</span>
-              <span class="subgroups-link">مشاهده زیرگروه‌ها ←</span>
+          </div>
+
+        </div>
+      </section>
+
+      <!-- 5. UNIFIED SMART PLANNER DASHBOARD STRIP -->
+      <section id="planner-dashboard-strip" class="relative bg-[#0e121c]/90 backdrop-blur-xl border border-[#C5A059]/30 rounded-3xl p-6 shadow-2xl overflow-hidden my-8 text-white">
+        <!-- Ambient Gold Radial Illumination -->
+        <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-96 h-96 bg-[#D4AF37]/10 rounded-full blur-3xl pointer-events-none"></div>
+
+        <div class="relative z-10 space-y-6">
+          <!-- Section Title Bar -->
+          <div class="flex items-center justify-between border-b border-[#C5A059]/20 pb-4 flex-wrap gap-3">
+            <div class="space-y-1 text-right">
+              <span class="text-[11px] font-black text-[#D4AF37] tracking-wider block">✨ داشبورد هوشمند برنامه‌ریزی</span>
+              <h2 class="text-xl font-black text-[#F7F5F0]">میان‌برهای سریع مدیریت مراسم و دعوت مهمانان</h2>
             </div>
+            <span class="text-xs font-bold text-amber-200/80 bg-[#141A28] border border-[#C5A059]/25 px-3 py-1.5 rounded-full flex items-center gap-1.5">
+              <i data-lucide="wand-2" class="w-4 h-4 text-[#D4AF37]"></i> هوش مصنوعی عروسی نو
+            </span>
+          </div>
+
+          <!-- High-Density Glass Dashboard Grid -->
+          <div class="grid grid-cols-1 lg:grid-cols-12 gap-6 items-center">
+
+            <!-- Box 1: Digital Invitation Suite (5 cols) -->
+            <div onclick="switchTab('invitation')" class="lg:col-span-5 bg-[rgba(20,26,38,0.85)] border border-[rgba(197,160,89,0.3)] hover:border-[#D4AF37] rounded-3xl p-5 shadow-xl transition-all duration-300 cursor-pointer space-y-4 group">
+              <div class="flex items-center justify-between">
+                <span class="text-[10px] font-bold text-amber-200 bg-[#D4AF37]/15 border border-[#D4AF37]/30 px-2.5 py-1 rounded-full flex items-center gap-1">
+                  🎵 به همراه موزیک & کارت سه‌بعدی
+                </span>
+                <div class="w-10 h-10 rounded-2xl bg-[#D4AF37] text-[#0F251A] flex items-center justify-center font-black shadow-md group-hover:scale-110 transition-transform">
+                  <i data-lucide="mail" class="w-5 h-5 text-[#0F251A]"></i>
+                </div>
+              </div>
+
+              <div class="space-y-1 text-right">
+                <h3 class="text-base font-black text-[#F7F5F0] group-hover:text-[#D4AF37] transition-colors">کارت دعوت دیجیتال VIP & RSVP</h3>
+                <p class="text-xs text-slate-300 font-medium leading-relaxed">طراحی اختصاصی آنلاین، نقشه مسیریابی تالار، منوی شام و ثبت‌نام مهمانان</p>
+              </div>
+
+              <div class="pt-2">
+                <button type="button" onclick="event.stopPropagation(); switchTab('invitation')" class="gold-shimmer-btn w-full text-[#0F251A] font-black py-2.5 px-4 rounded-2xl text-xs transition-all flex items-center justify-center gap-2 shadow-lg">
+                  <span>✨ ساخت کارت دعوت دیجیتال</span>
+                  <i data-lucide="arrow-left" class="w-4 h-4"></i>
+                </button>
+              </div>
+            </div>
+
+            <!-- Box 2: Budget Calculator & 12-Month Checklist Hub (7 cols) -->
+            <div class="lg:col-span-7 bg-[rgba(20,26,38,0.85)] border border-[rgba(197,160,89,0.3)] rounded-3xl p-5 shadow-xl space-y-4">
+              <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+
+                <!-- Sub-card A: Budget Calculator -->
+                <div onclick="switchTab('tools')" class="bg-[#141A28] border border-[#C5A059]/20 hover:border-[#D4AF37]/60 rounded-2xl p-4 cursor-pointer transition-all space-y-2 text-right group">
+                  <div class="flex items-center justify-between">
+                    <span class="text-[10px] font-black text-[#D4AF37] bg-[#D4AF37]/10 px-2 py-0.5 rounded-md">محاسبه هوشمند</span>
+                    <i data-lucide="calculator" class="w-5 h-5 text-[#D4AF37] group-hover:scale-110 transition-transform"></i>
+                  </div>
+                  <h4 class="text-xs font-black text-[#F7F5F0] group-hover:text-[#D4AF37] transition-colors">📊 بودجه‌ریز تخصصی یزد</h4>
+                  <p class="text-[11px] text-slate-300 font-medium">پیش‌بینی هزینه‌های ۶ رسته اصلی با فیلتر سطح تشریفات</p>
+                </div>
+
+                <!-- Sub-card B: 12-Month Timeline Checklist -->
+                <div onclick="switchTab('planner')" class="bg-[#141A28] border border-[#C5A059]/20 hover:border-[#D4AF37]/60 rounded-2xl p-4 cursor-pointer transition-all space-y-2 text-right group">
+                  <div class="flex items-center justify-between">
+                    <span class="text-[10px] font-black text-[#D4AF37] bg-[#D4AF37]/10 px-2 py-0.5 rounded-md">چک‌لیست ۱۲ ماهه</span>
+                    <i data-lucide="calendar-check" class="w-5 h-5 text-[#D4AF37] group-hover:scale-110 transition-transform"></i>
+                  </div>
+                  <h4 class="text-xs font-black text-[#F7F5F0] group-hover:text-[#D4AF37] transition-colors">🗓️ مدیریت زمان‌بندی کارهای ضروری</h4>
+                  <p class="text-[11px] text-slate-300 font-medium">گام‌به‌گام تا شب مراسم به همراه قابلیت اتصال تامین‌کننده</p>
+                </div>
+
+              </div>
+
+              <!-- Metrics Summary Bar -->
+              <div class="bg-[#0b0f19]/80 border border-[#C5A059]/20 rounded-2xl p-3 flex items-center justify-between text-xs font-bold text-slate-300 flex-wrap gap-2">
+                <span class="flex items-center gap-1.5 text-amber-200">
+                  <i data-lucide="check-circle-2" class="w-4 h-4 text-[#D4AF37]"></i>
+                  <span>بیش از ۱۵,۰۰۰ زوج یزدی برنامه خود را مدیریت کرده‌اند</span>
+                </span>
+                <button type="button" onclick="switchTab('planner')" class="text-[#D4AF37] hover:underline cursor-pointer flex items-center gap-1">
+                  <span>ورود به پنل کامل برنامه ➔</span>
+                </button>
+              </div>
+            </div>
+
           </div>
         </div>
       </section>
 
-      <!-- 5. QUICK TOOLS SHORTCUTS ("میان‌برهای سریع مدیریت مراسم و دعوت مهمانان") -->
-      <section class="quick-tools-section">
-        <div class="container text-center">
-          <span class="sub-title flex items-center justify-center gap-1.5 mx-auto w-fit"><i data-lucide="wrench" class="w-3.5 h-3.5 text-[#D4AF37]"></i> ابزارهای هوشمند برنامه‌ریزی عروسی</span>
-          <h2>میان‌برهای سریع مدیریت مراسم و دعوت مهمانان</h2>
-          <div class="tools-grid-4">
-            <div class="tool-card" onclick="switchTab('planner')">
-              <div class="tool-icon text-[#D4AF37] mb-2 flex justify-end"><i data-lucide="calendar-check" class="w-8 h-8"></i></div>
-              <h3>چک‌لیست ۱۲ ماهه</h3>
-              <p>مدیریت گام‌به‌گام کارهای ضروری از ۱۲ ماه قبل تا شب مراسم</p>
-            </div>
-            <div class="tool-card" onclick="switchTab('tools')">
-              <div class="tool-icon text-[#D4AF37] mb-2 flex justify-end"><i data-lucide="calculator" class="w-8 h-8"></i></div>
-              <h3>مدیریت بودجه AI</h3>
-              <p>محاسبه هوشمند هزینه‌ها و شیرینی‌پزی مبتنی بر یزد</p>
-            </div>
-            <div class="tool-card" onclick="switchTab('guests')">
-              <div class="tool-icon text-[#D4AF37] mb-2 flex justify-end"><i data-lucide="users" class="w-8 h-8"></i></div>
-              <h3>مدیریت مهمانان & RSVP</h3>
-              <p>پیگیری وضعیت حضور مدعوین و ثبت هدایای نقدی</p>
-            </div>
-            <div class="tool-card" onclick="switchTab('invitation')">
-              <div class="tool-icon text-[#D4AF37] mb-2 flex justify-end"><i data-lucide="mail" class="w-8 h-8"></i></div>
-              <h3>کارت دعوت دیجیتال</h3>
-              <p>ارسال کارت آنلاین با آدرس نقشه، منوی غذا و موزیک</p>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      <!-- 6. BUDGET CALCULATOR BANNER ("محاسبه تخمینی بودجه عروسی در استان یزد") -->
       <section class="budget-calculator-section">
         <div class="dark-calc-card">
           <div class="calc-top-row">

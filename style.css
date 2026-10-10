@@ -1169,12 +1169,14 @@ main#directory-view {
 
 /* MAIN CATEGORIES SECTION & CARDS GRID */
 .main-categories-section {
-    background: #FFFFFF !important;
-    border: 1px solid #E0D8C8 !important;
+    background: rgba(14, 18, 28, 0.90) !important;
+    backdrop-filter: blur(16px) !important;
+    -webkit-backdrop-filter: blur(16px) !important;
+    border: 1px solid rgba(197, 160, 89, 0.3) !important;
     border-radius: 24px !important;
     padding: 24px !important;
     margin: 16px 0 !important;
-    box-shadow: 0 2px 8px rgba(0,0,0,0.02) !important;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.5) !important;
     direction: rtl !important;
 }
 
