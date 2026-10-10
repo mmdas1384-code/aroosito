@@ -2258,22 +2258,24 @@ body.theme-pearl-white .text-slate-400 {
    SLEEK MINIMAL & COMPACT VENDOR DIRECTORY CARDS (STRICT OVERWRITE)
    ========================================================================== */
 .minimal-vendor-card {
-  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-  background-color: #0F172A !important;
-  border-radius: 1rem !important;
+  transition: all 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+  background: #0F172A !important;
+  border-radius: 1.5rem !important;
   max-width: 100%;
 }
 
 .minimal-vendor-card:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 10px 30px -5px rgba(212, 175, 55, 0.25);
+  transform: translateY(-4px);
+  box-shadow: 0 15px 35px -5px rgba(212, 175, 55, 0.3) !important;
   border-color: #D4AF37 !important;
 }
 
 .minimal-vendor-card .card-img-container {
-  height: 135px !important;
+  height: 155px !important;
   position: relative;
   overflow: hidden;
+  border-top-left-radius: 1.5rem;
+  border-top-right-radius: 1.5rem;
 }
 
 .minimal-vendor-card .hover-reveal-btn {
