@@ -23,23 +23,79 @@ const HOME_VIEW_HTML = `<main id="home-view" class="flex-1 max-w-7xl w-full mx-a
             پلتفرم جامع و هوشمند مدیریت، رزرو و برنامه‌ریزی عروسی‌های مجلل استان یزد
           </p>
 
-          <!-- Single-Line Horizontal Search Pill Island -->
-          <div class="flex items-center gap-2 bg-[#0F172A]/90 backdrop-blur-md border border-[#D4AF37]/50 rounded-full p-1.5 shadow-xl max-w-xl mx-auto mt-2">
-            <div class="relative flex-1 flex items-center pr-3">
-              <i data-lucide="search" class="w-4 h-4 text-[#D4AF37] shrink-0"></i>
-              <input id="hero-pill-search-input" type="text" oninput="handleHeaderSearchInput()" placeholder="جستجوی تالار، آتلیه، مزون یا آرایشگاه..." class="w-full bg-transparent text-white placeholder-slate-400 border-none pr-2 text-xs font-medium focus:outline-none">
+          <!-- Dynamic Hero Search Pill Bar -->
+          <div class="relative max-w-xl mx-auto mt-3">
+            <div class="flex items-center gap-2 bg-[#0F172A]/90 backdrop-blur-md border border-[#D4AF37]/60 rounded-full p-1.5 shadow-[0_8px_25px_rgba(212,175,55,0.15)] focus-within:border-[#D4AF37] focus-within:ring-2 focus-within:ring-[#D4AF37]/50 transition-all">
+              <div class="relative flex-1 flex items-center pr-3">
+                <i data-lucide="search" class="w-4 h-4 text-[#D4AF37] shrink-0"></i>
+                <input id="hero-pill-search-input" type="text" oninput="handleHeroSearchInput(this.value)" onfocus="handleHeroSearchFocus()" onkeydown="if(event.key==='Enter') executeHeroSearch()" placeholder="جستجوی تالار، آتلیه، مزون، سالن زیبایی..." class="w-full bg-transparent text-white placeholder-slate-400 border-none pr-2 text-xs font-medium focus:outline-none">
+              </div>
+
+              <!-- VIP Matchmaker Trigger in Hero -->
+              <button type="button" onclick="openVipConciergeModal()" class="gold-shimmer-btn text-[#0F251A] font-black px-3.5 py-1.5 rounded-full text-xs transition-all shrink-0 cursor-pointer flex items-center gap-1 shadow-md hover:scale-105 active:scale-95" title="دستیار هوشمند VIP">
+                <i data-lucide="crown" class="w-3.5 h-3.5 text-[#0F251A]"></i>
+                <span class="whitespace-nowrap">✨ دستیار هوشمند VIP</span>
+              </button>
+
+              <button type="button" onclick="executeHeroSearch()" class="bg-[#1E293B] hover:bg-slate-800 text-[#D4AF37] border border-[#D4AF37]/40 px-3.5 py-1.5 rounded-full text-xs font-bold transition-all shrink-0 cursor-pointer flex items-center gap-1">
+                <i data-lucide="compass" class="w-3.5 h-3.5 text-[#D4AF37]"></i>
+                <span>کشف فوری</span>
+              </button>
             </div>
 
-            <button type="button" onclick="switchTab('directory')" class="gold-shimmer-btn text-[#0F251A] font-black px-4 py-2 rounded-full text-xs transition-all shrink-0 cursor-pointer">
-              کشف فوری ↗
-            </button>
-            <button type="button" onclick="openSmartWizardModal()" class="bg-[#1E293B] hover:bg-slate-800 text-[#D4AF37] border border-[#D4AF37]/40 px-3 py-2 rounded-full text-xs font-bold transition-all shrink-0 cursor-pointer flex items-center gap-1">
-              <i data-lucide="sparkles" class="w-3.5 h-3.5 text-[#D4AF37]"></i>
-              <span>توصیه AI</span>
-            </button>
+            <!-- FLOATING TRANSLUCENT SEARCH DROPDOWN WITH TOP MATCHES -->
+            <div id="hero-search-dropdown" class="hidden absolute top-full right-0 left-0 mt-2 bg-[#0F172A]/95 backdrop-blur-xl text-white border border-[#D4AF37]/50 rounded-2xl shadow-2xl z-50 overflow-hidden max-h-72 overflow-y-auto divide-y divide-slate-800 text-right">
+              <!-- Dynamically populated via JS -->
+            </div>
+          </div>
+
+          <!-- Quick Discover Vibe Pills Row -->
+          <div class="flex items-center justify-center gap-1.5 overflow-x-auto no-scrollbar pt-1 text-[11px] font-bold text-slate-300">
+            <span class="text-amber-300 shrink-0 flex items-center gap-1"><i data-lucide="sparkles" class="w-3 h-3 text-[#D4AF37]"></i> دسترسی سریع:</span>
+            <button type="button" onclick="filterVendorsByCategoryTitle('تالار و باغ تالار عروسی')" class="bg-[#1E293B]/80 hover:bg-[#0F172A] text-amber-200 border border-[#D4AF37]/30 hover:border-[#D4AF37] px-2.5 py-0.5 rounded-full transition-all shrink-0 cursor-pointer">🏛️ تالارها</button>
+            <button type="button" onclick="filterVendorsByCategoryTitle('آتلیه عکاسی و فیلمبرداری')" class="bg-[#1E293B]/80 hover:bg-[#0F172A] text-amber-200 border border-[#D4AF37]/30 hover:border-[#D4AF37] px-2.5 py-0.5 rounded-full transition-all shrink-0 cursor-pointer">📸 آتلیه</button>
+            <button type="button" onclick="filterVendorsByCategoryTitle('سالن زیبایی و آرایشگاه عروس')" class="bg-[#1E293B]/80 hover:bg-[#0F172A] text-amber-200 border border-[#D4AF37]/30 hover:border-[#D4AF37] px-2.5 py-0.5 rounded-full transition-all shrink-0 cursor-pointer">💄 آرایشگاه</button>
+            <button type="button" onclick="filterVendorsByCategoryTitle('مزون لباس عروس')" class="bg-[#1E293B]/80 hover:bg-[#0F172A] text-amber-200 border border-[#D4AF37]/30 hover:border-[#D4AF37] px-2.5 py-0.5 rounded-full transition-all shrink-0 cursor-pointer">👗 مزون</button>
           </div>
         </div>
       </section>
+
+      <!-- ULTRA-SLEEK HORIZONTAL METRICS & TRUST GLASS STRIP -->
+      <div id="hero-floating-stats-bar" class="bg-[#0F172A]/80 backdrop-blur-xl border border-[#D4AF37]/40 rounded-3xl p-3 sm:p-4 my-6 shadow-[0_10px_35px_rgba(0,0,0,0.4)]">
+        <div class="grid grid-cols-1 md:grid-cols-3 divide-y md:divide-y-0 md:divide-x md:divide-x-reverse divide-[#D4AF37]/20 gap-3 md:gap-0 text-white text-center">
+
+          <div class="px-4 py-2 flex items-center justify-center gap-3">
+            <div class="w-9 h-9 rounded-xl bg-[#D4AF37]/15 border border-[#D4AF37]/40 text-[#D4AF37] flex items-center justify-center shrink-0">
+              <i data-lucide="award" class="w-4.5 h-4.5 text-[#D4AF37]"></i>
+            </div>
+            <div class="text-right">
+              <span class="text-sm font-black text-[#D4AF37] block">۵۰۰+ تامین‌کننده لوکس</span>
+              <span class="text-[10.5px] text-slate-300 font-medium">باغ، تالار، آتلیه و مزون‌های برتر یزد</span>
+            </div>
+          </div>
+
+          <div class="px-4 py-2 flex items-center justify-center gap-3">
+            <div class="w-9 h-9 rounded-xl bg-[#D4AF37]/15 border border-[#D4AF37]/40 text-[#D4AF37] flex items-center justify-center shrink-0">
+              <i data-lucide="sparkles" class="w-4 h-4.5 text-[#D4AF37]"></i>
+            </div>
+            <div class="text-right">
+              <span class="text-sm font-black text-[#D4AF37] block">۲,۰۰۰+ مراسم موفق</span>
+              <span class="text-[10.5px] text-slate-300 font-medium">رزرو آنلاین و مدیریت بودجه هوشمند</span>
+            </div>
+          </div>
+
+          <div class="px-4 py-2 flex items-center justify-center gap-3">
+            <div class="w-9 h-9 rounded-xl bg-[#D4AF37]/15 border border-[#D4AF37]/40 text-[#D4AF37] flex items-center justify-center shrink-0">
+              <i data-lucide="shield-check" class="w-4.5 h-4.5 text-[#D4AF37]"></i>
+            </div>
+            <div class="text-right">
+              <span class="text-sm font-black text-[#D4AF37] block">تضمین کیفیت و اصالت</span>
+              <span class="text-[10.5px] text-slate-300 font-medium">پشتیبانی اختصاصی و صدور پیش‌فاکتور</span>
+            </div>
+          </div>
+
+        </div>
+      </div>
 
       <!-- 3. VIP SHOWCASE SECTION -->
       <section class="bg-gradient-to-b from-slate-900 to-[#0b0f19] border border-[#D4AF37]/40 rounded-3xl p-5 shadow-xl relative space-y-3">
@@ -4029,6 +4085,68 @@ if (document.readyState === "loading") {
       }
       handleHeaderSearchInput();
     }
+
+    function handleHeroSearchInput(query) {
+      const dropdown = document.getElementById('hero-search-dropdown');
+      if (!dropdown) return;
+
+      const q = (query || '').trim().toLowerCase();
+      if (!q) {
+        dropdown.classList.add('hidden');
+        return;
+      }
+
+      const matchedVendors = vendors.filter(v =>
+        v.name.toLowerCase().includes(q) ||
+        v.category.toLowerCase().includes(q) ||
+        v.district.toLowerCase().includes(q)
+      ).slice(0, 5);
+
+      if (matchedVendors.length === 0) {
+        dropdown.innerHTML = `<div class="p-3 text-center text-slate-400 text-xs font-medium">نتیجه‌ای با عبارت "${query}" پیدا نشد</div>`;
+      } else {
+        dropdown.innerHTML = matchedVendors.map(v => `
+          <div onclick="openVendorDetailModal(${v.id}); document.getElementById('hero-search-dropdown').classList.add('hidden');" class="p-2.5 hover:bg-[#1E293B] rounded-xl cursor-pointer transition-all flex items-center justify-between">
+            <div class="flex items-center gap-2.5">
+              <img src="${v.image}" class="w-8 h-8 rounded-lg object-cover border border-[#D4AF37]/30">
+              <div>
+                <p class="text-xs font-bold text-white">${v.name}</p>
+                <p class="text-[10px] text-amber-200/70">${v.category} • ${v.district}</p>
+              </div>
+            </div>
+            <span class="text-[10px] font-bold text-[#D4AF37]">مشاهده ↗</span>
+          </div>
+        `).join('');
+      }
+
+      dropdown.classList.remove('hidden');
+      if (typeof lucide !== 'undefined') lucide.createIcons();
+    }
+
+    function handleHeroSearchFocus() {
+      const input = document.getElementById('hero-pill-search-input');
+      if (input && input.value.trim()) {
+        handleHeroSearchInput(input.value);
+      }
+    }
+
+    function executeHeroSearch() {
+      const input = document.getElementById('hero-pill-search-input');
+      const dropdown = document.getElementById('hero-search-dropdown');
+      if (dropdown) dropdown.classList.add('hidden');
+
+      const q = input ? input.value.trim() : '';
+      switchTab('directory');
+      if (q) {
+        const directSearch = document.getElementById('directory-instant-search');
+        if (directSearch) directSearch.value = q;
+        if (typeof filterVendors === 'function') filterVendors();
+      }
+    }
+
+    window.handleHeroSearchInput = handleHeroSearchInput;
+    window.handleHeroSearchFocus = handleHeroSearchFocus;
+    window.executeHeroSearch = executeHeroSearch;
 
     function handleHeaderSearchInput() {
       const input = document.getElementById('header-search-input');
@@ -12723,6 +12841,72 @@ window.stopCardImageSlideshow = function(container, vendorId) {
   if (img && vendor && vendor.image) {
     img.src = vendor.image;
     img.style.opacity = '1';
+  }
+};
+
+window.openQuickSearchOverlay = function() {
+  const modal = document.getElementById('modal-quick-search-overlay');
+  if (modal) {
+    modal.classList.remove('hidden');
+    const input = document.getElementById('quick-search-modal-input');
+    if (input) {
+      input.value = '';
+      setTimeout(() => input.focus(), 100);
+    }
+    window.handleOverlaySearchInput('');
+  }
+};
+
+window.closeQuickSearchOverlay = function() {
+  const modal = document.getElementById('modal-quick-search-overlay');
+  if (modal) modal.classList.add('hidden');
+};
+
+window.handleOverlaySearchInput = function(query) {
+  const container = document.getElementById('quick-search-modal-results');
+  if (!container) return;
+
+  const q = (query || '').trim().toLowerCase();
+  const matched = vendors.filter(v =>
+    !q ||
+    v.name.toLowerCase().includes(q) ||
+    v.category.toLowerCase().includes(q) ||
+    v.district.toLowerCase().includes(q)
+  );
+
+  if (matched.length === 0) {
+    container.innerHTML = `<div class="p-4 text-center text-slate-400 text-xs">نتیجه‌ای با عبارت "${query}" یافت نشد</div>`;
+    return;
+  }
+
+  container.innerHTML = matched.slice(0, 5).map(v => `
+    <div onclick="closeQuickSearchOverlay(); openVendorDetailModal(${v.id})" class="p-3 hover:bg-[#1E293B] rounded-2xl cursor-pointer transition-all flex items-center justify-between text-right">
+      <div class="flex items-center gap-3">
+        <img src="${v.image}" class="w-10 h-10 rounded-xl object-cover border border-[#D4AF37]/40">
+        <div>
+          <p class="text-xs font-black text-white">${v.name}</p>
+          <p class="text-[10px] text-amber-200/80">${v.category} • ${v.district}</p>
+        </div>
+      </div>
+      <span class="text-[11px] font-bold text-[#D4AF37] bg-[#D4AF37]/10 border border-[#D4AF37]/30 px-2.5 py-1 rounded-full">مشاهده ↗</span>
+    </div>
+  `).join('');
+};
+
+window.executeOverlaySearch = function() {
+  const input = document.getElementById('quick-search-modal-input');
+  if (input && input.value.trim()) {
+    closeQuickSearchOverlay();
+    switchTab('directory');
+  }
+};
+
+window.executeQuickCategorySearch = function(catName) {
+  closeQuickSearchOverlay();
+  if (typeof window.filterVendorsByCategoryTitle === 'function') {
+    window.filterVendorsByCategoryTitle(catName);
+  } else {
+    switchTab('directory');
   }
 };
 
