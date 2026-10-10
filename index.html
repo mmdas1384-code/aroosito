@@ -1381,57 +1381,55 @@
     <!-- ISOLATED VENDOR DIRECTORY CONTENT MODULE -->
     <div id="tab-directory" class="tab-content hidden space-y-8">
 
-      <!-- DYNAMIC CATEGORY PILL-TABS CAROUSEL BAR -->
-      <div class="bg-[#0F172A] border border-[#D4AF37]/40 rounded-2xl p-2.5 shadow-xl text-white">
-        <div id="directory-category-carousel" class="flex items-center gap-2 overflow-x-auto custom-scrollbar pb-1 text-xs font-black">
-          <button type="button" onclick="filterVendorsByCategoryTitle('all')" class="bg-gradient-to-r from-[#D4AF37] to-[#F3E5AB] text-[#0F251A] px-4 py-2 rounded-xl shrink-0 cursor-pointer shadow-md">
-            همه تامین‌کنندگان
-          </button>
-          <button type="button" onclick="filterVendorsByCategoryTitle('تالار و باغ‌تالار')" class="bg-[#1E293B] hover:bg-slate-800 text-amber-200 border border-[#D4AF37]/30 px-3.5 py-2 rounded-xl shrink-0 cursor-pointer">
-            🏰 تالار و باغ
-          </button>
-          <button type="button" onclick="filterVendorsByCategoryTitle('عکاسی و فیلم‌برداری')" class="bg-[#1E293B] hover:bg-slate-800 text-amber-200 border border-[#D4AF37]/30 px-3.5 py-2 rounded-xl shrink-0 cursor-pointer">
-            📸 عکس و فیلم
-          </button>
-          <button type="button" onclick="filterVendorsByCategoryTitle('میکاپ و سالن زیبایی')" class="bg-[#1E293B] hover:bg-slate-800 text-amber-200 border border-[#D4AF37]/30 px-3.5 py-2 rounded-xl shrink-0 cursor-pointer">
-            💄 میکاپ و زیبایی
-          </button>
-          <button type="button" onclick="filterVendorsByCategoryTitle('مزون و لباس عروس')" class="bg-[#1E293B] hover:bg-slate-800 text-amber-200 border border-[#D4AF37]/30 px-3.5 py-2 rounded-xl shrink-0 cursor-pointer">
-            👗 مزون و لباس
-          </button>
-          <button type="button" onclick="filterVendorsByCategoryTitle('تشریفات و گل‌آرایی')" class="bg-[#1E293B] hover:bg-slate-800 text-amber-200 border border-[#D4AF37]/30 px-3.5 py-2 rounded-xl shrink-0 cursor-pointer">
-            🔮 تشریفات و دیزاین
-          </button>
-        </div>
-      </div>
+      <!-- 1. COMPACT PRIMARY FILTER ISLAND BAR -->
+      <div id="directory-primary-filter-island" class="bg-[#0F172A]/90 backdrop-blur-xl border border-[#D4AF37]/50 rounded-3xl p-3 sm:p-4 shadow-2xl text-white space-y-3">
+        <div class="flex flex-col lg:flex-row lg:items-center justify-between gap-3">
 
-      <!-- HEADER BREADCRUMB & TOP CONTROL BAR -->
-      <div class="bg-[#0F172A] border border-[#D4AF37]/40 rounded-3xl p-5 sm:p-6 shadow-xl space-y-4 text-white">
-        <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-slate-800 pb-4">
-          <div class="space-y-1">
-            <nav class="flex items-center gap-2 text-xs text-slate-400 font-bold mb-1">
-              <button onclick="switchTab('home')" class="hover:text-[#D4AF37] transition-colors cursor-pointer">خانه</button>
-              <span>/</span>
-              <span class="text-amber-200">دایرکتوری جامع تامین‌کنندگان یزد</span>
-            </nav>
-            <h1 class="text-xl sm:text-2xl font-black text-white flex items-center gap-2">
-              <i data-lucide="building-2" class="w-6 h-6 text-[#D4AF37]"></i>
-              <span>دایرکتوری جامع تامین‌کنندگان و خدمات عروسی استان یزد</span>
-            </h1>
+          <!-- Category Carousel Pills -->
+          <div id="directory-category-carousel" class="flex items-center gap-2 overflow-x-auto custom-scrollbar pb-1 lg:pb-0 text-xs font-black flex-1 min-w-0">
+            <button type="button" onclick="filterVendorsByCategoryTitle('all')" class="bg-gradient-to-r from-[#D4AF37] to-[#F3E5AB] text-[#0F251A] px-4 py-2 rounded-xl shrink-0 cursor-pointer shadow-md">
+              همه تامین‌کنندگان
+            </button>
+            <button type="button" onclick="filterVendorsByCategoryTitle('تالار و باغ‌تالار')" class="bg-[#1E293B] hover:bg-slate-800 text-amber-200 border border-[#D4AF37]/30 px-3.5 py-2 rounded-xl shrink-0 cursor-pointer">
+              🏰 تالار و باغ
+            </button>
+            <button type="button" onclick="filterVendorsByCategoryTitle('عکاسی و فیلم‌برداری')" class="bg-[#1E293B] hover:bg-slate-800 text-amber-200 border border-[#D4AF37]/30 px-3.5 py-2 rounded-xl shrink-0 cursor-pointer">
+              📸 عکس و فیلم
+            </button>
+            <button type="button" onclick="filterVendorsByCategoryTitle('میکاپ و سالن زیبایی')" class="bg-[#1E293B] hover:bg-slate-800 text-amber-200 border border-[#D4AF37]/30 px-3.5 py-2 rounded-xl shrink-0 cursor-pointer">
+              💄 میکاپ و زیبایی
+            </button>
+            <button type="button" onclick="filterVendorsByCategoryTitle('مزون و لباس عروس')" class="bg-[#1E293B] hover:bg-slate-800 text-amber-200 border border-[#D4AF37]/30 px-3.5 py-2 rounded-xl shrink-0 cursor-pointer">
+              👗 مزون و لباس
+            </button>
+            <button type="button" onclick="filterVendorsByCategoryTitle('تشریفات و گل‌آرایی')" class="bg-[#1E293B] hover:bg-slate-800 text-amber-200 border border-[#D4AF37]/30 px-3.5 py-2 rounded-xl shrink-0 cursor-pointer">
+              🔮 تشریفات و دیزاین
+            </button>
           </div>
 
-          <div class="flex items-center gap-2">
-            <button onclick="toggleAdvancedFiltersDrawer()" class="bg-[#1E293B] hover:bg-slate-800 text-[#D4AF37] border border-[#D4AF37]/40 px-3.5 py-2 rounded-xl text-xs font-black transition-all flex items-center gap-1.5 shadow-sm cursor-pointer">
+          <!-- Controls: City Dropdown & Advanced Filters Toggle Button -->
+          <div class="flex items-center gap-2 shrink-0 self-end lg:self-auto">
+            <select id="directory-island-city-select" onchange="syncAndFilterCity(this.value)" class="bg-[#1E293B] border border-[#D4AF37]/40 rounded-xl px-3 py-2 text-xs font-bold text-amber-200 focus:outline-none focus:border-[#D4AF37] cursor-pointer">
+              <option value="استان یزد" class="bg-[#0F172A] text-white" selected>همه مناطق یزد 📍</option>
+              <option value="صفائیه" class="bg-[#0F172A] text-white">صفائیه</option>
+              <option value="میدان اطلسی" class="bg-[#0F172A] text-white">میدان اطلسی</option>
+              <option value="خیابان کاشانی" class="bg-[#0F172A] text-white">خیابان کاشانی</option>
+              <option value="بافت تاریخی" class="bg-[#0F172A] text-white">بافت تاریخی</option>
+              <option value="میبد" class="bg-[#0F172A] text-white">میبد</option>
+              <option value="اردکان" class="bg-[#0F172A] text-white">اردکان</option>
+              <option value="تفت" class="bg-[#0F172A] text-white">تفت</option>
+            </select>
+
+            <button type="button" onclick="toggleAdvancedFiltersDrawer()" class="gold-shimmer-btn text-[#0F251A] px-4 py-2 rounded-xl text-xs font-black transition-all flex items-center gap-1.5 shadow-lg cursor-pointer">
+              <i data-lucide="sliders-horizontal" class="w-4 h-4 text-[#0F251A]"></i>
               <span>فیلترهای پیشرفته ⚙️</span>
-            </button>
-            <button onclick="switchTab('home')" class="bg-[#1E293B] hover:bg-slate-800 text-slate-300 border border-slate-700 px-3.5 py-2 rounded-xl text-xs font-bold transition-all flex items-center gap-1 cursor-pointer">
-              <span>بازگشت به اصلی</span>
+              <span id="adv-filter-active-count" class="bg-[#0F172A] text-[#D4AF37] text-[10px] font-black px-2 py-0.5 rounded-full hidden">0 فعال</span>
             </button>
           </div>
         </div>
 
-        <!-- Active Filter Chips Container -->
-        <div class="flex items-center justify-between gap-3 text-xs font-bold flex-wrap">
+        <!-- Active Filter Chips Bar -->
+        <div class="flex items-center justify-between gap-3 text-xs font-bold flex-wrap pt-2 border-t border-slate-800">
           <div class="flex items-center gap-2 flex-wrap" id="active-category-chips">
             <span class="text-slate-400">فیلترهای فعال:</span>
             <div id="active-category-pills" class="flex items-center gap-1.5 flex-wrap">
@@ -1442,6 +1440,96 @@
           <button onclick="resetAllCategoryFilters()" class="text-xs font-bold text-rose-400 hover:text-rose-300 transition-colors flex items-center gap-1 cursor-pointer">
             <i data-lucide="rotate-ccw" class="w-3.5 h-3.5"></i>
             <span>پاک کردن همه فیلترها</span>
+          </button>
+        </div>
+      </div>
+
+      <!-- 2. ELEGANT ADVANCED FILTER DRAWER PANEL -->
+      <div id="directory-advanced-filters-drawer" class="bg-[#0F172A]/95 backdrop-blur-2xl border-2 border-[#D4AF37]/60 rounded-3xl p-6 shadow-2xl text-white space-y-6 hidden transition-all duration-300">
+        <div class="flex items-center justify-between border-b border-[#D4AF37]/30 pb-3">
+          <h3 class="text-sm sm:text-base font-black text-[#D4AF37] flex items-center gap-2">
+            <i data-lucide="sliders" class="w-5 h-5 text-[#D4AF37]"></i>
+            <span>تنظیمات پیشرفته جستجو و اعتبارسنجی (Advanced Filters)</span>
+          </h3>
+          <button type="button" onclick="toggleAdvancedFiltersDrawer()" class="text-slate-400 hover:text-white transition-colors cursor-pointer" title="بستن drawer">
+            <i data-lucide="x" class="w-5 h-5"></i>
+          </button>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 text-xs font-bold">
+
+          <!-- Price Range Selector Pills -->
+          <div class="space-y-2">
+            <label class="text-amber-200 font-extrabold block">محدوده قیمت:</label>
+            <div class="grid grid-cols-2 gap-2">
+              <button type="button" onclick="syncAndFilterPrice('all')" class="p-2.5 rounded-xl bg-[#1E293B] border border-[#D4AF37]/30 text-white hover:border-[#D4AF37] transition-all cursor-pointer text-center">
+                همه بازه‌ها
+              </button>
+              <button type="button" onclick="syncAndFilterPrice('economic')" class="p-2.5 rounded-xl bg-[#1E293B] border border-[#D4AF37]/30 text-emerald-300 hover:border-[#D4AF37] transition-all cursor-pointer text-center">
+                اقتصادی 💰
+              </button>
+              <button type="button" onclick="syncAndFilterPrice('mid')" class="p-2.5 rounded-xl bg-[#1E293B] border border-[#D4AF37]/30 text-amber-300 hover:border-[#D4AF37] transition-all cursor-pointer text-center">
+                متوسط 💰💰
+              </button>
+              <button type="button" onclick="syncAndFilterPrice('luxury')" class="p-2.5 rounded-xl bg-[#1E293B] border border-[#D4AF37]/30 text-[#D4AF37] hover:border-[#D4AF37] transition-all cursor-pointer text-center">
+                لوکس VIP 💰💰💰
+              </button>
+            </div>
+          </div>
+
+          <!-- Capacity Range Slider -->
+          <div class="space-y-2">
+            <div class="flex justify-between items-center text-amber-200 font-extrabold">
+              <span>ظرفیت مهمانان:</span>
+              <span id="sidebar-capacity-val" class="text-[#D4AF37] font-black">همه ظرفیت‌ها</span>
+            </div>
+            <input type="range" id="sidebar-capacity-slider" min="50" max="1000" step="50" value="1000" oninput="updateCapacitySliderLabel(this.value); filterVendors();" class="w-full h-2 bg-slate-800 rounded-lg appearance-none cursor-pointer accent-[#D4AF37] pt-2">
+            <div class="flex justify-between text-[10px] text-slate-400 font-semibold pt-1">
+              <span>۵۰ نفر</span>
+              <span>۱,۰۰۰+ نفر</span>
+            </div>
+          </div>
+
+          <!-- Event Date Availability Picker -->
+          <div class="space-y-2">
+            <label for="sidebar-event-date" class="text-amber-200 font-extrabold flex items-center justify-between">
+              <span>تاریخ مراسم:</span>
+              <span class="text-[10px] text-amber-300 font-bold bg-[#1E293B] px-2 py-0.5 rounded-full border border-[#D4AF37]/30">بررسی تقویم 📅</span>
+            </label>
+            <input type="date" id="sidebar-event-date" onchange="handleEventDateFilterChange(this.value)" class="w-full bg-[#1E293B] border border-[#D4AF37]/40 rounded-xl p-2.5 text-xs font-bold text-white focus:outline-none focus:border-[#D4AF37] cursor-pointer">
+          </div>
+
+          <!-- Verified Toggle & Features -->
+          <div class="space-y-2">
+            <label class="text-amber-200 font-extrabold block mb-2">امکانات ویژه VIP:</label>
+            <div class="space-y-2 text-slate-200">
+              <label class="flex items-center gap-2 cursor-pointer hover:text-[#D4AF37] transition-colors">
+                <input type="checkbox" id="verified-only" checked onchange="filterVendors()" class="rounded text-[#D4AF37] focus:ring-[#D4AF37] w-4 h-4 cursor-pointer">
+                <span class="text-emerald-300">تامین‌کنندگان تاییدشده 🛡️</span>
+              </label>
+              <label class="flex items-center gap-2 cursor-pointer hover:text-[#D4AF37] transition-colors">
+                <input type="checkbox" id="feat-parking" onchange="filterVendors()" class="rounded text-[#D4AF37] focus:ring-[#D4AF37] w-4 h-4 cursor-pointer">
+                <span>پارکینگ اختصاصی</span>
+              </label>
+              <label class="flex items-center gap-2 cursor-pointer hover:text-[#D4AF37] transition-colors">
+                <input type="checkbox" id="feat-sofreh" onchange="filterVendors()" class="rounded text-[#D4AF37] focus:ring-[#D4AF37] w-4 h-4 cursor-pointer">
+                <span>سفره عقد اختصاصی</span>
+              </label>
+              <label class="flex items-center gap-2 cursor-pointer hover:text-[#D4AF37] transition-colors">
+                <input type="checkbox" id="feat-garden" onchange="filterVendors()" class="rounded text-[#D4AF37] focus:ring-[#D4AF37] w-4 h-4 cursor-pointer">
+                <span>فضای باز / باغ</span>
+              </label>
+            </div>
+          </div>
+
+        </div>
+
+        <div class="pt-4 border-t border-[#D4AF37]/30 flex items-center justify-between gap-3">
+          <button type="button" onclick="filterVendors(); toggleAdvancedFiltersDrawer();" class="gold-shimmer-btn text-[#0F251A] font-black px-6 py-2.5 rounded-xl text-xs shadow-lg transition-all cursor-pointer">
+            اعمال فیلترها 🚀
+          </button>
+          <button type="button" onclick="resetAllCategoryFilters()" class="text-xs font-bold text-rose-300 hover:text-rose-100 transition-colors cursor-pointer">
+            پاک‌سازی همه فیلترها ✕
           </button>
         </div>
       </div>

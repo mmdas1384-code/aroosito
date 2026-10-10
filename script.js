@@ -4226,6 +4226,10 @@ if (document.readyState === "loading") {
       } else {
         container.innerHTML = html;
       }
+
+      if (typeof window.updateAdvFilterActiveCount === 'function') {
+        window.updateAdvFilterActiveCount();
+      }
     }
 
     function syncAndFilterCity(val) {
@@ -13185,10 +13189,30 @@ window.addForumComment = function(threadIdx) {
 // HOMEPAGE MAGAZINE HIGHLIGHTS RENDERER
 // ==========================================================================
 window.toggleAdvancedFiltersDrawer = function() {
-  const sidebar = document.querySelector('.directory-sidebar');
-  if (sidebar) {
-    sidebar.classList.toggle('hidden');
-    showToast('وضعیت فیلترهای پیشرفته تغییر یافت.', 'info');
+  const drawer = document.getElementById('directory-advanced-filters-drawer');
+  if (drawer) {
+    drawer.classList.toggle('hidden');
+    if (typeof showToast === 'function') {
+      showToast(drawer.classList.contains('hidden') ? 'فیلترهای پیشرفته بسته شد.' : 'فیلترهای پیشرفته باز شد.', 'info');
+    }
+  }
+};
+
+window.updateAdvFilterActiveCount = function() {
+  const badge = document.getElementById('adv-filter-active-count');
+  if (!badge) return;
+  let count = (typeof activeCategoryFilters !== 'undefined') ? activeCategoryFilters.size : 0;
+  if (typeof selectedEventDateFilter !== 'undefined' && selectedEventDateFilter) count++;
+  const citySelect = document.getElementById('sidebar-city-select') || document.getElementById('directory-island-city-select');
+  if (citySelect && citySelect.value !== 'استان یزد') count++;
+  const priceSelect = document.getElementById('sidebar-price-select');
+  if (priceSelect && priceSelect.value !== 'all') count++;
+
+  if (count > 0) {
+    badge.innerText = `${count.toLocaleString('fa-IR')} فعال`;
+    badge.classList.remove('hidden');
+  } else {
+    badge.classList.add('hidden');
   }
 };
 
