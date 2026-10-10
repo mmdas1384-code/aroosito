@@ -12611,6 +12611,22 @@ window.closeVendorInvoiceBuilderModal = function() {
   }
 };
 
+window.openVipConciergeModal = function() {
+  const modal = document.getElementById('modal-vip-concierge');
+  if (modal) modal.classList.remove('hidden');
+};
+
+window.closeVipConciergeModal = function() {
+  const modal = document.getElementById('modal-vip-concierge');
+  if (modal) modal.classList.add('hidden');
+};
+
+window.handleVipConciergeSubmit = function(e) {
+  if (e) e.preventDefault();
+  closeVipConciergeModal();
+  if (typeof showToast === 'function') showToast('درخواست مشاوره کنسیرژ VIP با موفقیت ثبت شد. مشاور تشریفات عروسی نو به زودی تماس می‌گیرد.', 'success');
+};
+
 /* QUICK VIEW MODAL / DRAWER CONTROLLERS */
 window.openQuickViewDrawer = function(vendorId, event) {
   if (event) event.stopPropagation();
@@ -13178,6 +13194,7 @@ window.renderSmartCountdownWidget = function(phaseIndex = 0) {
   if (!tabsContainer || !tasksContainer) return;
 
   const phases = [
+    { name: "۱۲ ماه تا عروسی", desc: "تعیین بودجه & تاریخ", tasks: ["تعیین سقف بودجه کل و سهم‌بندی", "انتخاب تاریخ تقریبی و بررسی فصل", "افتتاح حساب مشترک هزینه‌ها"] },
     { name: "۶ ماه تا عروسی", desc: "انتخاب باغ تالار & عکاس", tasks: ["رزرو باغ تالار و کترینگ", "انتخاب آتلیه عکاسی و فیلمبرداری", "برآورد اولیه بودجه مراسم"] },
     { name: "۳ ماه تا عروسی", desc: "لباس، آرایشگاه & سفره عقد", tasks: ["پرو و سفارش لباس عروس و داماد", "رزرو سالن زیبایی و میکاپ", "انتخاب دکوراسیون و سفره عقد"] },
     { name: "۱ ماه تا عروسی", desc: "کارت دعوت & هماهنگی نهایی", tasks: ["طراحی و ارسال کارت دعوت دیجیتال", "هماهنگی ماشین عروس و گل‌آرایی", "نهایی‌سازی لیست مهمانان"] },
