@@ -606,18 +606,25 @@
                       </div>
 
                       <div class="flex items-center justify-around w-full max-w-full px-1 py-1" onclick="event.stopPropagation()">
-                        <button type="button" onclick="openVendorDetailModal(3)" class="vip-icon-module flex flex-col items-center gap-1 cursor-pointer group/icon">
-                          <div class="w-9 h-9 rounded-full bg-[#1B3B2B]/90 text-[#D4AF37] border border-[#D4AF37]/70 shadow-md flex items-center justify-center group-hover/icon:scale-110 group-hover/icon:border-[#D4AF37] transition-all duration-200">
-                            <i data-lucide="eye" class="w-4 h-4"></i>
+                        <button type="button" onclick="openQuickViewDrawer(3, event)" class="vip-icon-module flex flex-col items-center gap-1 cursor-pointer group/icon" title="مشاهده سریع">
+                          <div class="w-8 h-8 rounded-full bg-[#0F172A]/90 text-amber-200 border border-[#D4AF37]/60 shadow-md flex items-center justify-center group-hover/icon:scale-110 transition-all duration-200">
+                            <i data-lucide="eye" class="w-3.5 h-3.5 text-[#D4AF37]"></i>
                           </div>
-                          <span class="text-[9.5px] font-bold text-white group-hover/icon:text-[#D4AF37] transition-colors whitespace-nowrap">مشاهده</span>
+                          <span class="text-[9px] font-bold text-slate-200 group-hover/icon:text-[#D4AF37] transition-colors whitespace-nowrap">سریع</span>
                         </button>
 
-                        <button type="button" onclick="openInquiryModal(3, 'سالن زیبایی رویال یزد')" class="vip-icon-module flex flex-col items-center gap-1 cursor-pointer group/icon">
-                          <div class="w-9 h-9 rounded-full bg-gradient-to-tr from-[#D4AF37] to-[#F3E5AB] text-[#0F251A] shadow-md flex items-center justify-center group-hover/icon:scale-110 transition-all duration-200">
-                            <i data-lucide="tag" class="w-4 h-4"></i>
+                        <button type="button" onclick="openVendorDetailModal(3)" class="vip-icon-module flex flex-col items-center gap-1 cursor-pointer group/icon" title="پروفایل کامل">
+                          <div class="w-8 h-8 rounded-full bg-[#1B3B2B]/90 text-[#D4AF37] border border-[#D4AF37]/70 shadow-md flex items-center justify-center group-hover/icon:scale-110 transition-all duration-200">
+                            <i data-lucide="store" class="w-3.5 h-3.5"></i>
                           </div>
-                          <span class="text-[9.5px] font-bold text-amber-200 group-hover/icon:text-white transition-colors whitespace-nowrap">استعلام قیمت</span>
+                          <span class="text-[9px] font-bold text-white group-hover/icon:text-[#D4AF37] transition-colors whitespace-nowrap">پروفایل</span>
+                        </button>
+
+                        <button type="button" onclick="openInquiryModal(3, 'سالن زیبایی رویال یزد')" class="vip-icon-module flex flex-col items-center gap-1 cursor-pointer group/icon" title="استعلام قیمت">
+                          <div class="w-8 h-8 rounded-full bg-gradient-to-tr from-[#D4AF37] to-[#F3E5AB] text-[#0F251A] shadow-md flex items-center justify-center group-hover/icon:scale-110 transition-all duration-200">
+                            <i data-lucide="tag" class="w-3.5 h-3.5"></i>
+                          </div>
+                          <span class="text-[9px] font-bold text-amber-200 group-hover/icon:text-white transition-colors whitespace-nowrap">استعلام</span>
                         </button>
                       </div>
                     </div>
@@ -1526,6 +1533,15 @@
               <option value="mid">متوسط 💰💰</option>
               <option value="luxury">لوکس 💰💰💰</option>
             </select>
+          </div>
+
+          <!-- Event Date Availability Picker -->
+          <div class="space-y-2 pt-3 border-t border-accent">
+            <label for="sidebar-event-date" class="text-xs font-extrabold text-graphite flex items-center justify-between">
+              <span>تاریخ مراسم (استعلام و رزرو):</span>
+              <span class="text-[10px] text-amber-700 font-bold bg-amber-50 px-2 py-0.5 rounded-full">بررسی تقویم 📅</span>
+            </label>
+            <input type="date" id="sidebar-event-date" onchange="handleEventDateFilterChange(this.value)" class="w-full bg-bgCustom border border-accent rounded-xl p-2.5 text-xs font-bold text-graphite focus:outline-none focus:ring-2 focus:ring-[#1B3B2B] focus:border-[#D4AF37] cursor-pointer">
           </div>
 
           <!-- Feature Checkboxes -->

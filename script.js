@@ -3811,11 +3811,17 @@ if (document.readyState === "loading") {
                 <span class="text-[11px] text-slate-300 font-medium block mt-1">📍 ${localTag}</span>
               </div>
 
-              <div class="flex items-center justify-between pt-2 border-t border-slate-800">
+              <div class="flex items-center justify-between pt-2 border-t border-slate-800 gap-2">
                 <span class="text-[#D4AF37] font-black text-xs sm:text-sm">${v.priceRange || 'استعلام قیمت'}</span>
-                <button type="button" onclick="event.stopPropagation(); openVendorDetailModal(${v.id})" class="bg-gradient-to-r from-[#D4AF37] to-[#F3E5AB] text-[#0F251A] text-[11px] font-black px-3 py-1.5 rounded-xl shadow-md transition-all hover:scale-105 cursor-pointer">
-                  مشاهده & استعلام
-                </button>
+                <div class="flex items-center gap-2">
+                  <button type="button" onclick="event.stopPropagation(); openQuickViewDrawer(${v.id}, event)" class="bg-[#1E293B] hover:bg-slate-700 text-amber-200 border border-[#D4AF37]/40 text-[11px] font-bold px-2.5 py-1.5 rounded-xl transition-all cursor-pointer flex items-center gap-1" title="مشاهده سریع">
+                    <i data-lucide="eye" class="w-3.5 h-3.5 text-[#D4AF37]"></i>
+                    <span>سریع</span>
+                  </button>
+                  <button type="button" onclick="event.stopPropagation(); openVendorDetailModal(${v.id})" class="bg-gradient-to-r from-[#D4AF37] to-[#F3E5AB] text-[#0F251A] text-[11px] font-black px-3 py-1.5 rounded-xl shadow-md transition-all hover:scale-105 cursor-pointer">
+                    مشاهده & استعلام
+                  </button>
+                </div>
               </div>
             </div>
           `;
@@ -3869,8 +3875,12 @@ if (document.readyState === "loading") {
             </div>
 
             <!-- Single Minimal Hover Trigger -->
-            <div class="p-3 pt-0 text-right">
-              <button type="button" onclick="event.stopPropagation(); openVendorDetailModal(${v.id})" class="hover-reveal-btn w-full bg-gradient-to-r from-[#D4AF37] to-[#F3E5AB] text-[#0F251A] text-[11px] font-black py-1.5 px-3 rounded-xl shadow-md transition-all flex items-center justify-center gap-1 cursor-pointer">
+            <div class="p-3 pt-0 text-right flex items-center gap-2">
+              <button type="button" onclick="event.stopPropagation(); openQuickViewDrawer(${v.id}, event)" class="bg-[#1E293B] hover:bg-slate-700 text-amber-200 border border-[#D4AF37]/40 text-[11px] font-bold py-1.5 px-2.5 rounded-xl transition-all flex items-center justify-center gap-1 cursor-pointer shrink-0" title="مشاهده سریع">
+                <i data-lucide="eye" class="w-3.5 h-3.5 text-[#D4AF37]"></i>
+                <span>سریع</span>
+              </button>
+              <button type="button" onclick="event.stopPropagation(); openVendorDetailModal(${v.id})" class="hover-reveal-btn flex-1 bg-gradient-to-r from-[#D4AF37] to-[#F3E5AB] text-[#0F251A] text-[11px] font-black py-1.5 px-3 rounded-xl shadow-md transition-all flex items-center justify-center gap-1 cursor-pointer">
                 <span>مشاهده و رزرو</span>
                 <i data-lucide="chevron-left" class="w-3 h-3 text-[#0F251A]"></i>
               </button>
@@ -4138,8 +4148,28 @@ if (document.readyState === "loading") {
       filterVendors();
     }
 
+    let selectedEventDateFilter = '';
+
+    window.handleEventDateFilterChange = function(dateVal) {
+      selectedEventDateFilter = dateVal;
+      renderMultiCategoryPills();
+      filterVendors();
+    };
+
+    window.clearEventDateFilter = function() {
+      selectedEventDateFilter = '';
+      const input = document.getElementById('sidebar-event-date');
+      if (input) input.value = '';
+      renderMultiCategoryPills();
+      filterVendors();
+    };
+
     function resetAllCategoryFilters() {
       activeCategoryFilters.clear();
+      selectedEventDateFilter = '';
+      const dateInput = document.getElementById('sidebar-event-date');
+      if (dateInput) dateInput.value = '';
+
       const searchInput = document.getElementById('search-input');
       if (searchInput) searchInput.value = '';
       const headerSearchInput = document.getElementById('header-search-input');
@@ -4166,17 +4196,31 @@ if (document.readyState === "loading") {
       const container = document.getElementById('active-category-pills');
       if (!container) return;
 
-      if (activeCategoryFilters.size === 0) {
-        container.innerHTML = `<span class="text-xs text-secondary font-medium bg-slate-100 px-3 py-1.5 rounded-xl border border-accent">نمایش تمامی تامین‌کنندگان</span>`;
-        return;
+      let html = '';
+
+      if (selectedEventDateFilter) {
+        html += `
+          <span class="inline-flex items-center gap-1.5 bg-amber-500/10 text-amber-800 border border-amber-300 text-xs font-bold px-3 py-1 rounded-xl">
+            <span>📅 تاریخ: ${selectedEventDateFilter}</span>
+            <button onclick="clearEventDateFilter()" class="hover:text-rose-600 transition-colors cursor-pointer font-bold">✕</button>
+          </span>
+        `;
       }
 
-      container.innerHTML = Array.from(activeCategoryFilters).map(cat => `
-        <span class="inline-flex items-center gap-1.5 bg-primary/10 text-primary border border-primary/20 text-xs font-bold px-3 py-1 rounded-xl">
-          <span>${cat}</span>
-          <button onclick="toggleCategoryFilter('${cat}')" class="hover:text-rose-600 transition-colors cursor-pointer">✕</button>
-        </span>
-      `).join('');
+      if (activeCategoryFilters.size > 0) {
+        html += Array.from(activeCategoryFilters).map(cat => `
+          <span class="inline-flex items-center gap-1.5 bg-primary/10 text-primary border border-primary/20 text-xs font-bold px-3 py-1 rounded-xl">
+            <span>${cat}</span>
+            <button onclick="toggleCategoryFilter('${cat}')" class="hover:text-rose-600 transition-colors cursor-pointer font-bold">✕</button>
+          </span>
+        `).join('');
+      }
+
+      if (!html) {
+        container.innerHTML = `<span class="text-xs text-secondary font-medium bg-slate-100 px-3 py-1.5 rounded-xl border border-accent">نمایش تمامی تامین‌کنندگان</span>`;
+      } else {
+        container.innerHTML = html;
+      }
     }
 
     function syncAndFilterCity(val) {
@@ -4278,6 +4322,11 @@ if (document.readyState === "loading") {
           matchesCapacity = (v.capacity || 0) <= maxCapacity;
         }
 
+        let matchesDate = true;
+        if (selectedEventDateFilter && v.blockedDates && Array.isArray(v.blockedDates)) {
+          matchesDate = !v.blockedDates.includes(selectedEventDateFilter);
+        }
+
         let matchesFeatures = true;
         const tagsAndCapabilities = [...(v.tags || []), ...(v.capabilityTags || []), v.description || ''];
         const tagText = tagsAndCapabilities.join(' ').toLowerCase();
@@ -4287,7 +4336,7 @@ if (document.readyState === "loading") {
         if (featGarden && !tagText.includes('باغ') && !tagText.includes('فضای باز')) matchesFeatures = false;
         if (featCatering && !tagText.includes('کترینگ') && !tagText.includes('پذیرایی') && !tagText.includes('شیرینی')) matchesFeatures = false;
 
-        return matchesSearch && matchesCat && matchesVerified && matchesCity && matchesPrice && matchesCapacity && matchesFeatures;
+        return matchesSearch && matchesCat && matchesVerified && matchesCity && matchesPrice && matchesCapacity && matchesDate && matchesFeatures;
       });
 
       // Apply dynamic sorting
