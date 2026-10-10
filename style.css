@@ -1,10 +1,11 @@
 :root {
-  --color-emerald: #1B3B2B;
+  --color-bg-dark: #07090E;
+  --color-surface-dark: rgba(14, 18, 28, 0.85);
   --color-gold: #D4AF37;
-  --color-off-white: #FBF9F5;
-  --color-cream-gold: #F5EFEB;
-  --color-accent: #E0D8C8;
-  --color-graphite: #111E16;
+  --color-champagne: #C5A059;
+  --color-gold-light: #F3E5AB;
+  --color-text-ivory: #F7F5F0;
+  --color-border-gold: rgba(212, 175, 55, 0.35);
 }
 
 * {
@@ -13,8 +14,8 @@
 
 body {
   font-family: 'Vazirmatn', Tahoma, sans-serif;
-  background-color: var(--color-off-white);
-  color: var(--color-graphite);
+  background-color: #07090E !important;
+  color: #F7F5F0 !important;
   margin: 0;
   padding: 0;
 }

@@ -3765,9 +3765,9 @@ if (document.readyState === "loading") {
           : "border border-[#D4AF37]/30 hover:border-[#D4AF37]";
 
         if (directoryViewMode === 'list') {
-          card.className = `minimal-vendor-card bg-[#0F172A] ${borderClasses} rounded-2xl overflow-hidden shadow-lg transition-all duration-300 flex flex-col md:flex-row group cursor-pointer relative`;
+          card.className = `minimal-vendor-card bg-[#0F172A]/90 backdrop-blur-md ${borderClasses} rounded-3xl overflow-hidden shadow-xl transition-all duration-300 flex flex-col md:flex-row group cursor-pointer relative`;
         } else {
-          card.className = `minimal-vendor-card bg-[#0F172A] ${borderClasses} rounded-2xl overflow-hidden shadow-lg transition-all duration-300 flex flex-col justify-between group cursor-pointer relative`;
+          card.className = `minimal-vendor-card bg-[#0F172A]/90 backdrop-blur-md ${borderClasses} rounded-3xl overflow-hidden shadow-xl transition-all duration-300 flex flex-col justify-between group cursor-pointer relative`;
         }
         card.setAttribute('onclick', `openVendorDetailModal(${v.id})`);
 
