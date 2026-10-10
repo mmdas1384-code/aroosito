@@ -3833,12 +3833,17 @@ if (document.readyState === "loading") {
                 <div class="absolute inset-0 bg-gradient-to-t from-[#0F172A] via-transparent to-black/30"></div>
 
                 <!-- Corner Floating Micro-Pills -->
-                <!-- Top-Right: Gold Star Rating Badge -->
-                <div class="absolute top-2.5 right-2.5 flex items-center gap-1 z-10">
-                  <div class="bg-black/75 backdrop-blur-md text-[#D4AF37] border border-[#D4AF37]/50 text-[10px] font-black px-2.5 py-0.5 rounded-full flex items-center gap-1 shadow-md">
+                <!-- Top-Right: Gold Star Rating Badge & Verified Shield Badge -->
+                <div class="absolute top-2.5 right-2.5 flex items-center gap-1.5 z-10">
+                  <div class="bg-black/80 backdrop-blur-md text-[#D4AF37] border border-[#D4AF37]/60 text-[10px] font-black px-2.5 py-0.5 rounded-full flex items-center gap-1 shadow-lg">
                     <i data-lucide="star" class="w-3 h-3 fill-amber-400 text-amber-400"></i>
                     <span>⭐ ${ratingVal}</span>
                   </div>
+                  ${v.verified ? `
+                    <div class="bg-emerald-950/90 backdrop-blur-md text-emerald-300 border border-emerald-500/60 text-[9.5px] font-black px-2 py-0.5 rounded-full shadow-md flex items-center gap-0.5">
+                      <span>تایید شده 🛡️</span>
+                    </div>
+                  ` : ''}
                 </div>
 
                 <!-- Top-Left: Heart, Scales/Compare, and 360 Tour Micro-Icons -->
