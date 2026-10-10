@@ -2300,6 +2300,25 @@ body.theme-pearl-white .text-slate-400 {
 }
 
 /* ==========================================================================
+   ATMOSPHERE LIGHTING SWITCHER (Day / Night Moods)
+   ========================================================================== */
+body.mood-day {
+  background-color: #F8F6F0 !important;
+  color: #111827 !important;
+}
+
+body.mood-day #tab-home,
+body.mood-day #tab-directory,
+body.mood-day .hero-section {
+  background: linear-gradient(180deg, #FBF9F5 0%, #F5EFEB 100%) !important;
+}
+
+body.mood-night {
+  background-color: #0b0f19 !important;
+  color: #ffffff !important;
+}
+
+/* ==========================================================================
    METALLIC SHIMMER & LUXURY LIGHTING ACCENTS
    ========================================================================== */
 .gold-shimmer-btn {

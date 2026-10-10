@@ -3476,8 +3476,8 @@ if (document.readyState === "loading") {
         selectedComparisonVendorIds.splice(index, 1);
         showToast('تامین‌کننده از لیست مقایسه حذف شد.', 'info');
       } else {
-        if (selectedComparisonVendorIds.length >= 4) {
-          showToast('حداکثر ۴ تامین‌کننده می‌توانید همزمان مقایسه کنید.', 'warning');
+        if (selectedComparisonVendorIds.length >= 3) {
+          showToast('حداکثر ۳ تامین‌کننده می‌توانید همزمان مقایسه کنید.', 'warning');
           return;
         }
         selectedComparisonVendorIds.push(id);
@@ -3828,7 +3828,7 @@ if (document.readyState === "loading") {
         } else {
           card.innerHTML = `
             <div>
-              <div class="card-img-container relative overflow-hidden bg-slate-900">
+              <div class="card-img-container relative overflow-hidden bg-slate-900" onmouseenter="startCardImageSlideshow(this, ${v.id})" onmouseleave="stopCardImageSlideshow(this, ${v.id})">
                 <img src="${v.image}" alt="${v.name}" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-108">
                 <div class="absolute inset-0 bg-gradient-to-t from-[#0F172A] via-transparent to-black/30"></div>
 
@@ -12608,6 +12608,73 @@ window.closeVendorInvoiceBuilderModal = function() {
   if (modal) {
     modal.classList.add('hidden');
     modal.classList.remove('flex');
+  }
+};
+
+/* ==========================================================================
+   ATMOSPHERE LIGHTING SWITCHER (Day / Night Moods)
+   ========================================================================== */
+window.setAtmosphereMood = function(mood) {
+  const body = document.body;
+  const nightBtn = document.getElementById('mood-btn-night');
+  const dayBtn = document.getElementById('mood-btn-day');
+
+  if (mood === 'day') {
+    body.classList.remove('mood-night');
+    body.classList.add('mood-day');
+    try { localStorage.setItem('aroosi_atmosphere_mood', 'day'); } catch(e){}
+    if (dayBtn) dayBtn.className = "px-2.5 py-1.5 rounded-xl text-[10.5px] font-black transition-all bg-[#D4AF37] text-[#0F251A] shadow-xs cursor-pointer flex items-center gap-1";
+    if (nightBtn) nightBtn.className = "px-2.5 py-1.5 rounded-xl text-[10.5px] font-bold transition-all text-amber-200 hover:text-white cursor-pointer flex items-center gap-1";
+    if (typeof showToast === 'function') showToast('حالت دیداری: روز / Sunlit Garden فعال شد.', 'info');
+  } else {
+    body.classList.remove('mood-day');
+    body.classList.add('mood-night');
+    try { localStorage.setItem('aroosi_atmosphere_mood', 'night'); } catch(e){}
+    if (nightBtn) nightBtn.className = "px-2.5 py-1.5 rounded-xl text-[10.5px] font-black transition-all bg-[#D4AF37] text-[#0F251A] shadow-xs cursor-pointer flex items-center gap-1";
+    if (dayBtn) dayBtn.className = "px-2.5 py-1.5 rounded-xl text-[10.5px] font-bold transition-all text-amber-200 hover:text-white cursor-pointer flex items-center gap-1";
+    if (typeof showToast === 'function') showToast('حالت دیداری: شب / Gold Candlelight (پیش‌فرض) فعال شد.', 'info');
+  }
+};
+
+/* ==========================================================================
+   HOVER CARD PORTFOLIO SLIDESHOW CONTROLLER
+   ========================================================================== */
+let cardSlideshowIntervals = {};
+
+window.startCardImageSlideshow = function(container, vendorId) {
+  if (!container) return;
+  const img = container.querySelector('img');
+  if (!img) return;
+
+  const vendor = (typeof vendors !== 'undefined' && Array.isArray(vendors)) ? vendors.find(v => v.id === parseInt(vendorId)) : null;
+  if (!vendor || !vendor.gallery || vendor.gallery.length === 0) return;
+
+  const images = [vendor.image, ...vendor.gallery.slice(0, 3)];
+  let idx = 0;
+
+  if (cardSlideshowIntervals[vendorId]) clearInterval(cardSlideshowIntervals[vendorId]);
+
+  cardSlideshowIntervals[vendorId] = setInterval(() => {
+    idx = (idx + 1) % images.length;
+    img.style.opacity = '0.7';
+    setTimeout(() => {
+      img.src = images[idx];
+      img.style.opacity = '1';
+    }, 150);
+  }, 1200);
+};
+
+window.stopCardImageSlideshow = function(container, vendorId) {
+  if (cardSlideshowIntervals[vendorId]) {
+    clearInterval(cardSlideshowIntervals[vendorId]);
+    delete cardSlideshowIntervals[vendorId];
+  }
+  if (!container) return;
+  const img = container.querySelector('img');
+  const vendor = (typeof vendors !== 'undefined' && Array.isArray(vendors)) ? vendors.find(v => v.id === parseInt(vendorId)) : null;
+  if (img && vendor && vendor.image) {
+    img.src = vendor.image;
+    img.style.opacity = '1';
   }
 };
 
