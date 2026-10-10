@@ -851,8 +851,38 @@ main#directory-view {
 /* ULTRA-LUXURY 3D GLASSMORPHIC VIP SHOWCASE  */
 /* ========================================== */
 
-#vip-showcase-container,
-.vip-showcase-container {
+/* EDITORIAL BENTO CAROUSEL FEATURED VENDORS */
+.bento-carousel-container {
+  display: flex !important;
+  flex-direction: row !important;
+  overflow-x: auto !important;
+  scroll-snap-type: x mandatory;
+  scroll-behavior: smooth;
+  grid-template-columns: none !important;
+  height: auto !important;
+}
+
+.vip-bento-card {
+  scroll-snap-align: start;
+  background: rgba(14, 18, 28, 0.75) !important;
+  backdrop-filter: blur(16px) !important;
+  -webkit-backdrop-filter: blur(16px) !important;
+  border: 1px solid rgba(197, 160, 89, 0.2) !important;
+  transition: all 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.vip-bento-card:hover {
+  border-color: rgba(212, 175, 55, 0.6) !important;
+  transform: translateY(-4px);
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.5), 0 0 20px rgba(212, 175, 55, 0.15);
+}
+
+.scale-108 {
+  transform: scale(1.08);
+}
+
+#vip-showcase-container:not(.bento-carousel-container),
+.vip-showcase-container:not(.bento-carousel-container) {
   display: grid !important;
   grid-template-columns: repeat(4, minmax(0, 1fr)) !important;
   gap: 10px !important;
@@ -863,15 +893,15 @@ main#directory-view {
 }
 
 @media (max-width: 1024px) {
-  #vip-showcase-container,
-  .vip-showcase-container {
+  #vip-showcase-container:not(.bento-carousel-container),
+  .vip-showcase-container:not(.bento-carousel-container) {
     grid-template-columns: repeat(3, minmax(0, 1fr)) !important;
   }
 }
 
 @media (max-width: 640px) {
-  #vip-showcase-container,
-  .vip-showcase-container {
+  #vip-showcase-container:not(.bento-carousel-container),
+  .vip-showcase-container:not(.bento-carousel-container) {
     grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
   }
 }
