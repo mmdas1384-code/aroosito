@@ -12429,6 +12429,99 @@ window.closeVendorInvoiceBuilderModal = function() {
   }
 };
 
+/* QUICK VIEW MODAL / DRAWER CONTROLLERS */
+window.openQuickViewDrawer = function(vendorId, event) {
+  if (event) event.stopPropagation();
+
+  let vId = vendorId;
+  if (typeof vendorId === 'string' && !isNaN(parseInt(vendorId))) {
+    vId = parseInt(vendorId);
+  }
+
+  const vendor = (typeof vendors !== 'undefined' && Array.isArray(vendors))
+    ? (vendors.find(v => v.id === vId) || vendors[0])
+    : null;
+
+  if (!vendor) return;
+
+  const modal = document.getElementById('quick-view-modal');
+  if (!modal) return;
+
+  const logoEl = document.getElementById('qv-vendor-logo');
+  const nameEl = document.getElementById('qv-vendor-name');
+  const subEl = document.getElementById('qv-vendor-sub');
+  const priceEl = document.getElementById('qv-vendor-price');
+  const ratingEl = document.getElementById('qv-vendor-rating');
+  const gridEl = document.getElementById('qv-portfolio-grid');
+  const tagsEl = document.getElementById('qv-amenities-tags');
+  const inquireBtn = document.getElementById('qv-inquire-btn');
+  const profileBtn = document.getElementById('qv-profile-btn');
+
+  if (logoEl) logoEl.src = vendor.image || 'https://images.unsplash.com/photo-1519167758481-83f550bb49b3?auto=format&fit=crop&w=150';
+  if (nameEl) nameEl.innerText = vendor.name;
+  if (subEl) subEl.innerText = `${vendor.category} • ${vendor.district || 'صفائیه، یزد'}`;
+  if (priceEl) priceEl.innerText = vendor.priceRange || 'استعلام قیمت';
+  if (ratingEl) ratingEl.innerText = `⭐️ ${vendor.rating || 4.9} (${vendor.reviewCount || 32} نظر)`;
+
+  // Render 3-5 top portfolio images
+  if (gridEl) {
+    const portfolioImgs = (vendor.gallery && vendor.gallery.length > 0)
+      ? vendor.gallery.slice(0, 3)
+      : [
+          vendor.image,
+          "https://images.unsplash.com/photo-1519741497674-611481863552?auto=format&fit=crop&w=400&q=80",
+          "https://images.unsplash.com/photo-1511285560929-80b456fea0bc?auto=format&fit=crop&w=400&q=80"
+        ];
+
+    gridEl.innerHTML = portfolioImgs.map(imgSrc => `
+      <div class="h-24 sm:h-28 rounded-xl overflow-hidden border border-[#D4AF37]/30 bg-[#1E293B] group/img relative cursor-pointer" onclick="closeQuickViewModal(); openVendorDetailModal(${vendor.id})">
+        <img src="${imgSrc}" alt="${vendor.name}" class="w-full h-full object-cover group-hover/img:scale-105 transition-transform duration-300">
+        <div class="absolute inset-0 bg-black/40 opacity-0 group-hover/img:opacity-100 transition-opacity flex items-center justify-center text-[#D4AF37]">
+          <i data-lucide="zoom-in" class="w-5 h-5"></i>
+        </div>
+      </div>
+    `).join('');
+  }
+
+  // Render key amenities / capability tags
+  if (tagsEl) {
+    const tags = vendor.capabilityTags || ["پارکینگ اختصاصی", "پاسخگویی سریع", "تضمین کیفیت خدمات", "پذیرایی VIP"];
+    tagsEl.innerHTML = tags.map(t => `
+      <span class="text-[10.5px] font-bold text-amber-100 bg-[#1E293B] border border-[#D4AF37]/30 px-2.5 py-1 rounded-lg flex items-center gap-1">
+        <i data-lucide="check-circle-2" class="w-3 h-3 text-[#D4AF37]"></i>
+        <span>${t}</span>
+      </span>
+    `).join('');
+  }
+
+  // Wire CTAs
+  if (inquireBtn) {
+    inquireBtn.onclick = function() {
+      closeQuickViewModal();
+      openInquiryModal(vendor.id, vendor.name);
+    };
+  }
+
+  if (profileBtn) {
+    profileBtn.onclick = function() {
+      closeQuickViewModal();
+      openVendorDetailModal(vendor.id);
+    };
+  }
+
+  modal.classList.remove('hidden');
+  modal.classList.add('flex');
+  if (window.lucide) lucide.createIcons();
+};
+
+window.closeQuickViewModal = function() {
+  const modal = document.getElementById('quick-view-modal');
+  if (modal) {
+    modal.classList.add('hidden');
+    modal.classList.remove('flex');
+  }
+};
+
 // ==========================================================================
 // PHASE 3: AI VIRTUAL TRY-ON STUDIO LOGIC
 // ==========================================================================

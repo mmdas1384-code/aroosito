@@ -539,6 +539,27 @@ main#directory-view {
 }
 
 /* ==========================================================================
+   FEATURED VENDORS & QUICK VIEW MODAL SCOPED STYLES
+   ========================================================================== */
+.vip-showcase-container {
+  position: relative;
+}
+
+.vip-showcase-container::before {
+  content: '';
+  position: absolute;
+  inset: -15px;
+  background: radial-gradient(circle, rgba(212, 175, 55, 0.12) 0%, rgba(11, 15, 25, 0) 70%);
+  filter: blur(25px);
+  pointer-events: none;
+  z-index: 0;
+}
+
+.quick-view-modal .group\/img:hover {
+  border-color: #D4AF37 !important;
+}
+
+/* ==========================================================================
    VENDOR COMPARISON MATRIX SCOPED STYLES
    ========================================================================== */
 .comparison-modal .comparison-matrix table {

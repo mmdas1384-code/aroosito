@@ -564,18 +564,25 @@
                       </div>
 
                       <div class="flex items-center justify-around w-full max-w-full px-1 py-1" onclick="event.stopPropagation()">
-                        <button type="button" onclick="openVendorDetailModal(1)" class="vip-icon-module flex flex-col items-center gap-1 cursor-pointer group/icon">
-                          <div class="w-9 h-9 rounded-full bg-[#1B3B2B]/90 text-[#D4AF37] border border-[#D4AF37]/70 shadow-md flex items-center justify-center group-hover/icon:scale-110 group-hover/icon:border-[#D4AF37] transition-all duration-200">
-                            <i data-lucide="eye" class="w-4 h-4"></i>
+                        <button type="button" onclick="openQuickViewDrawer(1, event)" class="vip-icon-module flex flex-col items-center gap-1 cursor-pointer group/icon" title="مشاهده سریع">
+                          <div class="w-8 h-8 rounded-full bg-[#0F172A]/90 text-amber-200 border border-[#D4AF37]/60 shadow-md flex items-center justify-center group-hover/icon:scale-110 transition-all duration-200">
+                            <i data-lucide="eye" class="w-3.5 h-3.5 text-[#D4AF37]"></i>
                           </div>
-                          <span class="text-[9.5px] font-bold text-white group-hover/icon:text-[#D4AF37] transition-colors whitespace-nowrap">مشاهده</span>
+                          <span class="text-[9px] font-bold text-slate-200 group-hover/icon:text-[#D4AF37] transition-colors whitespace-nowrap">سریع</span>
                         </button>
 
-                        <button type="button" onclick="openInquiryModal(1, 'هتل باغ و تشریفات مشیرالممالک یزد')" class="vip-icon-module flex flex-col items-center gap-1 cursor-pointer group/icon">
-                          <div class="w-9 h-9 rounded-full bg-gradient-to-tr from-[#D4AF37] to-[#F3E5AB] text-[#0F251A] shadow-md flex items-center justify-center group-hover/icon:scale-110 transition-all duration-200">
-                            <i data-lucide="tag" class="w-4 h-4"></i>
+                        <button type="button" onclick="openVendorDetailModal(1)" class="vip-icon-module flex flex-col items-center gap-1 cursor-pointer group/icon" title="پروفایل کامل">
+                          <div class="w-8 h-8 rounded-full bg-[#1B3B2B]/90 text-[#D4AF37] border border-[#D4AF37]/70 shadow-md flex items-center justify-center group-hover/icon:scale-110 transition-all duration-200">
+                            <i data-lucide="store" class="w-3.5 h-3.5"></i>
                           </div>
-                          <span class="text-[9.5px] font-bold text-amber-200 group-hover/icon:text-white transition-colors whitespace-nowrap">استعلام قیمت</span>
+                          <span class="text-[9px] font-bold text-white group-hover/icon:text-[#D4AF37] transition-colors whitespace-nowrap">پروفایل</span>
+                        </button>
+
+                        <button type="button" onclick="openInquiryModal(1, 'هتل باغ و تشریفات مشیرالممالک یزد')" class="vip-icon-module flex flex-col items-center gap-1 cursor-pointer group/icon" title="استعلام قیمت">
+                          <div class="w-8 h-8 rounded-full bg-gradient-to-tr from-[#D4AF37] to-[#F3E5AB] text-[#0F251A] shadow-md flex items-center justify-center group-hover/icon:scale-110 transition-all duration-200">
+                            <i data-lucide="tag" class="w-3.5 h-3.5"></i>
+                          </div>
+                          <span class="text-[9px] font-bold text-amber-200 group-hover/icon:text-white transition-colors whitespace-nowrap">استعلام</span>
                         </button>
                       </div>
                     </div>
@@ -7907,6 +7914,71 @@
       <div class="flex justify-end gap-2 pt-2 border-t border-accent">
         <button onclick="closeSubCatModal()" class="px-4 py-2 bg-slate-100 hover:bg-slate-200 text-graphite font-bold text-xs rounded-xl transition-colors">انصراف</button>
         <button onclick="handleSaveSubCategory(event)" class="px-5 py-2 bg-primary hover:bg-emerald-900 text-white font-bold text-xs rounded-xl transition-colors shadow-xs">ذخیره زیرگروه</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- QUICK VIEW MODAL / DRAWER (#quick-view-modal) -->
+  <div id="quick-view-modal" class="quick-view-modal hidden fixed inset-0 bg-black/80 backdrop-blur-md z-[999999] flex items-center justify-center p-3 sm:p-5 transition-all animate-fadeIn" onclick="if(event.target === this) closeQuickViewModal()">
+    <div class="bg-[#0F172A] text-white rounded-3xl shadow-2xl max-w-xl w-full overflow-hidden border border-[#D4AF37]/60 flex flex-col animate-scaleUp relative max-h-[90vh]">
+      <!-- Header -->
+      <div class="bg-[#1E293B] px-6 py-4 flex items-center justify-between border-b border-[#D4AF37]/30 shrink-0">
+        <div class="flex items-center gap-3">
+          <img id="qv-vendor-logo" src="https://images.unsplash.com/photo-1519167758481-83f550bb49b3?auto=format&fit=crop&w=150" alt="لوگو" class="w-10 h-10 rounded-xl object-cover border border-[#D4AF37]">
+          <div>
+            <h3 id="qv-vendor-name" class="text-base font-black text-[#D4AF37]">نام تامین‌کننده</h3>
+            <span id="qv-vendor-sub" class="text-[11px] text-amber-200/80 font-bold block">دسته‌بندی • یزد</span>
+          </div>
+        </div>
+        <button type="button" onclick="closeQuickViewModal()" class="w-9 h-9 rounded-xl bg-white/10 hover:bg-white/20 text-white flex items-center justify-center transition-colors cursor-pointer" title="بستن">
+          <i data-lucide="x" class="w-5 h-5"></i>
+        </button>
+      </div>
+
+      <!-- Body Content -->
+      <div class="p-5 sm:p-6 overflow-y-auto space-y-5 text-xs custom-scrollbar">
+        <!-- 3-5 Top Portfolio Images Carousel Grid -->
+        <div class="space-y-2">
+          <span class="text-xs font-bold text-amber-200 block flex items-center gap-1.5">
+            <i data-lucide="images" class="w-4 h-4 text-[#D4AF37]"></i>
+            <span>نمونه‌کارهای برتر (Portfolio Preview):</span>
+          </span>
+          <div id="qv-portfolio-grid" class="grid grid-cols-3 gap-2">
+            <!-- Dynamically populated via JS -->
+          </div>
+        </div>
+
+        <!-- Price Tier & Rating Bar -->
+        <div class="p-3.5 bg-[#1E293B] border border-[#D4AF37]/30 rounded-2xl flex items-center justify-between">
+          <div>
+            <span class="text-slate-400 block text-[10.5px]">شروع قیمت پایه:</span>
+            <strong id="qv-vendor-price" class="text-[#D4AF37] text-sm font-black"></strong>
+          </div>
+          <div class="text-left">
+            <span class="text-slate-400 block text-[10.5px]">امتیاز رضایت زوجین:</span>
+            <strong id="qv-vendor-rating" class="text-amber-300 font-black">⭐️ ۴.۹</strong>
+          </div>
+        </div>
+
+        <!-- Key Amenities Mini-Badges -->
+        <div class="space-y-2">
+          <span class="text-xs font-bold text-slate-300 block">✨ امکانات و ویژگی‌های برجسته:</span>
+          <div id="qv-amenities-tags" class="flex flex-wrap gap-1.5">
+            <!-- Dynamically populated via JS -->
+          </div>
+        </div>
+      </div>
+
+      <!-- Footer CTAs -->
+      <div class="p-4 bg-[#1E293B]/90 border-t border-[#D4AF37]/30 flex gap-2.5">
+        <button type="button" id="qv-inquire-btn" class="flex-1 bg-gradient-to-r from-[#D4AF37] to-[#F3E5AB] text-[#0F251A] font-black py-2.5 rounded-xl text-xs shadow-md transition-all hover:scale-[1.02] cursor-pointer flex items-center justify-center gap-1.5">
+          <i data-lucide="send" class="w-4 h-4"></i>
+          <span>استعلام قیمت سریع</span>
+        </button>
+        <button type="button" id="qv-profile-btn" class="bg-[#0F172A] hover:bg-slate-800 text-white border border-[#D4AF37]/50 font-bold px-4 py-2.5 rounded-xl text-xs transition-all cursor-pointer flex items-center justify-center gap-1.5">
+          <i data-lucide="eye" class="w-4 h-4 text-[#D4AF37]"></i>
+          <span>پروفایل کامل</span>
+        </button>
       </div>
     </div>
   </div>
