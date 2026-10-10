@@ -1,49 +1,48 @@
 
 // MODULAR VIEW TEMPLATE LOADERS & FALLBACKS
-const HOME_VIEW_HTML = `<!-- HOMEPAGE CONTENT MODULE (home-view.html) -->
+const HOME_VIEW_HTML = `<main id="home-view" class="flex-1 max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-8 space-y-12">
+    <!-- HOMEPAGE CONTENT MODULE (home-view.html) -->
     <div id="tab-home" class="tab-content space-y-12">
 
-      <!-- 2. HERO SECTION ("برنامه‌ریزی رویایی‌ترین شب زندگی با عروسی تو") -->
-      <section id="hero" class="relative bg-white border border-accent rounded-3xl p-6 lg:p-8 shadow-xs overflow-hidden hero-section">
-        <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-stretch">
+      <!-- 2. ULTRA-SLIM & COMPACT EDITORIAL HERO SECTION -->
+      <section id="hero" class="relative bg-[#0b0f19] border border-[#D4AF37]/40 rounded-3xl p-4 sm:p-5 lg:p-6 shadow-2xl overflow-hidden text-white text-center">
+        <!-- Ambient Gold Radial Illumination -->
+        <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-96 h-96 bg-[#D4AF37]/10 rounded-full blur-3xl pointer-events-none"></div>
 
-          <!-- Left Column: Compact Squared Hero Intro -->
-          <div class="lg:col-span-7 bg-slate-50/70 border border-accent/80 rounded-3xl p-6 sm:p-8 flex flex-col justify-between space-y-6 shadow-2xs relative overflow-hidden">
-            <div class="space-y-4">
-              <div class="inline-flex items-center gap-2 bg-primary/10 text-primary border border-primary/20 px-3.5 py-1.5 rounded-full text-xs font-bold">
-                <i data-lucide="sparkles" class="w-4 h-4"></i>
-                <span>پلتفرم تخصصی و هوشمند برنامه‌ریزی عروسی</span>
-              </div>
-
-              <h1 class="text-2xl sm:text-3xl lg:text-4xl font-black text-graphite leading-snug">
-                برنامه‌ریزی رویایی‌ترین شب زندگی با <span class="text-primary underline decoration-accent underline-offset-8">عروسی تو</span>
-              </h1>
-
-              <p class="text-xs sm:text-sm text-graphite/80 leading-relaxed max-w-xl">
-                بهترین باغ تالارها، آتلیه‌ها، سالن‌های زیبایی و خدمات مجالس را با تضمین قیمت، تاییدیه رسمی اعتبار و استعلام آنلاین رزرو کنید.
-              </p>
-
-            </div>
-
-            <!-- Stats Bar -->
-            <div class="grid grid-cols-3 gap-3 pt-4 border-t border-accent/80 text-center">
-              <div class="bg-white p-3 rounded-2xl border border-accent/60 shadow-2xs">
-                <p class="text-base sm:text-lg font-black text-primary">+۱,۲۰۰</p>
-                <p class="text-[10px] sm:text-xs text-secondary font-medium">کسب‌وکار معتبر</p>
-              </div>
-              <div class="bg-white p-3 rounded-2xl border border-accent/60 shadow-2xs">
-                <p class="text-base sm:text-lg font-black text-primary">+۱۵,۰۰۰</p>
-                <p class="text-[10px] sm:text-xs text-secondary font-medium">زوج موفق</p>
-              </div>
-              <div class="bg-white p-3 rounded-2xl border border-accent/60 shadow-2xs">
-                <p class="text-base sm:text-lg font-black text-primary">۹۸٪</p>
-                <p class="text-[10px] sm:text-xs text-secondary font-medium">رضایتمندی</p>
-              </div>
-            </div>
+        <div class="relative z-10 max-w-3xl mx-auto space-y-3">
+          <div class="inline-flex items-center gap-2 bg-[#D4AF37]/15 text-[#D4AF37] border border-[#D4AF37]/40 px-3 py-1 rounded-full text-[11px] font-black">
+            <i data-lucide="crown" class="w-3.5 h-3.5 text-[#D4AF37]"></i>
+            <span>Aroosi No — The Definitive Luxury Wedding Directory</span>
           </div>
 
-          <!-- Right Column: Interactive VIP Vendors Showcase -->
-          <div class="lg:col-span-5 bg-gradient-to-b from-slate-50 to-amber-50/30 border border-accent/80 rounded-3xl p-5 flex flex-col shadow-2xs relative space-y-3">
+          <h1 class="text-xl sm:text-2xl lg:text-3xl font-black text-white leading-tight">
+            آفرینش <span class="text-[#D4AF37] underline decoration-[#D4AF37]/60 underline-offset-4">خاطره‌انگیزترین لحظات لوکس</span>
+          </h1>
+
+          <p class="text-xs text-slate-300 font-medium">
+            پلتفرم جامع و هوشمند مدیریت، رزرو و برنامه‌ریزی عروسی‌های مجلل استان یزد
+          </p>
+
+          <!-- Single-Line Horizontal Search Pill Island -->
+          <div class="flex items-center gap-2 bg-[#0F172A]/90 backdrop-blur-md border border-[#D4AF37]/50 rounded-full p-1.5 shadow-xl max-w-xl mx-auto mt-2">
+            <div class="relative flex-1 flex items-center pr-3">
+              <i data-lucide="search" class="w-4 h-4 text-[#D4AF37] shrink-0"></i>
+              <input id="hero-pill-search-input" type="text" oninput="handleHeaderSearchInput()" placeholder="جستجوی تالار، آتلیه، مزون یا آرایشگاه..." class="w-full bg-transparent text-white placeholder-slate-400 border-none pr-2 text-xs font-medium focus:outline-none">
+            </div>
+
+            <button type="button" onclick="switchTab('directory')" class="gold-shimmer-btn text-[#0F251A] font-black px-4 py-2 rounded-full text-xs transition-all shrink-0 cursor-pointer">
+              کشف فوری ↗
+            </button>
+            <button type="button" onclick="openSmartWizardModal()" class="bg-[#1E293B] hover:bg-slate-800 text-[#D4AF37] border border-[#D4AF37]/40 px-3 py-2 rounded-full text-xs font-bold transition-all shrink-0 cursor-pointer flex items-center gap-1">
+              <i data-lucide="sparkles" class="w-3.5 h-3.5 text-[#D4AF37]"></i>
+              <span>توصیه AI</span>
+            </button>
+          </div>
+        </div>
+      </section>
+
+      <!-- 3. VIP SHOWCASE SECTION -->
+      <section class="bg-gradient-to-b from-slate-900 to-[#0b0f19] border border-[#D4AF37]/40 rounded-3xl p-5 shadow-xl relative space-y-3">
             <div class="flex items-center justify-between border-b border-accent/80 pb-2 flex-wrap gap-2">
               <div class="flex items-center gap-2">
                 <span class="text-[10px] text-amber-800 font-bold bg-amber-100 px-2 py-0.5 rounded-full border border-amber-300 flex items-center gap-1"><i data-lucide="crown" class="w-3 h-3 text-[#D4AF37]"></i> VIP</span>
@@ -77,6 +76,9 @@ const HOME_VIEW_HTML = `<!-- HOMEPAGE CONTENT MODULE (home-view.html) -->
                   <div data-vip-cat="hall" class="vip-3d-card group cursor-pointer" onclick="openVendorDetailModal(1)">
                     <img src="https://images.unsplash.com/photo-1519167758481-83f550bb49b3?auto=format&fit=crop&w=600&q=80" alt="هتل باغ مشیرالممالک" class="vip-cover-img">
                     <div class="vip-3d-badge">👑 VIP</div>
+                    <div class="vip-default-cover-label">
+                      <span class="text-[10px] font-black text-white block truncate drop-shadow-sm">هتل باغ مشیرالممالک</span>
+                    </div>
                     <div class="vip-reveal-overlay">
                       <div class="flex items-center gap-1.5 w-full min-w-0">
                         <img src="https://images.unsplash.com/photo-1519167758481-83f550bb49b3?auto=format&fit=crop&w=150" alt="لوگو" class="w-7 h-7 sm:w-8 sm:h-8 rounded-full border border-[#D4AF37] object-cover shrink-0">
@@ -107,6 +109,9 @@ const HOME_VIEW_HTML = `<!-- HOMEPAGE CONTENT MODULE (home-view.html) -->
                   <div data-vip-cat="beauty" class="vip-3d-card group cursor-pointer" onclick="openVendorDetailModal(3)">
                     <img src="https://images.unsplash.com/photo-1487412720507-e7ab37603c6f?auto=format&fit=crop&w=600&q=80" alt="سالن زیبایی رویال" class="vip-cover-img">
                     <div class="vip-3d-badge">👑 VIP</div>
+                    <div class="vip-default-cover-label">
+                      <span class="text-[10px] font-black text-white block truncate drop-shadow-sm">سالن زیبایی رویال</span>
+                    </div>
                     <div class="vip-reveal-overlay">
                       <div class="flex items-center gap-1.5 w-full min-w-0">
                         <img src="https://images.unsplash.com/photo-1487412720507-e7ab37603c6f?auto=format&fit=crop&w=150" alt="لوگو" class="w-7 h-7 sm:w-8 sm:h-8 rounded-full border border-[#D4AF37] object-cover shrink-0">
@@ -142,6 +147,9 @@ const HOME_VIEW_HTML = `<!-- HOMEPAGE CONTENT MODULE (home-view.html) -->
                   <div data-vip-cat="studio" class="vip-3d-card group cursor-pointer" onclick="openVendorDetailModal(2)">
                     <img src="https://images.unsplash.com/photo-1537633552985-df8429e8048b?auto=format&fit=crop&w=600&q=80" alt="استودیو کویر" class="vip-cover-img">
                     <div class="vip-3d-badge">👑 VIP</div>
+                    <div class="vip-default-cover-label">
+                      <span class="text-[10px] font-black text-white block truncate drop-shadow-sm">استودیو تخصصی کویر</span>
+                    </div>
                     <div class="vip-reveal-overlay">
                       <div class="flex items-center gap-1.5 w-full min-w-0">
                         <img src="https://images.unsplash.com/photo-1537633552985-df8429e8048b?auto=format&fit=crop&w=150" alt="لوگو" class="w-7 h-7 sm:w-8 sm:h-8 rounded-full border border-[#D4AF37] object-cover shrink-0">
@@ -172,6 +180,9 @@ const HOME_VIEW_HTML = `<!-- HOMEPAGE CONTENT MODULE (home-view.html) -->
                   <div data-vip-cat="beauty" class="vip-3d-card group cursor-pointer" onclick="openVendorDetailModal(4)">
                     <img src="https://images.unsplash.com/photo-1594552072238-b8a33785b261?auto=format&fit=crop&w=600&q=80" alt="مزون عروس لورنت" class="vip-cover-img">
                     <div class="vip-3d-badge">👑 VIP</div>
+                    <div class="vip-default-cover-label">
+                      <span class="text-[10px] font-black text-white block truncate drop-shadow-sm">مزون عروس لورنت</span>
+                    </div>
                     <div class="vip-reveal-overlay">
                       <div class="flex items-center gap-1.5 w-full min-w-0">
                         <img src="https://images.unsplash.com/photo-1594552072238-b8a33785b261?auto=format&fit=crop&w=150" alt="لوگو" class="w-7 h-7 sm:w-8 sm:h-8 rounded-full border border-[#D4AF37] object-cover shrink-0">
@@ -207,6 +218,9 @@ const HOME_VIEW_HTML = `<!-- HOMEPAGE CONTENT MODULE (home-view.html) -->
                   <div data-vip-cat="hall" class="vip-3d-card group cursor-pointer" onclick="openVendorDetailModal(5)">
                     <img src="https://images.unsplash.com/photo-1535141192574-5d4897c13136?auto=format&fit=crop&w=600&q=80" alt="حاج خلیفه رهبر" class="vip-cover-img">
                     <div class="vip-3d-badge">👑 VIP</div>
+                    <div class="vip-default-cover-label">
+                      <span class="text-[10px] font-black text-white block truncate drop-shadow-sm">حاج خلیفه رهبر</span>
+                    </div>
                     <div class="vip-reveal-overlay">
                       <div class="flex items-center gap-1.5 w-full min-w-0">
                         <img src="https://images.unsplash.com/photo-1535141192574-5d4897c13136?auto=format&fit=crop&w=150" alt="لوگو" class="w-7 h-7 sm:w-8 sm:h-8 rounded-full border border-[#D4AF37] object-cover shrink-0">
@@ -237,6 +251,9 @@ const HOME_VIEW_HTML = `<!-- HOMEPAGE CONTENT MODULE (home-view.html) -->
                   <div data-vip-cat="studio" class="vip-3d-card group cursor-pointer" onclick="openVendorDetailModal(6)">
                     <img src="https://images.unsplash.com/photo-1516450360452-9312f5e86fc7?auto=format&fit=crop&w=600&q=80" alt="دی‌جی و موزیک آریا" class="vip-cover-img">
                     <div class="vip-3d-badge">👑 VIP</div>
+                    <div class="vip-default-cover-label">
+                      <span class="text-[10px] font-black text-white block truncate drop-shadow-sm">دی‌جی & موزیک آریا</span>
+                    </div>
                     <div class="vip-reveal-overlay">
                       <div class="flex items-center gap-1.5 w-full min-w-0">
                         <img src="https://images.unsplash.com/photo-1516450360452-9312f5e86fc7?auto=format&fit=crop&w=150" alt="لوگو" class="w-7 h-7 sm:w-8 sm:h-8 rounded-full border border-[#D4AF37] object-cover shrink-0">
@@ -263,9 +280,6 @@ const HOME_VIEW_HTML = `<!-- HOMEPAGE CONTENT MODULE (home-view.html) -->
                       </div>
                     </div>
                   </div>
-                </div>
-              </div>
-
                 </div>
               </div>
 
@@ -623,6 +637,35 @@ const HOME_VIEW_HTML = `<!-- HOMEPAGE CONTENT MODULE (home-view.html) -->
         </div>
       </section>
 
+      <!-- VERIFIED TESTIMONIALS CAROUSEL ("نظرات و تجربیات زوجین تاییدشده یزد") -->
+      <section id="verified-testimonials-section" class="py-10 bg-[#0F251A] text-white my-8 rounded-3xl border border-[#D4AF37]/40 shadow-xl">
+        <div class="max-w-4xl mx-auto px-6 text-center space-y-6">
+          <div class="space-y-2">
+            <span class="bg-[#D4AF37]/20 border border-[#D4AF37]/50 text-[#D4AF37] text-xs font-black px-3.5 py-1 rounded-full inline-flex items-center gap-1.5">
+              <i data-lucide="shield-check" class="w-4 h-4 text-[#D4AF37]"></i>
+              <span>مشتری واقعی / تاییدشده عروسی‌تو</span>
+            </span>
+            <h2 class="text-xl sm:text-2xl font-black text-white">تجربیات و نظرات واقعی زوجین در یزد</h2>
+          </div>
+
+          <!-- Carousel Card Body -->
+          <div id="testimonial-card-container" class="bg-[#142E22] border border-[#D4AF37]/30 rounded-2xl p-6 sm:p-8 space-y-4 shadow-lg text-right relative">
+            <!-- Populated via JS renderTestimonialCard() -->
+          </div>
+
+          <!-- Carousel Navigation Controls -->
+          <div class="flex items-center justify-center gap-3 pt-2">
+            <button type="button" onclick="prevTestimonial()" class="w-10 h-10 rounded-full bg-[#142E22] hover:bg-[#1B3B2B] text-[#D4AF37] border border-[#D4AF37]/50 flex items-center justify-center transition-all cursor-pointer hover:scale-110 active:scale-95">
+              <i data-lucide="chevron-right" class="w-5 h-5"></i>
+            </button>
+            <span id="testimonial-index-badge" class="text-xs font-bold text-amber-200 bg-[#142E22] px-3 py-1 rounded-full border border-[#D4AF37]/30">۱ از ۳</span>
+            <button type="button" onclick="nextTestimonial()" class="w-10 h-10 rounded-full bg-[#142E22] hover:bg-[#1B3B2B] text-[#D4AF37] border border-[#D4AF37]/50 flex items-center justify-center transition-all cursor-pointer hover:scale-110 active:scale-95">
+              <i data-lucide="chevron-left" class="w-5 h-5"></i>
+            </button>
+          </div>
+        </div>
+      </section>
+
       <!-- 9. VENDOR REGISTRATION BANNER ("کسب‌وکار عروسی خود را به ۱۵,۰۰۰+ زوج یزدی معرفی کنید") -->
       <section class="vendor-banner-dark">
         <div class="container flex-banner">
@@ -638,7 +681,8 @@ const HOME_VIEW_HTML = `<!-- HOMEPAGE CONTENT MODULE (home-view.html) -->
         </div>
       </section>
 
-    </div>`;
+    </div>
+  </main>`;
 const DIRECTORY_VIEW_HTML = `<!-- ISOLATED VENDOR DIRECTORY CONTENT MODULE (directory-view.html) -->
 <div id="tab-directory" class="tab-content hidden space-y-8">
 
