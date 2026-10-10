@@ -4775,6 +4775,51 @@ if (document.readyState === "loading") {
             </div>
           </div>
 
+          <!-- GLASSMORPHISM OVERALL DONUT CHART SUMMARY & CATEGORY ALLOCATION WIDGET -->
+          <div class="bg-[#0F172A]/90 backdrop-blur-md rounded-3xl p-6 sm:p-8 space-y-6 border border-[#D4AF37]/50 shadow-2xl text-white">
+            <div class="flex justify-between items-center border-b border-[#D4AF37]/30 pb-3">
+              <h4 class="text-base font-black text-[#D4AF37] flex items-center gap-2">
+                <i data-lucide="pie-chart" class="w-5 h-5 text-[#D4AF37]"></i>
+                <span>نمودار دونات شیشه‌ای سهم هزینه‌ها (Glassmorphism Donut Charts)</span>
+              </h4>
+              <span class="text-xs text-amber-200/80 font-bold bg-[#1E293B] px-3 py-1 rounded-full border border-[#D4AF37]/30">تحلیل بصری تخصیص بودجه</span>
+            </div>
+
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-6 items-center">
+              <!-- Center Donut Chart Ring -->
+              <div class="lg:col-span-5 flex flex-col items-center justify-center relative p-4">
+                <div class="w-48 h-48 rounded-full relative flex items-center justify-center p-3 shadow-[0_0_30px_rgba(212,175,55,0.25)] border border-[#D4AF37]/40" style="background: conic-gradient(#D4AF37 0% 45%, #10B981 45% 60%, #F59E0B 60% 75%, #3B82F6 75% 85%, #EC4899 85% 93%, #8B5CF6 93% 100%);">
+                  <!-- Inner Glass Center Circle -->
+                  <div class="w-32 h-32 rounded-full bg-[#0F172A] border border-[#D4AF37]/50 shadow-inner flex flex-col items-center justify-center text-center p-2 backdrop-blur-md">
+                    <span class="text-[10px] font-bold text-amber-200">مجموع برآورد</span>
+                    <span class="text-sm font-black text-[#D4AF37]">${totalEstimatedSpent.toLocaleString('fa-IR')}</span>
+                    <span class="text-[9px] text-slate-300">تومان</span>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Category Allocation Legend Badges -->
+              <div class="lg:col-span-7 grid grid-cols-2 sm:grid-cols-3 gap-3 text-xs font-bold">
+                ${categoryCalculations.map((cat, idx) => {
+                  const colors = ['#D4AF37', '#10B981', '#F59E0B', '#3B82F6', '#EC4899', '#8B5CF6'];
+                  const color = colors[idx % colors.length];
+                  return `
+                    <div class="p-3 rounded-2xl bg-[#1E293B]/80 border border-[#D4AF37]/30 space-y-1 hover:border-[#D4AF37] transition-all">
+                      <div class="flex items-center gap-1.5 text-[11px] text-slate-200 font-extrabold">
+                        <span class="w-2.5 h-2.5 rounded-full inline-block shadow-xs shrink-0" style="background-color: ${color};"></span>
+                        <span class="truncate">${cat.name}</span>
+                      </div>
+                      <div class="flex justify-between items-center text-[10.5px]">
+                        <span class="text-[#D4AF37] font-black">${Math.round(cat.defaultSplit * 100)}٪</span>
+                        <span class="text-slate-300 font-normal">${cat.estimatedTotal.toLocaleString('fa-IR')}</span>
+                      </div>
+                    </div>
+                  `;
+                }).join('')}
+              </div>
+            </div>
+          </div>
+
           <!-- DUAL BUDGET SPLIT (GROOM VS BRIDE VS SHARED) -->
           <div class="bg-white border border-accent rounded-3xl p-6 sm:p-8 shadow-xs space-y-5">
             <div class="flex justify-between items-center border-b border-accent pb-3">
@@ -4868,12 +4913,12 @@ if (document.readyState === "loading") {
                     </div>
                   </div>
 
-                  <!-- Sleek Recommendation Trigger -->
+                  <!-- Sleek Recommendation Trigger Bridge -->
                   <div class="pt-1 flex items-center justify-between gap-2">
                     <span class="text-[10px] text-slate-500 font-bold">${cat.itemsCount} قلم ثبت‌شده</span>
-                    <button type="button" onclick="filterVendorsByCategoryTitle('${cat.name}')" class="text-[11px] font-bold text-[#0F251A] bg-gradient-to-r from-[#D4AF37] to-[#F3E5AB] hover:from-amber-400 hover:to-amber-200 px-3 py-1.5 rounded-xl shadow-xs transition-all flex items-center gap-1 cursor-pointer">
-                      <i data-lucide="store" class="w-3.5 h-3.5"></i>
-                      <span>پیشنهاد تامین‌کننده متناسب با این بودجه</span>
+                    <button type="button" onclick="filterVendorsByCategoryTitle('${cat.name}')" class="text-[11px] font-extrabold text-[#0F251A] bg-gradient-to-r from-[#D4AF37] to-[#F3E5AB] hover:from-amber-400 hover:to-amber-200 px-3.5 py-1.5 rounded-xl shadow-xs transition-all flex items-center gap-1 cursor-pointer hover:scale-105 active:scale-95">
+                      <i data-lucide="arrow-up-right" class="w-3.5 h-3.5 text-[#0F251A]"></i>
+                      <span>پیشنهاد تامین‌کنندگان این حوزه ↗</span>
                     </button>
                   </div>
                 </div>

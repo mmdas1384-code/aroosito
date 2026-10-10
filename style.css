@@ -631,6 +631,14 @@ main#directory-view {
   transform: translateY(-2px);
 }
 
+.budget-tracker .conic-donut-ring {
+  box-shadow: 0 0 35px rgba(212, 175, 55, 0.2);
+}
+
+.budget-tracker button[onclick*="filterVendorsByCategoryTitle"]:hover {
+  box-shadow: 0 4px 14px rgba(212, 175, 55, 0.4);
+}
+
 .budget-tracker table tr {
   transition: background-color 0.2s ease;
 }
