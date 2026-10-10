@@ -3243,10 +3243,22 @@
           </button>
         </div>
 
-        <button type="button" onclick="openVendorInvoiceBuilderModal()" class="bg-gradient-to-r from-[#D4AF37] to-[#F3E5AB] hover:from-[#e5bd3c] hover:to-[#fceba7] text-[#0F251A] text-xs font-black py-2 px-3.5 rounded-2xl shadow-md transition-all flex items-center gap-1.5 cursor-pointer hover:scale-105 active:scale-95">
-          <i data-lucide="plus-circle" class="w-4 h-4 text-[#0F251A]"></i>
-          <span>صدور پیش‌فاکتور جدید</span>
-        </button>
+        <div class="flex items-center gap-2">
+          <!-- FLOATING REAL-TIME LEAD NOTIFICATION PILL -->
+          <div id="vd-notifications-pill" class="bg-[#1E293B] border border-[#D4AF37]/50 px-3.5 py-1.5 rounded-2xl flex items-center gap-2 text-xs font-bold text-amber-200 shadow-lg animate-pulse cursor-pointer hover:border-[#D4AF37] transition-all" onclick="switchVendorPanelTab('inquiries')">
+            <span class="relative flex h-2.5 w-2.5">
+              <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
+              <span class="relative inline-flex rounded-full h-2.5 w-2.5 bg-emerald-500"></span>
+            </span>
+            <i data-lucide="bell" class="w-4 h-4 text-[#D4AF37]"></i>
+            <span id="vd-unread-inquiries-badge">۲ درخواست جدید لید</span>
+          </div>
+
+          <button type="button" onclick="openVendorInvoiceBuilderModal()" class="bg-gradient-to-r from-[#D4AF37] to-[#F3E5AB] hover:from-[#e5bd3c] hover:to-[#fceba7] text-[#0F251A] text-xs font-black py-2 px-3.5 rounded-2xl shadow-md transition-all flex items-center gap-1.5 cursor-pointer hover:scale-105 active:scale-95">
+            <i data-lucide="plus-circle" class="w-4 h-4 text-[#0F251A]"></i>
+            <span>صدور پیش‌فاکتور جدید</span>
+          </button>
+        </div>
       </div>
 
       <!-- TAB PANE 1: OVERVIEW & PROFILE -->

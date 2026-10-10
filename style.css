@@ -675,6 +675,25 @@ main#directory-view {
 }
 
 /* ==========================================================================
+   VENDOR DASHBOARD & SUPER ADMIN PANEL SCOPED STYLES
+   ========================================================================== */
+#tab-vendor-dash #vd-notifications-pill:hover {
+  box-shadow: 0 0 16px rgba(212, 175, 55, 0.4);
+}
+
+#tab-vendor-dash .inquiry-card,
+#tab-admin .admin-card {
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+#tab-vendor-dash .inquiry-card:hover,
+#tab-admin .admin-card:hover {
+  border-color: #D4AF37 !important;
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.3) !important;
+  transform: translateY(-2px);
+}
+
+/* ==========================================================================
    MULTI-STEP DIRECT INQUIRY MODAL STEP PANE SCOPED STYLES
    ========================================================================== */
 #inquiry-modal .inquiry-step-pane {

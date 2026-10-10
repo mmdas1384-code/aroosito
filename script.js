@@ -13946,10 +13946,16 @@ window.updateVendorAnalyticsUI = function() {
   const viewsEl = document.getElementById('vd-kpi-views');
   const convEl = document.getElementById('vd-kpi-conversion');
   const leadsEl = document.getElementById('vd-kpi-leads');
+  const badgeEl = document.getElementById('vd-unread-inquiries-badge');
 
   if (viewsEl) viewsEl.innerHTML = `${vendorAnalytics.views.toLocaleString('fa-IR')} <span class="text-xs font-normal text-secondary">بازدید</span>`;
   if (convEl) convEl.innerHTML = `${vendorAnalytics.conversionRate} <span class="text-xs font-normal text-secondary">استعلام</span>`;
   if (leadsEl) leadsEl.innerHTML = `${inquiries.length.toLocaleString('fa-IR')} <span class="text-xs font-normal text-secondary">درخواست</span>`;
+
+  const pendingCount = inquiries.filter(i => (i.status || 'pending') === 'pending').length;
+  if (badgeEl) {
+    badgeEl.innerText = `${pendingCount.toLocaleString('fa-IR')} درخواست جدید لید`;
+  }
 };
 
 window.incrementVendorViewCount = function(vendorId) {
@@ -14149,7 +14155,7 @@ window.renderVendorInquiriesTable = function() {
 
   filtered.forEach((inq, idx) => {
     const card = document.createElement('div');
-    card.className = "p-4 bg-[#1E293B] rounded-2xl border border-slate-700 space-y-3 shadow-md text-white text-right";
+    card.className = "p-5 bg-[#1E293B]/90 backdrop-blur-md rounded-2xl border border-[#D4AF37]/30 space-y-3 shadow-lg hover:border-[#D4AF37] hover:shadow-[0_8px_25px_rgba(212,175,55,0.15)] transition-all text-white text-right";
     const currentStatus = inq.status || 'pending';
     const inqId = inq.id || `inq_${idx}`;
 
