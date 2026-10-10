@@ -219,11 +219,11 @@
             <span class="hidden xl:inline">دستیار تشریفات VIP</span>
           </button>
 
-          <!-- ALWAYS-ON MIDNIGHT EDITORIAL LUXURY BADGE -->
-          <div class="bg-[#0F172A]/90 border border-[#D4AF37]/50 px-3 py-2 rounded-2xl flex items-center gap-1.5 shadow-md text-amber-200 text-xs font-black shrink-0">
-            <i data-lucide="moon" class="w-3.5 h-3.5 text-[#D4AF37]"></i>
-            <span class="hidden md:inline">Midnight Editorial</span>
-          </div>
+          <!-- CLEAN THEME SWITCHER TOGGLE BUTTON -->
+          <button type="button" id="theme-toggle-btn" onclick="toggleThemeMode()" class="bg-[#1E293B] border border-[#D4AF37]/40 px-3 py-2 rounded-2xl text-xs font-black transition-all flex items-center gap-1.5 shadow-md cursor-pointer hover:border-[#D4AF37] shrink-0" title="تغییر تم دیداری (روز/شب)">
+            <i data-lucide="sun" id="theme-toggle-icon" class="w-4 h-4 text-[#D4AF37]"></i>
+            <span id="theme-toggle-text" class="hidden md:inline">شب / Midnight</span>
+          </button>
 
           <button onclick="toggleVendorModalStatic(true)" class="bg-[#D4AF37] hover:bg-amber-400 text-[#1B3B2B] px-4 py-2.5 rounded-2xl text-xs sm:text-sm font-black transition-all flex items-center gap-1.5 shadow-md transform hover:-translate-y-0.5">
             <i data-lucide="building-2" class="w-4 h-4"></i>

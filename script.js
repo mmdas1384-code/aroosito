@@ -16360,31 +16360,40 @@ window.finishSmartWizard = function() {
    PEARL WHITE / DARK LUXURY THEME TOGGLE
    ========================================================================== */
 window.toggleThemeMode = function() {
-  const body = document.body;
-  const isPearl = body.classList.contains('theme-pearl-white');
-  const btnText = document.getElementById('theme-toggle-text');
+  const currentTheme = document.documentElement.getAttribute('data-theme') || 'dark';
+  const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+  document.documentElement.setAttribute('data-theme', newTheme);
+  try {
+    localStorage.setItem('aroosi_theme_mode', newTheme);
+  } catch(e) {}
 
-  if (isPearl) {
-    body.classList.remove('theme-pearl-white');
-    localStorage.setItem('aroosi_theme_mode', 'dark');
-    if (btnText) btnText.innerText = 'تم دارک';
-    showToast('تم دیداری به دارک اسلیت & طلایی تغییر یافت.', 'info');
+  const btnText = document.getElementById('theme-toggle-text');
+  const icon = document.getElementById('theme-toggle-icon');
+
+  if (newTheme === 'light') {
+    if (btnText) btnText.innerText = 'روز / Sunlit';
+    if (icon) icon.className = "w-4 h-4 text-[#A37F38]";
+    if (typeof showToast === 'function') showToast('تم دیداری: روز / Sunlit (روشن) فعال شد.', 'info');
   } else {
-    body.classList.add('theme-pearl-white');
-    localStorage.setItem('aroosi_theme_mode', 'pearl');
-    if (btnText) btnText.innerText = 'تم پرل وب';
-    showToast('تم دیداری به پرل وایت & شامپاین تغییر یافت.', 'info');
+    if (btnText) btnText.innerText = 'شب / Midnight';
+    if (icon) icon.className = "w-4 h-4 text-[#D4AF37]";
+    if (typeof showToast === 'function') showToast('تم دیداری: شب / Midnight Editorial (تاریک) فعال شد.', 'info');
   }
 
   if (window.lucide) lucide.createIcons();
 };
 
 document.addEventListener('DOMContentLoaded', () => {
-  const savedTheme = localStorage.getItem('aroosi_theme_mode');
-  if (savedTheme === 'pearl') {
-    document.body.classList.add('theme-pearl-white');
-    const btnText = document.getElementById('theme-toggle-text');
-    if (btnText) btnText.innerText = 'تم پرل وب';
+  const savedTheme = localStorage.getItem('aroosi_theme_mode') || 'dark';
+  document.documentElement.setAttribute('data-theme', savedTheme);
+  const btnText = document.getElementById('theme-toggle-text');
+  const icon = document.getElementById('theme-toggle-icon');
+  if (savedTheme === 'light') {
+    if (btnText) btnText.innerText = 'روز / Sunlit';
+    if (icon) icon.className = "w-4 h-4 text-[#A37F38]";
+  } else {
+    if (btnText) btnText.innerText = 'شب / Midnight';
+    if (icon) icon.className = "w-4 h-4 text-[#D4AF37]";
   }
 });
 

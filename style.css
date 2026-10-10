@@ -1,11 +1,29 @@
+/* GLOBAL CSS VARIABLES MATRIX */
 :root {
-  --color-bg-dark: #07090E;
-  --color-surface-dark: rgba(14, 18, 28, 0.85);
-  --color-gold: #D4AF37;
-  --color-champagne: #C5A059;
-  --color-gold-light: #F3E5AB;
-  --color-text-ivory: #F7F5F0;
-  --color-border-gold: rgba(212, 175, 55, 0.35);
+  --bg-primary: #07090E;
+  --bg-surface: rgba(14, 18, 28, 0.85);
+  --bg-input: rgba(20, 26, 38, 0.90);
+  --text-primary: #F7F5F0;
+  --text-secondary: #E6E8EC;
+  --text-muted: #9E9EA7;
+  --accent-gold: #C5A059;
+  --accent-gold-hover: #D4AF37;
+  --border-gold: rgba(197, 160, 89, 0.25);
+  --shadow-glow: rgba(197, 160, 89, 0.15);
+}
+
+/* LIGHT THEME (EXPLICIT OVERRIDES) */
+[data-theme="light"] {
+  --bg-primary: #F9F8F3;
+  --bg-surface: rgba(255, 255, 255, 0.92);
+  --bg-input: #FFFFFF;
+  --text-primary: #0B0F19;
+  --text-secondary: #1A1D24;
+  --text-muted: #5A5D66;
+  --accent-gold: #A37F38;
+  --accent-gold-hover: #8C6A28;
+  --border-gold: rgba(163, 127, 56, 0.25);
+  --shadow-glow: rgba(0, 0, 0, 0.08);
 }
 
 * {
@@ -14,10 +32,45 @@
 
 body {
   font-family: 'Vazirmatn', Tahoma, sans-serif;
-  background-color: #07090E !important;
-  color: #F7F5F0 !important;
+  background-color: var(--bg-primary) !important;
+  color: var(--text-primary) !important;
   margin: 0;
   padding: 0;
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+[data-theme="light"] body {
+  background-color: var(--bg-primary) !important;
+  color: var(--text-primary) !important;
+}
+
+[data-theme="light"] header,
+[data-theme="light"] nav,
+[data-theme="light"] .minimal-vendor-card,
+[data-theme="light"] .budget-tracker-card,
+[data-theme="light"] #directory-primary-filter-island,
+[data-theme="light"] #directory-advanced-filters-drawer {
+  background-color: var(--bg-surface) !important;
+  color: var(--text-primary) !important;
+  border-color: var(--border-gold) !important;
+}
+
+[data-theme="light"] .bg-\[\#0F172A\],
+[data-theme="light"] .bg-\[\#1E293B\] {
+  background-color: rgba(240, 238, 230, 0.95) !important;
+  color: var(--text-primary) !important;
+  border-color: var(--border-gold) !important;
+}
+
+[data-theme="light"] .text-white,
+[data-theme="light"] .text-slate-200,
+[data-theme="light"] .text-slate-300 {
+  color: var(--text-primary) !important;
+}
+
+[data-theme="light"] .text-amber-200,
+[data-theme="light"] .text-amber-100 {
+  color: var(--accent-gold) !important;
 }
 
 /* Global Layout Rules & Zero-Gap Below Header */
