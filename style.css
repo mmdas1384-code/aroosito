@@ -652,6 +652,20 @@ main#directory-view {
   background-color: rgba(212, 175, 55, 0.1);
 }
 
+#inquiry-modal.inquiry-modal #inquiry-step-indicators {
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+}
+
+#inquiry-modal.inquiry-modal #inquiry-whatsapp-btn {
+  box-shadow: 0 4px 14px rgba(16, 185, 129, 0.35);
+}
+
+#inquiry-modal.inquiry-modal #inquiry-whatsapp-btn:hover {
+  box-shadow: 0 6px 20px rgba(16, 185, 129, 0.5);
+  transform: translateY(-1px);
+}
+
 /* ==========================================================================
    MULTI-STEP DIRECT INQUIRY MODAL STEP PANE SCOPED STYLES
    ========================================================================== */

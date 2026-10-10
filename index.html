@@ -5640,16 +5640,16 @@
         <h3 id="modal-vendor-name" class="text-xl font-black text-[#D4AF37]">درخواست استعلام قیمت از تامین‌کننده</h3>
       </div>
 
-      <!-- STEP INDICATORS BAR -->
-      <div id="inquiry-step-indicators" class="flex items-center gap-2">
-        <div id="inquiry-step-ind-1" onclick="switchInquiryStep(1)" class="flex-1 text-center py-2 rounded-xl bg-[#D4AF37] text-[#0F251A] font-black text-xs shadow-md cursor-pointer hover:opacity-90 transition-all">
-          ۱. تاریخ & زمان
+      <!-- STICKY STEP INDICATORS BAR -->
+      <div id="inquiry-step-indicators" class="sticky top-0 z-20 bg-[#0F172A]/95 backdrop-blur-md border-b border-[#D4AF37]/30 py-3 px-2 -mx-6 sm:-mx-8 -mt-6 p-4 mb-2 shadow-lg flex items-center gap-2 border-t border-[#D4AF37]/20">
+        <div id="inquiry-step-ind-1" onclick="switchInquiryStep(1)" class="flex-1 text-center py-2 rounded-xl bg-[#D4AF37] text-[#0F251A] font-black text-xs shadow-[0_0_12px_rgba(212,175,55,0.4)] cursor-pointer hover:opacity-90 transition-all">
+          ۱. تاریخ و زمان
         </div>
-        <div id="inquiry-step-ind-2" onclick="switchInquiryStep(2)" class="flex-1 text-center py-2 rounded-xl bg-[#1E293B] text-slate-300 font-bold text-xs border border-[#D4AF37]/30 cursor-pointer hover:opacity-90 transition-all">
-          ۲. خدمات & جزئیات
+        <div id="inquiry-step-ind-2" onclick="switchInquiryStep(2)" class="flex-1 text-center py-2 rounded-xl bg-[#1E293B] text-slate-300 font-bold text-xs border border-[#D4AF37]/30 cursor-pointer hover:opacity-90 transition-all opacity-80">
+          ۲. جزئیات و خدمات
         </div>
-        <div id="inquiry-step-ind-3" onclick="switchInquiryStep(3)" class="flex-1 text-center py-2 rounded-xl bg-[#1E293B] text-slate-300 font-bold text-xs border border-[#D4AF37]/30 cursor-pointer hover:opacity-90 transition-all">
-          ۳. تماس & ثبت
+        <div id="inquiry-step-ind-3" onclick="switchInquiryStep(3)" class="flex-1 text-center py-2 rounded-xl bg-[#1E293B] text-slate-300 font-bold text-xs border border-[#D4AF37]/30 cursor-pointer hover:opacity-90 transition-all opacity-80">
+          ۳. ثبت و تماس
         </div>
       </div>
 
@@ -5788,6 +5788,9 @@
           <div class="flex-1"></div>
           <button type="button" id="inquiry-next-btn" onclick="nextInquiryStep()" class="px-5 py-2.5 rounded-xl bg-gradient-to-r from-[#D4AF37] to-[#F3E5AB] hover:from-[#e5bd3c] hover:to-[#fceba7] text-[#0F251A] font-black text-xs shadow-md transition-all cursor-pointer">
             مرحله بعدی →
+          </button>
+          <button type="button" id="inquiry-whatsapp-btn" onclick="openWhatsAppInquiry()" class="hidden px-4 py-2.5 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white font-black text-xs shadow-md transition-all cursor-pointer flex items-center gap-1.5 border border-emerald-400/40">
+            <span>استعلام سریع در واتس‌اپ</span> 💬
           </button>
           <button type="submit" id="inquiry-submit-btn" class="hidden px-6 py-2.5 rounded-xl bg-gradient-to-r from-[#D4AF37] to-[#F3E5AB] hover:from-[#e5bd3c] hover:to-[#fceba7] text-[#0F251A] font-black text-xs shadow-md transition-all cursor-pointer">
             ثبت نهایی استعلام & دریافت پیش‌فاکتور 🚀

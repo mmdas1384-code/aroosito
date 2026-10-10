@@ -6495,6 +6495,7 @@ if (document.readyState === "loading") {
       const prevBtn = document.getElementById('inquiry-prev-btn');
       const nextBtn = document.getElementById('inquiry-next-btn');
       const submitBtn = document.getElementById('inquiry-submit-btn');
+      const whatsappBtn = document.getElementById('inquiry-whatsapp-btn');
 
       if (s1) {
         if (step === 1) {
@@ -6524,13 +6525,14 @@ if (document.readyState === "loading") {
         }
       }
 
-      if (ind1) ind1.className = step === 1 ? "flex-1 text-center py-2 rounded-xl bg-[#D4AF37] text-[#0F251A] font-black text-xs shadow-md border border-[#D4AF37]" : "flex-1 text-center py-2 rounded-xl bg-[#1E293B] text-slate-300 font-bold text-xs border border-[#D4AF37]/30 opacity-70";
-      if (ind2) ind2.className = step === 2 ? "flex-1 text-center py-2 rounded-xl bg-[#D4AF37] text-[#0F251A] font-black text-xs shadow-md border border-[#D4AF37]" : "flex-1 text-center py-2 rounded-xl bg-[#1E293B] text-slate-300 font-bold text-xs border border-[#D4AF37]/30 opacity-70";
-      if (ind3) ind3.className = step === 3 ? "flex-1 text-center py-2 rounded-xl bg-[#D4AF37] text-[#0F251A] font-black text-xs shadow-md border border-[#D4AF37]" : "flex-1 text-center py-2 rounded-xl bg-[#1E293B] text-slate-300 font-bold text-xs border border-[#D4AF37]/30 opacity-70";
+      if (ind1) ind1.className = step === 1 ? "flex-1 text-center py-2 rounded-xl bg-[#D4AF37] text-[#0F251A] font-black text-xs shadow-[0_0_12px_rgba(212,175,55,0.4)] border border-[#D4AF37] cursor-pointer transition-all" : "flex-1 text-center py-2 rounded-xl bg-[#1E293B] text-slate-300 font-bold text-xs border border-[#D4AF37]/30 opacity-70 cursor-pointer hover:opacity-90 transition-all";
+      if (ind2) ind2.className = step === 2 ? "flex-1 text-center py-2 rounded-xl bg-[#D4AF37] text-[#0F251A] font-black text-xs shadow-[0_0_12px_rgba(212,175,55,0.4)] border border-[#D4AF37] cursor-pointer transition-all" : "flex-1 text-center py-2 rounded-xl bg-[#1E293B] text-slate-300 font-bold text-xs border border-[#D4AF37]/30 opacity-70 cursor-pointer hover:opacity-90 transition-all";
+      if (ind3) ind3.className = step === 3 ? "flex-1 text-center py-2 rounded-xl bg-[#D4AF37] text-[#0F251A] font-black text-xs shadow-[0_0_12px_rgba(212,175,55,0.4)] border border-[#D4AF37] cursor-pointer transition-all" : "flex-1 text-center py-2 rounded-xl bg-[#1E293B] text-slate-300 font-bold text-xs border border-[#D4AF37]/30 opacity-70 cursor-pointer hover:opacity-90 transition-all";
 
       if (prevBtn) prevBtn.classList.toggle('hidden', step === 1);
       if (nextBtn) nextBtn.classList.toggle('hidden', step === 3);
       if (submitBtn) submitBtn.classList.toggle('hidden', step !== 3);
+      if (whatsappBtn) whatsappBtn.classList.toggle('hidden', step !== 3);
 
       if (window.lucide) lucide.createIcons();
     };
@@ -6556,6 +6558,51 @@ if (document.readyState === "loading") {
       if (currentInquiryStep > 1) {
         switchInquiryStep(currentInquiryStep - 1);
       }
+    };
+
+    window.openWhatsAppInquiry = function() {
+      const vendorId = parseInt(document.getElementById('inquiry-vendor-id')?.value || '1');
+      const vendor = vendors.find(v => v.id === vendorId) || vendors[0];
+      const vendorName = document.getElementById('modal-vendor-name')?.innerText || vendor?.name || 'تامین‌کننده';
+
+      const eventDate = document.getElementById('inquiry-date')?.value || '';
+      const guestCount = document.getElementById('inquiry-guests')?.value || '';
+      const note = document.getElementById('inquiry-note')?.value || '';
+      const clientName = document.getElementById('inquiry-name')?.value || '';
+      const clientPhone = document.getElementById('inquiry-phone')?.value || '';
+      const budgetRange = document.getElementById('inquiry-budget-range')?.value || '';
+      const budgetCustom = document.getElementById('inquiry-budget-custom')?.value || '';
+      const itemTitle = document.getElementById('inquiry-item-title')?.value || '';
+
+      const checkedServices = [];
+      document.querySelectorAll('#inquiry-services-checklist input[type="checkbox"]:checked').forEach(cb => {
+        if (cb.value) checkedServices.push(cb.value);
+      });
+
+      let phone = vendor?.phone || '09131112233';
+      let cleanPhone = phone.replace(/[^0-9]/g, '');
+      if (cleanPhone.startsWith('0')) {
+        cleanPhone = '98' + cleanPhone.substring(1);
+      } else if (!cleanPhone.startsWith('98')) {
+        cleanPhone = '98' + cleanPhone;
+      }
+
+      let message = `سلام ${vendorName} عزیز،\n`;
+      message += `درخواست استعلام قیمت از طریق سامانه عروسی تو:\n\n`;
+      if (clientName) message += `👤 فرستنده: ${clientName}\n`;
+      if (clientPhone) message += `📞 شماره تماس: ${clientPhone}\n`;
+      if (eventDate) message += `📅 تاریخ مراسم: ${eventDate}\n`;
+      if (guestCount) message += `👥 تعداد مهمانان: ${guestCount} نفر\n`;
+      if (itemTitle) message += `📌 پکیج / آیتم مدنظر: ${itemTitle}\n`;
+      if (budgetCustom || budgetRange) message += `💰 بودجه پیشنهادی: ${budgetCustom || budgetRange}\n`;
+      if (checkedServices.length > 0) message += `✨ خدمات درخواستی: ${checkedServices.join(' ، ')}\n`;
+      if (note) message += `📝 توضیحات: ${note}\n`;
+      message += `\nبا تشکر!`;
+
+      const encodedMsg = encodeURIComponent(message);
+      const url = `https://wa.me/${cleanPhone}?text=${encodedMsg}`;
+      window.open(url, '_blank');
+      if (typeof showToast === 'function') showToast('در حال انتقال به واتس‌اپ...', 'info');
     };
 
     function openInquiryModal(vendorId, vendorName, itemTitle, itemPrice, itemType, itemId, itemThumb) {
