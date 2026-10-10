@@ -9861,8 +9861,13 @@ window.shareReceiptWhatsApp = function() {
     // ==========================================
     // DIGITAL INVITATION BUILDER STATE & LOGIC
     // ==========================================
+    let savedThemeInit = "emerald-gold";
+    try {
+      savedThemeInit = localStorage.getItem('aroosi_invitation_theme') || "emerald-gold";
+    } catch (e) {}
+
     let invitationState = {
-      theme: "emerald-gold", // emerald-gold, dark-minimal, royal-classic, boho-botanical, glassmorphism, pearl-white
+      theme: savedThemeInit, // emerald-gold, dark-minimal, royal-classic, boho-botanical, glassmorphism, pearl-white
       displayLang: "fa", // fa, en
       fontPersian: "vazirmatn", // nastaliq, vazirmatn, lalezar, shabnam, naskh
       fontEnglish: "great-vibes", // great-vibes, alex-brush, playfair, garamond, cinzel, bodoni
@@ -9941,6 +9946,10 @@ window.shareReceiptWhatsApp = function() {
 
     function setInvTheme(themeName) {
       invitationState.theme = themeName;
+      try {
+        localStorage.setItem('aroosi_invitation_theme', themeName);
+      } catch (e) {}
+
       document.querySelectorAll('.inv-theme-card').forEach(card => {
         card.className = "inv-theme-card p-3.5 rounded-2xl border border-accent bg-white hover:border-primary cursor-pointer transition-all space-y-2";
         const check = card.querySelector('.theme-check');
@@ -9953,6 +9962,18 @@ window.shareReceiptWhatsApp = function() {
         const check = activeCard.querySelector('.theme-check');
         if (check) check.classList.remove('hidden');
       }
+
+      // Update Quick Theme Switcher Bar Active States
+      ['dark-minimal', 'emerald-gold', 'royal-classic'].forEach(t => {
+        const btn = document.getElementById('inv-quicktheme-' + t);
+        if (btn) {
+          if (t === themeName) {
+            btn.classList.add('ring-2', 'ring-[#D4AF37]', 'scale-105', 'shadow-md');
+          } else {
+            btn.classList.remove('ring-2', 'ring-[#D4AF37]', 'scale-105', 'shadow-md');
+          }
+        }
+      });
 
       renderInvitationPreview();
     }

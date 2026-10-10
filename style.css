@@ -608,6 +608,14 @@ main#directory-view {
   box-shadow: 0 20px 50px rgba(15, 23, 42, 0.6);
 }
 
+#tab-invitation #inv-preview-panel button[id^="inv-quicktheme-"] {
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+#tab-invitation #inv-preview-panel button[id^="inv-quicktheme-"]:hover {
+  transform: translateY(-1px);
+}
+
 #tab-invitation .inv-rsvp-input {
   background: rgba(255, 255, 255, 0.03);
   transition: all 0.3s ease;
