@@ -530,6 +530,15 @@ main#directory-view {
 }
 
 /* ==========================================================================
+   MULTI-STEP INQUIRY MODAL DISPLAY SCOPED STYLES
+   ========================================================================== */
+#inquiry-modal #inquiry-step-1:not(.hidden),
+#inquiry-modal #inquiry-step-2:not(.hidden),
+#inquiry-modal #inquiry-step-3:not(.hidden) {
+  display: block !important;
+}
+
+/* ==========================================================================
    VENDOR COMPARISON MATRIX SCOPED STYLES
    ========================================================================== */
 .comparison-modal .comparison-matrix table {

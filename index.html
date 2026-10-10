@@ -5635,13 +5635,13 @@
 
       <!-- STEP INDICATORS BAR -->
       <div id="inquiry-step-indicators" class="flex items-center gap-2">
-        <div id="inquiry-step-ind-1" class="flex-1 text-center py-2 rounded-xl bg-[#D4AF37] text-[#0F251A] font-black text-xs shadow-md">
+        <div id="inquiry-step-ind-1" onclick="switchInquiryStep(1)" class="flex-1 text-center py-2 rounded-xl bg-[#D4AF37] text-[#0F251A] font-black text-xs shadow-md cursor-pointer hover:opacity-90 transition-all">
           ۱. تاریخ & زمان
         </div>
-        <div id="inquiry-step-ind-2" class="flex-1 text-center py-2 rounded-xl bg-[#1E293B] text-slate-300 font-bold text-xs border border-[#D4AF37]/30">
+        <div id="inquiry-step-ind-2" onclick="switchInquiryStep(2)" class="flex-1 text-center py-2 rounded-xl bg-[#1E293B] text-slate-300 font-bold text-xs border border-[#D4AF37]/30 cursor-pointer hover:opacity-90 transition-all">
           ۲. خدمات & جزئیات
         </div>
-        <div id="inquiry-step-ind-3" class="flex-1 text-center py-2 rounded-xl bg-[#1E293B] text-slate-300 font-bold text-xs border border-[#D4AF37]/30">
+        <div id="inquiry-step-ind-3" onclick="switchInquiryStep(3)" class="flex-1 text-center py-2 rounded-xl bg-[#1E293B] text-slate-300 font-bold text-xs border border-[#D4AF37]/30 cursor-pointer hover:opacity-90 transition-all">
           ۳. تماس & ثبت
         </div>
       </div>
@@ -5675,7 +5675,7 @@
           <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
             <div>
               <label id="inquiry-date-label" class="block mb-1.5 text-slate-200">تاریخ تقریبی مراسم (شمسی) *</label>
-              <input type="text" required id="inquiry-date" oninput="checkInquiryDateAvailability()" value="۱۴۰۳/۰۶/۱۵" placeholder="مثلاً: ۱۴۰۳/۰۶/۱۵" class="inquiry-form-control w-full bg-[#1E293B] border border-[#D4AF37]/30 text-white placeholder-slate-400 rounded-xl p-2.5 text-xs font-bold focus:outline-none focus:border-[#D4AF37]">
+              <input type="text" id="inquiry-date" oninput="checkInquiryDateAvailability()" value="۱۴۰۳/۰۶/۱۵" placeholder="مثلاً: ۱۴۰۳/۰۶/۱۵" class="inquiry-form-control w-full bg-[#1E293B] border border-[#D4AF37]/30 text-white placeholder-slate-400 rounded-xl p-2.5 text-xs font-bold focus:outline-none focus:border-[#D4AF37]">
               <div id="inquiry-date-availability-badge" class="mt-1 text-[11px] font-bold p-2 rounded-xl flex items-center gap-1.5 hidden"></div>
             </div>
 
@@ -5722,12 +5722,12 @@
           <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
             <div>
               <label class="block mb-1.5 text-slate-200">نام و نام خانوادگی شما *</label>
-              <input type="text" required id="inquiry-name" value="علی و سارا" class="inquiry-form-control w-full bg-[#1E293B] border border-[#D4AF37]/30 text-white placeholder-slate-400 rounded-xl p-2.5 text-xs font-bold focus:outline-none focus:border-[#D4AF37]">
+              <input type="text" id="inquiry-name" value="علی و سارا" class="inquiry-form-control w-full bg-[#1E293B] border border-[#D4AF37]/30 text-white placeholder-slate-400 rounded-xl p-2.5 text-xs font-bold focus:outline-none focus:border-[#D4AF37]">
             </div>
 
             <div>
               <label class="block mb-1.5 text-slate-200">شماره تماس (دریافت پیش‌فاکتور) *</label>
-              <input type="tel" required id="inquiry-phone" value="09121234567" placeholder="۰۹۱۲..." class="inquiry-form-control w-full bg-[#1E293B] border border-[#D4AF37]/30 text-white placeholder-slate-400 rounded-xl p-2.5 text-xs font-bold focus:outline-none focus:border-[#D4AF37] dir-ltr">
+              <input type="tel" id="inquiry-phone" value="09121234567" placeholder="۰۹۱۲..." class="inquiry-form-control w-full bg-[#1E293B] border border-[#D4AF37]/30 text-white placeholder-slate-400 rounded-xl p-2.5 text-xs font-bold focus:outline-none focus:border-[#D4AF37] dir-ltr">
             </div>
           </div>
 

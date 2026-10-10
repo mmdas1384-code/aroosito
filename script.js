@@ -6536,12 +6536,15 @@ if (document.readyState === "loading") {
     };
 
     window.nextInquiryStep = function() {
+      const dateInput = document.getElementById('inquiry-date');
       if (currentInquiryStep === 1) {
-        const dateInput = document.getElementById('inquiry-date');
         if (dateInput && !dateInput.value.trim()) {
+          dateInput.classList.add('border-rose-500');
           if (typeof showToast === 'function') showToast('لطفاً تاریخ تقریبی مراسم را وارد کنید.', 'warning');
           dateInput.focus();
           return;
+        } else if (dateInput) {
+          dateInput.classList.remove('border-rose-500');
         }
       }
       if (currentInquiryStep < 3) {
