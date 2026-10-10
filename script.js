@@ -9900,7 +9900,10 @@ window.shareReceiptWhatsApp = function() {
       invitationState.envelopeOpened = true;
       const overlay = document.getElementById('inv-envelope-overlay');
       if (overlay) {
-        overlay.classList.add('opacity-0', 'pointer-events-none', '-translate-y-full');
+        overlay.classList.add('opacity-0', 'pointer-events-none', '-translate-y-full', 'scale-95');
+      }
+      if (!invitationState.isPlayingAudio && typeof toggleInvMusic === 'function') {
+        toggleInvMusic();
       }
     }
 
@@ -10199,6 +10202,18 @@ window.shareReceiptWhatsApp = function() {
       const modal = document.getElementById('inv-qr-modal');
       if (modal) modal.classList.add('hidden');
     }
+
+    window.downloadQrCode = function() {
+      const qrUrl = "https://api.qrserver.com/v1/create-qr-code/?size=300x300&data=https://aroosito.com/invitation/ali-and-sara&color=0f172a";
+      const a = document.createElement('a');
+      a.href = qrUrl;
+      a.download = 'invitation-qr-code-ali-sara.png';
+      a.target = '_blank';
+      document.body.appendChild(a);
+      a.click();
+      document.body.removeChild(a);
+      if (typeof showToast === 'function') showToast('کارت QR دعوت با موفقیت آماده دانلود شد', 'success');
+    };
 
     function switchQuizCategoryTab(catKey) {
       quizState.activeTab = catKey;

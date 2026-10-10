@@ -1331,7 +1331,7 @@
 
   <main id="directory-view" class="flex-1 max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-8 space-y-12 hidden">
     <!-- ISOLATED VENDOR DIRECTORY CONTENT MODULE -->
-    <div id="tab-directory" class="space-y-8">
+    <div id="tab-directory" class="tab-content hidden space-y-8">
 
       <!-- DYNAMIC CATEGORY PILL-TABS CAROUSEL BAR -->
       <div class="bg-[#0F172A] border border-[#D4AF37]/40 rounded-2xl p-2.5 shadow-xl text-white">
@@ -4501,6 +4501,41 @@
             </div>
           </div>
 
+          <!-- 7. QR CODE SHARING BADGE & CARD DOWNLOAD -->
+          <div class="bg-gradient-to-br from-[#0F172A] via-[#1B3B2B] to-[#0F172A] border border-[#D4AF37]/40 rounded-3xl p-6 text-white shadow-xl space-y-4">
+            <div class="border-b border-[#D4AF37]/30 pb-3 flex justify-between items-center">
+              <h3 class="text-base font-black text-[#D4AF37] flex items-center gap-2">
+                <i data-lucide="qr-code" class="w-5 h-5 text-[#D4AF37]"></i>
+                <span>کارت QR و اشتراک‌گذاری سریع مهمانان</span>
+              </h3>
+              <span class="text-[10px] font-extrabold text-amber-200 bg-[#D4AF37]/20 border border-[#D4AF37]/40 px-2.5 py-0.5 rounded-full">QR Code اختصاصی</span>
+            </div>
+
+            <div class="flex flex-col sm:flex-row items-center gap-5">
+              <!-- QR Image Box -->
+              <div class="w-28 h-28 bg-white p-2.5 rounded-2xl shadow-lg border-2 border-[#D4AF37] flex items-center justify-center shrink-0">
+                <img src="https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=https://aroosito.com/invitation/ali-and-sara&color=0f172a" alt="QR Code" class="w-full h-full object-contain">
+              </div>
+
+              <div class="space-y-2 text-center sm:text-right">
+                <h4 class="text-xs font-black text-amber-100">کارت هوشمند ورود و اشتراک‌گذاری</h4>
+                <p class="text-[11px] text-slate-300 leading-relaxed font-medium">
+                  این کد QR اختصاصی را روی کارت دعوت کاغذی چاپ کنید یا تصویر آن را برای مهمانان ارسال کنید تا با اسکن به صورت مستقیم وارد صفحه دعوت‌نامه شوند.
+                </p>
+                <div class="flex flex-wrap items-center justify-center sm:justify-start gap-2 pt-1">
+                  <button onclick="downloadQrCode()" class="bg-gradient-to-r from-[#D4AF37] to-[#F3E5AB] hover:from-[#e5bd3c] hover:to-[#fceba7] text-[#0F251A] font-black px-4 py-2 rounded-xl text-xs shadow-md transition-all flex items-center gap-1.5 cursor-pointer">
+                    <i data-lucide="download" class="w-3.5 h-3.5 text-[#0F251A]"></i>
+                    <span>دانلود کارت QR 📥</span>
+                  </button>
+                  <button onclick="openQrModal()" class="bg-[#1E293B] hover:bg-slate-700 text-slate-200 border border-[#D4AF37]/40 font-bold px-3.5 py-2 rounded-xl text-xs transition-all flex items-center gap-1.5 cursor-pointer">
+                    <i data-lucide="maximize-2" class="w-3.5 h-3.5 text-[#D4AF37]"></i>
+                    <span>نمایش کامل</span>
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+
           <!-- ADMIN RSVP RESPONSES MANAGEMENT TABLE -->
           <div class="bg-white border border-accent rounded-3xl p-6 shadow-xs space-y-4">
             <div class="flex flex-col sm:flex-row justify-between sm:items-center gap-3 border-b border-accent pb-3">
@@ -4563,20 +4598,24 @@
             </div>
 
             <!-- ENVELOPE OPENING ANIMATION OVERLAY -->
-            <div id="inv-envelope-overlay" class="absolute inset-0 z-40 bg-gradient-to-b from-[#1B3B2B] via-[#223E2F] to-[#172b21] flex flex-col items-center justify-center p-6 text-center text-white transition-all duration-700 space-y-6">
-              <div class="w-20 h-20 rounded-full bg-amber-400/20 border-2 border-amber-300 flex items-center justify-center text-amber-200 shadow-xl animate-pulse">
-                <i data-lucide="mail-open" class="w-10 h-10"></i>
+            <div id="inv-envelope-overlay" class="absolute inset-0 z-40 bg-gradient-to-b from-[#0F172A] via-[#1E293B] to-[#0F172A] flex flex-col items-center justify-center p-6 text-center text-white transition-all duration-700 space-y-6 rounded-3xl border border-[#D4AF37]/40 shadow-2xl overflow-hidden">
+              <!-- GOLD WAX STAMP MONOGRAM -->
+              <div id="env-wax-stamp" class="relative z-10 w-20 h-20 rounded-full bg-gradient-to-tr from-[#B38728] via-[#FBF5B7] to-[#AA771C] p-1 shadow-[0_0_25px_rgba(212,175,55,0.5)] flex items-center justify-center animate-pulse cursor-pointer hover:scale-105 transition-transform" onclick="openEnvelopeAnimation()">
+                <div class="w-full h-full rounded-full bg-[#0F172A] border border-[#D4AF37] flex flex-col items-center justify-center text-[#D4AF37]">
+                  <span class="text-xs font-black tracking-widest" id="env-monogram-stamp">ع & س</span>
+                  <i data-lucide="crown" class="w-3.5 h-3.5 text-[#D4AF37]"></i>
+                </div>
               </div>
 
-              <div class="space-y-2">
-                <span class="text-xs font-semibold text-amber-200 uppercase tracking-widest">کارت دعوت اختصاصی</span>
+              <div class="relative z-10 space-y-2">
+                <span class="text-[10px] font-extrabold text-[#D4AF37] uppercase tracking-widest bg-[#D4AF37]/10 px-3 py-1 rounded-full border border-[#D4AF37]/30">کارت دعوت دیجیتال رسمی</span>
                 <h3 id="env-couple-names" class="text-2xl font-black text-white">علی & سارا</h3>
-                <p class="text-[11px] text-slate-200 leading-relaxed">جهت مشاهده دعوت‌نامه رسمی لمس کنید</p>
+                <p class="text-[11px] text-slate-300 leading-relaxed font-medium">جهت گشودن پاکت و مشاهده کارت دعوت لمس کنید</p>
               </div>
 
-              <button onclick="openEnvelopeAnimation()" class="bg-gradient-to-r from-amber-400 to-amber-500 hover:from-amber-500 hover:to-amber-600 text-graphite font-black px-6 py-3 rounded-2xl text-xs shadow-2xl border border-amber-200 transition-transform active:scale-95 flex items-center gap-2">
-                <i data-lucide="sparkles" class="w-4 h-4"></i>
-                <span>باز کردن پاکت نامه</span>
+              <button onclick="openEnvelopeAnimation()" class="relative z-10 bg-gradient-to-r from-[#D4AF37] to-[#F3E5AB] hover:from-[#e5bd3c] hover:to-[#fceba7] text-[#0F251A] font-black px-6 py-3 rounded-2xl text-xs shadow-xl border border-[#D4AF37]/60 transition-all active:scale-95 flex items-center gap-2 cursor-pointer">
+                <i data-lucide="sparkles" class="w-4 h-4 text-[#0F251A]"></i>
+                <span>باز کردن دعوت‌نامه 📩</span>
               </button>
             </div>
 
@@ -5797,6 +5836,41 @@
           </button>
         </div>
       </form>
+    </div>
+  </div>
+
+  <!-- DIGITAL INVITATION QR CODE MODAL -->
+  <div id="inv-qr-modal" class="fixed inset-0 z-[999999] bg-slate-950/80 backdrop-blur-md flex items-center justify-center p-4 hidden">
+    <div class="bg-[#0F172A] border border-[#D4AF37]/60 rounded-3xl max-w-sm w-full p-6 text-center text-white shadow-2xl space-y-5 relative">
+      <button onclick="closeQrModal()" class="absolute top-4 left-4 text-slate-400 hover:text-white transition-colors cursor-pointer" title="بستن">
+        <i data-lucide="x" class="w-5 h-5"></i>
+      </button>
+
+      <div class="space-y-1">
+        <div class="inline-flex items-center gap-1.5 bg-[#D4AF37]/20 border border-[#D4AF37]/40 text-[#D4AF37] text-[10px] font-black px-2.5 py-0.5 rounded-full">
+          <i data-lucide="qr-code" class="w-3 h-3 text-[#D4AF37]"></i>
+          <span>کارت ورود هوشمند مهمانان</span>
+        </div>
+        <h3 class="text-lg font-black text-white">کارت دعوت دیجیتال: علی & سارا</h3>
+      </div>
+
+      <div class="bg-white p-4 rounded-2xl shadow-xl border-2 border-[#D4AF37] mx-auto w-48 h-48 flex items-center justify-center">
+        <img src="https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=https://aroosito.com/invitation/ali-and-sara&color=0f172a" alt="QR Code Invitation" class="w-full h-full object-contain">
+      </div>
+
+      <p class="text-[11px] text-slate-300 font-medium leading-relaxed">
+        اسکن کد QR با دوربین موبایل برای ورود مستقیم به کارت دعوت آنلاین
+      </p>
+
+      <div class="flex items-center gap-2 pt-2">
+        <button onclick="downloadQrCode()" class="flex-1 bg-gradient-to-r from-[#D4AF37] to-[#F3E5AB] hover:from-[#e5bd3c] hover:to-[#fceba7] text-[#0F251A] font-black py-2.5 rounded-xl text-xs shadow-md transition-all cursor-pointer flex items-center justify-center gap-1.5">
+          <i data-lucide="download" class="w-4 h-4"></i>
+          <span>دانلود تصویر QR</span>
+        </button>
+        <button onclick="copyInvitationLink()" class="px-4 py-2.5 rounded-xl bg-[#1E293B] hover:bg-slate-700 text-slate-200 border border-[#D4AF37]/30 font-bold text-xs transition-all cursor-pointer">
+          کپی لینک
+        </button>
+      </div>
     </div>
   </div>
 
