@@ -116,6 +116,15 @@
         </select>
       </div>
 
+      <!-- Event Date Availability Picker -->
+      <div class="space-y-2 pt-3 border-t border-accent">
+        <label for="sidebar-event-date" class="text-xs font-extrabold text-graphite flex items-center justify-between">
+          <span>تاریخ مراسم (استعلام و رزرو):</span>
+          <span class="text-[10px] text-amber-700 font-bold bg-amber-50 px-2 py-0.5 rounded-full">بررسی تقویم 📅</span>
+        </label>
+        <input type="date" id="sidebar-event-date" onchange="handleEventDateFilterChange(this.value)" class="w-full bg-bgCustom border border-accent rounded-xl p-2.5 text-xs font-bold text-graphite focus:outline-none focus:ring-2 focus:ring-[#1B3B2B] focus:border-[#D4AF37] cursor-pointer">
+      </div>
+
       <!-- Feature Checkboxes -->
       <div class="space-y-2 pt-3 border-t border-accent text-xs font-bold text-graphite">
         <label class="block text-xs font-extrabold text-graphite mb-2">امکانات و ویژگی‌های خاص:</label>
