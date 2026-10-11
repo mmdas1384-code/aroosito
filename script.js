@@ -17426,3 +17426,21 @@ window.setPriceFilter = function(tier) {
     filterVendors();
   }
 };
+
+
+/* Direct Hover Video Card Listeners */
+window.initCardVideoHoverListeners = function() {
+  document.querySelectorAll('.minimal-vendor-card, .vendor-card').forEach(card => {
+    const video = card.querySelector('.card-teaser-video');
+    if (card && video) {
+      card.addEventListener('mouseenter', () => {
+        video.style.opacity = '1';
+        video.play().catch(e => {});
+      });
+      card.addEventListener('mouseleave', () => {
+        video.style.opacity = '0';
+        video.pause();
+      });
+    }
+  });
+};

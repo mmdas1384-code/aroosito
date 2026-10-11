@@ -41,29 +41,20 @@
   <!-- MAIN STANDALONE FULL-WIDTH SHOWROOM CONTAINER -->
   <main class="flex-1 max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 pt-10 pb-20 space-y-8 text-right">
 
-    <!-- 1. VENDOR HERO BRAND BANNER (STRICTLY MINIMALIST & UNCLUTTERED) -->
-    <div class="relative bg-[#0e121c]/95 backdrop-blur-2xl border border-[#C5A059]/40 rounded-3xl p-6 sm:p-8 shadow-2xl overflow-hidden">
-      <div class="flex items-center gap-5">
-        <div class="w-20 h-20 sm:w-24 sm:h-24 rounded-2xl border-2 border-[#D4AF37] overflow-hidden bg-slate-900 shrink-0 shadow-xl">
-          <img id="vdm-avatar-img" src="https://images.unsplash.com/photo-1519167758481-83f550bb49b3?w=300" class="w-full h-full object-cover" alt="لوگوی تامین‌کننده">
-        </div>
-        <div class="space-y-2 text-right">
-          <h1 id="vdm-title-page" class="text-2xl sm:text-3xl font-black text-[#C5A059]">هتل باغ و تشریفات مشیرالممالک یزد</h1>
-          <p id="vdm-subtitle-page" class="text-xs sm:text-sm font-bold text-slate-300">تالار و باغ تالار عروسی • استان یزد</p>
-
-          <!-- Single Minimalist Horizontal Text-Only Meta-Row -->
-          <p class="text-xs text-slate-300 font-bold flex items-center gap-2 flex-wrap pt-1">
-            <span>⭐️ ۴.۹ (۳۸ نظر)</span>
-            <span class="text-slate-600">•</span>
-            <span>📍 صفائیه یزد</span>
-            <span class="text-slate-600">•</span>
-            <span>👥 ظرفیت تا ۶۰۰ نفر</span>
-            <span class="text-slate-600">•</span>
-            <span class="text-emerald-400">✨ پروانه کسب تاییدشده</span>
-          </p>
-        </div>
+    <!-- 1. CLEAN MINIMALIST VENDOR PROFILE HEADER -->
+    <header class="vendor-profile-header" style="padding: 24px; background: #07090E; border-bottom: 1px solid rgba(197,160,89,0.15); border-radius: 24px;">
+      <h1 id="vdm-title-page" style="color: #C5A059; font-size: 28px; font-weight: bold; margin-bottom: 8px;">هتل باغ و تشریفات مشیرالممالک یزد</h1>
+      <p id="vdm-subtitle-page" style="color: #94A3B8; font-size: 14px; margin-bottom: 12px;">تالار و باغ تالار عروسی • صفائیه یزد</p>
+      <div class="vendor-meta-row" style="display: flex; flex-wrap: wrap; gap: 16px; color: #E2E8F0; font-size: 13px;">
+          <span>⭐️ 4.9 (۳۸ نظر)</span>
+          <span>•</span>
+          <span>📍 صفائیه یزد</span>
+          <span>•</span>
+          <span>👥 ظرفیت تا ۶۰۰ نفر</span>
+          <span>•</span>
+          <span>✨ پروانه کسب تاییدشده</span>
       </div>
-    </div>
+    </header>
 
     <!-- 2. IMMERSIVE CINEMATIC VIP PORTFOLIO GALLERY -->
     <div class="space-y-4">
@@ -249,32 +240,15 @@
   </main>
 
   <!-- STICKY FLOATING GLASS ACTION BAR -->
-  <div class="fixed bottom-0 left-0 right-0 w-full z-[99999] bg-[#07090E]/92 backdrop-blur-xl border-t border-[#C5A059]/20 py-3.5 px-6 shadow-[0_-15px_40px_rgba(0,0,0,0.9)]">
-    <div class="max-w-7xl mx-auto flex items-center justify-between gap-4 text-xs font-bold">
-      <!-- Right Side: Starting Price Display -->
-      <div class="text-right shrink-0">
-        <span class="text-[10px] text-slate-400 font-bold block">شروع قیمت از</span>
-        <span id="vdm-bottom-price" class="text-sm sm:text-base font-black text-[#D4AF37]">۹۵,۰۰۰,۰۰۰ تومان</span>
+  <div class="sticky-bottom-bar" style="position: fixed; bottom: 0; left: 0; width: 100%; z-index: 99999; background: rgba(7, 9, 14, 0.95); backdrop-filter: blur(16px); border-top: 1px solid rgba(197,160,89,0.3); padding: 12px 24px; display: flex; justify-content: space-between; align-items: center;">
+      <div style="display: flex; gap: 12px; align-items: center;">
+          <a href="#section-packages" onclick="openInquiryModal(1)" style="background: #C5A059; color: #07090E; font-weight: bold; padding: 12px 24px; border-radius: 12px; text-decoration: none; font-size: 14px;">✨ استعلام قیمت و رزرو</a>
+          <button type="button" onclick="makeVendorCall()" style="background: rgba(255,255,255,0.08); color: #fff; padding: 10px 16px; border-radius: 10px; text-decoration: none; border: 1px solid rgba(197,160,89,0.2); cursor: pointer;">📞 تماس</button>
+          <button type="button" onclick="openWhatsAppInquiry()" style="background: rgba(255,255,255,0.08); color: #fff; padding: 10px 16px; border-radius: 10px; text-decoration: none; border: 1px solid rgba(197,160,89,0.2); cursor: pointer;">💬 واتساپ</button>
       </div>
-
-      <!-- Center: Compact Frosted Glass Icon-Buttons -->
-      <div class="flex items-center gap-2 sm:gap-3">
-        <button type="button" onclick="makeVendorCall()" class="bg-[#141A28] hover:bg-[#1E293B] text-amber-200 border border-[#C5A059]/40 px-3.5 py-2.5 rounded-2xl flex items-center gap-1.5 cursor-pointer shadow-md transition-all hover:scale-105">
-          <i data-lucide="phone-call" class="w-4 h-4 text-[#D4AF37]"></i>
-          <span>📞 تماس</span>
-        </button>
-        <button type="button" onclick="openWhatsAppInquiry()" class="bg-emerald-950/80 hover:bg-emerald-900 text-emerald-300 border border-emerald-500/40 px-3.5 py-2.5 rounded-2xl flex items-center gap-1.5 cursor-pointer shadow-md transition-all hover:scale-105">
-          <i data-lucide="message-circle" class="w-4 h-4 text-emerald-400"></i>
-          <span>💬 واتساپ</span>
-        </button>
+      <div style="color: #C5A059; font-weight: 500; font-size: 14px;">
+          شروع قیمت از <span id="vdm-bottom-price" style="color: #fff; font-weight: bold;">۹۵,۰۰۰,۰۰۰ تومان</span>
       </div>
-
-      <!-- Left Side: Primary Glowing Button -->
-      <button type="button" onclick="openInquiryModal(1)" class="bg-[#C5A059] hover:bg-[#D4AF37] text-[#07090E] font-black px-6 py-3 rounded-xl shadow-xl flex items-center gap-2 cursor-pointer transition-all transform hover:scale-[1.02] shrink-0">
-        <i data-lucide="sparkles" class="w-4 h-4 text-[#07090E]"></i>
-        <span>✨ استعلام قیمت و رزرو</span>
-      </button>
-    </div>
   </div>
 
   <!-- App Script -->
