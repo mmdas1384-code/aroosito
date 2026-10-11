@@ -519,6 +519,7 @@
       </section>
 
       <!-- 2.5 EDITORIAL BENTO CAROUSEL FEATURED VENDORS SHOWCASE -->
+            <!-- 2.5 EDITORIAL BENTO CAROUSEL FEATURED VENDORS SHOWCASE -->
       <section id="featured-vendors-section" class="bg-[#0e121c]/90 backdrop-blur-xl border border-[#C5A059]/30 rounded-3xl p-5 shadow-2xl relative space-y-4">
         <!-- Section Header Bar with Category Filter Pills & Carousel Controls -->
         <div class="flex items-center justify-between border-b border-[#C5A059]/20 pb-3 flex-wrap gap-3">
@@ -558,168 +559,169 @@
           </div>
         </div>
 
-        <!-- BENTO HORIZONTAL CAROUSEL CONTAINER -->
-        <div id="vip-showcase-container" class="bento-carousel-container flex gap-4 overflow-x-auto no-scrollbar scroll-smooth p-1">
+        <!-- BENTO HORIZONTAL AUTO-SCROLL CAROUSEL CONTAINER -->
+        <div id="vip-showcase-container" class="bento-carousel-container flex gap-3 overflow-x-auto no-scrollbar scroll-smooth p-1 cursor-grab active:cursor-grabbing select-none">
 
           <!-- Bento Card 1 -->
-          <div data-vip-cat="hall" class="vip-bento-card group shrink-0 w-[270px] sm:w-[300px] rounded-3xl bg-[rgba(14,18,28,0.75)] backdrop-blur-xl border border-[rgba(197,160,89,0.2)] hover:border-[#D4AF37]/60 overflow-hidden transition-all duration-300 shadow-xl cursor-pointer flex flex-col justify-between" onclick="openVendorDetailModal(1)">
+          <div data-vip-cat="hall" class="vip-bento-card group relative shrink-0 w-[230px] sm:w-[250px] rounded-2xl bg-[rgba(14,18,28,0.85)] border border-[rgba(197,160,89,0.25)] hover:border-[#D4AF37] overflow-hidden transition-all duration-300 shadow-xl cursor-pointer" onclick="openVendorDetailModal(1)">
+            <div class="relative h-[150px] w-full overflow-hidden">
+              <img src="https://images.unsplash.com/photo-1519167758481-83f550bb49b3?auto=format&fit=crop&w=600&q=80" alt="هتل باغ مشیرالممالک" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700">
+              <div class="absolute inset-0 bg-gradient-to-t from-[#07090E] via-transparent to-black/30"></div>
 
-            <!-- Image Container (Tight height ~180px-200px) -->
-            <div class="relative h-[190px] w-full overflow-hidden">
-              <img src="https://images.unsplash.com/photo-1519167758481-83f550bb49b3?auto=format&fit=crop&w=600&q=80" alt="هتل باغ مشیرالممالک" class="w-full h-full object-cover group-hover:scale-108 transition-transform duration-500">
-              <div class="absolute inset-0 bg-gradient-to-t from-[#0e121c] via-transparent to-black/20"></div>
-
-              <!-- Float Badges -->
-              <span class="absolute top-3 right-3 text-[10px] font-black text-[#0F251A] bg-gradient-to-r from-[#D4AF37] to-[#F3E5AB] px-2.5 py-0.5 rounded-full border border-[#D4AF37] shadow-md flex items-center gap-1">
-                👑 VIP تایید شده
+              <span class="absolute top-2.5 right-2.5 text-[9.5px] font-black text-[#0F251A] bg-gradient-to-r from-[#D4AF37] to-[#F3E5AB] px-2 py-0.5 rounded-full border border-[#D4AF37] shadow-md flex items-center gap-1">
+                👑 VIP
               </span>
-              <span class="absolute bottom-3 left-3 text-[10px] font-bold text-amber-200 bg-black/60 backdrop-blur-md px-2.5 py-1 rounded-full border border-[#D4AF37]/40 shadow-sm">
-                از ۲۵,۰۰۰,۰۰۰ تومان
-              </span>
-            </div>
 
-            <!-- Content Area -->
-            <div class="p-4 space-y-2 text-right">
-              <div class="flex items-center justify-between gap-2">
-                <span class="text-[10px] font-bold text-[#D4AF37] bg-[#D4AF37]/10 px-2 py-0.5 rounded-md border border-[#D4AF37]/30">باغ و تالار</span>
-                <span class="text-[11px] font-black text-amber-300 flex items-center gap-1">
-                  ⭐ ۴.۹ <span class="text-slate-400 font-medium text-[9.5px]">(۱۲۸ نظر)</span>
-                </span>
-              </div>
-
-              <h4 class="text-sm font-black text-[#F7F5F0] truncate group-hover:text-[#D4AF37] transition-colors">هتل باغ مشیرالممالک</h4>
-
-              <p class="text-[11px] text-slate-300 font-medium flex items-center gap-1">
-                📍 صفائیه، یزد • ظرفیت تا ۸۰۰ نفر
-              </p>
-
-              <!-- Slide-Up Hover Action Button -->
-              <div class="pt-2">
-                <button type="button" onclick="event.stopPropagation(); openVendorDetailModal(1)" class="w-full bg-[#1B3B2B] hover:bg-[#D4AF37] text-[#D4AF37] hover:text-[#0F251A] border border-[#D4AF37]/40 py-2 rounded-2xl text-xs font-black transition-all flex items-center justify-center gap-1.5 shadow-md">
-                  <span>مشاهده تالار / رزرو مشاوره</span>
-                  <i data-lucide="arrow-left" class="w-3.5 h-3.5"></i>
-                </button>
+              <div class="absolute bottom-2.5 right-2.5 left-2.5 text-right">
+                <h4 class="text-xs sm:text-sm font-black text-[#F7F5F0] truncate drop-shadow-md">هتل باغ مشیرالممالک</h4>
               </div>
             </div>
 
+            <!-- CINEMATIC HOVER REVEAL OVERLAY -->
+            <div class="vip-card-hover-overlay absolute inset-0 bg-[#07090e]/90 backdrop-blur-md p-4 text-right flex flex-col justify-between opacity-0 group-hover:opacity-100 transition-all duration-300 pointer-events-none group-hover:pointer-events-auto z-20">
+              <div class="space-y-2">
+                <div class="flex items-center justify-between">
+                  <span class="text-[9.5px] font-bold text-[#D4AF37] bg-[#D4AF37]/15 px-2 py-0.5 rounded-md border border-[#D4AF37]/30">باغ و تالار</span>
+                  <span class="text-[10.5px] font-black text-amber-300 flex items-center gap-0.5">⭐ ۴.۹</span>
+                </div>
+
+                <h4 class="text-xs sm:text-sm font-black text-[#F7F5F0] leading-snug">هتل باغ مشیرالممالک</h4>
+
+                <p class="text-[10px] text-slate-300 font-medium">📍 صفائیه، یزد • ظرفیت تا ۸۰۰ نفر</p>
+
+                <div class="text-[10.5px] font-bold text-amber-200 bg-black/50 px-2.5 py-1 rounded-lg border border-[#D4AF37]/30 inline-block">
+                  شروع قیمت: ۲۵,۰۰۰,۰۰۰ تومان
+                </div>
+              </div>
+
+              <button type="button" onclick="event.stopPropagation(); openVendorDetailModal(1)" class="gold-shimmer-btn w-full text-[#0F251A] font-black py-2 rounded-xl text-xs transition-all flex items-center justify-center gap-1 shadow-lg cursor-pointer">
+                <span>مشاهده و رزرو</span>
+                <i data-lucide="arrow-left" class="w-3.5 h-3.5"></i>
+              </button>
+            </div>
           </div>
 
           <!-- Bento Card 2 -->
-          <div data-vip-cat="studio" class="vip-bento-card group shrink-0 w-[270px] sm:w-[300px] rounded-3xl bg-[rgba(14,18,28,0.75)] backdrop-blur-xl border border-[rgba(197,160,89,0.2)] hover:border-[#D4AF37]/60 overflow-hidden transition-all duration-300 shadow-xl cursor-pointer flex flex-col justify-between" onclick="openVendorDetailModal(2)">
-            <div class="relative h-[190px] w-full overflow-hidden">
-              <img src="https://images.unsplash.com/photo-1537633552985-df8429e8048b?auto=format&fit=crop&w=600&q=80" alt="استودیو تخصصی کویر" class="w-full h-full object-cover group-hover:scale-108 transition-transform duration-500">
-              <div class="absolute inset-0 bg-gradient-to-t from-[#0e121c] via-transparent to-black/20"></div>
+          <div data-vip-cat="studio" class="vip-bento-card group relative shrink-0 w-[230px] sm:w-[250px] rounded-2xl bg-[rgba(14,18,28,0.85)] border border-[rgba(197,160,89,0.25)] hover:border-[#D4AF37] overflow-hidden transition-all duration-300 shadow-xl cursor-pointer" onclick="openVendorDetailModal(2)">
+            <div class="relative h-[150px] w-full overflow-hidden">
+              <img src="https://images.unsplash.com/photo-1537633552985-df8429e8048b?auto=format&fit=crop&w=600&q=80" alt="استودیو تخصصی کویر" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700">
+              <div class="absolute inset-0 bg-gradient-to-t from-[#07090E] via-transparent to-black/30"></div>
 
-              <span class="absolute top-3 right-3 text-[10px] font-black text-[#0F251A] bg-gradient-to-r from-[#D4AF37] to-[#F3E5AB] px-2.5 py-0.5 rounded-full border border-[#D4AF37] shadow-md flex items-center gap-1">
-                👑 VIP تایید شده
+              <span class="absolute top-2.5 right-2.5 text-[9.5px] font-black text-[#0F251A] bg-gradient-to-r from-[#D4AF37] to-[#F3E5AB] px-2 py-0.5 rounded-full border border-[#D4AF37] shadow-md flex items-center gap-1">
+                👑 VIP
               </span>
-              <span class="absolute bottom-3 left-3 text-[10px] font-bold text-amber-200 bg-black/60 backdrop-blur-md px-2.5 py-1 rounded-full border border-[#D4AF37]/40 shadow-sm">
-                از ۱۸,۰۰۰,۰۰۰ تومان
-              </span>
+
+              <div class="absolute bottom-2.5 right-2.5 left-2.5 text-right">
+                <h4 class="text-xs sm:text-sm font-black text-[#F7F5F0] truncate drop-shadow-md">استودیو تخصصی کویر</h4>
+              </div>
             </div>
 
-            <div class="p-4 space-y-2 text-right">
-              <div class="flex items-center justify-between gap-2">
-                <span class="text-[10px] font-bold text-[#D4AF37] bg-[#D4AF37]/10 px-2 py-0.5 rounded-md border border-[#D4AF37]/30">آتلیه و عکاسی</span>
-                <span class="text-[11px] font-black text-amber-300 flex items-center gap-1">
-                  ⭐ ۴.۸ <span class="text-slate-400 font-medium text-[9.5px]">(۹۵ نظر)</span>
-                </span>
+            <!-- CINEMATIC HOVER REVEAL OVERLAY -->
+            <div class="vip-card-hover-overlay absolute inset-0 bg-[#07090e]/90 backdrop-blur-md p-4 text-right flex flex-col justify-between opacity-0 group-hover:opacity-100 transition-all duration-300 pointer-events-none group-hover:pointer-events-auto z-20">
+              <div class="space-y-2">
+                <div class="flex items-center justify-between">
+                  <span class="text-[9.5px] font-bold text-[#D4AF37] bg-[#D4AF37]/15 px-2 py-0.5 rounded-md border border-[#D4AF37]/30">آتلیه و عکاسی</span>
+                  <span class="text-[10.5px] font-black text-amber-300 flex items-center gap-0.5">⭐ ۴.۸</span>
+                </div>
+
+                <h4 class="text-xs sm:text-sm font-black text-[#F7F5F0] leading-snug">استودیو تخصصی کویر</h4>
+
+                <p class="text-[10px] text-slate-300 font-medium">📍 میدان اطلسی، یزد • عکاسی فرمالیته & هلی‌شات</p>
+
+                <div class="text-[10.5px] font-bold text-amber-200 bg-black/50 px-2.5 py-1 rounded-lg border border-[#D4AF37]/30 inline-block">
+                  شروع قیمت: ۱۸,۰۰۰,۰۰۰ تومان
+                </div>
               </div>
 
-              <h4 class="text-sm font-black text-[#F7F5F0] truncate group-hover:text-[#D4AF37] transition-colors">استودیو تخصصی کویر</h4>
-
-              <p class="text-[11px] text-slate-300 font-medium flex items-center gap-1">
-                📍 میدان اطلسی، یزد • عکاسی فرمالیته & هلی‌شات
-              </p>
-
-              <div class="pt-2">
-                <button type="button" onclick="event.stopPropagation(); openVendorDetailModal(2)" class="w-full bg-[#1B3B2B] hover:bg-[#D4AF37] text-[#D4AF37] hover:text-[#0F251A] border border-[#D4AF37]/40 py-2 rounded-2xl text-xs font-black transition-all flex items-center justify-center gap-1.5 shadow-md">
-                  <span>مشاهده آتلیه / رزرو مشاوره</span>
-                  <i data-lucide="arrow-left" class="w-3.5 h-3.5"></i>
-                </button>
-              </div>
+              <button type="button" onclick="event.stopPropagation(); openVendorDetailModal(2)" class="gold-shimmer-btn w-full text-[#0F251A] font-black py-2 rounded-xl text-xs transition-all flex items-center justify-center gap-1 shadow-lg cursor-pointer">
+                <span>مشاهده و رزرو</span>
+                <i data-lucide="arrow-left" class="w-3.5 h-3.5"></i>
+              </button>
             </div>
           </div>
 
           <!-- Bento Card 3 -->
-          <div data-vip-cat="beauty" class="vip-bento-card group shrink-0 w-[270px] sm:w-[300px] rounded-3xl bg-[rgba(14,18,28,0.75)] backdrop-blur-xl border border-[rgba(197,160,89,0.2)] hover:border-[#D4AF37]/60 overflow-hidden transition-all duration-300 shadow-xl cursor-pointer flex flex-col justify-between" onclick="openVendorDetailModal(3)">
-            <div class="relative h-[190px] w-full overflow-hidden">
-              <img src="https://images.unsplash.com/photo-1487412720507-e7ab37603c6f?auto=format&fit=crop&w=600&q=80" alt="سالن زیبایی رویال" class="w-full h-full object-cover group-hover:scale-108 transition-transform duration-500">
-              <div class="absolute inset-0 bg-gradient-to-t from-[#0e121c] via-transparent to-black/20"></div>
+          <div data-vip-cat="beauty" class="vip-bento-card group relative shrink-0 w-[230px] sm:w-[250px] rounded-2xl bg-[rgba(14,18,28,0.85)] border border-[rgba(197,160,89,0.25)] hover:border-[#D4AF37] overflow-hidden transition-all duration-300 shadow-xl cursor-pointer" onclick="openVendorDetailModal(3)">
+            <div class="relative h-[150px] w-full overflow-hidden">
+              <img src="https://images.unsplash.com/photo-1487412720507-e7ab37603c6f?auto=format&fit=crop&w=600&q=80" alt="سالن زیبایی رویال" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700">
+              <div class="absolute inset-0 bg-gradient-to-t from-[#07090E] via-transparent to-black/30"></div>
 
-              <span class="absolute top-3 right-3 text-[10px] font-black text-[#0F251A] bg-gradient-to-r from-[#D4AF37] to-[#F3E5AB] px-2.5 py-0.5 rounded-full border border-[#D4AF37] shadow-md flex items-center gap-1">
-                👑 VIP تایید شده
+              <span class="absolute top-2.5 right-2.5 text-[9.5px] font-black text-[#0F251A] bg-gradient-to-r from-[#D4AF37] to-[#F3E5AB] px-2 py-0.5 rounded-full border border-[#D4AF37] shadow-md flex items-center gap-1">
+                👑 VIP
               </span>
-              <span class="absolute bottom-3 left-3 text-[10px] font-bold text-amber-200 bg-black/60 backdrop-blur-md px-2.5 py-1 rounded-full border border-[#D4AF37]/40 shadow-sm">
-                از ۱۵,۰۰۰,۰۰۰ تومان
-              </span>
+
+              <div class="absolute bottom-2.5 right-2.5 left-2.5 text-right">
+                <h4 class="text-xs sm:text-sm font-black text-[#F7F5F0] truncate drop-shadow-md">سالن زیبایی رویال</h4>
+              </div>
             </div>
 
-            <div class="p-4 space-y-2 text-right">
-              <div class="flex items-center justify-between gap-2">
-                <span class="text-[10px] font-bold text-[#D4AF37] bg-[#D4AF37]/10 px-2 py-0.5 rounded-md border border-[#D4AF37]/30">سالن زیبایی</span>
-                <span class="text-[11px] font-black text-amber-300 flex items-center gap-1">
-                  ⭐ ۵.۰ <span class="text-slate-400 font-medium text-[9.5px]">(۱۱۰ نظر)</span>
-                </span>
+            <!-- CINEMATIC HOVER REVEAL OVERLAY -->
+            <div class="vip-card-hover-overlay absolute inset-0 bg-[#07090e]/90 backdrop-blur-md p-4 text-right flex flex-col justify-between opacity-0 group-hover:opacity-100 transition-all duration-300 pointer-events-none group-hover:pointer-events-auto z-20">
+              <div class="space-y-2">
+                <div class="flex items-center justify-between">
+                  <span class="text-[9.5px] font-bold text-[#D4AF37] bg-[#D4AF37]/15 px-2 py-0.5 rounded-md border border-[#D4AF37]/30">سالن زیبایی</span>
+                  <span class="text-[10.5px] font-black text-amber-300 flex items-center gap-0.5">⭐ ۵.۰</span>
+                </div>
+
+                <h4 class="text-xs sm:text-sm font-black text-[#F7F5F0] leading-snug">سالن زیبایی رویال</h4>
+
+                <p class="text-[10px] text-slate-300 font-medium">📍 خیابان کاشانی، یزد • میکاپ VIP عروس</p>
+
+                <div class="text-[10.5px] font-bold text-amber-200 bg-black/50 px-2.5 py-1 rounded-lg border border-[#D4AF37]/30 inline-block">
+                  شروع قیمت: ۱۵,۰۰۰,۰۰۰ تومان
+                </div>
               </div>
 
-              <h4 class="text-sm font-black text-[#F7F5F0] truncate group-hover:text-[#D4AF37] transition-colors">سالن زیبایی رویال</h4>
-
-              <p class="text-[11px] text-slate-300 font-medium flex items-center gap-1">
-                📍 خیابان کاشانی، یزد • میکاپ VIP عروس
-              </p>
-
-              <div class="pt-2">
-                <button type="button" onclick="event.stopPropagation(); openVendorDetailModal(3)" class="w-full bg-[#1B3B2B] hover:bg-[#D4AF37] text-[#D4AF37] hover:text-[#0F251A] border border-[#D4AF37]/40 py-2 rounded-2xl text-xs font-black transition-all flex items-center justify-center gap-1.5 shadow-md">
-                  <span>مشاهده سالن / رزرو مشاوره</span>
-                  <i data-lucide="arrow-left" class="w-3.5 h-3.5"></i>
-                </button>
-              </div>
+              <button type="button" onclick="event.stopPropagation(); openVendorDetailModal(3)" class="gold-shimmer-btn w-full text-[#0F251A] font-black py-2 rounded-xl text-xs transition-all flex items-center justify-center gap-1 shadow-lg cursor-pointer">
+                <span>مشاهده و رزرو</span>
+                <i data-lucide="arrow-left" class="w-3.5 h-3.5"></i>
+              </button>
             </div>
           </div>
 
           <!-- Bento Card 4 -->
-          <div data-vip-cat="beauty" class="vip-bento-card group shrink-0 w-[270px] sm:w-[300px] rounded-3xl bg-[rgba(14,18,28,0.75)] backdrop-blur-xl border border-[rgba(197,160,89,0.2)] hover:border-[#D4AF37]/60 overflow-hidden transition-all duration-300 shadow-xl cursor-pointer flex flex-col justify-between" onclick="openVendorDetailModal(4)">
-            <div class="relative h-[190px] w-full overflow-hidden">
-              <img src="https://images.unsplash.com/photo-1594552072238-b8a33785b261?auto=format&fit=crop&w=600&q=80" alt="مزون عروس لورنت" class="w-full h-full object-cover group-hover:scale-108 transition-transform duration-500">
-              <div class="absolute inset-0 bg-gradient-to-t from-[#0e121c] via-transparent to-black/20"></div>
+          <div data-vip-cat="beauty" class="vip-bento-card group relative shrink-0 w-[230px] sm:w-[250px] rounded-2xl bg-[rgba(14,18,28,0.85)] border border-[rgba(197,160,89,0.25)] hover:border-[#D4AF37] overflow-hidden transition-all duration-300 shadow-xl cursor-pointer" onclick="openVendorDetailModal(4)">
+            <div class="relative h-[150px] w-full overflow-hidden">
+              <img src="https://images.unsplash.com/photo-1594552072238-b8a33785b261?auto=format&fit=crop&w=600&q=80" alt="مزون عروس لورنت" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700">
+              <div class="absolute inset-0 bg-gradient-to-t from-[#07090E] via-transparent to-black/30"></div>
 
-              <span class="absolute top-3 right-3 text-[10px] font-black text-[#0F251A] bg-gradient-to-r from-[#D4AF37] to-[#F3E5AB] px-2.5 py-0.5 rounded-full border border-[#D4AF37] shadow-md flex items-center gap-1">
-                👑 VIP تایید شده
+              <span class="absolute top-2.5 right-2.5 text-[9.5px] font-black text-[#0F251A] bg-gradient-to-r from-[#D4AF37] to-[#F3E5AB] px-2 py-0.5 rounded-full border border-[#D4AF37] shadow-md flex items-center gap-1">
+                👑 VIP
               </span>
-              <span class="absolute bottom-3 left-3 text-[10px] font-bold text-amber-200 bg-black/60 backdrop-blur-md px-2.5 py-1 rounded-full border border-[#D4AF37]/40 shadow-sm">
-                از ۱۲,۰۰۰,۰۰۰ تومان
-              </span>
+
+              <div class="absolute bottom-2.5 right-2.5 left-2.5 text-right">
+                <h4 class="text-xs sm:text-sm font-black text-[#F7F5F0] truncate drop-shadow-md">مزون عروس لورنت</h4>
+              </div>
             </div>
 
-            <div class="p-4 space-y-2 text-right">
-              <div class="flex items-center justify-between gap-2">
-                <span class="text-[10px] font-bold text-[#D4AF37] bg-[#D4AF37]/10 px-2 py-0.5 rounded-md border border-[#D4AF37]/30">مزون لباس</span>
-                <span class="text-[11px] font-black text-amber-300 flex items-center gap-1">
-                  ⭐ ۴.۷ <span class="text-slate-400 font-medium text-[9.5px]">(۸۲ نظر)</span>
-                </span>
+            <!-- CINEMATIC HOVER REVEAL OVERLAY -->
+            <div class="vip-card-hover-overlay absolute inset-0 bg-[#07090e]/90 backdrop-blur-md p-4 text-right flex flex-col justify-between opacity-0 group-hover:opacity-100 transition-all duration-300 pointer-events-none group-hover:pointer-events-auto z-20">
+              <div class="space-y-2">
+                <div class="flex items-center justify-between">
+                  <span class="text-[9.5px] font-bold text-[#D4AF37] bg-[#D4AF37]/15 px-2 py-0.5 rounded-md border border-[#D4AF37]/30">مزون لباس</span>
+                  <span class="text-[10.5px] font-black text-amber-300 flex items-center gap-0.5">⭐ ۴.۷</span>
+                </div>
+
+                <h4 class="text-xs sm:text-sm font-black text-[#F7F5F0] leading-snug">مزون عروس لورنت</h4>
+
+                <p class="text-[10px] text-slate-300 font-medium">📍 صفائیه، یزد • لباس عروس و تور اختصاصی</p>
+
+                <div class="text-[10.5px] font-bold text-amber-200 bg-black/50 px-2.5 py-1 rounded-lg border border-[#D4AF37]/30 inline-block">
+                  شروع قیمت: ۱۲,۰۰۰,۰۰۰ تومان
+                </div>
               </div>
 
-              <h4 class="text-sm font-black text-[#F7F5F0] truncate group-hover:text-[#D4AF37] transition-colors">مزون عروس لورنت</h4>
-
-              <p class="text-[11px] text-slate-300 font-medium flex items-center gap-1">
-                📍 صفائیه، یزد • لباس عروس و تور اختصاصی
-              </p>
-
-              <div class="pt-2">
-                <button type="button" onclick="event.stopPropagation(); openVendorDetailModal(4)" class="w-full bg-[#1B3B2B] hover:bg-[#D4AF37] text-[#D4AF37] hover:text-[#0F251A] border border-[#D4AF37]/40 py-2 rounded-2xl text-xs font-black transition-all flex items-center justify-center gap-1.5 shadow-md">
-                  <span>مشاهده مزون / رزرو مشاوره</span>
-                  <i data-lucide="arrow-left" class="w-3.5 h-3.5"></i>
-                </button>
-              </div>
+              <button type="button" onclick="event.stopPropagation(); openVendorDetailModal(4)" class="gold-shimmer-btn w-full text-[#0F251A] font-black py-2 rounded-xl text-xs transition-all flex items-center justify-center gap-1 shadow-lg cursor-pointer">
+                <span>مشاهده و رزرو</span>
+                <i data-lucide="arrow-left" class="w-3.5 h-3.5"></i>
+              </button>
             </div>
           </div>
 
         </div>
       </section>
 
-      <!-- 4. MAIN CATEGORIES GRID ("دسته‌بندی جامع خدمات و تشریفات عروسی") -->
-            <!-- 4. BENTO CATEGORY GALLERY -->
+      <!-- 4. BENTO CATEGORY GALLERY -->
       <section class="main-categories-section space-y-4">
         <!-- Section Header Bar -->
         <div class="flex items-center justify-between border-b border-[#C5A059]/20 pb-3 flex-wrap gap-3">
