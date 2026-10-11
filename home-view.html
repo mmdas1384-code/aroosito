@@ -508,71 +508,145 @@
         </div>
       </section>
 
-      <section class="budget-calculator-section">
-        <div class="dark-calc-card">
-          <div class="calc-top-row">
-            <a href="#" onclick="switchTab('tools'); return false;" class="btn-gold-sm flex items-center gap-1">ورود به بودجه‌ریز کامل AI <i data-lucide="arrow-left" class="w-4 h-4"></i></a>
-            <div class="calc-title-box">
-              <span class="calc-badge flex items-center gap-1.5"><i data-lucide="bar-chart-3" class="w-3.5 h-3.5 text-[#D4AF37]"></i> پیش‌بینی هوشمند هزینه مراسم</span>
-              <h3>محاسبه تخمینی بودجه عروسی در استان یزد</h3>
+            <!-- 6. HIGH-TECH FROSTED GLASS CONSOLE: AI BUDGET CALCULATOR -->
+      <section class="budget-calculator-section relative bg-[#0e121c]/90 backdrop-blur-xl border border-[#C5A059]/30 rounded-3xl p-6 shadow-2xl overflow-hidden my-8 text-white">
+        <!-- Ambient Gold Radial Glow Background -->
+        <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[450px] h-[450px] bg-[#D4AF37]/10 rounded-full blur-3xl pointer-events-none"></div>
+
+        <div class="relative z-10 space-y-6">
+          <!-- Top Row Header -->
+          <div class="flex items-center justify-between border-b border-[#C5A059]/20 pb-4 flex-wrap gap-3">
+            <div class="space-y-1 text-right">
+              <span class="text-[11px] font-black text-[#D4AF37] tracking-wider flex items-center gap-1.5">
+                <i data-lucide="bar-chart-3" class="w-4 h-4 text-[#D4AF37]"></i> پیش‌بینی هوشمند هزینه مراسم
+              </span>
+              <h3 class="text-xl font-black text-[#F7F5F0]">کنسول هوشمند تخمین بودجه عروسی در استان یزد</h3>
             </div>
+
+            <button type="button" onclick="switchTab('tools')" class="gold-shimmer-btn text-[#0F251A] font-black py-2.5 px-5 rounded-2xl text-xs sm:text-sm transition-all flex items-center gap-2 shadow-lg cursor-pointer hover:scale-105 active:scale-95">
+              <span>✨ ورود به بودجه‌ریز کامل AI</span>
+              <i data-lucide="arrow-left" class="w-4 h-4 text-[#0F251A]"></i>
+            </button>
           </div>
 
-          <div class="calc-main-content">
-            <div class="calc-result-box">
-              <span>برآورد کل هزینه‌های اصلی مراسم:</span>
-              <h2 id="home-calc-result-price">۳۸۰,۰۰۰,۰۰۰ تومان</h2>
-              <small>شامل ورودی تالار، شام، آتلیه، آرایشگاه، مزون لباس و شیرینی‌سرای یزد</small>
+          <!-- Console Main Content Grid (Result Price Display + Interactive Controls) -->
+          <div class="grid grid-cols-1 lg:grid-cols-12 gap-6 items-center">
+
+            <!-- Result Box: Large Striking Display with Ambient Gold Backlighting -->
+            <div class="lg:col-span-5 bg-[rgba(20,26,38,0.85)] border border-[rgba(197,160,89,0.35)] rounded-3xl p-6 text-center space-y-3 shadow-xl relative overflow-hidden group">
+              <div class="absolute -top-10 -right-10 w-32 h-32 bg-[#D4AF37]/15 rounded-full blur-2xl pointer-events-none"></div>
+
+              <span class="text-xs font-bold text-slate-300 block">برآورد کل هزینه‌های اصلی مراسم:</span>
+
+              <div class="py-2">
+                <h2 id="home-calc-result-price" class="text-2xl sm:text-3xl lg:text-4xl font-black text-[#F7F5F0] tracking-tight drop-shadow-[0_4px_15px_rgba(212,175,55,0.4)]">
+                  ۳۸۰,۰۰۰,۰۰۰ تومان
+                </h2>
+              </div>
+
+              <p class="text-[11px] text-amber-200/80 font-medium leading-relaxed bg-[#141A28] border border-[#C5A059]/20 rounded-2xl p-2.5">
+                شامل ورودی تالار، شام، آتلیه، آرایشگاه، مزون لباس و شیرینی‌سرای یزد
+              </p>
             </div>
 
-            <div class="calc-controls-box">
-              <div class="slider-row">
-                <span id="home-calc-guest-tag" class="val-tag">250 نفر</span>
-                <label>تعداد مهمانان تخمینی:</label>
-              </div>
-              <input type="range" id="home-calc-range" min="50" max="1000" step="25" value="250" oninput="updateHomeQuickBudget()" class="custom-range-slider cursor-pointer">
+            <!-- Controls Box: Slider & Service Level Toggles -->
+            <div class="lg:col-span-7 bg-[rgba(20,26,38,0.85)] border border-[rgba(197,160,89,0.35)] rounded-3xl p-6 space-y-5 text-right shadow-xl">
 
-              <div class="style-row">
-                <label>سطح تشریفات و خدمات:</label>
-                <div class="style-btns">
-                  <button type="button" onclick="setHomeCalcStyle('luxury')" id="home-style-luxury" class="s-btn flex items-center justify-center gap-1 cursor-pointer"><i data-lucide="gem" class="w-3.5 h-3.5 text-[#D4AF37]"></i> لوکس / VIP</button>
-                  <button type="button" onclick="setHomeCalcStyle('medium')" id="home-style-medium" class="s-btn active flex items-center justify-center gap-1 cursor-pointer"><i data-lucide="star" class="w-3.5 h-3.5 text-[#D4AF37] fill-[#D4AF37]"></i> متوسط</button>
-                  <button type="button" onclick="setHomeCalcStyle('economic')" id="home-style-economic" class="s-btn flex items-center justify-center gap-1 cursor-pointer"><i data-lucide="sparkles" class="w-3.5 h-3.5 text-[#D4AF37]"></i> اقتصادی</button>
+              <!-- Guest Count Slider Row -->
+              <div class="space-y-2">
+                <div class="flex items-center justify-between">
+                  <span id="home-calc-guest-tag" class="text-xs font-black text-[#D4AF37] bg-[#D4AF37]/15 border border-[#D4AF37]/40 px-3 py-1 rounded-full shadow-sm">
+                    250 نفر
+                  </span>
+                  <label class="text-xs font-bold text-[#F7F5F0]">تعداد مهمانان تخمینی:</label>
+                </div>
+
+                <input type="range" id="home-calc-range" min="50" max="1000" step="25" value="250" oninput="updateHomeQuickBudget()" class="w-full accent-[#D4AF37] bg-[#141A28] h-2 rounded-lg cursor-pointer">
+              </div>
+
+              <!-- Service Levels Toggles -->
+              <div class="space-y-2 pt-2 border-t border-[#C5A059]/20">
+                <label class="text-xs font-bold text-[#F7F5F0] block">سطح تشریفات و خدمات:</label>
+
+                <div class="grid grid-cols-3 gap-2">
+                  <button type="button" onclick="setHomeCalcStyle('luxury')" id="home-style-luxury" class="s-btn bg-[#141A28] hover:bg-[#1E293B] text-slate-200 border border-[#C5A059]/30 font-bold py-2.5 px-3 rounded-2xl text-xs transition-all flex items-center justify-center gap-1.5 cursor-pointer">
+                    <i data-lucide="gem" class="w-3.5 h-3.5 text-[#D4AF37]"></i>
+                    <span>لوکس / VIP</span>
+                  </button>
+
+                  <button type="button" onclick="setHomeCalcStyle('medium')" id="home-style-medium" class="s-btn active bg-[#1B3B2B] text-[#D4AF37] border border-[#D4AF37] font-bold py-2.5 px-3 rounded-2xl text-xs transition-all flex items-center justify-center gap-1.5 cursor-pointer shadow-md">
+                    <i data-lucide="star" class="w-3.5 h-3.5 text-[#D4AF37] fill-[#D4AF37]"></i>
+                    <span>متوسط</span>
+                  </button>
+
+                  <button type="button" onclick="setHomeCalcStyle('economic')" id="home-style-economic" class="s-btn bg-[#141A28] hover:bg-[#1E293B] text-slate-200 border border-[#C5A059]/30 font-bold py-2.5 px-3 rounded-2xl text-xs transition-all flex items-center justify-center gap-1.5 cursor-pointer">
+                    <i data-lucide="sparkles" class="w-3.5 h-3.5 text-[#D4AF37]"></i>
+                    <span>اقتصادی</span>
+                  </button>
                 </div>
               </div>
+
             </div>
+
           </div>
         </div>
       </section>
 
-      <!-- 7. WHY CHOOSE US ("چرا زوج‌های یزدی عروسی تو را انتخاب می‌کنند؟") -->
-      <section class="why-us-section">
-        <div class="container text-center">
-          <h2>چرا زوج‌های یزدی "عروسی تو" را انتخاب می‌کنند؟</h2>
-          <p class="section-subtext">پلتفرمی امن و هوشمند جهت تجربه‌ای بی‌دغدغه در برنامه‌ریزی رویاپردازی‌ترین جشن زندگی</p>
+      <!-- 7. EDITORIAL BENTO GRID: WHY CHOOSE US -->
+      <section class="why-us-section relative space-y-6 text-white my-8">
+        <div class="text-center space-y-2 max-w-2xl mx-auto">
+          <span class="text-[11px] font-black text-[#D4AF37] bg-[#D4AF37]/15 border border-[#D4AF37]/30 px-3 py-1 rounded-full inline-block">
+            🛡️ تضمین کیفیت & ارزش افزوده
+          </span>
+          <h2 class="text-xl sm:text-2xl font-black text-[#F7F5F0]">چرا زوج‌های یزدی "عروسی تو" را انتخاب می‌کنند؟</h2>
+          <p class="text-xs text-slate-300 font-medium">پلتفرمی امن و هوشمند جهت تجربه‌ای بی‌دغدغه در برنامه‌ریزی رویاپردازی‌ترین جشن زندگی</p>
+        </div>
 
-          <div class="why-grid-4">
-            <div class="why-card">
-              <div class="why-icon"><i data-lucide="shield-check" class="w-6 h-6"></i></div>
-              <h3>کسب‌وکارهای تاییدشده یزد</h3>
-              <p>استعلام جواز کسب، بررسی سوابق و اصالت‌سنجی کامل تمامی تامین‌کنندگان استان یزد</p>
+        <div class="why-grid-4 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+
+          <!-- Card 1: Verified Vendors -->
+          <div class="why-card bg-[#0e121c]/90 backdrop-blur-xl border border-[#C5A059]/30 rounded-3xl p-5 text-right space-y-3 hover:border-[#D4AF37] transition-all duration-300 shadow-xl group">
+            <div class="w-11 h-11 rounded-2xl bg-[#D4AF37]/15 border border-[#D4AF37]/40 text-[#D4AF37] flex items-center justify-center font-black shadow-md group-hover:scale-110 transition-transform">
+              <i data-lucide="shield-check" class="w-5 h-5 text-[#D4AF37]"></i>
             </div>
-            <div class="why-card">
-              <div class="why-icon"><i data-lucide="tag" class="w-6 h-6"></i></div>
-              <h3>تضمین بهترین قیمت</h3>
-              <p>ارائه پکیج‌های شفاف، قیمت بدون هزینه پنهان و تضمین قیمت عادلانه در بازار یزد</p>
+            <h3 class="text-sm font-black text-[#F7F5F0] group-hover:text-[#D4AF37] transition-colors">کسب‌وکار‌های تاییدشده یزد</h3>
+            <p class="text-xs text-slate-300 font-medium leading-relaxed">استعلام جواز کسب، بررسی سوابق و اصالت‌سنجی کامل تمامی تامین‌کنندگان استان یزد</p>
+            <span class="text-[10px] font-bold text-amber-200/80 bg-[#141A28] border border-[#C5A059]/20 px-2.5 py-1 rounded-full inline-block">۱۰۰٪ اصالت سنجی</span>
+          </div>
+
+          <!-- Card 2: Price Guarantee -->
+          <div class="why-card bg-[#0e121c]/90 backdrop-blur-xl border border-[#C5A059]/30 rounded-3xl p-5 text-right space-y-3 hover:border-[#D4AF37] transition-all duration-300 shadow-xl group">
+            <div class="w-11 h-11 rounded-2xl bg-[#D4AF37]/15 border border-[#D4AF37]/40 text-[#D4AF37] flex items-center justify-center font-black shadow-md group-hover:scale-110 transition-transform">
+              <i data-lucide="tag" class="w-5 h-5 text-[#D4AF37]"></i>
             </div>
-            <div class="why-card">
-              <div class="why-icon"><i data-lucide="bot" class="w-6 h-6"></i></div>
-              <h3>ابزارهای هوشمند AI</h3>
-              <p>چک‌لیست ۱۲ ماهه، بودجه‌ریز تخصصی و کارت دعوت دیجیتال با RSVP</p>
+            <h3 class="text-sm font-black text-[#F7F5F0] group-hover:text-[#D4AF37] transition-colors">تضمین بهترین قیمت</h3>
+            <p class="text-xs text-slate-300 font-medium leading-relaxed">ارائه پکیج‌های شفاف، قیمت بدون هزینه پنهان و تضمین قیمت عادلانه در بازار یزد</p>
+            <span class="text-[10px] font-bold text-amber-200/80 bg-[#141A28] border border-[#C5A059]/20 px-2.5 py-1 rounded-full inline-block">قیمت‌گذاری شفاف</span>
+          </div>
+
+          <!-- Card 3: AI Smart Tools -->
+          <div class="why-card bg-[#0e121c]/90 backdrop-blur-xl border border-[#C5A059]/30 rounded-3xl p-5 text-right space-y-3 hover:border-[#D4AF37] transition-all duration-300 shadow-xl group">
+            <div class="w-11 h-11 rounded-2xl bg-[#D4AF37]/15 border border-[#D4AF37]/40 text-[#D4AF37] flex items-center justify-center font-black shadow-md group-hover:scale-110 transition-transform">
+              <i data-lucide="bot" class="w-5 h-5 text-[#D4AF37]"></i>
             </div>
-            <div class="why-card">
-              <div class="why-icon"><i data-lucide="headphones" class="w-6 h-6"></i></div>
-              <h3>پشتیبانی اختصاصی</h3>
-              <p>مشاوره تلفنی و آنلاین گام‌به‌گام در برنامه‌ریزی تا شب برگزاری مراسم</p>
+            <h3 class="text-sm font-black text-[#F7F5F0] group-hover:text-[#D4AF37] transition-colors">ابزارهای هوشمند AI</h3>
+            <p class="text-xs text-slate-300 font-medium leading-relaxed">چک‌لیست ۱۲ ماهه، بودجه‌ریز تخصصی و کارت دعوت دیجیتال به همراه مدیریت RSVP</p>
+            <div class="flex items-center gap-1.5 pt-1">
+              <span class="text-[9.5px] font-bold text-amber-300 bg-[#D4AF37]/15 px-2 py-0.5 rounded-md border border-[#D4AF37]/30">چک‌لیست</span>
+              <span class="text-[9.5px] font-bold text-amber-300 bg-[#D4AF37]/15 px-2 py-0.5 rounded-md border border-[#D4AF37]/30">RSVP</span>
             </div>
           </div>
+
+          <!-- Card 4: Dedicated Support -->
+          <div class="why-card bg-[#0e121c]/90 backdrop-blur-xl border border-[#C5A059]/30 rounded-3xl p-5 text-right space-y-3 hover:border-[#D4AF37] transition-all duration-300 shadow-xl group">
+            <div class="w-11 h-11 rounded-2xl bg-[#D4AF37]/15 border border-[#D4AF37]/40 text-[#D4AF37] flex items-center justify-center font-black shadow-md group-hover:scale-110 transition-transform">
+              <i data-lucide="headphones" class="w-5 h-5 text-[#D4AF37]"></i>
+            </div>
+            <h3 class="text-sm font-black text-[#F7F5F0] group-hover:text-[#D4AF37] transition-colors">پشتیبانی اختصاصی</h3>
+            <p class="text-xs text-slate-300 font-medium leading-relaxed">مشاوره تلفنی و آنلاین گام‌به‌گام در برنامه‌ریزی تا شب برگزاری مراسم</p>
+            <span class="text-[10px] font-bold text-amber-200/80 bg-[#141A28] border border-[#C5A059]/20 px-2.5 py-1 rounded-full inline-block">پاسخگویی سریع</span>
+          </div>
+
         </div>
       </section>
 
