@@ -6865,18 +6865,19 @@ if (document.readyState === "loading") {
     }
 
     function renderModalAvailabilityCalendar(monthName) {
+      monthName = monthName || 'اردیبهشت';
       const container = document.getElementById('vdm-calendar-container');
       if (container && (!document.getElementById('vdm-calendar-days-grid') || !container.querySelector('.vcal-month-pill'))) {
         container.innerHTML = `
-          <div class="flex flex-wrap items-center justify-between gap-2 border-b border-stone-100 pb-3 mb-4">
-            <span class="text-xs font-bold text-stone-700">انتخاب ماه:</span>
+          <div class="flex flex-wrap items-center justify-between gap-2 border-b border-[#C5A059]/30 pb-3 mb-4">
+            <span class="text-xs font-bold text-amber-200">انتخاب ماه:</span>
             <div class="flex flex-wrap gap-1.5">
               <button onclick="renderModalAvailabilityCalendar('اردیبهشت')" class="vcal-month-pill px-3 py-1 rounded-xl text-xs font-bold transition-all">اردیبهشت</button>
               <button onclick="renderModalAvailabilityCalendar('خرداد')" class="vcal-month-pill px-3 py-1 rounded-xl text-xs font-bold transition-all">خرداد</button>
               <button onclick="renderModalAvailabilityCalendar('تیر')" class="vcal-month-pill px-3 py-1 rounded-xl text-xs font-bold transition-all">تیر</button>
             </div>
           </div>
-          <div class="flex items-center justify-around text-xs font-semibold text-stone-500 mb-3 bg-stone-50 py-2 rounded-xl border border-stone-100">
+          <div class="flex items-center justify-around text-xs font-semibold text-slate-300 mb-3 bg-[#141A28] py-2 rounded-xl border border-[#C5A059]/30">
             <span class="flex items-center gap-1"><span class="w-2.5 h-2.5 rounded-full bg-emerald-500 inline-block"></span> آزاد</span>
             <span class="flex items-center gap-1"><span class="w-2.5 h-2.5 rounded-full bg-amber-500 inline-block"></span> استعلام</span>
             <span class="flex items-center gap-1"><span class="w-2.5 h-2.5 rounded-full bg-rose-500 inline-block"></span> رزرو شده</span>
@@ -6888,42 +6889,44 @@ if (document.readyState === "loading") {
       const pills = document.querySelectorAll('.vcal-month-pill');
       pills.forEach(pill => {
         if (pill.innerText.includes(monthName)) {
-          pill.className = "vcal-month-pill active px-3 py-1 rounded-xl bg-[#1B3B2B] text-white transition-all cursor-pointer font-bold text-xs";
+          pill.className = "vcal-month-pill active px-3 py-1 rounded-xl bg-[#D4AF37] text-[#0F251A] transition-all cursor-pointer font-bold text-xs shadow-md";
         } else {
-          pill.className = "vcal-month-pill px-3 py-1 rounded-xl bg-white border border-stone-200 text-stone-700 hover:border-[#D4AF37] transition-all cursor-pointer font-bold text-xs";
+          pill.className = "vcal-month-pill px-3 py-1 rounded-xl bg-[#141A28] border border-[#C5A059]/30 text-slate-200 hover:border-[#D4AF37] transition-all cursor-pointer font-bold text-xs";
         }
       });
 
       const grid = document.getElementById('vdm-calendar-days-grid');
-      if (!grid) return;
+      const standaloneGrid = document.getElementById('standalone-calendar-grid');
+      const targetGrids = [grid, standaloneGrid].filter(Boolean);
+      if (targetGrids.length === 0) return;
 
       const bookedDays = [4, 8, 12, 19, 25, 26];
       const pendingDays = [2, 15, 21];
 
       let html = '';
       for (let day = 1; day <= 30; day++) {
-        let bgClass = "bg-emerald-50 hover:bg-emerald-100 text-emerald-900 border-emerald-300";
+        let bgClass = "bg-emerald-950/80 hover:bg-emerald-900 text-emerald-200 border-emerald-500/40";
         let statusBadge = "آزاد";
 
         if (bookedDays.includes(day)) {
-          bgClass = "bg-rose-50 text-rose-900 border-rose-300 opacity-90";
+          bgClass = "bg-rose-950/80 text-rose-200 border-rose-500/40 opacity-90";
           statusBadge = "رزرو شده";
         } else if (pendingDays.includes(day)) {
-          bgClass = "bg-amber-50 text-amber-900 border-amber-300";
+          bgClass = "bg-amber-950/80 text-amber-200 border-amber-500/40";
           statusBadge = "استعلام";
         }
 
         html += `
-          <div onclick="openInquiryModal(1, 'استعلام رزرو تاریخ ${day} ${monthName}')" class="p-2 sm:p-2.5 rounded-xl border flex flex-col justify-between items-center h-16 sm:h-20 transition-all cursor-pointer shadow-2xs ${bgClass}">
+          <div onclick="openInquiryModal(1, 'استعلام رزرو تاریخ ${day} ${monthName}')" class="p-2 sm:p-2.5 rounded-xl border flex flex-col justify-between items-center h-16 sm:h-20 transition-all cursor-pointer shadow-xs ${bgClass}">
             <span class="text-xs sm:text-sm font-black">${day}</span>
             <span class="text-[9px] sm:text-[10px] font-extrabold px-1.5 py-0.5 rounded-md ${
-              bookedDays.includes(day) ? 'bg-rose-200 text-rose-900' : pendingDays.includes(day) ? 'bg-amber-200 text-amber-900' : 'bg-emerald-200 text-emerald-900'
+              bookedDays.includes(day) ? 'bg-rose-900/60 text-rose-200' : pendingDays.includes(day) ? 'bg-amber-900/60 text-amber-200' : 'bg-emerald-900/60 text-emerald-200'
             }">${statusBadge}</span>
           </div>
         `;
       }
 
-      grid.innerHTML = html;
+      targetGrids.forEach(g => { g.innerHTML = html; });
     }
 
     function filterModalGallery(category) {

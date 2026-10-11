@@ -2555,3 +2555,54 @@ main, #home-view, #directory-view {
 #directory-primary-filter-island {
   margin-top: 1rem;
 }
+
+
+/* ==========================================================================
+   FORCE OVERWRITE: FULL-WIDTH DIRECTORY & VENDOR VIP SHOWROOM
+   ========================================================================== */
+#tab-directory,
+#directory-view,
+.directory-container {
+  width: 100% !important;
+  max-width: 100% !important;
+  background-color: #07090E !important;
+  color: #F7F5F0 !important;
+}
+
+/* 100% Full-Width Bento Grid for Directory */
+#vendor-grid {
+  width: 100% !important;
+}
+
+/* Advanced Filters Slide-Over Drawer */
+#directory-advanced-filters-drawer {
+  position: fixed !important;
+  top: 0 !important;
+  bottom: 0 !important;
+  right: 0 !important;
+  left: 0 !important;
+  z-index: 999999 !important;
+  background-color: rgba(0, 0, 0, 0.8) !important;
+  backdrop-filter: blur(12px) !important;
+  -webkit-backdrop-filter: blur(12px) !important;
+}
+
+/* Standalone Vendor Profile VIP Showroom Page */
+body.vendor-detail-page,
+main.vendor-showroom-main {
+  width: 100% !important;
+  background-color: #07090E !important;
+  color: #F7F5F0 !important;
+}
+
+/* Sticky Concierge Footer Bar */
+.vdm-floating-concierge-bar {
+  position: fixed !important;
+  bottom: 0 !important;
+  left: 0 !important;
+  right: 0 !important;
+  z-index: 99999 !important;
+  background: rgba(7, 9, 14, 0.95) !important;
+  backdrop-filter: blur(20px) !important;
+  border-top: 1px solid rgba(197, 160, 89, 0.4) !important;
+}
