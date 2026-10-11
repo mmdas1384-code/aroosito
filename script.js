@@ -1922,6 +1922,8 @@ if (document.readyState === "loading") {
       if (tabId === 'home') {
         if (homeView) homeView.classList.remove('hidden');
         if (directoryView) directoryView.classList.add('hidden');
+        if (typeof initVipShowcaseAutoScroll === 'function') initVipShowcaseAutoScroll();
+        if (typeof initTestimonialsAutoScroll === 'function') initTestimonialsAutoScroll();
       } else {
         if (homeView) homeView.classList.add('hidden');
         if (directoryView) directoryView.classList.remove('hidden');
@@ -11683,24 +11685,37 @@ window.shareReceiptWhatsApp = function() {
                                 document.querySelector('.bento-carousel-container');
       if (!showcaseContainer) return;
 
+      // Disable CSS smooth scroll to prevent conflicting animation frames on JS scrollLeft
+      showcaseContainer.style.scrollBehavior = 'auto';
+
       let isPaused = false;
       let animationFrameId = null;
 
       function autoScrollStep() {
         if (!isPaused && showcaseContainer) {
-          const isRTL = getComputedStyle(showcaseContainer).direction === 'rtl';
-          const speed = 0.8;
+          const maxScroll = showcaseContainer.scrollWidth - showcaseContainer.clientWidth;
+          if (maxScroll > 0) {
+            const isRTL = getComputedStyle(showcaseContainer).direction === 'rtl';
+            const step = 0.8;
 
-          if (isRTL) {
-            // For RTL scroll, scrollLeft is zero or negative depending on browser/layout
-            showcaseContainer.scrollLeft -= speed;
-            if (Math.abs(showcaseContainer.scrollLeft) >= (showcaseContainer.scrollWidth - showcaseContainer.clientWidth - 5)) {
-              showcaseContainer.scrollLeft = 0;
-            }
-          } else {
-            showcaseContainer.scrollLeft += speed;
-            if (showcaseContainer.scrollLeft >= (showcaseContainer.scrollWidth - showcaseContainer.clientWidth - 5)) {
-              showcaseContainer.scrollLeft = 0;
+            if (isRTL) {
+              // Handle RTL scrollLeft variations across browsers (negative vs positive)
+              if (showcaseContainer.scrollLeft < 0) {
+                showcaseContainer.scrollLeft -= step;
+                if (Math.abs(showcaseContainer.scrollLeft) >= maxScroll - 5) {
+                  showcaseContainer.scrollLeft = 0;
+                }
+              } else {
+                showcaseContainer.scrollLeft += step;
+                if (showcaseContainer.scrollLeft >= maxScroll - 5) {
+                  showcaseContainer.scrollLeft = 0;
+                }
+              }
+            } else {
+              showcaseContainer.scrollLeft += step;
+              if (showcaseContainer.scrollLeft >= maxScroll - 5) {
+                showcaseContainer.scrollLeft = 0;
+              }
             }
           }
         }
@@ -11741,8 +11756,10 @@ window.shareReceiptWhatsApp = function() {
         showcaseContainer.scrollLeft = scrollLeft - walk;
       });
 
-      if (animationFrameId) cancelAnimationFrame(animationFrameId);
-      animationFrameId = requestAnimationFrame(autoScrollStep);
+      if (showcaseContainer._autoScrollTimer) {
+        cancelAnimationFrame(showcaseContainer._autoScrollTimer);
+      }
+      showcaseContainer._autoScrollTimer = requestAnimationFrame(autoScrollStep);
     }
 
     window.addEventListener('DOMContentLoaded', () => {
@@ -16653,23 +16670,35 @@ function initTestimonialsAutoScroll() {
   const container = document.getElementById('testimonials-carousel-container');
   if (!container) return;
 
+  container.style.scrollBehavior = 'auto';
+
   let isPaused = false;
   let animationFrameId = null;
 
   function autoScrollStep() {
     if (!isPaused && container) {
-      const isRTL = getComputedStyle(container).direction === 'rtl';
-      const speed = 0.7;
+      const maxScroll = container.scrollWidth - container.clientWidth;
+      if (maxScroll > 0) {
+        const isRTL = getComputedStyle(container).direction === 'rtl';
+        const step = 0.7;
 
-      if (isRTL) {
-        container.scrollLeft -= speed;
-        if (Math.abs(container.scrollLeft) >= (container.scrollWidth - container.clientWidth - 5)) {
-          container.scrollLeft = 0;
-        }
-      } else {
-        container.scrollLeft += speed;
-        if (container.scrollLeft >= (container.scrollWidth - container.clientWidth - 5)) {
-          container.scrollLeft = 0;
+        if (isRTL) {
+          if (container.scrollLeft < 0) {
+            container.scrollLeft -= step;
+            if (Math.abs(container.scrollLeft) >= maxScroll - 5) {
+              container.scrollLeft = 0;
+            }
+          } else {
+            container.scrollLeft += step;
+            if (container.scrollLeft >= maxScroll - 5) {
+              container.scrollLeft = 0;
+            }
+          }
+        } else {
+          container.scrollLeft += step;
+          if (container.scrollLeft >= maxScroll - 5) {
+            container.scrollLeft = 0;
+          }
         }
       }
     }
@@ -16710,8 +16739,10 @@ function initTestimonialsAutoScroll() {
     container.scrollLeft = scrollLeft - walk;
   });
 
-  cancelAnimationFrame(animationFrameId);
-  animationFrameId = requestAnimationFrame(autoScrollStep);
+  if (container._autoScrollTimer) {
+    cancelAnimationFrame(container._autoScrollTimer);
+  }
+  container._autoScrollTimer = requestAnimationFrame(autoScrollStep);
 }
 
 document.addEventListener('DOMContentLoaded', () => {
