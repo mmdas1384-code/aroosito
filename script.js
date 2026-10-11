@@ -6,18 +6,19 @@ const HOME_VIEW_HTML = `<main id="home-view" class="flex-1 max-w-7xl w-full mx-a
 
       <!-- 2. ULTRA-SLIM & COMPACT EDITORIAL HERO SECTION -->
             <!-- 2. ULTRA-LUXURY EDITORIAL HERO SECTION WITH INTEGRATED AI SIDEBAR & METRICS -->
+            <!-- 2. ULTRA-LUXURY EDITORIAL HERO SECTION WITH DISTINCT LEFT SIDEBAR BOX -->
       <section id="hero" class="relative bg-[#0b0f19] border border-[#D4AF37]/40 rounded-3xl p-5 sm:p-6 lg:p-8 shadow-2xl overflow-hidden text-white space-y-6">
         <!-- Ambient Gold Radial Illumination -->
         <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[500px] h-[500px] bg-[#D4AF37]/10 rounded-full blur-3xl pointer-events-none"></div>
 
-        <!-- Main Hero Content Grid (Main Area + Sidebar AI Panel) -->
+        <!-- Main Hero Content Grid -->
         <div class="grid grid-cols-1 lg:grid-cols-12 gap-6 items-stretch relative z-10">
 
-          <!-- Left / Main Area: Brand Headline, Clean Search Pill Bar -->
-          <div class="lg:col-span-8 flex flex-col justify-between space-y-4 text-right">
-            <div class="space-y-3">
-              <div class="inline-flex items-center gap-2 bg-[#D4AF37]/15 text-[#D4AF37] border border-[#D4AF37]/40 px-3.5 py-1 rounded-full text-[11px] font-black">
-                <i data-lucide="crown" class="w-3.5 h-3.5 text-[#D4AF37]"></i>
+          <!-- RIGHT / CENTRAL AREA: Brand Headline & Search Input Bar -->
+          <div class="lg:col-span-7 flex flex-col justify-between space-y-6 text-right">
+            <div class="space-y-4">
+              <div class="inline-flex items-center gap-2 bg-[#D4AF37]/15 text-[#D4AF37] border border-[#D4AF37]/40 px-3.5 py-1.5 rounded-full text-xs font-black">
+                <i data-lucide="crown" class="w-4 h-4 text-[#D4AF37]"></i>
                 <span>Aroosi No — The Definitive Luxury Wedding Directory</span>
               </div>
 
@@ -25,7 +26,7 @@ const HOME_VIEW_HTML = `<main id="home-view" class="flex-1 max-w-7xl w-full mx-a
                 آفرینش <span class="text-[#D4AF37] underline decoration-[#D4AF37]/60 underline-offset-8">خاطره‌انگیزترین لحظات لوکس</span>
               </h1>
 
-              <p class="text-xs sm:text-sm text-slate-300 font-medium leading-relaxed">
+              <p class="text-xs sm:text-sm text-slate-300 font-medium leading-relaxed max-w-xl">
                 پلتفرم جامع و هوشمند مدیریت، رزرو و برنامه‌ریزی عروسی‌های مجلل استان یزد
               </p>
             </div>
@@ -38,9 +39,9 @@ const HOME_VIEW_HTML = `<main id="home-view" class="flex-1 max-w-7xl w-full mx-a
                   <input id="hero-pill-search-input" type="text" oninput="handleHeroSearchInput(this.value)" onfocus="handleHeroSearchFocus()" onkeydown="if(event.key==='Enter') executeHeroSearch()" placeholder="جستجوی تالار، آتلیه، مزون، سالن زیبایی..." class="w-full bg-transparent text-white placeholder-slate-400 border-none pr-2 text-xs sm:text-sm font-medium focus:outline-none">
                 </div>
 
-                <button type="button" onclick="executeHeroSearch()" class="gold-shimmer-btn text-[#0F251A] font-black px-5 py-2 rounded-full text-xs sm:text-sm transition-all shrink-0 cursor-pointer flex items-center gap-1.5 shadow-md">
+                <button type="button" onclick="executeHeroSearch()" class="gold-shimmer-btn text-[#0F251A] font-black px-5 py-2.5 rounded-full text-xs sm:text-sm transition-all shrink-0 cursor-pointer flex items-center gap-1.5 shadow-md">
                   <i data-lucide="compass" class="w-4 h-4 text-[#0F251A]"></i>
-                  <span>جستجو ↗</span>
+                  <span>کشف فوری ↗</span>
                 </button>
               </div>
 
@@ -51,75 +52,63 @@ const HOME_VIEW_HTML = `<main id="home-view" class="flex-1 max-w-7xl w-full mx-a
             </div>
           </div>
 
-          <!-- Right / Sidebar AI & Quick-Discover Action Panel -->
-          <div class="lg:col-span-4 bg-[#0e121c]/80 backdrop-blur-xl border border-[#C5A059]/30 rounded-2xl p-4 sm:p-5 flex flex-col justify-between space-y-4 text-right shadow-xl">
+          <!-- LEFT SIDEBAR BOX: Distinct Frosted Glass Box Housing AI Tools, Vibe Pills & Platform Metrics -->
+          <div class="lg:col-span-5 bg-[#0e121c]/85 backdrop-blur-xl border border-[#C5A059]/35 rounded-3xl p-5 flex flex-col justify-between space-y-5 text-right shadow-2xl">
+
+            <!-- AI & Assistant Trigger Buttons -->
             <div class="space-y-3">
               <div class="flex items-center justify-between border-b border-[#C5A059]/20 pb-2">
                 <span class="text-[10px] font-bold text-amber-200 bg-[#D4AF37]/15 border border-[#D4AF37]/30 px-2.5 py-0.5 rounded-full flex items-center gap-1">
                   <i data-lucide="wand-2" class="w-3 h-3 text-[#D4AF37]"></i> هوش مصنوعی
                 </span>
-                <span class="text-xs font-black text-[#D4AF37]">دستیار & میان‌بر</span>
+                <span class="text-xs font-black text-[#D4AF37]">ابزارهای هوشمند</span>
               </div>
 
-              <!-- VIP AI Matchmaker Trigger -->
-              <button type="button" onclick="openVipConciergeModal()" class="gold-shimmer-btn w-full text-[#0F251A] font-black py-3 px-4 rounded-xl text-xs sm:text-sm transition-all cursor-pointer flex items-center justify-between shadow-lg hover:scale-[1.02] active:scale-[0.98]">
-                <div class="flex items-center gap-2">
+              <div class="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
+                <button type="button" onclick="openVipConciergeModal()" class="gold-shimmer-btn w-full text-[#0F251A] font-black py-2.5 px-3 rounded-2xl text-xs transition-all cursor-pointer flex items-center justify-center gap-1.5 shadow-md hover:scale-[1.02] active:scale-[0.98]">
                   <i data-lucide="crown" class="w-4 h-4 text-[#0F251A]"></i>
                   <span>✨ دستیار هوشمند VIP</span>
-                </div>
-                <i data-lucide="arrow-left" class="w-4 h-4 text-[#0F251A]"></i>
-              </button>
+                </button>
+
+                <button type="button" onclick="openSmartWizardModal()" class="bg-[#1E293B] hover:bg-slate-800 text-[#D4AF37] border border-[#D4AF37]/40 font-bold py-2.5 px-3 rounded-2xl text-xs transition-all cursor-pointer flex items-center justify-center gap-1.5 shadow-md">
+                  <i data-lucide="sparkles" class="w-4 h-4 text-[#D4AF37]"></i>
+                  <span>توصیه AI</span>
+                </button>
+              </div>
             </div>
 
             <!-- Quick Discover Vibe Pills -->
             <div class="space-y-2 pt-2 border-t border-[#C5A059]/15">
               <span class="text-[10.5px] font-bold text-slate-300 block">کشف سریع خدمات:</span>
               <div class="flex flex-wrap gap-1.5 text-[10.5px] font-bold">
-                <button type="button" onclick="filterVendorsByCategoryTitle('تالار و باغ تالار عروسی')" class="bg-[#141A28] hover:bg-[#1E293B] text-amber-200 border border-[#C5A059]/30 px-2.5 py-1 rounded-lg transition-all cursor-pointer">🏛️ تالارها</button>
-                <button type="button" onclick="filterVendorsByCategoryTitle('آتلیه عکاسی و فیلمبرداری')" class="bg-[#141A28] hover:bg-[#1E293B] text-amber-200 border border-[#C5A059]/30 px-2.5 py-1 rounded-lg transition-all cursor-pointer">📸 آتلیه</button>
-                <button type="button" onclick="filterVendorsByCategoryTitle('سالن زیبایی و آرایشگاه عروس')" class="bg-[#141A28] hover:bg-[#1E293B] text-amber-200 border border-[#C5A059]/30 px-2.5 py-1 rounded-lg transition-all cursor-pointer">💄 آرایشگاه</button>
-                <button type="button" onclick="filterVendorsByCategoryTitle('مزون لباس عروس')" class="bg-[#141A28] hover:bg-[#1E293B] text-amber-200 border border-[#C5A059]/30 px-2.5 py-1 rounded-lg transition-all cursor-pointer">👗 مزون</button>
-              </div>
-            </div>
-          </div>
-
-        </div>
-
-        <!-- INTEGRATED METRICS & TRUST GLASS STRIP -->
-        <div class="relative z-10 pt-4 border-t border-[#D4AF37]/20">
-          <div class="grid grid-cols-1 md:grid-cols-3 divide-y md:divide-y-0 md:divide-x md:divide-x-reverse divide-[#D4AF37]/20 gap-3 md:gap-0 text-white text-center">
-
-            <div class="px-4 py-1.5 flex items-center justify-center gap-3">
-              <div class="w-8 h-8 rounded-xl bg-[#D4AF37]/15 border border-[#D4AF37]/40 text-[#D4AF37] flex items-center justify-center shrink-0">
-                <i data-lucide="award" class="w-4 h-4 text-[#D4AF37]"></i>
-              </div>
-              <div class="text-right">
-                <span class="text-xs font-black text-[#D4AF37] block">۵۰۰+ تامین‌کننده لوکس</span>
-                <span class="text-[10px] text-slate-300 font-medium">باغ، تالار، آتلیه و مزون‌های برتر یزد</span>
+                <button type="button" onclick="filterVendorsByCategoryTitle('تالار و باغ تالار عروسی')" class="bg-[#141A28] hover:bg-[#1E293B] text-amber-200 border border-[#C5A059]/30 px-2.5 py-1 rounded-xl transition-all cursor-pointer">🏛️ تالارها</button>
+                <button type="button" onclick="filterVendorsByCategoryTitle('آتلیه عکاسی و فیلمبرداری')" class="bg-[#141A28] hover:bg-[#1E293B] text-amber-200 border border-[#C5A059]/30 px-2.5 py-1 rounded-xl transition-all cursor-pointer">📸 آتلیه</button>
+                <button type="button" onclick="filterVendorsByCategoryTitle('سالن زیبایی و آرایشگاه عروس')" class="bg-[#141A28] hover:bg-[#1E293B] text-amber-200 border border-[#C5A059]/30 px-2.5 py-1 rounded-xl transition-all cursor-pointer">💄 آرایشگاه</button>
+                <button type="button" onclick="filterVendorsByCategoryTitle('مزون لباس عروس')" class="bg-[#141A28] hover:bg-[#1E293B] text-amber-200 border border-[#C5A059]/30 px-2.5 py-1 rounded-xl transition-all cursor-pointer">👗 مزون</button>
               </div>
             </div>
 
-            <div class="px-4 py-1.5 flex items-center justify-center gap-3">
-              <div class="w-8 h-8 rounded-xl bg-[#D4AF37]/15 border border-[#D4AF37]/40 text-[#D4AF37] flex items-center justify-center shrink-0">
-                <i data-lucide="sparkles" class="w-4 h-4 text-[#D4AF37]"></i>
-              </div>
-              <div class="text-right">
-                <span class="text-xs font-black text-[#D4AF37] block">۲,۰۰۰+ مراسم موفق</span>
-                <span class="text-[10px] text-slate-300 font-medium">رزرو آنلاین و مدیریت بودجه هوشمند</span>
-              </div>
-            </div>
-
-            <div class="px-4 py-1.5 flex items-center justify-center gap-3">
-              <div class="w-8 h-8 rounded-xl bg-[#D4AF37]/15 border border-[#D4AF37]/40 text-[#D4AF37] flex items-center justify-center shrink-0">
-                <i data-lucide="shield-check" class="w-4 h-4 text-[#D4AF37]"></i>
-              </div>
-              <div class="text-right">
-                <span class="text-xs font-black text-[#D4AF37] block">تضمین کیفیت و اصالت</span>
-                <span class="text-[10px] text-slate-300 font-medium">پشتیبانی اختصاصی و صدور پیش‌فاکتور</span>
+            <!-- Integrated Platform Metrics Inside Sidebar Box -->
+            <div class="space-y-2 pt-3 border-t border-[#C5A059]/20">
+              <span class="text-[10.5px] font-bold text-[#D4AF37] block">آمارهای کلی عروسی نو:</span>
+              <div class="grid grid-cols-3 gap-2 text-center">
+                <div class="bg-[#141A28]/80 border border-[#C5A059]/20 rounded-xl p-2">
+                  <span class="text-xs font-black text-[#D4AF37] block">۵۰۰+</span>
+                  <span class="text-[9px] text-slate-300 font-medium block">تامین‌کننده</span>
+                </div>
+                <div class="bg-[#141A28]/80 border border-[#C5A059]/20 rounded-xl p-2">
+                  <span class="text-xs font-black text-[#D4AF37] block">۲,۰۰۰+</span>
+                  <span class="text-[9px] text-slate-300 font-medium block">مراسم موفق</span>
+                </div>
+                <div class="bg-[#141A28]/80 border border-[#C5A059]/20 rounded-xl p-2">
+                  <span class="text-xs font-black text-[#D4AF37] block">تضمین</span>
+                  <span class="text-[9px] text-slate-300 font-medium block">کیفیت & اصالت</span>
+                </div>
               </div>
             </div>
 
           </div>
+
         </div>
       </section>
 
@@ -199,7 +188,7 @@ const HOME_VIEW_HTML = `<main id="home-view" class="flex-1 max-w-7xl w-full mx-a
                 </div>
               </div>
 
-              <button type="button" onclick="event.stopPropagation(); openVendorDetailModal(1)" class="gold-shimmer-btn w-full text-[#0F251A] font-black py-2 rounded-xl text-xs transition-all flex items-center justify-center gap-1 shadow-lg cursor-pointer">
+              <button type="button" onclick="event.stopPropagation(); openVendorDetailModal(1)" class="gold-shimmer-btn w-full text-[#0F251A] font-black py-2.5 sm:py-3 px-4 rounded-xl text-xs sm:text-sm transition-all flex items-center justify-center gap-2 shadow-xl hover:scale-105 active:scale-95 cursor-pointer">
                 <span>مشاهده و رزرو</span>
                 <i data-lucide="arrow-left" class="w-3.5 h-3.5"></i>
               </button>
@@ -238,7 +227,7 @@ const HOME_VIEW_HTML = `<main id="home-view" class="flex-1 max-w-7xl w-full mx-a
                 </div>
               </div>
 
-              <button type="button" onclick="event.stopPropagation(); openVendorDetailModal(2)" class="gold-shimmer-btn w-full text-[#0F251A] font-black py-2 rounded-xl text-xs transition-all flex items-center justify-center gap-1 shadow-lg cursor-pointer">
+              <button type="button" onclick="event.stopPropagation(); openVendorDetailModal(2)" class="gold-shimmer-btn w-full text-[#0F251A] font-black py-2.5 sm:py-3 px-4 rounded-xl text-xs sm:text-sm transition-all flex items-center justify-center gap-2 shadow-xl hover:scale-105 active:scale-95 cursor-pointer">
                 <span>مشاهده و رزرو</span>
                 <i data-lucide="arrow-left" class="w-3.5 h-3.5"></i>
               </button>
@@ -277,7 +266,7 @@ const HOME_VIEW_HTML = `<main id="home-view" class="flex-1 max-w-7xl w-full mx-a
                 </div>
               </div>
 
-              <button type="button" onclick="event.stopPropagation(); openVendorDetailModal(3)" class="gold-shimmer-btn w-full text-[#0F251A] font-black py-2 rounded-xl text-xs transition-all flex items-center justify-center gap-1 shadow-lg cursor-pointer">
+              <button type="button" onclick="event.stopPropagation(); openVendorDetailModal(3)" class="gold-shimmer-btn w-full text-[#0F251A] font-black py-2.5 sm:py-3 px-4 rounded-xl text-xs sm:text-sm transition-all flex items-center justify-center gap-2 shadow-xl hover:scale-105 active:scale-95 cursor-pointer">
                 <span>مشاهده و رزرو</span>
                 <i data-lucide="arrow-left" class="w-3.5 h-3.5"></i>
               </button>
@@ -316,7 +305,7 @@ const HOME_VIEW_HTML = `<main id="home-view" class="flex-1 max-w-7xl w-full mx-a
                 </div>
               </div>
 
-              <button type="button" onclick="event.stopPropagation(); openVendorDetailModal(4)" class="gold-shimmer-btn w-full text-[#0F251A] font-black py-2 rounded-xl text-xs transition-all flex items-center justify-center gap-1 shadow-lg cursor-pointer">
+              <button type="button" onclick="event.stopPropagation(); openVendorDetailModal(4)" class="gold-shimmer-btn w-full text-[#0F251A] font-black py-2.5 sm:py-3 px-4 rounded-xl text-xs sm:text-sm transition-all flex items-center justify-center gap-2 shadow-xl hover:scale-105 active:scale-95 cursor-pointer">
                 <span>مشاهده و رزرو</span>
                 <i data-lucide="arrow-left" class="w-3.5 h-3.5"></i>
               </button>
@@ -1814,15 +1803,14 @@ if (document.readyState === "loading") {
       if (tabId === 'home') {
         if (homeView) homeView.classList.remove('hidden');
         if (directoryView) directoryView.classList.add('hidden');
-      } else if (tabId === 'directory') {
-        if (homeView) homeView.classList.add('hidden');
-        if (directoryView) directoryView.classList.remove('hidden');
-        if (typeof renderSidebarCategoryCheckboxes === 'function') renderSidebarCategoryCheckboxes();
-        if (typeof renderMultiCategoryPills === 'function') renderMultiCategoryPills();
-        if (typeof filterVendors === 'function') filterVendors();
       } else {
         if (homeView) homeView.classList.add('hidden');
-        if (directoryView) directoryView.classList.add('hidden');
+        if (directoryView) directoryView.classList.remove('hidden');
+        if (tabId === 'directory') {
+          if (typeof renderSidebarCategoryCheckboxes === 'function') renderSidebarCategoryCheckboxes();
+          if (typeof renderMultiCategoryPills === 'function') renderMultiCategoryPills();
+          if (typeof filterVendors === 'function') filterVendors();
+        }
       }
 
       if (tabId === 'guests') renderGuestsAndGifts();
