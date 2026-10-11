@@ -1047,132 +1047,123 @@
         </div>
       </section>
 
-      <!-- 8. REAL WEDDINGS GALLERY ("گالری و روایت عروسی‌های واقعی استان یزد") -->
-      <section class="weddings-gallery-section">
-        <div class="container">
-          <div class="gallery-top-bar">
-            <a href="#" onclick="switchTab('inspiration'); return false;" class="btn-gold-sm flex items-center gap-1">مشاهده مجله ایده‌ها & مودبورد <i data-lucide="arrow-left" class="w-4 h-4"></i></a>
-            <div class="gallery-titles">
-              <span class="rose-tag flex items-center gap-1 justify-end"><i data-lucide="heart" class="w-3.5 h-3.5 fill-[#E11D48] text-[#E11D48]"></i> داستان‌های واقعی پیوند عشاق یزد</span>
-              <h2>گالری و روایت عروسی‌های واقعی استان یزد</h2>
+            <!-- 8. ULTRA-LUXURY EDITORIAL MAGAZINE SECTION (مجله عروسی) -->
+      <section id="homepage-magazine-section" class="relative bg-[#0e121c]/90 backdrop-blur-xl border border-[#C5A059]/30 rounded-3xl p-6 shadow-2xl overflow-hidden my-8 text-white space-y-6">
+        <!-- Section Header Bar -->
+        <div class="flex items-center justify-between border-b border-[#C5A059]/20 pb-4 flex-wrap gap-3">
+          <div class="space-y-1 text-right">
+            <span class="text-[11px] font-black text-[#D4AF37] tracking-wider block">📖 ژورنال & ایده‌ها</span>
+            <h2 class="text-xl font-black text-[#F7F5F0]">مجله عروسی نو & ایده‌های الهام‌بخش</h2>
+          </div>
+
+          <div class="flex items-center gap-3 flex-wrap">
+            <!-- Filter Pills -->
+            <div class="flex items-center gap-1.5 overflow-x-auto no-scrollbar text-xs font-bold text-slate-300">
+              <button type="button" onclick="switchTab('inspiration')" class="bg-[#1B3B2B] text-[#D4AF37] border border-[#D4AF37]/50 px-3 py-1 rounded-full transition-all cursor-pointer">✨ ایده‌های روز</button>
+              <button type="button" onclick="switchTab('inspiration')" class="bg-[#141A28] border border-[#C5A059]/25 text-[#E6E8EC] hover:text-[#D4AF37] hover:border-[#D4AF37] px-3 py-1 rounded-full transition-all cursor-pointer">💐 تشریفات</button>
+              <button type="button" onclick="switchTab('inspiration')" class="bg-[#141A28] border border-[#C5A059]/25 text-[#E6E8EC] hover:text-[#D4AF37] hover:border-[#D4AF37] px-3 py-1 rounded-full transition-all cursor-pointer">👗 مد و زیبایی</button>
+              <button type="button" onclick="switchTab('inspiration')" class="bg-[#141A28] border border-[#C5A059]/25 text-[#E6E8EC] hover:text-[#D4AF37] hover:border-[#D4AF37] px-3 py-1 rounded-full transition-all cursor-pointer">📝 راهنمای برنامه‌ریزی</button>
+            </div>
+
+            <button type="button" onclick="switchTab('inspiration')" class="text-xs font-bold text-[#D4AF37] hover:underline cursor-pointer flex items-center gap-1 shrink-0">
+              <span>مشاهده آرشیو مجله ➔</span>
+            </button>
+          </div>
+        </div>
+
+        <!-- Editorial Bento Grid (1 Featured Hero Story + 3 Compact Articles) -->
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-5 items-stretch">
+
+          <!-- Hero Story Card (7 cols) -->
+          <div onclick="switchTab('inspiration')" class="lg:col-span-7 group relative min-h-[320px] rounded-3xl overflow-hidden border border-[#C5A059]/30 hover:border-[#D4AF37] transition-all duration-500 shadow-2xl cursor-pointer bg-slate-900 flex flex-col justify-end p-6 sm:p-8">
+            <img src="https://images.unsplash.com/photo-1519741497674-611481863552?auto=format&fit=crop&w=1000&q=80" alt="جدیدترین ایده‌های عکاسی فرمالیته" class="absolute inset-0 w-full h-full object-cover group-hover:scale-108 transition-transform duration-700">
+            <div class="absolute inset-0 bg-gradient-to-t from-[#07090E] via-[#07090E]/60 to-transparent"></div>
+
+            <div class="relative z-10 space-y-3 text-right pr-1">
+              <span class="text-[10.5px] font-black text-[#0F251A] bg-gradient-to-r from-[#D4AF37] to-[#F3E5AB] px-3 py-1 rounded-full border border-[#D4AF37] shadow-md inline-block">
+                🌟 داستان ویژه ژورنال
+              </span>
+
+              <h3 class="text-lg sm:text-xl font-black text-[#F7F5F0] leading-snug group-hover:text-[#D4AF37] transition-colors">
+                جدیدترین ایده‌های عکاسی فرمالیته و پلت‌های رنگی سال ۱۴۰۳ در کویر یزد
+              </h3>
+
+              <p class="text-xs text-slate-300 font-medium leading-relaxed max-w-lg line-clamp-2">
+                بررسی ترندهای عکاسی غروب، انتخاب لباس فرمالیته متناسب با رمل‌های طلایی و عکس‌برداری هوایی با هلی‌شات
+              </p>
+
+              <div class="pt-2 flex items-center gap-4 text-xs font-bold text-amber-200/80">
+                <span>⏱️ زمان مطالعه: ۴ دقیقه</span>
+                <span>•</span>
+                <span class="text-[#D4AF37] group-hover:translate-x-[-4px] transition-transform">مطالعه کامل مقاله ➔</span>
+              </div>
             </div>
           </div>
 
-          <div class="gallery-grid-3">
-            <div class="wedding-card">
-              <div class="img-box">
-                <span class="location-badge">صفائیه یزد</span>
-                <img src="https://images.unsplash.com/photo-1519741497674-611481863552?w=500" alt="عروسی">
-              </div>
-              <div class="card-info">
-                <h3>جشن عروسی زمردین: امیر & مریم</h3>
-                <p>مراسم باشکوه در باغ تالار مشیرالممالک با تم زمردی و گل‌آرایی مگنولیا</p>
+          <!-- 3 Compact Article Cards Stack (5 cols) -->
+          <div class="lg:col-span-5 flex flex-col gap-4">
+
+            <div onclick="switchTab('inspiration')" class="bg-[#141A28] border border-[#C5A059]/20 hover:border-[#D4AF37]/60 rounded-2xl p-3.5 flex items-center gap-3.5 cursor-pointer transition-all duration-300 shadow-md group">
+              <img src="https://images.unsplash.com/photo-1511285560929-80b456fea0bc?auto=format&fit=crop&w=300&q=80" alt="تشریفات سنتی" class="w-20 h-20 rounded-xl object-cover border border-[#C5A059]/30 shrink-0 group-hover:scale-105 transition-transform">
+              <div class="space-y-1 text-right min-w-0">
+                <span class="text-[9.5px] font-bold text-[#D4AF37] bg-[#D4AF37]/10 px-2 py-0.5 rounded-md border border-[#D4AF37]/30">تشریفات اصیل</span>
+                <h4 class="text-xs sm:text-sm font-black text-[#F7F5F0] truncate group-hover:text-[#D4AF37] transition-colors">راهنمای برگزاری عقد سنتی در خانه‌های تاریخی یزد</h4>
+                <p class="text-[10.5px] text-slate-300 font-medium truncate">سفره عقد اسلیمی و پذیرایی با شیرینی حاج خلیفه</p>
               </div>
             </div>
 
-            <div class="wedding-card">
-              <div class="img-box">
-                <span class="location-badge">کویر سندباد یزد</span>
-                <img src="https://images.unsplash.com/photo-1511285560929-80b456fea0bc?w=500" alt="فرمالیته">
-              </div>
-              <div class="card-info">
-                <h3>فرمالیته طلایی کویر: رضا & سارا</h3>
-                <p>عکاسی فرمالیته روی رمل‌های طلایی کویر یزد توسط استودیو تخصصی کویر</p>
+            <div onclick="switchTab('inspiration')" class="bg-[#141A28] border border-[#C5A059]/20 hover:border-[#D4AF37]/60 rounded-2xl p-3.5 flex items-center gap-3.5 cursor-pointer transition-all duration-300 shadow-md group">
+              <img src="https://images.unsplash.com/photo-1487412720507-e7ab37603c6f?auto=format&fit=crop&w=300&q=80" alt="میکاپ لایت" class="w-20 h-20 rounded-xl object-cover border border-[#C5A059]/30 shrink-0 group-hover:scale-105 transition-transform">
+              <div class="space-y-1 text-right min-w-0">
+                <span class="text-[9.5px] font-bold text-[#D4AF37] bg-[#D4AF37]/10 px-2 py-0.5 rounded-md border border-[#D4AF37]/30">زیبایی & میکاپ</span>
+                <h4 class="text-xs sm:text-sm font-black text-[#F7F5F0] truncate group-hover:text-[#D4AF37] transition-colors">جدیدترین سبک‌های میکاپ لایت عروس و تور مرواریدی</h4>
+                <p class="text-[10.5px] text-slate-300 font-medium truncate">ترکیب گریم هالیوودی با تاج زمردین</p>
               </div>
             </div>
 
-            <div class="wedding-card">
-              <div class="img-box">
-                <span class="location-badge">بافت تاریخی یزد</span>
-                <img src="https://images.unsplash.com/photo-1583939003579-730e3918a45a?w=500" alt="عقد سنتی">
-              </div>
-              <div class="card-info">
-                <h3>عقد سنتی در خانه تاریخی: مهدی & زهرا</h3>
-                <p>سفره عقد اسلیمی و پذیرایی اصیل با شیرینی سنتی حاج خلیفه رهبر</p>
+            <div onclick="switchTab('inspiration')" class="bg-[#141A28] border border-[#C5A059]/20 hover:border-[#D4AF37]/60 rounded-2xl p-3.5 flex items-center gap-3.5 cursor-pointer transition-all duration-300 shadow-md group">
+              <img src="https://images.unsplash.com/photo-1583939003579-730e3918a45a?auto=format&fit=crop&w=300&q=80" alt="بودجه تالار" class="w-20 h-20 rounded-xl object-cover border border-[#C5A059]/30 shrink-0 group-hover:scale-105 transition-transform">
+              <div class="space-y-1 text-right min-w-0">
+                <span class="text-[9.5px] font-bold text-[#D4AF37] bg-[#D4AF37]/10 px-2 py-0.5 rounded-md border border-[#D4AF37]/30">برنامه‌ریزی مالی</span>
+                <h4 class="text-xs sm:text-sm font-black text-[#F7F5F0] truncate group-hover:text-[#D4AF37] transition-colors">۵ راز کاهش هزینه باغ‌تالار بدون کاهش کیفیت مراسم</h4>
+                <p class="text-[10.5px] text-slate-300 font-medium truncate">مدیریت ورودی تالار و تخفیف روزهای غیراوج</p>
               </div>
             </div>
+
           </div>
+
         </div>
       </section>
 
-      <!-- VERIFIED TESTIMONIALS CAROUSEL ("نظرات و تجربیات زوجین تاییدشده یزد") -->
-      <section id="verified-testimonials-section" class="py-10 bg-[#0F251A] text-white my-8 rounded-3xl border border-[#D4AF37]/40 shadow-xl">
-        <div class="max-w-4xl mx-auto px-6 text-center space-y-6">
-          <div class="space-y-2">
-            <span class="bg-[#D4AF37]/20 border border-[#D4AF37]/50 text-[#D4AF37] text-xs font-black px-3.5 py-1 rounded-full inline-flex items-center gap-1.5">
-              <i data-lucide="shield-check" class="w-4 h-4 text-[#D4AF37]"></i>
-              <span>مشتری واقعی / تاییدشده عروسی‌تو</span>
-            </span>
-            <h2 class="text-xl sm:text-2xl font-black text-white">تجربیات و نظرات واقعی زوجین در یزد</h2>
+      <!-- 9. CINEMATIC COUPLE TESTIMONIALS & REAL EXPERIENCES SLIDER -->
+      <section id="verified-testimonials-section" class="relative bg-[#0e121c]/90 backdrop-blur-xl border border-[#C5A059]/30 rounded-3xl p-6 shadow-2xl overflow-hidden my-8 text-white space-y-6">
+        <!-- Section Header -->
+        <div class="flex items-center justify-between border-b border-[#C5A059]/20 pb-4 flex-wrap gap-3">
+          <div class="space-y-1 text-right">
+            <span class="text-[11px] font-black text-[#D4AF37] tracking-wider block">💬 نظرات زوجین تاییدشده</span>
+            <h2 class="text-xl font-black text-[#F7F5F0]">تجربیات و نظرات واقعی زوجین در یزد</h2>
           </div>
 
-          <!-- Carousel Card Body -->
-          <div id="testimonial-card-container" class="bg-[#142E22] border border-[#D4AF37]/30 rounded-2xl p-6 sm:p-8 space-y-4 shadow-lg text-right relative">
-            <!-- Populated via JS renderTestimonialCard() -->
-          </div>
-
-          <!-- Carousel Navigation Controls -->
-          <div class="flex items-center justify-center gap-3 pt-2">
-            <button type="button" onclick="prevTestimonial()" class="w-10 h-10 rounded-full bg-[#142E22] hover:bg-[#1B3B2B] text-[#D4AF37] border border-[#D4AF37]/50 flex items-center justify-center transition-all cursor-pointer hover:scale-110 active:scale-95">
-              <i data-lucide="chevron-right" class="w-5 h-5"></i>
+          <div class="flex items-center gap-2 shrink-0">
+            <button type="button" onclick="prevTestimonial()" class="w-9 h-9 rounded-full bg-[#141A28] hover:bg-[#1E293B] text-[#D4AF37] border border-[#C5A059]/30 flex items-center justify-center transition-all cursor-pointer shadow-md hover:scale-110 active:scale-95" title="قبلی">
+              <i data-lucide="chevron-right" class="w-4 h-4"></i>
             </button>
-            <span id="testimonial-index-badge" class="text-xs font-bold text-amber-200 bg-[#142E22] px-3 py-1 rounded-full border border-[#D4AF37]/30">۱ از ۳</span>
-            <button type="button" onclick="nextTestimonial()" class="w-10 h-10 rounded-full bg-[#142E22] hover:bg-[#1B3B2B] text-[#D4AF37] border border-[#D4AF37]/50 flex items-center justify-center transition-all cursor-pointer hover:scale-110 active:scale-95">
-              <i data-lucide="chevron-left" class="w-5 h-5"></i>
+            <button type="button" onclick="nextTestimonial()" class="w-9 h-9 rounded-full bg-[#141A28] hover:bg-[#1E293B] text-[#D4AF37] border border-[#C5A059]/30 flex items-center justify-center transition-all cursor-pointer shadow-md hover:scale-110 active:scale-95" title="بعدی">
+              <i data-lucide="chevron-left" class="w-4 h-4"></i>
             </button>
           </div>
         </div>
-      </section>
 
-      <!-- 8.5 INTERACTIVE WORKFLOW & HOMEPAGE MAGAZINE HIGHLIGHTS -->
-      <section class="space-y-8">
-        <!-- 3-Step Interactive Visual Workflow -->
-        <div class="bg-[#0F172A] border border-[#D4AF37]/50 rounded-3xl p-6 sm:p-8 shadow-xl space-y-6 text-white text-right">
-          <div class="text-center space-y-2 border-b border-slate-800 pb-4">
-            <span class="inline-block bg-[#D4AF37]/20 border border-[#D4AF37]/50 text-[#D4AF37] text-xs font-black px-3.5 py-1 rounded-full">نقشه راه لوکس</span>
-            <h2 class="text-xl sm:text-2xl font-black text-[#D4AF37]">مسیر ۳ گام برنامه‌ریزی عروسی نو</h2>
-            <p class="text-xs text-slate-300">از جستجوی هوشمند تا خاطره‌انگیزترین شب زندگی با ابزارهای آنلاین پلتفرم</p>
-          </div>
-
-          <div class="grid grid-cols-1 md:grid-cols-3 gap-6 relative">
-            <!-- Step 1 -->
-            <div class="bg-[#1E293B] border border-slate-700 hover:border-[#D4AF37] rounded-2xl p-5 space-y-3 transition-all hover:scale-105">
-              <div class="w-10 h-10 rounded-full bg-[#D4AF37] text-[#0F251A] font-black text-sm flex items-center justify-center">۱</div>
-              <h3 class="text-sm font-black text-[#D4AF37]">جستجو & تور ۳۶۰ درجه</h3>
-              <p class="text-xs text-slate-300 leading-relaxed">بازدید مجازی از سالن‌ها، بررسی کاتالوگ قیمت و مقایسه همزمان ۳ تامین‌کننده برتر یزد.</p>
-            </div>
-
-            <!-- Step 2 -->
-            <div class="bg-[#1E293B] border border-slate-700 hover:border-[#D4AF37] rounded-2xl p-5 space-y-3 transition-all hover:scale-105">
-              <div class="w-10 h-10 rounded-full bg-[#D4AF37] text-[#0F251A] font-black text-sm flex items-center justify-center">۲</div>
-              <h3 class="text-sm font-black text-[#D4AF37]">پرو مجازی AI & مناقصه</h3>
-              <p class="text-xs text-slate-300 leading-relaxed">تست هوشمند تاج و میکاپ، ثبت بودجه مدنظر در میز مناقصه و دریافت پیش‌فاکتور اقساطی.</p>
-            </div>
-
-            <!-- Step 3 -->
-            <div class="bg-[#1E293B] border border-slate-700 hover:border-[#D4AF37] rounded-2xl p-5 space-y-3 transition-all hover:scale-105">
-              <div class="w-10 h-10 rounded-full bg-[#D4AF37] text-[#0F251A] font-black text-sm flex items-center justify-center">۳</div>
-              <h3 class="text-sm font-black text-[#D4AF37]">زمان‌بندی روز & کارت RSVP</h3>
-              <p class="text-xs text-slate-300 leading-relaxed">تنظیم برنامه دقیق دقیقه به دقیقه، تفویض وظایف به ساقدوش‌ها و ارسال کارت دعوت آنلاین.</p>
-            </div>
-          </div>
+        <!-- Dynamic Testimonial Editorial Card Container -->
+        <div id="testimonial-card-container" class="bg-[rgba(20,26,38,0.85)] border border-[rgba(197,160,89,0.35)] rounded-3xl p-6 sm:p-8 space-y-4 shadow-xl text-right relative min-h-[180px]">
+          <!-- Populated via JS renderTestimonialCard() -->
         </div>
 
-        <!-- Homepage Magazine & Ideas Dynamic Highlights -->
-        <div class="bg-[#0F172A] border border-[#D4AF37]/50 rounded-3xl p-6 sm:p-8 shadow-xl space-y-6 text-white text-right">
-          <div class="flex flex-col sm:flex-row justify-between sm:items-center gap-3 border-b border-slate-800 pb-4">
-            <div>
-              <span class="inline-block text-xs font-black text-[#D4AF37] bg-[#D4AF37]/20 border border-[#D4AF37]/40 px-3 py-0.5 rounded-full mb-1">مجله ایده‌ها & ژورنال</span>
-              <h2 class="text-xl font-black text-white">آخرین مقالات و ایده‌های مجله عروسی نو</h2>
-            </div>
-            <button onclick="switchTab('inspiration')" class="bg-[#1E293B] border border-[#D4AF37]/40 hover:border-[#D4AF37] text-[#D4AF37] px-4 py-2 rounded-xl text-xs font-bold transition-all cursor-pointer">
-              مشاهده کامل مجله & ایده‌ها ←
-            </button>
-          </div>
-
-          <div id="home-magazine-highlights-feed" class="grid grid-cols-1 md:grid-cols-3 gap-6">
-            <!-- Populated via JS renderHomeMagazineHighlights() -->
-          </div>
+        <!-- Slider Pagination Indicators -->
+        <div class="flex items-center justify-center gap-2 pt-1">
+          <span id="testimonial-dot-0" onclick="setTestimonialIndex(0)" class="w-3 h-3 rounded-full bg-[#D4AF37] cursor-pointer transition-all"></span>
+          <span id="testimonial-dot-1" onclick="setTestimonialIndex(1)" class="w-2.5 h-2.5 rounded-full bg-[#141A28] border border-[#C5A059]/30 cursor-pointer transition-all"></span>
+          <span id="testimonial-dot-2" onclick="setTestimonialIndex(2)" class="w-2.5 h-2.5 rounded-full bg-[#141A28] border border-[#C5A059]/30 cursor-pointer transition-all"></span>
         </div>
       </section>
 
