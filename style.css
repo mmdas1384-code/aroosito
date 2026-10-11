@@ -173,18 +173,18 @@ header, nav, .header-container, .navbar {
     visibility: hidden !important;
 }
 
-/* Modal Inner Main Card - Light Clean Canvas Modern Transformation */
+/* Modal Inner Main Card - Dark Obsidian Modern Transformation */
 .clean-vmodal-card {
-    background: #FAF9F5 !important;
-    color: #1A1A1A !important;
+    background: #07090E !important;
+    color: #F7F5F0 !important;
     width: 95% !important;
-    max-width: 980px !important;
-    max-height: 90vh !important;
-    border-radius: 20px !important;
+    max-width: 1100px !important;
+    max-height: 92vh !important;
+    border-radius: 24px !important;
     position: relative !important;
     direction: rtl !important;
-    box-shadow: 0 20px 50px rgba(0, 0, 0, 0.25) !important;
-    border: 1px solid #E5E7EB !important;
+    box-shadow: 0 25px 60px rgba(0, 0, 0, 0.8) !important;
+    border: 1px solid rgba(197, 160, 89, 0.4) !important;
     overflow-y: auto !important;
     display: flex !important;
     flex-direction: column !important;
@@ -350,31 +350,27 @@ header, nav, .header-container, .navbar {
     text-shadow: none !important;
 }
 
-/* Force High Contrast Dark Slate Typography inside #vendor-detail-modal */
+/* Enforce Warm Ivory & Gold Typography inside #vendor-detail-modal */
 #vendor-detail-modal {
-    color: #111827 !important;
+    color: #F7F5F0 !important;
 }
 
 #vendor-detail-modal h1,
 #vendor-detail-modal h2,
 #vendor-detail-modal h3,
-#vendor-detail-modal h4,
+#vendor-detail-modal h4 {
+    color: #F7F5F0 !important;
+}
+
 #vendor-detail-modal p,
-#vendor-detail-modal span:not(.vmodal-badge-gold):not(.bg-[#1B3B2B]),
 #vendor-detail-modal li,
 #vendor-detail-modal label {
-    color: #111827;
+    color: #E6E8EC !important;
 }
 
 #vendor-detail-modal .vtab-pane {
-    color: #111827 !important;
+    color: #F7F5F0 !important;
     background-color: transparent !important;
-}
-
-#vendor-detail-modal .vtab-pane p,
-#vendor-detail-modal .vtab-pane span,
-#vendor-detail-modal .vtab-pane li {
-    color: #1F2937 !important;
 }
 
 .vtab-btn.active::after {
@@ -397,13 +393,15 @@ header, nav, .header-container, .navbar {
 
 /* Luxury Vendor Detail Modal Custom Styling */
 #vendor-detail-modal .clean-vmodal-card {
-    background-color: #FAF9F6 !important;
+    background-color: #07090E !important;
+    color: #F7F5F0 !important;
 }
 
 .clean-vmodal-body {
     display: block !important;
     padding: 24px !important;
-    background-color: #FAF9F6 !important;
+    background-color: #07090E !important;
+    color: #F7F5F0 !important;
 }
 
 /* Section Box Floating Cards in Modal */
@@ -413,10 +411,11 @@ header, nav, .header-container, .navbar {
 #vendor-detail-modal #vdm-reviews-container > div,
 #vendor-detail-modal #vdm-amenities-container > div,
 #vendor-detail-modal #vdm-calendar-container > div {
-    background: #FFFFFF !important;
+    background: rgba(14, 18, 28, 0.90) !important;
+    color: #F7F5F0 !important;
     border-radius: 1.5rem !important;
-    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.04) !important;
-    border: 1px solid rgba(0, 0, 0, 0.03) !important;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4) !important;
+    border: 1px solid rgba(197, 160, 89, 0.3) !important;
 }
 
 /* Gallery Image Hover Scale Effect */
@@ -2550,7 +2549,7 @@ body.mood-night {
 
 /* Ensure proper header spacing clearance across all pages */
 main, #home-view, #directory-view {
-  padding-top: 2rem;
+  padding-top: 2.5rem !important;
 }
 
 #directory-primary-filter-island {
