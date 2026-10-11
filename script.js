@@ -3947,6 +3947,7 @@ if (document.readyState === "loading") {
           card.innerHTML = `
             <div class="relative w-full md:w-64 h-40 overflow-hidden bg-slate-900 shrink-0">
               <img src="${v.image}" alt="${v.name}" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-108">
+                <video src="${v.videoTeaser || 'https://assets.mixkit.co/videos/preview/mixkit-wedding-couple-walking-in-a-park-41315-large.mp4'}" muted loop playsinline preload="none" class="card-teaser-video absolute inset-0 w-full h-full object-cover opacity-0 transition-opacity duration-500 pointer-events-none"></video>
               <div class="absolute inset-0 bg-gradient-to-t from-[#0F172A] via-transparent to-black/40"></div>
 
               <!-- Top Floating Pills -->
@@ -3996,8 +3997,9 @@ if (document.readyState === "loading") {
         } else {
           card.innerHTML = `
             <div>
-              <div class="card-img-container relative overflow-hidden bg-slate-900" onmouseenter="startCardImageSlideshow(this, ${v.id})" onmouseleave="stopCardImageSlideshow(this, ${v.id})">
+              <div class="card-img-container relative overflow-hidden bg-slate-900" onmouseenter="playCardVideoTeaser(this)" onmouseleave="stopCardVideoTeaser(this)">
                 <img src="${v.image}" alt="${v.name}" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-108">
+                <video src="${v.videoTeaser || 'https://assets.mixkit.co/videos/preview/mixkit-wedding-couple-walking-in-a-park-41315-large.mp4'}" muted loop playsinline preload="none" class="card-teaser-video absolute inset-0 w-full h-full object-cover opacity-0 transition-opacity duration-500 pointer-events-none"></video>
                 <div class="absolute inset-0 bg-gradient-to-t from-[#0F172A] via-transparent to-black/30"></div>
 
                 <!-- Corner Floating Micro-Pills -->
@@ -17230,5 +17232,26 @@ window.closeStoryLightbox = function() {
   if (modal) {
     modal.classList.add('hidden');
     modal.classList.remove('flex');
+  }
+};
+
+
+/* Cinematic Hover Video Teaser Handlers */
+window.playCardVideoTeaser = function(container) {
+  if (!container) return;
+  const video = container.querySelector('.card-teaser-video');
+  if (video) {
+    video.style.opacity = '1';
+    video.play().catch(() => {});
+  }
+};
+
+window.stopCardVideoTeaser = function(container) {
+  if (!container) return;
+  const video = container.querySelector('.card-teaser-video');
+  if (video) {
+    video.style.opacity = '0';
+    video.pause();
+    try { video.currentTime = 0; } catch (e) {}
   }
 };
