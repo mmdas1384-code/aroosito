@@ -961,7 +961,7 @@ const DIRECTORY_VIEW_HTML = `<!-- ISOLATED VENDOR DIRECTORY CONTENT MODULE (dire
   </div>
 
   <!-- ADVANCED SLIDE-OVER GLASS FILTER DRAWER -->
-  <div id="directory-advanced-filters-drawer" class="fixed top-0 right-0 w-full max-w-[420px] h-screen z-[999999] bg-[#07090E] border-l border-[#C5A059]/40 p-6 space-y-6 overflow-y-auto text-right shadow-2xl text-white hidden">
+  <div id="directory-advanced-filters-drawer" class="fixed top-0 right-0 w-full max-w-[450px] h-screen z-[2147483647] bg-[#07090E] border-l border-[#C5A059]/40 p-6 space-y-6 overflow-y-auto text-right shadow-2xl text-white hidden">
     <div class="flex items-center justify-between border-b border-[#C5A059]/30 pb-4">
       <h3 class="text-base font-black text-[#D4AF37] flex items-center gap-2">
         <i data-lucide="sliders-horizontal" class="w-4 h-4 text-[#D4AF37]"></i>
@@ -972,16 +972,107 @@ const DIRECTORY_VIEW_HTML = `<!-- ISOLATED VENDOR DIRECTORY CONTENT MODULE (dire
       </button>
     </div>
 
-    <!-- 1. Category Filter Buttons -->
-    <div class="space-y-2">
-      <label class="text-xs font-bold text-slate-300 block">دسته‌بندی اصلی:</label>
-      <div class="grid grid-cols-2 gap-2 text-xs font-bold">
-        <button type="button" onclick="filterVendorsByCategoryTitle('all')" class="bg-[#141A28] hover:bg-[#1E293B] text-amber-200 border border-[#C5A059]/30 py-2 rounded-xl">همه دسته‌ها</button>
-        <button type="button" onclick="filterVendorsByCategoryTitle('تالار و باغ تالار عروسی')" class="bg-[#141A28] hover:bg-[#1E293B] text-amber-200 border border-[#C5A059]/30 py-2 rounded-xl">🏛️ باغ‌تالار</button>
-        <button type="button" onclick="filterVendorsByCategoryTitle('آتلیه عکاسی و فیلمبرداری')" class="bg-[#141A28] hover:bg-[#1E293B] text-amber-200 border border-[#C5A059]/30 py-2 rounded-xl">📸 آتلیه عکاسی</button>
-        <button type="button" onclick="filterVendorsByCategoryTitle('مزون لباس عروس و داماد')" class="bg-[#141A28] hover:bg-[#1E293B] text-amber-200 border border-[#C5A059]/30 py-2 rounded-xl">👗 مزون عروس</button>
-        <button type="button" onclick="filterVendorsByCategoryTitle('سالن زیبایی و میکاپ عروس')" class="bg-[#141A28] hover:bg-[#1E293B] text-amber-200 border border-[#C5A059]/30 py-2 rounded-xl">💄 سالن زیبایی</button>
-        <button type="button" onclick="filterVendorsByCategoryTitle('تشریفات و خدمات مجالس')" class="bg-[#141A28] hover:bg-[#1E293B] text-amber-200 border border-[#C5A059]/30 py-2 rounded-xl">🌸 تشریفات</button>
+    <!-- 1. Category Filter Buttons (Accordion Multi-Select) -->
+    <div class="space-y-3">
+      <div class="flex items-center justify-between">
+        <label class="text-xs font-bold text-slate-300">دسته‌بندی‌ها و خدمات (چند انتخابی):</label>
+        <button type="button" onclick="clearDrawerCategoryCheckboxes()" class="text-[10px] text-amber-300 hover:text-white font-bold cursor-pointer">پاکسازی انتخاب‌ها</button>
+      </div>
+
+      <div class="space-y-2 text-xs font-bold">
+        <!-- Group 1: 🏰 مکان‌ها و تشریفات -->
+        <details open class="bg-[#141A28] border border-[#C5A059]/30 rounded-2xl p-3 space-y-2 group/acc">
+          <summary class="flex items-center justify-between cursor-pointer text-amber-300 font-black">
+            <span>🏰 مکان‌ها و تشریفات</span>
+            <i data-lucide="chevron-down" class="w-4 h-4 text-[#D4AF37] group-open/acc:rotate-180 transition-transform"></i>
+          </summary>
+          <div class="grid grid-cols-1 gap-1.5 pt-2 border-t border-slate-800 font-medium text-slate-200">
+            <label class="flex items-center gap-2 cursor-pointer hover:text-amber-200">
+              <input type="checkbox" value="تالار و باغ تالار عروسی" onchange="filterVendors()" class="adv-cat-checkbox accent-[#D4AF37] w-4 h-4 rounded">
+              <span>باغ‌تالار & تالار پذیرایی</span>
+            </label>
+            <label class="flex items-center gap-2 cursor-pointer hover:text-amber-200">
+              <input type="checkbox" value="سالن عقد و سفره عقد" onchange="filterVendors()" class="adv-cat-checkbox accent-[#D4AF37] w-4 h-4 rounded">
+              <span>سالن عقد & سفره عقد</span>
+            </label>
+            <label class="flex items-center gap-2 cursor-pointer hover:text-amber-200">
+              <input type="checkbox" value="تشریفات و خدمات مجالس" onchange="filterVendors()" class="adv-cat-checkbox accent-[#D4AF37] w-4 h-4 rounded">
+              <span>تشریفات & خدمات مجالس</span>
+            </label>
+          </div>
+        </details>
+
+        <!-- Group 2: 📸 عکاسی و فیلمبرداری -->
+        <details open class="bg-[#141A28] border border-[#C5A059]/30 rounded-2xl p-3 space-y-2 group/acc">
+          <summary class="flex items-center justify-between cursor-pointer text-amber-300 font-black">
+            <span>📸 عکاسی و فیلمبرداری</span>
+            <i data-lucide="chevron-down" class="w-4 h-4 text-[#D4AF37] group-open/acc:rotate-180 transition-transform"></i>
+          </summary>
+          <div class="grid grid-cols-1 gap-1.5 pt-2 border-t border-slate-800 font-medium text-slate-200">
+            <label class="flex items-center gap-2 cursor-pointer hover:text-amber-200">
+              <input type="checkbox" value="آتلیه عکاسی و فیلمبرداری" onchange="filterVendors()" class="adv-cat-checkbox accent-[#D4AF37] w-4 h-4 rounded">
+              <span>آتلیه تخصصی عروس & استودیو</span>
+            </label>
+            <label class="flex items-center gap-2 cursor-pointer hover:text-amber-200">
+              <input type="checkbox" value="فرمالیته و ساخت تیزر" onchange="filterVendors()" class="adv-cat-checkbox accent-[#D4AF37] w-4 h-4 rounded">
+              <span>ساخت تیزر & کلیپ فرمالیته</span>
+            </label>
+          </div>
+        </details>
+
+        <!-- Group 3: 💄 زیبایی و استایل -->
+        <details open class="bg-[#141A28] border border-[#C5A059]/30 rounded-2xl p-3 space-y-2 group/acc">
+          <summary class="flex items-center justify-between cursor-pointer text-amber-300 font-black">
+            <span>💄 زیبایی و استایل</span>
+            <i data-lucide="chevron-down" class="w-4 h-4 text-[#D4AF37] group-open/acc:rotate-180 transition-transform"></i>
+          </summary>
+          <div class="grid grid-cols-1 gap-1.5 pt-2 border-t border-slate-800 font-medium text-slate-200">
+            <label class="flex items-center gap-2 cursor-pointer hover:text-amber-200">
+              <input type="checkbox" value="سالن زیبایی و میکاپ عروس" onchange="filterVendors()" class="adv-cat-checkbox accent-[#D4AF37] w-4 h-4 rounded">
+              <span>سالن زیبایی & میکاپ عروس</span>
+            </label>
+            <label class="flex items-center gap-2 cursor-pointer hover:text-amber-200">
+              <input type="checkbox" value="مزون لباس عروس و داماد" onchange="filterVendors()" class="adv-cat-checkbox accent-[#D4AF37] w-4 h-4 rounded">
+              <span>مزون لباس عروس & کت داماد</span>
+            </label>
+          </div>
+        </details>
+
+        <!-- Group 4: 💐 خدمات مکمل و تزئینات -->
+        <details class="bg-[#141A28] border border-[#C5A059]/30 rounded-2xl p-3 space-y-2 group/acc">
+          <summary class="flex items-center justify-between cursor-pointer text-amber-300 font-black">
+            <span>💐 خدمات مکمل و تزئینات</span>
+            <i data-lucide="chevron-down" class="w-4 h-4 text-[#D4AF37] group-open/acc:rotate-180 transition-transform"></i>
+          </summary>
+          <div class="grid grid-cols-1 gap-1.5 pt-2 border-t border-slate-800 font-medium text-slate-200">
+            <label class="flex items-center gap-2 cursor-pointer hover:text-amber-200">
+              <input type="checkbox" value="گل‌آرایی و ماشین عروس" onchange="filterVendors()" class="adv-cat-checkbox accent-[#D4AF37] w-4 h-4 rounded">
+              <span>گل‌آرایی & ماشین عروس</span>
+            </label>
+            <label class="flex items-center gap-2 cursor-pointer hover:text-amber-200">
+              <input type="checkbox" value="کیک و شیرینی عروسی" onchange="filterVendors()" class="adv-cat-checkbox accent-[#D4AF37] w-4 h-4 rounded">
+              <span>کیک & شیرینی عروسی</span>
+            </label>
+          </div>
+        </details>
+
+        <!-- Group 5: 🎵 موسیقی و سرگرمی -->
+        <details class="bg-[#141A28] border border-[#C5A059]/30 rounded-2xl p-3 space-y-2 group/acc">
+          <summary class="flex items-center justify-between cursor-pointer text-amber-300 font-black">
+            <span>🎵 موسیقی و سرگرمی</span>
+            <i data-lucide="chevron-down" class="w-4 h-4 text-[#D4AF37] group-open/acc:rotate-180 transition-transform"></i>
+          </summary>
+          <div class="grid grid-cols-1 gap-1.5 pt-2 border-t border-slate-800 font-medium text-slate-200">
+            <label class="flex items-center gap-2 cursor-pointer hover:text-amber-200">
+              <input type="checkbox" value="دی‌جی و موسیقی زنده" onchange="filterVendors()" class="adv-cat-checkbox accent-[#D4AF37] w-4 h-4 rounded">
+              <span>دی‌جی & گروه موسیقی زنده</span>
+            </label>
+            <label class="flex items-center gap-2 cursor-pointer hover:text-amber-200">
+              <input type="checkbox" value="نورپردازی و آتش‌بازی" onchange="filterVendors()" class="adv-cat-checkbox accent-[#D4AF37] w-4 h-4 rounded">
+              <span>نورپردازی & آتش‌بازی سرد</span>
+            </label>
+          </div>
+        </details>
       </div>
     </div>
 
@@ -4758,7 +4849,14 @@ if (document.readyState === "loading") {
                               (v.city && v.city.toLowerCase().includes(search));
 
         let matchesCat = true;
-        if (activeCategoryFilters.size > 0) {
+        const advChecked = Array.from(document.querySelectorAll('.adv-cat-checkbox:checked')).map(cb => cb.value.toLowerCase());
+        if (advChecked.length > 0) {
+          matchesCat = advChecked.some(cat =>
+            v.category.toLowerCase().includes(cat) ||
+            (v.tags && v.tags.some(t => t.toLowerCase().includes(cat))) ||
+            (v.name && v.name.toLowerCase().includes(cat))
+          );
+        } else if (activeCategoryFilters.size > 0) {
           matchesCat = Array.from(activeCategoryFilters).some(cat =>
             v.category.toLowerCase().includes(cat.toLowerCase()) ||
             (v.tags && v.tags.some(t => t.toLowerCase().includes(cat.toLowerCase())))
@@ -13828,6 +13926,9 @@ window.addForumComment = function(threadIdx) {
 window.toggleAdvancedFiltersDrawer = function() {
   const drawer = document.getElementById('directory-advanced-filters-drawer');
   if (drawer) {
+    if (drawer.parentNode !== document.body) {
+      document.body.appendChild(drawer);
+    }
     drawer.classList.toggle('hidden');
     if (typeof showToast === 'function') {
       showToast(drawer.classList.contains('hidden') ? 'فیلترهای پیشرفته بسته شد.' : 'فیلترهای پیشرفته باز شد.', 'info');
@@ -17306,5 +17407,22 @@ window.stopCardVideoTeaser = function(container) {
     video.style.opacity = '0';
     video.pause();
     try { video.currentTime = 0; } catch (e) {}
+  }
+};
+
+
+/* Drawer Category & Price Filter Helpers */
+window.clearDrawerCategoryCheckboxes = function() {
+  const cbs = document.querySelectorAll('.adv-cat-checkbox');
+  cbs.forEach(cb => { cb.checked = false; });
+  if (typeof filterVendors === 'function') filterVendors();
+  if (typeof showToast === 'function') showToast('انتخاب‌های دسته‌بندی پاکسازی شد.', 'info');
+};
+
+window.setPriceFilter = function(tier) {
+  if (typeof syncAndFilterPrice === 'function') {
+    syncAndFilterPrice(tier);
+  } else if (typeof filterVendors === 'function') {
+    filterVendors();
   }
 };

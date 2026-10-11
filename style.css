@@ -2694,3 +2694,23 @@ main.vendor-showroom-main {
   border-top: 1px solid rgba(197, 160, 89, 0.3) !important;
   box-shadow: 0 -15px 40px rgba(0, 0, 0, 0.9) !important;
 }
+
+
+/* Direct Body-Level Maximum Z-Index Advanced Filter Drawer Overlay */
+#directory-advanced-filters-drawer {
+  position: fixed !important;
+  top: 0 !important;
+  right: 0 !important;
+  width: 100% !important;
+  max-width: 450px !important;
+  height: 100vh !important;
+  z-index: 2147483647 !important;
+  background: #07090E !important;
+  box-shadow: -10px 0 30px rgba(0, 0, 0, 0.9) !important;
+  border-left: 1px solid rgba(197, 160, 89, 0.4) !important;
+  overflow-y: auto !important;
+}
+
+#directory-advanced-filters-drawer.hidden {
+  display: none !important;
+}
