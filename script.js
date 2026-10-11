@@ -43,8 +43,8 @@ const HOME_VIEW_HTML = `<main id="home-view" class="flex-1 max-w-7xl w-full mx-a
                 </button>
               </div>
 
-              <!-- FLOATING TRANSLUCENT MULTI-RESULT DROPDOWN -->
-              <div id="hero-search-dropdown" class="hidden absolute top-full right-0 left-0 mt-2 bg-[#0F172A]/95 backdrop-blur-xl text-white border border-[#D4AF37]/50 rounded-2xl shadow-2xl z-50 overflow-hidden text-right">
+              <!-- EXPANDED WIDE FLOATING GLASS MULTI-RESULT DROPDOWN -->
+              <div id="hero-search-dropdown" class="hidden absolute top-full right-0 left-0 mt-2 bg-[#07090E]/95 backdrop-blur-2xl text-white border border-[#C5A059] rounded-2xl shadow-[0_25px_60px_rgba(0,0,0,0.85)] z-50 overflow-hidden text-right transition-all">
                 <!-- Dynamically populated via JS -->
               </div>
             </div>
@@ -4154,35 +4154,48 @@ if (document.readyState === "loading") {
       );
 
       if (matchedVendors.length === 0) {
-        dropdown.innerHTML = `<div class="p-4 text-center text-slate-400 text-xs font-medium">نتیجه‌ای برای "${query}" یافت نشد</div>`;
+        dropdown.innerHTML = `
+          <div class="p-6 text-center text-slate-400 text-xs font-medium space-y-2">
+            <i data-lucide="search-x" class="w-6 h-6 text-[#C5A059] mx-auto opacity-70"></i>
+            <p>نتیجه‌ای برای "<span class="text-white font-bold">${query}</span>" یافت نشد.</p>
+            <p class="text-[10px] text-amber-200/60">می‌توانید در دایرکتوری جامع تمامی تامین‌کنندگان را جستجو کنید.</p>
+          </div>
+        `;
       } else {
         const itemsHtml = matchedVendors.map(v => `
-          <div onclick="document.getElementById('hero-search-dropdown').classList.add('hidden'); openVendorDetailModal(${v.id});" class="p-3 hover:bg-[#1E293B] cursor-pointer transition-all flex items-center justify-between text-right border-b border-slate-800/60 last:border-none">
+          <div onclick="document.getElementById('hero-search-dropdown').classList.add('hidden'); openVendorDetailModal(${v.id});" class="p-3.5 hover:bg-[#141A28] cursor-pointer transition-all flex items-center justify-between text-right border-b border-[#C5A059]/15 last:border-none group">
             <div class="flex items-center gap-3">
-              <img src="${v.image}" class="w-10 h-10 rounded-xl object-cover border border-[#D4AF37]/40 shrink-0">
-              <div>
-                <p class="text-xs font-black text-white">${v.name}</p>
-                <div class="flex items-center gap-2 mt-0.5">
-                  <span class="text-[9.5px] font-bold text-[#D4AF37] bg-[#D4AF37]/10 px-2 py-0.5 rounded-md border border-[#D4AF37]/30">${v.category}</span>
-                  <span class="text-[10px] text-amber-200/80 font-medium">📍 ${v.district || 'یزد'}</span>
+              <div class="relative shrink-0">
+                <img src="${v.image}" class="w-12 h-12 rounded-xl object-cover border border-[#C5A059]/40 group-hover:border-[#D4AF37] transition-all">
+                <span class="absolute -bottom-1 -right-1 bg-[#D4AF37] text-[#0F251A] text-[8px] font-black px-1 rounded-full">✓</span>
+              </div>
+              <div class="space-y-0.5">
+                <p class="text-xs sm:text-sm font-black text-white group-hover:text-[#D4AF37] transition-colors">${v.name}</p>
+                <div class="flex items-center gap-2 flex-wrap">
+                  <span class="text-[9.5px] font-bold text-[#D4AF37] bg-[#D4AF37]/15 px-2 py-0.5 rounded-md border border-[#D4AF37]/30">${v.category}</span>
+                  <span class="text-[10px] text-slate-300 font-medium">📍 ${v.district || 'یزد'}</span>
+                  ${v.price ? `<span class="text-[10px] font-bold text-amber-200/80">💰 ${v.price}</span>` : ''}
                 </div>
               </div>
             </div>
             <div class="flex items-center gap-2 shrink-0">
-              <span class="text-[10.5px] font-black text-amber-300 flex items-center gap-0.5">⭐ ${v.rating || '۴.۹'}</span>
-              <span class="text-[10px] font-bold text-[#D4AF37] bg-[#D4AF37]/15 border border-[#D4AF37]/30 px-2.5 py-1 rounded-full">مشاهده ↗</span>
+              <span class="text-[11px] font-black text-amber-300 bg-[#141A28] px-2 py-1 rounded-lg border border-[#C5A059]/20 flex items-center gap-1">⭐ ${v.rating || '۴.۹'}</span>
+              <span class="gold-shimmer-btn text-[#0F251A] font-black text-[10px] px-3 py-1.5 rounded-xl shadow-md cursor-pointer flex items-center gap-1 group-hover:scale-105 transition-transform">
+                <span>رزرو</span>
+                <i data-lucide="arrow-left" class="w-3 h-3 text-[#0F251A]"></i>
+              </span>
             </div>
           </div>
         `).join('');
 
         const stickyFooter = `
-          <div onclick="document.getElementById('hero-search-dropdown').classList.add('hidden'); switchTab('directory'); const s=document.getElementById('directory-instant-search'); if(s){s.value='${q}'; filterVendors();}" class="sticky bottom-0 bg-[#0b0f19] border-t border-[#D4AF37]/40 p-3 text-center text-xs font-black text-[#D4AF37] hover:bg-[#1E293B] cursor-pointer transition-all flex items-center justify-center gap-1 shadow-lg">
+          <div onclick="document.getElementById('hero-search-dropdown').classList.add('hidden'); switchTab('directory'); const s=document.getElementById('directory-instant-search'); if(s){s.value='${q}'; filterVendors();}" class="sticky bottom-0 bg-[#07090E] border-t border-[#C5A059]/40 p-3.5 text-center text-xs font-black text-[#D4AF37] hover:bg-[#141A28] cursor-pointer transition-all flex items-center justify-center gap-2 shadow-2xl">
             <span>مشاهده تمامی نتایج برای "${q}" (${matchedVendors.length} مورد)</span>
-            <i data-lucide="arrow-left" class="w-3.5 h-3.5 text-[#D4AF37]"></i>
+            <i data-lucide="arrow-left" class="w-4 h-4 text-[#D4AF37]"></i>
           </div>
         `;
 
-        dropdown.innerHTML = `<div class="max-h-[350px] overflow-y-auto custom-scrollbar">${itemsHtml}</div>${stickyFooter}`;
+        dropdown.innerHTML = `<div class="max-h-[420px] overflow-y-auto custom-scrollbar">${itemsHtml}</div>${stickyFooter}`;
       }
 
       dropdown.classList.remove('hidden');
@@ -4213,6 +4226,26 @@ if (document.readyState === "loading") {
     window.handleHeroSearchInput = handleHeroSearchInput;
     window.handleHeroSearchFocus = handleHeroSearchFocus;
     window.executeHeroSearch = executeHeroSearch;
+
+    // GLOBAL LISTENERS FOR HERO LIVE SEARCH DROPDOWN DISMISSAL
+    document.addEventListener('click', (e) => {
+      const dropdown = document.getElementById('hero-search-dropdown');
+      const input = document.getElementById('hero-pill-search-input');
+      if (dropdown && !dropdown.classList.contains('hidden')) {
+        if (!dropdown.contains(e.target) && (!input || !input.contains(e.target))) {
+          dropdown.classList.add('hidden');
+        }
+      }
+    });
+
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape') {
+        const dropdown = document.getElementById('hero-search-dropdown');
+        if (dropdown && !dropdown.classList.contains('hidden')) {
+          dropdown.classList.add('hidden');
+        }
+      }
+    });
 
     // ONBOARDING CONCIERGE WIZARD LOGIC ("شروع برنامه‌ریزی")
     function openStartPlanningModal() {

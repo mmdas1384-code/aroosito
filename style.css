@@ -598,6 +598,23 @@ main#directory-view {
 }
 
 /* ==========================================================================
+   EXPANDED LIVE SEARCH DROPDOWN UTILITIES
+   ========================================================================== */
+#hero-search-dropdown {
+  background: rgba(7, 9, 14, 0.96);
+  border: 1px solid rgba(197, 160, 89, 0.45);
+  box-shadow: 0 25px 60px rgba(0, 0, 0, 0.85);
+}
+
+#hero-search-dropdown .custom-scrollbar::-webkit-scrollbar {
+  width: 5px;
+}
+#hero-search-dropdown .custom-scrollbar::-webkit-scrollbar-thumb {
+  background: rgba(197, 160, 89, 0.4);
+  border-radius: 9999px;
+}
+
+/* ==========================================================================
    FLOATING ONBOARDING CONCIERGE MODAL ("شروع برنامه‌ریزی")
    ========================================================================== */
 #modal-start-planning {
