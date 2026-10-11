@@ -584,18 +584,17 @@ main#directory-view {
 }
 
 /* ==========================================================================
-   ONBOARDING CONCIERGE CONSOLE ("شروع برنامه‌ریزی")
+   FLOATING ONBOARDING CONCIERGE MODAL ("شروع برنامه‌ریزی")
    ========================================================================== */
-#start-planning-console {
-  background: rgba(14, 18, 28, 0.88);
-  border: 1px solid rgba(197, 160, 89, 0.35);
-  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4), 0 0 20px rgba(197, 160, 89, 0.08);
+#modal-start-planning {
+  backdrop-filter: blur(25px);
+  -webkit-backdrop-filter: blur(25px);
 }
 
-#start-planning-console input:focus,
-#start-planning-console select:focus {
+#modal-start-planning input:focus,
+#modal-start-planning select:focus {
   border-color: #D4AF37;
-  box-shadow: 0 0 10px rgba(212, 175, 55, 0.25);
+  box-shadow: 0 0 12px rgba(212, 175, 55, 0.3);
 }
 
 /* ==========================================================================
