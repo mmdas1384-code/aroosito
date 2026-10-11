@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl" class="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Aroosi No — پروفایل و شو روم اختصاصی تامین‌کننده</title>
+
+  <!-- Vazirmatn Persian Font -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@100..900&display=swap" rel="stylesheet">
+
+  <!-- Tailwind CSS v4 CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+
+  <!-- Lucide Icons CDN -->
+  <script src="https://unpkg.com/lucide@latest"></script>
+
+  <!-- Scoped Styles -->
+  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="directory.css">
+</head>
+<body class="bg-[#07090E] text-[#F7F5F0] font-['Vazirmatn'] antialiased min-h-screen flex flex-col pb-24">
+
+  <!-- TOP NAVIGATION HEADER -->
+  <header class="sticky top-0 z-50 bg-[#0b0f19]/90 backdrop-blur-xl border-b border-[#D4AF37]/35 shadow-2xl">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-3.5 flex items-center justify-between">
+      <a href="directory.html" class="flex items-center gap-2 text-xs font-bold text-slate-300 hover:text-[#D4AF37] transition-colors">
+        <i data-lucide="arrow-right" class="w-4 h-4 text-[#D4AF37]"></i>
+        <span>بازگشت به دایرکتوری تامین‌کنندگان</span>
+      </a>
+
+      <div class="flex items-center gap-2">
+        <span class="bg-[#D4AF37]/15 text-[#D4AF37] border border-[#D4AF37]/40 text-xs px-3 py-1 rounded-full font-black flex items-center gap-1">
+          👑 شو روم رسمی تامین‌کننده VIP
+        </span>
+      </div>
+    </div>
+  </header>
+
+  <!-- MAIN SHOWROOM CONTENT -->
+  <main class="flex-1 max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-8 space-y-8">
+
+    <!-- VENDOR HERO BRAND BANNER -->
+    <div class="relative bg-[#0e121c]/90 backdrop-blur-xl border border-[#C5A059]/40 rounded-3xl p-6 shadow-2xl overflow-hidden space-y-6">
+      <div class="flex flex-col md:flex-row items-center justify-between gap-6">
+        <div class="flex items-center gap-4 text-right">
+          <div class="w-20 h-20 sm:w-24 sm:h-24 rounded-2xl border-2 border-[#D4AF37] overflow-hidden bg-slate-900 shrink-0 shadow-xl">
+            <img id="vdm-avatar-img" src="https://images.unsplash.com/photo-1519167758481-83f550bb49b3?w=300" class="w-full h-full object-cover" alt="لوگوی تامین‌کننده">
+          </div>
+          <div class="space-y-1.5">
+            <div class="flex items-center gap-2 flex-wrap">
+              <h1 id="vdm-title-page" class="text-xl sm:text-2xl font-black text-white">هتل باغ و تشریفات مشیرالممالک یزد</h1>
+              <span class="bg-[#D4AF37]/20 text-[#D4AF37] border border-[#D4AF37]/50 text-xs px-3 py-0.5 rounded-full font-black flex items-center gap-1">
+                🛡️ دارای پروانه کسب رسمی
+              </span>
+            </div>
+            <p class="text-xs text-slate-300 font-bold flex items-center gap-2 flex-wrap">
+              <span>🏛️ تالار و باغ تالار عروسی</span> •
+              <span>📍 یزد، صفائیه & اطلسی</span> •
+              <span class="text-amber-300 font-black">⭐ ۴.۹ (۳۸ نظر تاییدشده)</span>
+            </p>
+          </div>
+        </div>
+
+        <div class="flex items-center gap-2 shrink-0">
+          <button type="button" onclick="openInquiryModal(1)" class="gold-shimmer-btn text-[#0F251A] font-black px-5 py-2.5 rounded-xl text-xs shadow-lg transition-all flex items-center gap-1.5 cursor-pointer">
+            <i data-lucide="sparkles" class="w-4 h-4 text-[#0F251A]"></i>
+            <span>استعلام قیمت آنلاین</span>
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- CINEMATIC PORTFOLIO SHOWCASE GALLERY -->
+    <div class="space-y-3">
+      <h3 class="text-sm font-black text-[#D4AF37] flex items-center gap-2">
+        <i data-lucide="image" class="w-4 h-4 text-[#D4AF37]"></i>
+        <span>گالری تصاویر و نمونه کارهای زنده</span>
+      </h3>
+      <div class="grid grid-cols-1 sm:grid-cols-3 gap-4 rounded-3xl overflow-hidden border border-[#C5A059]/30 p-2 bg-[#0e121c]">
+        <div class="h-56 rounded-2xl overflow-hidden cursor-pointer group relative" onclick="openLightbox('https://images.unsplash.com/photo-1519167758481-83f550bb49b3?w=1200')">
+          <img src="https://images.unsplash.com/photo-1519167758481-83f550bb49b3?w=800" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500">
+          <div class="absolute inset-0 bg-black/20 group-hover:bg-black/0 transition-colors"></div>
+        </div>
+        <div class="h-56 rounded-2xl overflow-hidden cursor-pointer group relative" onclick="openLightbox('https://images.unsplash.com/photo-1519741497674-611481863552?w=1200')">
+          <img src="https://images.unsplash.com/photo-1519741497674-611481863552?w=800" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500">
+          <div class="absolute inset-0 bg-black/20 group-hover:bg-black/0 transition-colors"></div>
+        </div>
+        <div class="h-56 rounded-2xl overflow-hidden cursor-pointer group relative" onclick="openLightbox('https://images.unsplash.com/photo-1511285560929-80b456fea0bc?w=1200')">
+          <img src="https://images.unsplash.com/photo-1511285560929-80b456fea0bc?w=800" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500">
+          <div class="absolute inset-0 bg-black/20 group-hover:bg-black/0 transition-colors"></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- TRANSPARENT PACKAGE CARDS GRID -->
+    <div class="space-y-4">
+      <h3 class="text-sm font-black text-[#D4AF37] flex items-center gap-2">
+        <i data-lucide="package" class="w-4 h-4 text-[#D4AF37]"></i>
+        <span>پکیج‌های خدماتی و قیمت‌های شفاف</span>
+      </h3>
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+
+        <!-- Package 1: Base -->
+        <div class="bg-[#0e121c]/90 backdrop-blur-xl border border-[#C5A059]/30 rounded-3xl p-5 space-y-4 text-right flex flex-col justify-between hover:border-[#D4AF37] transition-all">
+          <div class="space-y-3">
+            <span class="text-[10px] font-black text-amber-200 bg-[#D4AF37]/15 px-2.5 py-0.5 rounded-full border border-[#D4AF37]/30 inline-block">پکیج پایه (اقتصادی)</span>
+            <h4 class="text-base font-black text-white">پکیج نقره‌ای تشریفات</h4>
+            <p class="text-xs text-slate-300">مناسب برای مراسم‌های اقتصادی تا ۳۰۰ نفر با منوی کلاسیک</p>
+            <div class="text-sm font-black text-[#D4AF37] pt-2 border-t border-slate-800">۲۵,۰۰۰,۰۰۰ تومان</div>
+            <ul class="space-y-1.5 text-xs text-slate-300 font-medium">
+              <li class="flex items-center gap-1.5"><i data-lucide="check" class="w-3.5 h-3.5 text-[#D4AF37]"></i> ورودی تالار و سیستم صوتی</li>
+              <li class="flex items-center gap-1.5"><i data-lucide="check" class="w-3.5 h-3.5 text-[#D4AF37]"></i> منوی شام کباب و جوجه دیس‌پرس</li>
+              <li class="flex items-center gap-1.5"><i data-lucide="check" class="w-3.5 h-3.5 text-[#D4AF37]"></i> گل‌آرایی طبیعی ورودی</li>
+            </ul>
+          </div>
+          <button type="button" onclick="openInquiryModal(1)" class="w-full bg-[#141A28] hover:bg-[#1E293B] text-amber-200 border border-[#D4AF37]/40 font-bold py-2 rounded-xl text-xs transition-all cursor-pointer">انتخاب پکیج & استعلام</button>
+        </div>
+
+        <!-- Package 2: Standard (Recommended) -->
+        <div class="bg-[#0e121c]/90 backdrop-blur-xl border-2 border-[#D4AF37] rounded-3xl p-5 space-y-4 text-right flex flex-col justify-between shadow-[0_10px_30px_rgba(212,175,55,0.15)] relative">
+          <span class="absolute -top-3 right-5 bg-gradient-to-r from-[#D4AF37] to-[#F3E5AB] text-[#0F251A] text-[9.5px] font-black px-3 py-0.5 rounded-full shadow-md">⭐ پرطرفدارترین</span>
+          <div class="space-y-3">
+            <span class="text-[10px] font-black text-amber-200 bg-[#D4AF37]/15 px-2.5 py-0.5 rounded-full border border-[#D4AF37]/30 inline-block">پکیج استاندارد</span>
+            <h4 class="text-base font-black text-white">پکیج طلایی مشیرالممالک</h4>
+            <p class="text-xs text-slate-300">پکیج محبوب با خدمات کامل پذیرایی، نورپردازی و سفره عقد</p>
+            <div class="text-sm font-black text-[#D4AF37] pt-2 border-t border-slate-800">۵۵,۰۰۰,۰۰۰ تومان</div>
+            <ul class="space-y-1.5 text-xs text-slate-300 font-medium">
+              <li class="flex items-center gap-1.5"><i data-lucide="check" class="w-3.5 h-3.5 text-[#D4AF37]"></i> منوی سلف‌سرویس ۵ مدل غذا</li>
+              <li class="flex items-center gap-1.5"><i data-lucide="check" class="w-3.5 h-3.5 text-[#D4AF37]"></i> سفره عقد مجلل با شمع‌آرایی</li>
+              <li class="flex items-center gap-1.5"><i data-lucide="check" class="w-3.5 h-3.5 text-[#D4AF37]"></i> گروه موسیقی زنده و نورپردازی LED</li>
+            </ul>
+          </div>
+          <button type="button" onclick="openInquiryModal(1)" class="w-full gold-shimmer-btn text-[#0F251A] font-black py-2.5 rounded-xl text-xs shadow-md transition-all cursor-pointer">انتخاب پکیج & استعلام</button>
+        </div>
+
+        <!-- Package 3: VIP -->
+        <div class="bg-[#0e121c]/90 backdrop-blur-xl border border-[#C5A059]/30 rounded-3xl p-5 space-y-4 text-right flex flex-col justify-between hover:border-[#D4AF37] transition-all">
+          <div class="space-y-3">
+            <span class="text-[10px] font-black text-amber-300 bg-[#D4AF37]/15 px-2.5 py-0.5 rounded-full border border-[#D4AF37]/30 inline-block">👑 پکیج اختصاصی VIP</span>
+            <h4 class="text-base font-black text-white">پکیج رویال تشریفات خاص</h4>
+            <p class="text-xs text-slate-300">مجلل‌ترین خدمات تشریفات، هلی‌شات، نورپردازی هلندی و کترینگ بین‌المللی</p>
+            <div class="text-sm font-black text-[#D4AF37] pt-2 border-t border-slate-800">۱۱۰,۰۰۰,۰۰۰ تومان</div>
+            <ul class="space-y-1.5 text-xs text-slate-300 font-medium">
+              <li class="flex items-center gap-1.5"><i data-lucide="check" class="w-3.5 h-3.5 text-[#D4AF37]"></i> منوی باز بین‌المللی + بار نوشیدنی گرم/سرد</li>
+              <li class="flex items-center gap-1.5"><i data-lucide="check" class="w-3.5 h-3.5 text-[#D4AF37]"></i> آتش‌بازی سرد ورودی و گل‌آرایی ارکیده</li>
+              <li class="flex items-center gap-1.5"><i data-lucide="check" class="w-3.5 h-3.5 text-[#D4AF37]"></i> ماشین عروس لوکس با راننده و گل‌آرایی</li>
+            </ul>
+          </div>
+          <button type="button" onclick="openInquiryModal(1)" class="w-full bg-[#141A28] hover:bg-[#1E293B] text-amber-200 border border-[#D4AF37]/40 font-bold py-2 rounded-xl text-xs transition-all cursor-pointer">انتخاب پکیج & استعلام</button>
+        </div>
+
+      </div>
+    </div>
+
+  </main>
+
+  <!-- STICKY FLOATING GLASS ACTION BAR -->
+  <div class="fixed bottom-0 left-0 right-0 z-50 bg-[#07090E]/95 backdrop-blur-2xl border-t border-[#C5A059]/40 py-3 px-4 shadow-[0_-15px_40px_rgba(0,0,0,0.9)]">
+    <div class="max-w-4xl mx-auto flex items-center justify-between gap-3 text-xs font-bold">
+      <div class="flex items-center gap-2">
+        <button type="button" onclick="makeVendorCall()" class="bg-[#141A28] hover:bg-slate-800 text-amber-200 border border-[#C5A059]/40 px-4 py-2.5 rounded-2xl flex items-center gap-1.5 cursor-pointer shadow-md transition-all">
+          <i data-lucide="phone-call" class="w-4 h-4 text-[#D4AF37]"></i>
+          <span class="hidden sm:inline">📞 تماس مستقیم</span>
+        </button>
+        <button type="button" onclick="openWhatsAppInquiry()" class="bg-emerald-950/80 hover:bg-emerald-900 text-emerald-300 border border-emerald-500/40 px-4 py-2.5 rounded-2xl flex items-center gap-1.5 cursor-pointer shadow-md transition-all">
+          <i data-lucide="message-circle" class="w-4 h-4 text-emerald-400"></i>
+          <span class="hidden sm:inline">💬 واتساپ</span>
+        </button>
+      </div>
+
+      <button type="button" onclick="openInquiryModal(1)" class="gold-shimmer-btn text-[#0F251A] font-black px-6 py-2.5 rounded-2xl shadow-xl flex items-center gap-2 cursor-pointer transition-all transform hover:scale-[1.02]">
+        <i data-lucide="sparkles" class="w-4 h-4 text-[#0F251A]"></i>
+        <span>✨ استعلام قیمت و رزرو بازدید</span>
+      </button>
+    </div>
+  </div>
+
+  <!-- App Script -->
+  <script src="script.js"></script>
+</body>
+</html>

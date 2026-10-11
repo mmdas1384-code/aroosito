@@ -5439,21 +5439,21 @@
   <!-- MODAL: FULL COMPREHENSIVE VENDOR DETAIL    -->
   <!-- ========================================== -->
 <div id="vendor-detail-modal" class="clean-vmodal-overlay hidden" onclick="if(event.target === this) closeVendorDetailModal()">
-    <div class="clean-vmodal-card relative text-right flex flex-col bg-[#FAF9F5] text-[#111827] rounded-2xl overflow-hidden shadow-2xl border border-stone-200" onclick="event.stopPropagation()">
+    <div class="clean-vmodal-card relative text-right flex flex-col bg-[#07090E] text-[#F7F5F0] rounded-3xl overflow-hidden shadow-2xl border border-[#C5A059]/50" onclick="event.stopPropagation()">
 
       <!-- BLOCK 1: Top Header & Title Section -->
-      <div class="vmodal-block-header sticky top-0 z-30 bg-[#0F172A] text-white px-6 py-4 border-b border-[#D4AF37]/40 flex flex-col gap-3 shadow-lg">
+      <div class="vmodal-block-header sticky top-0 z-30 bg-[#07090E]/95 backdrop-blur-2xl text-white px-6 py-4 border-b border-[#C5A059]/40 flex flex-col gap-3 shadow-xl">
         <div class="flex items-center justify-between text-white">
           <div class="flex items-center gap-3">
             <div id="vdm-avatar" class="w-12 h-12 rounded-full border-2 border-[#D4AF37] overflow-hidden bg-slate-900 shadow-md flex-shrink-0">
               <img src="https://images.unsplash.com/photo-1519741497674-611481863552?w=150" alt="Vendor Avatar" class="w-full h-full object-cover">
             </div>
             <div>
-              <div class="flex items-center gap-2">
+              <div class="flex items-center gap-2 flex-wrap">
                 <h2 id="vdm-title" class="text-lg sm:text-xl font-black text-white">هتل باغ و تشریفات مشیرالممالک یزد</h2>
                 <span id="vdm-verified" class="bg-[#D4AF37]/20 text-[#D4AF37] border border-[#D4AF37]/50 text-xs px-2.5 py-0.5 rounded-full flex items-center gap-1 font-black">
                   <i data-lucide="shield-check" class="w-3.5 h-3.5 text-[#D4AF37]"></i>
-                  تاییدشده عروسی تو
+                  دارای پروانه کسب رسمی
                 </span>
               </div>
               <p id="vdm-subtitle" class="text-xs text-slate-300 font-bold mt-0.5 flex items-center gap-2">
@@ -5466,18 +5466,18 @@
             </div>
           </div>
 
-          <button onclick="closeVendorDetailModal()" class="w-9 h-9 rounded-full bg-white/10 hover:bg-white/20 text-white flex items-center justify-center transition-colors border border-white/20 cursor-pointer" title="بستن">
+          <button onclick="closeVendorDetailModal()" class="w-9 h-9 rounded-full bg-[#141A28] hover:bg-[#1E293B] text-slate-300 hover:text-white flex items-center justify-center transition-colors border border-[#C5A059]/30 cursor-pointer" title="بستن">
             <i data-lucide="x" class="w-5 h-5"></i>
           </button>
         </div>
 
-        <!-- Key Metrics & Compact Action CTAs Row -->
+        <!-- Key Metrics & Floating Bottom Action Bar Triggers -->
         <div class="flex items-center justify-between flex-wrap gap-2 text-xs pt-2 border-t border-slate-800">
           <div class="flex items-center gap-2 flex-wrap">
-            <span id="vdm-rating" class="bg-[#1E293B] text-amber-200 border border-[#D4AF37]/40 text-xs px-3 py-1 rounded-full font-black flex items-center gap-1.5 shadow-xs">
+            <span id="vdm-rating" class="bg-[#141A28] text-amber-200 border border-[#D4AF37]/40 text-xs px-3 py-1 rounded-full font-black flex items-center gap-1.5 shadow-xs">
               ⭐️ 4.9 (۳۸ نظر ثبت‌شده)
             </span>
-            <span class="bg-[#1E293B] text-slate-200 text-xs px-3 py-1 rounded-full border border-slate-700 font-bold shadow-xs">
+            <span class="bg-[#141A28] text-slate-200 text-xs px-3 py-1 rounded-full border border-slate-700 font-bold shadow-xs">
               💳 اقتصادی / VIP
             </span>
             <span class="bg-emerald-950/80 text-emerald-300 text-xs px-3 py-1 rounded-full border border-emerald-500/40 font-bold flex items-center gap-1 shadow-xs">
@@ -5486,13 +5486,17 @@
           </div>
 
           <div class="flex items-center gap-2">
-            <button onclick="openInquireFromVendorModal()" class="bg-gradient-to-r from-[#D4AF37] to-[#F3E5AB] hover:from-[#e5bd3c] hover:to-[#fceba7] text-[#0F251A] font-black px-3.5 py-1.5 rounded-full text-xs transition-all shadow-md flex items-center gap-1 cursor-pointer hover:scale-105 active:scale-95">
-              <i data-lucide="file-plus" class="w-3.5 h-3.5 text-[#0F251A]"></i>
-              <span>درخواست پیش‌فاکتور</span>
-            </button>
-            <button onclick="makeVendorCall()" class="bg-[#1E293B] hover:bg-slate-700 text-amber-200 border border-[#D4AF37]/50 font-bold px-3.5 py-1.5 rounded-full text-xs transition-all flex items-center gap-1 cursor-pointer">
+            <button onclick="makeVendorCall()" class="bg-[#141A28] hover:bg-[#1E293B] text-amber-200 border border-[#D4AF37]/50 font-bold px-3 py-1.5 rounded-full text-xs transition-all flex items-center gap-1 cursor-pointer">
               <i data-lucide="phone-call" class="w-3.5 h-3.5 text-[#D4AF37]"></i>
-              <span>تماس مستقیم</span>
+              <span>📞 تماس مستقیم</span>
+            </button>
+            <button onclick="openWhatsAppInquiry()" class="bg-emerald-950/80 hover:bg-emerald-900 text-emerald-300 border border-emerald-500/40 font-bold px-3 py-1.5 rounded-full text-xs transition-all flex items-center gap-1 cursor-pointer">
+              <i data-lucide="message-circle" class="w-3.5 h-3.5 text-emerald-400"></i>
+              <span>💬 واتساپ</span>
+            </button>
+            <button onclick="openInquireFromVendorModal()" class="gold-shimmer-btn text-[#0F251A] font-black px-4 py-1.5 rounded-full text-xs transition-all shadow-md flex items-center gap-1 cursor-pointer hover:scale-105 active:scale-95">
+              <i data-lucide="sparkles" class="w-3.5 h-3.5 text-[#0F251A]"></i>
+              <span>✨ استعلام قیمت و رزرو</span>
             </button>
           </div>
         </div>

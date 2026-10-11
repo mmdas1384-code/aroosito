@@ -4030,15 +4030,20 @@ if (document.readyState === "loading") {
               </div>
             </div>
 
-            <!-- Single Minimal Hover Trigger -->
-            <div class="p-3 pt-0 text-right flex items-center gap-2">
-              <button type="button" onclick="event.stopPropagation(); openQuickViewDrawer(${v.id}, event)" class="bg-[#1E293B] hover:bg-slate-700 text-amber-200 border border-[#D4AF37]/40 text-[11px] font-bold py-1.5 px-2.5 rounded-xl transition-all flex items-center justify-center gap-1 cursor-pointer shrink-0" title="مشاهده سریع">
+              <!-- Gold License Seal Tag -->
+              <div class="px-3 pb-1 flex items-center justify-between text-[10px] font-bold text-amber-200">
+                <span class="bg-[#D4AF37]/15 text-[#D4AF37] px-2 py-0.5 rounded-md border border-[#D4AF37]/30 flex items-center gap-1">✨ دارای پروانه کسب</span>
+                <span>⭐ ${ratingVal}</span>
+              </div>
+
+              <!-- Prominent Gold Action CTA -->
+              <div class="p-3 pt-1 text-right flex items-center gap-2">
+                <button type="button" onclick="event.stopPropagation(); openQuickViewDrawer(${v.id}, event)" class="bg-[#141A28] hover:bg-slate-800 text-amber-200 border border-[#D4AF37]/40 text-[11px] font-bold py-2 px-2.5 rounded-xl transition-all flex items-center justify-center gap-1 cursor-pointer shrink-0" title="مشاهده سریع">
                 <i data-lucide="eye" class="w-3.5 h-3.5 text-[#D4AF37]"></i>
                 <span>سریع</span>
               </button>
-              <button type="button" onclick="event.stopPropagation(); openVendorDetailModal(${v.id})" class="hover-reveal-btn flex-1 bg-gradient-to-r from-[#D4AF37] to-[#F3E5AB] text-[#0F251A] text-[11px] font-black py-1.5 px-3 rounded-xl shadow-md transition-all flex items-center justify-center gap-1 cursor-pointer">
-                <span>مشاهده و رزرو</span>
-                <i data-lucide="chevron-left" class="w-3 h-3 text-[#0F251A]"></i>
+                <button type="button" onclick="event.stopPropagation(); openVendorDetailModal(${v.id})" class="gold-shimmer-btn flex-1 text-[#0F251A] text-[11px] font-black py-2 px-3 rounded-xl shadow-lg transition-all flex items-center justify-center gap-1 cursor-pointer transform hover:scale-[1.02]">
+                  <span>مشاهده پروفایل و پکیج‌ها ➔</span>
               </button>
             </div>
           `;
@@ -4222,6 +4227,12 @@ if (document.readyState === "loading") {
         if (typeof filterVendors === 'function') filterVendors();
       }
     }
+
+    function setPriceFilter(tier) {
+      window.selectedPriceTier = tier;
+      filterVendors();
+    }
+    window.setPriceFilter = setPriceFilter;
 
     window.handleHeroSearchInput = handleHeroSearchInput;
     window.handleHeroSearchFocus = handleHeroSearchFocus;
@@ -7539,7 +7550,7 @@ if (document.readyState === "loading") {
       if (receiptContainer) receiptContainer.classList.remove('hidden');
 
       if (window.lucide) lucide.createIcons();
-      showToast('پیش‌فاکتور دیجیتال استعلام شما صادر شد!', 'success');
+      showToast('درخواست استعلام قیمت شما با موفقیت ثبت شد ✨', 'success');
     }
 
 window.downloadReceiptPdf = function() {
