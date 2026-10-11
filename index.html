@@ -5471,28 +5471,34 @@
           </button>
         </div>
 
-        <!-- Key Metrics & Floating Bottom Action Bar Triggers -->
+        <!-- Key Specs Pills & Video Tour Button -->
         <div class="flex items-center justify-between flex-wrap gap-2 text-xs pt-2 border-t border-slate-800">
           <div class="flex items-center gap-2 flex-wrap">
-            <span id="vdm-rating" class="bg-[#141A28] text-amber-200 border border-[#D4AF37]/40 text-xs px-3 py-1 rounded-full font-black flex items-center gap-1.5 shadow-xs">
+            <span id="vdm-rating" class="bg-[#141A28] text-amber-300 border border-amber-500/40 text-xs px-3 py-1 rounded-full font-black flex items-center gap-1.5 shadow-xs">
               ⭐️ 4.9 (۳۸ نظر ثبت‌شده)
             </span>
             <span class="bg-[#141A28] text-slate-200 text-xs px-3 py-1 rounded-full border border-slate-700 font-bold shadow-xs">
-              💳 اقتصادی / VIP
+              📍 صفائیه یزد
             </span>
-            <span class="bg-emerald-950/80 text-emerald-300 text-xs px-3 py-1 rounded-full border border-emerald-500/40 font-bold flex items-center gap-1 shadow-xs">
-              ⚡ پاسخگویی زیر ۲ ساعت
+            <span class="bg-[#141A28] text-amber-200 text-xs px-3 py-1 rounded-full border border-[#D4AF37]/40 font-bold shadow-xs">
+              👥 ظرفیت تا ۶۰۰ نفر
+            </span>
+            <span class="bg-[#D4AF37]/20 text-[#D4AF37] border border-[#D4AF37]/50 text-xs px-3 py-1 rounded-full font-black flex items-center gap-1">
+              ✨ پروانه کسب تاییدشده
             </span>
           </div>
 
           <div class="flex items-center gap-2">
+            <button onclick="open360TourModal(1)" class="bg-[#141A28] hover:bg-[#1E293B] text-amber-200 border border-[#C5A059]/50 font-bold px-3 py-1.5 rounded-full text-xs transition-all flex items-center gap-1 cursor-pointer hover:scale-105">
+              <span>🎥 تور ویدئویی / نمونه‌کارها</span>
+            </button>
             <button onclick="makeVendorCall()" class="bg-[#141A28] hover:bg-[#1E293B] text-amber-200 border border-[#D4AF37]/50 font-bold px-3 py-1.5 rounded-full text-xs transition-all flex items-center gap-1 cursor-pointer">
               <i data-lucide="phone-call" class="w-3.5 h-3.5 text-[#D4AF37]"></i>
-              <span>📞 تماس مستقیم</span>
+              <span class="hidden sm:inline">📞 تماس</span>
             </button>
             <button onclick="openWhatsAppInquiry()" class="bg-emerald-950/80 hover:bg-emerald-900 text-emerald-300 border border-emerald-500/40 font-bold px-3 py-1.5 rounded-full text-xs transition-all flex items-center gap-1 cursor-pointer">
               <i data-lucide="message-circle" class="w-3.5 h-3.5 text-emerald-400"></i>
-              <span>💬 واتساپ</span>
+              <span class="hidden sm:inline">💬 واتساپ</span>
             </button>
             <button onclick="openInquireFromVendorModal()" class="gold-shimmer-btn text-[#0F251A] font-black px-4 py-1.5 rounded-full text-xs transition-all shadow-md flex items-center gap-1 cursor-pointer hover:scale-105 active:scale-95">
               <i data-lucide="sparkles" class="w-3.5 h-3.5 text-[#0F251A]"></i>
@@ -5522,19 +5528,22 @@
 
       <!-- BLOCK 3: Segmented Navigation Tabs Bar & Tab Content Panes -->
       <div class="vmodal-block-tabs px-6 py-2 bg-[#FAF9F5]">
-        <!-- Segmented Capsule Bar -->
-        <div class="clean-vmodal-tabs my-4 p-1.5 bg-[#E5E7EB] rounded-2xl flex items-center gap-1.5 overflow-x-auto shadow-inner">
-          <button class="vtab-btn active text-[#111827] font-bold" onclick="switchModalTab(0)">
-            <span>📖 درباره & معرفی</span>
+        <!-- Sticky Frosted Glass Navigation Tabs Bar -->
+        <div class="clean-vmodal-tabs sticky top-0 z-20 my-4 p-2 bg-[#0e121c]/90 backdrop-blur-xl border border-[#C5A059]/40 rounded-2xl flex items-center gap-2 overflow-x-auto shadow-xl">
+          <button class="vtab-btn active px-4 py-2 rounded-xl text-xs font-bold text-amber-200 bg-[#D4AF37]/20 border border-[#D4AF37]/50 transition-all cursor-pointer whitespace-nowrap" onclick="switchModalTab(0)">
+            <span>🖼️ نمونه‌کارها & معرفی</span>
           </button>
-          <button class="vtab-btn text-[#111827] font-bold" onclick="switchModalTab(1)">
-            <span>💎 پکیج‌ها & قیمت‌ها</span>
+          <button class="vtab-btn px-4 py-2 rounded-xl text-xs font-bold text-slate-300 hover:text-amber-200 transition-all cursor-pointer whitespace-nowrap" onclick="switchModalTab(1)">
+            <span>📋 پکیج‌ها & قیمت</span>
           </button>
-          <button class="vtab-btn text-[#111827] font-bold" onclick="switchModalTab(2)">
-            <span>📅 تقویم روزهای آزاد</span>
+          <button class="vtab-btn px-4 py-2 rounded-xl text-xs font-bold text-slate-300 hover:text-amber-200 transition-all cursor-pointer whitespace-nowrap" onclick="switchModalTab(2)">
+            <span>✨ خدمات & امکانات</span>
           </button>
-          <button class="vtab-btn text-[#111827] font-bold" onclick="switchModalTab(3)">
-            <span>⭐ نظرات & تجربیات</span>
+          <button class="vtab-btn px-4 py-2 rounded-xl text-xs font-bold text-slate-300 hover:text-amber-200 transition-all cursor-pointer whitespace-nowrap" onclick="switchModalTab(3)">
+            <span>💬 نظرات زوجین</span>
+          </button>
+          <button class="vtab-btn px-4 py-2 rounded-xl text-xs font-bold text-slate-300 hover:text-amber-200 transition-all cursor-pointer whitespace-nowrap" onclick="switchModalTab(0)">
+            <span>📍 موقعیت مکانی</span>
           </button>
         </div>
 
@@ -5652,17 +5661,27 @@
       </div>
 
       <!-- BLOCK 4: Sticky Modal Bottom Action Footer -->
-      <div class="sticky bottom-0 z-30 bg-white/95 backdrop-blur-md px-6 py-4 border-t border-stone-200 flex items-center justify-between text-[#1A1A1A] shadow-lg">
+      <div id="vdm-floating-bar" class="sticky bottom-0 z-30 bg-[#07090E]/95 backdrop-blur-2xl px-6 py-4 border-t border-[#C5A059]/40 flex items-center justify-between text-white shadow-[0_-15px_40px_rgba(0,0,0,0.9)]">
         <div>
-          <span class="text-xs text-stone-500 block font-medium">شروع قیمت از:</span>
-          <span id="vdm-price" class="text-lg font-black text-[#1B3B2B]">۹۵,۰۰۰,۰۰۰ تومان</span>
+          <span class="text-xs text-slate-400 block font-medium">شروع قیمت از:</span>
+          <span id="vdm-price" class="text-lg font-black text-[#D4AF37]">۹۵,۰۰۰,۰۰۰ تومان</span>
         </div>
-        <div class="flex items-center gap-3">
-          <button id="vdm-modal-chat-cta" onclick="openVendorChatFromModal()" class="bg-[#1B3B2B] hover:bg-[#2E533F] text-white px-5 py-2.5 rounded-xl text-xs sm:text-sm font-bold flex items-center gap-2 transition-all shadow">
-            💬 ارسال پیام مستقیم (چت)
+        <div class="flex items-center gap-2 sm:gap-3">
+          <button onclick="makeVendorCall()" class="bg-[#141A28] hover:bg-slate-800 text-amber-200 border border-[#C5A059]/40 px-3.5 py-2.5 rounded-2xl text-xs sm:text-sm font-bold flex items-center gap-1.5 cursor-pointer shadow-md transition-all">
+            <i data-lucide="phone-call" class="w-4 h-4 text-[#D4AF37]"></i>
+            <span class="hidden sm:inline">📞 تماس</span>
           </button>
-          <button id="vdm-modal-inquire-cta" onclick="openInquireFromVendorModal()" class="bg-gradient-to-r from-[#D4AF37] to-[#E2C258] hover:from-[#B88E28] hover:to-[#D4AF37] text-[#1B3B2B] px-6 py-2.5 rounded-xl text-xs sm:text-sm font-black flex items-center gap-2 transition-all shadow-md">
-            📝 استعلام قیمت آنلاین & رزرو
+          <button onclick="openWhatsAppInquiry()" class="bg-emerald-950/80 hover:bg-emerald-900 text-emerald-300 border border-emerald-500/40 px-3.5 py-2.5 rounded-2xl text-xs sm:text-sm font-bold flex items-center gap-1.5 cursor-pointer shadow-md transition-all">
+            <i data-lucide="message-circle" class="w-4 h-4 text-emerald-400"></i>
+            <span class="hidden sm:inline">💬 واتساپ</span>
+          </button>
+          <button id="vdm-modal-chat-cta" onclick="openVendorChatFromModal()" class="bg-[#141A28] hover:bg-[#1E293B] text-amber-200 border border-[#D4AF37]/40 px-3.5 py-2.5 rounded-2xl text-xs sm:text-sm font-bold flex items-center gap-1.5 transition-all shadow cursor-pointer">
+            <i data-lucide="message-square" class="w-4 h-4 text-[#D4AF37]"></i>
+            <span class="hidden md:inline">چت داخلی</span>
+          </button>
+          <button id="vdm-modal-inquire-cta" onclick="openInquireFromVendorModal()" class="gold-shimmer-btn text-[#0F251A] px-5 py-2.5 rounded-2xl text-xs sm:text-sm font-black flex items-center gap-2 transition-all shadow-xl cursor-pointer hover:scale-105 active:scale-95">
+            <i data-lucide="sparkles" class="w-4 h-4 text-[#0F251A]"></i>
+            <span>✨ استعلام قیمت & رزرو</span>
           </button>
         </div>
       </div>

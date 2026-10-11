@@ -6702,26 +6702,30 @@ if (document.readyState === "loading") {
       const packagesContainer = document.getElementById('vdm-packages-container');
       if (packagesContainer) {
         const pkgs = vendor.packages || [
-          { name: "برنزی (پایه)", price: "۶۵,۰۰۰,۰۰۰ تومان", items: ["منوی شام ۲ رنگ سلف‌سرویس", "ورودی باغ تالار", "سیستم صوتی"] },
-          { name: "نقره‌ای (VIP)", price: "۹۵,۰۰۰,۰۰۰ تومان", items: ["منوی شام ۳ رنگ با کترینگ یزدی", "شمع‌آرایی کامل", "تست غذا برای ۴ نفر"] },
-          { name: "طلایی (Luxury)", price: "۱۴۰,۰۰۰,۰۰۰ تومان", items: ["تمام امکانات نقره‌ای + سفره عقد", "آتش‌بازی ورودی", "اقامت سوئیت عروس"] }
+          { name: "برنزی (پایه)", price: "۶۵,۰۰۰,۰۰۰ تومان", items: ["منوی شام ۲ رنگ سلف‌سرویس", "ورودی باغ تالار و سیستم صوتی", "گل‌آرایی طبیعی ورودی"] },
+          { name: "نقره‌ای (VIP)", price: "۹۵,۰۰۰,۰۰۰ تومان", items: ["منوی شام ۳ رنگ با کترینگ یزدی", "سفره عقد مجلل با شمع‌آرایی", "نورپردازی LED و موسیقی زنده"] },
+          { name: "طلایی (Luxury)", price: "۱۴۰,۰۰۰,۰۰۰ تومان", items: ["تمام امکانات VIP + آتش‌بازی ورودی", "بار نوشیدنی گرم و سرد بین‌المللی", "اقامت سوئیت ماه عسل عروس و داماد"] }
         ];
-        packagesContainer.innerHTML = pkgs.map(p => `
-          <div class="bg-white border border-stone-200 rounded-2xl p-5 shadow-sm space-y-3 flex flex-col justify-between">
-            <div>
-              <div class="flex justify-between items-center border-b border-stone-100 pb-2 mb-2">
-                <h4 class="font-bold text-[#1B3B2B] text-sm">${p.name}</h4>
-                <span class="text-xs font-black text-[#D4AF37] bg-amber-50 px-2 py-0.5 rounded-md border border-amber-200">${p.price}</span>
+        packagesContainer.innerHTML = pkgs.map((p, idx) => {
+          const isFeatured = idx === 1;
+          const borderClass = isFeatured ? 'border-2 border-[#D4AF37] shadow-[0_10px_30px_rgba(212,175,55,0.2)]' : 'border border-[#C5A059]/40 hover:border-[#D4AF37]';
+          const badgeHtml = isFeatured ? `<span class="absolute -top-3 right-5 bg-gradient-to-r from-[#D4AF37] to-[#F3E5AB] text-[#0F251A] text-[9.5px] font-black px-3 py-0.5 rounded-full shadow-md">⭐ پیشنهاد ویژه</span>` : '';
+          return `
+            <div class="relative bg-[#0e121c]/90 backdrop-blur-xl ${borderClass} rounded-3xl p-5 space-y-4 text-right flex flex-col justify-between transition-all">
+              ${badgeHtml}
+              <div class="space-y-3">
+                <span class="text-[10px] font-black text-amber-200 bg-[#D4AF37]/15 px-2.5 py-0.5 rounded-full border border-[#D4AF37]/30 inline-block">${p.name}</span>
+                <div class="text-sm font-black text-[#D4AF37] pt-1 border-t border-slate-800">${p.price}</div>
+                <ul class="space-y-2 text-xs text-slate-300 font-medium">
+                  ${(p.items || []).map(item => `<li class="flex items-center gap-2"><span class="text-[#D4AF37] font-black">✓</span> <span>${item}</span></li>`).join('')}
+                </ul>
               </div>
-              <ul class="space-y-1.5 text-xs text-stone-600">
-                ${(p.items || []).map(item => `<li class="flex items-center gap-1.5"><span class="text-emerald-600">✓</span> <span>${item}</span></li>`).join('')}
-              </ul>
+              <button onclick="triggerPackageInquiry('${p.name}', '${p.price}')" class="w-full ${isFeatured ? 'gold-shimmer-btn text-[#0F251A]' : 'bg-[#141A28] hover:bg-[#1E293B] text-amber-200 border border-[#D4AF37]/40'} font-bold py-2.5 rounded-xl text-xs transition-all cursor-pointer flex items-center justify-center gap-1.5 shadow-md">
+                <span>استعلام قیمت این پکیج ➔</span>
+              </button>
             </div>
-            <button onclick="triggerPackageInquiry('${p.name}', '${p.price}')" class="w-full bg-[#1B3B2B] hover:bg-emerald-900 text-white font-bold py-2 rounded-xl text-xs transition-colors mt-3">
-              رزرو این پکیج
-            </button>
-          </div>
-        `).join('');
+          `;
+        }).join('');
       }
 
       // Populate Amenities Container inside About Us section

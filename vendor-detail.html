@@ -41,35 +41,65 @@
   <!-- MAIN SHOWROOM CONTENT -->
   <main class="flex-1 max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-8 space-y-8">
 
-    <!-- VENDOR HERO BRAND BANNER -->
-    <div class="relative bg-[#0e121c]/90 backdrop-blur-xl border border-[#C5A059]/40 rounded-3xl p-6 shadow-2xl overflow-hidden space-y-6">
+    <!-- VENDOR HERO BRAND BANNER & VIDEO TOUR TRIGGER -->
+    <div class="relative bg-[#0e121c]/95 backdrop-blur-2xl border border-[#C5A059]/50 rounded-3xl p-6 shadow-2xl overflow-hidden space-y-6">
       <div class="flex flex-col md:flex-row items-center justify-between gap-6">
         <div class="flex items-center gap-4 text-right">
           <div class="w-20 h-20 sm:w-24 sm:h-24 rounded-2xl border-2 border-[#D4AF37] overflow-hidden bg-slate-900 shrink-0 shadow-xl">
             <img id="vdm-avatar-img" src="https://images.unsplash.com/photo-1519167758481-83f550bb49b3?w=300" class="w-full h-full object-cover" alt="لوگوی تامین‌کننده">
           </div>
-          <div class="space-y-1.5">
+          <div class="space-y-2">
             <div class="flex items-center gap-2 flex-wrap">
-              <h1 id="vdm-title-page" class="text-xl sm:text-2xl font-black text-white">هتل باغ و تشریفات مشیرالممالک یزد</h1>
-              <span class="bg-[#D4AF37]/20 text-[#D4AF37] border border-[#D4AF37]/50 text-xs px-3 py-0.5 rounded-full font-black flex items-center gap-1">
-                🛡️ دارای پروانه کسب رسمی
+              <h1 id="vdm-title-page" class="text-xl sm:text-2xl font-black text-[#F7F5F0]">هتل باغ و تشریفات مشیرالممالک یزد</h1>
+            </div>
+
+            <!-- Key Specs Pills -->
+            <div class="flex items-center gap-2 flex-wrap text-xs font-bold">
+              <span class="bg-[#D4AF37]/20 text-[#D4AF37] border border-[#D4AF37]/50 px-3 py-1 rounded-full flex items-center gap-1 font-black">
+                ✨ پروانه کسب تاییدشده
+              </span>
+              <span class="bg-[#141A28] text-slate-200 border border-slate-700 px-3 py-1 rounded-full flex items-center gap-1 font-bold">
+                📍 صفائیه یزد
+              </span>
+              <span class="bg-[#141A28] text-amber-200 border border-[#D4AF37]/40 px-3 py-1 rounded-full flex items-center gap-1 font-bold">
+                👥 ظرفیت تا ۶۰۰ نفر
+              </span>
+              <span class="bg-[#141A28] text-amber-300 border border-amber-500/40 px-3 py-1 rounded-full flex items-center gap-1 font-black">
+                ⭐ ۴.۹ (۳۸ نظر تاییدشده)
               </span>
             </div>
-            <p class="text-xs text-slate-300 font-bold flex items-center gap-2 flex-wrap">
-              <span>🏛️ تالار و باغ تالار عروسی</span> •
-              <span>📍 یزد، صفائیه & اطلسی</span> •
-              <span class="text-amber-300 font-black">⭐ ۴.۹ (۳۸ نظر تاییدشده)</span>
-            </p>
           </div>
         </div>
 
-        <div class="flex items-center gap-2 shrink-0">
-          <button type="button" onclick="openInquiryModal(1)" class="gold-shimmer-btn text-[#0F251A] font-black px-5 py-2.5 rounded-xl text-xs shadow-lg transition-all flex items-center gap-1.5 cursor-pointer">
+        <div class="flex items-center gap-2 shrink-0 flex-wrap">
+          <button type="button" onclick="open360TourModal(1)" class="bg-[#141A28] hover:bg-[#1E293B] text-amber-200 border border-[#C5A059]/50 font-bold px-4 py-2.5 rounded-2xl text-xs transition-all flex items-center gap-1.5 cursor-pointer shadow-md hover:scale-105">
+            <span>🎥 تور ویدئویی / نمونه‌کارها</span>
+          </button>
+          <button type="button" onclick="openInquiryModal(1)" class="gold-shimmer-btn text-[#0F251A] font-black px-5 py-2.5 rounded-2xl text-xs shadow-lg transition-all flex items-center gap-1.5 cursor-pointer hover:scale-105">
             <i data-lucide="sparkles" class="w-4 h-4 text-[#0F251A]"></i>
             <span>استعلام قیمت آنلاین</span>
           </button>
         </div>
       </div>
+    </div>
+
+    <!-- STICKY FROSTED GLASS NAVIGATION TABS BAR -->
+    <div class="sticky top-16 z-30 p-2 bg-[#0e121c]/95 backdrop-blur-2xl border border-[#C5A059]/50 rounded-2xl flex items-center justify-center gap-3 overflow-x-auto shadow-2xl">
+      <a href="#section-portfolio" class="px-4 py-2 rounded-xl text-xs font-bold text-amber-200 bg-[#D4AF37]/20 border border-[#D4AF37]/50 transition-all hover:scale-105 whitespace-nowrap">
+        🖼️ نمونه‌کارها
+      </a>
+      <a href="#section-packages" class="px-4 py-2 rounded-xl text-xs font-bold text-slate-300 hover:text-amber-200 transition-all hover:scale-105 whitespace-nowrap">
+        📋 پکیج‌ها و قیمت
+      </a>
+      <a href="#section-services" class="px-4 py-2 rounded-xl text-xs font-bold text-slate-300 hover:text-amber-200 transition-all hover:scale-105 whitespace-nowrap">
+        ✨ خدمات
+      </a>
+      <a href="#section-reviews" class="px-4 py-2 rounded-xl text-xs font-bold text-slate-300 hover:text-amber-200 transition-all hover:scale-105 whitespace-nowrap">
+        💬 نظرات زوجین
+      </a>
+      <a href="#section-location" class="px-4 py-2 rounded-xl text-xs font-bold text-slate-300 hover:text-amber-200 transition-all hover:scale-105 whitespace-nowrap">
+        📍 موقعیت مکانی
+      </a>
     </div>
 
     <!-- CINEMATIC PORTFOLIO SHOWCASE GALLERY -->
