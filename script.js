@@ -749,7 +749,7 @@ const HOME_VIEW_HTML = `<main id="home-view" class="flex-1 max-w-7xl w-full mx-a
         </div>
       </section>
 
-      <!-- 9. CINEMATIC COUPLE TESTIMONIALS & REAL EXPERIENCES SLIDER -->
+      <!-- 9. CINEMATIC COUPLE TESTIMONIALS & REAL EXPERIENCES MULTI-ITEM SCROLLER -->
       <section id="verified-testimonials-section" class="relative bg-[#0e121c]/90 backdrop-blur-xl border border-[#C5A059]/30 rounded-3xl p-6 shadow-2xl overflow-hidden my-8 text-white space-y-6">
         <!-- Section Header -->
         <div class="flex items-center justify-between border-b border-[#C5A059]/20 pb-4 flex-wrap gap-3">
@@ -759,25 +759,18 @@ const HOME_VIEW_HTML = `<main id="home-view" class="flex-1 max-w-7xl w-full mx-a
           </div>
 
           <div class="flex items-center gap-2 shrink-0">
-            <button type="button" onclick="prevTestimonial()" class="w-9 h-9 rounded-full bg-[#141A28] hover:bg-[#1E293B] text-[#D4AF37] border border-[#C5A059]/30 flex items-center justify-center transition-all cursor-pointer shadow-md hover:scale-110 active:scale-95" title="قبلی">
+            <button type="button" onclick="scrollTestimonialCarousel(-1)" class="w-9 h-9 rounded-full bg-[#141A28] hover:bg-[#1E293B] text-[#D4AF37] border border-[#C5A059]/30 flex items-center justify-center transition-all cursor-pointer shadow-md hover:scale-110 active:scale-95" title="قبلی">
               <i data-lucide="chevron-right" class="w-4 h-4"></i>
             </button>
-            <button type="button" onclick="nextTestimonial()" class="w-9 h-9 rounded-full bg-[#141A28] hover:bg-[#1E293B] text-[#D4AF37] border border-[#C5A059]/30 flex items-center justify-center transition-all cursor-pointer shadow-md hover:scale-110 active:scale-95" title="بعدی">
+            <button type="button" onclick="scrollTestimonialCarousel(1)" class="w-9 h-9 rounded-full bg-[#141A28] hover:bg-[#1E293B] text-[#D4AF37] border border-[#C5A059]/30 flex items-center justify-center transition-all cursor-pointer shadow-md hover:scale-110 active:scale-95" title="بعدی">
               <i data-lucide="chevron-left" class="w-4 h-4"></i>
             </button>
           </div>
         </div>
 
-        <!-- Dynamic Testimonial Editorial Card Container -->
-        <div id="testimonial-card-container" class="bg-[rgba(20,26,38,0.85)] border border-[rgba(197,160,89,0.35)] rounded-3xl p-6 sm:p-8 space-y-4 shadow-xl text-right relative min-h-[180px]">
-          <!-- Populated via JS renderTestimonialCard() -->
-        </div>
-
-        <!-- Slider Pagination Indicators -->
-        <div class="flex items-center justify-center gap-2 pt-1">
-          <span id="testimonial-dot-0" onclick="setTestimonialIndex(0)" class="w-3 h-3 rounded-full bg-[#D4AF37] cursor-pointer transition-all"></span>
-          <span id="testimonial-dot-1" onclick="setTestimonialIndex(1)" class="w-2.5 h-2.5 rounded-full bg-[#141A28] border border-[#C5A059]/30 cursor-pointer transition-all"></span>
-          <span id="testimonial-dot-2" onclick="setTestimonialIndex(2)" class="w-2.5 h-2.5 rounded-full bg-[#141A28] border border-[#C5A059]/30 cursor-pointer transition-all"></span>
+        <!-- MULTI-ITEM COMPACT HORIZONTAL AUTO-SCROLL CAROUSEL CONTAINER -->
+        <div id="testimonials-carousel-container" class="flex gap-4 overflow-x-auto no-scrollbar scroll-smooth p-1 cursor-grab active:cursor-grabbing select-none">
+          <!-- Populated via JS renderTestimonialsCarousel() -->
         </div>
       </section>
 
@@ -11695,9 +11688,20 @@ window.shareReceiptWhatsApp = function() {
 
       function autoScrollStep() {
         if (!isPaused && showcaseContainer) {
-          showcaseContainer.scrollLeft += 0.8;
-          if (showcaseContainer.scrollLeft >= (showcaseContainer.scrollWidth - showcaseContainer.clientWidth - 2)) {
-            showcaseContainer.scrollLeft = 0;
+          const isRTL = getComputedStyle(showcaseContainer).direction === 'rtl';
+          const speed = 0.8;
+
+          if (isRTL) {
+            // For RTL scroll, scrollLeft is zero or negative depending on browser/layout
+            showcaseContainer.scrollLeft -= speed;
+            if (Math.abs(showcaseContainer.scrollLeft) >= (showcaseContainer.scrollWidth - showcaseContainer.clientWidth - 5)) {
+              showcaseContainer.scrollLeft = 0;
+            }
+          } else {
+            showcaseContainer.scrollLeft += speed;
+            if (showcaseContainer.scrollLeft >= (showcaseContainer.scrollWidth - showcaseContainer.clientWidth - 5)) {
+              showcaseContainer.scrollLeft = 0;
+            }
           }
         }
         animationFrameId = requestAnimationFrame(autoScrollStep);
@@ -16555,111 +16559,167 @@ window.updateHomeQuickBudget = function() {
 };
 
 /* ==========================================================================
-   VERIFIED TESTIMONIALS CAROUSEL
+   VERIFIED TESTIMONIALS COMPACT MULTI-ITEM HORIZONTAL SCROLLER
    ========================================================================== */
 const testimonialsList = [
   {
     couple: "علی & سارا",
-    date: "مهر ۱۴۰۳ - صفائیه یزد",
+    date: "مهر ۱۴۰۳ - صفائیه",
     vendor: "هتل باغ مشیرالممالک & استودیو کویر",
-    text: "برنامه‌ریزی عروسی با پلتفرم عروسی‌تو فوق‌العاده راحت و بی‌دردسر بود. از صدور پیش‌فاکتور شفاف تا هماهنگی عکاسی فرمالیته در کویر، همه چیز دقیقاً طبق توافق انجام شد.",
+    text: "برنامه‌ریزی عروسی با عروسی‌تو فوق‌العاده راحت بود. از پیش‌فاکتور شفاف تا عکاسی کویر عالی بود.",
     image: "https://images.unsplash.com/photo-1519741497674-611481863552?auto=format&fit=crop&w=300&q=80",
     rating: "★★★★★"
   },
   {
     couple: "محمد & مریم",
-    date: "شهریور ۱۴۰۳ - میدان اطلسی یزد",
-    vendor: "سالن زیبایی رویال & مزون عروس لورنت",
-    text: "مدل رزرو اقساطی بدون دریافت کمیسیون اضافه بزرگترین کمک به بودجه ما بود. تمام قیمت‌های ثبت شده در سایت ۱۰۰٪ واقعی و تطبیق داده شده بودند.",
+    date: "شهریور ۱۴۰۳ - جمهوری",
+    vendor: "تالار تدارک & سالن زیبایی الماس",
+    text: "مدیریت بودجه و چک‌لیست به ما کمک کرد ۳۰ میلیون تومان صرفه‌جویی کنیم. پشتیبانی عالی بود.",
+    image: "https://images.unsplash.com/photo-1511285560929-80b456fea0bc?auto=format&fit=crop&w=300&q=80",
+    rating: "★★★★★"
+  },
+  {
+    couple: "رضا & نیلوفر",
+    date: "مرداد ۱۴۰۳ - ملاصدرا",
+    vendor: "مزون رویال & آتلیه نورا",
+    text: "کارت دعوت دیجیتال با تم زمرد و طلا رزرو مهمانان را منظم کرد. همه فامیل تعریف کردند.",
     image: "https://images.unsplash.com/photo-1583939003579-730e3918a45a?auto=format&fit=crop&w=300&q=80",
     rating: "★★★★★"
   },
   {
-    couple: "حسین & زهرا",
-    date: "اردیبهشت ۱۴۰۳ - بافت تاریخی یزد",
-    vendor: "دی‌جی و موزیک آریا & شیرینی‌سرای حاج خلیفه رهبر",
-    text: "پشتیبانی پاسخگوی ۲۴/۷ و ابزارهای رایگان تخمین بودجه عالی بودند. خوشحالم که پلتفرم تخصصی عروسی در یزد را انتخاب کردیم.",
-    image: "https://images.unsplash.com/photo-1511285560929-80b456fea0bc?auto=format&fit=crop&w=300&q=80",
+    couple: "امیر & مهسا",
+    date: "تیر ۱۴۰۳ - اطلسی یزد",
+    vendor: "تشریفات رویال & گل‌آرایی یاس",
+    text: "پکیج کامل تشریفات با بهترین تخفیف رزرو شد. تیم مشاوره کنسیرژ دقیقاً همون چیزی رو اجرا کرد که می‌خواستیم.",
+    image: "https://images.unsplash.com/photo-1522673607200-164d1b6ce486?auto=format&fit=crop&w=300&q=80",
+    rating: "★★★★★"
+  },
+  {
+    couple: "حسین & الهام",
+    date: "خرداد ۱۴۰۳ - امامشهر",
+    vendor: "باغ تالار نیاوران & فیلمبرداری رویا",
+    text: "تور ۳۶۰ درجه تالارها قبل از بازدید حضوری خیالمون رو راحت کرد. سرعت پاسخگویی تامین‌کننده‌ها عالیه.",
+    image: "https://images.unsplash.com/photo-1519225421980-715cb0215aed?auto=format&fit=crop&w=300&q=80",
     rating: "★★★★★"
   }
 ];
 
-let currentTestimonialIdx = 0;
-
-window.renderTestimonialCard = function() {
-  const container = document.getElementById('testimonial-card-container');
+window.renderTestimonialsCarousel = function() {
+  const container = document.getElementById('testimonials-carousel-container');
   if (!container) return;
 
-  const item = testimonialsList[currentTestimonialIdx];
-  if (!item) return;
-
-  container.innerHTML = `
-    <div class="flex flex-col sm:flex-row items-center gap-6">
-      <div class="relative shrink-0">
-        <img src="${item.image}" alt="${item.couple}" class="w-20 h-20 sm:w-24 sm:h-24 rounded-2xl object-cover border-2 border-[#D4AF37] shadow-xl">
-        <span class="absolute -bottom-2 -right-2 bg-[#D4AF37] text-[#0F251A] text-[10px] font-black px-2 py-0.5 rounded-full shadow-md">
-          تایید شده
-        </span>
-      </div>
-
-      <div class="space-y-3 flex-1 text-center sm:text-right">
-        <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2 border-b border-[#C5A059]/20 pb-2">
-          <div>
-            <div class="flex items-center justify-center sm:justify-start gap-2">
-              <h3 class="text-base sm:text-lg font-black text-[#F7F5F0]">${item.couple}</h3>
-              <span class="text-amber-300 font-black text-xs flex items-center gap-0.5">⭐ ${item.rating}</span>
+  container.innerHTML = testimonialsList.map((item) => `
+    <div class="shrink-0 w-[280px] sm:w-[320px] rounded-2xl bg-[rgba(14,18,28,0.85)] border border-[rgba(197,160,89,0.25)] hover:border-[#D4AF37] p-4 space-y-3 transition-all duration-300 shadow-lg text-right flex flex-col justify-between">
+      <div class="space-y-2">
+        <div class="flex items-center justify-between">
+          <div class="flex items-center gap-2.5">
+            <div class="relative shrink-0">
+              <img src="${item.image}" alt="${item.couple}" class="w-10 h-10 rounded-full object-cover border border-[#D4AF37]">
+              <span class="absolute -bottom-1 -right-1 bg-[#D4AF37] text-[#0F251A] text-[8px] font-black px-1 rounded-full">✓</span>
             </div>
-            <span class="text-xs text-amber-200/80 font-medium block mt-0.5">📅 ${item.date} • ${item.location || 'یزد'}</span>
+            <div>
+              <h4 class="text-xs font-black text-white">${item.couple}</h4>
+              <span class="text-[9.5px] text-slate-400 block">${item.date}</span>
+            </div>
           </div>
-
-          <span class="text-[10.5px] font-bold text-[#D4AF37] bg-[#D4AF37]/15 border border-[#D4AF37]/30 px-3 py-1 rounded-full shadow-sm">
-            ✨ رزرو تاییدشده: ${item.vendor}
+          <span class="text-[#D4AF37] text-xs tracking-wider bg-[#D4AF37]/10 px-2 py-0.5 rounded-full border border-[#D4AF37]/30 font-bold">
+            ${item.rating}
           </span>
         </div>
 
-        <p class="text-xs sm:text-sm text-slate-200 leading-relaxed font-medium italic bg-[#141A28]/80 p-4 rounded-2xl border border-[#C5A059]/20 shadow-inner relative">
-          <span class="text-[#D4AF37] text-lg font-serif">“</span> ${item.text} <span class="text-[#D4AF37] text-lg font-serif">”</span>
+        <p class="text-[11px] text-slate-200 leading-relaxed font-medium bg-[#141A28]/80 p-3 rounded-xl border border-[#C5A059]/15 relative">
+          <span class="text-[#D4AF37] font-serif">“</span> ${item.text} <span class="text-[#D4AF37] font-serif">”</span>
         </p>
       </div>
-    </div>
-  `;
 
-  for (let i = 0; i < testimonialsList.length; i++) {
-    const dot = document.getElementById(`testimonial-dot-${i}`);
-    if (dot) {
-      if (i === currentTestimonialIdx) {
-        dot.className = "w-3 h-3 rounded-full bg-[#D4AF37] cursor-pointer transition-all shadow-md";
-      } else {
-        dot.className = "w-2.5 h-2.5 rounded-full bg-[#141A28] border border-[#C5A059]/30 cursor-pointer transition-all";
-      }
-    }
-  }
+      <div class="pt-2 border-t border-[#C5A059]/15 flex items-center justify-between text-[9.5px] text-amber-200/80 font-bold">
+        <span>رزرو: ${item.vendor}</span>
+        <span class="text-[#D4AF37]">تاییدشده ✨</span>
+      </div>
+    </div>
+  `).join('');
 
   if (window.lucide) lucide.createIcons();
 };
 
-window.setTestimonialIndex = function(idx) {
-  if (idx >= 0 && idx < testimonialsList.length) {
-    currentTestimonialIdx = idx;
-    window.renderTestimonialCard();
+window.scrollTestimonialCarousel = function(direction) {
+  const container = document.getElementById('testimonials-carousel-container');
+  if (!container) return;
+  const scrollAmount = 300 * direction;
+  container.scrollBy({ left: scrollAmount, behavior: 'smooth' });
+};
+
+function initTestimonialsAutoScroll() {
+  const container = document.getElementById('testimonials-carousel-container');
+  if (!container) return;
+
+  let isPaused = false;
+  let animationFrameId = null;
+
+  function autoScrollStep() {
+    if (!isPaused && container) {
+      const isRTL = getComputedStyle(container).direction === 'rtl';
+      const speed = 0.7;
+
+      if (isRTL) {
+        container.scrollLeft -= speed;
+        if (Math.abs(container.scrollLeft) >= (container.scrollWidth - container.clientWidth - 5)) {
+          container.scrollLeft = 0;
+        }
+      } else {
+        container.scrollLeft += speed;
+        if (container.scrollLeft >= (container.scrollWidth - container.clientWidth - 5)) {
+          container.scrollLeft = 0;
+        }
+      }
+    }
+    animationFrameId = requestAnimationFrame(autoScrollStep);
   }
-};
 
-window.nextTestimonial = function() {
-  currentTestimonialIdx = (currentTestimonialIdx + 1) % testimonialsList.length;
-  window.renderTestimonialCard();
-};
+  container.addEventListener('mouseenter', () => { isPaused = true; });
+  container.addEventListener('mouseleave', () => { isPaused = false; });
+  container.addEventListener('touchstart', () => { isPaused = true; }, { passive: true });
+  container.addEventListener('touchend', () => { isPaused = false; }, { passive: true });
 
-window.prevTestimonial = function() {
-  currentTestimonialIdx = (currentTestimonialIdx - 1 + testimonialsList.length) % testimonialsList.length;
-  window.renderTestimonialCard();
-};
+  let isDown = false;
+  let startX = 0;
+  let scrollLeft = 0;
+
+  container.addEventListener('mousedown', (e) => {
+    isDown = true;
+    isPaused = true;
+    startX = e.pageX - container.offsetLeft;
+    scrollLeft = container.scrollLeft;
+  });
+
+  container.addEventListener('mouseleave', () => {
+    isDown = false;
+    isPaused = false;
+  });
+
+  container.addEventListener('mouseup', () => {
+    isDown = false;
+    isPaused = false;
+  });
+
+  container.addEventListener('mousemove', (e) => {
+    if (!isDown) return;
+    e.preventDefault();
+    const x = e.pageX - container.offsetLeft;
+    const walk = (x - startX) * 1.5;
+    container.scrollLeft = scrollLeft - walk;
+  });
+
+  cancelAnimationFrame(animationFrameId);
+  animationFrameId = requestAnimationFrame(autoScrollStep);
+}
 
 document.addEventListener('DOMContentLoaded', () => {
   setTimeout(() => {
-    if (typeof window.renderTestimonialCard === 'function') {
-      window.renderTestimonialCard();
+    if (typeof window.renderTestimonialsCarousel === 'function') {
+      window.renderTestimonialsCarousel();
     }
+    initTestimonialsAutoScroll();
   }, 300);
 });
 

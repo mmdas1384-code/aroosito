@@ -584,6 +584,20 @@ main#directory-view {
 }
 
 /* ==========================================================================
+   TESTIMONIALS & BENTO CAROUSEL SCROLLER UTILITIES
+   ========================================================================== */
+#testimonials-carousel-container::-webkit-scrollbar,
+.bento-carousel-container::-webkit-scrollbar {
+  display: none;
+}
+
+#testimonials-carousel-container,
+.bento-carousel-container {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+/* ==========================================================================
    FLOATING ONBOARDING CONCIERGE MODAL ("شروع برنامه‌ریزی")
    ========================================================================== */
 #modal-start-planning {

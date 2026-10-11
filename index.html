@@ -1144,7 +1144,7 @@
         </div>
       </section>
 
-      <!-- 9. CINEMATIC COUPLE TESTIMONIALS & REAL EXPERIENCES SLIDER -->
+      <!-- 9. CINEMATIC COUPLE TESTIMONIALS & REAL EXPERIENCES MULTI-ITEM SCROLLER -->
       <section id="verified-testimonials-section" class="relative bg-[#0e121c]/90 backdrop-blur-xl border border-[#C5A059]/30 rounded-3xl p-6 shadow-2xl overflow-hidden my-8 text-white space-y-6">
         <!-- Section Header -->
         <div class="flex items-center justify-between border-b border-[#C5A059]/20 pb-4 flex-wrap gap-3">
@@ -1154,25 +1154,18 @@
           </div>
 
           <div class="flex items-center gap-2 shrink-0">
-            <button type="button" onclick="prevTestimonial()" class="w-9 h-9 rounded-full bg-[#141A28] hover:bg-[#1E293B] text-[#D4AF37] border border-[#C5A059]/30 flex items-center justify-center transition-all cursor-pointer shadow-md hover:scale-110 active:scale-95" title="قبلی">
+            <button type="button" onclick="scrollTestimonialCarousel(-1)" class="w-9 h-9 rounded-full bg-[#141A28] hover:bg-[#1E293B] text-[#D4AF37] border border-[#C5A059]/30 flex items-center justify-center transition-all cursor-pointer shadow-md hover:scale-110 active:scale-95" title="قبلی">
               <i data-lucide="chevron-right" class="w-4 h-4"></i>
             </button>
-            <button type="button" onclick="nextTestimonial()" class="w-9 h-9 rounded-full bg-[#141A28] hover:bg-[#1E293B] text-[#D4AF37] border border-[#C5A059]/30 flex items-center justify-center transition-all cursor-pointer shadow-md hover:scale-110 active:scale-95" title="بعدی">
+            <button type="button" onclick="scrollTestimonialCarousel(1)" class="w-9 h-9 rounded-full bg-[#141A28] hover:bg-[#1E293B] text-[#D4AF37] border border-[#C5A059]/30 flex items-center justify-center transition-all cursor-pointer shadow-md hover:scale-110 active:scale-95" title="بعدی">
               <i data-lucide="chevron-left" class="w-4 h-4"></i>
             </button>
           </div>
         </div>
 
-        <!-- Dynamic Testimonial Editorial Card Container -->
-        <div id="testimonial-card-container" class="bg-[rgba(20,26,38,0.85)] border border-[rgba(197,160,89,0.35)] rounded-3xl p-6 sm:p-8 space-y-4 shadow-xl text-right relative min-h-[180px]">
-          <!-- Populated via JS renderTestimonialCard() -->
-        </div>
-
-        <!-- Slider Pagination Indicators -->
-        <div class="flex items-center justify-center gap-2 pt-1">
-          <span id="testimonial-dot-0" onclick="setTestimonialIndex(0)" class="w-3 h-3 rounded-full bg-[#D4AF37] cursor-pointer transition-all"></span>
-          <span id="testimonial-dot-1" onclick="setTestimonialIndex(1)" class="w-2.5 h-2.5 rounded-full bg-[#141A28] border border-[#C5A059]/30 cursor-pointer transition-all"></span>
-          <span id="testimonial-dot-2" onclick="setTestimonialIndex(2)" class="w-2.5 h-2.5 rounded-full bg-[#141A28] border border-[#C5A059]/30 cursor-pointer transition-all"></span>
+        <!-- MULTI-ITEM COMPACT HORIZONTAL AUTO-SCROLL CAROUSEL CONTAINER -->
+        <div id="testimonials-carousel-container" class="flex gap-4 overflow-x-auto no-scrollbar scroll-smooth p-1 cursor-grab active:cursor-grabbing select-none">
+          <!-- Populated via JS renderTestimonialsCarousel() -->
         </div>
       </section>
 
