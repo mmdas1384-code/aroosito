@@ -4234,6 +4234,26 @@ if (document.readyState === "loading") {
     }
     window.setPriceFilter = setPriceFilter;
 
+    function toggleDirectoryMainView(mode) {
+      const gridView = document.getElementById('directory-magazine-grid-view') || document.getElementById('vendor-grid');
+      const mapView = document.getElementById('directory-interactive-map-view');
+      const btnGrid = document.getElementById('dir-btn-view-grid');
+      const btnMap = document.getElementById('dir-btn-view-map');
+
+      if (mode === 'map') {
+        if (gridView) gridView.classList.add('hidden');
+        if (mapView) mapView.classList.remove('hidden');
+        if (btnGrid) btnGrid.className = 'px-4 py-2 rounded-xl text-xs font-black text-slate-300 hover:text-white transition-all cursor-pointer flex items-center gap-1.5';
+        if (btnMap) btnMap.className = 'px-4 py-2 rounded-xl text-xs font-black bg-[#D4AF37] text-[#0F251A] shadow-md transition-all cursor-pointer flex items-center gap-1.5';
+      } else {
+        if (gridView) gridView.classList.remove('hidden');
+        if (mapView) mapView.classList.add('hidden');
+        if (btnGrid) btnGrid.className = 'px-4 py-2 rounded-xl text-xs font-black bg-[#D4AF37] text-[#0F251A] shadow-md transition-all cursor-pointer flex items-center gap-1.5';
+        if (btnMap) btnMap.className = 'px-4 py-2 rounded-xl text-xs font-black text-slate-300 hover:text-white transition-all cursor-pointer flex items-center gap-1.5';
+      }
+    }
+    window.toggleDirectoryMainView = toggleDirectoryMainView;
+
     window.handleHeroSearchInput = handleHeroSearchInput;
     window.handleHeroSearchFocus = handleHeroSearchFocus;
     window.executeHeroSearch = executeHeroSearch;

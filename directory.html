@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Aroosi No — دایرکتوری لوکس تامین‌کنندگان عروسی استان یزد</title>
+  <title>Aroosi No — هاب استکشافی و دایرکتوری لوکس تامین‌کنندگان یزد</title>
 
   <!-- Vazirmatn Persian Font -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -22,9 +22,9 @@
 </head>
 <body class="bg-[#07090E] text-[#F7F5F0] font-['Vazirmatn'] antialiased min-h-screen flex flex-col">
 
-  <!-- TOP HEADER -->
+  <!-- TOP HEADER WITH FLOATING GLASS PHI BAR -->
   <header class="sticky top-0 z-50 bg-[#0b0f19]/90 backdrop-blur-xl border-b border-[#D4AF37]/35 shadow-2xl">
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-3 flex items-center justify-between">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-3.5 flex items-center justify-between">
       <!-- Right: Brand Logo & Back to Home -->
       <div class="flex items-center gap-3">
         <a href="index.html" class="flex items-center gap-2">
@@ -33,42 +33,112 @@
           </div>
           <div class="text-right">
             <span class="text-sm font-black text-white block">عروسی نو</span>
-            <span class="text-[9px] text-[#D4AF37] font-bold block">Aroosi No Luxury Directory</span>
+            <span class="text-[9px] text-[#D4AF37] font-bold block">Aroosi No Exploration Hub</span>
           </div>
         </a>
       </div>
 
-      <!-- Left: Navigation Links -->
+      <!-- Center / Left: View Mode Controls & Home Link -->
       <div class="flex items-center gap-3">
         <a href="index.html" class="text-xs font-bold text-slate-300 hover:text-[#D4AF37] transition-colors">بازگشت به صفحه اصلی ➔</a>
       </div>
     </div>
   </header>
 
-  <!-- MAIN DIRECTORY CONTAINER -->
-  <main class="flex-1 max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-8 space-y-8">
+  <!-- MAIN EXPLORATION HUB CONTAINER WITH CLEAR TOP BREATHING PADDING (pt-10 / 2.5rem) -->
+  <main class="flex-1 max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 pt-10 pb-16 space-y-8">
     <div id="tab-directory" class="tab-content space-y-8">
 
-      <!-- STICKY TOP GLASS FILTER BAR -->
-      <div id="directory-primary-filter-island" class="bg-[#0e121c]/90 backdrop-blur-xl border border-[#C5A059]/40 rounded-3xl p-4 sm:p-5 shadow-2xl text-white space-y-4">
-        <!-- Filter Header & Search Bar -->
-        <div class="flex flex-col md:flex-row items-center justify-between gap-4">
-          <div class="space-y-1 text-right w-full md:w-auto">
-            <span class="text-[11px] font-black text-[#D4AF37] block">💎 دایرکتوری برندهای تاییدشده یزد</span>
-            <h1 class="text-lg sm:text-xl font-black text-[#F7F5F0]">جستجو و رزرو تامین‌کنندگان لوکس عروسی</h1>
+      <!-- 1. VENDOR STORIES & SHOWCASE HIGHLIGHTS CIRCLE BAR -->
+      <div class="space-y-2">
+        <div class="flex items-center justify-between">
+          <span class="text-xs font-black text-[#D4AF37] flex items-center gap-1">
+            <i data-lucide="play-circle" class="w-4 h-4 text-[#D4AF37]"></i>
+            <span>استوری‌ها و تیزرهای تصویری تامین‌کنندگان برتر یزد</span>
+          </span>
+          <span class="text-[10px] text-slate-400 font-bold">برای مشاهده تیزر روی دایره کلیک کنید</span>
+        </div>
+
+        <div id="story-highlights-bar" class="flex items-center gap-4 overflow-x-auto no-scrollbar py-2 px-1">
+          <div onclick="openStoryLightbox('https://images.unsplash.com/photo-1519167758481-83f550bb49b3?w=800', 'هتل باغ مشیرالممالک')" class="flex flex-col items-center gap-1.5 cursor-pointer group shrink-0">
+            <div class="w-16 h-16 rounded-full p-0.5 bg-gradient-to-tr from-[#D4AF37] via-[#F3E5AB] to-[#8C6D23] shadow-lg group-hover:scale-108 transition-transform">
+              <img src="https://images.unsplash.com/photo-1519167758481-83f550bb49b3?w=150" class="w-full h-full rounded-full object-cover border-2 border-[#07090E]">
+            </div>
+            <span class="text-[10px] font-bold text-slate-200 group-hover:text-[#D4AF37]">مشیرالممالک</span>
           </div>
 
-          <!-- Quick Instant Search Input -->
-          <div class="relative w-full md:w-80">
-            <input id="directory-instant-search" type="text" oninput="filterVendors()" placeholder="جستجوی نام تالار، آتلیه، مزون..." class="w-full bg-[#141A28] border border-[#C5A059]/30 rounded-2xl pr-9 pl-4 py-2 text-xs text-white placeholder-slate-400 focus:outline-none focus:border-[#D4AF37]">
-            <i data-lucide="search" class="w-4 h-4 text-[#D4AF37] absolute right-3 top-2.5"></i>
+          <div onclick="openStoryLightbox('https://images.unsplash.com/photo-1537633552985-df8429e8048b?w=800', 'استودیو کویر')" class="flex flex-col items-center gap-1.5 cursor-pointer group shrink-0">
+            <div class="w-16 h-16 rounded-full p-0.5 bg-gradient-to-tr from-[#D4AF37] via-[#F3E5AB] to-[#8C6D23] shadow-lg group-hover:scale-108 transition-transform">
+              <img src="https://images.unsplash.com/photo-1537633552985-df8429e8048b?w=150" class="w-full h-full rounded-full object-cover border-2 border-[#07090E]">
+            </div>
+            <span class="text-[10px] font-bold text-slate-200 group-hover:text-[#D4AF37]">استودیو کویر</span>
+          </div>
+
+          <div onclick="openStoryLightbox('https://images.unsplash.com/photo-1511285560929-80b456fea0bc?w=800', 'سالن زیبایی رویال')" class="flex flex-col items-center gap-1.5 cursor-pointer group shrink-0">
+            <div class="w-16 h-16 rounded-full p-0.5 bg-gradient-to-tr from-[#D4AF37] via-[#F3E5AB] to-[#8C6D23] shadow-lg group-hover:scale-108 transition-transform">
+              <img src="https://images.unsplash.com/photo-1511285560929-80b456fea0bc?w=150" class="w-full h-full rounded-full object-cover border-2 border-[#07090E]">
+            </div>
+            <span class="text-[10px] font-bold text-slate-200 group-hover:text-[#D4AF37]">زیبایی رویال</span>
+          </div>
+
+          <div onclick="openStoryLightbox('https://images.unsplash.com/photo-1583939003579-730e3918a45a?w=800', 'مزون لورنت')" class="flex flex-col items-center gap-1.5 cursor-pointer group shrink-0">
+            <div class="w-16 h-16 rounded-full p-0.5 bg-gradient-to-tr from-[#D4AF37] via-[#F3E5AB] to-[#8C6D23] shadow-lg group-hover:scale-108 transition-transform">
+              <img src="https://images.unsplash.com/photo-1583939003579-730e3918a45a?w=150" class="w-full h-full rounded-full object-cover border-2 border-[#07090E]">
+            </div>
+            <span class="text-[10px] font-bold text-slate-200 group-hover:text-[#D4AF37]">مزون لورنت</span>
+          </div>
+
+          <div onclick="openStoryLightbox('https://images.unsplash.com/photo-1522673607200-164d1b6ce486?w=800', 'تشریفات یاس')" class="flex flex-col items-center gap-1.5 cursor-pointer group shrink-0">
+            <div class="w-16 h-16 rounded-full p-0.5 bg-gradient-to-tr from-[#D4AF37] via-[#F3E5AB] to-[#8C6D23] shadow-lg group-hover:scale-108 transition-transform">
+              <img src="https://images.unsplash.com/photo-1522673607200-164d1b6ce486?w=150" class="w-full h-full rounded-full object-cover border-2 border-[#07090E]">
+            </div>
+            <span class="text-[10px] font-bold text-slate-200 group-hover:text-[#D4AF37]">تشریفات یاس</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- 2. STICKY TOP GLASS FILTER ISLAND & VIEW MODE SWITCHER -->
+      <div id="directory-primary-filter-island" class="bg-[#0e121c]/90 backdrop-blur-xl border border-[#C5A059]/40 rounded-3xl p-4 sm:p-5 shadow-2xl text-white space-y-4">
+
+        <!-- Header Row with Dual View Switcher -->
+        <div class="flex flex-col md:flex-row items-center justify-between gap-4 border-b border-[#C5A059]/20 pb-4">
+          <div class="space-y-1 text-right w-full md:w-auto">
+            <span class="text-[11px] font-black text-[#D4AF37] block">💎 دایرکتوری برندهای تاییدشده یزد</span>
+            <h1 class="text-lg sm:text-xl font-black text-[#F7F5F0]">هاب استکشافی و رزرو تامین‌کنندگان لوکس</h1>
+          </div>
+
+          <!-- DUAL VIEW SWITCHER: MAGAZINE GRID vs. OBSIDIAN MAP -->
+          <div class="flex items-center gap-2 bg-[#141A28] border border-[#C5A059]/40 p-1.5 rounded-2xl shrink-0 shadow-lg">
+            <button type="button" id="dir-btn-view-grid" onclick="toggleDirectoryMainView('grid')" class="px-4 py-2 rounded-xl text-xs font-black bg-[#D4AF37] text-[#0F251A] shadow-md transition-all cursor-pointer flex items-center gap-1.5">
+              <span>📸 نمایش گرید</span>
+            </button>
+            <button type="button" id="dir-btn-view-map" onclick="toggleDirectoryMainView('map')" class="px-4 py-2 rounded-xl text-xs font-black text-slate-300 hover:text-white transition-all cursor-pointer flex items-center gap-1.5">
+              <span>🗺️ نقشه تعاملی یزد</span>
+            </button>
           </div>
         </div>
 
-        <!-- CATEGORY PILLS BAR -->
-        <div class="space-y-2 pt-2 border-t border-[#C5A059]/20">
-          <span class="text-[10.5px] font-bold text-slate-300 block">دسته‌بندی خدمات:</span>
-          <div id="directory-category-carousel" class="flex items-center gap-2 overflow-x-auto no-scrollbar text-xs font-black">
+        <!-- SEARCH INPUT & VIBE/MOOD FILTERS -->
+        <div class="space-y-3">
+          <div class="flex flex-col md:flex-row items-center justify-between gap-3">
+            <!-- Search Input -->
+            <div class="relative w-full md:w-80">
+              <input id="directory-instant-search" type="text" oninput="filterVendors()" placeholder="جستجوی نام تالار، آتلیه، مزون..." class="w-full bg-[#141A28] border border-[#C5A059]/30 rounded-2xl pr-9 pl-4 py-2 text-xs text-white placeholder-slate-400 focus:outline-none focus:border-[#D4AF37]">
+              <i data-lucide="search" class="w-4 h-4 text-[#D4AF37] absolute right-3 top-2.5"></i>
+            </div>
+
+            <!-- Mood & Vibe Pills -->
+            <div class="flex items-center gap-2 overflow-x-auto no-scrollbar text-xs font-bold w-full md:w-auto">
+              <span class="text-[10.5px] text-amber-300 font-extrabold shrink-0">سبک و استایل:</span>
+              <button type="button" onclick="filterVendorsByCategoryTitle('all')" class="bg-[#141A28] hover:bg-[#1E293B] text-amber-200 border border-[#C5A059]/30 px-3 py-1.5 rounded-xl shrink-0 cursor-pointer">🏛️ سنتی یزد</button>
+              <button type="button" onclick="filterVendorsByCategoryTitle('all')" class="bg-[#141A28] hover:bg-[#1E293B] text-amber-200 border border-[#C5A059]/30 px-3 py-1.5 rounded-xl shrink-0 cursor-pointer">✨ مدرن & لوکس</button>
+              <button type="button" onclick="filterVendorsByCategoryTitle('all')" class="bg-[#141A28] hover:bg-[#1E293B] text-amber-200 border border-[#C5A059]/30 px-3 py-1.5 rounded-xl shrink-0 cursor-pointer">🌿 فضای باز</button>
+              <button type="button" onclick="filterVendorsByCategoryTitle('all')" class="bg-[#141A28] hover:bg-[#1E293B] text-amber-300 border border-[#D4AF37]/50 px-3 py-1.5 rounded-xl shrink-0 cursor-pointer font-black">👑 VIP ویژه</button>
+            </div>
+          </div>
+
+          <!-- CATEGORY PILLS BAR -->
+          <div id="directory-category-carousel" class="flex items-center gap-2 overflow-x-auto no-scrollbar text-xs font-black pt-2 border-t border-[#C5A059]/20">
             <button type="button" onclick="filterVendorsByCategoryTitle('all')" class="bg-[#D4AF37] text-[#0F251A] px-3.5 py-1.5 rounded-xl shrink-0 cursor-pointer shadow-md font-bold">
               همه خدمات
             </button>
@@ -93,34 +163,57 @@
           </div>
         </div>
 
-        <!-- DISTRICT & PRICE TIER FILTER ROW -->
-        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-12 gap-3 pt-2 border-t border-[#C5A059]/20 items-center text-xs">
-          <!-- Neighborhoods Dropdown -->
-          <div class="lg:col-span-4">
-            <select id="header-city-select" onchange="filterVendors()" class="w-full bg-[#141A28] border border-[#C5A059]/30 text-white rounded-xl px-3 py-2 text-xs font-bold focus:outline-none focus:border-[#D4AF37] cursor-pointer">
-              <option value="همه مناطق استان یزد">📍 تمامی مناطق یزد (صفائیه، تفت، جمهوری، ملاصدرا)</option>
-              <option value="صفائیه، یزد">📍 صفائیه یزد</option>
-              <option value="تفت، یزد">📍 تفت (باغ تالارهای خنک)</option>
-              <option value="بلوار جمهوری، یزد">📍 بلوار جمهوری یزد</option>
-              <option value="ملاصدرا، یزد">📍 خیابان ملاصدرا</option>
-            </select>
-          </div>
+      </div>
 
-          <!-- Price Tiers -->
-          <div class="lg:col-span-8 flex items-center gap-2 overflow-x-auto no-scrollbar">
-            <span class="text-[10px] text-slate-300 font-bold shrink-0">سطح قیمت:</span>
-            <button type="button" onclick="setPriceFilter('all')" class="bg-[#D4AF37]/20 text-[#D4AF37] border border-[#D4AF37]/40 px-3 py-1 rounded-lg shrink-0 font-bold">همه</button>
-            <button type="button" onclick="setPriceFilter('economic')" class="bg-[#141A28] text-slate-200 border border-slate-700 px-3 py-1 rounded-lg shrink-0 hover:border-[#D4AF37]">اقتصادی</button>
-            <button type="button" onclick="setPriceFilter('mid')" class="bg-[#141A28] text-slate-200 border border-slate-700 px-3 py-1 rounded-lg shrink-0 hover:border-[#D4AF37]">متوسط-اقتصادی</button>
-            <button type="button" onclick="setPriceFilter('luxury')" class="bg-[#141A28] text-slate-200 border border-slate-700 px-3 py-1 rounded-lg shrink-0 hover:border-[#D4AF37]">لوکس</button>
-            <button type="button" onclick="setPriceFilter('vip')" class="bg-[#141A28] text-amber-300 border border-[#D4AF37]/50 px-3 py-1 rounded-lg shrink-0 hover:border-[#D4AF37] font-bold">👑 ویژه VIP</button>
-          </div>
+      <!-- 3. MAGAZINE GRID VIEW CONTAINER -->
+      <div id="directory-magazine-grid-view" class="space-y-6">
+        <div id="vendor-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+          <!-- Populated dynamically via JS renderVendors() -->
         </div>
       </div>
 
-      <!-- EDITORIAL BENTO GRID CONTAINER -->
-      <div id="vendor-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-        <!-- Populated dynamically via JS renderVendors() -->
+      <!-- 4. OBSIDIAN INTERACTIVE YAZD MAP VIEW CONTAINER -->
+      <div id="directory-interactive-map-view" class="hidden bg-[#0e121c]/90 backdrop-blur-xl border border-[#C5A059]/40 rounded-3xl p-6 shadow-2xl text-right space-y-4">
+        <div class="flex items-center justify-between border-b border-[#C5A059]/20 pb-3">
+          <span class="text-xs font-black text-[#D4AF37]">🗺️ نقشه تعاملی تامین‌کنندگان استان یزد</span>
+          <span class="text-[10.5px] text-slate-400 font-bold">روی پین‌های طلایی جهت مشاهده مشخصات کلیک کنید</span>
+        </div>
+
+        <div class="relative w-full h-[450px] rounded-2xl overflow-hidden border border-[#C5A059]/30 bg-[#07090E] flex items-center justify-center p-4">
+          <!-- Dark Map Stylized Canvas -->
+          <div class="absolute inset-0 opacity-40 bg-[radial-gradient(#D4AF37_1px,transparent_1px)] [background-size:16px_16px]"></div>
+
+          <!-- Animated Map Pins -->
+          <div class="relative z-10 w-full h-full flex flex-col justify-between p-6 text-xs">
+            <div class="flex justify-between items-start">
+              <div onclick="openVendorDetailModal(1)" class="bg-[#141A28] border-2 border-[#D4AF37] p-2.5 rounded-2xl shadow-2xl cursor-pointer hover:scale-110 transition-transform flex items-center gap-2">
+                <span class="w-3 h-3 rounded-full bg-[#D4AF37] animate-ping"></span>
+                <div>
+                  <p class="font-black text-white text-[11px]">هتل باغ مشیرالممالک</p>
+                  <span class="text-[9.5px] text-amber-300 block">صفائیه یزد • ⭐ ۴.۹</span>
+                </div>
+              </div>
+
+              <div onclick="openVendorDetailModal(2)" class="bg-[#141A28] border-2 border-[#D4AF37] p-2.5 rounded-2xl shadow-2xl cursor-pointer hover:scale-110 transition-transform flex items-center gap-2">
+                <span class="w-3 h-3 rounded-full bg-[#D4AF37] animate-ping"></span>
+                <div>
+                  <p class="font-black text-white text-[11px]">استودیو کویر یزد</p>
+                  <span class="text-[9.5px] text-amber-300 block">بلوار جمهوری • ⭐ ۴.۸</span>
+                </div>
+              </div>
+            </div>
+
+            <div class="flex justify-around items-end">
+              <div onclick="openVendorDetailModal(3)" class="bg-[#141A28] border-2 border-[#D4AF37] p-2.5 rounded-2xl shadow-2xl cursor-pointer hover:scale-110 transition-transform flex items-center gap-2">
+                <span class="w-3 h-3 rounded-full bg-[#D4AF37] animate-ping"></span>
+                <div>
+                  <p class="font-black text-white text-[11px]">مزون رویال لورنت</p>
+                  <span class="text-[9.5px] text-amber-300 block">خیابان ملاصدرا • ⭐ ۵.۰</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
 
     </div>
