@@ -4,10 +4,8 @@ const HOME_VIEW_HTML = `<main id="home-view" class="flex-1 max-w-7xl w-full mx-a
     <!-- HOMEPAGE CONTENT MODULE (home-view.html) -->
     <div id="tab-home" class="tab-content space-y-12">
 
-      <!-- 2. ULTRA-SLIM & COMPACT EDITORIAL HERO SECTION -->
-            <!-- 2. ULTRA-LUXURY EDITORIAL HERO SECTION WITH INTEGRATED AI SIDEBAR & METRICS -->
-            <!-- 2. ULTRA-LUXURY EDITORIAL HERO SECTION WITH DISTINCT LEFT SIDEBAR BOX -->
-      <section id="hero" class="relative bg-[#0b0f19] border border-[#D4AF37]/40 rounded-3xl p-5 sm:p-6 lg:p-8 shadow-2xl overflow-hidden text-white space-y-6">
+      <!-- 2. ULTRA-SLIM & COMPACT EDITORIAL HERO SECTION WITH TOP BREATHING GAP -->
+      <section id="hero" class="relative mt-6 sm:mt-8 bg-[#0b0f19] border border-[#D4AF37]/40 rounded-3xl p-5 sm:p-6 lg:p-8 shadow-2xl overflow-hidden text-white space-y-6">
         <!-- Ambient Gold Radial Illumination -->
         <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[500px] h-[500px] bg-[#D4AF37]/10 rounded-full blur-3xl pointer-events-none"></div>
 
@@ -163,7 +161,7 @@ const HOME_VIEW_HTML = `<main id="home-view" class="flex-1 max-w-7xl w-full mx-a
         </div>
 
         <!-- BENTO HORIZONTAL AUTO-SCROLL CAROUSEL CONTAINER -->
-        <div id="vip-showcase-container" class="bento-carousel-container flex gap-3 overflow-x-auto no-scrollbar scroll-smooth p-1 cursor-grab active:cursor-grabbing select-none">
+        <div id="vip-showcase-container" class="bento-carousel-container flex gap-3 overflow-x-auto no-scrollbar p-1 cursor-grab active:cursor-grabbing select-none">
 
           <!-- Bento Card 1 -->
           <div data-vip-cat="hall" class="vip-bento-card group relative shrink-0 w-[230px] sm:w-[250px] rounded-2xl bg-[rgba(14,18,28,0.85)] border border-[rgba(197,160,89,0.25)] hover:border-[#D4AF37] overflow-hidden transition-all duration-300 shadow-xl cursor-pointer" onclick="openVendorDetailModal(1)">
@@ -11685,76 +11683,88 @@ window.shareReceiptWhatsApp = function() {
                                 document.querySelector('.bento-carousel-container');
       if (!showcaseContainer) return;
 
-      // Disable CSS smooth scroll to prevent conflicting animation frames on JS scrollLeft
+      // Disable CSS smooth scroll to ensure instant, unthrottled frame updates
       showcaseContainer.style.scrollBehavior = 'auto';
 
+      // Clone children once to ensure a seamless infinite marquee scroll track
+      if (!showcaseContainer._isCloned) {
+        const originalCards = Array.from(showcaseContainer.children);
+        originalCards.forEach(card => {
+          const clone = card.cloneNode(true);
+          showcaseContainer.appendChild(clone);
+        });
+        showcaseContainer._isCloned = true;
+      }
+
       let isPaused = false;
-      let animationFrameId = null;
 
       function autoScrollStep() {
         if (!isPaused && showcaseContainer) {
-          const maxScroll = showcaseContainer.scrollWidth - showcaseContainer.clientWidth;
-          if (maxScroll > 0) {
-            const isRTL = getComputedStyle(showcaseContainer).direction === 'rtl';
-            const step = 0.8;
+          const halfWidth = showcaseContainer.scrollWidth / 2;
+          const step = 0.85;
 
-            if (isRTL) {
-              // Handle RTL scrollLeft variations across browsers (negative vs positive)
-              if (showcaseContainer.scrollLeft < 0) {
-                showcaseContainer.scrollLeft -= step;
-                if (Math.abs(showcaseContainer.scrollLeft) >= maxScroll - 5) {
-                  showcaseContainer.scrollLeft = 0;
-                }
-              } else {
-                showcaseContainer.scrollLeft += step;
-                if (showcaseContainer.scrollLeft >= maxScroll - 5) {
-                  showcaseContainer.scrollLeft = 0;
-                }
+          // Cross-browser RTL/LTR scrollLeft calculation
+          const isRTL = getComputedStyle(showcaseContainer).direction === 'rtl';
+
+          if (isRTL) {
+            if (showcaseContainer.scrollLeft < 0) {
+              showcaseContainer.scrollLeft -= step;
+              if (Math.abs(showcaseContainer.scrollLeft) >= halfWidth) {
+                showcaseContainer.scrollLeft = 0;
               }
             } else {
               showcaseContainer.scrollLeft += step;
-              if (showcaseContainer.scrollLeft >= maxScroll - 5) {
+              if (showcaseContainer.scrollLeft >= halfWidth) {
                 showcaseContainer.scrollLeft = 0;
               }
             }
+          } else {
+            showcaseContainer.scrollLeft += step;
+            if (showcaseContainer.scrollLeft >= halfWidth) {
+              showcaseContainer.scrollLeft = 0;
+            }
           }
         }
-        animationFrameId = requestAnimationFrame(autoScrollStep);
+        showcaseContainer._autoScrollTimer = requestAnimationFrame(autoScrollStep);
       }
 
-      showcaseContainer.addEventListener('mouseenter', () => { isPaused = true; });
-      showcaseContainer.addEventListener('mouseleave', () => { isPaused = false; });
-      showcaseContainer.addEventListener('touchstart', () => { isPaused = true; }, { passive: true });
-      showcaseContainer.addEventListener('touchend', () => { isPaused = false; }, { passive: true });
+      if (!showcaseContainer._listenersAttached) {
+        showcaseContainer.addEventListener('mouseenter', () => { isPaused = true; });
+        showcaseContainer.addEventListener('mouseleave', () => { isPaused = false; });
+        showcaseContainer.addEventListener('touchstart', () => { isPaused = true; }, { passive: true });
+        showcaseContainer.addEventListener('touchend', () => { isPaused = false; }, { passive: true });
 
-      let isDown = false;
-      let startX = 0;
-      let scrollLeft = 0;
+        let isDown = false;
+        let startX = 0;
+        let scrollLeft = 0;
 
-      showcaseContainer.addEventListener('mousedown', (e) => {
-        isDown = true;
-        isPaused = true;
-        startX = e.pageX - showcaseContainer.offsetLeft;
-        scrollLeft = showcaseContainer.scrollLeft;
-      });
+        showcaseContainer.addEventListener('mousedown', (e) => {
+          isDown = true;
+          isPaused = true;
+          startX = e.pageX - showcaseContainer.offsetLeft;
+          scrollLeft = showcaseContainer.scrollLeft;
+        });
 
-      showcaseContainer.addEventListener('mouseleave', () => {
-        isDown = false;
-        isPaused = false;
-      });
+        showcaseContainer.addEventListener('mouseleave', () => {
+          isDown = false;
+          isPaused = false;
+        });
 
-      showcaseContainer.addEventListener('mouseup', () => {
-        isDown = false;
-        isPaused = false;
-      });
+        showcaseContainer.addEventListener('mouseup', () => {
+          isDown = false;
+          isPaused = false;
+        });
 
-      showcaseContainer.addEventListener('mousemove', (e) => {
-        if (!isDown) return;
-        e.preventDefault();
-        const x = e.pageX - showcaseContainer.offsetLeft;
-        const walk = (x - startX) * 1.5;
-        showcaseContainer.scrollLeft = scrollLeft - walk;
-      });
+        showcaseContainer.addEventListener('mousemove', (e) => {
+          if (!isDown) return;
+          e.preventDefault();
+          const x = e.pageX - showcaseContainer.offsetLeft;
+          const walk = (x - startX) * 1.5;
+          showcaseContainer.scrollLeft = scrollLeft - walk;
+        });
+
+        showcaseContainer._listenersAttached = true;
+      }
 
       if (showcaseContainer._autoScrollTimer) {
         cancelAnimationFrame(showcaseContainer._autoScrollTimer);
