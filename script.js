@@ -960,6 +960,47 @@ const DIRECTORY_VIEW_HTML = `<!-- ISOLATED VENDOR DIRECTORY CONTENT MODULE (dire
     </div>
   </div>
 
+  <!-- ADVANCED SLIDE-OVER GLASS FILTER DRAWER -->
+  <div id="directory-advanced-filters-drawer" class="fixed inset-0 top-0 right-0 left-0 bottom-0 h-screen w-screen z-[999999] bg-[#07090E]/85 backdrop-blur-2xl flex justify-end hidden" onclick="if(event.target === this) toggleAdvancedFiltersDrawer()">
+    <div class="w-full max-w-md h-full bg-[#07090E] border-l border-[#C5A059]/40 p-6 space-y-6 overflow-y-auto text-right shadow-2xl text-white relative z-[1000000]" onclick="event.stopPropagation()">
+      <div class="flex items-center justify-between border-b border-[#C5A059]/30 pb-4">
+        <h3 class="text-base font-black text-[#D4AF37] flex items-center gap-2">
+          <span>⚙️ فیلترهای پیشرفته جستجو</span>
+        </h3>
+        <button type="button" onclick="toggleAdvancedFiltersDrawer()" class="w-8 h-8 rounded-full bg-[#141A28] text-slate-300 hover:text-white flex items-center justify-center border border-slate-700 cursor-pointer">
+          <i data-lucide="x" class="w-4 h-4"></i>
+        </button>
+      </div>
+
+      <!-- Capacity Filter Slider -->
+      <div class="space-y-2">
+        <label class="text-xs font-bold text-slate-300 block">ظرفیت مهمانان:</label>
+        <input type="range" min="50" max="1500" step="50" value="500" oninput="document.getElementById('adv-cap-val').textContent = this.value + ' نفر'; filterVendors();" class="w-full accent-[#D4AF37]">
+        <div class="flex justify-between text-[11px] text-amber-300 font-bold">
+          <span>۵۰ نفر</span>
+          <span id="adv-cap-val">۵۰۰ نفر</span>
+          <span>۱۵۰۰+ نفر</span>
+        </div>
+      </div>
+
+      <!-- Price Tier Radios -->
+      <div class="space-y-2">
+        <label class="text-xs font-bold text-slate-300 block">رنج قیمتی خدمات:</label>
+        <div class="grid grid-cols-3 gap-2 text-xs font-bold">
+          <button type="button" onclick="setPriceFilter('economic')" class="bg-[#141A28] border border-[#C5A059]/30 hover:border-[#D4AF37] text-amber-200 py-2 rounded-xl">اقتصادی</button>
+          <button type="button" onclick="setPriceFilter('mid')" class="bg-[#141A28] border border-[#C5A059]/30 hover:border-[#D4AF37] text-amber-200 py-2 rounded-xl">متوسط</button>
+          <button type="button" onclick="setPriceFilter('luxury')" class="bg-[#141A28] border border-[#C5A059]/30 hover:border-[#D4AF37] text-amber-300 py-2 rounded-xl font-black">VIP لوکس</button>
+        </div>
+      </div>
+
+      <div class="pt-4 border-t border-slate-800">
+        <button type="button" onclick="toggleAdvancedFiltersDrawer(); filterVendors();" class="w-full gold-shimmer-btn text-[#0F251A] font-black py-3 rounded-2xl text-xs shadow-xl cursor-pointer">
+          اعمال فیلترها & به‌روزرسانی
+        </button>
+      </div>
+    </div>
+  </div>
+
 </div>`;
 
 async function loadViewTemplates() {
@@ -13986,22 +14027,55 @@ window.renderVendorPortfolioTimeline = function(vendor, activeStageIndex = 0) {
 let current360PanOffset = 0;
 
 window.open360TourModal = function(vendorId) {
-  const modal = document.getElementById('modal-360-tour');
-  const vendorObj = (typeof vendors !== 'undefined' ? vendors : []).find(v => v && v.id === vendorId) || { name: 'تالار و باغ تشریفات عروسی یزد' };
+  let modal = document.getElementById('modal-360-tour');
 
+  if (!modal) {
+    modal = document.createElement('div');
+    modal.id = 'modal-360-tour';
+    modal.className = 'fixed inset-0 z-[999999] hidden bg-[#07090E]/95 backdrop-blur-2xl flex items-center justify-center p-4 sm:p-6';
+    modal.setAttribute('onclick', 'if(event.target===this) close360TourModal()');
+    modal.innerHTML = `
+      <div class="relative w-full max-w-4xl bg-[#0e121c] border border-[#C5A059]/50 rounded-3xl overflow-hidden shadow-2xl space-y-4 p-5 text-right text-white" onclick="event.stopPropagation()">
+        <div class="flex items-center justify-between border-b border-[#C5A059]/30 pb-3">
+          <div class="flex items-center gap-2">
+            <span class="w-3 h-3 rounded-full bg-[#D4AF37] animate-ping"></span>
+            <h3 id="m360-vendor-name" class="text-sm sm:text-base font-black text-[#D4AF37]">تور مجازی ۳۶۰ درجه و نمونه‌کار زنده</h3>
+          </div>
+          <button type="button" onclick="close360TourModal()" class="w-8 h-8 rounded-full bg-[#141A28] text-slate-300 hover:text-white flex items-center justify-center border border-slate-700 cursor-pointer">
+            <i data-lucide="x" class="w-4 h-4"></i>
+          </button>
+        </div>
+        <div class="relative w-full h-[350px] sm:h-[450px] rounded-2xl overflow-hidden border border-[#C5A059]/30 bg-black flex items-center justify-center">
+          <img id="m360-pano-container" src="https://images.unsplash.com/photo-1519167758481-83f550bb49b3?w=1600" class="w-full h-full object-cover transition-transform duration-500 ease-out scale-110" alt="360 Panorama">
+          <div class="absolute bottom-4 left-1/2 -translate-x-1/2 flex items-center gap-3 bg-[#07090E]/80 backdrop-blur-md border border-[#D4AF37]/40 px-4 py-2 rounded-2xl shadow-xl z-20">
+            <button type="button" onclick="rotate360Panorama('left')" class="p-2 rounded-xl bg-[#141A28] text-amber-200 hover:bg-[#1E293B] cursor-pointer">
+              <i data-lucide="chevron-right" class="w-5 h-5"></i>
+            </button>
+            <span class="text-xs font-bold text-amber-300">چرخش ۳۶۰° پانوراما</span>
+            <button type="button" onclick="rotate360Panorama('right')" class="p-2 rounded-xl bg-[#141A28] text-amber-200 hover:bg-[#1E293B] cursor-pointer">
+              <i data-lucide="chevron-left" class="w-5 h-5"></i>
+            </button>
+          </div>
+        </div>
+      </div>
+    `;
+    document.body.appendChild(modal);
+  }
+
+  const vendorObj = (typeof vendors !== 'undefined' ? vendors : []).find(v => v && v.id === vendorId) || { name: 'هتل باغ و تشریفات مشیرالممالک یزد' };
   const nameEl = document.getElementById('m360-vendor-name');
-  if (nameEl) nameEl.innerText = vendorObj.name;
+  if (nameEl) nameEl.innerText = `تور ۳۶۰° — ${vendorObj.name}`;
 
   current360PanOffset = 0;
   const container = document.getElementById('m360-pano-container');
   if (container) {
+    if (vendorObj.image) container.src = vendorObj.image;
     container.style.transform = `scale(1.1) translateX(${current360PanOffset}px)`;
   }
 
-  if (modal) {
-    modal.classList.remove('hidden');
-    modal.classList.add('flex');
-  }
+  modal.classList.remove('hidden');
+  modal.classList.add('flex');
+  document.body.style.overflow = 'hidden';
   if (window.lucide) lucide.createIcons();
 };
 
@@ -17087,7 +17161,39 @@ const storyHighlightsData = {
 };
 
 window.openStoryLightbox = function(storyId) {
-  const modal = document.getElementById('modal-story-lightbox');
+  let modal = document.getElementById('modal-story-lightbox');
+
+  if (!modal) {
+    modal = document.createElement('div');
+    modal.id = 'modal-story-lightbox';
+    modal.className = 'hidden fixed inset-0 z-[999999] bg-[#07090E]/95 backdrop-blur-2xl flex items-center justify-center p-3 animate-fadeIn';
+    modal.setAttribute('onclick', 'if(event.target === this) closeStoryLightbox()');
+    modal.innerHTML = `
+      <div class="relative w-full max-w-sm sm:max-w-md bg-[#0e121c] border border-[#C5A059]/50 rounded-3xl overflow-hidden shadow-2xl text-right text-white space-y-3 p-4" onclick="event.stopPropagation()">
+        <div class="flex items-center justify-between border-b border-[#C5A059]/30 pb-3">
+          <div class="flex items-center gap-2.5">
+            <img id="story-lightbox-avatar" src="https://images.unsplash.com/photo-1519167758481-83f550bb49b3?w=150" class="w-10 h-10 rounded-full object-cover border border-[#D4AF37]">
+            <div>
+              <h4 id="story-lightbox-vendor-name" class="text-xs font-black text-white">نام مجموعه</h4>
+              <span id="story-lightbox-category" class="text-[10px] text-amber-300 font-bold block">دسته‌بندی</span>
+            </div>
+          </div>
+          <button type="button" onclick="closeStoryLightbox()" class="w-8 h-8 rounded-full bg-[#141A28] text-slate-300 hover:text-white flex items-center justify-center border border-slate-700 cursor-pointer">
+            <i data-lucide="x" class="w-4 h-4"></i>
+          </button>
+        </div>
+        <div class="relative w-full h-80 sm:h-96 rounded-2xl overflow-hidden border border-[#C5A059]/30">
+          <img id="story-lightbox-img" src="https://images.unsplash.com/photo-1519167758481-83f550bb49b3?w=800" class="w-full h-full object-cover">
+        </div>
+        <p id="story-lightbox-caption" class="text-xs text-slate-300 leading-relaxed font-medium">توضیحات تیزر و استوری</p>
+        <button type="button" id="story-lightbox-profile-btn" class="w-full gold-shimmer-btn text-[#0F251A] font-black py-2.5 rounded-xl text-xs shadow-lg cursor-pointer">
+          مشاهده پروفایل و رزرو ➔
+        </button>
+      </div>
+    `;
+    document.body.appendChild(modal);
+  }
+
   const img = document.getElementById('story-lightbox-img');
   const avatar = document.getElementById('story-lightbox-avatar');
   const vendorName = document.getElementById('story-lightbox-vendor-name');
@@ -17095,8 +17201,14 @@ window.openStoryLightbox = function(storyId) {
   const caption = document.getElementById('story-lightbox-caption');
   const profileBtn = document.getElementById('story-lightbox-profile-btn');
 
-  if (!modal) return;
-  const data = storyHighlightsData[storyId] || storyHighlightsData[1];
+  const data = (typeof storyHighlightsData !== 'undefined' ? storyHighlightsData[storyId] : null) || {
+    image: "https://images.unsplash.com/photo-1519167758481-83f550bb49b3?w=800",
+    avatar: "https://images.unsplash.com/photo-1519167758481-83f550bb49b3?w=150",
+    vendorName: "هتل باغ مشیرالممالک یزد",
+    category: "تالار و تشریفات",
+    caption: "تیزر تصویری و چیدمان سفره عقد اسلیمی سنتی بافت تاریخی یزد",
+    vendorId: 1
+  };
 
   if (img) img.src = data.image;
   if (avatar) avatar.src = data.avatar;
@@ -17104,11 +17216,12 @@ window.openStoryLightbox = function(storyId) {
   if (category) category.innerText = data.category;
   if (caption) caption.innerText = data.caption;
   if (profileBtn) {
-    profileBtn.setAttribute('onclick', `closeStoryLightbox(); openVendorDetailModal(${data.vendorId})`);
+    profileBtn.setAttribute('onclick', `closeStoryLightbox(); openVendorDetailModal(${data.vendorId || 1})`);
   }
 
   modal.classList.remove('hidden');
   modal.classList.add('flex');
+  document.body.style.overflow = 'hidden';
   if (window.lucide) lucide.createIcons();
 };
 

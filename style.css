@@ -2606,3 +2606,20 @@ main.vendor-showroom-main {
   backdrop-filter: blur(20px) !important;
   border-top: 1px solid rgba(197, 160, 89, 0.4) !important;
 }
+
+
+/* High Z-Index Lightbox & 360 Tour Modals */
+#modal-360-tour,
+#modal-story-lightbox {
+  position: fixed !important;
+  top: 0 !important;
+  left: 0 !important;
+  right: 0 !important;
+  bottom: 0 !important;
+  width: 100vw !important;
+  height: 100vh !important;
+  z-index: 999999 !important;
+  background-color: rgba(7, 9, 14, 0.95) !important;
+  backdrop-filter: blur(20px) !important;
+  -webkit-backdrop-filter: blur(20px) !important;
+}
