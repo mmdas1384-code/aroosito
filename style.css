@@ -584,6 +584,21 @@ main#directory-view {
 }
 
 /* ==========================================================================
+   ONBOARDING CONCIERGE CONSOLE ("شروع برنامه‌ریزی")
+   ========================================================================== */
+#start-planning-console {
+  background: rgba(14, 18, 28, 0.88);
+  border: 1px solid rgba(197, 160, 89, 0.35);
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4), 0 0 20px rgba(197, 160, 89, 0.08);
+}
+
+#start-planning-console input:focus,
+#start-planning-console select:focus {
+  border-color: #D4AF37;
+  box-shadow: 0 0 10px rgba(212, 175, 55, 0.25);
+}
+
+/* ==========================================================================
    MULTI-STEP INQUIRY MODAL DISPLAY SCOPED STYLES
    ========================================================================== */
 #inquiry-modal #inquiry-step-1:not(.hidden),

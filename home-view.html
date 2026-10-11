@@ -13,8 +13,8 @@
         <div class="grid grid-cols-1 lg:grid-cols-12 gap-6 items-stretch relative z-10">
 
           <!-- RIGHT / CENTRAL AREA: Brand Headline & Search Input Bar -->
-          <div class="lg:col-span-7 flex flex-col justify-between space-y-6 text-right">
-            <div class="space-y-4">
+          <div class="lg:col-span-7 flex flex-col justify-between items-center text-center space-y-6">
+            <div class="space-y-4 flex flex-col items-center">
               <div class="inline-flex items-center gap-2 bg-[#D4AF37]/15 text-[#D4AF37] border border-[#D4AF37]/40 px-3.5 py-1.5 rounded-full text-xs font-black">
                 <i data-lucide="crown" class="w-4 h-4 text-[#D4AF37]"></i>
                 <span>Aroosi No — The Definitive Luxury Wedding Directory</span>
@@ -29,8 +29,8 @@
               </p>
             </div>
 
-            <!-- Clean Search Input Bar & Floating Dropdown -->
-            <div class="relative max-w-xl w-full pt-2">
+            <!-- Centered Search Input Bar & Floating Dropdown -->
+            <div class="relative max-w-xl w-full pt-2 mx-auto">
               <div class="flex items-center gap-2 bg-[#0F172A]/90 backdrop-blur-md border border-[#D4AF37]/60 rounded-full p-2 shadow-[0_8px_25px_rgba(212,175,55,0.15)] focus-within:border-[#D4AF37] focus-within:ring-2 focus-within:ring-[#D4AF37]/50 transition-all">
                 <div class="relative flex-1 flex items-center pr-3">
                   <i data-lucide="search" class="w-4 h-4 text-[#D4AF37] shrink-0"></i>
@@ -46,6 +46,164 @@
               <!-- FLOATING TRANSLUCENT MULTI-RESULT DROPDOWN -->
               <div id="hero-search-dropdown" class="hidden absolute top-full right-0 left-0 mt-2 bg-[#0F172A]/95 backdrop-blur-xl text-white border border-[#D4AF37]/50 rounded-2xl shadow-2xl z-50 overflow-hidden text-right">
                 <!-- Dynamically populated via JS -->
+              </div>
+            </div>
+
+            <!-- "شروع برنامه‌ریزی" ONBOARDING CONCIERGE CONSOLE MODULE -->
+            <div id="start-planning-console" class="w-full max-w-xl mx-auto bg-[#0e121c]/90 backdrop-blur-xl border border-[#C5A059]/40 rounded-3xl p-4 sm:p-5 shadow-2xl text-right space-y-4 transition-all">
+              <!-- Console Header & Wizard Progress Indicators -->
+              <div class="flex items-center justify-between border-b border-[#C5A059]/20 pb-3">
+                <div class="flex items-center gap-2">
+                  <span class="w-2.5 h-2.5 rounded-full bg-[#C5A059] animate-pulse"></span>
+                  <span class="text-xs sm:text-sm font-black text-[#D4AF37]">✨ شروع برنامه‌ریزی هوشمند</span>
+                </div>
+                <div class="flex items-center gap-1 text-[11px] font-bold text-slate-300">
+                  <span id="planning-step-num" class="text-[#D4AF37]">۱</span> از <span>۳</span>
+                </div>
+              </div>
+
+              <!-- PROGRESS STEP BARS -->
+              <div class="grid grid-cols-3 gap-2">
+                <div id="planning-bar-1" class="h-1.5 rounded-full bg-[#C5A059] transition-all"></div>
+                <div id="planning-bar-2" class="h-1.5 rounded-full bg-slate-700/80 transition-all"></div>
+                <div id="planning-bar-3" class="h-1.5 rounded-full bg-slate-700/80 transition-all"></div>
+              </div>
+
+              <!-- STEP 1: QUICK VIP ACCESS / LOGIN -->
+              <div id="planning-panel-1" class="space-y-3">
+                <p class="text-xs text-slate-200 font-medium leading-relaxed">
+                  ورود سریع یا ثبت‌نام به عنوان زوج برای باز شدن دستیار اختصاصی عروسی:
+                </p>
+                <div class="flex flex-col sm:flex-row items-center gap-2">
+                  <input id="planning-phone-input" type="tel" placeholder="۰۹۱۲۳ND4567 (شماره همراه)" class="w-full sm:flex-1 bg-[#141A28] border border-[#C5A059]/30 rounded-xl px-3.5 py-2 text-xs text-white placeholder-slate-400 focus:outline-none focus:border-[#D4AF37]">
+                  <button type="button" onclick="handlePlanningQuickAccess()" class="w-full sm:w-auto gold-shimmer-btn text-[#0F251A] font-black px-4 py-2 rounded-xl text-xs shrink-0 cursor-pointer flex items-center justify-center gap-1">
+                    <span>تایید & ادامه</span>
+                    <i data-lucide="arrow-left" class="w-3.5 h-3.5 text-[#0F251A]"></i>
+                  </button>
+                </div>
+                <div class="flex items-center justify-between text-[10.5px] text-slate-400 pt-1">
+                  <button type="button" onclick="setPlanningWizardStep(2)" class="text-[#D4AF37] hover:underline cursor-pointer">ورود به عنوان مهمان (رد شدن) ➔</button>
+                  <span class="flex items-center gap-1"><i data-lucide="shield-check" class="w-3 h-3 text-[#D4AF37]"></i> ۱۰۰٪ رایگان و امن</span>
+                </div>
+              </div>
+
+              <!-- STEP 2: SHAMSI DATE PICKER -->
+              <div id="planning-panel-2" class="hidden space-y-3">
+                <div class="flex items-center justify-between">
+                  <p class="text-xs text-slate-200 font-medium">تاریخ تقریبی برگزاری مراسم عروسی شما:</p>
+                  <span id="selected-shamsi-date-badge" class="text-[11px] font-bold text-[#D4AF37] bg-[#D4AF37]/10 px-2.5 py-0.5 rounded-full border border-[#D4AF37]/30">انتخاب نشده</span>
+                </div>
+
+                <!-- COMPACT SHAMSI MONTH/YEAR SELECTORS -->
+                <div class="grid grid-cols-3 gap-2 text-xs">
+                  <div>
+                    <label class="text-[10px] text-slate-400 block mb-1">سال:</label>
+                    <select id="shamsi-year-select" onchange="updateShamsiDateFromSelect()" class="w-full bg-[#141A28] border border-[#C5A059]/30 rounded-xl px-2 py-1.5 text-white font-bold focus:outline-none text-xs">
+                      <option value="1403">۱۴۰۳</option>
+                      <option value="1404" selected>۱۴۰۴</option>
+                      <option value="1405">۱۴۰۵</option>
+                    </select>
+                  </div>
+                  <div>
+                    <label class="text-[10px] text-slate-400 block mb-1">ماه:</label>
+                    <select id="shamsi-month-select" onchange="updateShamsiDateFromSelect()" class="w-full bg-[#141A28] border border-[#C5A059]/30 rounded-xl px-2 py-1.5 text-white font-bold focus:outline-none text-xs">
+                      <option value="فروردین">فروردین</option>
+                      <option value="اردیبهشت">اردیبهشت</option>
+                      <option value="خرداد">خرداد</option>
+                      <option value="تیر">تیر</option>
+                      <option value="مرداد">مرداد</option>
+                      <option value="شهریور">شهریور</option>
+                      <option value="مهر" selected>مهر</option>
+                      <option value="آبان">آبان</option>
+                      <option value="آذر">آذر</option>
+                      <option value="دی">دی</option>
+                      <option value="بهمن">بهمن</option>
+                      <option value="اسفند">اسفند</option>
+                    </select>
+                  </div>
+                  <div>
+                    <label class="text-[10px] text-slate-400 block mb-1">روز:</label>
+                    <select id="shamsi-day-select" onchange="updateShamsiDateFromSelect()" class="w-full bg-[#141A28] border border-[#C5A059]/30 rounded-xl px-2 py-1.5 text-white font-bold focus:outline-none text-xs">
+                      <option value="۱">۱</option>
+                      <option value="۵">۵</option>
+                      <option value="۱۰">۱۰</option>
+                      <option value="۱۵" selected>۱۵</option>
+                      <option value="۲۰">۲۰</option>
+                      <option value="۲۵">۲۵</option>
+                      <option value="۳۰">۳۰</option>
+                    </select>
+                  </div>
+                </div>
+
+                <div class="flex items-center justify-between pt-1">
+                  <button type="button" onclick="setPlanningWizardStep(1)" class="text-xs text-slate-400 hover:text-white cursor-pointer flex items-center gap-1">
+                    <i data-lucide="chevron-right" class="w-3.5 h-3.5"></i> قبلی
+                  </button>
+                  <button type="button" onclick="confirmShamsiWeddingDate()" class="gold-shimmer-btn text-[#0F251A] font-black px-4 py-1.5 rounded-xl text-xs cursor-pointer flex items-center gap-1">
+                    <span>ثبت تاریخ & مشاهده نقشه راه</span>
+                    <i data-lucide="arrow-left" class="w-3.5 h-3.5 text-[#0F251A]"></i>
+                  </button>
+                </div>
+              </div>
+
+              <!-- STEP 3: INTERACTIVE 4-STEP JOURNEY ROADMAP -->
+              <div id="planning-panel-3" class="hidden space-y-3">
+                <div class="flex items-center justify-between">
+                  <p class="text-xs font-bold text-amber-200">🗺️ نقشه راه اختصاصی عروسی شما آماده شد:</p>
+                  <span id="saved-date-display" class="text-[10px] font-bold text-[#D4AF37]"></span>
+                </div>
+
+                <div class="grid grid-cols-2 gap-2 text-xs">
+                  <button type="button" onclick="switchTab('planner');" class="bg-[#141A28] hover:bg-[#1E293B] border border-[#C5A059]/40 rounded-2xl p-2.5 text-right transition-all cursor-pointer flex items-center gap-2 group">
+                    <div class="w-7 h-7 rounded-xl bg-[#D4AF37]/15 border border-[#D4AF37]/30 flex items-center justify-center shrink-0">
+                      <span class="text-sm">💰</span>
+                    </div>
+                    <div>
+                      <span class="font-black text-white group-hover:text-[#D4AF37] block text-[11px]">۱. برآورد بودجه</span>
+                      <span class="text-[9.5px] text-slate-400 block">محاسبه هزینه‌ها</span>
+                    </div>
+                  </button>
+
+                  <button type="button" onclick="switchTab('directory')" class="bg-[#141A28] hover:bg-[#1E293B] border border-[#C5A059]/40 rounded-2xl p-2.5 text-right transition-all cursor-pointer flex items-center gap-2 group">
+                    <div class="w-7 h-7 rounded-xl bg-[#D4AF37]/15 border border-[#D4AF37]/30 flex items-center justify-center shrink-0">
+                      <span class="text-sm">🏛️</span>
+                    </div>
+                    <div>
+                      <span class="font-black text-white group-hover:text-[#D4AF37] block text-[11px]">۲. کشف تامین‌کنندگان</span>
+                      <span class="text-[9.5px] text-slate-400 block">تالار، آتلیه و مزون</span>
+                    </div>
+                  </button>
+
+                  <button type="button" onclick="switchTab('planner');" class="bg-[#141A28] hover:bg-[#1E293B] border border-[#C5A059]/40 rounded-2xl p-2.5 text-right transition-all cursor-pointer flex items-center gap-2 group">
+                    <div class="w-7 h-7 rounded-xl bg-[#D4AF37]/15 border border-[#D4AF37]/30 flex items-center justify-center shrink-0">
+                      <span class="text-sm">📋</span>
+                    </div>
+                    <div>
+                      <span class="font-black text-white group-hover:text-[#D4AF37] block text-[11px]">۳. چک‌لیست ۱۲ ماهه</span>
+                      <span class="text-[9.5px] text-slate-400 block">وظایف و زمان‌بندی</span>
+                    </div>
+                  </button>
+
+                  <button type="button" onclick="switchTab('invitation')" class="bg-[#141A28] hover:bg-[#1E293B] border border-[#C5A059]/40 rounded-2xl p-2.5 text-right transition-all cursor-pointer flex items-center gap-2 group">
+                    <div class="w-7 h-7 rounded-xl bg-[#D4AF37]/15 border border-[#D4AF37]/30 flex items-center justify-center shrink-0">
+                      <span class="text-sm">💌</span>
+                    </div>
+                    <div>
+                      <span class="font-black text-white group-hover:text-[#D4AF37] block text-[11px]">۴. کارت دعوت & مهمانان</span>
+                      <span class="text-[9.5px] text-slate-400 block">طراحی آنلاین و RSVP</span>
+                    </div>
+                  </button>
+                </div>
+
+                <div class="flex items-center justify-between pt-1">
+                  <button type="button" onclick="setPlanningWizardStep(2)" class="text-xs text-slate-400 hover:text-white cursor-pointer flex items-center gap-1">
+                    <i data-lucide="chevron-right" class="w-3.5 h-3.5"></i> تغییر تاریخ
+                  </button>
+                  <button type="button" onclick="switchTab('planner')" class="text-xs font-bold text-[#D4AF37] hover:underline cursor-pointer flex items-center gap-1">
+                    <span>ورود به پنل جامع برنامه‌ریزی</span>
+                    <i data-lucide="arrow-left" class="w-3.5 h-3.5 text-[#D4AF37]"></i>
+                  </button>
+                </div>
               </div>
             </div>
           </div>
