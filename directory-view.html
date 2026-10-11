@@ -173,6 +173,7 @@
   <div id="directory-advanced-filters-drawer" class="fixed top-0 right-0 w-full max-w-[420px] h-screen z-[999999] bg-[#07090E] border-l border-[#C5A059]/40 p-6 space-y-6 overflow-y-auto text-right shadow-2xl text-white hidden">
     <div class="flex items-center justify-between border-b border-[#C5A059]/30 pb-4">
       <h3 class="text-base font-black text-[#D4AF37] flex items-center gap-2">
+        <i data-lucide="sliders-horizontal" class="w-4 h-4 text-[#D4AF37]"></i>
         <span>⚙️ فیلترهای پیشرفته جستجو</span>
       </h3>
       <button type="button" onclick="toggleAdvancedFiltersDrawer()" class="w-8 h-8 rounded-full bg-[#141A28] text-slate-300 hover:text-white flex items-center justify-center border border-slate-700 cursor-pointer">
@@ -180,8 +181,21 @@
       </button>
     </div>
 
-    <!-- Capacity Filter Slider -->
+    <!-- 1. Category Filter Buttons -->
     <div class="space-y-2">
+      <label class="text-xs font-bold text-slate-300 block">دسته‌بندی اصلی:</label>
+      <div class="grid grid-cols-2 gap-2 text-xs font-bold">
+        <button type="button" onclick="filterVendorsByCategoryTitle('all')" class="bg-[#141A28] hover:bg-[#1E293B] text-amber-200 border border-[#C5A059]/30 py-2 rounded-xl">همه دسته‌ها</button>
+        <button type="button" onclick="filterVendorsByCategoryTitle('تالار و باغ تالار عروسی')" class="bg-[#141A28] hover:bg-[#1E293B] text-amber-200 border border-[#C5A059]/30 py-2 rounded-xl">🏛️ باغ‌تالار</button>
+        <button type="button" onclick="filterVendorsByCategoryTitle('آتلیه عکاسی و فیلمبرداری')" class="bg-[#141A28] hover:bg-[#1E293B] text-amber-200 border border-[#C5A059]/30 py-2 rounded-xl">📸 آتلیه عکاسی</button>
+        <button type="button" onclick="filterVendorsByCategoryTitle('مزون لباس عروس و داماد')" class="bg-[#141A28] hover:bg-[#1E293B] text-amber-200 border border-[#C5A059]/30 py-2 rounded-xl">👗 مزون عروس</button>
+        <button type="button" onclick="filterVendorsByCategoryTitle('سالن زیبایی و میکاپ عروس')" class="bg-[#141A28] hover:bg-[#1E293B] text-amber-200 border border-[#C5A059]/30 py-2 rounded-xl">💄 سالن زیبایی</button>
+        <button type="button" onclick="filterVendorsByCategoryTitle('تشریفات و خدمات مجالس')" class="bg-[#141A28] hover:bg-[#1E293B] text-amber-200 border border-[#C5A059]/30 py-2 rounded-xl">🌸 تشریفات</button>
+      </div>
+    </div>
+
+    <!-- 2. Capacity Filter Slider -->
+    <div class="space-y-2 pt-2 border-t border-slate-800">
       <label class="text-xs font-bold text-slate-300 block">ظرفیت مهمانان:</label>
       <input type="range" min="50" max="1500" step="50" value="500" oninput="document.getElementById('adv-cap-val').textContent = this.value + ' نفر'; filterVendors();" class="w-full accent-[#D4AF37]">
       <div class="flex justify-between text-[11px] text-amber-300 font-bold">
@@ -191,13 +205,48 @@
       </div>
     </div>
 
-    <!-- Price Tier Radios -->
-    <div class="space-y-2">
+    <!-- 3. Price Tier Radios -->
+    <div class="space-y-2 pt-2 border-t border-slate-800">
       <label class="text-xs font-bold text-slate-300 block">رنج قیمتی خدمات:</label>
       <div class="grid grid-cols-3 gap-2 text-xs font-bold">
         <button type="button" onclick="setPriceFilter('economic')" class="bg-[#141A28] border border-[#C5A059]/30 hover:border-[#D4AF37] text-amber-200 py-2 rounded-xl">اقتصادی</button>
         <button type="button" onclick="setPriceFilter('mid')" class="bg-[#141A28] border border-[#C5A059]/30 hover:border-[#D4AF37] text-amber-200 py-2 rounded-xl">متوسط</button>
         <button type="button" onclick="setPriceFilter('luxury')" class="bg-[#141A28] border border-[#C5A059]/30 hover:border-[#D4AF37] text-amber-300 py-2 rounded-xl font-black">VIP لوکس</button>
+      </div>
+    </div>
+
+    <!-- 4. Location Selector -->
+    <div class="space-y-2 pt-2 border-t border-slate-800">
+      <label class="text-xs font-bold text-slate-300 block">منطقه و موقعیت (یزد):</label>
+      <select onchange="filterVendors()" class="w-full bg-[#141A28] border border-[#C5A059]/30 rounded-2xl px-3 py-2 text-xs text-amber-200 focus:outline-none focus:border-[#D4AF37]">
+        <option value="all">همه مناطق استان یزد</option>
+        <option value="صفائیه">📍 صفائیه یزد</option>
+        <option value="بلوار جمهوری">📍 بلوار جمهوری</option>
+        <option value="تفت">📍 تفت و ییلاقات</option>
+        <option value="بافت تاریخی">📍 بافت تاریخی و ملاصدرا</option>
+      </select>
+    </div>
+
+    <!-- 5. Key Amenities Checkboxes -->
+    <div class="space-y-2 pt-2 border-t border-slate-800">
+      <label class="text-xs font-bold text-slate-300 block">امکانات و ویژگی‌های خاص:</label>
+      <div class="space-y-1.5 text-xs text-slate-300 font-medium">
+        <label class="flex items-center gap-2 cursor-pointer">
+          <input type="checkbox" onchange="filterVendors()" checked class="accent-[#D4AF37]">
+          <span>پارکینگ اختصاصی مهمانان</span>
+        </label>
+        <label class="flex items-center gap-2 cursor-pointer">
+          <input type="checkbox" onchange="filterVendors()" checked class="accent-[#D4AF37]">
+          <span>سیستم صوتی و نورپردازی حرفه‌ای</span>
+        </label>
+        <label class="flex items-center gap-2 cursor-pointer">
+          <input type="checkbox" onchange="filterVendors()" checked class="accent-[#D4AF37]">
+          <span>فضای باز & باغ سرسبز</span>
+        </label>
+        <label class="flex items-center gap-2 cursor-pointer">
+          <input type="checkbox" onchange="filterVendors()" checked class="accent-[#D4AF37]">
+          <span>تور مجازی ۳۶۰ درجه</span>
+        </label>
       </div>
     </div>
 

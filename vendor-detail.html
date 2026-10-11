@@ -231,20 +231,28 @@
   </main>
 
   <!-- STICKY FLOATING GLASS ACTION BAR -->
-  <div class="fixed bottom-0 left-0 right-0 z-50 bg-[#07090E]/95 backdrop-blur-2xl border-t border-[#C5A059]/40 py-3 px-4 shadow-[0_-15px_40px_rgba(0,0,0,0.9)]">
-    <div class="max-w-4xl mx-auto flex items-center justify-between gap-3 text-xs font-bold">
-      <div class="flex items-center gap-2">
-        <button type="button" onclick="makeVendorCall()" class="bg-[#141A28] hover:bg-slate-800 text-amber-200 border border-[#C5A059]/40 px-4 py-2.5 rounded-2xl flex items-center gap-1.5 cursor-pointer shadow-md transition-all">
+  <div class="fixed bottom-0 left-0 right-0 z-[9999] bg-[#07090E]/95 backdrop-blur-2xl border-t border-[#C5A059]/30 py-3.5 px-4 shadow-[0_-15px_40px_rgba(0,0,0,0.9)]">
+    <div class="max-w-7xl mx-auto flex items-center justify-between gap-4 text-xs font-bold">
+      <!-- Right Info: Clean Starting Price Display -->
+      <div class="text-right shrink-0">
+        <span class="text-[10px] text-slate-400 font-bold block">شروع قیمت از</span>
+        <span id="vdm-bottom-price" class="text-sm sm:text-base font-black text-[#D4AF37]">۲۵,۰۰۰,۰۰۰ تومان</span>
+      </div>
+
+      <!-- Center Actions: Compact Frosted Glass Icon-Buttons -->
+      <div class="flex items-center gap-2 sm:gap-3">
+        <button type="button" onclick="makeVendorCall()" class="bg-[#141A28] hover:bg-[#1E293B] text-amber-200 border border-[#C5A059]/40 px-3.5 py-2.5 rounded-2xl flex items-center gap-1.5 cursor-pointer shadow-md transition-all hover:scale-105">
           <i data-lucide="phone-call" class="w-4 h-4 text-[#D4AF37]"></i>
           <span>📞 تماس</span>
         </button>
-        <button type="button" onclick="openWhatsAppInquiry()" class="bg-emerald-950/80 hover:bg-emerald-900 text-emerald-300 border border-emerald-500/40 px-4 py-2.5 rounded-2xl flex items-center gap-1.5 cursor-pointer shadow-md transition-all">
+        <button type="button" onclick="openWhatsAppInquiry()" class="bg-emerald-950/80 hover:bg-emerald-900 text-emerald-300 border border-emerald-500/40 px-3.5 py-2.5 rounded-2xl flex items-center gap-1.5 cursor-pointer shadow-md transition-all hover:scale-105">
           <i data-lucide="message-circle" class="w-4 h-4 text-emerald-400"></i>
           <span>💬 واتساپ</span>
         </button>
       </div>
 
-      <button type="button" onclick="openInquiryModal(1)" class="gold-shimmer-btn text-[#0F251A] font-black px-6 py-2.5 rounded-2xl shadow-xl flex items-center gap-2 cursor-pointer transition-all transform hover:scale-[1.02]">
+      <!-- Left / Main Action: Glowing Champagne Gold Button -->
+      <button type="button" onclick="openInquiryModal(1)" class="gold-shimmer-btn text-[#0F251A] font-black px-6 py-3 rounded-2xl shadow-xl flex items-center gap-2 cursor-pointer transition-all transform hover:scale-[1.02] shrink-0">
         <i data-lucide="sparkles" class="w-4 h-4 text-[#0F251A]"></i>
         <span>✨ استعلام قیمت و رزرو</span>
       </button>
