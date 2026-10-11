@@ -2538,7 +2538,7 @@ body.mood-night {
 }
 
 /* ==========================================================================
-   DYNAMIC CATEGORY CAROUSEL BAR STYLES
+   DYNAMIC CATEGORY CAROUSEL BAR STYLES & HEADER SPACING
    ========================================================================== */
 #directory-category-carousel::-webkit-scrollbar {
   display: none;
@@ -2546,4 +2546,13 @@ body.mood-night {
 #directory-category-carousel {
   -ms-overflow-style: none;
   scrollbar-width: none;
+}
+
+/* Ensure proper header spacing clearance across all pages */
+main, #home-view, #directory-view {
+  padding-top: 2rem;
+}
+
+#directory-primary-filter-island {
+  margin-top: 1rem;
 }
