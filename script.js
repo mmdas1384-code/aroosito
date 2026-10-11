@@ -961,43 +961,41 @@ const DIRECTORY_VIEW_HTML = `<!-- ISOLATED VENDOR DIRECTORY CONTENT MODULE (dire
   </div>
 
   <!-- ADVANCED SLIDE-OVER GLASS FILTER DRAWER -->
-  <div id="directory-advanced-filters-drawer" class="fixed inset-0 top-0 right-0 left-0 bottom-0 h-screen w-screen z-[999999] bg-[#07090E]/85 backdrop-blur-2xl flex justify-end hidden" onclick="if(event.target === this) toggleAdvancedFiltersDrawer()">
-    <div class="w-full max-w-md h-full bg-[#07090E] border-l border-[#C5A059]/40 p-6 space-y-6 overflow-y-auto text-right shadow-2xl text-white relative z-[1000000]" onclick="event.stopPropagation()">
-      <div class="flex items-center justify-between border-b border-[#C5A059]/30 pb-4">
-        <h3 class="text-base font-black text-[#D4AF37] flex items-center gap-2">
-          <span>⚙️ فیلترهای پیشرفته جستجو</span>
-        </h3>
-        <button type="button" onclick="toggleAdvancedFiltersDrawer()" class="w-8 h-8 rounded-full bg-[#141A28] text-slate-300 hover:text-white flex items-center justify-center border border-slate-700 cursor-pointer">
-          <i data-lucide="x" class="w-4 h-4"></i>
-        </button>
-      </div>
+  <div id="directory-advanced-filters-drawer" class="fixed top-0 right-0 w-full max-w-[420px] h-screen z-[999999] bg-[#07090E] border-l border-[#C5A059]/40 p-6 space-y-6 overflow-y-auto text-right shadow-2xl text-white hidden">
+    <div class="flex items-center justify-between border-b border-[#C5A059]/30 pb-4">
+      <h3 class="text-base font-black text-[#D4AF37] flex items-center gap-2">
+        <span>⚙️ فیلترهای پیشرفته جستجو</span>
+      </h3>
+      <button type="button" onclick="toggleAdvancedFiltersDrawer()" class="w-8 h-8 rounded-full bg-[#141A28] text-slate-300 hover:text-white flex items-center justify-center border border-slate-700 cursor-pointer">
+        <i data-lucide="x" class="w-4 h-4"></i>
+      </button>
+    </div>
 
-      <!-- Capacity Filter Slider -->
-      <div class="space-y-2">
-        <label class="text-xs font-bold text-slate-300 block">ظرفیت مهمانان:</label>
-        <input type="range" min="50" max="1500" step="50" value="500" oninput="document.getElementById('adv-cap-val').textContent = this.value + ' نفر'; filterVendors();" class="w-full accent-[#D4AF37]">
-        <div class="flex justify-between text-[11px] text-amber-300 font-bold">
-          <span>۵۰ نفر</span>
-          <span id="adv-cap-val">۵۰۰ نفر</span>
-          <span>۱۵۰۰+ نفر</span>
-        </div>
+    <!-- Capacity Filter Slider -->
+    <div class="space-y-2">
+      <label class="text-xs font-bold text-slate-300 block">ظرفیت مهمانان:</label>
+      <input type="range" min="50" max="1500" step="50" value="500" oninput="document.getElementById('adv-cap-val').textContent = this.value + ' نفر'; filterVendors();" class="w-full accent-[#D4AF37]">
+      <div class="flex justify-between text-[11px] text-amber-300 font-bold">
+        <span>۵۰ نفر</span>
+        <span id="adv-cap-val">۵۰۰ نفر</span>
+        <span>۱۵۰۰+ نفر</span>
       </div>
+    </div>
 
-      <!-- Price Tier Radios -->
-      <div class="space-y-2">
-        <label class="text-xs font-bold text-slate-300 block">رنج قیمتی خدمات:</label>
-        <div class="grid grid-cols-3 gap-2 text-xs font-bold">
-          <button type="button" onclick="setPriceFilter('economic')" class="bg-[#141A28] border border-[#C5A059]/30 hover:border-[#D4AF37] text-amber-200 py-2 rounded-xl">اقتصادی</button>
-          <button type="button" onclick="setPriceFilter('mid')" class="bg-[#141A28] border border-[#C5A059]/30 hover:border-[#D4AF37] text-amber-200 py-2 rounded-xl">متوسط</button>
-          <button type="button" onclick="setPriceFilter('luxury')" class="bg-[#141A28] border border-[#C5A059]/30 hover:border-[#D4AF37] text-amber-300 py-2 rounded-xl font-black">VIP لوکس</button>
-        </div>
+    <!-- Price Tier Radios -->
+    <div class="space-y-2">
+      <label class="text-xs font-bold text-slate-300 block">رنج قیمتی خدمات:</label>
+      <div class="grid grid-cols-3 gap-2 text-xs font-bold">
+        <button type="button" onclick="setPriceFilter('economic')" class="bg-[#141A28] border border-[#C5A059]/30 hover:border-[#D4AF37] text-amber-200 py-2 rounded-xl">اقتصادی</button>
+        <button type="button" onclick="setPriceFilter('mid')" class="bg-[#141A28] border border-[#C5A059]/30 hover:border-[#D4AF37] text-amber-200 py-2 rounded-xl">متوسط</button>
+        <button type="button" onclick="setPriceFilter('luxury')" class="bg-[#141A28] border border-[#C5A059]/30 hover:border-[#D4AF37] text-amber-300 py-2 rounded-xl font-black">VIP لوکس</button>
       </div>
+    </div>
 
-      <div class="pt-4 border-t border-slate-800">
-        <button type="button" onclick="toggleAdvancedFiltersDrawer(); filterVendors();" class="w-full gold-shimmer-btn text-[#0F251A] font-black py-3 rounded-2xl text-xs shadow-xl cursor-pointer">
-          اعمال فیلترها & به‌روزرسانی
-        </button>
-      </div>
+    <div class="pt-4 border-t border-slate-800">
+      <button type="button" onclick="toggleAdvancedFiltersDrawer(); filterVendors();" class="w-full gold-shimmer-btn text-[#0F251A] font-black py-3 rounded-2xl text-xs shadow-xl cursor-pointer">
+        اعمال فیلترها & به‌روزرسانی
+      </button>
     </div>
   </div>
 
@@ -3945,7 +3943,7 @@ if (document.readyState === "loading") {
 
         if (directoryViewMode === 'list') {
           card.innerHTML = `
-            <div class="relative w-full md:w-64 h-40 overflow-hidden bg-slate-900 shrink-0">
+            <div class="relative w-full md:w-64 h-40 overflow-hidden bg-slate-900 shrink-0" onmouseenter="playCardVideoTeaser(this)" onmouseleave="stopCardVideoTeaser(this)">
               <img src="${v.image}" alt="${v.name}" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-108">
                 <video src="${v.videoTeaser || 'https://assets.mixkit.co/videos/preview/mixkit-wedding-couple-walking-in-a-park-41315-large.mp4'}" muted loop playsinline preload="none" class="card-teaser-video absolute inset-0 w-full h-full object-cover opacity-0 transition-opacity duration-500 pointer-events-none"></video>
               <div class="absolute inset-0 bg-gradient-to-t from-[#0F172A] via-transparent to-black/40"></div>
@@ -14031,6 +14029,9 @@ let current360PanOffset = 0;
 window.open360TourModal = function(vendorId) {
   let modal = document.getElementById('modal-360-tour');
 
+  if (modal && modal.parentNode !== document.body) {
+    document.body.appendChild(modal);
+  }
   if (!modal) {
     modal = document.createElement('div');
     modal.id = 'modal-360-tour';
@@ -17165,6 +17166,9 @@ const storyHighlightsData = {
 window.openStoryLightbox = function(storyId) {
   let modal = document.getElementById('modal-story-lightbox');
 
+  if (modal && modal.parentNode !== document.body) {
+    document.body.appendChild(modal);
+  }
   if (!modal) {
     modal = document.createElement('div');
     modal.id = 'modal-story-lightbox';
