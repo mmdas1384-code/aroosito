@@ -5528,22 +5528,19 @@
 
       <!-- BLOCK 3: Segmented Navigation Tabs Bar & Tab Content Panes -->
       <div class="vmodal-block-tabs px-6 py-2 bg-[#FAF9F5]">
-        <!-- Sticky Frosted Glass Navigation Tabs Bar -->
-        <div class="clean-vmodal-tabs sticky top-0 z-20 my-4 p-2 bg-[#0e121c]/90 backdrop-blur-xl border border-[#C5A059]/40 rounded-2xl flex items-center gap-2 overflow-x-auto shadow-xl">
+        <!-- Streamlined 4-Tab Sticky Frosted Glass Navigation Bar -->
+        <div class="clean-vmodal-tabs sticky top-0 z-20 my-4 p-2 bg-[#0e121c]/95 backdrop-blur-2xl border border-[#C5A059]/50 rounded-2xl flex items-center justify-center gap-2 overflow-x-auto shadow-xl">
           <button class="vtab-btn active px-4 py-2 rounded-xl text-xs font-bold text-amber-200 bg-[#D4AF37]/20 border border-[#D4AF37]/50 transition-all cursor-pointer whitespace-nowrap" onclick="switchModalTab(0)">
-            <span>🖼️ نمونه‌کارها & معرفی</span>
+            <span>✨ معرفی و خدمات</span>
           </button>
           <button class="vtab-btn px-4 py-2 rounded-xl text-xs font-bold text-slate-300 hover:text-amber-200 transition-all cursor-pointer whitespace-nowrap" onclick="switchModalTab(1)">
-            <span>📋 پکیج‌ها & قیمت</span>
+            <span>📋 پکیج‌ها و قیمت</span>
           </button>
           <button class="vtab-btn px-4 py-2 rounded-xl text-xs font-bold text-slate-300 hover:text-amber-200 transition-all cursor-pointer whitespace-nowrap" onclick="switchModalTab(2)">
-            <span>✨ خدمات & امکانات</span>
+            <span>📅 تقویم روزهای آزاد</span>
           </button>
           <button class="vtab-btn px-4 py-2 rounded-xl text-xs font-bold text-slate-300 hover:text-amber-200 transition-all cursor-pointer whitespace-nowrap" onclick="switchModalTab(3)">
-            <span>💬 نظرات زوجین</span>
-          </button>
-          <button class="vtab-btn px-4 py-2 rounded-xl text-xs font-bold text-slate-300 hover:text-amber-200 transition-all cursor-pointer whitespace-nowrap" onclick="switchModalTab(0)">
-            <span>📍 موقعیت مکانی</span>
+            <span>💬 نظرات و موقعیت</span>
           </button>
         </div>
 
@@ -5642,18 +5639,42 @@
           </div>
         </div>
 
-        <!-- Tab 3: Reviews -->
-        <div id="vtab-pane-3" class="vtab-pane hidden space-y-4">
-          <div class="flex items-center justify-between">
-            <h3 class="text-base font-bold text-[#1B3B2B] flex items-center gap-2">
-              ⭐ نظرات و تجربیات واقعی زوجین
-            </h3>
-            <button onclick="toggleReviewSubmitDrawer()" class="text-xs text-[#1B3B2B] bg-[#D4AF37]/20 hover:bg-[#D4AF37]/30 border border-[#D4AF37]/50 px-3 py-1.5 rounded-xl font-bold transition-colors">
-              + ثبت نظر جدید
-            </button>
+        <!-- Tab 3: Reviews & Location Map -->
+        <div id="vtab-pane-3" class="vtab-pane hidden space-y-6">
+          <div class="space-y-4">
+            <div class="flex items-center justify-between">
+              <h3 class="text-base font-bold text-[#1B3B2B] flex items-center gap-2">
+                ⭐ نظرات و تجربیات واقعی زوجین
+              </h3>
+              <button onclick="toggleReviewSubmitDrawer()" class="text-xs text-[#1B3B2B] bg-[#D4AF37]/20 hover:bg-[#D4AF37]/30 border border-[#D4AF37]/50 px-3 py-1.5 rounded-xl font-bold transition-colors cursor-pointer">
+                + ثبت نظر جدید
+              </button>
+            </div>
+            <div id="vdm-reviews-container" class="space-y-3">
+              <!-- Rendered via JS -->
+            </div>
           </div>
-          <div id="vdm-reviews-container" class="space-y-3">
-            <!-- Rendered via JS -->
+
+          <!-- Location Map & Booking Policy -->
+          <div class="bg-[#0e121c]/90 backdrop-blur-xl border border-[#C5A059]/40 rounded-3xl p-5 shadow-xl space-y-4 text-right">
+            <h3 class="text-sm font-bold text-[#D4AF37] flex items-center gap-2">
+              📍 موقعیت مکانی و قوانین رزرو
+            </h3>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4 text-xs text-slate-300">
+              <div class="space-y-2">
+                <p><strong class="text-amber-200">آدرس:</strong> <span id="vdm-full-address-pane">استان یزد، صفائیه، خیابان دانشگاه</span></p>
+                <p><strong class="text-amber-200">ساعات پاسخگویی:</strong> همه روزه ۱۰:۰۰ الی ۲۲:۰۰</p>
+                <p><strong class="text-amber-200">شرایط کنسلی:</strong> امکان استرداد ۵۰٪ بیعانه تا ۳۰ روز قبل مراسم</p>
+              </div>
+              <div class="bg-[#141A28] border border-[#C5A059]/30 rounded-2xl p-3 flex flex-col justify-between space-y-2">
+                <span class="text-amber-200 font-bold">مسیریابی مستقیم:</span>
+                <div class="grid grid-cols-3 gap-2">
+                  <a id="vdm-map-balad" href="#" target="_blank" class="bg-[#07090E] text-slate-200 text-center py-1.5 rounded-xl border border-slate-700 font-bold hover:border-[#D4AF37]">بلد</a>
+                  <a id="vdm-map-neshan" href="#" target="_blank" class="bg-[#07090E] text-slate-200 text-center py-1.5 rounded-xl border border-slate-700 font-bold hover:border-[#D4AF37]">نشان</a>
+                  <a id="vdm-map-google" href="#" target="_blank" class="bg-[#D4AF37] text-[#0F251A] text-center py-1.5 rounded-xl font-black">گوگل‌مپ</a>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
 
