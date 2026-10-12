@@ -1,195 +1,172 @@
 <!-- ISOLATED VENDOR DIRECTORY CONTENT MODULE (directory-view.html) -->
 <div id="tab-directory" class="tab-content hidden space-y-8">
 
-  <!-- HEADER BREADCRUMB & TOP CONTROL BAR -->
-  <div class="bg-white border border-accent rounded-3xl p-6 sm:p-8 shadow-xs space-y-4">
-    <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-accent pb-4">
-      <div class="space-y-1">
-        <nav class="flex items-center gap-2 text-xs text-secondary font-bold mb-1">
-          <button onclick="switchTab('home')" class="hover:text-primary transition-colors cursor-pointer">خانه</button>
-          <span>/</span>
-          <span class="text-graphite">دایرکتوری جامع تامین‌کنندگان یزد</span>
-        </nav>
-        <h1 class="text-2xl sm:text-3xl font-black text-graphite flex items-center gap-2.5">
-          <i data-lucide="building-2" class="w-7 h-7 text-primary"></i>
-          <span>دایرکتوری جامع تامین‌کنندگان و خدمات عروسی استان یزد</span>
-        </h1>
-        <p class="text-xs text-secondary font-medium">بررسی پروفایل رسمی، گالری تصاویر، لیست قیمت و استعلام آنلاین رزرو</p>
-      </div>
-
-      <button onclick="switchTab('home')" class="bg-bgCustom hover:bg-slate-100 text-graphite border border-accent px-4 py-2.5 rounded-2xl text-xs font-bold transition-all flex items-center gap-2 shadow-xs shrink-0 cursor-pointer">
-        <i data-lucide="arrow-right" class="w-4 h-4 text-primary"></i>
-        <span>بازگشت به صفحه اصلی</span>
-      </button>
+  <!-- 1. VENDOR STORIES & SHOWCASE HIGHLIGHTS CIRCLE BAR -->
+  <div class="space-y-2">
+    <div class="flex items-center justify-between">
+      <span class="text-xs font-black text-[#D4AF37] flex items-center gap-1">
+        <i data-lucide="play-circle" class="w-4 h-4 text-[#D4AF37]"></i>
+        <span>استوری‌ها و تیزرهای تصویری تامین‌کنندگان برتر یزد</span>
+      </span>
+      <span class="text-[10px] text-slate-400 font-bold">برای مشاهده تیزر روی دایره کلیک کنید</span>
     </div>
 
-    <!-- Active Filter Chips Container -->
-    <div class="flex items-center justify-between gap-3 pt-2 text-xs font-bold flex-wrap">
-      <div class="flex items-center gap-2 flex-wrap" id="active-category-chips">
-        <span class="text-secondary">فیلترهای فعال:</span>
-        <div id="active-category-pills" class="flex items-center gap-1.5 flex-wrap">
-          <!-- Dynamic Category Pills rendered by renderMultiCategoryPills() -->
+    <div id="story-highlights-bar" class="flex items-center gap-4 overflow-x-auto no-scrollbar py-2 px-1">
+      <div onclick="openStoryLightbox('https://images.unsplash.com/photo-1519167758481-83f550bb49b3?w=800', 'هتل باغ مشیرالممالک')" class="flex flex-col items-center gap-1.5 cursor-pointer group shrink-0">
+        <div class="w-16 h-16 rounded-full p-0.5 bg-gradient-to-tr from-[#D4AF37] via-[#F3E5AB] to-[#8C6D23] shadow-lg group-hover:scale-108 transition-transform">
+          <img src="https://images.unsplash.com/photo-1519167758481-83f550bb49b3?w=150" class="w-full h-full rounded-full object-cover border-2 border-[#07090E]">
         </div>
+        <span class="text-[10px] font-bold text-slate-200 group-hover:text-[#D4AF37]">مشیرالممالک</span>
       </div>
 
-      <button onclick="resetAllCategoryFilters()" class="text-xs font-bold text-rose-600 hover:text-rose-800 transition-colors flex items-center gap-1 cursor-pointer">
-        <i data-lucide="rotate-ccw" class="w-3.5 h-3.5"></i>
-        <span>پاک کردن همه فیلترها</span>
-      </button>
+      <div onclick="openStoryLightbox('https://images.unsplash.com/photo-1537633552985-df8429e8048b?w=800', 'استودیو کویر')" class="flex flex-col items-center gap-1.5 cursor-pointer group shrink-0">
+        <div class="w-16 h-16 rounded-full p-0.5 bg-gradient-to-tr from-[#D4AF37] via-[#F3E5AB] to-[#8C6D23] shadow-lg group-hover:scale-108 transition-transform">
+          <img src="https://images.unsplash.com/photo-1537633552985-df8429e8048b?w=150" class="w-full h-full rounded-full object-cover border-2 border-[#07090E]">
+        </div>
+        <span class="text-[10px] font-bold text-slate-200 group-hover:text-[#D4AF37]">استودیو کویر</span>
+      </div>
+
+      <div onclick="openStoryLightbox('https://images.unsplash.com/photo-1511285560929-80b456fea0bc?w=800', 'سالن زیبایی رویال')" class="flex flex-col items-center gap-1.5 cursor-pointer group shrink-0">
+        <div class="w-16 h-16 rounded-full p-0.5 bg-gradient-to-tr from-[#D4AF37] via-[#F3E5AB] to-[#8C6D23] shadow-lg group-hover:scale-108 transition-transform">
+          <img src="https://images.unsplash.com/photo-1511285560929-80b456fea0bc?w=150" class="w-full h-full rounded-full object-cover border-2 border-[#07090E]">
+        </div>
+        <span class="text-[10px] font-bold text-slate-200 group-hover:text-[#D4AF37]">زیبایی رویال</span>
+      </div>
+
+      <div onclick="openStoryLightbox('https://images.unsplash.com/photo-1583939003579-730e3918a45a?w=800', 'مزون لورنت')" class="flex flex-col items-center gap-1.5 cursor-pointer group shrink-0">
+        <div class="w-16 h-16 rounded-full p-0.5 bg-gradient-to-tr from-[#D4AF37] via-[#F3E5AB] to-[#8C6D23] shadow-lg group-hover:scale-108 transition-transform">
+          <img src="https://images.unsplash.com/photo-1583939003579-730e3918a45a?w=150" class="w-full h-full rounded-full object-cover border-2 border-[#07090E]">
+        </div>
+        <span class="text-[10px] font-bold text-slate-200 group-hover:text-[#D4AF37]">مزون لورنت</span>
+      </div>
+
+      <div onclick="openStoryLightbox('https://images.unsplash.com/photo-1522673607200-164d1b6ce486?w=800', 'تشریفات یاس')" class="flex flex-col items-center gap-1.5 cursor-pointer group shrink-0">
+        <div class="w-16 h-16 rounded-full p-0.5 bg-gradient-to-tr from-[#D4AF37] via-[#F3E5AB] to-[#8C6D23] shadow-lg group-hover:scale-108 transition-transform">
+          <img src="https://images.unsplash.com/photo-1522673607200-164d1b6ce486?w=150" class="w-full h-full rounded-full object-cover border-2 border-[#07090E]">
+        </div>
+        <span class="text-[10px] font-bold text-slate-200 group-hover:text-[#D4AF37]">تشریفات یاس</span>
+      </div>
     </div>
   </div>
 
-  <!-- DIRECTORY MAIN 2-COLUMN LAYOUT -->
-  <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
+  <!-- 2. STICKY TOP GLASS FILTER ISLAND & VIEW MODE SWITCHER -->
+  <div id="directory-primary-filter-island" class="bg-[#0e121c]/90 backdrop-blur-xl border border-[#C5A059]/40 rounded-3xl p-4 sm:p-5 shadow-2xl text-white space-y-4">
 
-    <!-- SIDEBAR ADVANCED FILTERS (col-span-12 lg:col-span-3) -->
-    <aside class="lg:col-span-3 space-y-6 bg-white border border-accent rounded-3xl p-5 shadow-xs sticky top-28 directory-sidebar">
-      <div class="flex items-center justify-between border-b border-accent pb-3">
-        <h3 class="text-sm font-black text-graphite flex items-center gap-2">
-          <i data-lucide="filter" class="w-4 h-4 text-primary"></i>
-          <span>فیلترهای پیشرفته</span>
-        </h3>
-        <button onclick="resetAllCategoryFilters()" class="text-[11px] font-bold text-rose-600 hover:text-rose-800 bg-rose-50 hover:bg-rose-100 px-2.5 py-1 rounded-lg transition-colors cursor-pointer">
-          پاکسازی همه
+    <!-- Header Row with Dual View Switcher -->
+    <div class="flex flex-col md:flex-row items-center justify-between gap-4 border-b border-[#C5A059]/20 pb-4">
+      <div class="space-y-1 text-right w-full md:w-auto">
+        <span class="text-[11px] font-black text-[#D4AF37] block">💎 دایرکتوری برندهای تاییدشده یزد</span>
+        <h1 class="text-lg sm:text-xl font-black text-[#F7F5F0]">هاب استکشافی و رزرو تامین‌کنندگان لوکس</h1>
+      </div>
+
+      <!-- DUAL VIEW SWITCHER: MAGAZINE GRID vs. OBSIDIAN MAP -->
+      <div class="flex items-center gap-2 bg-[#141A28] border border-[#C5A059]/40 p-1.5 rounded-2xl shrink-0 shadow-lg">
+        <button type="button" id="dir-btn-view-grid" onclick="toggleDirectoryMainView('grid')" class="px-4 py-2 rounded-xl text-xs font-black bg-[#D4AF37] text-[#0F251A] shadow-md transition-all cursor-pointer flex items-center gap-1.5">
+          <span>📸 گرید مجله‌ای</span>
+        </button>
+        <button type="button" id="dir-btn-view-map" onclick="toggleDirectoryMainView('map')" class="px-4 py-2 rounded-xl text-xs font-black text-slate-300 hover:text-white transition-all cursor-pointer flex items-center gap-1.5">
+          <span>🗺️ نقشه تعاملی یزد</span>
         </button>
       </div>
-
-      <!-- Verified Badge Toggle Switch -->
-      <div class="p-3 bg-[#1B3B2B]/5 border border-[#D4AF37]/30 rounded-2xl flex items-center justify-between">
-        <div class="flex items-center gap-2">
-          <i data-lucide="shield-check" class="w-4 h-4 text-[#D4AF37]"></i>
-          <span class="text-xs font-bold text-[#1B3B2B]">فقط تامین‌کنندگان تاییدشده</span>
-        </div>
-        <label class="relative inline-flex items-center cursor-pointer">
-          <input type="checkbox" id="verified-only" checked onchange="filterVendors()" class="sr-only peer">
-          <div class="w-9 h-5 bg-slate-300 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:start-[2px] after:bg-white after:border-slate-300 after:border after:rounded-full after:h-4 after:w-4 after:transition-all peer-checked:bg-[#1B3B2B]"></div>
-        </label>
-      </div>
-
-      <!-- Category & Subgroup Accordions / Multi-Select Checklist -->
-      <div class="space-y-3">
-        <label class="text-xs font-extrabold text-graphite block flex items-center justify-between">
-          <span>دسته‌بندی خدمات:</span>
-          <span class="text-[10px] text-secondary font-normal">(چند انتخابی)</span>
-        </label>
-        <div id="sidebar-category-checkboxes" class="space-y-2 max-h-60 overflow-y-auto custom-scrollbar text-xs font-bold text-graphite pr-1">
-          <!-- Populated dynamically via JS -->
-        </div>
-      </div>
-
-      <!-- Capacity Range Slider -->
-      <div class="space-y-2 pt-3 border-t border-accent">
-        <div class="flex justify-between items-center text-xs font-extrabold text-graphite">
-          <span>ظرفیت پذیرش (مهمان):</span>
-          <span id="sidebar-capacity-val" class="text-primary font-black">همه ظرفیت‌ها</span>
-        </div>
-        <input type="range" id="sidebar-capacity-slider" min="50" max="1000" step="50" value="1000" oninput="updateCapacitySliderLabel(this.value); filterVendors();" class="w-full h-2 bg-slate-200 rounded-lg appearance-none cursor-pointer accent-[#1B3B2B]">
-        <div class="flex justify-between text-[10px] text-secondary font-semibold">
-          <span>۵۰ نفر</span>
-          <span>۱,۰۰۰+ نفر</span>
-        </div>
-      </div>
-
-      <!-- City / District Selector -->
-      <div class="space-y-2 pt-3 border-t border-accent">
-        <label for="sidebar-city-select" class="text-xs font-extrabold text-graphite block">شهر / منطقه یزد:</label>
-        <select id="sidebar-city-select" onchange="syncAndFilterCity(this.value)" class="w-full bg-bgCustom border border-accent rounded-xl p-2.5 text-xs font-bold text-graphite focus:outline-none focus:ring-2 focus:ring-[#1B3B2B] focus:border-[#D4AF37] cursor-pointer">
-          <option value="استان یزد" selected>همه مناطق استان یزد 📍</option>
-          <option value="صفائیه">صفائیه یزد</option>
-          <option value="میدان اطلسی">میدان اطلسی</option>
-          <option value="خیابان کاشانی">خیابان کاشانی & ملاصدرا</option>
-          <option value="بافت تاریخی">بافت تاریخی یزد</option>
-          <option value="میبد">میبد</option>
-          <option value="اردکان">اردکان</option>
-          <option value="تفت">تفت</option>
-        </select>
-      </div>
-
-      <!-- Price Range Selector -->
-      <div class="space-y-2 pt-3 border-t border-accent">
-        <label for="sidebar-price-select" class="text-xs font-extrabold text-graphite block">بازه قیمتی:</label>
-        <select id="sidebar-price-select" onchange="syncAndFilterPrice(this.value)" class="w-full bg-bgCustom border border-accent rounded-xl p-2.5 text-xs font-bold text-graphite focus:outline-none focus:ring-2 focus:ring-[#1B3B2B] focus:border-[#D4AF37] cursor-pointer">
-          <option value="all" selected>همه بازه‌های قیمتی</option>
-          <option value="economic">اقتصادی 💰</option>
-          <option value="mid">متوسط 💰💰</option>
-          <option value="luxury">لوکس 💰💰💰</option>
-        </select>
-      </div>
-
-      <!-- Feature Checkboxes -->
-      <div class="space-y-2 pt-3 border-t border-accent text-xs font-bold text-graphite">
-        <label class="block text-xs font-extrabold text-graphite mb-2">امکانات و ویژگی‌های خاص:</label>
-        <div class="space-y-2">
-          <label class="flex items-center gap-2 cursor-pointer hover:text-primary transition-colors">
-            <input type="checkbox" id="feat-parking" onchange="filterVendors()" class="rounded text-[#1B3B2B] focus:ring-[#1B3B2B] w-4 h-4">
-            <span>پارکینگ اختصاصی</span>
-          </label>
-          <label class="flex items-center gap-2 cursor-pointer hover:text-primary transition-colors">
-            <input type="checkbox" id="feat-sofreh" onchange="filterVendors()" class="rounded text-[#1B3B2B] focus:ring-[#1B3B2B] w-4 h-4">
-            <span>سفره عقد سنتی & VIP</span>
-          </label>
-          <label class="flex items-center gap-2 cursor-pointer hover:text-primary transition-colors">
-            <input type="checkbox" id="feat-garden" onchange="filterVendors()" class="rounded text-[#1B3B2B] focus:ring-[#1B3B2B] w-4 h-4">
-            <span>فضای باز & باغ اختصاصی</span>
-          </label>
-          <label class="flex items-center gap-2 cursor-pointer hover:text-primary transition-colors">
-            <input type="checkbox" id="feat-catering" onchange="filterVendors()" class="rounded text-[#1B3B2B] focus:ring-[#1B3B2B] w-4 h-4">
-            <span>کترینگ و پذیرایی VIP</span>
-          </label>
-        </div>
-      </div>
-    </aside>
-
-    <!-- MAIN DIRECTORY CONTENT (col-span-12 lg:col-span-9) -->
-    <div class="lg:col-span-9 space-y-6">
-
-      <!-- Sorting & View Controls Bar -->
-      <div id="vendor-sorting-bar" class="bg-white border border-accent rounded-2xl p-4 shadow-2xs flex flex-col sm:flex-row sm:items-center justify-between gap-4 text-xs font-bold text-graphite">
-        <!-- Instant Search Box -->
-        <div class="relative flex-1 max-w-md">
-          <i data-lucide="search" class="w-4 h-4 text-primary absolute right-3 top-2.5"></i>
-          <input type="text" id="directory-instant-search" oninput="filterVendors()" placeholder="جستجوی نام تالار، آتلیه یا مزون..." class="w-full bg-bgCustom border border-accent rounded-xl pr-9 pl-3 py-2 text-xs font-medium focus:outline-none focus:ring-2 focus:ring-[#1B3B2B] focus:border-[#D4AF37]">
-        </div>
-
-        <div class="flex items-center gap-4 shrink-0 flex-wrap sm:flex-nowrap justify-between sm:justify-end">
-          <div class="flex items-center gap-2">
-            <span class="text-secondary">نتایج:</span>
-            <span id="directory-vendor-count-badge" class="bg-[#1B3B2B]/10 text-[#1B3B2B] border border-[#1B3B2B]/20 text-xs font-black px-2.5 py-1 rounded-xl">
-              نمایش ۴۸ تامین‌کننده در استان یزد
-            </span>
-          </div>
-
-          <div class="flex items-center gap-3">
-            <div class="flex items-center gap-1.5">
-              <label for="vendor-sort-select" class="text-secondary shrink-0">مرتب‌سازی:</label>
-              <select id="vendor-sort-select" onchange="filterVendors()" class="bg-bgCustom border border-accent rounded-xl px-3 py-1.5 text-xs font-bold text-graphite focus:outline-none focus:ring-2 focus:ring-[#1B3B2B] focus:border-[#D4AF37] cursor-pointer">
-                <option value="popular" selected>محبوب‌ترین ⭐</option>
-                <option value="newest">جدیدترین 🆕</option>
-                <option value="price-asc">ارزان‌ترین 📈</option>
-                <option value="price-desc">گران‌ترین 📉</option>
-              </select>
-            </div>
-
-            <!-- View Layout Toggle Icons (Grid / List) -->
-            <div class="flex items-center bg-bgCustom border border-accent rounded-xl p-1 gap-1">
-              <button type="button" id="view-mode-grid" onclick="setDirectoryViewMode('grid')" class="p-1.5 rounded-lg bg-[#1B3B2B] text-white shadow-2xs transition-all cursor-pointer" title="نمای شبکه‌ای">
-                <i data-lucide="grid" class="w-4 h-4"></i>
-              </button>
-              <button type="button" id="view-mode-list" onclick="setDirectoryViewMode('list')" class="p-1.5 rounded-lg text-secondary hover:text-graphite transition-all cursor-pointer" title="نمای لیستی">
-                <i data-lucide="list" class="w-4 h-4"></i>
-              </button>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <!-- Dynamic Vendor Grid -->
-      <div id="vendor-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-        <!-- Populated dynamically via JS -->
-      </div>
-
     </div>
 
+    <!-- SEARCH INPUT & VIBE/MOOD FILTERS -->
+    <div class="space-y-3">
+      <div class="flex flex-col md:flex-row items-center justify-between gap-3">
+        <!-- Search Input -->
+        <div class="relative w-full md:w-80">
+          <input id="directory-instant-search" type="text" oninput="filterVendors()" placeholder="جستجوی نام تالار، آتلیه، مزون..." class="w-full bg-[#141A28] border border-[#C5A059]/30 rounded-2xl pr-9 pl-4 py-2 text-xs text-white placeholder-slate-400 focus:outline-none focus:border-[#D4AF37]">
+          <i data-lucide="search" class="w-4 h-4 text-[#D4AF37] absolute right-3 top-2.5"></i>
+        </div>
+
+        <!-- Mood & Vibe Pills -->
+        <div class="flex items-center gap-2 overflow-x-auto no-scrollbar text-xs font-bold w-full md:w-auto">
+          <span class="text-[10.5px] text-amber-300 font-extrabold shrink-0">سبک و استایل:</span>
+          <button type="button" onclick="filterVendorsByCategoryTitle('all')" class="bg-[#141A28] hover:bg-[#1E293B] text-amber-200 border border-[#C5A059]/30 px-3 py-1.5 rounded-xl shrink-0 cursor-pointer">🏛️ سنتی یزد</button>
+          <button type="button" onclick="filterVendorsByCategoryTitle('all')" class="bg-[#141A28] hover:bg-[#1E293B] text-amber-200 border border-[#C5A059]/30 px-3 py-1.5 rounded-xl shrink-0 cursor-pointer">✨ مدرن & لوکس</button>
+          <button type="button" onclick="filterVendorsByCategoryTitle('all')" class="bg-[#141A28] hover:bg-[#1E293B] text-amber-200 border border-[#C5A059]/30 px-3 py-1.5 rounded-xl shrink-0 cursor-pointer">🌿 فضای باز</button>
+          <button type="button" onclick="filterVendorsByCategoryTitle('all')" class="bg-[#141A28] hover:bg-[#1E293B] text-amber-300 border border-[#D4AF37]/50 px-3 py-1.5 rounded-xl shrink-0 cursor-pointer font-black">👑 VIP ویژه</button>
+        </div>
+      </div>
+
+      <!-- CATEGORY PILLS BAR & SLIDE-OVER DRAWER TRIGGER -->
+      <div id="directory-category-carousel" class="flex items-center gap-2 overflow-x-auto no-scrollbar text-xs font-black pt-2 border-t border-[#C5A059]/20">
+        <button type="button" onclick="toggleAdvancedFiltersDrawer()" class="bg-[#141A28] hover:bg-[#1E293B] text-amber-300 border border-[#D4AF37]/50 px-3.5 py-1.5 rounded-xl shrink-0 cursor-pointer font-black flex items-center gap-1 shadow-md hover:scale-105 transition-transform">
+          <span>⚙️ فیلترهای پیشرفته</span>
+        </button>
+        <button type="button" onclick="filterVendorsByCategoryTitle('all')" class="bg-[#D4AF37] text-[#0F251A] px-3.5 py-1.5 rounded-xl shrink-0 cursor-pointer shadow-md font-bold">
+          همه خدمات
+        </button>
+        <button type="button" onclick="filterVendorsByCategoryTitle('تالار و باغ تالار عروسی')" class="bg-[#141A28] hover:bg-[#1E293B] text-amber-200 border border-[#C5A059]/30 px-3.5 py-1.5 rounded-xl shrink-0 cursor-pointer transition-all">
+          🏛️ تالار و باغ تالار
+        </button>
+        <button type="button" onclick="filterVendorsByCategoryTitle('آتلیه عکاسی و فیلمبرداری')" class="bg-[#141A28] hover:bg-[#1E293B] text-amber-200 border border-[#C5A059]/30 px-3.5 py-1.5 rounded-xl shrink-0 cursor-pointer transition-all">
+          📸 آتلیه عکاسی
+        </button>
+        <button type="button" onclick="filterVendorsByCategoryTitle('مزون لباس عروس و داماد')" class="bg-[#141A28] hover:bg-[#1E293B] text-amber-200 border border-[#C5A059]/30 px-3.5 py-1.5 rounded-xl shrink-0 cursor-pointer transition-all">
+          👗 مزون عروس
+        </button>
+        <button type="button" onclick="filterVendorsByCategoryTitle('سالن زیبایی و میکاپ عروس')" class="bg-[#141A28] hover:bg-[#1E293B] text-amber-200 border border-[#C5A059]/30 px-3.5 py-1.5 rounded-xl shrink-0 cursor-pointer transition-all">
+          💄 سالن زیبایی
+        </button>
+        <button type="button" onclick="filterVendorsByCategoryTitle('تشریفات و خدمات مجالس')" class="bg-[#141A28] hover:bg-[#1E293B] text-amber-200 border border-[#C5A059]/30 px-3.5 py-1.5 rounded-xl shrink-0 cursor-pointer transition-all">
+          🌸 گل‌آرایی & تشریفات
+        </button>
+        <button type="button" onclick="filterVendorsByCategoryTitle('کیک و شیرینی عروسی')" class="bg-[#141A28] hover:bg-[#1E293B] text-amber-200 border border-[#C5A059]/30 px-3.5 py-1.5 rounded-xl shrink-0 cursor-pointer transition-all">
+          🎂 کیک & شیرینی
+        </button>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- 3. FULL-WIDTH MAGAZINE BENTO GRID VIEW CONTAINER -->
+  <div id="directory-magazine-grid-view" class="w-full space-y-6">
+    <div id="vendor-grid" class="w-full grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+      <!-- Populated dynamically via JS renderVendors() -->
+    </div>
+  </div>
+
+  <!-- 4. OBSIDIAN INTERACTIVE YAZD MAP VIEW CONTAINER -->
+  <div id="directory-interactive-map-view" class="hidden bg-[#0e121c]/90 backdrop-blur-xl border border-[#C5A059]/40 rounded-3xl p-6 shadow-2xl text-right space-y-4">
+    <div class="flex items-center justify-between border-b border-[#C5A059]/20 pb-3">
+      <span class="text-xs font-black text-[#D4AF37]">🗺️ نقشه تعاملی تامین‌کنندگان استان یزد</span>
+      <span class="text-[10.5px] text-slate-400 font-bold">روی پین‌های طلایی جهت مشاهده مشخصات کلیک کنید</span>
+    </div>
+
+    <div class="relative w-full h-[450px] rounded-2xl overflow-hidden border border-[#C5A059]/30 bg-[#07090E] flex items-center justify-center p-4">
+      <div class="absolute inset-0 opacity-40 bg-[radial-gradient(#D4AF37_1px,transparent_1px)] [background-size:16px_16px]"></div>
+
+      <div class="relative z-10 w-full h-full flex flex-col justify-between p-6 text-xs">
+        <div class="flex justify-between items-start">
+          <div onclick="openVendorDetailModal(1)" class="bg-[#141A28] border-2 border-[#D4AF37] p-2.5 rounded-2xl shadow-2xl cursor-pointer hover:scale-110 transition-transform flex items-center gap-2">
+            <span class="w-3 h-3 rounded-full bg-[#D4AF37] animate-ping"></span>
+            <div>
+              <p class="font-black text-white text-[11px]">هتل باغ مشیرالممالک</p>
+              <span class="text-[9.5px] text-amber-300 block">صفائیه یزد • ⭐ ۴.۹</span>
+            </div>
+          </div>
+
+          <div onclick="openVendorDetailModal(2)" class="bg-[#141A28] border-2 border-[#D4AF37] p-2.5 rounded-2xl shadow-2xl cursor-pointer hover:scale-110 transition-transform flex items-center gap-2">
+            <span class="w-3 h-3 rounded-full bg-[#D4AF37] animate-ping"></span>
+            <div>
+              <p class="font-black text-white text-[11px]">استودیو کویر یزد</p>
+              <span class="text-[9.5px] text-amber-300 block">بلوار جمهوری • ⭐ ۴.۸</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="flex justify-around items-end">
+          <div onclick="openVendorDetailModal(3)" class="bg-[#141A28] border-2 border-[#D4AF37] p-2.5 rounded-2xl shadow-2xl cursor-pointer hover:scale-110 transition-transform flex items-center gap-2">
+            <span class="w-3 h-3 rounded-full bg-[#D4AF37] animate-ping"></span>
+            <div>
+              <p class="font-black text-white text-[11px]">مزون رویال لورنت</p>
+              <span class="text-[9.5px] text-amber-300 block">خیابان ملاصدرا • ⭐ ۵.۰</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
   </div>
 
 </div>
