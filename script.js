@@ -6761,13 +6761,47 @@ if (document.readyState === "loading") {
     let currentModalVendor = null;
 
     window.openVendorDetailModal = function openVendorDetailModal(vendorId) {
-      window.closeVendorDetailModal = closeVendorDetailModal;
       let vId = vendorId || 1;
       if (typeof vendorId === 'string' && !isNaN(parseInt(vendorId))) {
         vId = parseInt(vendorId);
       }
-      window.location.href = `vendor-detail.html?id=${vId}`;
+      const vendor = vendors.find(v => v.id === vId) || vendors[0];
+      if (!vendor) return;
+
+      currentModalVendor = vendor;
+
+      const profileView = document.getElementById('vendor-profile-view');
+      const directoryView = document.getElementById('tab-directory');
+
+      if (profileView) {
+        profileView.classList.remove('hidden');
+        if (directoryView) directoryView.classList.add('hidden');
+
+        const titleEl = document.getElementById('vdm-title');
+        const subtitleEl = document.getElementById('vdm-subtitle');
+        const priceEl = document.getElementById('vdm-price');
+        const aboutEl = document.getElementById('vdm-about');
+        const addressEl = document.getElementById('vdm-full-address-explicit');
+
+        if (titleEl) titleEl.innerText = vendor.name;
+        if (subtitleEl) subtitleEl.innerText = `${vendor.category || 'تالار و تشریفات'} • ${vendor.district || 'صفائیه یزد'}`;
+        if (priceEl) priceEl.innerText = vendor.priceRange || '۹۵,۰۰۰,۰۰۰ تومان';
+        if (aboutEl) aboutEl.innerText = vendor.about || vendor.description || 'توضیحات جامع مجموعه و خدمات تخصصی آن.';
+        if (addressEl) addressEl.innerText = vendor.address ? `استان یزد، ${vendor.address}` : 'استان یزد، صفائیه، خیابان تیمسار فلاحی، هتل باغ مشیرالممالک';
+
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+      } else {
+        window.location.href = `vendor-detail.html?id=${vId}`;
+      }
     };
+
+    window.closeVendorProfileView = function closeVendorProfileView() {
+      const profileView = document.getElementById('vendor-profile-view');
+      const directoryView = document.getElementById('tab-directory');
+      if (profileView) profileView.classList.add('hidden');
+      if (directoryView) directoryView.classList.remove('hidden');
+    };
+    window.closeVendorDetailModal = window.closeVendorProfileView;
 
     function initStandaloneVendorShowroom() {
       if (!window.location.pathname.includes('vendor-detail.html')) return;

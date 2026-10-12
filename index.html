@@ -5418,36 +5418,40 @@
   </div>
 
   <!-- ========================================== -->
-  <!-- MODAL: FULL COMPREHENSIVE VENDOR DETAIL    -->
+  <!-- IN-PAGE SPA VIEW: VENDOR PROFILE SHOWROOM  -->
   <!-- ========================================== -->
-<div id="vendor-detail-modal" class="clean-vmodal-overlay hidden" onclick="if(event.target === this) closeVendorDetailModal()">
-    <div class="clean-vmodal-card relative text-right flex flex-col bg-[#07090E] text-[#F7F5F0] rounded-3xl overflow-hidden shadow-2xl border border-[#C5A059]/50" onclick="event.stopPropagation()">
+  <div id="vendor-profile-view" class="hidden max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-8 space-y-8 text-right bg-[#07090E] text-[#F7F5F0]">
+    <!-- Top Back Link Bar -->
+    <div class="flex items-center justify-between border-b border-[#C5A059]/20 pb-4">
+      <button type="button" onclick="closeVendorProfileView()" class="flex items-center gap-2 text-xs sm:text-sm font-bold text-[#D4AF37] hover:text-amber-200 transition-colors cursor-pointer bg-[#141A28] px-4 py-2 rounded-xl border border-[#C5A059]/40 shadow-md">
+        <i data-lucide="arrow-right" class="w-4 h-4 text-[#D4AF37]"></i>
+        <span>← بازگشت به دایرکتوری تامین‌کنندگان</span>
+      </button>
+      <span class="bg-[#D4AF37]/15 text-[#D4AF37] border border-[#D4AF37]/40 text-xs px-3.5 py-1 rounded-full font-black flex items-center gap-1 shadow-sm">
+        👑 شو روم رسمی VIP
+      </span>
+    </div>
 
-      <!-- BLOCK 1: Top Header & Title Section (Clean, Minimalist Layout) -->
-      <div class="vmodal-block-header sticky top-0 z-30 bg-[#07090E]/95 backdrop-blur-2xl text-white px-6 py-4 border-b border-[#C5A059]/40 shadow-xl">
-        <div class="flex items-start justify-between gap-4">
-          <div class="space-y-1 text-right flex-1">
-            <h2 id="vdm-title" class="text-xl sm:text-2xl font-bold text-[#C5A059]">هتل باغ و تشریفات مشیرالممالک یزد</h2>
-            <p id="vdm-subtitle" class="text-xs sm:text-sm text-slate-400 font-medium">
-              <span id="vdm-category" class="text-slate-300">تالار و باغ تالار عروسی</span> •
-              <span id="vdm-address" class="text-slate-400">صفائیه یزد</span>
-            </p>
-            <div class="vendor-meta-row flex flex-wrap items-center gap-2 text-xs text-slate-200 pt-2">
-              <span id="vdm-rating">⭐️ 4.9 (۳۸ نظر)</span>
-              <span>•</span>
-              <span>📍 صفائیه یزد</span>
-              <span>•</span>
-              <span>👥 ظرفیت تا ۶۰۰ نفر</span>
-              <span>•</span>
-              <span id="vdm-verified" class="text-[#D4AF37] font-bold">✨ پروانه کسب تاییدشده</span>
-            </div>
-          </div>
+    <!-- Header & Full Address -->
+    <div class="vendor-profile-header space-y-3 bg-[#07090E] p-6 rounded-3xl border border-[#C5A059]/25 shadow-2xl">
+      <h1 id="vdm-title" class="text-2xl sm:text-3xl font-black text-[#C5A059]">هتل باغ و تشریفات مشیرالممالک یزد</h1>
+      <p id="vdm-subtitle" class="text-xs sm:text-sm text-slate-400 font-bold">تالار و باغ تالار عروسی • صفائیه یزد</p>
 
-          <button onclick="closeVendorDetailModal()" class="w-9 h-9 rounded-full bg-[#141A28] hover:bg-[#1E293B] text-slate-300 hover:text-white flex items-center justify-center transition-colors border border-[#C5A059]/30 cursor-pointer shrink-0 mt-1" title="بستن">
-            <i data-lucide="x" class="w-5 h-5"></i>
-          </button>
-        </div>
+      <!-- Explicit Full Address Row -->
+      <div class="p-3.5 bg-[#0e121c] border border-[#C5A059]/30 rounded-2xl text-xs sm:text-sm text-slate-200 font-medium flex items-center gap-2 shadow-inner">
+        <span class="text-[#D4AF37] font-black shrink-0">📍 آدرس دقیق:</span>
+        <span id="vdm-full-address-explicit" class="text-slate-100">استان یزد، صفائیه، خیابان تیمسار فلاحی، هتل باغ مشیرالممالک</span>
       </div>
+
+      <!-- Clean Meta Row -->
+      <div class="vendor-meta-row flex flex-wrap items-center gap-3 text-xs sm:text-sm text-slate-200 pt-1 font-bold">
+        <span id="vdm-rating" class="text-amber-300">⭐️ 4.9 (۳۸ نظر)</span>
+        <span class="text-slate-600">•</span>
+        <span id="vdm-capacity">👥 ظرفیت تا ۶۰۰ نفر</span>
+        <span class="text-slate-600">•</span>
+        <span id="vdm-verified" class="text-[#D4AF37]">✨ پروانه کسب تاییدشده</span>
+      </div>
+    </div>
 
       <!-- BLOCK 2: Photo Gallery Showcase (Cinematic Full-Width Bento Grid) -->
       <div class="vmodal-block-gallery px-6 pt-3 pb-1 bg-[#07090E]">
@@ -5648,18 +5652,17 @@
       </div>
 
       <!-- BLOCK 4: Sticky Modal Bottom Action Footer (Exact Luxe Sticky Bottom Bar) -->
-      <div id="vdm-floating-bar" class="sticky-bottom-bar" style="position: sticky; bottom: 0; left: 0; width: 100%; z-index: 99999; background: rgba(7, 9, 14, 0.95); backdrop-filter: blur(16px); border-top: 1px solid rgba(197, 160, 89, 0.3); padding: 12px 24px; display: flex; justify-content: space-between; align-items: center; box-shadow: 0 -10px 25px rgba(0,0,0,0.5);">
+      <div id="vdm-floating-bar" class="sticky-bottom-bar" style="position: fixed; bottom: 0; left: 0; width: 100%; z-index: 99999; background: rgba(7, 9, 14, 0.95); backdrop-filter: blur(16px); border-top: 1px solid rgba(197, 160, 89, 0.3); padding: 12px 24px; display: flex; justify-content: space-between; align-items: center; box-shadow: 0 -10px 25px rgba(0,0,0,0.5);">
           <div style="display: flex; gap: 12px; align-items: center;">
-              <a href="#quote" onclick="openInquireFromVendorModal(); return false;" style="background: #C5A059; color: #07090E; font-weight: bold; padding: 12px 24px; border-radius: 12px; text-decoration: none; font-size: 14px; box-shadow: 0 0 15px rgba(197, 160, 89, 0.4);">✨ استعلام قیمت و رزرو</a>
-              <a href="tel:03530000" onclick="makeVendorCall(); return false;" style="background: rgba(255, 255, 255, 0.08); color: #fff; padding: 10px 16px; border-radius: 10px; text-decoration: none; border: 1px solid rgba(197, 160, 89, 0.2); font-size: 13px;">📞 تماس</a>
-              <a href="https://wa.me/" onclick="openWhatsAppInquiry(); return false;" style="background: rgba(255, 255, 255, 0.08); color: #fff; padding: 10px 16px; border-radius: 10px; text-decoration: none; border: 1px solid rgba(197, 160, 89, 0.2); font-size: 13px;">💬 واتساپ</a>
+              <a href="#quote" onclick="openInquireFromVendorModal(); return false;" style="background: #C5A059; color: #07090E; font-weight: bold; padding: 12px 24px; border-radius: 12px; text-decoration: none; font-size: 14px; box-shadow: 0 0 15px rgba(197, 160, 89, 0.4);">✨ استعلام قیمت و رزرو اختصاصی</a>
+              <a href="tel:03530000" onclick="makeVendorCall(); return false;" style="background: rgba(255, 255, 255, 0.08); color: #fff; padding: 10px 16px; border-radius: 10px; text-decoration: none; border: 1px solid rgba(197, 160, 89, 0.2); font-size: 13px;">📞 تماس مستقیم</a>
+              <a href="https://wa.me/" onclick="openWhatsAppInquiry(); return false;" style="background: rgba(255, 255, 255, 0.08); color: #fff; padding: 10px 16px; border-radius: 10px; text-decoration: none; border: 1px solid rgba(197, 160, 89, 0.2); font-size: 13px;">💬 چت واتساپ</a>
           </div>
           <div style="color: #C5A059; font-weight: 500; font-size: 14px;">
               شروع قیمت از <span id="vdm-price" style="color: #fff; font-weight: bold; font-size: 16px;">۹۵,۰۰۰,۰۰۰ تومان</span>
           </div>
       </div>
 
-    </div>
   </div>
 
 
