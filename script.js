@@ -6768,13 +6768,7 @@ if (document.readyState === "loading") {
       window.location.href = `vendor-detail.html?id=${vId}`;
     };
 
-    window.closeVendorProfileView = function closeVendorProfileView() {
-      const profileView = document.getElementById('vendor-profile-view');
-      const directoryView = document.getElementById('tab-directory');
-      if (profileView) profileView.classList.add('hidden');
-      if (directoryView) directoryView.classList.remove('hidden');
-    };
-    window.closeVendorDetailModal = window.closeVendorProfileView;
+    window.closeVendorDetailModal = function closeVendorDetailModal() {};
 
     function initStandaloneVendorShowroom() {
       if (!window.location.pathname.includes('vendor-detail.html')) return;
@@ -6783,13 +6777,21 @@ if (document.readyState === "loading") {
       const vendor = vendors.find(v => v.id === vendorId) || vendors[0];
       if (!vendor) return;
 
+      currentModalVendor = vendor;
+
+      const coverEl = document.getElementById('vdm-cover-hero');
       const titleEl = document.getElementById('vdm-title-page');
       const subtitleEl = document.getElementById('vdm-subtitle-page');
+      const addressEl = document.getElementById('vdm-full-address-explicit');
       const aboutEl = document.getElementById('vdm-about-standalone');
 
+      if (coverEl) coverEl.src = vendor.image || "https://images.unsplash.com/photo-1519167758481-83f550bb49b3?w=1600";
       if (titleEl) titleEl.innerText = vendor.name;
       if (subtitleEl) subtitleEl.innerText = `${vendor.category || 'خدمات عروسی'} • ${vendor.district || 'صفائیه یزد'}`;
+      if (addressEl) addressEl.innerText = vendor.address ? `یزد، ${vendor.address}` : 'یزد، صفائیه، خیابان تیمسار فلاحی، هتل باغ مشیرالممالک';
       if (aboutEl) aboutEl.innerText = vendor.about || vendor.description || "توضیحات جامع و خدمات تخصصی مجموعه.";
+
+      renderModalAvailabilityCalendar('اردیبهشت');
     }
 
     if (document.readyState === 'loading') {
