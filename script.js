@@ -6761,185 +6761,34 @@ if (document.readyState === "loading") {
     let currentModalVendor = null;
 
     window.openVendorDetailModal = function openVendorDetailModal(vendorId) {
-    window.closeVendorDetailModal = closeVendorDetailModal;
-      let vId = vendorId;
+      window.closeVendorDetailModal = closeVendorDetailModal;
+      let vId = vendorId || 1;
       if (typeof vendorId === 'string' && !isNaN(parseInt(vendorId))) {
         vId = parseInt(vendorId);
       }
-      let vendor = vendors.find(v => v.id === vId) || vendors[0];
+      window.location.href = `vendor-detail.html?id=${vId}`;
+    };
+
+    function initStandaloneVendorShowroom() {
+      if (!window.location.pathname.includes('vendor-detail.html')) return;
+      const params = new URLSearchParams(window.location.search);
+      const vendorId = parseInt(params.get('id')) || 1;
+      const vendor = vendors.find(v => v.id === vendorId) || vendors[0];
       if (!vendor) return;
 
-      try {
-        const savedCustom = localStorage.getItem(`aroosi_vendor_custom_profile_${vendor.id}`);
-        if (savedCustom) {
-          const customObj = JSON.parse(savedCustom);
-          vendor = {
-            ...vendor,
-            ...customObj,
-            name: customObj.name || vendor.name,
-            about: customObj.about || vendor.about,
-            customServices: (customObj.customServices && customObj.customServices.length > 0) ? customObj.customServices : vendor.customServices,
-            capabilityTags: (customObj.capabilityTags && customObj.capabilityTags.length > 0) ? customObj.capabilityTags : vendor.capabilityTags
-          };
-        }
-      } catch (e) {
-        console.error(e);
-      }
-
-      currentModalVendor = vendor;
-
-      const modal = document.getElementById('vendor-detail-modal');
-      if (modal) {
-        modal.classList.remove('hidden');
-        modal.classList.add('active');
-        modal.classList.add('is-open');
-        document.body.style.overflow = 'hidden';
-      }
-
-      const titleEl = document.getElementById('vdm-title');
-      const coverEl = document.getElementById('vdm-cover');
-      let avatarEl = document.getElementById('vdm-avatar');
-      if (avatarEl && avatarEl.tagName !== 'IMG') {
-        const childImg = avatarEl.querySelector('img');
-        if (childImg) avatarEl = childImg;
-      }
-      const catEl = document.getElementById('vdm-category');
-      const districtEl = document.getElementById('vdm-district') || document.getElementById('vdm-address');
-      const bottomPriceBarEl = document.getElementById('vdm-bottom-price-bar') || document.getElementById('vdm-price');
-      const aboutEl = document.getElementById('vdm-about') || document.getElementById('vdm-about-text');
-      const inquireCta = document.getElementById('vdm-modal-inquire-cta');
-      const chatCta = document.getElementById('vdm-modal-chat-cta');
+      const titleEl = document.getElementById('vdm-title-page');
+      const subtitleEl = document.getElementById('vdm-subtitle-page');
+      const aboutEl = document.getElementById('vdm-about-standalone');
 
       if (titleEl) titleEl.innerText = vendor.name;
-      if (coverEl) coverEl.src = vendor.image || "https://images.unsplash.com/photo-1519167758481-83f550bb49b3?auto=format&fit=crop&w=1200&q=80";
-      if (avatarEl && avatarEl.tagName === 'IMG') avatarEl.src = vendor.image || "https://images.unsplash.com/photo-1519167758481-83f550bb49b3?auto=format&fit=crop&w=400&q=80";
-      if (catEl) catEl.innerText = vendor.category;
-      if (districtEl) districtEl.innerText = `📍 ${vendor.province || 'استان یزد'}، ${vendor.district || 'صفائیه'}`;
-      if (bottomPriceBarEl) bottomPriceBarEl.innerText = vendor.priceRange || "۶۵,۰۰۰,۰۰۰ تومان";
-      if (aboutEl) aboutEl.innerText = vendor.description || vendor.about || "توضیحات جامع مجموعه و خدمات تخصصی آن.";
+      if (subtitleEl) subtitleEl.innerText = `${vendor.category || 'خدمات عروسی'} • ${vendor.district || 'صفائیه یزد'}`;
+      if (aboutEl) aboutEl.innerText = vendor.about || vendor.description || "توضیحات جامع و خدمات تخصصی مجموعه.";
+    }
 
-      if (inquireCta) {
-        inquireCta.onclick = function() {
-          closeVendorDetailModal();
-          openInquiryModal(vendor.id, vendor.name);
-        };
-      }
-
-      if (chatCta) {
-        chatCta.onclick = function() {
-          closeVendorDetailModal();
-          switchTab('messages');
-        };
-      }
-
-      // Render Capability Tags Badges in Modal
-      const tagsContainer = document.getElementById('vdm-capability-tags');
-      if (tagsContainer) {
-        const tags = vendor.capabilityTags || ["مجوز رسمی عکاسی کویر", "تجهیزات هلی‌شات & نور کویر", "سرو شیرینی‌های سنتی یزد (حاج خلیفه)", "فضای باز & سالن سرپوشیده"];
-        tagsContainer.innerHTML = tags.map(t => `<span class="bg-amber-100 text-amber-900 border border-amber-300 text-[11px] font-bold px-3 py-1 rounded-full flex items-center gap-1">✅ ${t}</span>`).join('');
-      }
-
-      // Populate Portfolio Gallery Grid
-      const galleryGrid = document.getElementById('vdm-gallery-grid');
-      if (galleryGrid) {
-        const portfolio = vendor.portfolio || [
-          { url: vendor.image, tag: "نمونه‌کار اصلی" },
-          { url: "https://images.unsplash.com/photo-1519741497674-611481863552?auto=format&fit=crop&w=600&q=80", tag: "سالن و دکور" },
-          { url: "https://images.unsplash.com/photo-1511285560929-80b456fea0bc?auto=format&fit=crop&w=600&q=80", tag: "سفره عقد" }
-        ];
-        galleryGrid.innerHTML = portfolio.map(item => `
-          <div class="aspect-4/3 rounded-xl overflow-hidden bg-slate-100 border border-gray-200 relative group cursor-pointer" onclick="openLightbox('${item.url}')">
-            <img src="${item.url}" alt="${item.tag || 'نمونه کار'}" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300">
-            <div class="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center text-white text-xs font-bold">🔍 بزرگ‌نمایی</div>
-            <span class="absolute top-2 right-2 bg-black/60 text-white text-[9px] font-bold px-2 py-0.5 rounded-md backdrop-blur-xs">${item.tag || 'تصویر'}</span>
-          </div>
-        `).join('');
-      }
-
-      // Populate Packages Container
-      const packagesContainer = document.getElementById('vdm-packages-container');
-      if (packagesContainer) {
-        const pkgs = vendor.packages || [
-          { name: "برنزی (پایه)", price: "۶۵,۰۰۰,۰۰۰ تومان", items: ["منوی شام ۲ رنگ سلف‌سرویس", "ورودی باغ تالار و سیستم صوتی", "گل‌آرایی طبیعی ورودی"] },
-          { name: "نقره‌ای (VIP)", price: "۹۵,۰۰۰,۰۰۰ تومان", items: ["منوی شام ۳ رنگ با کترینگ یزدی", "سفره عقد مجلل با شمع‌آرایی", "نورپردازی LED و موسیقی زنده"] },
-          { name: "طلایی (Luxury)", price: "۱۴۰,۰۰۰,۰۰۰ تومان", items: ["تمام امکانات VIP + آتش‌بازی ورودی", "بار نوشیدنی گرم و سرد بین‌المللی", "اقامت سوئیت ماه عسل عروس و داماد"] }
-        ];
-        packagesContainer.innerHTML = pkgs.map((p, idx) => {
-          const isFeatured = idx === 1;
-          const borderClass = isFeatured ? 'border-2 border-[#D4AF37] shadow-[0_10px_30px_rgba(212,175,55,0.2)]' : 'border border-[#C5A059]/40 hover:border-[#D4AF37]';
-          const badgeHtml = isFeatured ? `<span class="absolute -top-3 right-5 bg-gradient-to-r from-[#D4AF37] to-[#F3E5AB] text-[#0F251A] text-[9.5px] font-black px-3 py-0.5 rounded-full shadow-md">⭐ پیشنهاد ویژه</span>` : '';
-          return `
-            <div class="relative bg-[#0e121c]/90 backdrop-blur-xl ${borderClass} rounded-3xl p-5 space-y-4 text-right flex flex-col justify-between transition-all">
-              ${badgeHtml}
-              <div class="space-y-3">
-                <span class="text-[10px] font-black text-amber-200 bg-[#D4AF37]/15 px-2.5 py-0.5 rounded-full border border-[#D4AF37]/30 inline-block">${p.name}</span>
-                <div class="text-sm font-black text-[#D4AF37] pt-1 border-t border-slate-800">${p.price}</div>
-                <ul class="space-y-2 text-xs text-slate-300 font-medium">
-                  ${(p.items || []).map(item => `<li class="flex items-center gap-2"><span class="text-[#D4AF37] font-black">✓</span> <span>${item}</span></li>`).join('')}
-                </ul>
-              </div>
-              <button onclick="triggerPackageInquiry('${p.name}', '${p.price}')" class="w-full ${isFeatured ? 'gold-shimmer-btn text-[#0F251A]' : 'bg-[#141A28] hover:bg-[#1E293B] text-amber-200 border border-[#D4AF37]/40'} font-bold py-2.5 rounded-xl text-xs transition-all cursor-pointer flex items-center justify-center gap-1.5 shadow-md">
-                <span>استعلام قیمت این پکیج ➔</span>
-              </button>
-            </div>
-          `;
-        }).join('');
-      }
-
-      // Populate Amenities Container inside About Us section
-      const amenitiesContainer = document.getElementById('vdm-amenities-container');
-      if (amenitiesContainer) {
-        let amenities = vendor.customServices || vendor.capabilityTags;
-        if (!amenities || amenities.length === 0) {
-          amenities = ["پارکینگ اختصاصی (۳۰۰ خودرو)", "سیستم صوتی و نورپردازی حرفه‌ای", "سفره عقد سنتی و سنتی-مدرن", "ژنراتور برق اضطراری", "اتاق پرو و میکاپ اختصاصی عروس", "کترینگ غذا و پذیرایی یزدی"];
-        }
-        amenitiesContainer.innerHTML = amenities.map(a => `
-          <div class="bg-stone-50 hover:bg-stone-100/80 border border-stone-200/90 hover:border-[#D4AF37]/60 rounded-xl p-2.5 flex items-center gap-2 text-xs font-bold text-stone-800 transition-all shadow-2xs">
-            <span class="w-2 h-2 rounded-full bg-[#D4AF37] shrink-0"></span>
-            <span class="truncate">${a}</span>
-          </div>
-        `).join('');
-      }
-
-      // Populate Reviews Container
-      const reviewsContainer = document.getElementById('vdm-reviews-container') || document.getElementById('vdm-reviews-list');
-      if (reviewsContainer) {
-        const reviews = vendor.reviews || [
-          { author: "رضا و مریم", text: "کیفیت غذا و میزبانی مجموعه بی‌نظیر بود.", stars: "★★★★★", date: "اردیبهشت ۱۴۰۳" },
-          { author: "محمد و سارا", text: "فضای باغ سنتی بسیار شیک و عکس‌ها رویایی شدند.", stars: "★★★★★", date: "فروردین ۱۴۰۳" }
-        ];
-        reviewsContainer.innerHTML = reviews.map(r => `
-          <div class="bg-white border border-stone-200/90 rounded-2xl p-4 space-y-2 shadow-2xs text-right">
-            <div class="flex justify-between items-center text-xs">
-              <div class="flex items-center gap-2">
-                <strong class="text-[#1B3B2B] font-bold text-sm">${r.author}</strong>
-                <span class="bg-emerald-50 text-emerald-800 text-[10px] font-bold px-2.5 py-0.5 rounded-full border border-emerald-200/80 inline-flex items-center gap-1">
-                  <i data-lucide="check-circle" class="w-3 h-3 text-emerald-600"></i>
-                  <span>تاییدشده توسط عروسی نو</span>
-                </span>
-              </div>
-              <span class="text-amber-500 font-bold">${r.stars || '★★★★★'}</span>
-            </div>
-            <p class="text-xs text-stone-600 leading-relaxed font-medium">${r.text}</p>
-            <span class="text-[10px] text-stone-400 block">${r.date || '۱۴۰۳'}</span>
-          </div>
-        `).join('');
-      }
-
-      // Populate Contact Tab & Map Links
-      const phoneEl = document.getElementById('vdm-contact-phone') || document.getElementById('vdm-phone');
-      const addressEl = document.getElementById('vdm-contact-address') || document.getElementById('vdm-full-address');
-      const hoursEl = document.getElementById('vdm-contact-hours');
-      const instaEl = document.getElementById('vdm-contact-insta');
-
-      if (phoneEl) phoneEl.innerText = vendor.phone || "۰۳۵-۳۸۲۴۰۰۰۰";
-      if (addressEl) addressEl.innerText = vendor.address || `استان یزد، ${vendor.district || 'صفائیه'}`;
-      if (hoursEl) hoursEl.innerText = vendor.hours || "همه روزه از ۱۰:۰۰ الی ۲۲:۰۰";
-      if (instaEl) instaEl.innerText = vendor.instagram || "@yazd_wedding_studio";
-
-      renderModalAvailabilityCalendar('اردیبهشت');
-      switchModalTab(0);
-      if (typeof lucide !== 'undefined' && lucide.createIcons) lucide.createIcons();
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', initStandaloneVendorShowroom);
+    } else {
+      initStandaloneVendorShowroom();
     }
 
     function triggerPackageInquiry(packageName, packagePrice) {
