@@ -75,11 +75,11 @@
         </div>
       </div>
 
-      <!-- Bento Grid Showcase -->
-      <div class="grid grid-cols-1 sm:grid-cols-3 md:grid-cols-4 gap-4 rounded-3xl overflow-hidden border border-[#C5A059]/40 p-3 bg-[#0e121c]/90 backdrop-blur-xl shadow-2xl">
+      <!-- Cinematic Full-Width Bento Grid Showcase -->
+      <div class="grid grid-cols-1 sm:grid-cols-3 md:grid-cols-4 gap-4 rounded-3xl overflow-hidden p-3 shadow-2xl backdrop-blur-xl" style="background: rgba(7, 9, 14, 0.8); border: 1px solid rgba(197, 160, 89, 0.2);">
         <!-- Hero Large Tile (Col span 2) -->
-        <div class="sm:col-span-2 h-64 sm:h-80 rounded-2xl overflow-hidden cursor-pointer group relative border border-[#C5A059]/30" onclick="openLightbox('https://images.unsplash.com/photo-1519167758481-83f550bb49b3?w=1200')">
-          <img src="https://images.unsplash.com/photo-1519167758481-83f550bb49b3?w=1000" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500 ease-out" alt="نمونه کار اصلی">
+        <div class="sm:col-span-2 h-64 sm:h-80 rounded-2xl overflow-hidden cursor-pointer group relative" style="background: rgba(7, 9, 14, 0.8); border: 1px solid rgba(197, 160, 89, 0.2);" onclick="openLightbox('https://images.unsplash.com/photo-1519167758481-83f550bb49b3?w=1200')">
+          <img src="https://images.unsplash.com/photo-1519167758481-83f550bb49b3?w=1000" class="w-full h-full object-cover group-hover:scale-105" style="transition: transform 0.5s ease;" alt="نمونه کار اصلی">
           <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent opacity-80 group-hover:opacity-60 transition-opacity"></div>
           <div class="absolute bottom-4 right-4 text-right space-y-1">
             <span class="bg-[#D4AF37] text-[#0F251A] text-[9.5px] font-black px-2.5 py-0.5 rounded-full shadow-md inline-block">⭐ شاهکار معماری</span>
@@ -92,8 +92,8 @@
         </div>
 
         <!-- Tile 2 -->
-        <div class="h-64 sm:h-80 rounded-2xl overflow-hidden cursor-pointer group relative border border-[#C5A059]/30" onclick="openLightbox('https://images.unsplash.com/photo-1519741497674-611481863552?w=1200')">
-          <img src="https://images.unsplash.com/photo-1519741497674-611481863552?w=800" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500 ease-out" alt="نمونه کار ۲">
+        <div class="h-64 sm:h-80 rounded-2xl overflow-hidden cursor-pointer group relative" style="background: rgba(7, 9, 14, 0.8); border: 1px solid rgba(197, 160, 89, 0.2);" onclick="openLightbox('https://images.unsplash.com/photo-1519741497674-611481863552?w=1200')">
+          <img src="https://images.unsplash.com/photo-1519741497674-611481863552?w=800" class="w-full h-full object-cover group-hover:scale-105" style="transition: transform 0.5s ease;" alt="نمونه کار ۲">
           <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent opacity-80 group-hover:opacity-60 transition-opacity"></div>
           <div class="absolute bottom-3 right-3 text-right">
             <h4 class="text-xs font-black text-white">دیزاین و سفره عقد اسلیمی</h4>
@@ -101,8 +101,8 @@
         </div>
 
         <!-- Tile 3 with 360 Overlay Trigger -->
-        <div class="h-64 sm:h-80 rounded-2xl overflow-hidden cursor-pointer group relative border border-[#C5A059]/30" onclick="open360TourModal(1)">
-          <img src="https://images.unsplash.com/photo-1511285560929-80b456fea0bc?w=1200" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500 ease-out" alt="نمونه کار ۳">
+        <div class="h-64 sm:h-80 rounded-2xl overflow-hidden cursor-pointer group relative" style="background: rgba(7, 9, 14, 0.8); border: 1px solid rgba(197, 160, 89, 0.2);" onclick="open360TourModal(1)">
+          <img src="https://images.unsplash.com/photo-1511285560929-80b456fea0bc?w=1200" class="w-full h-full object-cover group-hover:scale-105" style="transition: transform 0.5s ease;" alt="نمونه کار ۳">
           <div class="absolute inset-0 bg-black/40 group-hover:bg-black/20 transition-colors flex flex-col justify-between p-3 text-right">
             <span class="self-start bg-[#D4AF37] text-[#0F251A] text-[9.5px] font-black px-2.5 py-0.5 rounded-full shadow-md flex items-center gap-1">
               <i data-lucide="compass" class="w-3 h-3"></i>
@@ -239,17 +239,16 @@
 
   </main>
 
-  <!-- STICKY FLOATING GLASS ACTION BAR -->
-  <div class="sticky-bottom-bar" style="position: fixed; bottom: 0; left: 0; width: 100%; z-index: 99999; background: rgba(7, 9, 14, 0.95); backdrop-filter: blur(16px); border-top: 1px solid rgba(197,160,89,0.3); padding: 12px 24px; display: flex; justify-content: space-between; align-items: center;">
-      <div style="display: flex; gap: 12px; align-items: center;">
-          <a href="#section-packages" onclick="openInquiryModal(1)" style="background: #C5A059; color: #07090E; font-weight: bold; padding: 12px 24px; border-radius: 12px; text-decoration: none; font-size: 14px;">✨ استعلام قیمت و رزرو</a>
-          <button type="button" onclick="makeVendorCall()" style="background: rgba(255,255,255,0.08); color: #fff; padding: 10px 16px; border-radius: 10px; text-decoration: none; border: 1px solid rgba(197,160,89,0.2); cursor: pointer;">📞 تماس</button>
-          <button type="button" onclick="openWhatsAppInquiry()" style="background: rgba(255,255,255,0.08); color: #fff; padding: 10px 16px; border-radius: 10px; text-decoration: none; border: 1px solid rgba(197,160,89,0.2); cursor: pointer;">💬 واتساپ</button>
-      </div>
-      <div style="color: #C5A059; font-weight: 500; font-size: 14px;">
-          شروع قیمت از <span id="vdm-bottom-price" style="color: #fff; font-weight: bold;">۹۵,۰۰۰,۰۰۰ تومان</span>
-      </div>
-  </div>
+<div class="sticky-bottom-bar" style="position: fixed; bottom: 0; left: 0; width: 100%; z-index: 99999; background: rgba(7, 9, 14, 0.95); backdrop-filter: blur(16px); border-top: 1px solid rgba(197, 160, 89, 0.3); padding: 12px 24px; display: flex; justify-content: space-between; align-items: center; box-shadow: 0 -10px 25px rgba(0,0,0,0.5);">
+    <div style="display: flex; gap: 12px; align-items: center;">
+        <a href="#quote" onclick="openInquiryModal(1); return false;" style="background: #C5A059; color: #07090E; font-weight: bold; padding: 12px 24px; border-radius: 12px; text-decoration: none; font-size: 14px; box-shadow: 0 0 15px rgba(197, 160, 89, 0.4);">✨ استعلام قیمت و رزرو</a>
+        <a href="tel:03530000" onclick="makeVendorCall(); return false;" style="background: rgba(255, 255, 255, 0.08); color: #fff; padding: 10px 16px; border-radius: 10px; text-decoration: none; border: 1px solid rgba(197, 160, 89, 0.2); font-size: 13px;">📞 تماس</a>
+        <a href="https://wa.me/" onclick="openWhatsAppInquiry(); return false;" style="background: rgba(255, 255, 255, 0.08); color: #fff; padding: 10px 16px; border-radius: 10px; text-decoration: none; border: 1px solid rgba(197, 160, 89, 0.2); font-size: 13px;">💬 واتساپ</a>
+    </div>
+    <div style="color: #C5A059; font-weight: 500; font-size: 14px;">
+        شروع قیمت از <span style="color: #fff; font-weight: bold; font-size: 16px;">۹۵,۰۰۰,۰۰۰ تومان</span>
+    </div>
+</div>
 
   <!-- App Script -->
   <script src="script.js"></script>
