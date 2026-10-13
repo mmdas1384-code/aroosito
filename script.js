@@ -1714,7 +1714,7 @@ if (document.readyState === "loading") {
     // ==========================================
     // GUEST LIST & CASH GIFT STATE & LOGIC
     // ==========================================
-    let guestListState = [
+    let initialGuests = [
       { id: "g-1", name: "دکتر حمیدرضا احمدی", side: "فامیل عروس", phone: "09121112233", companions: 2, table: "میز VIP ۱", status: "CONFIRMED" },
       { id: "g-2", name: "مهندس سارا نوری", side: "دوستان مشترک", phone: "09123334455", companions: 1, table: "میز ۴", status: "CONFIRMED" },
       { id: "g-3", name: "حاج محمود کریمی", side: "فامیل داماد", phone: "09125556677", companions: 3, table: "میز VIP ۲", status: "PENDING" },
@@ -1722,11 +1722,21 @@ if (document.readyState === "loading") {
       { id: "g-5", name: "مریم و نیما حسینی", side: "فامیل عروس", phone: "09128889900", companions: 2, table: "میز ۲", status: "CONFIRMED" }
     ];
 
-    let giftLedgerState = [
+    let initialGifts = [
       { id: "gift-1", guestName: "دکتر حمیدرضا احمدی", type: "نقدی", amount: 15000000, method: "کارت به کارت / پاکت نقدی", notes: "پاکت طلاکوب با یادداشت آرزوی خوشبختی" },
       { id: "gift-2", guestName: "مهندس سارا نوری", type: "واریز آنلاین کارت دعوت", amount: 10000000, method: "واریز آنلاین کارت دعوت", notes: "پرداخت مستقیم از درگاه درگاه آنلاین" },
       { id: "gift-3", guestName: "حاج محمود کریمی", type: "سکه طلا", amount: 35000000, method: "تحویل حضوری در سالن", notes: "یک عدد سکه کامل بهار آزادی" }
     ];
+
+    let guestListState = [];
+    try {
+      guestListState = JSON.parse(localStorage.getItem('aroosi_guest_list_db') || 'null') || initialGuests;
+    } catch(e) { guestListState = initialGuests; }
+
+    let giftLedgerState = [];
+    try {
+      giftLedgerState = JSON.parse(localStorage.getItem('aroosi_gift_ledger_db') || 'null') || initialGifts;
+    } catch(e) { giftLedgerState = initialGifts; }
 
     function renderGuestsAndGifts() {
       renderGuestsKPIs();
@@ -5003,6 +5013,9 @@ if (document.readyState === "loading") {
       const task = staticChecklist.find(t => t.id === id);
       if (task) {
         task.completed = !task.completed;
+        try {
+          localStorage.setItem('aroosi_checklist_db', JSON.stringify(staticChecklist));
+        } catch(e) {}
         renderChecklistTimeline();
         if (task.completed) {
           showToast(`تاسک «${task.title}» به انجام‌شده تغییر یافت.`, 'success');
@@ -5769,82 +5782,90 @@ if (document.readyState === "loading") {
 
         let priorityBadge = '';
         if (t.priority === 'urgent' || t.isUrgent) {
-          priorityBadge = `<span class="bg-rose-100 text-rose-700 text-[10px] font-bold px-2.5 py-0.5 rounded-full border border-rose-200">ضروری</span>`;
+          priorityBadge = `<span class="bg-rose-950/80 text-rose-300 border border-rose-500/40 text-[10px] font-bold px-2.5 py-0.5 rounded-full">🔴 ضروری</span>`;
         } else if (t.priority === 'suggested') {
-          priorityBadge = `<span class="bg-amber-100 text-amber-800 text-[10px] font-bold px-2.5 py-0.5 rounded-full border border-amber-200">پیشنهادی</span>`;
+          priorityBadge = `<span class="bg-amber-950/80 text-[#C5A059] border border-[#C5A059]/40 text-[10px] font-bold px-2.5 py-0.5 rounded-full">🟡 معمولی</span>`;
         } else {
-          priorityBadge = `<span class="bg-slate-100 text-slate-700 text-[10px] font-bold px-2.5 py-0.5 rounded-full border border-slate-200">اختیاری</span>`;
+          priorityBadge = `<span class="bg-[#07090E] text-slate-300 border border-[#C5A059]/30 text-[10px] font-bold px-2.5 py-0.5 rounded-full">اختیاری</span>`;
+        }
+
+        let assignedBadge = `<span class="bg-[#07090E] text-[#C5A059] border border-[#C5A059]/30 text-[10px] font-bold px-2.5 py-0.5 rounded-full">💍 مشترک</span>`;
+        if (t.assignedTo === 'bride') {
+          assignedBadge = `<span class="bg-[#07090E] text-rose-300 border border-rose-500/30 text-[10px] font-bold px-2.5 py-0.5 rounded-full">👰‍♀️ عروس</span>`;
+        } else if (t.assignedTo === 'groom') {
+          assignedBadge = `<span class="bg-[#07090E] text-blue-300 border border-blue-500/30 text-[10px] font-bold px-2.5 py-0.5 rounded-full">🤵‍♂️ داماد</span>`;
         }
 
         let vendorStatusBadge = '';
         if (t.vendorStatus === 'quote_received') {
-          vendorStatusBadge = `<span class="bg-blue-100 text-blue-800 text-[10px] font-bold px-2.5 py-0.5 rounded-full border border-blue-200">پیش‌فاکتور دریافت شد</span>`;
+          vendorStatusBadge = `<span class="bg-blue-950/80 text-blue-300 text-[10px] font-bold px-2.5 py-0.5 rounded-full border border-blue-500/40">پیش‌فاکتور دریافت شد</span>`;
         } else if (t.vendorStatus === 'deposit_paid') {
-          vendorStatusBadge = `<span class="bg-amber-100 text-amber-800 text-[10px] font-bold px-2.5 py-0.5 rounded-full border border-amber-200">بیعانه پرداخت شد</span>`;
+          vendorStatusBadge = `<span class="bg-amber-950/80 text-[#C5A059] text-[10px] font-bold px-2.5 py-0.5 rounded-full border border-[#C5A059]/40">بیعانه پرداخت شد</span>`;
         } else if (t.vendorStatus === 'finalized') {
-          vendorStatusBadge = `<span class="bg-emerald-100 text-emerald-800 text-[10px] font-bold px-2.5 py-0.5 rounded-full border border-emerald-200">نهایی شد</span>`;
+          vendorStatusBadge = `<span class="bg-emerald-950/80 text-emerald-300 text-[10px] font-bold px-2.5 py-0.5 rounded-full border border-emerald-500/40">نهایی شد</span>`;
         }
 
         const div = document.createElement('div');
-        div.className = `p-5 rounded-2xl border transition-all space-y-4 ${
-          t.completed ? 'bg-emerald-50/50 border-emerald-200 shadow-2xs' : 'bg-white border-accent hover:border-primary/40 shadow-xs'
+        div.className = `p-5 rounded-2xl border transition-all space-y-4 shadow-lg text-white ${
+          t.completed ? 'bg-[#07090E]/80 border-emerald-500/40' : 'bg-[#141A28] border-[#C5A059]/30 hover:border-[#C5A059]/60'
         }`;
 
         div.innerHTML = `
-          <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 border-b border-accent/40 pb-3">
+          <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 border-b border-[#C5A059]/20 pb-3">
             <div class="flex items-center gap-3">
-              <button type="button" onclick="toggleChecklistTask('${t.id}')" class="w-6 h-6 rounded-lg border-2 flex items-center justify-center font-bold text-xs transition-colors shrink-0 ${
-                t.completed ? 'bg-primary border-primary text-white' : 'border-secondary/40 text-transparent hover:border-primary'
+              <button type="button" onclick="toggleChecklistTask('${t.id}')" class="w-6 h-6 rounded-lg border-2 flex items-center justify-center font-black text-xs transition-colors shrink-0 ${
+                t.completed ? 'bg-[#C5A059] border-[#C5A059] text-[#07090E] shadow-[0_0_10px_#C5A059]' : 'border-[#C5A059]/40 text-transparent hover:border-[#C5A059]'
               }">
                 ✓
               </button>
               <div class="space-y-1">
                 <div class="flex items-center gap-2 flex-wrap">
-                  <span class="text-sm sm:text-base font-bold ${t.completed ? 'task-completed-strikethrough' : 'text-[#111827]'}">${t.title}</span>
+                  <span class="text-sm sm:text-base font-bold ${t.completed ? 'task-completed-strikethrough' : 'text-[#F7F5F0]'}">${t.title}</span>
                   ${priorityBadge}
+                  ${assignedBadge}
                 </div>
               </div>
             </div>
 
             <div class="flex items-center gap-2 self-start sm:self-auto">
-              <span class="text-[11px] font-semibold text-secondary bg-bgCustom px-3 py-1 rounded-lg border border-accent/80">${t.dueDate || t.timeframe}</span>
-              <span class="text-[11px] font-bold text-primary bg-primary/10 px-3 py-1 rounded-lg">${t.timeframe || t.category}</span>
+              <span class="text-[11px] font-semibold text-slate-300 bg-[#07090E] px-3 py-1 rounded-lg border border-[#C5A059]/30">${t.dueDate || t.timeframe}</span>
+              <span class="text-[11px] font-bold text-[#C5A059] bg-[#07090E] px-3 py-1 rounded-lg border border-[#C5A059]/30">${t.timeframe || t.category}</span>
             </div>
           </div>
 
           <!-- SELECTED VENDOR SECTION -->
-          <div class="bg-bgCustom p-3.5 rounded-xl border border-accent/70 flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+          <div class="bg-[#07090E] p-3.5 rounded-xl border border-[#C5A059]/20 flex flex-col sm:flex-row sm:items-center justify-between gap-3">
             ${attachedVendor ? `
               <div class="flex items-center gap-3">
-                <div class="w-12 h-12 rounded-xl border border-accent overflow-hidden bg-white shrink-0">
+                <div class="w-12 h-12 rounded-xl border border-[#C5A059]/40 overflow-hidden bg-[#07090E] shrink-0 shadow-md">
                   <img src="${attachedVendor.image}" alt="${attachedVendor.name}" class="w-full h-full object-cover">
                 </div>
                 <div class="space-y-1">
                   <div class="flex items-center gap-2 flex-wrap">
-                    <span class="text-xs font-bold text-graphite">${attachedVendor.name}</span>
-                    <span class="text-[10px] text-secondary font-medium">(${attachedVendor.category})</span>
+                    <span class="text-xs font-bold text-[#F7F5F0]">${attachedVendor.name}</span>
+                    <span class="text-[10px] text-slate-400 font-medium">(${attachedVendor.category})</span>
                     ${vendorStatusBadge}
                   </div>
                   <div class="flex items-center gap-2">
-                    <span class="text-[11px] font-bold text-primary">${attachedVendor.priceRange}</span>
+                    <span class="text-[11px] font-bold text-[#C5A059]">${attachedVendor.priceRange}</span>
                   </div>
                 </div>
               </div>
 
               <div class="flex items-center gap-2 self-end sm:self-auto">
-                <button onclick="openVendorSelectModal('${t.id}')" class="bg-white border border-accent hover:border-primary text-graphite text-[11px] font-bold px-3 py-1.5 rounded-lg transition-colors">
+                <button onclick="openVendorSelectModal('${t.id}')" class="bg-[#141A28] border border-[#C5A059]/30 hover:border-[#C5A059] text-white text-[11px] font-bold px-3 py-1.5 rounded-lg transition-colors cursor-pointer">
                   تغییر یا ویرایش وضعیت
                 </button>
-                <button onclick="detachVendorFromTask('${t.id}')" class="text-rose-600 hover:text-rose-800 text-[11px] font-bold px-2 py-1">
+                <button onclick="detachVendorFromTask('${t.id}')" class="text-rose-400 hover:text-rose-300 text-[11px] font-bold px-2 py-1 cursor-pointer">
                   حذف
                 </button>
               </div>
             ` : `
-              <div class="flex items-center gap-2 text-xs font-medium text-secondary">
-                <i data-lucide="store" class="w-4 h-4 text-secondary shrink-0"></i>
+              <div class="flex items-center gap-2 text-xs font-medium text-slate-300">
+                <i data-lucide="store" class="w-4 h-4 text-[#C5A059] shrink-0"></i>
                 <span>هنوز تأمین‌کننده‌ای به این اقدام متصل نشده است.</span>
               </div>
-              <button onclick="openVendorSelectModal('${t.id}')" class="bg-primary hover:bg-emerald-900 text-white text-xs font-bold px-3.5 py-1.5 rounded-lg transition-all flex items-center gap-1.5 shadow-xs self-start sm:self-auto">
+              <button onclick="openVendorSelectModal('${t.id}')" class="bg-[#C5A059] hover:bg-[#D4AF37] text-[#07090E] text-xs font-black px-3.5 py-1.5 rounded-lg transition-all flex items-center gap-1.5 shadow-md self-start sm:self-auto cursor-pointer">
                 <i data-lucide="plus-circle" class="w-3.5 h-3.5"></i>
                 <span>+ اتصال تأمین‌کننده از دایرکتوری</span>
               </button>
