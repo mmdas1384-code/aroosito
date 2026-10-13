@@ -1199,6 +1199,13 @@ async function loadViewTemplates() {
   }
 }
 
+function parsePriceNumeric(str) {
+  if (!str) return 0;
+  const enStr = str.toString().replace(/[۰-۹]/g, d => '۰۱۲۳۴۵۶۷۸۹'.indexOf(d));
+  return parseInt(enStr.replace(/[^\d]/g, ''), 10) || 0;
+}
+window.parsePriceNumeric = parsePriceNumeric;
+
 // Immediately load view templates if DOM is ready, or on DOMContentLoaded
 if (document.readyState === "loading") {
   document.addEventListener("DOMContentLoaded", loadViewTemplates);
