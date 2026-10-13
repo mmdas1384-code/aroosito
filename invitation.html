@@ -1,0 +1,265 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl" class="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>کارت دعوت دیجیتال رسمی | علی & سارا - عروسی تو</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://unpkg.com/lucide@latest"></script>
+  <link href="https://cdn.jsdelivr.net/gh/rastikerdar/vazirmatn@v33.003/Vazirmatn-font-face.css" rel="stylesheet" type="text/css" />
+  <link rel="stylesheet" href="style.css">
+  <style>
+    body {
+      background-color: #07090E;
+      color: #F7F5F0;
+      font-family: 'Vazirmatn', sans-serif;
+    }
+    .gold-wax-seal {
+      background: radial-gradient(circle, #F3E5AB 0%, #C5A059 50%, #8C6A28 100%);
+      box-shadow: 0 0 30px rgba(197, 160, 89, 0.6), inset 0 0 10px rgba(255, 255, 255, 0.5);
+    }
+  </style>
+</head>
+<body class="min-h-screen bg-[#07090E] flex items-center justify-center p-2 sm:p-4">
+
+  <!-- MAIN INVITATION FRAME (MOBILE CONTAINER STYLED) -->
+  <div class="w-full max-w-md bg-[#0e121c] border border-[#C5A059]/40 rounded-3xl shadow-2xl overflow-hidden relative min-h-[90vh] flex flex-col my-auto">
+
+    <!-- TOP STICKY BAR WITH MUSIC PLAYER -->
+    <div class="bg-[#141A28] border-b border-[#C5A059]/30 px-4 py-3 flex justify-between items-center text-xs font-bold sticky top-0 z-30 backdrop-blur-md">
+      <span class="text-[#C5A059] font-black flex items-center gap-1.5">
+        <i data-lucide="sparkles" class="w-4 h-4 text-[#C5A059]"></i>
+        <span>عروسی تو • کارت دعوت VIP</span>
+      </span>
+      <button id="inv-music-toggle-btn" onclick="toggleInvMusic()" class="bg-[#07090E] text-[#C5A059] border border-[#C5A059]/50 px-3 py-1 rounded-full flex items-center gap-1.5 text-xs transition-all cursor-pointer">
+        <span id="inv-music-indicator" class="w-2 h-2 rounded-full bg-emerald-400 inline-block animate-pulse"></span>
+        <i data-lucide="music" class="w-3.5 h-3.5 text-[#C5A059]"></i>
+        <span id="inv-music-text" class="font-bold">موزیک</span>
+      </button>
+    </div>
+
+    <!-- WAX SEAL ENVELOPE OVERLAY -->
+    <div id="inv-envelope-overlay" class="absolute inset-0 z-40 bg-gradient-to-b from-[#07090E] via-[#141A28] to-[#07090E] flex flex-col items-center justify-center p-6 text-center text-white transition-all duration-700 space-y-6">
+      <!-- GOLD WAX STAMP -->
+      <div id="env-wax-stamp" class="gold-wax-seal w-24 h-24 rounded-full p-1 flex items-center justify-center animate-pulse cursor-pointer hover:scale-105 transition-transform" onclick="openEnvelopeAnimation()">
+        <div class="w-full h-full rounded-full bg-[#07090E] border-2 border-[#C5A059] flex flex-col items-center justify-center text-[#C5A059]">
+          <span class="text-sm font-black tracking-widest">ع & س</span>
+          <i data-lucide="crown" class="w-4 h-4 text-[#C5A059]"></i>
+        </div>
+      </div>
+
+      <div class="space-y-2">
+        <span class="text-xs font-black text-[#C5A059] uppercase tracking-widest bg-[#C5A059]/10 px-3 py-1 rounded-full border border-[#C5A059]/30">کارت دعوت دیجیتال رسمی</span>
+        <h3 class="text-3xl font-black text-[#F7F5F0]">علی & سارا</h3>
+        <p class="text-xs text-slate-300 font-medium">جهت گشودن پاکت و مشاهده کارت دعوت لمس کنید</p>
+      </div>
+
+      <button onclick="openEnvelopeAnimation()" class="bg-gradient-to-r from-[#C5A059] to-[#F3E5AB] text-[#07090E] font-black px-6 py-3 rounded-2xl text-xs shadow-xl border border-[#C5A059]/60 transition-all active:scale-95 flex items-center gap-2 cursor-pointer">
+        <i data-lucide="sparkles" class="w-4 h-4 text-[#07090E]"></i>
+        <span>گشودن دعوت‌نامه 📩</span>
+      </button>
+    </div>
+
+    <!-- INVITATION CARD CONTENT -->
+    <div id="inv-card-inner" class="p-6 space-y-6 flex-1 text-center">
+
+      <!-- HEADER EMBLEM & COUPLE NAMES -->
+      <div class="pt-2 space-y-3">
+        <div class="w-14 h-14 rounded-full mx-auto flex items-center justify-center border-2 border-[#C5A059] bg-[#07090E] text-lg font-black text-[#C5A059] shadow-lg">
+          <span>ع & س</span>
+        </div>
+        <span class="text-xs font-bold text-[#C5A059] block tracking-widest">با افتخار شما را دعوت می‌نماییم</span>
+        <h1 class="text-3xl font-black text-[#F7F5F0]">علی & سارا</h1>
+      </div>
+
+      <!-- HERO COVER IMAGE -->
+      <div class="rounded-2xl overflow-hidden border border-[#C5A059]/40 shadow-xl h-56 relative">
+        <img id="inv-cover-img" src="https://images.unsplash.com/photo-1519741497674-611481863552?auto=format&fit=crop&w=800&q=80" alt="پیوند علی و سارا" class="w-full h-full object-cover">
+      </div>
+
+      <!-- INVITATION POEM / TEXT -->
+      <div class="p-4 rounded-2xl border border-[#C5A059]/30 bg-[#141A28] text-xs font-semibold leading-relaxed whitespace-pre-line text-slate-200">
+        در مکتب عشق، تو بهترین همسفری
+با مقدم گرمتان در شب پیوند ما، محفل‌مان بهشت می‌گردد.
+      </div>
+
+      <!-- EVENT DATE & TIME DETAILS -->
+      <div class="bg-[#07090E] p-4 rounded-2xl border border-[#C5A059]/30 space-y-2 text-xs">
+        <div class="flex justify-between items-center border-b border-[#C5A059]/20 pb-2">
+          <span class="text-slate-400 font-bold">📅 تاریخ مراسم:</span>
+          <span class="font-black text-[#C5A059]">پنج‌شنبه، ۱۵ شهریور ۱۴۰۳</span>
+        </div>
+        <div class="flex justify-between items-center pt-1">
+          <span class="text-slate-400 font-bold">⏰ ساعت برگزاری:</span>
+          <span class="font-bold text-white">۱۸:۰۰ الی ۲۴:۰۰</span>
+        </div>
+      </div>
+
+      <!-- LIVE COUNTDOWN TIMER -->
+      <div class="bg-[#141A28] p-4 rounded-2xl border border-[#C5A059]/30 space-y-2">
+        <span class="text-xs font-black text-[#C5A059] block">⏳ روزشمار معکوس تا آغاز مراسم:</span>
+        <div class="grid grid-cols-4 gap-2 text-center dir-ltr">
+          <div class="bg-[#07090E] p-2 rounded-xl border border-[#C5A059]/20">
+            <span id="cd-days" class="block text-lg font-black text-[#C5A059]">۱۴۵</span>
+            <span class="text-[9px] text-slate-400">روز</span>
+          </div>
+          <div class="bg-[#07090E] p-2 rounded-xl border border-[#C5A059]/20">
+            <span id="cd-hours" class="block text-lg font-black text-[#C5A059]">۰۸</span>
+            <span class="text-[9px] text-slate-400">ساعت</span>
+          </div>
+          <div class="bg-[#07090E] p-2 rounded-xl border border-[#C5A059]/20">
+            <span id="cd-mins" class="block text-lg font-black text-[#C5A059]">۳۲</span>
+            <span class="text-[9px] text-slate-400">دقیقه</span>
+          </div>
+          <div class="bg-[#07090E] p-2 rounded-xl border border-[#C5A059]/20">
+            <span id="cd-secs" class="block text-lg font-black text-[#C5A059]">۱۵</span>
+            <span class="text-[9px] text-slate-400">ثانیه</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- VENUE & ROUTING NAVIGATOR -->
+      <div class="bg-[#141A28] p-4 rounded-2xl border border-[#C5A059]/30 space-y-3">
+        <span class="text-xs font-black text-[#C5A059] block">📍 مکان برگزاری و مسیریابی یزد:</span>
+        <p class="text-xs font-bold text-white">باغ تالار تشریفاتی زمرد - یزد، صفائیه، خیابان تیمسار فلاحی</p>
+
+        <div class="grid grid-cols-2 sm:grid-cols-4 gap-2 pt-2">
+          <a href="https://nshn.ir" target="_blank" class="bg-[#07090E] hover:bg-[#1E293B] border border-[#C5A059]/30 text-white p-2 rounded-xl text-xs font-bold flex items-center justify-center gap-1">🗺️ نشان</a>
+          <a href="https://balad.ir" target="_blank" class="bg-[#07090E] hover:bg-[#1E293B] border border-[#C5A059]/30 text-white p-2 rounded-xl text-xs font-bold flex items-center justify-center gap-1">📍 بلد</a>
+          <a href="https://maps.google.com" target="_blank" class="bg-[#07090E] hover:bg-[#1E293B] border border-[#C5A059]/30 text-white p-2 rounded-xl text-xs font-bold flex items-center justify-center gap-1">🌍 Google</a>
+          <a href="https://waze.com" target="_blank" class="bg-[#07090E] hover:bg-[#1E293B] border border-[#C5A059]/30 text-white p-2 rounded-xl text-xs font-bold flex items-center justify-center gap-1">🚘 Waze</a>
+        </div>
+      </div>
+
+      <!-- RSVP FORM -->
+      <div class="bg-[#141A28] p-5 rounded-2xl border border-[#C5A059]/40 text-right space-y-4">
+        <div class="border-b border-[#C5A059]/20 pb-2">
+          <h3 class="text-sm font-black text-[#C5A059] flex items-center gap-1.5">
+            <i data-lucide="user-check" class="w-4 h-4 text-[#C5A059]"></i>
+            <span>تأیید حضور و اعلام تعداد همراهان (RSVP)</span>
+          </h3>
+          <p class="text-[11px] text-slate-300">لطفاً جهت برنامه‌ریزی دقیق پذیرایی، حضور خود را اعلام فرمایید.</p>
+        </div>
+
+        <form onsubmit="handleGuestRsvpSubmit(event)" class="space-y-3">
+          <div>
+            <label class="block text-xs font-bold text-slate-300 mb-1">نام و نام خانوادگی مهمان *</label>
+            <input type="text" id="rsvp-guest-name" required placeholder="مثلاً: دکتر حمیدرضا احمدی" class="w-full bg-[#07090E] border border-[#C5A059]/30 text-white rounded-xl p-2.5 text-xs focus:outline-none focus:border-[#C5A059]">
+          </div>
+
+          <div>
+            <label class="block text-xs font-bold text-slate-300 mb-1">شماره همراه مهمان *</label>
+            <input type="tel" id="rsvp-guest-phone" required placeholder="۰۹۱۲۳۴۵۶۷۸۹" class="w-full bg-[#07090E] border border-[#C5A059]/30 text-white rounded-xl p-2.5 text-xs font-mono focus:outline-none focus:border-[#C5A059]">
+          </div>
+
+          <div>
+            <label class="block text-xs font-bold text-slate-300 mb-1">وضعیت حضور *</label>
+            <select id="rsvp-status" required class="w-full bg-[#07090E] border border-[#C5A059]/30 text-white rounded-xl p-2.5 text-xs font-bold focus:outline-none focus:border-[#C5A059] cursor-pointer">
+              <option value="CONFIRMED">با کمال میل می‌آیم 💚</option>
+              <option value="DECLINED">متأسفانه امکان حضور ندارم 💔</option>
+            </select>
+          </div>
+
+          <div>
+            <label class="block text-xs font-bold text-slate-300 mb-1">تعداد همراهان (بدون مهمان اصلی)</label>
+            <select id="rsvp-companions" class="w-full bg-[#07090E] border border-[#C5A059]/30 text-white rounded-xl p-2.5 text-xs font-bold focus:outline-none focus:border-[#C5A059] cursor-pointer">
+              <option value="0">تنها می‌آیم (۰ همراه)</option>
+              <option value="1">۱ همراه (+۱)</option>
+              <option value="2">۲ همراه (+۲)</option>
+              <option value="3">۳ همراه (+۳)</option>
+              <option value="4">۴ همراه (+۴)</option>
+            </select>
+          </div>
+
+          <div>
+            <label class="block text-xs font-bold text-slate-300 mb-1">پیام تبریک به عروس و داماد:</label>
+            <textarea id="rsvp-notes" rows="2" placeholder="متن تبریک و آرزوی خوشبختی..." class="w-full bg-[#07090E] border border-[#C5A059]/30 text-white rounded-xl p-2.5 text-xs focus:outline-none focus:border-[#C5A059]"></textarea>
+          </div>
+
+          <button type="submit" class="w-full bg-gradient-to-r from-[#C5A059] to-[#F3E5AB] text-[#07090E] font-black py-3 rounded-xl text-xs shadow-lg transition-all cursor-pointer">
+            ثبت نهایی پاسخ RSVP
+          </button>
+        </form>
+      </div>
+
+      <p class="text-[10px] text-slate-500 text-center pb-4">طراحی شده با ❤️ در سامانه جامع تشریفات عروسی یزد (عروسی تو)</p>
+
+    </div>
+
+  </div>
+
+  <script>
+    lucide.createIcons();
+
+    function openEnvelopeAnimation() {
+      const overlay = document.getElementById('inv-envelope-overlay');
+      if (overlay) {
+        overlay.style.opacity = '0';
+        overlay.style.pointerEvents = 'none';
+        setTimeout(() => { overlay.style.display = 'none'; }, 700);
+      }
+    }
+
+    function toggleInvMusic() {
+      const btn = document.getElementById('inv-music-toggle-btn');
+      if (btn) {
+        btn.classList.toggle('border-emerald-400');
+      }
+    }
+
+    function handleGuestRsvpSubmit(e) {
+      e.preventDefault();
+      const name = document.getElementById('rsvp-guest-name')?.value.trim();
+      const phone = document.getElementById('rsvp-guest-phone')?.value.trim();
+      const status = document.getElementById('rsvp-status')?.value;
+      const companions = parseInt(document.getElementById('rsvp-companions')?.value || '0');
+      const notes = document.getElementById('rsvp-notes')?.value.trim();
+
+      if (!name || !phone) {
+        alert('لطفاً نام و شماره همراه را وارد کنید.');
+        return;
+      }
+
+      const newGuest = {
+        id: 'g_' + Date.now(),
+        name,
+        side: 'کارت دعوت آنلاین',
+        phone,
+        companions,
+        table: 'تخصیص آنلاین',
+        status,
+        notes
+      };
+
+      try {
+        let existingGuests = JSON.parse(localStorage.getItem('aroosi_guest_list_db') || '[]');
+        existingGuests.unshift(newGuest);
+        localStorage.setItem('aroosi_guest_list_db', JSON.stringify(existingGuests));
+        localStorage.setItem('userGuestsData', JSON.stringify(existingGuests));
+      } catch(e) {}
+
+      alert('پاسخ RSVP شما با موفقیت ثبت شد و در سیستم مدیریت مهمانان زوجین به روز رسانی گردید ✨');
+      e.target.reset();
+    }
+
+    // Countdown Timer Loop
+    let days = 145, hours = 8, mins = 32, secs = 15;
+    setInterval(() => {
+      secs--;
+      if (secs < 0) { secs = 59; mins--; }
+      if (mins < 0) { mins = 59; hours--; }
+      if (hours < 0) { hours = 23; days--; }
+
+      const dEl = document.getElementById('cd-days');
+      const hEl = document.getElementById('cd-hours');
+      const mEl = document.getElementById('cd-mins');
+      const sEl = document.getElementById('cd-secs');
+
+      if (dEl) dEl.innerText = days;
+      if (hEl) hEl.innerText = hours < 10 ? '۰' + hours : hours;
+      if (mEl) mEl.innerText = mins < 10 ? '۰' + mins : mins;
+      if (sEl) sEl.innerText = secs < 10 ? '۰' + secs : secs;
+    }, 1000);
+  </script>
+</body>
+</html>

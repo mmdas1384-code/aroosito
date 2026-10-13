@@ -10832,10 +10832,10 @@ window.shareReceiptWhatsApp = function() {
     }
 
     function copyInvitationLink() {
-      const link = 'https://aroosito.com/invitation/ali-and-sara';
+      const link = window.location.origin + '/invitation.html';
       if (navigator.clipboard) {
         navigator.clipboard.writeText(link);
-        showToast('لینک اختصاصی کارت دعوت کپی شد', 'info');
+        showToast('لینک اختصاصی کارت دعوت کپی شد ✨', 'info');
       } else {
         showToast('لینک کارت دعوت: ' + link, 'info');
       }
