@@ -559,15 +559,15 @@ const HOME_VIEW_HTML = `<main id="home-view" class="flex-1 max-w-7xl w-full mx-a
                 <div class="grid grid-cols-3 gap-2">
                   <button type="button" onclick="applyBudgetScenario('economic')" class="bg-[#141A28] hover:bg-emerald-950/40 text-emerald-300 border border-emerald-500/40 font-bold py-2 rounded-xl text-xs transition-all flex flex-col items-center justify-center gap-0.5 cursor-pointer">
                     <span class="text-[11px]">🟢 اقتصادی</span>
-                    <span class="text-[9px] text-slate-400">صرفه‌جویی عالی</span>
+                    <span class="text-[9px] text-emerald-400 font-bold">۱۵۰ میلیون تومان</span>
                   </button>
                   <button type="button" onclick="applyBudgetScenario('medium')" class="bg-[#1B3B2B] text-amber-300 border border-[#D4AF37] font-bold py-2 rounded-xl text-xs transition-all flex flex-col items-center justify-center gap-0.5 cursor-pointer shadow-md">
                     <span class="text-[11px]">🟡 متوازن</span>
-                    <span class="text-[9px] text-amber-200/80">توصیه شده AI</span>
+                    <span class="text-[9px] text-amber-200 font-bold">۳۰۰ میلیون تومان</span>
                   </button>
                   <button type="button" onclick="applyBudgetScenario('luxury')" class="bg-[#141A28] hover:bg-amber-950/40 text-amber-300 border border-[#D4AF37]/50 font-bold py-2 rounded-xl text-xs transition-all flex flex-col items-center justify-center gap-0.5 cursor-pointer">
                     <span class="text-[11px]">🌟 لوکس VIP</span>
-                    <span class="text-[9px] text-slate-400">سلطنتی کامل</span>
+                    <span class="text-[9px] text-amber-300 font-bold">۶۰۰ میلیون تومان</span>
                   </button>
                 </div>
               </div>
@@ -16780,6 +16780,19 @@ window.syncAiBudgetToUserDashboard = function() {
 
   try {
     localStorage.setItem('aroosi_enterprise_budget_db', JSON.stringify(budgetPlannerState));
+    localStorage.setItem('userBudgetState', JSON.stringify({
+      totalBudget: totalCost,
+      scenario: currentHomeCalcStyle,
+      guestsCount: guests,
+      lastSyncedAt: new Date().toISOString(),
+      breakdown: {
+        venue: Math.round(totalCost * 0.50),
+        photography: Math.round(totalCost * 0.15),
+        beauty: Math.round(totalCost * 0.10),
+        attire: Math.round(totalCost * 0.05),
+        ceremony: Math.round(totalCost * 0.20)
+      }
+    }));
   } catch(e) {}
 
   if (typeof window.switchTab === 'function') {
