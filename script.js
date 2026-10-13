@@ -12281,6 +12281,12 @@ window.shareReceiptWhatsApp = function() {
       renderInspirationGalleryGrid();
     }
 
+    window.filterInspirationByStyle = function(styleName) {
+      const input = document.getElementById('insp-search-input');
+      if (input) input.value = styleName;
+      renderInspirationGalleryGrid();
+    };
+
     function filterInspirationItems() {
       renderInspirationGalleryGrid();
     }
@@ -12512,51 +12518,60 @@ window.shareReceiptWhatsApp = function() {
       items.forEach(item => {
         const isBookmarked = inspirationState.bookmarkedIds.includes(item.id);
         const card = document.createElement('div');
-        card.className = "bg-[#0F172A] border border-[#D4AF37]/30 hover:border-[#D4AF37] rounded-3xl overflow-hidden shadow-lg hover:shadow-[0_12px_30px_rgba(212,175,55,0.25)] transition-all duration-300 group flex flex-col justify-between hover:-translate-y-1";
+        card.className = "bg-[#141A28] border border-[#C5A059]/30 hover:border-[#C5A059] rounded-3xl overflow-hidden shadow-xl hover:shadow-[0_12px_30px_rgba(197,160,89,0.25)] transition-all duration-300 group flex flex-col justify-between hover:-translate-y-1 text-white";
 
-        const vendorName = item.vendor ? item.vendor.name : 'تامین‌کننده معتبر';
+        const vendorName = item.vendor ? item.vendor.name : 'تامین‌کننده معتبر یزد';
+        const vendorId = item.vendor ? item.vendor.id : 1;
 
         card.innerHTML = `
           <div>
-            <div onclick="openIdeaDetailModal(${item.id})" class="relative aspect-4/5 overflow-hidden bg-slate-900 cursor-pointer">
+            <div onclick="openIdeaDetailModal(${item.id})" class="relative aspect-4/5 overflow-hidden bg-[#07090E] cursor-pointer">
               <img src="${item.image}" alt="${item.title}" class="w-full h-full object-cover group-hover:scale-108 transition-transform duration-700">
-              <div class="absolute inset-0 bg-gradient-to-t from-[#0F172A] via-[#0F172A]/20 to-transparent"></div>
+              <div class="absolute inset-0 bg-gradient-to-t from-[#07090E] via-[#07090E]/20 to-transparent"></div>
 
               <div class="absolute top-3 right-3">
-                <span class="bg-black/60 backdrop-blur-md text-amber-200 border border-[#D4AF37]/50 text-[10px] font-bold px-2.5 py-1 rounded-full shadow-md inline-flex items-center gap-1">
-                  <i data-lucide="tag" class="w-3 h-3 text-[#D4AF37]"></i>
+                <span class="bg-[#07090E]/80 backdrop-blur-md text-[#C5A059] border border-[#C5A059]/50 text-[10px] font-bold px-2.5 py-1 rounded-full shadow-md inline-flex items-center gap-1">
+                  <i data-lucide="tag" class="w-3 h-3 text-[#C5A059]"></i>
                   <span>${item.categoryName}</span>
                 </span>
               </div>
 
+              <!-- "Shop the Look" Vendor Tag Overlay -->
+              <div class="absolute bottom-3 right-3 left-3 flex justify-between items-center opacity-90 group-hover:opacity-100 transition-opacity" onclick="event.stopPropagation()">
+                <button onclick="openVendorDetailModal(${vendorId})" class="bg-[#07090E]/90 hover:bg-[#C5A059] hover:text-[#07090E] text-[#C5A059] border border-[#C5A059]/60 backdrop-blur-md px-2.5 py-1 rounded-xl text-[10px] font-black transition-all flex items-center gap-1 shadow-lg cursor-pointer">
+                  <i data-lucide="store" class="w-3 h-3"></i>
+                  <span>تگ هوشمند: ${vendorName}</span>
+                </button>
+              </div>
+
               <div class="absolute top-3 left-3 flex items-center gap-1.5" onclick="event.stopPropagation()">
-                <button onclick="toggleBookmarkMoodboard(${item.id}, event)" class="w-8 h-8 rounded-full bg-black/60 backdrop-blur-md border border-white/20 flex items-center justify-center text-rose-500 shadow-sm transition-transform active:scale-90 hover:scale-110 cursor-pointer" title="ذخیره در مودبورد">
+                <button onclick="toggleBookmarkMoodboard(${item.id}, event)" class="w-8 h-8 rounded-full bg-[#07090E]/80 backdrop-blur-md border border-[#C5A059]/30 flex items-center justify-center text-rose-500 shadow-md transition-transform active:scale-90 hover:scale-110 cursor-pointer" title="📌 ذخیره در مودبورد من">
                   <i data-lucide="heart" class="w-4 h-4 ${isBookmarked ? 'fill-rose-500 text-rose-500' : 'text-rose-500'}"></i>
                 </button>
-                <span class="bg-black/60 backdrop-blur-md text-slate-200 text-[10px] font-bold px-2 py-1 rounded-full flex items-center gap-1">
-                  <i data-lucide="clock" class="w-3 h-3 text-[#D4AF37]"></i>
+                <span class="bg-[#07090E]/80 backdrop-blur-md text-slate-200 text-[10px] font-bold px-2 py-1 rounded-full flex items-center gap-1">
+                  <i data-lucide="clock" class="w-3 h-3 text-[#C5A059]"></i>
                   <span>خواندن ۳ دقیقه</span>
                 </span>
               </div>
             </div>
 
             <div onclick="openIdeaDetailModal(${item.id})" class="p-5 space-y-2 cursor-pointer text-right">
-              <h4 class="text-sm sm:text-base font-black text-white line-clamp-2 leading-relaxed group-hover:text-[#D4AF37] transition-colors">${item.title}</h4>
+              <h4 class="text-sm sm:text-base font-black text-[#F7F5F0] line-clamp-2 leading-relaxed group-hover:text-[#C5A059] transition-colors">${item.title}</h4>
               <p class="text-xs text-slate-300 font-medium line-clamp-2 leading-relaxed">مجموعه ایده‌های جدید و جذاب برای برنامه‌ریزی مراسم عروسی در یزد با طراحی اختصاصی.</p>
-              <p class="text-[11px] text-amber-200/90 font-bold truncate flex items-center gap-1 pt-1">
-                <i data-lucide="store" class="w-3.5 h-3.5 text-[#D4AF37]"></i>
+              <p class="text-[11px] text-[#C5A059] font-bold truncate flex items-center gap-1 pt-1">
+                <i data-lucide="store" class="w-3.5 h-3.5 text-[#C5A059]"></i>
                 <span>مجری: ${vendorName}</span>
               </p>
             </div>
           </div>
 
-          <div class="px-5 pb-5 pt-2 flex items-center justify-between border-t border-slate-800/80">
+          <div class="px-5 pb-5 pt-2 flex items-center justify-between border-t border-[#C5A059]/20">
             <button onclick="toggleBookmarkMoodboard(${item.id}, event)" class="text-xs font-bold flex items-center gap-1.5 ${isBookmarked ? 'text-rose-400' : 'text-slate-300 hover:text-rose-400'} transition-colors cursor-pointer">
               <i data-lucide="heart" class="w-4 h-4 ${isBookmarked ? 'fill-rose-500 text-rose-500' : ''}"></i>
-              <span>${isBookmarked ? 'ذخیره شده' : 'ذخیره در مودبورد'}</span>
+              <span>${isBookmarked ? 'ذخیره شده در مودبورد' : '📌 ذخیره در مودبورد من'}</span>
             </button>
 
-            <button onclick="openIdeaDetailModal(${item.id})" class="text-xs font-black text-[#D4AF37] hover:text-amber-300 flex items-center gap-1 transition-all group-hover:translate-x-[-3px] cursor-pointer">
+            <button onclick="openIdeaDetailModal(${item.id})" class="text-xs font-black text-[#C5A059] hover:text-[#D4AF37] flex items-center gap-1 transition-all group-hover:translate-x-[-3px] cursor-pointer">
               <span>مطالعه مقاله</span>
               <i data-lucide="arrow-left" class="w-3.5 h-3.5 text-[#D4AF37]"></i>
             </button>
@@ -12579,15 +12594,15 @@ window.shareReceiptWhatsApp = function() {
 
       if (savedItems.length === 0) {
         grid.innerHTML = `
-          <div class="col-span-full p-12 text-center bg-white border border-accent rounded-3xl space-y-4">
-            <div class="w-16 h-16 rounded-full bg-rose-50 text-rose-500 mx-auto flex items-center justify-center">
+          <div class="col-span-full p-12 text-center bg-[#0e121c]/90 border border-[#C5A059]/40 rounded-3xl space-y-4 text-white">
+            <div class="w-16 h-16 rounded-full bg-rose-950/80 border border-rose-500/40 text-rose-400 mx-auto flex items-center justify-center">
               <i data-lucide="heart" class="w-8 h-8"></i>
             </div>
             <div class="space-y-1">
-              <h4 class="text-base font-bold text-graphite">مودبورد شما هنوز خالی است</h4>
-              <p class="text-xs text-secondary">روی آیکون قلب در مجله ایده‌ها کلیک کنید تا ایده‌های محبوبتان اینجا قرار گیرند.</p>
+              <h4 class="text-base font-bold text-[#F7F5F0]">مودبورد شما هنوز خالی است</h4>
+              <p class="text-xs text-slate-300">روی آیکون 📌 «ذخیره در مودبورد من» در مجله ایده‌ها کلیک کنید تا ایده‌های محبوبتان اینجا قرار گیرند.</p>
             </div>
-            <button onclick="switchInspirationSubTab('gallery')" class="bg-primary text-white font-bold text-xs px-6 py-2.5 rounded-xl shadow-xs transition-colors inline-flex items-center gap-1.5">
+            <button onclick="switchInspirationSubTab('gallery')" class="bg-[#C5A059] text-[#07090E] font-black text-xs px-6 py-2.5 rounded-xl shadow-lg transition-all inline-flex items-center gap-1.5 cursor-pointer">
               <span>ورود به مجله ایده‌ها</span>
               <i data-lucide="arrow-left" class="w-4 h-4"></i>
             </button>
@@ -12599,26 +12614,26 @@ window.shareReceiptWhatsApp = function() {
 
       savedItems.forEach(item => {
         const card = document.createElement('div');
-        card.className = "bg-white border border-accent rounded-3xl overflow-hidden shadow-xs hover:shadow-md transition-all flex flex-col justify-between";
+        card.className = "bg-[#141A28] border border-[#C5A059]/30 rounded-3xl overflow-hidden shadow-xl hover:border-[#C5A059] transition-all flex flex-col justify-between text-white";
         card.innerHTML = `
           <div>
-            <div class="relative aspect-4/5 overflow-hidden bg-slate-900">
+            <div class="relative aspect-4/5 overflow-hidden bg-[#07090E]">
               <img src="${item.image}" alt="${item.title}" class="w-full h-full object-cover">
-              <button onclick="toggleBookmarkMoodboard(${item.id}, event)" class="absolute top-3 left-3 bg-white/90 text-rose-600 hover:bg-white p-2 rounded-full shadow-md text-xs font-bold transition-transform active:scale-95" title="حذف از مودبورد">
+              <button onclick="toggleBookmarkMoodboard(${item.id}, event)" class="absolute top-3 left-3 bg-[#07090E]/90 text-rose-400 hover:text-rose-300 border border-rose-500/40 p-2 rounded-full shadow-md text-xs font-bold transition-transform active:scale-95 cursor-pointer" title="حذف از مودبورد">
                 <i data-lucide="trash-2" class="w-4 h-4"></i>
               </button>
             </div>
 
             <div class="p-4 space-y-2">
-              <span class="inline-block bg-primary/10 text-primary text-[10px] font-bold px-2.5 py-0.5 rounded-full">
+              <span class="inline-block bg-[#07090E] text-[#C5A059] border border-[#C5A059]/30 text-[10px] font-bold px-2.5 py-0.5 rounded-full">
                 ${item.categoryName}
               </span>
-              <h4 class="text-xs font-bold text-graphite line-clamp-2 leading-relaxed">${item.title}</h4>
+              <h4 class="text-xs font-bold text-[#F7F5F0] line-clamp-2 leading-relaxed">${item.title}</h4>
             </div>
           </div>
 
           <div class="p-4 pt-0 space-y-2">
-            <button onclick="filterDirectoryByVendorCategory('${item.vendorCategoryMatch}')" class="w-full bg-primary/10 hover:bg-primary/20 text-primary font-bold text-xs py-2 rounded-xl transition-colors flex items-center justify-center gap-1.5">
+            <button onclick="filterDirectoryByVendorCategory('${item.vendorCategoryMatch}')" class="w-full bg-[#C5A059] hover:bg-[#D4AF37] text-[#07090E] font-black text-xs py-2 rounded-xl transition-all flex items-center justify-center gap-1.5 cursor-pointer">
               <i data-lucide="store" class="w-3.5 h-3.5"></i>
               <span>جستجوی تامین‌کننده مرتبط</span>
             </button>

@@ -3197,27 +3197,27 @@
     <div id="tab-inspiration" class="tab-content hidden space-y-8">
 
       <!-- TOP HEADER BANNER & SUB-TAB SWITCHER -->
-      <div class="bg-white border border-accent rounded-3xl p-6 sm:p-8 shadow-xs flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
+      <div class="bg-[#0e121c]/90 backdrop-blur-2xl border border-[#C5A059]/40 rounded-3xl p-6 sm:p-8 shadow-2xl flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 text-white">
         <div class="space-y-1">
-          <div class="inline-flex items-center gap-1.5 bg-primary/10 text-primary text-xs font-bold px-3 py-1 rounded-full">
+          <div class="inline-flex items-center gap-1.5 bg-[#07090E] text-[#C5A059] border border-[#C5A059]/40 text-xs font-bold px-3 py-1 rounded-full">
             <i data-lucide="sparkles" class="w-3.5 h-3.5"></i>
             <span>ژورنال بصری و ایده‌پردازی اختصاصی عروسی</span>
           </div>
-          <h2 class="text-2xl sm:text-3xl font-black text-graphite flex items-center gap-2">
+          <h2 class="text-2xl sm:text-3xl font-black text-[#F7F5F0] flex items-center gap-2">
             <span>مجله ایده‌ها & مودبورد شخصی</span>
           </h2>
-          <p class="text-xs text-secondary font-medium">مجموعه‌ای از برترین ایده‌های بین‌المللی لباس، دکوراسیون، ژست‌های عکاسی و تشریفات مجالس</p>
+          <p class="text-xs text-slate-300 font-medium">مجموعه‌ای از برترین ایده‌های بین‌المللی لباس، دکوراسیون، ژست‌های عکاسی و تشریفات مجالس</p>
         </div>
 
-        <div class="flex items-center gap-2 bg-bgCustom p-1.5 border border-accent rounded-2xl text-xs font-bold shadow-xs">
-          <button id="insp-subtab-gallery" onclick="switchInspirationSubTab('gallery')" class="px-4 py-2.5 rounded-xl transition-all bg-primary text-white shadow-xs flex items-center gap-1.5">
+        <div class="flex items-center gap-2 bg-[#07090E] p-1.5 border border-[#C5A059]/30 rounded-2xl text-xs font-bold shadow-md">
+          <button id="insp-subtab-gallery" onclick="switchInspirationSubTab('gallery')" class="px-4 py-2.5 rounded-xl transition-all bg-[#C5A059] text-[#07090E] font-black shadow-md flex items-center gap-1.5">
             <i data-lucide="grid" class="w-4 h-4"></i>
             <span>مجله و ایده‌ها</span>
           </button>
-          <button id="insp-subtab-moodboard" onclick="switchInspirationSubTab('moodboard')" class="px-4 py-2.5 rounded-xl transition-all text-secondary hover:text-graphite flex items-center gap-1.5">
+          <button id="insp-subtab-moodboard" onclick="switchInspirationSubTab('moodboard')" class="px-4 py-2.5 rounded-xl transition-all text-slate-300 hover:text-amber-200 flex items-center gap-1.5">
             <i data-lucide="heart" class="w-4 h-4 text-rose-500 fill-rose-500"></i>
             <span>مودبورد من</span>
-            <span id="moodboard-badge-count" class="bg-primary text-white text-[10px] font-bold px-2 py-0.5 rounded-full">3</span>
+            <span id="moodboard-badge-count" class="bg-[#C5A059] text-[#07090E] text-[10px] font-black px-2 py-0.5 rounded-full">3</span>
           </button>
         </div>
       </div>
@@ -3230,8 +3230,8 @@
           <!-- Rendered dynamically via JS -->
         </div>
 
-        <!-- CATEGORIES & SEARCH TOOLBAR -->
-        <div class="bg-white border border-accent rounded-3xl p-4 sm:p-6 shadow-xs space-y-4">
+        <!-- CATEGORIES, STYLES & PALETTE FILTER TOOLBAR -->
+        <div class="bg-[#0e121c]/90 backdrop-blur-2xl border border-[#C5A059]/40 rounded-3xl p-4 sm:p-6 shadow-2xl space-y-4 text-white">
           <div class="flex flex-col md:flex-row md:items-center justify-between gap-4">
 
             <!-- Scrollable Category Filter Pills -->
@@ -3241,10 +3241,67 @@
 
             <!-- Search Bar -->
             <div class="relative min-w-[220px]">
-              <input type="text" id="insp-search-input" oninput="filterInspirationItems()" placeholder="جستجو در ایده‌ها..." class="w-full bg-bgCustom border border-accent rounded-xl py-2 px-3 pl-8 text-xs font-medium focus:outline-none focus:border-primary">
-              <i data-lucide="search" class="w-4 h-4 text-secondary absolute left-2.5 top-2.5"></i>
+              <input type="text" id="insp-search-input" oninput="filterInspirationItems()" placeholder="جستجو در ایده‌ها..." class="w-full bg-[#07090E] border border-[#C5A059]/30 text-white rounded-xl py-2 px-3 pl-8 text-xs font-medium focus:outline-none focus:border-[#C5A059]">
+              <i data-lucide="search" class="w-4 h-4 text-slate-400 absolute left-2.5 top-2.5"></i>
             </div>
 
+          </div>
+
+          <!-- STYLE & COLOR PALETTE QUICK FILTERS -->
+          <div class="flex flex-wrap items-center justify-between gap-3 pt-3 border-t border-[#C5A059]/20 text-xs">
+            <div class="flex items-center gap-2 flex-wrap">
+              <span class="text-[#C5A059] font-bold">🎨 سبک:</span>
+              <button onclick="filterInspirationByStyle('سنتی یزدی')" class="bg-[#07090E] hover:bg-[#1E293B] border border-[#C5A059]/30 text-slate-200 px-3 py-1 rounded-xl">سنتی یزدی</button>
+              <button onclick="filterInspirationByStyle('بوهو')" class="bg-[#07090E] hover:bg-[#1E293B] border border-[#C5A059]/30 text-slate-200 px-3 py-1 rounded-xl">بوهو</button>
+              <button onclick="filterInspirationByStyle('کلاسیک VIP')" class="bg-[#07090E] hover:bg-[#1E293B] border border-[#C5A059]/30 text-slate-200 px-3 py-1 rounded-xl">کلاسیک VIP</button>
+              <button onclick="filterInspirationByStyle('مینیمال')" class="bg-[#07090E] hover:bg-[#1E293B] border border-[#C5A059]/30 text-slate-200 px-3 py-1 rounded-xl">مینیمال</button>
+            </div>
+            <div class="flex items-center gap-2 flex-wrap">
+              <span class="text-[#C5A059] font-bold">✨ پالت رنگی:</span>
+              <button onclick="filterInspirationByStyle('طلایی-سرمه‌ای')" class="bg-[#07090E] hover:bg-[#1E293B] border border-[#C5A059]/30 text-slate-200 px-3 py-1 rounded-xl">طلایی-سرمه‌ای</button>
+              <button onclick="filterInspirationByStyle('پاستلی')" class="bg-[#07090E] hover:bg-[#1E293B] border border-[#C5A059]/30 text-slate-200 px-3 py-1 rounded-xl">پاستلی</button>
+              <button onclick="filterInspirationByStyle('نود')" class="bg-[#07090E] hover:bg-[#1E293B] border border-[#C5A059]/30 text-slate-200 px-3 py-1 rounded-xl">نود</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- REAL YAZD WEDDINGS SHOWCASE -->
+        <div class="bg-[#0e121c]/90 backdrop-blur-2xl border border-[#C5A059]/40 rounded-3xl p-6 shadow-2xl space-y-4 text-white">
+          <div class="flex justify-between items-center border-b border-[#C5A059]/30 pb-3">
+            <h3 class="text-base sm:text-lg font-black text-[#C5A059] flex items-center gap-2">
+              <i data-lucide="camera" class="w-5 h-5 text-[#C5A059]"></i>
+              <span>عروسی‌های واقعی استان یزد (Real Weddings Showcase)</span>
+            </h3>
+            <span class="text-xs text-slate-300">آلبوم‌های منتخب زنده</span>
+          </div>
+
+          <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+            <div class="bg-[#141A28] border border-[#C5A059]/30 rounded-2xl overflow-hidden p-3 space-y-2 group">
+              <div class="h-40 rounded-xl overflow-hidden relative">
+                <img src="https://images.unsplash.com/photo-1519741497674-611481863552?auto=format&fit=crop&w=600&q=80" alt="عروسی علیرضا و نسترن" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
+                <span class="absolute top-2 right-2 bg-[#07090E]/90 text-[#C5A059] text-[10px] font-bold px-2 py-0.5 rounded-md border border-[#C5A059]/30">باغ مشیرالممالک</span>
+              </div>
+              <h4 class="text-xs font-black text-[#F7F5F0]">جشن عروسی علیرضا & نسترن (مهر ۱۴۰۳)</h4>
+              <p class="text-[11px] text-slate-300">تامین‌کنندگان: آتلیه زمرد • تشریفات قصر • مزون طلایی</p>
+            </div>
+
+            <div class="bg-[#141A28] border border-[#C5A059]/30 rounded-2xl overflow-hidden p-3 space-y-2 group">
+              <div class="h-40 rounded-xl overflow-hidden relative">
+                <img src="https://images.unsplash.com/photo-1511285560929-80b456fea0bc?auto=format&fit=crop&w=600&q=80" alt="عروسی سعید و مهسا" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
+                <span class="absolute top-2 right-2 bg-[#07090E]/90 text-[#C5A059] text-[10px] font-bold px-2 py-0.5 rounded-md border border-[#C5A059]/30">عمارت ارگ صفائیه</span>
+              </div>
+              <h4 class="text-xs font-black text-[#F7F5F0]">جشن عروسی سعید & مهسا (آبان ۱۴۰۳)</h4>
+              <p class="text-[11px] text-slate-300">تامین‌کنندگان: سالن زیبایی رویا • گل‌آرایی مگنولیا</p>
+            </div>
+
+            <div class="bg-[#141A28] border border-[#C5A059]/30 rounded-2xl overflow-hidden p-3 space-y-2 group">
+              <div class="h-40 rounded-xl overflow-hidden relative">
+                <img src="https://images.unsplash.com/photo-1519167758481-83f550bb49b3?auto=format&fit=crop&w=600&q=80" alt="عروسی پوریا و هانیه" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
+                <span class="absolute top-2 right-2 bg-[#07090E]/90 text-[#C5A059] text-[10px] font-bold px-2 py-0.5 rounded-md border border-[#C5A059]/30">تالار پذیرایی داد</span>
+              </div>
+              <h4 class="text-xs font-black text-[#F7F5F0]">جشن عروسی پوریا & هانیه (آذر ۱۴۰۳)</h4>
+              <p class="text-[11px] text-slate-300">تامین‌کنندگان: کیک حاج خلیفه • تشریفات زمرد</p>
+            </div>
           </div>
         </div>
 
