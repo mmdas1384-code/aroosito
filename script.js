@@ -6951,23 +6951,24 @@ if (document.readyState === "loading") {
 
       let html = '';
       for (let day = 1; day <= 30; day++) {
-        let bgClass = "bg-[#0b1f14] hover:bg-[#112f1f] text-[#A7F3D0] border-emerald-500/60";
+        let bgClass = "bg-[rgba(16,185,129,0.08)] hover:bg-[rgba(16,185,129,0.18)] border-emerald-500/40 hover:border-emerald-400 shadow-[0_0_12px_rgba(16,185,129,0.15)]";
         let statusBadge = "آزاد";
+        let badgeClass = "bg-emerald-500/20 text-emerald-300 border border-emerald-500/40 shadow-[0_0_8px_rgba(16,185,129,0.4)]";
 
         if (bookedDays.includes(day)) {
-          bgClass = "bg-[#2A0F15] text-[#FECDD3] border-rose-500/60";
+          bgClass = "bg-[rgba(225,29,72,0.08)] opacity-75 border-rose-500/40 hover:border-rose-400 shadow-[0_0_10px_rgba(225,29,72,0.15)]";
           statusBadge = "رزرو شده";
+          badgeClass = "bg-rose-500/20 text-rose-300 border border-rose-500/40 shadow-[0_0_8px_rgba(225,29,72,0.4)]";
         } else if (pendingDays.includes(day)) {
-          bgClass = "bg-[#281A08] text-[#FDE68A] border-amber-500/60";
-          statusBadge = "استعلام";
+          bgClass = "bg-[rgba(197,160,89,0.12)] hover:bg-[rgba(197,160,89,0.22)] border-[#C5A059]/50 hover:border-[#C5A059] shadow-[0_0_14px_rgba(197,160,89,0.2)]";
+          statusBadge = "آفر ویژه";
+          badgeClass = "bg-[#C5A059]/25 text-amber-200 border border-[#C5A059]/50 shadow-[0_0_8px_rgba(197,160,89,0.5)]";
         }
 
         html += `
-          <div onclick="openInquiryModal(1, 'استعلام رزرو تاریخ ${day} ${monthName}')" class="p-2 sm:p-2.5 rounded-xl border flex flex-col justify-between items-center h-16 sm:h-20 transition-all cursor-pointer shadow-md ${bgClass}">
-            <span class="text-sm sm:text-base font-black text-slate-100" style="color: #F7F5F0 !important;">${day}</span>
-            <span class="text-[9.5px] sm:text-[10.5px] font-black px-2 py-0.5 rounded-md ${
-              bookedDays.includes(day) ? 'bg-rose-900/80 text-rose-100' : pendingDays.includes(day) ? 'bg-amber-900/80 text-amber-100' : 'bg-emerald-900/80 text-emerald-100'
-            }">${statusBadge}</span>
+          <div onclick="openQuoteModal(1, 'استعلام رزرو تاریخ ${day} ${monthName}')" class="p-2 sm:p-2.5 rounded-2xl border flex flex-col justify-between items-center h-16 sm:h-20 transition-all cursor-pointer hover:scale-105 active:scale-95 ${bgClass}">
+            <span class="text-sm sm:text-base font-black text-white block">${day}</span>
+            <span class="text-[9px] sm:text-[10px] font-black px-2 py-0.5 rounded-full ${badgeClass}">${statusBadge}</span>
           </div>
         `;
       }
@@ -12917,6 +12918,7 @@ try {
   window.triggerPackageInquiry = triggerPackageInquiry;
   window.handleModalReviewSubmit = handleModalReviewSubmit;
   window.renderModalAvailabilityCalendar = renderModalAvailabilityCalendar;
+  window.switchModalCalendarMonth = renderModalAvailabilityCalendar;
 } catch(e) {}
 
 
