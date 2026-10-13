@@ -6951,22 +6951,22 @@ if (document.readyState === "loading") {
 
       let html = '';
       for (let day = 1; day <= 30; day++) {
-        let bgClass = "bg-emerald-950/80 hover:bg-emerald-900 text-emerald-200 border-emerald-500/40";
+        let bgClass = "bg-[#0b1f14] hover:bg-[#112f1f] text-[#A7F3D0] border-emerald-500/60";
         let statusBadge = "آزاد";
 
         if (bookedDays.includes(day)) {
-          bgClass = "bg-rose-950/80 text-rose-200 border-rose-500/40 opacity-90";
+          bgClass = "bg-[#2A0F15] text-[#FECDD3] border-rose-500/60";
           statusBadge = "رزرو شده";
         } else if (pendingDays.includes(day)) {
-          bgClass = "bg-amber-950/80 text-amber-200 border-amber-500/40";
+          bgClass = "bg-[#281A08] text-[#FDE68A] border-amber-500/60";
           statusBadge = "استعلام";
         }
 
         html += `
-          <div onclick="openInquiryModal(1, 'استعلام رزرو تاریخ ${day} ${monthName}')" class="p-2 sm:p-2.5 rounded-xl border flex flex-col justify-between items-center h-16 sm:h-20 transition-all cursor-pointer shadow-xs ${bgClass}">
-            <span class="text-xs sm:text-sm font-black">${day}</span>
-            <span class="text-[9px] sm:text-[10px] font-extrabold px-1.5 py-0.5 rounded-md ${
-              bookedDays.includes(day) ? 'bg-rose-900/60 text-rose-200' : pendingDays.includes(day) ? 'bg-amber-900/60 text-amber-200' : 'bg-emerald-900/60 text-emerald-200'
+          <div onclick="openInquiryModal(1, 'استعلام رزرو تاریخ ${day} ${monthName}')" class="p-2 sm:p-2.5 rounded-xl border flex flex-col justify-between items-center h-16 sm:h-20 transition-all cursor-pointer shadow-md ${bgClass}">
+            <span class="text-sm sm:text-base font-black text-slate-100" style="color: #F7F5F0 !important;">${day}</span>
+            <span class="text-[9.5px] sm:text-[10.5px] font-black px-2 py-0.5 rounded-md ${
+              bookedDays.includes(day) ? 'bg-rose-900/80 text-rose-100' : pendingDays.includes(day) ? 'bg-amber-900/80 text-amber-100' : 'bg-emerald-900/80 text-emerald-100'
             }">${statusBadge}</span>
           </div>
         `;
