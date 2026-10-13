@@ -11323,10 +11323,16 @@ window.shareReceiptWhatsApp = function() {
                 </div>
 
                 <div class="flex flex-col gap-2 pt-1">
-                  <button onclick="openPreInvoicePrintModal()" class="w-full bg-[#C5A059] hover:bg-[#D4AF37] text-[#07090E] font-black py-2 rounded-xl text-xs transition-all flex items-center justify-center gap-1.5 shadow-md cursor-pointer">
-                    <i data-lucide="printer" class="w-3.5 h-3.5"></i>
-                    <span>مشاهده و چاپ پیش‌فاکتور رسمی</span>
-                  </button>
+                  <div class="flex gap-2">
+                    <button onclick="openPreInvoicePrintModal()" class="flex-1 bg-[#C5A059] hover:bg-[#D4AF37] text-[#07090E] font-black py-2.5 rounded-xl text-xs transition-all flex items-center justify-center gap-1.5 shadow-md cursor-pointer">
+                      <i data-lucide="check-circle" class="w-3.5 h-3.5"></i>
+                      <span>تایید پیش‌فاکتور ✨</span>
+                    </button>
+                    <button onclick="openPreInvoicePrintModal()" class="flex-1 bg-[#141A28] hover:bg-[#1E293B] text-amber-200 border border-[#C5A059]/40 font-bold py-2.5 rounded-xl text-xs transition-all flex items-center justify-center gap-1.5 shadow-sm cursor-pointer">
+                      <i data-lucide="download" class="w-3.5 h-3.5 text-[#C5A059]"></i>
+                      <span>دانلود فاکتور PDF</span>
+                    </button>
+                  </div>
                   <div class="flex gap-2">
                     <button onclick="openAppointmentModal('${activeThread.id}', '${msg.id}')" class="flex-1 bg-[#141A28] hover:bg-[#1E293B] text-white border border-[#C5A059]/40 py-2 rounded-xl text-xs font-bold transition-all shadow-sm flex items-center justify-center gap-1 cursor-pointer">
                       <i data-lucide="calendar" class="w-3.5 h-3.5 text-[#C5A059]"></i>
