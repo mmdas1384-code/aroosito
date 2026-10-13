@@ -5022,9 +5022,9 @@ if (document.readyState === "loading") {
         const panel = document.getElementById('planner-panel-' + key);
         if (btn) {
           if (key === subTabKey) {
-            btn.className = "flex-1 py-3 px-3 rounded-xl transition-all bg-primary text-white text-center flex items-center justify-center gap-1.5 shadow-xs cursor-pointer min-w-[120px]";
+            btn.className = "flex-1 py-3 px-3 rounded-xl transition-all bg-[#D4AF37] text-[#0F251A] font-black text-center flex items-center justify-center gap-1.5 shadow-md cursor-pointer min-w-[120px]";
           } else {
-            btn.className = "flex-1 py-3 px-3 rounded-xl transition-all text-secondary hover:text-graphite hover:bg-slate-50 text-center flex items-center justify-center gap-1.5 cursor-pointer min-w-[120px]";
+            btn.className = "flex-1 py-3 px-3 rounded-xl transition-all text-slate-300 hover:text-amber-200 hover:bg-white/5 text-center flex items-center justify-center gap-1.5 cursor-pointer min-w-[120px]";
           }
         }
         if (panel) {

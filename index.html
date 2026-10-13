@@ -1563,43 +1563,43 @@
   <div id="tab-planner" class="tab-content hidden space-y-8">
 
       <!-- TOP DEDICATED HEADER BAR -->
-      <div class="bg-white border border-accent rounded-3xl p-6 sm:p-8 shadow-xs flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
+      <div class="bg-[#0e121c]/90 backdrop-blur-2xl border border-[#C5A059]/40 rounded-3xl p-6 sm:p-8 shadow-2xl flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 text-white">
         <div class="space-y-1">
-          <div class="inline-flex items-center gap-1.5 bg-primary/10 text-primary text-xs font-bold px-3 py-1 rounded-full">
-            <i data-lucide="sparkles" class="w-3.5 h-3.5"></i>
+          <div class="inline-flex items-center gap-1.5 bg-[#D4AF37]/15 text-[#D4AF37] text-xs font-bold px-3.5 py-1 rounded-full border border-[#D4AF37]/30 shadow-xs">
+            <i data-lucide="sparkles" class="w-3.5 h-3.5 text-[#D4AF37]"></i>
             <span>صفحه اختصاصی مدیریت و برنامه‌ریزی هوشمند</span>
           </div>
-          <h1 class="text-2xl sm:text-3xl font-black text-graphite">مدیریت و برنامه‌ریزی هوشمند جشن عروسی</h1>
-          <p class="text-xs text-secondary font-medium">مدیریت کرونولوژیک تمامی اقدامات، اتصال تامین‌کنندگان و خلاصه هزینه‌های مراسم</p>
+          <h1 class="text-2xl sm:text-3xl font-black text-[#F7F5F0]">مدیریت و برنامه‌ریزی هوشمند جشن عروسی</h1>
+          <p class="text-xs text-slate-300 font-medium">مدیریت کرونولوژیک تمامی اقدامات، اتصال تامین‌کنندگان و خلاصه هزینه‌های مراسم</p>
         </div>
 
         <div class="flex items-center gap-3 flex-wrap">
-          <span class="bg-primary/10 text-primary border border-primary/20 text-xs font-bold px-3.5 py-2 rounded-xl flex items-center gap-1.5">
-            <i data-lucide="calendar-heart" class="w-4 h-4 text-primary"></i>
+          <span class="bg-[#1B3B2B] text-amber-200 border border-[#D4AF37]/50 text-xs font-black px-4 py-2.5 rounded-2xl flex items-center gap-1.5 shadow-md">
+            <i data-lucide="calendar-heart" class="w-4 h-4 text-[#D4AF37]"></i>
             <span id="planner-countdown-badge">۱۳۵ روز تا مراسم عروسی شما</span>
           </span>
 
-          <button onclick="switchTab('home')" class="bg-bgCustom hover:bg-slate-100 text-graphite border border-accent px-4 py-2 rounded-xl text-xs font-bold transition-all flex items-center gap-1.5 shadow-xs">
-            <i data-lucide="arrow-right" class="w-4 h-4 text-primary"></i>
+          <button onclick="switchTab('home')" class="bg-[#141A28] hover:bg-[#1E293B] text-slate-200 border border-[#C5A059]/30 px-4 py-2.5 rounded-2xl text-xs font-bold transition-all flex items-center gap-1.5 shadow-md cursor-pointer hover:scale-105 active:scale-95">
+            <i data-lucide="arrow-right" class="w-4 h-4 text-[#D4AF37]"></i>
             <span>عودت به صفحه اصلی</span>
           </button>
         </div>
       </div>
 
       <!-- COUPLE PLANNING DASHBOARD OVERVIEW (خلاصه وضعیت برنامه‌ریزی و بوک‌مارک‌های عروسی) -->
-      <section class="bg-white border border-accent rounded-3xl p-6 sm:p-8 shadow-xs space-y-6">
-        <div class="flex flex-col sm:flex-row justify-between sm:items-center gap-4 border-b border-accent pb-4">
+      <section class="bg-[#0e121c]/90 backdrop-blur-2xl border border-[#C5A059]/40 rounded-3xl p-6 sm:p-8 shadow-2xl space-y-6 text-white">
+        <div class="flex flex-col sm:flex-row justify-between sm:items-center gap-4 border-b border-[#C5A059]/20 pb-4">
           <div>
-            <div class="inline-flex items-center gap-1.5 bg-rose-50 text-rose-700 text-xs font-bold px-3 py-1 rounded-full mb-1 border border-rose-200">
+            <div class="inline-flex items-center gap-1.5 bg-rose-950/60 text-rose-300 text-xs font-bold px-3 py-1 rounded-full mb-1 border border-rose-800/40">
               <i data-lucide="heart" class="w-3.5 h-3.5 fill-rose-500"></i>
               <span>پنل اختصاصی برنامه‌ریزی زوجین: علی & سارا</span>
             </div>
-            <h2 class="text-xl sm:text-2xl font-bold text-graphite">خلاصه وضعیت برنامه‌ریزی و بوک‌مارک‌های عروسی در یزد</h2>
+            <h2 class="text-xl sm:text-2xl font-black text-[#C5A059]">خلاصه وضعیت برنامه‌ریزی و بوک‌مارک‌های عروسی در یزد</h2>
           </div>
 
           <div class="flex items-center gap-2">
-            <button onclick="switchTab('messages')" class="bg-primary hover:bg-emerald-900 text-white font-bold px-4 py-2 rounded-xl text-xs shadow-xs transition-all flex items-center gap-1.5">
-              <i data-lucide="message-square" class="w-4 h-4"></i>
+            <button onclick="switchTab('messages')" class="gold-shimmer-btn text-[#0F251A] font-black px-5 py-2.5 rounded-2xl text-xs shadow-lg transition-all flex items-center gap-1.5 cursor-pointer hover:scale-105 active:scale-95">
+              <i data-lucide="message-square" class="w-4 h-4 text-[#0F251A]"></i>
               <span>پیش‌فاکتورها و چت</span>
             </button>
           </div>
@@ -1704,34 +1704,34 @@
         </div>
       </section>
 
-      <!-- PLANNER SUB-TABS TOOLBAR -->
-      <div class="flex bg-white border border-accent rounded-2xl p-1.5 text-xs sm:text-sm font-bold shadow-xs flex-wrap gap-1">
-        <button id="planner-subtab-checklist" onclick="switchPlannerSubTab('checklist')" class="flex-1 py-3 px-3 rounded-xl transition-all bg-primary text-white text-center flex items-center justify-center gap-1.5 shadow-xs cursor-pointer min-w-[120px]">
+      <!-- PLANNER SUB-TABS TOOLBAR (LUXURY GLASS CAPSULE) -->
+      <div class="flex bg-[#0e121c]/95 border border-[#C5A059]/40 rounded-2xl p-2 text-xs sm:text-sm font-bold shadow-2xl flex-wrap gap-1.5 backdrop-blur-2xl">
+        <button id="planner-subtab-checklist" onclick="switchPlannerSubTab('checklist')" class="flex-1 py-3 px-3 rounded-xl transition-all bg-[#D4AF37] text-[#0F251A] font-black text-center flex items-center justify-center gap-1.5 shadow-md cursor-pointer min-w-[120px]">
           <i data-lucide="check-square" class="w-4 h-4"></i>
           <span>📋 چک‌لیست</span>
         </button>
-        <button id="planner-subtab-schedule" onclick="switchPlannerSubTab('schedule')" class="flex-1 py-3 px-3 rounded-xl transition-all text-secondary hover:text-graphite hover:bg-slate-50 text-center flex items-center justify-center gap-1.5 cursor-pointer min-w-[120px]">
+        <button id="planner-subtab-schedule" onclick="switchPlannerSubTab('schedule')" class="flex-1 py-3 px-3 rounded-xl transition-all text-slate-300 hover:text-amber-200 hover:bg-white/5 text-center flex items-center justify-center gap-1.5 cursor-pointer min-w-[120px]">
           <i data-lucide="clock" class="w-4 h-4 text-[#D4AF37]"></i>
           <span>⏱️ زمان‌بندی روز عروسی</span>
         </button>
-        <button id="planner-subtab-party" onclick="switchPlannerSubTab('party')" class="flex-1 py-3 px-3 rounded-xl transition-all text-secondary hover:text-graphite hover:bg-slate-50 text-center flex items-center justify-center gap-1.5 cursor-pointer min-w-[120px]">
+        <button id="planner-subtab-party" onclick="switchPlannerSubTab('party')" class="flex-1 py-3 px-3 rounded-xl transition-all text-slate-300 hover:text-amber-200 hover:bg-white/5 text-center flex items-center justify-center gap-1.5 cursor-pointer min-w-[120px]">
           <i data-lucide="users" class="w-4 h-4 text-[#D4AF37]"></i>
-          <span>👥 تیم همراهان (Bridal Party)</span>
+          <span>👥 همراهان</span>
         </button>
-        <button id="planner-subtab-forum" onclick="switchPlannerSubTab('forum')" class="flex-1 py-3 px-3 rounded-xl transition-all text-secondary hover:text-graphite hover:bg-slate-50 text-center flex items-center justify-center gap-1.5 cursor-pointer min-w-[120px]">
+        <button id="planner-subtab-forum" onclick="switchPlannerSubTab('forum')" class="flex-1 py-3 px-3 rounded-xl transition-all text-slate-300 hover:text-amber-200 hover:bg-white/5 text-center flex items-center justify-center gap-1.5 cursor-pointer min-w-[120px]">
           <i data-lucide="messages-square" class="w-4 h-4 text-[#D4AF37]"></i>
           <span>💬 تالار گفت‌وگو</span>
         </button>
-        <button id="planner-subtab-vendors" onclick="switchPlannerSubTab('vendors')" class="flex-1 py-3 px-3 rounded-xl transition-all text-secondary hover:text-graphite hover:bg-slate-50 text-center flex items-center justify-center gap-1.5 cursor-pointer min-w-[120px]">
-          <i data-lucide="store" class="w-4 h-4"></i>
+        <button id="planner-subtab-vendors" onclick="switchPlannerSubTab('vendors')" class="flex-1 py-3 px-3 rounded-xl transition-all text-slate-300 hover:text-amber-200 hover:bg-white/5 text-center flex items-center justify-center gap-1.5 cursor-pointer min-w-[120px]">
+          <i data-lucide="store" class="w-4 h-4 text-[#D4AF37]"></i>
           <span>🤝 تامین‌کنندگان من</span>
         </button>
-        <button id="planner-subtab-budget" onclick="switchPlannerSubTab('budget')" class="flex-1 py-3 px-3 rounded-xl transition-all text-secondary hover:text-graphite hover:bg-slate-50 text-center flex items-center justify-center gap-1.5 cursor-pointer min-w-[120px]">
-          <i data-lucide="coins" class="w-4 h-4"></i>
+        <button id="planner-subtab-budget" onclick="switchPlannerSubTab('budget')" class="flex-1 py-3 px-3 rounded-xl transition-all text-slate-300 hover:text-amber-200 hover:bg-white/5 text-center flex items-center justify-center gap-1.5 cursor-pointer min-w-[120px]">
+          <i data-lucide="coins" class="w-4 h-4 text-[#D4AF37]"></i>
           <span>💰 خلاصه بودجه</span>
         </button>
-        <button id="planner-subtab-offers" onclick="switchPlannerSubTab('offers')" class="flex-1 py-3 px-3 rounded-xl transition-all text-secondary hover:text-graphite hover:bg-slate-50 text-center flex items-center justify-center gap-1.5 cursor-pointer min-w-[120px]">
-          <i data-lucide="message-square" class="w-4 h-4"></i>
+        <button id="planner-subtab-offers" onclick="switchPlannerSubTab('offers')" class="flex-1 py-3 px-3 rounded-xl transition-all text-slate-300 hover:text-amber-200 hover:bg-white/5 text-center flex items-center justify-center gap-1.5 cursor-pointer min-w-[120px]">
+          <i data-lucide="message-square" class="w-4 h-4 text-[#D4AF37]"></i>
           <span>📩 استعلام‌ها</span>
         </button>
       </div>
