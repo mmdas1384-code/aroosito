@@ -7772,19 +7772,19 @@ window.shareReceiptWhatsApp = function() {
             toggleBwService(srv.id);
           }
         };
-        card.className = `p-4 rounded-2xl border-2 transition-all cursor-pointer flex items-center justify-between gap-3 ${
-          srv.checked ? 'bg-primary/5 border-primary' : 'bg-white border-accent hover:border-accent/80 opacity-75'
+        card.className = `p-4 rounded-2xl border transition-all cursor-pointer flex items-center justify-between gap-3 ${
+          srv.checked ? 'bg-[#1B3B2B] border-[#D4AF37] shadow-md' : 'bg-[#141A28] border-[#C5A059]/30 hover:border-[#D4AF37] opacity-80'
         }`;
 
         card.innerHTML = `
           <div class="flex items-center gap-3">
-            <input type="checkbox" ${srv.checked ? 'checked' : ''} onchange="toggleBwService('${srv.id}')" class="rounded text-primary focus:ring-primary w-5 h-5 cursor-pointer">
+            <input type="checkbox" ${srv.checked ? 'checked' : ''} onchange="toggleBwService('${srv.id}')" class="rounded accent-[#D4AF37] w-5 h-5 cursor-pointer">
             <div class="flex items-center gap-2">
-              <i data-lucide="${srv.icon}" class="w-4 h-4 ${srv.checked ? 'text-primary' : 'text-secondary'}"></i>
-              <span class="text-xs font-bold ${srv.checked ? 'text-graphite' : 'text-secondary'}">${srv.title}</span>
+              <i data-lucide="${srv.icon}" class="w-4 h-4 ${srv.checked ? 'text-[#D4AF37]' : 'text-amber-200/70'}"></i>
+              <span class="text-xs font-black ${srv.checked ? 'text-white' : 'text-slate-200'}">${srv.title}</span>
             </div>
           </div>
-          ${srv.isCustom ? `<button onclick="deleteCustomBwService('${srv.id}')" class="text-rose-600 hover:text-rose-800 text-[11px] font-bold">حذف</button>` : ''}
+          ${srv.isCustom ? `<button onclick="deleteCustomBwService('${srv.id}')" class="text-rose-400 hover:text-rose-200 text-[11px] font-black">حذف</button>` : ''}
         `;
         container.appendChild(card);
       });
