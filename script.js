@@ -2095,6 +2095,7 @@ if (document.readyState === "loading") {
       }
 
       if (tabId === 'guests') renderGuestsAndGifts();
+      if (tabId === 'forum' && typeof renderBridalForum === 'function') renderBridalForum();
       if (tabId === 'vendor-dash') {
         if (typeof renderVendorPromoBadges === 'function') renderVendorPromoBadges();
         if (typeof renderVendorPackages === 'function') renderVendorPackages();
@@ -5017,7 +5018,7 @@ if (document.readyState === "loading") {
     function switchPlannerSubTab(subTabKey) {
       activePlannerSubTab = subTabKey;
 
-      ['checklist', 'schedule', 'party', 'forum', 'vendors', 'budget', 'offers'].forEach(key => {
+      ['checklist', 'schedule', 'party', 'guests', 'vendors', 'budget', 'offers'].forEach(key => {
         const btn = document.getElementById('planner-subtab-' + key);
         const panel = document.getElementById('planner-panel-' + key);
         if (btn) {
@@ -5043,6 +5044,8 @@ if (document.readyState === "loading") {
         renderMasterDaySchedule();
       } else if (subTabKey === 'party' && typeof renderBridalParty === 'function') {
         renderBridalParty();
+      } else if (subTabKey === 'guests' && typeof renderGuestsAndGifts === 'function') {
+        renderGuestsAndGifts();
       } else if (subTabKey === 'forum' && typeof renderBridalForum === 'function') {
         renderBridalForum();
       }
