@@ -5490,107 +5490,115 @@
     <div id="tab-messages" class="tab-content hidden space-y-8">
 
       <!-- HEADER BANNER -->
-      <div class="bg-white border border-accent rounded-3xl p-6 shadow-xs flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
+      <div class="bg-[#0e121c]/90 backdrop-blur-2xl border border-[#C5A059]/40 rounded-3xl p-6 shadow-2xl flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 text-white">
         <div class="space-y-1">
-          <div class="inline-flex items-center gap-1.5 bg-primary/10 text-primary text-xs font-bold px-3 py-1 rounded-full">
+          <div class="inline-flex items-center gap-1.5 bg-[#07090E] text-[#C5A059] border border-[#C5A059]/40 text-xs font-bold px-3 py-1 rounded-full">
             <i data-lucide="message-square" class="w-3.5 h-3.5"></i>
             <span>مرکز گفت‌وگوها و پیام‌های مستقیم پلتفرم</span>
           </div>
-          <h2 class="text-2xl font-black text-graphite flex items-center gap-2">
+          <h2 class="text-2xl font-black text-[#F7F5F0] flex items-center gap-2">
             <span>گفت‌وگوها و استعلام‌های قیمت</span>
           </h2>
-          <p class="text-xs text-secondary font-medium">ارتباط مستقیم زوج‌ها با تأمین‌کنندگان خدمات عروسی، دریافت پیش‌فاکتور و پاسخ به سؤالات</p>
+          <p class="text-xs text-slate-300 font-medium">ارتباط مستقیم زوج‌ها با تأمین‌کنندگان خدمات عروسی، دریافت پیش‌فاکتور و پاسخ به سؤالات</p>
         </div>
 
         <div class="flex items-center gap-3">
-          <button onclick="switchTab('home')" class="bg-bgCustom hover:bg-slate-100 text-graphite border border-accent px-4 py-2.5 rounded-xl text-xs font-bold transition-all flex items-center gap-1.5 shadow-xs">
-            <i data-lucide="store" class="w-4 h-4 text-primary"></i>
+          <button onclick="switchTab('directory')" class="bg-[#C5A059] hover:bg-[#D4AF37] text-[#07090E] font-black px-4 py-2.5 rounded-xl text-xs transition-all flex items-center gap-1.5 shadow-lg cursor-pointer">
+            <i data-lucide="store" class="w-4 h-4"></i>
             <span>جستجوی تامین‌کننده جدید</span>
           </button>
         </div>
       </div>
 
       <!-- SPLIT-SCREEN CHAT CONTAINER -->
-      <div class="bg-white border border-accent rounded-3xl overflow-hidden shadow-md grid grid-cols-1 lg:grid-cols-12 min-h-[600px] h-[720px]">
+      <div class="bg-[#0e121c]/90 backdrop-blur-2xl border border-[#C5A059]/40 rounded-3xl overflow-hidden shadow-2xl grid grid-cols-1 lg:grid-cols-12 min-h-[600px] h-[720px] text-white">
 
-        <!-- LEFT SIDEBAR: THREADS LIST (lg:col-span-4) -->
-        <div class="lg:col-span-4 border-l border-accent flex flex-col bg-bgCustom">
+        <!-- RIGHT SIDEBAR: THREADS LIST (lg:col-span-4) -->
+        <div class="lg:col-span-4 border-l border-[#C5A059]/30 flex flex-col bg-[#07090E]">
 
           <!-- Search Header in Sidebar -->
-          <div class="p-4 border-b border-accent bg-white space-y-3">
+          <div class="p-4 border-b border-[#C5A059]/30 bg-[#141A28] space-y-3">
             <div class="flex items-center justify-between">
-              <h3 class="text-sm font-bold text-graphite flex items-center gap-2">
-                <i data-lucide="message-circle" class="w-4 h-4 text-primary"></i>
+              <h3 class="text-sm font-bold text-[#F7F5F0] flex items-center gap-2">
+                <i data-lucide="message-circle" class="w-4 h-4 text-[#C5A059]"></i>
                 <span>لیست گفت‌وگوها</span>
               </h3>
-              <span id="chat-total-threads-count" class="text-[11px] font-bold bg-primary/10 text-primary px-2.5 py-0.5 rounded-full">۳ گفتگو</span>
+              <span id="chat-total-threads-count" class="text-[11px] font-bold bg-[#07090E] text-[#C5A059] border border-[#C5A059]/30 px-2.5 py-0.5 rounded-full">۳ گفتگو</span>
             </div>
 
             <div class="relative">
-              <input type="text" id="chat-thread-search" oninput="filterChatThreads()" placeholder="جستجو در گفتگوها..." class="w-full bg-bgCustom border border-accent rounded-xl py-2 px-3 pl-8 text-xs font-medium focus:outline-none focus:border-primary">
-              <i data-lucide="search" class="w-4 h-4 text-secondary absolute left-2.5 top-2.5"></i>
+              <input type="text" id="chat-thread-search" oninput="filterChatThreads()" placeholder="جستجو در گفتگوها..." class="w-full bg-[#07090E] border border-[#C5A059]/30 text-white rounded-xl py-2 px-3 pl-8 text-xs font-medium focus:outline-none focus:border-[#C5A059]">
+              <i data-lucide="search" class="w-4 h-4 text-slate-400 absolute left-2.5 top-2.5"></i>
             </div>
           </div>
 
           <!-- Thread List Scroll Container -->
-          <div id="chat-threads-list-container" class="flex-1 overflow-y-auto custom-scrollbar divide-y divide-accent/60">
+          <div id="chat-threads-list-container" class="flex-1 overflow-y-auto custom-scrollbar divide-y divide-[#C5A059]/20">
             <!-- Populated dynamically via JS -->
           </div>
 
         </div>
 
-        <!-- RIGHT MAIN PANEL: ACTIVE CONVERSATION THREAD (lg:col-span-8) -->
-        <div id="chat-main-thread-panel" class="lg:col-span-8 flex flex-col bg-white min-h-0">
+        <!-- LEFT MAIN PANEL: ACTIVE CONVERSATION THREAD (lg:col-span-8) -->
+        <div id="chat-main-thread-panel" class="lg:col-span-8 flex flex-col bg-[#141A28] min-h-0">
 
           <!-- Trust & Safety Sticky Notice Banner -->
-          <div class="bg-amber-50 border-b border-amber-200 px-4 py-2 text-[11px] font-bold text-amber-900 flex items-center justify-between gap-2 shrink-0">
+          <div class="bg-[#07090E] border-b border-[#C5A059]/30 px-4 py-2 text-[11px] font-bold text-[#C5A059] flex items-center justify-between gap-2 shrink-0">
             <div class="flex items-center gap-1.5">
-              <i data-lucide="shield-alert" class="w-4 h-4 text-amber-600 shrink-0"></i>
+              <i data-lucide="shield-alert" class="w-4 h-4 text-[#C5A059] shrink-0"></i>
               <span>عروسی تو بستری برای ارتباط و دریافت پیش‌فاکتور است. نهایی‌سازی قرارداد و پرداخت بیعانه پس از مراجعه حضوری انجام می‌شود.</span>
             </div>
-            <span class="bg-white/80 px-2 py-0.5 rounded-md border border-amber-300/60 text-[10px] shrink-0">امنیت معامله</span>
+            <span class="bg-[#141A28] px-2 py-0.5 rounded-md border border-[#C5A059]/40 text-[10px] text-white shrink-0">امنیت معامله</span>
           </div>
 
           <!-- ACTIVE THREAD TOP BAR -->
-          <div id="chat-active-header" class="p-4 border-b border-accent bg-white flex items-center justify-between gap-4 shrink-0 shadow-xs">
+          <div id="chat-active-header" class="p-4 border-b border-[#C5A059]/30 bg-[#07090E] flex items-center justify-between gap-4 shrink-0 shadow-md">
             <!-- Populated dynamically via JS -->
           </div>
 
           <!-- STATUS BADGE / INQUIRY SUMMARY CARD -->
-          <div id="chat-active-status-bar" class="bg-primary/5 border-b border-primary/20 px-5 py-3 text-xs font-bold text-graphite flex flex-wrap items-center justify-between gap-3 shrink-0">
+          <div id="chat-active-status-bar" class="bg-[#07090E] border-b border-[#C5A059]/30 px-5 py-3 text-xs font-bold text-white flex flex-wrap items-center justify-between gap-3 shrink-0">
             <!-- Populated dynamically via JS -->
           </div>
 
           <!-- MESSAGES STREAM CONTAINER -->
-          <div id="chat-messages-stream-container" class="flex-1 overflow-y-auto p-5 space-y-4 custom-scrollbar bg-[#F5EFEB]">
+          <div id="chat-messages-stream-container" class="flex-1 overflow-y-auto p-5 space-y-4 custom-scrollbar bg-[#07090E]">
             <!-- Messages rendered via JS -->
           </div>
 
+          <!-- QUICK ACTIONS BAR -->
+          <div class="px-4 py-2 bg-[#07090E] border-t border-[#C5A059]/20 flex items-center gap-2 overflow-x-auto text-[11px] font-bold text-slate-300">
+            <span class="text-[#C5A059] shrink-0">میان‌بر سریع:</span>
+            <button onclick="sendChatMessageQuickAction('📋 اطلاعات عروسی من: تاریخ ۱۵ شهریور | ۲۰۰ نفر مهمان')" class="bg-[#141A28] hover:bg-[#1E293B] border border-[#C5A059]/30 text-white px-3 py-1 rounded-xl shrink-0 cursor-pointer">ارسال اطلاعات عروسی من 📋</button>
+            <button onclick="sendChatMessageQuickAction('📞 لطفا جهت هماهنگی تلفنی تماس بگیرید: ۰۹۱۲۳۴۵۶۷۸۹')" class="bg-[#141A28] hover:bg-[#1E293B] border border-[#C5A059]/30 text-white px-3 py-1 rounded-xl shrink-0 cursor-pointer">شماره تماس 📞</button>
+            <button onclick="sendChatMessageQuickAction('📍 آدرس و لینک مسیریابی تالار ارسال شود')" class="bg-[#141A28] hover:bg-[#1E293B] border border-[#C5A059]/30 text-white px-3 py-1 rounded-xl shrink-0 cursor-pointer">مسیریابی آدرس 📍</button>
+          </div>
+
           <!-- INPUT ACTION BAR -->
-          <div class="p-4 border-t border-accent bg-white shrink-0 space-y-2">
+          <div class="p-4 border-t border-[#C5A059]/30 bg-[#141A28] shrink-0 space-y-2">
             <form onsubmit="handleSendChatMessage(event)" class="flex items-center gap-2">
               <div class="flex items-center gap-1 shrink-0">
-                <button type="button" onclick="showToast('شبیه‌سازی پیوست تصویر نمونه‌کار یا پروانه کسب', 'info')" class="p-2.5 rounded-xl border border-accent hover:border-primary text-secondary hover:text-primary transition-colors" title="پیوست تصویر">
+                <button type="button" onclick="showToast('شبیه‌سازی پیوست تصویر نمونه‌کار یا پروانه کسب', 'info')" class="p-2.5 rounded-xl border border-[#C5A059]/30 hover:border-[#C5A059] text-slate-300 hover:text-[#C5A059] transition-colors" title="پیوست تصویر">
                   <i data-lucide="image" class="w-4 h-4"></i>
                 </button>
-                <button type="button" onclick="showToast('شبیه‌سازی ارسال فایل PDF قرارداد', 'info')" class="p-2.5 rounded-xl border border-accent hover:border-primary text-secondary hover:text-primary transition-colors" title="پیوست قرارداد PDF">
+                <button type="button" onclick="showToast('شبیه‌سازی ارسال فایل PDF قرارداد', 'info')" class="p-2.5 rounded-xl border border-[#C5A059]/30 hover:border-[#C5A059] text-slate-300 hover:text-[#C5A059] transition-colors" title="پیوست قرارداد PDF">
                   <i data-lucide="file-text" class="w-4 h-4"></i>
                 </button>
-                <button type="button" onclick="showToast('شبیه‌سازی ضبط پیام صوتی (Voice Note)', 'info')" class="p-2.5 rounded-xl border border-accent hover:border-primary text-secondary hover:text-primary transition-colors" title="ارسال ویس">
+                <button type="button" onclick="showToast('شبیه‌سازی ضبط پیام صوتی (Voice Note)', 'info')" class="p-2.5 rounded-xl border border-[#C5A059]/30 hover:border-[#C5A059] text-slate-300 hover:text-[#C5A059] transition-colors" title="ارسال ویس">
                   <i data-lucide="mic" class="w-4 h-4"></i>
                 </button>
               </div>
 
-              <input type="text" id="chat-message-input" required placeholder="پیام خود را بنویسید..." class="flex-1 bg-bgCustom border border-accent rounded-xl px-4 py-3 text-xs font-medium text-graphite focus:outline-none focus:border-primary">
+              <input type="text" id="chat-message-input" required placeholder="پیام خود را بنویسید..." class="flex-1 bg-[#07090E] border border-[#C5A059]/30 rounded-xl px-4 py-3 text-xs font-medium text-white focus:outline-none focus:border-[#C5A059]">
 
-              <button type="submit" class="bg-primary hover:bg-emerald-900 text-white font-bold px-5 py-3 rounded-xl text-xs transition-all flex items-center gap-1.5 shadow-md shrink-0">
+              <button type="submit" class="bg-[#C5A059] hover:bg-[#D4AF37] text-[#07090E] font-black px-5 py-3 rounded-xl text-xs transition-all flex items-center gap-1.5 shadow-lg shrink-0 cursor-pointer">
                 <span>ارسال</span>
                 <i data-lucide="send" class="w-4 h-4"></i>
               </button>
             </form>
-            <div class="flex justify-between items-center text-[10px] text-secondary font-medium">
+            <div class="flex justify-between items-center text-[10px] text-slate-400 font-medium">
               <span>ارتباط امن و مستقیم • پاسخ‌های سریع تامین‌کننده</span>
-              <span class="flex items-center gap-1 text-emerald-700 font-bold">
+              <span class="flex items-center gap-1 text-emerald-400 font-bold">
                 <i data-lucide="check-check" class="w-3.5 h-3.5"></i>
                 <span>پایان‌به‌پایان رمزنگاری شده</span>
               </span>

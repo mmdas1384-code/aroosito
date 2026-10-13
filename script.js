@@ -11019,7 +11019,7 @@ window.shareReceiptWhatsApp = function() {
       }
 
       if (threads.length === 0) {
-        container.innerHTML = `<div class="p-6 text-center text-secondary text-xs font-medium">هیچ گفت‌وگویی یافت نشد.</div>`;
+        container.innerHTML = `<div class="p-6 text-center text-slate-400 text-xs font-medium">هیچ گفت‌وگویی یافت نشد.</div>`;
         return;
       }
 
@@ -11028,32 +11028,32 @@ window.shareReceiptWhatsApp = function() {
         const item = document.createElement('div');
         item.onclick = () => selectChatThread(t.id);
         item.className = `p-4 cursor-pointer transition-all flex items-start gap-3 relative ${
-          isActive ? 'bg-primary/10 border-r-4 border-primary shadow-xs' : 'hover:bg-slate-100 bg-white'
+          isActive ? 'bg-[#141A28] border-r-4 border-[#C5A059] shadow-lg' : 'hover:bg-[#141A28]/50 bg-[#07090E]'
         }`;
 
-        let badgeBg = "bg-blue-100 text-blue-800 border-blue-200";
-        if (t.statusBadge === "quote_sent") badgeBg = "bg-emerald-100 text-emerald-800 border-emerald-200";
-        if (t.statusBadge === "finalized") badgeBg = "bg-purple-100 text-purple-800 border-purple-200";
+        let badgeBg = "bg-blue-950/80 text-blue-300 border-blue-800/40";
+        if (t.statusBadge === "quote_sent") badgeBg = "bg-emerald-950/80 text-emerald-300 border-emerald-800/40";
+        if (t.statusBadge === "finalized") badgeBg = "bg-purple-950/80 text-purple-300 border-purple-800/40";
 
         item.innerHTML = `
           <div class="relative shrink-0">
-            <div class="w-12 h-12 rounded-2xl overflow-hidden border border-accent bg-white">
+            <div class="w-12 h-12 rounded-2xl overflow-hidden border border-[#C5A059]/40 bg-[#07090E]">
               <img src="${t.vendorLogo}" alt="${t.vendorName}" class="w-full h-full object-cover">
             </div>
             ${t.unreadCount > 0 ? `
-              <span class="absolute -top-1 -right-1 bg-rose-500 text-white text-[10px] font-bold w-5 h-5 rounded-full flex items-center justify-center border-2 border-white shadow-xs">
+              <span class="absolute -top-1 -right-1 bg-rose-500 text-white text-[10px] font-bold w-5 h-5 rounded-full flex items-center justify-center border-2 border-[#07090E] shadow-sm">
                 ${t.unreadCount}
               </span>
             ` : ''}
           </div>
 
-          <div class="flex-1 min-w-0 space-y-1">
+          <div class="flex-1 min-w-0 space-y-1 text-right">
             <div class="flex justify-between items-center">
-              <h4 class="text-xs font-bold text-graphite truncate">${t.vendorName}</h4>
-              <span class="text-[10px] text-secondary font-medium shrink-0 ml-1">${t.lastTime}</span>
+              <h4 class="text-xs font-bold text-[#F7F5F0] truncate">${t.vendorName}</h4>
+              <span class="text-[10px] text-slate-400 font-medium shrink-0 ml-1">${t.lastTime}</span>
             </div>
 
-            <p class="text-[11px] text-secondary truncate font-medium">${t.lastMessage}</p>
+            <p class="text-[11px] text-slate-300 truncate font-medium">${t.lastMessage}</p>
 
             <div class="flex items-center gap-2 pt-0.5">
               <span class="text-[9px] font-bold px-2 py-0.5 rounded-full border ${badgeBg}">
@@ -11092,7 +11092,7 @@ window.shareReceiptWhatsApp = function() {
 
       container.innerHTML = '';
       if (filtered.length === 0) {
-        container.innerHTML = `<div class="p-6 text-center text-secondary text-xs font-medium">نتیجه‌ای یافت نشد.</div>`;
+        container.innerHTML = `<div class="p-6 text-center text-slate-400 text-xs font-medium">نتیجه‌ای یافت نشد.</div>`;
         return;
       }
 
@@ -11101,27 +11101,27 @@ window.shareReceiptWhatsApp = function() {
         const item = document.createElement('div');
         item.onclick = () => selectChatThread(t.id);
         item.className = `p-4 cursor-pointer transition-all flex items-start gap-3 relative ${
-          isActive ? 'bg-primary/10 border-r-4 border-primary shadow-xs' : 'hover:bg-slate-100 bg-white'
+          isActive ? 'bg-[#141A28] border-r-4 border-[#C5A059] shadow-lg' : 'hover:bg-[#141A28]/50 bg-[#07090E]'
         }`;
 
-        let badgeBg = "bg-blue-100 text-blue-800 border-blue-200";
-        if (t.statusBadge === "quote_sent") badgeBg = "bg-emerald-100 text-emerald-800 border-emerald-200";
-        if (t.statusBadge === "finalized") badgeBg = "bg-purple-100 text-purple-800 border-purple-200";
+        let badgeBg = "bg-blue-950/80 text-blue-300 border-blue-800/40";
+        if (t.statusBadge === "quote_sent") badgeBg = "bg-emerald-950/80 text-emerald-300 border-emerald-800/40";
+        if (t.statusBadge === "finalized") badgeBg = "bg-purple-950/80 text-purple-300 border-purple-800/40";
 
         item.innerHTML = `
           <div class="relative shrink-0">
-            <div class="w-12 h-12 rounded-2xl overflow-hidden border border-accent bg-white">
+            <div class="w-12 h-12 rounded-2xl overflow-hidden border border-[#C5A059]/40 bg-[#07090E]">
               <img src="${t.vendorLogo}" alt="${t.vendorName}" class="w-full h-full object-cover">
             </div>
           </div>
 
-          <div class="flex-1 min-w-0 space-y-1">
+          <div class="flex-1 min-w-0 space-y-1 text-right">
             <div class="flex justify-between items-center">
-              <h4 class="text-xs font-bold text-graphite truncate">${t.vendorName}</h4>
-              <span class="text-[10px] text-secondary font-medium shrink-0 ml-1">${t.lastTime}</span>
+              <h4 class="text-xs font-bold text-[#F7F5F0] truncate">${t.vendorName}</h4>
+              <span class="text-[10px] text-slate-400 font-medium shrink-0 ml-1">${t.lastTime}</span>
             </div>
 
-            <p class="text-[11px] text-secondary truncate font-medium">${t.lastMessage}</p>
+            <p class="text-[11px] text-slate-300 truncate font-medium">${t.lastMessage}</p>
 
             <div class="flex items-center gap-2 pt-0.5">
               <span class="text-[9px] font-bold px-2 py-0.5 rounded-full border ${badgeBg}">
@@ -11146,29 +11146,29 @@ window.shareReceiptWhatsApp = function() {
       if (header) {
         header.innerHTML = `
           <div class="flex items-center gap-3">
-            <div class="w-12 h-12 rounded-2xl overflow-hidden border border-accent bg-white shrink-0">
+            <div class="w-12 h-12 rounded-2xl overflow-hidden border border-[#C5A059]/40 bg-[#141A28] shrink-0">
               <img src="${activeThread.vendorLogo}" alt="${activeThread.vendorName}" class="w-full h-full object-cover">
             </div>
-            <div>
+            <div class="text-right">
               <div class="flex items-center gap-2">
-                <h3 class="text-base font-bold text-graphite">${activeThread.vendorName}</h3>
+                <h3 class="text-base font-bold text-[#F7F5F0]">${activeThread.vendorName}</h3>
                 ${activeThread.verified ? `
-                  <span class="bg-primary text-white text-[10px] font-bold px-2 py-0.5 rounded-full flex items-center gap-0.5">
+                  <span class="bg-[#C5A059] text-[#07090E] text-[10px] font-black px-2 py-0.5 rounded-full flex items-center gap-0.5 shadow-sm">
                     <i data-lucide="shield-check" class="w-3 h-3"></i>
                     <span>تاییدیه رسمی</span>
                   </span>
                 ` : ''}
               </div>
-              <span class="text-xs text-secondary font-medium">${activeThread.vendorCategory} • آنلاین</span>
+              <span class="text-xs text-slate-400 font-medium">${activeThread.vendorCategory} • آنلاین</span>
             </div>
           </div>
 
           <div class="flex items-center gap-2">
-            <button onclick="openPreInvoiceModal()" class="bg-primary hover:bg-emerald-900 text-white px-3.5 py-2 rounded-xl text-xs font-bold transition-all flex items-center gap-1.5 shadow-xs shrink-0 cursor-pointer">
+            <button onclick="openPreInvoiceModal()" class="bg-[#C5A059] hover:bg-[#D4AF37] text-[#07090E] px-3.5 py-2 rounded-xl text-xs font-black transition-all flex items-center gap-1.5 shadow-md shrink-0 cursor-pointer">
               <i data-lucide="file-plus" class="w-4 h-4"></i>
               <span>صدور / مشاهده پیش‌فاکتور</span>
             </button>
-            <a href="tel:${activeThread.phone}" class="bg-primary/10 hover:bg-primary/20 text-primary border border-primary/20 px-3 py-2 rounded-xl text-xs font-bold transition-all flex items-center gap-1.5">
+            <a href="tel:${activeThread.phone}" class="bg-[#141A28] hover:bg-[#1E293B] text-[#C5A059] border border-[#C5A059]/40 px-3 py-2 rounded-xl text-xs font-bold transition-all flex items-center gap-1.5">
               <i data-lucide="phone" class="w-4 h-4"></i>
               <span class="hidden sm:inline">تماس: ${activeThread.phone}</span>
             </a>
@@ -11179,20 +11179,20 @@ window.shareReceiptWhatsApp = function() {
       // 2. Status Bar & Inquiry Card
       const statusBar = document.getElementById('chat-active-status-bar');
       if (statusBar && activeThread.inquiryData) {
-        let statusBadgeHTML = `<span class="bg-amber-100 text-amber-800 border border-amber-200 px-3 py-1 rounded-full text-xs font-bold">در انتظار پاسخ تامین‌کننده</span>`;
+        let statusBadgeHTML = `<span class="bg-amber-950/80 text-amber-300 border border-amber-800/40 px-3 py-1 rounded-full text-xs font-bold">در انتظار پاسخ تامین‌کننده</span>`;
         if (activeThread.statusBadge === 'quote_sent') {
-          statusBadgeHTML = `<span class="bg-emerald-100 text-emerald-800 border border-emerald-200 px-3 py-1 rounded-full text-xs font-bold">پیش‌فاکتور صادر شد</span>`;
+          statusBadgeHTML = `<span class="bg-emerald-950/80 text-emerald-300 border border-emerald-800/40 px-3 py-1 rounded-full text-xs font-bold">پیش‌فاکتور صادر شد</span>`;
         } else if (activeThread.statusBadge === 'finalized') {
-          statusBadgeHTML = `<span class="bg-purple-100 text-purple-800 border border-purple-200 px-3 py-1 rounded-full text-xs font-bold">رزرو نهایی شد</span>`;
+          statusBadgeHTML = `<span class="bg-purple-950/80 text-purple-300 border border-purple-800/40 px-3 py-1 rounded-full text-xs font-bold">رزرو نهایی شد</span>`;
         }
 
         const inq = activeThread.inquiryData;
         statusBar.innerHTML = `
-          <div class="flex items-center gap-2 flex-wrap">
-            <span class="text-primary font-black">اطلاعات استعلام قیمت ثبت شده:</span>
-            <span class="bg-white px-2.5 py-1 rounded-lg border border-accent">تاریخ: ${inq.date}</span>
-            <span class="bg-white px-2.5 py-1 rounded-lg border border-accent">مهمانان: ${inq.guests} نفر</span>
-            <span class="bg-white px-2.5 py-1 rounded-lg border border-accent">خدمات: ${inq.services ? inq.services.join('، ') : 'ارائه شده'}</span>
+          <div class="flex items-center gap-2 flex-wrap text-right">
+            <span class="text-[#C5A059] font-black">اطلاعات استعلام قیمت ثبت شده:</span>
+            <span class="bg-[#141A28] text-slate-200 px-2.5 py-1 rounded-lg border border-[#C5A059]/30">تاریخ: ${inq.date}</span>
+            <span class="bg-[#141A28] text-slate-200 px-2.5 py-1 rounded-lg border border-[#C5A059]/30">مهمانان: ${inq.guests} نفر</span>
+            <span class="bg-[#141A28] text-slate-200 px-2.5 py-1 rounded-lg border border-[#C5A059]/30">خدمات: ${inq.services ? inq.services.join('، ') : 'ارائه شده'}</span>
           </div>
           <div>
             ${statusBadgeHTML}
@@ -11214,47 +11214,47 @@ window.shareReceiptWhatsApp = function() {
 
           if (msg.isInquirySummary) {
             content = `
-              <div class="max-w-md bg-primary text-white p-4 rounded-3xl rounded-tr-xs shadow-sm space-y-2 text-xs font-medium leading-relaxed">
-                <div class="font-bold border-b border-white/20 pb-1.5 flex items-center gap-1.5">
+              <div class="max-w-md bg-[#0e121c] border border-[#C5A059]/40 text-white p-4 rounded-3xl rounded-tr-xs shadow-xl space-y-2 text-xs font-medium leading-relaxed text-right">
+                <div class="font-bold border-b border-[#C5A059]/30 pb-1.5 flex items-center gap-1.5 text-[#C5A059]">
                   <i data-lucide="send" class="w-3.5 h-3.5"></i>
                   <span>خلاصه استعلام قیمت ارسال شده</span>
                 </div>
-                <div class="whitespace-pre-line">${msg.text}</div>
-                <span class="block text-[10px] text-emerald-200 text-left dir-ltr mt-1">${msg.time}</span>
+                <div class="whitespace-pre-line text-slate-200">${msg.text}</div>
+                <span class="block text-[10px] text-slate-400 text-left dir-ltr mt-1">${msg.time}</span>
               </div>
             `;
           } else if (msg.hasAppointmentCard && msg.appointmentDetails) {
             const appt = msg.appointmentDetails;
             content = `
-              <div class="max-w-md w-full bg-white border-2 border-emerald-500/60 p-4 rounded-3xl rounded-tl-xs shadow-lg space-y-3 text-xs font-bold text-graphite">
-                <div class="flex justify-between items-center border-b border-accent pb-2">
-                  <div class="flex items-center gap-1.5 text-emerald-800 font-black">
-                    <i data-lucide="calendar-check" class="w-4.5 h-4.5 text-emerald-600"></i>
+              <div class="max-w-md w-full bg-[#0e121c] border-2 border-emerald-500/60 p-4 rounded-3xl rounded-tl-xs shadow-2xl space-y-3 text-xs font-bold text-white text-right">
+                <div class="flex justify-between items-center border-b border-[#C5A059]/30 pb-2">
+                  <div class="flex items-center gap-1.5 text-emerald-400 font-black">
+                    <i data-lucide="calendar-check" class="w-4.5 h-4.5 text-emerald-400"></i>
                     <span>${appt.title || 'کارت تایید وقت بازدید و مشاوره حضوری'}</span>
                   </div>
-                  <span class="bg-emerald-100 text-emerald-800 text-[10px] font-bold px-2.5 py-0.5 rounded-full">وقت رزرو شد</span>
+                  <span class="bg-emerald-950 text-emerald-300 border border-emerald-800/50 text-[10px] font-bold px-2.5 py-0.5 rounded-full">وقت رزرو شد</span>
                 </div>
 
-                <div class="space-y-2 bg-emerald-50/70 p-3 rounded-2xl border border-emerald-200/80">
+                <div class="space-y-2 bg-[#141A28] p-3 rounded-2xl border border-emerald-500/30">
                   <div class="flex justify-between text-xs">
-                    <span class="text-secondary font-medium">📅 تاریخ بازدید:</span>
-                    <span class="font-black text-graphite">${appt.date}</span>
+                    <span class="text-slate-400 font-medium">📅 تاریخ بازدید:</span>
+                    <span class="font-black text-[#F7F5F0]">${appt.date}</span>
                   </div>
                   <div class="flex justify-between text-xs">
-                    <span class="text-secondary font-medium">⏰ ساعت:</span>
-                    <span class="font-black text-graphite">${appt.time}</span>
+                    <span class="text-slate-400 font-medium">⏰ ساعت:</span>
+                    <span class="font-black text-[#F7F5F0]">${appt.time}</span>
                   </div>
                   <div class="flex justify-between text-xs">
-                    <span class="text-secondary font-medium">👤 مسئول هماهنگی:</span>
-                    <span class="font-bold text-graphite">${appt.contactPerson || 'مدیریت تشریفات'}</span>
+                    <span class="text-slate-400 font-medium">👤 مسئول هماهنگی:</span>
+                    <span class="font-bold text-[#F7F5F0]">${appt.contactPerson || 'مدیریت تشریفات'}</span>
                   </div>
-                  <div class="pt-1.5 border-t border-emerald-200/60 text-[11px]">
-                    <span class="text-secondary font-medium block">📍 آدرس دقیق:</span>
-                    <span class="font-bold text-graphite leading-relaxed block mt-0.5">${appt.address}</span>
+                  <div class="pt-1.5 border-t border-slate-700 text-[11px]">
+                    <span class="text-slate-400 font-medium block">📍 آدرس دقیق:</span>
+                    <span class="font-bold text-[#F7F5F0] leading-relaxed block mt-0.5">${appt.address}</span>
                   </div>
                 </div>
 
-                <button onclick="confirmAppointmentScheduleCard('${msg.id}')" class="w-full bg-emerald-600 hover:bg-emerald-700 text-white font-bold py-2.5 rounded-xl text-xs shadow-xs transition-colors flex items-center justify-center gap-1.5 cursor-pointer">
+                <button onclick="confirmAppointmentScheduleCard('${msg.id}')" class="w-full bg-emerald-600 hover:bg-emerald-700 text-white font-bold py-2.5 rounded-xl text-xs shadow-md transition-colors flex items-center justify-center gap-1.5 cursor-pointer">
                   <i data-lucide="check-circle" class="w-4 h-4"></i>
                   <span>تایید و ثبت در یادآور من</span>
                 </button>
@@ -11262,84 +11262,84 @@ window.shareReceiptWhatsApp = function() {
             `;
           } else if (msg.hasQuoteCard && msg.quoteDetails) {
             const q = msg.quoteDetails;
-            let statusBadge = `<span class="bg-amber-100 text-amber-800 border border-amber-200 text-[10px] font-bold px-2.5 py-0.5 rounded-full">در انتظار بررسی</span>`;
+            let statusBadge = `<span class="bg-amber-950 text-amber-300 border border-amber-800/50 text-[10px] font-bold px-2.5 py-0.5 rounded-full">در انتظار بررسی</span>`;
             if (q.status === 'accepted' || q.status === 'appointment_scheduled') {
-              statusBadge = `<span class="bg-emerald-100 text-emerald-800 border border-emerald-200 text-[10px] font-bold px-2.5 py-0.5 rounded-full">تایید اولیه و رزرو جلسه حضوری</span>`;
+              statusBadge = `<span class="bg-emerald-950 text-emerald-300 border border-emerald-800/50 text-[10px] font-bold px-2.5 py-0.5 rounded-full">تایید اولیه و رزرو جلسه حضوری</span>`;
             } else if (q.status === 'finalized_in_person') {
-              statusBadge = `<span class="bg-purple-100 text-purple-800 border border-purple-200 text-[10px] font-bold px-2.5 py-0.5 rounded-full">نهایی‌شده حضوری</span>`;
+              statusBadge = `<span class="bg-purple-950 text-purple-300 border border-purple-800/50 text-[10px] font-bold px-2.5 py-0.5 rounded-full">نهایی‌شده حضوری</span>`;
             } else if (q.status === 'revision_requested') {
-              statusBadge = `<span class="bg-rose-100 text-rose-800 border border-rose-200 text-[10px] font-bold px-2.5 py-0.5 rounded-full">درخواست تغییرات</span>`;
+              statusBadge = `<span class="bg-rose-950 text-rose-300 border border-rose-800/50 text-[10px] font-bold px-2.5 py-0.5 rounded-full">درخواست تغییرات</span>`;
             }
 
             let lineItemsHtml = '';
             if (q.items && q.items.length > 0) {
               q.items.forEach(it => {
                 lineItemsHtml += `
-                  <div class="flex justify-between items-center text-[11px] border-b border-accent/40 pb-1">
-                    <span class="text-graphite font-medium">• ${it.name}</span>
-                    <span class="text-primary font-bold">${Number(it.price).toLocaleString('fa-IR')} تومان</span>
+                  <div class="flex justify-between items-center text-[11px] border-b border-slate-800 pb-1">
+                    <span class="text-slate-200 font-medium">• ${it.name}</span>
+                    <span class="text-[#C5A059] font-bold">${Number(it.price).toLocaleString('fa-IR')} تومان</span>
                   </div>
                 `;
               });
             } else if (q.servicesIncluded) {
               q.servicesIncluded.forEach(s => {
-                lineItemsHtml += `<div class="text-[11px] font-medium text-graphite">• ${s}</div>`;
+                lineItemsHtml += `<div class="text-[11px] font-medium text-slate-200">• ${s}</div>`;
               });
             }
 
             content = `
-              <div class="max-w-md w-full bg-white border-2 border-primary/40 p-4 rounded-3xl rounded-tl-xs shadow-lg space-y-3.5 text-xs font-bold text-graphite">
-                <div class="flex justify-between items-center border-b border-accent pb-2">
-                  <div class="flex items-center gap-1.5 text-primary">
+              <div class="max-w-md w-full bg-[#0e121c] border-2 border-[#C5A059]/60 p-4 rounded-3xl rounded-tl-xs shadow-2xl space-y-3.5 text-xs font-bold text-white text-right">
+                <div class="flex justify-between items-center border-b border-[#C5A059]/30 pb-2">
+                  <div class="flex items-center gap-1.5 text-[#C5A059]">
                     <i data-lucide="file-check-2" class="w-4 h-4"></i>
                     <span class="font-black">${q.title}</span>
                   </div>
                   ${statusBadge}
                 </div>
 
-                <div class="grid grid-cols-2 gap-2 text-[10px] bg-bgCustom p-2 rounded-xl border border-accent">
+                <div class="grid grid-cols-2 gap-2 text-[10px] bg-[#141A28] p-2 rounded-xl border border-[#C5A059]/30">
                   <div>
-                    <span class="text-secondary block">شماره پیش‌فاکتور:</span>
-                    <span class="font-mono text-graphite font-bold">${q.invoiceNumber || 'INV-1403-8821'}</span>
+                    <span class="text-slate-400 block">شماره پیش‌فاکتور:</span>
+                    <span class="font-mono text-[#F7F5F0] font-bold">${q.invoiceNumber || 'INV-1403-8821'}</span>
                   </div>
                   <div>
-                    <span class="text-secondary block">اعتبار تا:</span>
-                    <span class="text-rose-600 font-bold">${q.validityDays || 7} روز آینده</span>
+                    <span class="text-slate-400 block">اعتبار تا:</span>
+                    <span class="text-rose-400 font-bold">${q.validityDays || 7} روز آینده</span>
                   </div>
                 </div>
 
                 <div class="space-y-1.5">
-                  <span class="text-secondary text-[11px] block">ریز خدمات و برآورد اولیه:</span>
+                  <span class="text-slate-400 text-[11px] block">ریز خدمات و برآورد اولیه:</span>
                   <div class="space-y-1">
                     ${lineItemsHtml}
                   </div>
                 </div>
 
-                <div class="p-3 bg-emerald-50 rounded-xl border border-emerald-200 space-y-1.5">
+                <div class="p-3 bg-[#141A28] rounded-xl border border-emerald-500/40 space-y-1.5">
                   <div class="flex justify-between text-xs">
-                    <span class="text-secondary">برآورد کل هزینه:</span>
-                    <span class="font-black text-graphite">${q.amount}</span>
+                    <span class="text-slate-300">برآورد کل هزینه:</span>
+                    <span class="font-black text-[#C5A059]">${q.amount}</span>
                   </div>
                 </div>
 
                 <div class="flex flex-col gap-2 pt-1">
-                  <button onclick="openPreInvoicePrintModal()" class="w-full bg-[#1B3B2B] hover:bg-emerald-900 text-[#D4AF37] border border-[#D4AF37]/40 py-2 rounded-xl text-xs font-extrabold transition-all flex items-center justify-center gap-1.5 shadow-2xs cursor-pointer">
-                    <i data-lucide="printer" class="w-3.5 h-3.5 text-[#D4AF37]"></i>
+                  <button onclick="openPreInvoicePrintModal()" class="w-full bg-[#C5A059] hover:bg-[#D4AF37] text-[#07090E] font-black py-2 rounded-xl text-xs transition-all flex items-center justify-center gap-1.5 shadow-md cursor-pointer">
+                    <i data-lucide="printer" class="w-3.5 h-3.5"></i>
                     <span>مشاهده و چاپ پیش‌فاکتور رسمی</span>
                   </button>
                   <div class="flex gap-2">
-                    <button onclick="openAppointmentModal('${activeThread.id}', '${msg.id}')" class="flex-1 bg-primary hover:bg-emerald-900 text-white py-2 rounded-xl text-xs font-bold transition-all shadow-xs flex items-center justify-center gap-1 cursor-pointer">
-                      <i data-lucide="calendar" class="w-3.5 h-3.5"></i>
+                    <button onclick="openAppointmentModal('${activeThread.id}', '${msg.id}')" class="flex-1 bg-[#141A28] hover:bg-[#1E293B] text-white border border-[#C5A059]/40 py-2 rounded-xl text-xs font-bold transition-all shadow-sm flex items-center justify-center gap-1 cursor-pointer">
+                      <i data-lucide="calendar" class="w-3.5 h-3.5 text-[#C5A059]"></i>
                       <span>هماهنگی وقت بازدید</span>
                     </button>
-                    <button onclick="openRevisionModal('${activeThread.id}', '${msg.id}')" class="bg-amber-50 hover:bg-amber-100 text-amber-800 border border-amber-200 px-3 py-2 rounded-xl text-xs font-bold transition-all flex items-center gap-1 cursor-pointer">
+                    <button onclick="openRevisionModal('${activeThread.id}', '${msg.id}')" class="bg-[#141A28] hover:bg-[#1E293B] text-amber-300 border border-amber-500/40 px-3 py-2 rounded-xl text-xs font-bold transition-all flex items-center gap-1 cursor-pointer">
                       <i data-lucide="edit-3" class="w-3.5 h-3.5"></i>
                       <span>تغییرات</span>
                     </button>
                   </div>
                 </div>
 
-                <div class="flex justify-between items-center text-[10px] text-secondary border-t border-accent/60 pt-2">
+                <div class="flex justify-between items-center text-[10px] text-slate-400 border-t border-slate-800 pt-2">
                   <span>این برآورد صرفاً جهت اطلاع است و هیچ‌گونه الزام یا پرداخت آنلاین ندارد.</span>
                   <span class="font-mono dir-ltr">${msg.time}</span>
                 </div>
@@ -11621,7 +11621,18 @@ window.shareReceiptWhatsApp = function() {
       const text = input ? input.value.trim() : '';
       if (!text) return;
 
-      const activeThread = chatState.threads.find(t => t.id === chatState.activeThreadId);
+      sendChatMessageText(text);
+      if (input) input.value = '';
+    }
+
+    function sendChatMessageQuickAction(text) {
+      sendChatMessageText(text);
+    }
+
+    function sendChatMessageText(text) {
+      if (!text) return;
+
+      const activeThread = chatState.threads.find(t => t.id === chatState.activeThreadId) || chatState.threads[0];
       if (!activeThread) return;
 
       const timeStr = new Date().toLocaleTimeString('fa-IR', { hour: '2-digit', minute: '2-digit' });
@@ -11637,7 +11648,6 @@ window.shareReceiptWhatsApp = function() {
       activeThread.lastMessage = text;
       activeThread.lastTime = timeStr;
 
-      input.value = '';
       renderChatActiveThread();
       renderChatThreadsList();
 
@@ -17544,6 +17554,12 @@ window.setPriceFilter = function(tier) {
   }
 };
 
+
+window.sendChatMessageQuickAction = function(text) {
+  if (typeof sendChatMessageQuickAction === 'function') {
+    sendChatMessageQuickAction(text);
+  }
+};
 
 /* Direct Hover Video Card Listeners */
 window.initCardVideoHoverListeners = function() {
