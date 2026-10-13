@@ -5080,47 +5080,47 @@ if (document.readyState === "loading") {
         if (!vendor) return;
 
         let statusText = "پیش‌فاکتور دریافت شد";
-        let statusBadgeClass = "bg-blue-100 text-blue-800 border-blue-200";
+        let statusBadgeClass = "bg-blue-950/80 text-blue-300 border-blue-500/40";
 
         if (t.vendorStatus === 'deposit_paid') {
           statusText = "بیعانه پرداخت شد";
-          statusBadgeClass = "bg-amber-100 text-amber-800 border-amber-200";
+          statusBadgeClass = "bg-amber-950/80 text-[#C5A059] border-[#C5A059]/40";
         } else if (t.vendorStatus === 'finalized') {
           statusText = "نهایی و رزرو شد";
-          statusBadgeClass = "bg-emerald-100 text-emerald-800 border-emerald-200";
+          statusBadgeClass = "bg-emerald-950/80 text-emerald-300 border-emerald-500/40";
         }
 
         const card = document.createElement('div');
-        card.className = "bg-bgCustom border border-accent rounded-2xl overflow-hidden shadow-xs space-y-3 flex flex-col justify-between p-4";
+        card.className = "bg-[#141A28] border border-[#C5A059]/30 hover:border-[#C5A059]/60 rounded-2xl overflow-hidden shadow-lg space-y-3 flex flex-col justify-between p-4 transition-all text-white";
         card.innerHTML = `
           <div class="space-y-3">
             <div class="flex items-center gap-3">
-              <div class="w-14 h-14 rounded-2xl overflow-hidden border border-accent shrink-0">
+              <div class="w-14 h-14 rounded-2xl overflow-hidden border border-[#C5A059]/40 shrink-0 shadow-md">
                 <img src="${vendor.image}" alt="${vendor.name}" class="w-full h-full object-cover">
               </div>
               <div class="space-y-1">
-                <h4 class="text-sm font-bold text-graphite">${vendor.name}</h4>
-                <p class="text-xs text-secondary font-medium">${vendor.category}</p>
+                <h4 class="text-sm font-bold text-[#F7F5F0]">${vendor.name}</h4>
+                <p class="text-xs text-slate-300 font-medium">${vendor.category}</p>
                 <span class="inline-block px-2.5 py-0.5 rounded-full text-[10px] font-bold border ${statusBadgeClass}">
                   ${statusText}
                 </span>
               </div>
             </div>
 
-            <div class="p-3 bg-white rounded-xl border border-accent/60 space-y-1 text-xs">
-              <div class="flex justify-between items-center text-graphite">
-                <span class="text-secondary font-medium">اقدام متصل:</span>
-                <span class="font-bold text-primary truncate max-w-[160px]">${t.title}</span>
+            <div class="p-3 bg-[#07090E] rounded-xl border border-[#C5A059]/20 space-y-1 text-xs">
+              <div class="flex justify-between items-center text-[#F7F5F0]">
+                <span class="text-slate-400 font-medium">اقدام متصل:</span>
+                <span class="font-bold text-[#C5A059] truncate max-w-[160px]">${t.title}</span>
               </div>
-              <div class="flex justify-between items-center text-graphite">
-                <span class="text-secondary font-medium">حدود قیمت:</span>
-                <span class="font-bold">${vendor.priceRange}</span>
+              <div class="flex justify-between items-center text-[#F7F5F0]">
+                <span class="text-slate-400 font-medium">حدود قیمت:</span>
+                <span class="font-bold text-slate-200">${vendor.priceRange}</span>
               </div>
             </div>
           </div>
 
-          <div class="pt-2 border-t border-accent/60 flex items-center justify-between gap-2">
-            <button onclick="switchTab('vendor-profile')" class="flex-1 bg-white border border-accent hover:border-primary text-graphite py-2 rounded-xl text-xs font-bold transition-colors text-center">
+          <div class="pt-2 border-t border-[#C5A059]/20 flex items-center justify-between gap-2">
+            <button onclick="openVendorDetailModal(${vendor.id})" class="flex-1 bg-[#C5A059] hover:bg-[#D4AF37] text-[#07090E] py-2 rounded-xl text-xs font-black transition-all text-center cursor-pointer shadow-md">
               مشاهده پروفایل
             </button>
             <button onclick="openVendorSelectModal('${t.id}')" class="bg-primary hover:bg-emerald-900 text-white py-2 px-3 rounded-xl text-xs font-bold transition-colors">
@@ -13564,13 +13564,14 @@ window.renderMasterDaySchedule = function() {
 
   items.forEach((item, idx) => {
     const card = document.createElement('div');
-    card.className = "schedule-item-card rounded-2xl p-3.5 sm:p-4 text-white text-right flex flex-col sm:flex-row justify-between sm:items-center gap-2 shadow-md";
+      card.className = "relative bg-[#141A28] border border-[#C5A059]/30 hover:border-[#C5A059]/60 rounded-2xl p-4 text-white text-right flex flex-col sm:flex-row justify-between sm:items-center gap-3 shadow-lg transition-all";
     card.innerHTML = `
       <div class="flex items-center gap-3">
-        <span class="text-xs sm:text-sm font-black text-[#D4AF37] bg-[#1E293B] border border-[#D4AF37]/30 px-3 py-1 rounded-xl dir-ltr font-mono">${item.time}</span>
+          <div class="w-3 h-3 rounded-full bg-[#C5A059] shadow-[0_0_10px_#C5A059] shrink-0 -mr-6 border-2 border-[#07090E]"></div>
+          <span class="text-xs sm:text-sm font-black text-[#C5A059] bg-[#07090E] border border-[#C5A059]/40 px-3 py-1 rounded-xl dir-ltr font-mono shadow-sm">${item.time}</span>
         <div>
-          <h4 class="text-xs sm:text-sm font-black text-white">${item.title}</h4>
-          ${item.responsible ? `<span class="text-[11px] text-slate-400">👤 مسئول: <strong class="text-amber-200">${item.responsible}</strong></span>` : ''}
+            <h4 class="text-xs sm:text-sm font-black text-[#F7F5F0]">${item.title}</h4>
+            ${item.responsible ? `<span class="text-[11px] text-slate-300">👤 مسئول: <strong class="text-[#C5A059]">${item.responsible}</strong></span>` : ''}
         </div>
       </div>
 
@@ -13669,38 +13670,43 @@ window.renderBridalParty = function() {
 
   members.forEach((m, mIdx) => {
     const card = document.createElement('div');
-    card.className = "party-member-card rounded-2xl p-4 text-[#FFFFFF] text-right space-y-3 shadow-md";
+    card.className = "bg-[#141A28] border border-[#C5A059]/30 hover:border-[#C5A059]/60 rounded-2xl p-4 text-[#F7F5F0] text-right space-y-3 shadow-lg transition-all";
 
     const completedCount = (m.tasks || []).filter(t => t.completed).length;
     const totalCount = (m.tasks || []).length;
     const percent = totalCount > 0 ? Math.round((completedCount / totalCount) * 100) : 0;
 
     card.innerHTML = `
-      <div class="flex justify-between items-start border-b border-slate-800 pb-2">
-        <div>
-          <h4 class="text-sm font-black text-[#D4AF37]">${m.name}</h4>
-          <span class="text-[11px] font-bold text-slate-300">${m.role}</span>
+      <div class="flex justify-between items-center border-b border-[#C5A059]/20 pb-3">
+        <div class="flex items-center gap-3">
+          <div class="w-10 h-10 rounded-full bg-[#07090E] border-2 border-[#C5A059] flex items-center justify-center font-black text-sm text-[#C5A059] shadow-[0_0_10px_rgba(197,160,89,0.3)]">
+            ${m.name ? m.name.charAt(0) : '👑'}
+          </div>
+          <div>
+            <h4 class="text-sm font-black text-[#C5A059]">${m.name}</h4>
+            <span class="text-[11px] font-bold text-slate-300">${m.role}</span>
+          </div>
         </div>
-        <span class="text-xs font-black text-emerald-400 bg-emerald-950/80 border border-emerald-500/40 px-2.5 py-0.5 rounded-full">${percent}% پیشرفت</span>
+        <span class="text-xs font-black text-[#C5A059] bg-[#07090E] border border-[#C5A059]/40 px-2.5 py-1 rounded-full shadow-sm">${percent}% پیشرفت</span>
       </div>
 
       <!-- Tasks List -->
       <div class="space-y-1.5">
-        <span class="text-[11px] font-black text-slate-400 block">لیست وظایف محوله:</span>
+        <span class="text-[11px] font-black text-slate-300 block">لیست وظایف محوله:</span>
         ${(m.tasks && m.tasks.length) ? m.tasks.map((t, tIdx) => `
-          <div class="flex items-center justify-between bg-[#0F172A] p-2 rounded-xl border border-slate-800 text-xs">
+          <div class="flex items-center justify-between bg-[#07090E] p-2.5 rounded-xl border border-[#C5A059]/20 text-xs">
             <label class="flex items-center gap-2 cursor-pointer select-none">
-              <input type="checkbox" ${t.completed ? 'checked' : ''} onchange="togglePartyTaskComplete(${mIdx}, ${tIdx})" class="w-4 h-4 accent-[#D4AF37] cursor-pointer">
-              <span class="${t.completed ? 'line-through text-slate-500' : 'text-slate-200 font-medium'}">${t.text}</span>
+              <input type="checkbox" ${t.completed ? 'checked' : ''} onchange="togglePartyTaskComplete(${mIdx}, ${tIdx})" class="planner-checkbox">
+              <span class="${t.completed ? 'line-through text-slate-500' : 'text-[#F7F5F0] font-medium'}">${t.text}</span>
             </label>
           </div>
-        `).join('') : '<span class="text-xs text-slate-500">هیچ وظیفه‌ای تعریف نشده است.</span>'}
+        `).join('') : '<span class="text-xs text-slate-400">هیچ وظیفه‌ای تعریف نشده است.</span>'}
       </div>
 
       <!-- Assign New Task Input -->
-      <div class="flex gap-2 pt-2 border-t border-slate-800/80">
-        <input type="text" id="party-task-input-${mIdx}" placeholder="افزودن وظیفه جدید..." class="flex-1 bg-[#0F172A] border border-slate-700 text-xs text-white rounded-xl px-3 py-1.5 focus:outline-none focus:border-[#D4AF37]">
-        <button type="button" onclick="assignPartyTask(${mIdx})" class="bg-[#D4AF37] text-[#0F251A] text-xs font-black px-3 py-1.5 rounded-xl hover:bg-amber-500 transition-all cursor-pointer">
+      <div class="flex gap-2 pt-2 border-t border-[#C5A059]/20">
+        <input type="text" id="party-task-input-${mIdx}" placeholder="افزودن وظیفه جدید..." class="flex-1 bg-[#07090E] border border-[#C5A059]/30 text-xs text-white rounded-xl px-3 py-1.5 focus:outline-none focus:border-[#C5A059]">
+        <button type="button" onclick="assignPartyTask(${mIdx})" class="bg-[#C5A059] text-[#07090E] text-xs font-black px-3 py-1.5 rounded-xl hover:bg-[#D4AF37] transition-all cursor-pointer">
           ثبت
         </button>
       </div>
