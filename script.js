@@ -12927,13 +12927,39 @@ window.openVendorChatFromModal = function() {
   if (typeof showToast === 'function') showToast('💬 چت مستقیم با تامین‌کننده فعال شد', 'info');
 };
 
+window.openQuoteModal = function openQuoteModal(vendorId, vendorName) {
+  const modal = document.getElementById('quote-modal');
+  if (modal) {
+    modal.classList.remove('hidden');
+    if (vendorName) {
+      const titleEl = document.getElementById('quote-vendor-title');
+      if (titleEl) titleEl.innerText = `✨ استعلام قیمت و رزرو VIP از ${vendorName}`;
+    }
+  } else if (typeof openInquiryModal === 'function') {
+    openInquiryModal(vendorId || 1, vendorName || 'تامین‌کننده');
+  }
+};
+
+window.closeQuoteModal = function closeQuoteModal() {
+  const modal = document.getElementById('quote-modal');
+  if (modal) modal.classList.add('hidden');
+  if (typeof closeInquiryModal === 'function') closeInquiryModal();
+};
+
+window.handleQuoteSubmit = function handleQuoteSubmit(e) {
+  if (e) e.preventDefault();
+  window.closeQuoteModal();
+  if (typeof showToast === 'function') {
+    showToast('✨ درخواست استعلام قیمت شما با موفقیت ثبت شد و پاسخ به زودی ارسال می‌شود.', 'success');
+  }
+};
+
 window.openInquireFromVendorModal = function() {
   const v = (typeof currentModalVendor !== 'undefined' && currentModalVendor) ? currentModalVendor : null;
-  if (typeof closeVendorDetailModal === 'function') closeVendorDetailModal();
-  if (v && typeof openInquiryModal === 'function') {
-    openInquiryModal(v.id, v.name);
-  } else if (typeof openInquiryModal === 'function') {
-    openInquiryModal(1, 'تامین‌کننده');
+  if (v) {
+    window.openQuoteModal(v.id, v.name);
+  } else {
+    window.openQuoteModal(1, 'هتل باغ مشیرالممالک یزد');
   }
 };
 
