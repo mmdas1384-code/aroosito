@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Aroosi No — شو روم اختصاصی تامین‌کننده</title>
+  <title>Aroosi No — شو روم اختصاصی تامین‌کننده VIP</title>
 
   <!-- Vazirmatn Persian Font -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -21,9 +21,8 @@
   <link rel="stylesheet" href="directory.css">
 </head>
 <body class="bg-[#07090E] text-[#F7F5F0] font-['Vazirmatn'] antialiased min-h-screen flex flex-col pb-24">
-  <div style="background:red; color:white; padding:10px; text-align:center; font-weight:bold; z-index:9999;">TEST OVERWRITE ACTIVE — AROOSI NO VIP SHOWROOM</div>
 
-  <!-- TOP NAVIGATION HEADER WITH CLEARANCE -->
+  <!-- TOP NAVIGATION HEADER -->
   <header class="sticky top-0 z-50 bg-[#0b0f19]/90 backdrop-blur-xl border-b border-[#D4AF37]/35 shadow-2xl">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-3.5 flex items-center justify-between">
       <a href="directory.html" class="flex items-center gap-2 text-xs font-bold text-slate-300 hover:text-[#D4AF37] transition-colors">
@@ -39,64 +38,100 @@
     </div>
   </header>
 
-  <!-- MAIN STANDALONE FULL-WIDTH SHOWROOM CONTAINER (pt-10 / 2.5rem padding top) -->
-  <main class="flex-1 max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 pt-10 pb-20 space-y-8 text-right">
+  <!-- 1. FULL-WIDTH HERO COVER BANNER & FLOATING TITLE CARD OVERLAY -->
+  <section class="relative w-full h-[380px] sm:h-[460px] overflow-hidden bg-slate-950">
+    <img id="vdm-cover-hero" src="https://images.unsplash.com/photo-1519167758481-83f550bb49b3?w=1600" class="w-full h-full object-cover object-center" alt="Cover Banner">
+    <div class="absolute inset-0 bg-gradient-to-t from-[#07090E] via-[#07090E]/60 to-transparent"></div>
 
-    <!-- 1. VENDOR HERO BRAND BANNER & QUICK ACTIONS -->
-    <div class="relative bg-[#0e121c]/95 backdrop-blur-2xl border border-[#C5A059]/50 rounded-3xl p-6 shadow-2xl overflow-hidden space-y-6">
-      <div class="flex flex-col md:flex-row items-center justify-between gap-6">
-        <div class="flex items-center gap-4">
-          <div class="w-20 h-20 sm:w-24 sm:h-24 rounded-2xl border-2 border-[#D4AF37] overflow-hidden bg-slate-900 shrink-0 shadow-xl">
-            <img id="vdm-avatar-img" src="https://images.unsplash.com/photo-1519167758481-83f550bb49b3?w=300" class="w-full h-full object-cover" alt="لوگوی تامین‌کننده">
-          </div>
-          <div class="space-y-2">
-            <h1 id="vdm-title-page" class="text-xl sm:text-2xl font-black text-[#F7F5F0]">هتل باغ و تشریفات مشیرالممالک یزد</h1>
-
-            <!-- Key Specs Pills Upfront -->
-            <div class="flex items-center gap-2 flex-wrap text-xs font-bold">
-              <span class="bg-[#141A28] text-slate-200 border border-slate-700 px-3 py-1 rounded-full">
-                📍 صفائیه یزد
-              </span>
-              <span class="bg-[#141A28] text-amber-200 border border-[#D4AF37]/40 px-3 py-1 rounded-full">
-                👥 ظرفیت تا ۶۰۰ نفر
-              </span>
-              <span class="bg-[#141A28] text-amber-300 border border-amber-500/40 px-3 py-1 rounded-full font-black">
-                ⭐ ۴.۹ (۳۸ نظر ثبت‌شده)
-              </span>
-            </div>
+    <!-- Floating Title Card overlay -->
+    <div class="absolute bottom-6 left-0 right-0 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="bg-[#0e121c]/90 backdrop-blur-xl border border-[#C5A059]/40 p-6 sm:p-8 rounded-3xl shadow-2xl space-y-3 text-right">
+        <div class="flex items-start justify-between flex-wrap gap-3">
+          <div>
+            <span class="text-xs font-black text-amber-200 bg-[#D4AF37]/15 px-3 py-1 rounded-full border border-[#D4AF37]/30 inline-block mb-1">⭐ مجموعه منتخب VIP</span>
+            <h1 id="vdm-title-page" class="text-2xl sm:text-4xl font-black text-[#C5A059] leading-tight">هتل باغ و تشریفات مشیرالممالک یزد</h1>
+            <p id="vdm-subtitle-page" class="text-xs sm:text-sm text-slate-300 font-bold mt-1">تالار و باغ تالار عروسی • صفائیه یزد</p>
           </div>
         </div>
 
-        <div class="flex items-center gap-2 shrink-0 flex-wrap">
-          <button type="button" onclick="open360TourModal(1)" class="bg-[#141A28] hover:bg-[#1E293B] text-amber-200 border border-[#C5A059]/50 font-bold px-4 py-2.5 rounded-2xl text-xs transition-all flex items-center gap-1.5 cursor-pointer shadow-md hover:scale-105">
-            <span>🎥 تور ویدئویی / نمونه‌کارها</span>
-          </button>
-          <button type="button" onclick="openInquiryModal(1)" class="gold-shimmer-btn text-[#0F251A] font-black px-5 py-2.5 rounded-2xl text-xs shadow-lg transition-all flex items-center gap-1.5 cursor-pointer hover:scale-105">
-            <i data-lucide="sparkles" class="w-4 h-4 text-[#0F251A]"></i>
-            <span>استعلام قیمت آنلاین</span>
-          </button>
+        <!-- Explicit Full Address Banner -->
+        <div class="p-3 bg-[#141A28] border border-[#C5A059]/30 rounded-2xl text-xs sm:text-sm text-slate-200 font-medium flex items-center gap-2 shadow-inner">
+          <span class="text-[#D4AF37] font-black shrink-0">📍 آدرس دقیق:</span>
+          <span id="vdm-full-address-explicit" class="text-slate-100 font-bold">یزد، صفائیه، خیابان تیمسار فلاحی، هتل باغ مشیرالممالک</span>
+        </div>
+
+        <!-- Meta Stats Row -->
+        <div class="flex flex-wrap items-center gap-4 text-xs sm:text-sm text-slate-200 pt-1 font-bold">
+          <span class="text-amber-300">⭐️ 4.9 (۳۸ نظر)</span>
+          <span class="text-slate-600">•</span>
+          <span>👥 ظرفیت تا ۶۰۰ نفر</span>
+          <span class="text-slate-600">•</span>
+          <span class="text-[#D4AF37]">✨ پروانه کسب تاییدشده</span>
         </div>
       </div>
     </div>
+  </section>
 
-    <!-- 2. DIRECTLY VISIBLE HERO PORTFOLIO GALLERY (UPFRONT AT TOP) -->
-    <div class="space-y-3">
-      <h3 class="text-sm font-black text-[#D4AF37] flex items-center gap-2">
-        <i data-lucide="image" class="w-4 h-4 text-[#D4AF37]"></i>
-        <span>گالری تصاویر و نمونه‌کارهای زنده</span>
-      </h3>
-      <div class="grid grid-cols-1 sm:grid-cols-3 gap-4 rounded-3xl overflow-hidden border border-[#C5A059]/30 p-2 bg-[#0e121c]">
-        <div class="h-56 rounded-2xl overflow-hidden cursor-pointer group relative" onclick="openLightbox('https://images.unsplash.com/photo-1519167758481-83f550bb49b3?w=1200')">
-          <img src="https://images.unsplash.com/photo-1519167758481-83f550bb49b3?w=800" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500" alt="نمونه کار ۱">
-          <div class="absolute inset-0 bg-black/20 group-hover:bg-black/0 transition-colors"></div>
+  <!-- MAIN STANDALONE FULL-WIDTH SHOWROOM CONTAINER -->
+  <main class="flex-1 max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 pt-8 pb-20 space-y-8 text-right">
+
+    <!-- 2. CINEMATIC BENTO GRID GALLERY SHOWCASE -->
+    <div class="space-y-4">
+      <div class="flex items-center justify-between flex-wrap gap-2">
+        <h3 class="text-base sm:text-lg font-black text-[#D4AF37] flex items-center gap-2">
+          <i data-lucide="film" class="w-5 h-5 text-[#D4AF37]"></i>
+          <span>گالری سینمایی، تیزرها و نمونه‌کارهای زنده</span>
+        </h3>
+        <div class="flex items-center gap-2">
+          <button type="button" onclick="open360TourModal(1)" class="px-4 py-2 rounded-xl text-xs font-bold bg-[#141A28] hover:bg-[#1E293B] text-amber-200 border border-[#C5A059]/40 hover:border-[#D4AF37] transition-all cursor-pointer flex items-center gap-1.5 shadow-md hover:scale-105">
+            <i data-lucide="compass" class="w-4 h-4 text-[#D4AF37]"></i>
+            <span>🎥 تور ۳۶۰° پانوراما</span>
+          </button>
+          <button type="button" onclick="openStoryLightbox(1)" class="px-4 py-2 rounded-xl text-xs font-bold bg-[#141A28] hover:bg-[#1E293B] text-amber-200 border border-[#C5A059]/40 hover:border-[#D4AF37] transition-all cursor-pointer flex items-center gap-1.5 shadow-md hover:scale-105">
+            <i data-lucide="play-circle" class="w-4 h-4 text-[#D4AF37]"></i>
+            <span>🎬 تیزر ویدیویی</span>
+          </button>
         </div>
-        <div class="h-56 rounded-2xl overflow-hidden cursor-pointer group relative" onclick="openLightbox('https://images.unsplash.com/photo-1519741497674-611481863552?w=1200')">
-          <img src="https://images.unsplash.com/photo-1519741497674-611481863552?w=800" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500" alt="نمونه کار ۲">
-          <div class="absolute inset-0 bg-black/20 group-hover:bg-black/0 transition-colors"></div>
+      </div>
+
+      <!-- Asymmetrical High-End Bento Grid -->
+      <div class="grid grid-cols-1 sm:grid-cols-3 md:grid-cols-4 gap-4 rounded-3xl overflow-hidden p-3 shadow-2xl backdrop-blur-xl" style="background: rgba(7, 9, 14, 0.8); border: 1px solid rgba(197, 160, 89, 0.25);">
+        <!-- Tile 1: Large Hero Tile (Col span 2) -->
+        <div class="sm:col-span-2 h-64 sm:h-80 rounded-2xl overflow-hidden cursor-pointer group relative" style="background: rgba(7, 9, 14, 0.8); border: 1px solid rgba(197, 160, 89, 0.2);" onclick="openLightbox('https://images.unsplash.com/photo-1519167758481-83f550bb49b3?w=1200')">
+          <img src="https://images.unsplash.com/photo-1519167758481-83f550bb49b3?w=1000" class="w-full h-full object-cover group-hover:scale-105" style="transition: transform 0.5s ease;" alt="نمونه کار اصلی">
+          <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent opacity-80 group-hover:opacity-60 transition-opacity"></div>
+          <div class="absolute bottom-4 right-4 text-right space-y-1">
+            <span class="bg-[#D4AF37] text-[#0F251A] text-[9.5px] font-black px-2.5 py-0.5 rounded-full shadow-md inline-block">⭐ تالار زمرد</span>
+            <h4 class="text-sm font-black text-white">بافت تشریفاتی هتل موزه باغ مشیرالممالک</h4>
+          </div>
+          <span class="absolute top-3 left-3 bg-black/70 backdrop-blur-md text-amber-300 border border-[#D4AF37]/40 text-[10px] font-bold px-2.5 py-1 rounded-xl flex items-center gap-1">
+            <i data-lucide="maximize-2" class="w-3 h-3 text-[#D4AF37]"></i>
+            <span>بزرگ‌نمایی</span>
+          </span>
         </div>
-        <div class="h-56 rounded-2xl overflow-hidden cursor-pointer group relative" onclick="openLightbox('https://images.unsplash.com/photo-1511285560929-80b456fea0bc?w=1200')">
-          <img src="https://images.unsplash.com/photo-1511285560929-80b456fea0bc?w=800" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500" alt="نمونه کار ۳">
-          <div class="absolute inset-0 bg-black/20 group-hover:bg-black/0 transition-colors"></div>
+
+        <!-- Tile 2 -->
+        <div class="h-64 sm:h-80 rounded-2xl overflow-hidden cursor-pointer group relative" style="background: rgba(7, 9, 14, 0.8); border: 1px solid rgba(197, 160, 89, 0.2);" onclick="openLightbox('https://images.unsplash.com/photo-1519741497674-611481863552?w=1200')">
+          <img src="https://images.unsplash.com/photo-1519741497674-611481863552?w=800" class="w-full h-full object-cover group-hover:scale-105" style="transition: transform 0.5s ease;" alt="نمونه کار ۲">
+          <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent opacity-80 group-hover:opacity-60 transition-opacity"></div>
+          <div class="absolute bottom-3 right-3 text-right">
+            <h4 class="text-xs font-black text-white">دیزاین و سفره عقد اسلیمی</h4>
+          </div>
+        </div>
+
+        <!-- Tile 3 with 360 Overlay Trigger -->
+        <div class="h-64 sm:h-80 rounded-2xl overflow-hidden cursor-pointer group relative" style="background: rgba(7, 9, 14, 0.8); border: 1px solid rgba(197, 160, 89, 0.2);" onclick="open360TourModal(1)">
+          <img src="https://images.unsplash.com/photo-1511285560929-80b456fea0bc?w=1200" class="w-full h-full object-cover group-hover:scale-105" style="transition: transform 0.5s ease;" alt="نمونه کار ۳">
+          <div class="absolute inset-0 bg-black/40 group-hover:bg-black/20 transition-colors flex flex-col justify-between p-3 text-right">
+            <span class="self-start bg-[#D4AF37] text-[#0F251A] text-[9.5px] font-black px-2.5 py-0.5 rounded-full shadow-md flex items-center gap-1">
+              <i data-lucide="compass" class="w-3 h-3"></i>
+              <span>تور ۳۶۰°</span>
+            </span>
+            <div>
+              <h4 class="text-xs font-black text-white">فضای باز & باغ ایرانی</h4>
+              <span class="text-[9.5px] text-amber-200 block">مشاهده تور مجازی ➔</span>
+            </div>
+          </div>
         </div>
       </div>
     </div>
@@ -117,102 +152,123 @@
       </a>
     </div>
 
-    <!-- TAB 1: OVERVIEW & SERVICES -->
+    <!-- TAB 1: ABOUT & AMENITIES -->
     <div id="section-services" class="bg-[#0e121c]/90 backdrop-blur-xl border border-[#C5A059]/30 rounded-3xl p-6 shadow-xl space-y-4">
-      <h3 class="text-base font-black text-[#D4AF37]">✨ درباره و امکانات تخصصی مجموعه</h3>
-      <p id="vdm-about-standalone" class="text-xs text-slate-300 leading-relaxed">
+      <h3 class="text-base sm:text-lg font-black text-[#D4AF37] flex items-center gap-2">
+        <i data-lucide="info" class="w-5 h-5 text-[#D4AF37]"></i>
+        <span>درباره و امکانات تخصصی مجموعه</span>
+      </h3>
+      <p id="vdm-about-standalone" class="text-xs sm:text-sm text-slate-300 leading-relaxed font-medium">
         هتل باغ مشیرالممالک یزد اولین هتل موزه باغ ایرانی با معماری اصیل یزدی، درختان کهنسال و جوی‌های جاری است که خدمات پذیرایی تشریفاتی مدرن را برای جشن‌های عقد و عروسی ارایه می‌دهد.
       </p>
 
-      <!-- Mini-Badge Tags -->
-      <div id="vdm-amenities-standalone" class="grid grid-cols-2 sm:grid-cols-3 gap-2.5 pt-2">
-        <div class="bg-[#141A28] border border-[#C5A059]/30 p-2.5 rounded-xl text-xs font-bold text-slate-200 flex items-center gap-2">
-          <span class="w-2 h-2 rounded-full bg-[#D4AF37]"></span>
+      <!-- Glassmorphic Amenities & Specs Grid -->
+      <div id="vdm-amenities-standalone" class="grid grid-cols-2 sm:grid-cols-3 gap-3 pt-2">
+        <div class="bg-[#141A28] border border-[#C5A059]/30 p-3 rounded-2xl text-xs font-bold text-slate-200 flex items-center gap-2 shadow-sm">
+          <span class="w-2.5 h-2.5 rounded-full bg-[#D4AF37] shrink-0"></span>
           <span>پارکینگ اختصاصی (۳۰۰ خودرو)</span>
         </div>
-        <div class="bg-[#141A28] border border-[#C5A059]/30 p-2.5 rounded-xl text-xs font-bold text-slate-200 flex items-center gap-2">
-          <span class="w-2 h-2 rounded-full bg-[#D4AF37]"></span>
+        <div class="bg-[#141A28] border border-[#C5A059]/30 p-3 rounded-2xl text-xs font-bold text-slate-200 flex items-center gap-2 shadow-sm">
+          <span class="w-2.5 h-2.5 rounded-full bg-[#D4AF37] shrink-0"></span>
           <span>سیستم صوتی و نورپردازی LED</span>
         </div>
-        <div class="bg-[#141A28] border border-[#C5A059]/30 p-2.5 rounded-xl text-xs font-bold text-slate-200 flex items-center gap-2">
-          <span class="w-2 h-2 rounded-full bg-[#D4AF37]"></span>
+        <div class="bg-[#141A28] border border-[#C5A059]/30 p-3 rounded-2xl text-xs font-bold text-slate-200 flex items-center gap-2 shadow-sm">
+          <span class="w-2.5 h-2.5 rounded-full bg-[#D4AF37] shrink-0"></span>
           <span>سفره عقد سنتی و مدرن</span>
+        </div>
+        <div class="bg-[#141A28] border border-[#C5A059]/30 p-3 rounded-2xl text-xs font-bold text-slate-200 flex items-center gap-2 shadow-sm">
+          <span class="w-2.5 h-2.5 rounded-full bg-[#D4AF37] shrink-0"></span>
+          <span>ژنراتور برق اضطراری</span>
+        </div>
+        <div class="bg-[#141A28] border border-[#C5A059]/30 p-3 rounded-2xl text-xs font-bold text-slate-200 flex items-center gap-2 shadow-sm">
+          <span class="w-2.5 h-2.5 rounded-full bg-[#D4AF37] shrink-0"></span>
+          <span>اتاق میکاپ و پرو عروس</span>
+        </div>
+        <div class="bg-[#141A28] border border-[#C5A059]/30 p-3 rounded-2xl text-xs font-bold text-slate-200 flex items-center gap-2 shadow-sm">
+          <span class="w-2.5 h-2.5 rounded-full bg-[#D4AF37] shrink-0"></span>
+          <span>کترینگ و سرو میوه و شیرینی</span>
         </div>
       </div>
     </div>
 
-    <!-- TAB 2: PACKAGES & PRICING (3 FROSTED GLASS CARDS) -->
+    <!-- TAB 2: PACKAGES & PRICING -->
     <div id="section-packages" class="space-y-4">
-      <h3 class="text-sm font-black text-[#D4AF37] flex items-center gap-2">
-        <i data-lucide="package" class="w-4 h-4 text-[#D4AF37]"></i>
+      <h3 class="text-base sm:text-lg font-black text-[#D4AF37] flex items-center gap-2">
+        <i data-lucide="package" class="w-5 h-5 text-[#D4AF37]"></i>
         <span>📋 پکیج‌های خدماتی و قیمت‌های شفاف</span>
       </h3>
       <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
         <!-- Package 1: Base -->
-        <div class="bg-[#0e121c]/90 backdrop-blur-xl border border-[#C5A059]/30 rounded-3xl p-5 space-y-4 text-right flex flex-col justify-between hover:border-[#D4AF37] transition-all">
+        <div class="bg-[#0e121c]/90 backdrop-blur-xl border border-[#C5A059]/30 rounded-3xl p-6 space-y-4 text-right flex flex-col justify-between hover:border-[#D4AF37] transition-all shadow-xl">
           <div class="space-y-3">
-            <span class="text-[10px] font-black text-amber-200 bg-[#D4AF37]/15 px-2.5 py-0.5 rounded-full border border-[#D4AF37]/30 inline-block">پکیج برنزی (پایه)</span>
-            <div class="text-sm font-black text-[#D4AF37] pt-2 border-t border-slate-800">۲۵,۰۰۰,۰۰۰ تومان</div>
-            <ul class="space-y-1.5 text-xs text-slate-300 font-medium">
-              <li class="flex items-center gap-1.5"><span class="text-[#D4AF37]">✓</span> ورودی تالار و سیستم صوتی</li>
-              <li class="flex items-center gap-1.5"><span class="text-[#D4AF37]">✓</span> منوی شام کباب و جوجه دیس‌پرس</li>
+            <span class="text-xs font-black text-amber-200 bg-[#D4AF37]/15 px-3 py-1 rounded-full border border-[#D4AF37]/30 inline-block">پکیج برنزی (پایه)</span>
+            <div class="text-base font-black text-[#D4AF37] pt-2 border-t border-slate-800">۲۵,۰۰۰,۰۰۰ تومان</div>
+            <ul class="space-y-2 text-xs text-slate-300 font-medium">
+              <li class="flex items-center gap-2"><span class="text-[#D4AF37] font-black">✓</span> ورودی تالار و سیستم صوتی</li>
+              <li class="flex items-center gap-2"><span class="text-[#D4AF37] font-black">✓</span> منوی شام کباب و جوجه دیس‌پرس</li>
+              <li class="flex items-center gap-2"><span class="text-[#D4AF37] font-black">✓</span> پذیرایی چای و نسکافه</li>
             </ul>
           </div>
-          <button type="button" onclick="openInquiryModal(1)" class="w-full bg-[#141A28] hover:bg-[#1E293B] text-amber-200 border border-[#D4AF37]/40 font-bold py-2 rounded-xl text-xs transition-all cursor-pointer">استعلام قیمت این پکیج ➔</button>
+          <button type="button" onclick="openQuoteModal(1, 'پکیج برنزی')" class="w-full bg-[#141A28] hover:bg-[#1E293B] text-amber-200 border border-[#D4AF37]/40 font-bold py-2.5 rounded-xl text-xs transition-all cursor-pointer shadow-md">استعلام قیمت این پکیج ➔</button>
         </div>
 
         <!-- Package 2: Standard (Recommended) -->
-        <div class="bg-[#0e121c]/90 backdrop-blur-xl border-2 border-[#D4AF37] rounded-3xl p-5 space-y-4 text-right flex flex-col justify-between shadow-[0_10px_30px_rgba(212,175,55,0.15)] relative">
-          <span class="absolute -top-3 right-5 bg-gradient-to-r from-[#D4AF37] to-[#F3E5AB] text-[#0F251A] text-[9.5px] font-black px-3 py-0.5 rounded-full shadow-md">⭐ پرطرفدارترین</span>
+        <div class="bg-[#0e121c]/90 backdrop-blur-xl border-2 border-[#D4AF37] rounded-3xl p-6 space-y-4 text-right flex flex-col justify-between shadow-[0_10px_35px_rgba(212,175,55,0.2)] relative">
+          <span class="absolute -top-3.5 right-6 bg-gradient-to-r from-[#D4AF37] to-[#F3E5AB] text-[#0F251A] text-xs font-black px-3.5 py-1 rounded-full shadow-lg">⭐ پرطرفدارترین</span>
           <div class="space-y-3">
-            <span class="text-[10px] font-black text-amber-200 bg-[#D4AF37]/15 px-2.5 py-0.5 rounded-full border border-[#D4AF37]/30 inline-block">پکیج نقره‌ای (VIP)</span>
-            <div class="text-sm font-black text-[#D4AF37] pt-2 border-t border-slate-800">۵۵,۰۰۰,۰۰۰ تومان</div>
-            <ul class="space-y-1.5 text-xs text-slate-300 font-medium">
-              <li class="flex items-center gap-1.5"><span class="text-[#D4AF37]">✓</span> منوی سلف‌سرویس ۵ مدل غذا</li>
-              <li class="flex items-center gap-1.5"><span class="text-[#D4AF37]">✓</span> سفره عقد مجلل با شمع‌آرایی</li>
+            <span class="text-xs font-black text-amber-200 bg-[#D4AF37]/20 px-3 py-1 rounded-full border border-[#D4AF37]/40 inline-block">پکیج نقره‌ای (VIP)</span>
+            <div class="text-base font-black text-[#D4AF37] pt-2 border-t border-slate-800">۵۵,۰۰۰,۰۰۰ تومان</div>
+            <ul class="space-y-2 text-xs text-slate-300 font-medium">
+              <li class="flex items-center gap-2"><span class="text-[#D4AF37] font-black">✓</span> منوی سلف‌سرویس ۵ مدل غذا</li>
+              <li class="flex items-center gap-2"><span class="text-[#D4AF37] font-black">✓</span> سفره عقد مجلل با شمع‌آرایی</li>
+              <li class="flex items-center gap-2"><span class="text-[#D4AF37] font-black">✓</span> نورپردازی حرفه‌ای LED</li>
             </ul>
           </div>
-          <button type="button" onclick="openInquiryModal(1)" class="w-full gold-shimmer-btn text-[#0F251A] font-black py-2.5 rounded-xl text-xs shadow-md transition-all cursor-pointer">استعلام قیمت این پکیج ➔</button>
+          <button type="button" onclick="openQuoteModal(1, 'پکیج نقره‌ای VIP')" class="w-full gold-shimmer-btn text-[#0F251A] font-black py-3 rounded-xl text-xs shadow-lg transition-all cursor-pointer">استعلام قیمت این پکیج ➔</button>
         </div>
 
         <!-- Package 3: VIP -->
-        <div class="bg-[#0e121c]/90 backdrop-blur-xl border border-[#C5A059]/30 rounded-3xl p-5 space-y-4 text-right flex flex-col justify-between hover:border-[#D4AF37] transition-all">
+        <div class="bg-[#0e121c]/90 backdrop-blur-xl border border-[#C5A059]/30 rounded-3xl p-6 space-y-4 text-right flex flex-col justify-between hover:border-[#D4AF37] transition-all shadow-xl">
           <div class="space-y-3">
-            <span class="text-[10px] font-black text-amber-300 bg-[#D4AF37]/15 px-2.5 py-0.5 rounded-full border border-[#D4AF37]/30 inline-block">👑 پکیج طلایی (Luxury)</span>
-            <div class="text-sm font-black text-[#D4AF37] pt-2 border-t border-slate-800">۱۱۰,۰۰۰,۰۰۰ تومان</div>
-            <ul class="space-y-1.5 text-xs text-slate-300 font-medium">
-              <li class="flex items-center gap-1.5"><span class="text-[#D4AF37]">✓</span> منوی باز بین‌المللی + بار نوشیدنی</li>
-              <li class="flex items-center gap-1.5"><span class="text-[#D4AF37]">✓</span> آتش‌بازی سرد ورودی و گل‌آرایی</li>
+            <span class="text-xs font-black text-amber-300 bg-[#D4AF37]/15 px-3 py-1 rounded-full border border-[#D4AF37]/30 inline-block">👑 پکیج طلایی (Luxury)</span>
+            <div class="text-base font-black text-[#D4AF37] pt-2 border-t border-slate-800">۱۱۰,۰۰۰,۰۰۰ تومان</div>
+            <ul class="space-y-2 text-xs text-slate-300 font-medium">
+              <li class="flex items-center gap-2"><span class="text-[#D4AF37] font-black">✓</span> منوی باز بین‌المللی + بار نوشیدنی</li>
+              <li class="flex items-center gap-2"><span class="text-[#D4AF37] font-black">✓</span> آتش‌بازی سرد ورودی و گل‌آرایی</li>
+              <li class="flex items-center gap-2"><span class="text-[#D4AF37] font-black">✓</span> اقامت سوئیت ماه عسل</li>
             </ul>
           </div>
-          <button type="button" onclick="openInquiryModal(1)" class="w-full bg-[#141A28] hover:bg-[#1E293B] text-amber-200 border border-[#D4AF37]/40 font-bold py-2 rounded-xl text-xs transition-all cursor-pointer">استعلام قیمت این پکیج ➔</button>
+          <button type="button" onclick="openQuoteModal(1, 'پکیج طلایی')" class="w-full bg-[#141A28] hover:bg-[#1E293B] text-amber-200 border border-[#D4AF37]/40 font-bold py-2.5 rounded-xl text-xs transition-all cursor-pointer shadow-md">استعلام قیمت این پکیج ➔</button>
         </div>
       </div>
     </div>
 
     <!-- TAB 3: SHAMSI CALENDAR -->
     <div id="section-calendar" class="bg-[#0e121c]/90 backdrop-blur-xl border border-[#C5A059]/40 rounded-3xl p-6 shadow-xl space-y-4">
-      <h3 class="text-sm font-black text-[#D4AF37]">📅 تقویم روزهای آزاد و وضعیت رزرو (شمسی)</h3>
+      <h3 class="text-base sm:text-lg font-black text-[#D4AF37] flex items-center gap-2">
+        <i data-lucide="calendar" class="w-5 h-5 text-[#D4AF37]"></i>
+        <span>📅 تقویم روزهای آزاد و وضعیت رزرو (شمسی)</span>
+      </h3>
       <div id="standalone-calendar-grid" class="grid grid-cols-7 gap-2 text-center text-xs font-bold pt-2">
         <!-- Rendered via JS -->
       </div>
     </div>
 
-    <!-- TAB 4: REVIEWS & DARK OBSIDIAN MAP -->
+    <!-- TAB 4: REVIEWS & MAP -->
     <div id="section-reviews-map" class="grid grid-cols-1 md:grid-cols-2 gap-6">
       <div class="bg-[#0e121c]/90 backdrop-blur-xl border border-[#C5A059]/40 rounded-3xl p-6 shadow-xl space-y-4">
-        <h3 class="text-sm font-black text-[#D4AF37]">💬 نظرات زوجین</h3>
+        <h3 class="text-base font-black text-[#D4AF37]">💬 نظرات زوجین</h3>
         <div class="space-y-3 text-xs text-slate-300">
-          <div class="bg-[#141A28] p-3 rounded-2xl border border-slate-800">
+          <div class="bg-[#141A28] p-4 rounded-2xl border border-slate-800 space-y-1">
             <span class="font-black text-amber-200 block">رضا و مریم ⭐ ۵.۰</span>
-            <p class="mt-1 text-slate-300">کیفیت غذا و میزبانی مجموعه بی‌نظیر بود.</p>
+            <p class="text-slate-300 leading-relaxed">کیفیت غذا و میزبانی مجموعه بی‌نظیر بود.</p>
           </div>
         </div>
       </div>
 
       <div class="bg-[#0e121c]/90 backdrop-blur-xl border border-[#C5A059]/40 rounded-3xl p-6 shadow-xl space-y-4">
-        <h3 class="text-sm font-black text-[#D4AF37]">📍 موقعیت مکانی روی نقشه یزد</h3>
-        <p class="text-xs text-slate-300">یزد، صفائیه، خیابان دانشگاه</p>
+        <h3 class="text-base font-black text-[#D4AF37]">📍 موقعیت مکانی روی نقشه یزد</h3>
+        <p class="text-xs text-slate-300">استان یزد، صفائیه، خیابان تیمسار فلاحی، هتل باغ مشیرالممالک</p>
         <div class="grid grid-cols-3 gap-2 pt-2 text-xs font-bold">
           <a href="#" class="bg-[#141A28] text-slate-200 text-center py-2 rounded-xl border border-slate-700">بلد</a>
           <a href="#" class="bg-[#141A28] text-slate-200 text-center py-2 rounded-xl border border-slate-700">نشان</a>
@@ -223,25 +279,16 @@
 
   </main>
 
-  <!-- STICKY FLOATING GLASS ACTION BAR -->
-  <div class="fixed bottom-0 left-0 right-0 z-50 bg-[#07090E]/95 backdrop-blur-2xl border-t border-[#C5A059]/40 py-3 px-4 shadow-[0_-15px_40px_rgba(0,0,0,0.9)]">
-    <div class="max-w-4xl mx-auto flex items-center justify-between gap-3 text-xs font-bold">
-      <div class="flex items-center gap-2">
-        <button type="button" onclick="makeVendorCall()" class="bg-[#141A28] hover:bg-slate-800 text-amber-200 border border-[#C5A059]/40 px-4 py-2.5 rounded-2xl flex items-center gap-1.5 cursor-pointer shadow-md transition-all">
-          <i data-lucide="phone-call" class="w-4 h-4 text-[#D4AF37]"></i>
-          <span>📞 تماس</span>
-        </button>
-        <button type="button" onclick="openWhatsAppInquiry()" class="bg-emerald-950/80 hover:bg-emerald-900 text-emerald-300 border border-emerald-500/40 px-4 py-2.5 rounded-2xl flex items-center gap-1.5 cursor-pointer shadow-md transition-all">
-          <i data-lucide="message-circle" class="w-4 h-4 text-emerald-400"></i>
-          <span>💬 واتساپ</span>
-        </button>
+  <!-- LUXE STICKY BOTTOM ACTION BAR -->
+  <div class="sticky-bottom-bar" style="position: fixed; bottom: 0; left: 0; width: 100%; z-index: 99999; background: rgba(7, 9, 14, 0.95); backdrop-filter: blur(16px); border-top: 1px solid rgba(197, 160, 89, 0.3); padding: 12px 24px; display: flex; justify-content: space-between; align-items: center; box-shadow: 0 -10px 25px rgba(0,0,0,0.5);">
+      <div style="display: flex; gap: 12px; align-items: center;">
+          <a href="#quote" onclick="openQuoteModal(1); return false;" style="background: #C5A059; color: #07090E; font-weight: bold; padding: 12px 24px; border-radius: 12px; text-decoration: none; font-size: 14px; box-shadow: 0 0 15px rgba(197, 160, 89, 0.4);">✨ استعلام قیمت و رزرو اختصاصی</a>
+          <a href="tel:03530000" onclick="makeVendorCall(); return false;" style="background: rgba(255, 255, 255, 0.08); color: #fff; padding: 10px 16px; border-radius: 10px; text-decoration: none; border: 1px solid rgba(197, 160, 89, 0.2); font-size: 13px;">📞 تماس</a>
+          <a href="https://wa.me/" onclick="openWhatsAppInquiry(); return false;" style="background: rgba(255, 255, 255, 0.08); color: #fff; padding: 10px 16px; border-radius: 10px; text-decoration: none; border: 1px solid rgba(197, 160, 89, 0.2); font-size: 13px;">💬 واتساپ</a>
       </div>
-
-      <button type="button" onclick="openInquiryModal(1)" class="gold-shimmer-btn text-[#0F251A] font-black px-6 py-2.5 rounded-2xl shadow-xl flex items-center gap-2 cursor-pointer transition-all transform hover:scale-[1.02]">
-        <i data-lucide="sparkles" class="w-4 h-4 text-[#0F251A]"></i>
-        <span>✨ استعلام قیمت و رزرو</span>
-      </button>
-    </div>
+      <div style="color: #C5A059; font-weight: 500; font-size: 14px;">
+          شروع قیمت از <span style="color: #fff; font-weight: bold; font-size: 16px;">۹۵,۰۰۰,۰۰۰ تومان</span>
+      </div>
   </div>
 
   <!-- LUXURY PRICE INQUIRY FORM MODAL -->
@@ -285,180 +332,6 @@
         <button type="submit" class="gold-shimmer-btn w-full text-[#0F251A] font-black py-3 rounded-2xl text-xs sm:text-sm shadow-xl transition-all cursor-pointer hover:scale-105 active:scale-95 mt-2">
           ارسال درخواست استعلام ➔
         </button>
-      </form>
-    </div>
-  </div>
-
-  <!-- INQUIRY MODAL FOR PRICE QUOTES -->
-  <div id="inquiry-modal" class="inquiry-modal booking-modal-container fixed inset-0 z-[9999999] bg-slate-950/80 backdrop-blur-md flex items-center justify-center p-4 hidden">
-    <div class="bg-[#0F172A]/95 text-white border border-[#D4AF37]/60 rounded-3xl max-w-xl w-full p-6 sm:p-8 shadow-[0_20px_60px_rgba(0,0,0,0.6)] space-y-5 relative max-h-[90vh] overflow-y-auto custom-scrollbar">
-      <button onclick="closeInquiryModal()" class="absolute top-5 left-5 text-slate-400 hover:text-white transition-colors cursor-pointer" title="بستن">
-        <i data-lucide="x" class="w-6 h-6"></i>
-      </button>
-
-      <div class="border-b border-slate-700/80 pb-3 space-y-2">
-        <div class="inline-flex items-center gap-1.5 bg-[#D4AF37]/20 border border-[#D4AF37]/50 text-[#D4AF37] text-xs font-bold px-3 py-1 rounded-full">
-          <i data-lucide="message-square-quote" class="w-3.5 h-3.5 text-[#D4AF37]"></i>
-          <span>استعلام قیمت آنلاین و صدور پیش‌فاکتور</span>
-        </div>
-        <h3 id="modal-vendor-name" class="text-xl font-black text-[#D4AF37]">درخواست استعلام قیمت از تامین‌کننده</h3>
-      </div>
-
-      <!-- STICKY STEP INDICATORS BAR -->
-      <div id="inquiry-step-indicators" class="sticky top-0 z-20 bg-[#0F172A]/95 backdrop-blur-md border-b border-[#D4AF37]/30 py-3 px-2 -mx-6 sm:-mx-8 -mt-6 p-4 mb-2 shadow-lg flex items-center gap-2 border-t border-[#D4AF37]/20">
-        <div id="inquiry-step-ind-1" onclick="switchInquiryStep(1)" class="flex-1 text-center py-2 rounded-xl bg-[#D4AF37] text-[#0F251A] font-black text-xs shadow-[0_0_12px_rgba(212,175,55,0.4)] cursor-pointer hover:opacity-90 transition-all">
-          ۱. تاریخ و زمان
-        </div>
-        <div id="inquiry-step-ind-2" onclick="switchInquiryStep(2)" class="flex-1 text-center py-2 rounded-xl bg-[#1E293B] text-slate-300 font-bold text-xs border border-[#D4AF37]/30 cursor-pointer hover:opacity-90 transition-all opacity-80">
-          ۲. جزئیات و خدمات
-        </div>
-        <div id="inquiry-step-ind-3" onclick="switchInquiryStep(3)" class="flex-1 text-center py-2 rounded-xl bg-[#1E293B] text-slate-300 font-bold text-xs border border-[#D4AF37]/30 cursor-pointer hover:opacity-90 transition-all opacity-80">
-          ۳. ثبت و تماس
-        </div>
-      </div>
-
-      <!-- DYNAMIC CONTEXT BANNER CARD -->
-      <div id="inquiry-context-banner" class="hidden bg-[#1E293B] border border-[#D4AF37]/60 rounded-2xl p-3.5 shadow-md space-y-2">
-        <div class="flex items-center justify-between gap-2">
-          <span id="inquiry-context-badge" class="bg-[#0F172A] text-[#D4AF37] text-[10px] font-black px-2.5 py-0.5 rounded-full border border-[#D4AF37]/40 flex items-center gap-1">
-            <i data-lucide="tag" class="w-3 h-3 text-[#D4AF37]"></i>
-            <span id="inquiry-context-type-text">درخواست استعلام پکیج</span>
-          </span>
-          <span id="inquiry-context-price" class="text-xs font-black text-[#D4AF37]"></span>
-        </div>
-        <div class="flex items-center gap-3">
-          <img id="inquiry-context-thumb" src="" alt="کاور" class="w-12 h-12 rounded-xl object-cover border border-[#D4AF37]/40 shrink-0 hidden">
-          <div>
-            <h4 id="inquiry-context-title" class="text-xs font-extrabold text-white leading-snug"></h4>
-            <p id="inquiry-context-sub" class="text-[11px] text-slate-300 mt-0.5 font-medium"></p>
-          </div>
-        </div>
-      </div>
-
-      <form id="inquiry-form" onsubmit="handleInquirySubmit(event)" class="space-y-4 text-xs font-bold text-white">
-        <input type="hidden" id="inquiry-vendor-id" value="">
-        <input type="hidden" id="inquiry-item-type" value="عمومی">
-        <input type="hidden" id="inquiry-item-id" value="">
-        <input type="hidden" id="inquiry-item-title" value="">
-
-        <!-- STEP 1: DATE, AVAILABILITY & GUEST COUNT -->
-        <div id="inquiry-step-1" class="space-y-4">
-          <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
-            <div>
-              <label id="inquiry-date-label" class="block mb-1.5 text-slate-200">تاریخ تقریبی مراسم (شمسی) *</label>
-              <input type="text" id="inquiry-date" oninput="checkInquiryDateAvailability()" value="۱۴۰۳/۰۶/۱۵" placeholder="مثلاً: ۱۴۰۳/۰۶/۱۵" class="inquiry-form-control w-full bg-[#1E293B] border border-[#D4AF37]/30 text-white placeholder-slate-400 rounded-xl p-2.5 text-xs font-bold focus:outline-none focus:border-[#D4AF37]">
-              <div id="inquiry-date-availability-badge" class="mt-1 text-[11px] font-bold p-2 rounded-xl flex items-center gap-1.5 hidden"></div>
-            </div>
-
-            <!-- Dynamic Guest Count / Package Specifics -->
-            <div id="inquiry-guests-container">
-              <label class="block mb-1.5 text-slate-200">تعداد تقریبی مهمانان *</label>
-              <input type="number" id="inquiry-guests" value="250" min="1" max="2000" class="inquiry-form-control w-full bg-[#1E293B] border border-[#D4AF37]/30 text-white placeholder-slate-400 rounded-xl p-2.5 text-xs font-bold focus:outline-none focus:border-[#D4AF37]">
-            </div>
-
-            <div id="inquiry-nonvenue-container" class="hidden">
-              <label class="block mb-1.5 text-slate-200">نوع پکیج / نیاز اختصاصی *</label>
-              <select id="inquiry-package-type" class="inquiry-form-control w-full bg-[#1E293B] border border-[#D4AF37]/30 text-white rounded-xl p-2.5 text-xs font-bold focus:outline-none focus:border-[#D4AF37]">
-                <option value="فرمالیته کویر یزد" class="bg-[#0F172A] text-white">پکیج اختصاصی فرمالیته کویر یزد</option>
-                <option value="مراسم اصلی عروسی" class="bg-[#0F172A] text-white">خدمات کامل روز عروسی</option>
-                <option value="پرو و مشاوره اختصاصی" class="bg-[#0F172A] text-white">مشاوره حضوری و تست پکیج</option>
-              </select>
-            </div>
-          </div>
-        </div>
-
-        <!-- STEP 2: SERVICES CHECKLIST & CUSTOM QUESTIONS -->
-        <div id="inquiry-step-2" class="space-y-4 hidden">
-          <!-- Vendor Specific Custom Inquiry Questions Container -->
-          <div id="inquiry-custom-fields-container" class="space-y-3 p-3.5 bg-[#1E293B] border border-[#D4AF37]/50 rounded-2xl hidden">
-            <!-- Dynamically populated via JS -->
-          </div>
-
-          <!-- Service Checklist -->
-          <div id="inquiry-services-container" class="space-y-2">
-            <label class="block text-slate-200">انتخاب خدمات مورد نظر شما:</label>
-            <div id="inquiry-services-checklist" class="grid grid-cols-1 sm:grid-cols-2 gap-2 p-3 bg-[#1E293B] border border-[#D4AF37]/30 rounded-2xl">
-              <!-- Dynamically populated via JS -->
-            </div>
-          </div>
-
-          <div>
-            <label class="block mb-1.5 text-slate-200">توضیحات و یادداشت اختصاصی:</label>
-            <input type="text" id="inquiry-note" value="سلام، درخواست استعلام قیمت و دریافت پیش‌فاکتور را دارم." class="inquiry-form-control w-full bg-[#1E293B] border border-[#D4AF37]/30 text-white placeholder-slate-400 rounded-xl p-2.5 text-xs font-bold focus:outline-none focus:border-[#D4AF37]">
-          </div>
-        </div>
-
-        <!-- STEP 3: CONTACT & BUDGET CONFIRMATION -->
-        <div id="inquiry-step-3" class="space-y-4 hidden">
-          <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
-            <div>
-              <label class="block mb-1.5 text-slate-200">نام و نام خانوادگی شما *</label>
-              <input type="text" id="inquiry-name" value="علی و سارا" class="inquiry-form-control w-full bg-[#1E293B] border border-[#D4AF37]/30 text-white placeholder-slate-400 rounded-xl p-2.5 text-xs font-bold focus:outline-none focus:border-[#D4AF37]">
-            </div>
-
-            <div>
-              <label class="block mb-1.5 text-slate-200">شماره تماس (دریافت پیش‌فاکتور) *</label>
-              <input type="tel" id="inquiry-phone" value="09121234567" placeholder="۰۹۱۲..." class="inquiry-form-control w-full bg-[#1E293B] border border-[#D4AF37]/30 text-white placeholder-slate-400 rounded-xl p-2.5 text-xs font-bold focus:outline-none focus:border-[#D4AF37] dir-ltr">
-            </div>
-          </div>
-
-          <div class="space-y-3">
-            <div>
-              <label class="block mb-1.5 text-slate-200">محدوده بودجه مد نظر:</label>
-              <select id="inquiry-budget-range" class="inquiry-form-control w-full bg-[#1E293B] border border-[#D4AF37]/30 text-white rounded-xl p-2.5 text-xs font-bold focus:outline-none focus:border-[#D4AF37] cursor-pointer">
-                <option value="۱۰ تا ۲۰ میلیون تومان" class="bg-[#0F172A] text-white">۱۰ تا ۲۰ میلیون تومان</option>
-                <option value="۲۰ تا ۴۰ میلیون تومان" class="bg-[#0F172A] text-white">۲۰ تا ۴۰ میلیون تومان</option>
-                <option value="۴۰ تا ۷۰ میلیون تومان" class="bg-[#0F172A] text-white">۴۰ تا ۷۰ میلیون تومان</option>
-                <option value="۷۰ تا ۱۲۰ میلیون تومان" class="bg-[#0F172A] text-white" selected>۷۰ تا ۱۲۰ میلیون تومان</option>
-                <option value="بالای ۱۲۰ میلیون تومان (VIP)" class="bg-[#0F172A] text-white">بالای ۱۲۰ میلیون تومان (VIP)</option>
-                <option value="توافقی / استعلام متقابل" class="bg-[#0F172A] text-white">توافقی / استعلام متقابل</option>
-              </select>
-            </div>
-          </div>
-
-          <!-- Manual Budget Input & Quick Selector Pills -->
-          <div class="p-3 bg-[#1E293B] border border-[#D4AF37]/30 rounded-2xl space-y-2">
-            <div class="flex items-center justify-between">
-              <label class="block text-xs font-bold text-[#D4AF37]">مبلغ بودجه پیشنهادی یا حداکثر سقف پرداختی (تومان - اختیاری):</label>
-              <span class="text-[11px] text-slate-300 font-normal">انتخاب سریع یا ورود دستی</span>
-            </div>
-            <div class="flex items-center gap-2">
-              <input type="text" id="inquiry-budget-custom" placeholder="مثلاً: ۳۵,۰۰۰,۰۰۰ تومان" class="w-full bg-[#0F172A] border border-[#D4AF37]/30 rounded-xl p-2 text-xs font-bold text-white placeholder-slate-400 focus:outline-none focus:border-[#D4AF37]">
-            </div>
-            <div class="flex items-center gap-1.5 flex-wrap pt-1">
-              <span class="text-[11px] text-slate-300">پیشنهاد سریع:</span>
-              <button type="button" onclick="setInquiryBudgetPill('۱۰ تا ۲۰ میلیون تومان', '۱۵,۰۰۰,۰۰۰ تومان')" class="px-2.5 py-1 bg-[#0F172A] hover:bg-[#D4AF37]/20 border border-[#D4AF37]/30 rounded-lg text-[11px] text-amber-200 transition-all cursor-pointer">
-                ۱۰ تا ۲۰ میلیون
-              </button>
-              <button type="button" onclick="setInquiryBudgetPill('۲۰ تا ۴۰ میلیون تومان', '۳۰,۰۰۰,۰۰۰ تومان')" class="px-2.5 py-1 bg-[#0F172A] hover:bg-[#D4AF37]/20 border border-[#D4AF37]/30 rounded-lg text-[11px] text-amber-200 transition-all cursor-pointer">
-                ۲۰ تا ۴۰ میلیون
-              </button>
-              <button type="button" onclick="setInquiryBudgetPill('۴۰ تا ۷۰ میلیون تومان', '۵۰,۰۰۰,۰۰۰ تومان')" class="px-2.5 py-1 bg-[#0F172A] hover:bg-[#D4AF37]/20 border border-[#D4AF37]/30 rounded-lg text-[11px] text-amber-200 transition-all cursor-pointer">
-                ۴۰ تا ۷۰ میلیون
-              </button>
-              <button type="button" onclick="setInquiryBudgetPill('توافقی / استعلام متقابل', 'توافقی')" class="px-2.5 py-1 bg-[#0F172A] hover:bg-[#D4AF37]/20 border border-[#D4AF37]/30 rounded-lg text-[11px] text-amber-200 transition-all cursor-pointer">
-                توافقی / استعلام متقابل
-              </button>
-            </div>
-          </div>
-        </div>
-
-        <!-- NAVIGATION STEP FOOTER BUTTONS -->
-        <div class="flex items-center justify-between pt-3 border-t border-slate-700/80 gap-3">
-          <button type="button" id="inquiry-prev-btn" onclick="prevInquiryStep()" class="hidden px-4 py-2.5 rounded-xl bg-[#1E293B] hover:bg-slate-700 text-slate-200 border border-[#D4AF37]/30 font-bold text-xs transition-all cursor-pointer">
-            ← قبلی
-          </button>
-          <div class="flex-1"></div>
-          <button type="button" id="inquiry-next-btn" onclick="nextInquiryStep()" class="px-5 py-2.5 rounded-xl bg-gradient-to-r from-[#D4AF37] to-[#F3E5AB] hover:from-[#e5bd3c] hover:to-[#fceba7] text-[#0F251A] font-black text-xs shadow-md transition-all cursor-pointer">
-            مرحله بعدی →
-          </button>
-          <button type="button" id="inquiry-whatsapp-btn" onclick="openWhatsAppInquiry()" class="hidden px-4 py-2.5 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white font-black text-xs shadow-md transition-all cursor-pointer flex items-center gap-1.5 border border-emerald-400/40">
-            <span>استعلام سریع در واتس‌اپ</span> 💬
-          </button>
-          <button type="submit" id="inquiry-submit-btn" class="hidden px-5 py-2.5 rounded-xl bg-gradient-to-r from-[#D4AF37] to-[#F3E5AB] hover:from-[#e5bd3c] hover:to-[#fceba7] text-[#0F251A] font-black text-xs shadow-md transition-all cursor-pointer">
-            ✨ ارسال درخواست استعلام قیمت
-          </button>
-        </div>
       </form>
     </div>
   </div>
