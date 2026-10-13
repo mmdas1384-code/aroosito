@@ -2588,15 +2588,15 @@ if (document.readyState === "loading") {
               const isSelected = selectedOption && selectedOption.id === opt.id;
               return `
                 <div onclick="selectQuizOption('${question.id}', '${opt.id}')" class="p-3.5 rounded-2xl border-2 transition-all cursor-pointer flex flex-col justify-between space-y-3 ${
-                  isSelected ? 'bg-primary/10 border-primary shadow-md' : 'bg-bgCustom border-accent hover:border-primary/50'
+                  isSelected ? 'bg-[#07090E] border-[#C5A059] shadow-[0_0_15px_rgba(197,160,89,0.3)]' : 'bg-[#141A28] border-[#C5A059]/30 hover:border-[#C5A059]/60'
                 }">
-                  <div class="aspect-4/3 rounded-xl overflow-hidden bg-slate-900 border border-accent">
+                  <div class="aspect-4/3 rounded-xl overflow-hidden bg-[#07090E] border border-[#C5A059]/20">
                     <img src="${opt.image}" alt="${opt.label}" class="w-full h-full object-cover">
                   </div>
-                  <div class="flex items-center justify-between text-xs font-bold text-graphite">
+                  <div class="flex items-center justify-between text-xs font-bold text-[#F7F5F0]">
                     <span class="leading-snug">${opt.label}</span>
                     <div class="w-5 h-5 rounded-full border-2 flex items-center justify-center shrink-0 ${
-                      isSelected ? 'border-primary bg-primary text-white' : 'border-secondary/40'
+                      isSelected ? 'border-[#C5A059] bg-[#C5A059] text-[#07090E] font-black' : 'border-slate-500'
                     }">
                       ${isSelected ? '✓' : ''}
                     </div>
@@ -2614,11 +2614,11 @@ if (document.readyState === "loading") {
               const isSelected = selectedOption && selectedOption.id === opt.id;
               return `
                 <div onclick="selectQuizOption('${question.id}', '${opt.id}')" class="p-4 rounded-2xl border-2 transition-all cursor-pointer flex items-center justify-between gap-3 ${
-                  isSelected ? 'bg-primary/10 border-primary shadow-md' : 'bg-bgCustom border-accent hover:border-primary/50'
+                  isSelected ? 'bg-[#07090E] border-[#C5A059] shadow-[0_0_15px_rgba(197,160,89,0.3)]' : 'bg-[#141A28] border-[#C5A059]/30 hover:border-[#C5A059]/60'
                 }">
-                  <span class="text-xs sm:text-sm font-bold text-graphite leading-relaxed">${opt.label}</span>
+                  <span class="text-xs sm:text-sm font-bold text-[#F7F5F0] leading-relaxed">${opt.label}</span>
                   <div class="w-5 h-5 rounded-full border-2 flex items-center justify-center shrink-0 ${
-                    isSelected ? 'border-primary bg-primary text-white' : 'border-secondary/40'
+                    isSelected ? 'border-[#C5A059] bg-[#C5A059] text-[#07090E] font-black' : 'border-slate-500'
                   }">
                     ${isSelected ? '✓' : ''}
                   </div>
@@ -10912,43 +10912,43 @@ window.shareReceiptWhatsApp = function() {
       filteredQuizzes.forEach(quiz => {
         const pastResult = history.find(h => h.quizId === quiz.id);
         const card = document.createElement('div');
-        card.className = "bg-white border border-accent rounded-3xl overflow-hidden shadow-xs hover:shadow-md transition-all flex flex-col justify-between";
+        card.className = "bg-[#141A28] border border-[#C5A059]/30 hover:border-[#C5A059] rounded-3xl overflow-hidden shadow-xl hover:shadow-[0_12px_30px_rgba(197,160,89,0.25)] transition-all duration-300 flex flex-col justify-between text-white";
         card.innerHTML = `
           <div>
-            <div class="relative h-48 overflow-hidden bg-slate-900">
-              <img src="${quiz.image}" alt="${quiz.title}" class="w-full h-full object-cover opacity-90 hover:scale-105 transition-transform duration-300">
-              <div class="absolute top-3 right-3 bg-primary text-white text-[11px] font-bold px-3 py-1 rounded-full shadow-md">
+            <div class="relative h-48 overflow-hidden bg-[#07090E]">
+              <img src="${quiz.image}" alt="${quiz.title}" class="w-full h-full object-cover opacity-90 hover:scale-105 transition-transform duration-500">
+              <div class="absolute top-3 right-3 bg-[#07090E]/90 text-[#C5A059] border border-[#C5A059]/50 text-[11px] font-bold px-3 py-1 rounded-full shadow-md">
                 ${quiz.badge}
               </div>
               ${pastResult ? `
-                <div class="absolute bottom-3 right-3 left-3 bg-[#1B3B2B]/90 backdrop-blur-xs text-[#D4AF37] text-[11px] font-bold px-3 py-1.5 rounded-xl border border-[#D4AF37]/40 flex justify-between items-center shadow-md">
+                <div class="absolute bottom-3 right-3 left-3 bg-[#07090E]/90 backdrop-blur-md text-[#C5A059] text-[11px] font-bold px-3 py-1.5 rounded-xl border border-[#C5A059]/40 flex justify-between items-center shadow-md">
                   <span>آخرین نتیجه: ${pastResult.scorePercent}٪</span>
-                  <span class="text-white text-[10px] font-normal">${pastResult.date}</span>
+                  <span class="text-slate-300 text-[10px] font-normal">${pastResult.date}</span>
                 </div>
               ` : ''}
             </div>
 
             <div class="p-6 space-y-3">
-              <div class="flex items-center gap-3 text-xs font-bold text-secondary">
+              <div class="flex items-center gap-3 text-xs font-bold text-slate-300">
                 <span class="flex items-center gap-1">
-                  <i data-lucide="help-circle" class="w-4 h-4 text-primary"></i>
+                  <i data-lucide="help-circle" class="w-4 h-4 text-[#C5A059]"></i>
                   <span>${quiz.questionsCount} سوال</span>
                 </span>
                 <span>•</span>
                 <span class="flex items-center gap-1">
-                  <i data-lucide="clock" class="w-4 h-4 text-primary"></i>
+                  <i data-lucide="clock" class="w-4 h-4 text-[#C5A059]"></i>
                   <span>زمان: ${quiz.duration}</span>
                 </span>
               </div>
 
-              <h3 class="text-lg font-bold text-graphite leading-snug">${quiz.title}</h3>
-              <p class="text-xs text-secondary leading-relaxed">${quiz.description}</p>
+              <h3 class="text-lg font-bold text-[#F7F5F0] leading-snug">${quiz.title}</h3>
+              <p class="text-xs text-slate-300 leading-relaxed">${quiz.description}</p>
             </div>
           </div>
 
           <div class="p-6 pt-0 space-y-2">
-            <button onclick="startQuizRunner('${quiz.id}')" class="w-full bg-primary hover:bg-emerald-900 text-white font-bold py-3 rounded-2xl text-xs shadow-md transition-all flex items-center justify-center gap-2 cursor-pointer">
-              <span>${pastResult ? 'شرکت مجدد در تست' : 'شروع تست هوشمند'}</span>
+            <button onclick="startQuizRunner('${quiz.id}')" class="w-full bg-[#C5A059] hover:bg-[#D4AF37] text-[#07090E] font-black py-3 rounded-2xl text-xs shadow-lg transition-all flex items-center justify-center gap-2 cursor-pointer">
+              <span>${pastResult ? 'شرکت مجدد در تست' : 'شروع تست ✨'}</span>
               <i data-lucide="arrow-left" class="w-4 h-4"></i>
             </button>
           </div>

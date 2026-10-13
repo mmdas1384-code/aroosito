@@ -5033,18 +5033,18 @@
     <div id="tab-quizzes" class="tab-content hidden space-y-8">
 
       <!-- TOP BANNER HEADER -->
-      <div class="bg-white border border-accent rounded-3xl p-6 sm:p-8 shadow-xs flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
+      <div class="bg-[#0e121c]/90 backdrop-blur-2xl border border-[#C5A059]/40 rounded-3xl p-6 sm:p-8 shadow-2xl flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 text-white">
         <div class="space-y-1">
-          <div class="inline-flex items-center gap-1.5 bg-primary/10 text-primary text-xs font-bold px-3 py-1 rounded-full">
+          <div class="inline-flex items-center gap-1.5 bg-[#07090E] text-[#C5A059] border border-[#C5A059]/40 text-xs font-bold px-3 py-1 rounded-full">
             <i data-lucide="sparkles" class="w-3.5 h-3.5"></i>
             <span>تست‌های هوشمند استایل‌شناسی و روانشناسی عروسی</span>
           </div>
-          <h2 class="text-2xl sm:text-3xl font-black text-graphite">شناخت دقیق استایل، تم و آمادگی ازدواج</h2>
-          <p class="text-xs text-secondary font-medium">پاسخ به سوالات تصویری، دریافت آنالیز اختصاصی و هماهنگی با بهترین تأمین‌کنندگان</p>
+          <h2 class="text-2xl sm:text-3xl font-black text-[#F7F5F0]">شناخت دقیق استایل، تم و آمادگی ازدواج</h2>
+          <p class="text-xs text-slate-300 font-medium">پاسخ به سوالات تصویری، دریافت آنالیز اختصاصی و هماهنگی با بهترین تأمین‌کنندگان</p>
         </div>
 
         <div class="flex items-center gap-2">
-          <span class="bg-primary text-white text-xs font-bold px-3 py-2 rounded-xl shadow-xs">
+          <span class="bg-[#C5A059] text-[#07090E] text-xs font-black px-4 py-2 rounded-xl shadow-lg">
             تحلیل هوشمند زنده
           </span>
         </div>
@@ -5057,20 +5057,20 @@
         <div id="quiz-catalog-view" class="space-y-6">
 
           <!-- CATEGORY FILTER TABS (4 DISTINCT CATEGORIES) -->
-          <div class="flex flex-wrap bg-white border border-accent rounded-2xl p-1.5 text-xs font-bold shadow-xs gap-1 max-w-4xl">
-            <button id="quiz-tab-style" onclick="switchQuizCategoryTab('style')" class="flex-1 min-w-[140px] py-3 px-3 rounded-xl transition-all bg-primary text-white text-center flex items-center justify-center gap-1.5 shadow-xs">
+          <div class="flex flex-wrap bg-[#0e121c]/90 backdrop-blur-2xl border border-[#C5A059]/40 rounded-2xl p-1.5 text-xs font-bold shadow-2xl gap-1 max-w-4xl text-white">
+            <button id="quiz-tab-style" onclick="switchQuizCategoryTab('style')" class="flex-1 min-w-[140px] py-3 px-3 rounded-xl transition-all bg-[#C5A059] text-[#07090E] font-black text-center flex items-center justify-center gap-1.5 shadow-md">
               <i data-lucide="palette" class="w-4 h-4"></i>
               <span>استایل‌شناسی & فرمالیته</span>
             </button>
-            <button id="quiz-tab-psychology" onclick="switchQuizCategoryTab('psychology')" class="flex-1 min-w-[140px] py-3 px-3 rounded-xl transition-all text-secondary hover:text-graphite text-center flex items-center justify-center gap-1.5">
+            <button id="quiz-tab-psychology" onclick="switchQuizCategoryTab('psychology')" class="flex-1 min-w-[140px] py-3 px-3 rounded-xl transition-all text-slate-300 hover:text-amber-200 text-center flex items-center justify-center gap-1.5">
               <i data-lucide="heart-handshake" class="w-4 h-4"></i>
               <span>روانشناسی & تفاهم</span>
             </button>
-            <button id="quiz-tab-beauty" onclick="switchQuizCategoryTab('beauty')" class="flex-1 min-w-[140px] py-3 px-3 rounded-xl transition-all text-secondary hover:text-graphite text-center flex items-center justify-center gap-1.5">
+            <button id="quiz-tab-beauty" onclick="switchQuizCategoryTab('beauty')" class="flex-1 min-w-[140px] py-3 px-3 rounded-xl transition-all text-slate-300 hover:text-amber-200 text-center flex items-center justify-center gap-1.5">
               <i data-lucide="sparkles" class="w-4 h-4"></i>
               <span>زیبایی & اکسسوری</span>
             </button>
-            <button id="quiz-tab-catering" onclick="switchQuizCategoryTab('catering')" class="flex-1 min-w-[140px] py-3 px-3 rounded-xl transition-all text-secondary hover:text-graphite text-center flex items-center justify-center gap-1.5">
+            <button id="quiz-tab-catering" onclick="switchQuizCategoryTab('catering')" class="flex-1 min-w-[140px] py-3 px-3 rounded-xl transition-all text-slate-300 hover:text-amber-200 text-center flex items-center justify-center gap-1.5">
               <i data-lucide="utensils" class="w-4 h-4"></i>
               <span>پذیرایی & تشریفات</span>
             </button>
@@ -5084,12 +5084,12 @@
         </div>
 
         <!-- QUIZ RUNNER INTERACTIVE UX (Hidden by default) -->
-        <div id="quiz-runner-view" class="bg-white border border-accent rounded-3xl p-6 sm:p-10 shadow-lg space-y-8 hidden">
+        <div id="quiz-runner-view" class="bg-[#0e121c]/90 backdrop-blur-2xl border border-[#C5A059]/40 rounded-3xl p-6 sm:p-10 shadow-2xl space-y-8 hidden text-white">
           <!-- Populated via JS -->
         </div>
 
         <!-- DYNAMIC RESULT DASHBOARD (Hidden by default) -->
-        <div id="quiz-result-view" class="bg-white border border-accent rounded-3xl p-6 sm:p-10 shadow-lg space-y-8 hidden">
+        <div id="quiz-result-view" class="bg-[#0e121c]/90 backdrop-blur-2xl border border-[#C5A059]/40 rounded-3xl p-6 sm:p-10 shadow-2xl space-y-8 hidden text-white">
           <!-- Populated via JS -->
         </div>
 
