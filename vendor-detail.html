@@ -136,7 +136,7 @@
       </div>
     </div>
 
-    <!-- 3. STREAMLINED 4-TAB STATIC INLINE NAVIGATION BAR -->
+    <!-- 3. STREAMLINED STATIC INLINE NAVIGATION BAR -->
     <div class="p-2 bg-[#0e121c]/95 backdrop-blur-2xl border border-[#C5A059]/50 rounded-2xl flex items-center justify-center gap-3 overflow-x-auto shadow-2xl" style="position: static !important;">
       <a href="#section-services" class="px-4 py-2 rounded-xl text-xs font-bold text-amber-200 bg-[#D4AF37]/20 border border-[#D4AF37]/50 transition-all hover:scale-105 whitespace-nowrap">
         ✨ معرفی و خدمات
@@ -149,6 +149,9 @@
       </a>
       <a href="#section-reviews-map" class="px-4 py-2 rounded-xl text-xs font-bold text-slate-300 hover:text-amber-200 transition-all hover:scale-105 whitespace-nowrap">
         💬 نظرات و موقعیت
+      </a>
+      <a href="#section-vendor-faqs" class="px-4 py-2 rounded-xl text-xs font-bold text-slate-300 hover:text-amber-200 transition-all hover:scale-105 whitespace-nowrap">
+        ❓ سوالات متداول
       </a>
     </div>
 
@@ -479,6 +482,75 @@
             </a>
           </div>
         </div>
+      </div>
+    </div>
+
+    <!-- TAB 5: VENDOR FAQS SECTION (ACCORDION STYLE) -->
+    <div id="section-vendor-faqs" class="bg-[rgba(15,20,28,0.85)] backdrop-blur-2xl border border-[#C5A059]/30 rounded-3xl p-6 sm:p-8 shadow-2xl space-y-6">
+      <div class="flex items-center justify-between border-b border-[#C5A059]/20 pb-4">
+        <h3 class="text-base sm:text-lg font-black text-[#C5A059] flex items-center gap-2.5">
+          <i data-lucide="help-circle" class="w-5 h-5 text-[#C5A059]"></i>
+          <span>سوالات متداول اختصاصی رزرو و خدمات (FAQs)</span>
+        </h3>
+        <span class="text-xs font-bold text-slate-400 bg-black/40 px-3 py-1 rounded-full border border-[#C5A059]/20">پاسخ‌های شفاف</span>
+      </div>
+
+      <div class="space-y-3">
+        <!-- FAQ 1: Cancellation Policy -->
+        <details open class="bg-black/40 border border-[#C5A059]/25 rounded-2xl p-4 transition-all duration-200 group/faq">
+          <summary class="flex items-center justify-between cursor-pointer font-black text-xs sm:text-sm text-white hover:text-[#C5A059] transition-colors list-none">
+            <span class="flex items-center gap-2.5">
+              <i data-lucide="file-text" class="w-4 h-4 text-[#C5A059]"></i>
+              <span>شرایط کنسلی، فسخ رزرو و عودت بیعانه به چه صورت است؟</span>
+            </span>
+            <i data-lucide="chevron-down" class="w-4 h-4 text-[#C5A059] group-open/faq:rotate-180 transition-transform"></i>
+          </summary>
+          <div class="mt-3 pt-3 border-t border-slate-800/80 text-xs text-slate-300 leading-relaxed font-medium">
+            فسخ قرارداد تا ۴۵ روز قبل از تاریخ مراسم با کسر ۱۰٪ هزینه بیعانهامکان‌پذیر است. در صورت اعلام کنسلی بین ۳۰ تا ۴۵ روز قبل، ۳۰٪ بیعانه کسر گردیده و مابقی حساب تسویه می‌شود.
+          </div>
+        </details>
+
+        <!-- FAQ 2: Food Tasting -->
+        <details class="bg-black/40 border border-[#C5A059]/25 rounded-2xl p-4 transition-all duration-200 group/faq">
+          <summary class="flex items-center justify-between cursor-pointer font-black text-xs sm:text-sm text-white hover:text-[#C5A059] transition-colors list-none">
+            <span class="flex items-center gap-2.5">
+              <i data-lucide="utensils-crossed" class="w-4 h-4 text-[#C5A059]"></i>
+              <span>آیا امکان تست رایگان کیفیت غذا قبل از عقد نهایی قرارداد وجود دارد؟</span>
+            </span>
+            <i data-lucide="chevron-down" class="w-4 h-4 text-[#C5A059] group-open/faq:rotate-180 transition-transform"></i>
+          </summary>
+          <div class="mt-3 pt-3 border-t border-slate-800/80 text-xs text-slate-300 leading-relaxed font-medium">
+            بله، زوجین محترم می‌توانند پس از استعلام قیمت اولیه و هماهنگی با مدیریت مجموعه، در یکی از مراسم‌های زنده شرکت نموده و کیفیت کترینگ و دیزاین منو را تست نمایند.
+          </div>
+        </details>
+
+        <!-- FAQ 3: Special Days Surcharge -->
+        <details class="bg-black/40 border border-[#C5A059]/25 rounded-2xl p-4 transition-all duration-200 group/faq">
+          <summary class="flex items-center justify-between cursor-pointer font-black text-xs sm:text-sm text-white hover:text-[#C5A059] transition-colors list-none">
+            <span class="flex items-center gap-2.5">
+              <i data-lucide="calendar-heart" class="w-4 h-4 text-[#C5A059]"></i>
+              <span>آیا تعرفه ورودی تالار در اعیاد شادمانی و آخر هفته‌ها تفاوت دارد؟</span>
+            </span>
+            <i data-lucide="chevron-down" class="w-4 h-4 text-[#C5A059] group-open/faq:rotate-180 transition-transform"></i>
+          </summary>
+          <div class="mt-3 pt-3 border-t border-slate-800/80 text-xs text-slate-300 leading-relaxed font-medium">
+            تعرفه پایه پکیج‌ها ثابت است، اما در ایام پیک (اعیاد مذهبی و اعیاد ملی)، ضریب ورودی ۵ الی ۱۰ درصدی مطابق مصوبه اتحادیه محاسبه می‌گردد.
+          </div>
+        </details>
+
+        <!-- FAQ 4: Sound System & DJ -->
+        <details class="bg-black/40 border border-[#C5A059]/25 rounded-2xl p-4 transition-all duration-200 group/faq">
+          <summary class="flex items-center justify-between cursor-pointer font-black text-xs sm:text-sm text-white hover:text-[#C5A059] transition-colors list-none">
+            <span class="flex items-center gap-2.5">
+              <i data-lucide="volume-2" class="w-4 h-4 text-[#C5A059]"></i>
+              <span>محدودیت زمانی صدا و موسیقی تا چه ساعتی از شب است؟</span>
+            </span>
+            <i data-lucide="chevron-down" class="w-4 h-4 text-[#C5A059] group-open/faq:rotate-180 transition-transform"></i>
+          </summary>
+          <div class="mt-3 pt-3 border-t border-slate-800/80 text-xs text-slate-300 leading-relaxed font-medium">
+            با توجه به استانداردهای صوتی سالن و عایق‌بندی آکوستیک، اجرای موسیقی و دی‌جی بدون محدودیت تا ساعت ۱ بامداد امکان‌پذیر خواهد بود.
+          </div>
+        </details>
       </div>
     </div>
 

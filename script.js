@@ -4187,11 +4187,11 @@ if (document.readyState === "loading") {
               </div>
             </div>
 
-              <!-- Prominent Gold Action CTA -->
+              <!-- Prominent Gold Action CTA & Quick Compare Toggle -->
               <div class="p-3 pt-1 text-right flex items-center gap-2">
-                <button type="button" onclick="event.stopPropagation(); openQuickViewDrawer(${v.id}, event)" class="bg-[#141A28] hover:bg-slate-800 text-amber-200 border border-[#D4AF37]/40 text-[11px] font-bold py-2 px-2.5 rounded-xl transition-all flex items-center justify-center gap-1 cursor-pointer shrink-0" title="مشاهده سریع">
-                  <i data-lucide="eye" class="w-3.5 h-3.5 text-[#D4AF37]"></i>
-                  <span>سریع</span>
+                <button type="button" onclick="event.stopPropagation(); toggleVendorComparison(${v.id}, event)" class="${isComparing ? 'bg-[#D4AF37] text-[#0F251A] font-black' : 'bg-[#141A28] hover:bg-slate-800 text-amber-200 border border-[#D4AF37]/40'} text-[11px] font-bold py-2 px-2.5 rounded-xl transition-all flex items-center justify-center gap-1 cursor-pointer shrink-0" title="افزودن به لیبل مقایسه">
+                  <i data-lucide="columns-2" class="w-3.5 h-3.5 ${isComparing ? 'text-[#0F251A]' : 'text-[#D4AF37]'}"></i>
+                  <span>${isComparing ? 'حذف مقایسه' : '+ مقایسه'}</span>
                 </button>
                 <button type="button" onclick="event.stopPropagation(); openVendorDetailModal(${v.id})" class="gold-shimmer-btn flex-1 text-[#0F251A] text-[11px] font-black py-2 px-3 rounded-xl shadow-lg transition-all flex items-center justify-center gap-1 cursor-pointer transform hover:scale-[1.02]">
                   <span>مشاهده پروفایل ➔</span>
@@ -4912,9 +4912,10 @@ if (document.readyState === "loading") {
         return matchesSearch && matchesCat && matchesVerified && matchesCity && matchesPrice && matchesCapacity && matchesDate && matchesFeatures;
       });
 
-      // Apply dynamic sorting
+      // Apply dynamic sorting from header/drawer select
+      const advSortSelect = document.getElementById('adv-sort-select');
       const sortSelect = document.getElementById('vendor-sort-select');
-      const sortMode = sortSelect ? sortSelect.value : 'popular';
+      const sortMode = (advSortSelect && advSortSelect.value) ? advSortSelect.value : (sortSelect ? sortSelect.value : 'popular');
 
       filtered.sort((a, b) => {
         const parsePriceNumeric = (str) => {
