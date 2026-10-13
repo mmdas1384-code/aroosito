@@ -517,7 +517,7 @@ const HOME_VIEW_HTML = `<main id="home-view" class="flex-1 max-w-7xl w-full mx-a
         </div>
       </section>
 
-      <!-- 6. GLASSMORPHISM AI BUDGET ESTIMATOR CONSOLE -->
+      <!-- 6. HIGH-TECH FROSTED GLASS CONSOLE: AI BUDGET CALCULATOR -->
       <section class="budget-calculator-section relative bg-[#0e121c]/90 backdrop-blur-xl border border-[#C5A059]/30 rounded-3xl p-6 shadow-2xl overflow-hidden my-8 text-white">
         <!-- Ambient Gold Radial Glow Background -->
         <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[450px] h-[450px] bg-[#D4AF37]/10 rounded-full blur-3xl pointer-events-none"></div>
@@ -527,95 +527,72 @@ const HOME_VIEW_HTML = `<main id="home-view" class="flex-1 max-w-7xl w-full mx-a
           <div class="flex items-center justify-between border-b border-[#C5A059]/20 pb-4 flex-wrap gap-3">
             <div class="space-y-1 text-right">
               <span class="text-[11px] font-black text-[#D4AF37] tracking-wider flex items-center gap-1.5">
-                <i data-lucide="sparkles" class="w-4 h-4 text-[#D4AF37]"></i> دستیار و بودجه‌ریز هوشمند AI
+                <i data-lucide="bar-chart-3" class="w-4 h-4 text-[#D4AF37]"></i> پیش‌بینی سریع هزینه مراسم
               </span>
-              <h3 class="text-xl font-black text-[#F7F5F0]">کنسول هوشمند تخمین بودجه & تطبیق تامین‌کنندگان یزد</h3>
+              <h3 class="text-xl font-black text-[#F7F5F0]">کنسول تخمین سریع بودجه عروسی در استان یزد</h3>
             </div>
 
-            <button type="button" onclick="syncAiBudgetToUserDashboard()" class="gold-shimmer-btn text-[#0F251A] font-black py-2.5 px-5 rounded-2xl text-xs sm:text-sm transition-all flex items-center gap-2 shadow-lg cursor-pointer hover:scale-105 active:scale-95">
-              <span>✨ ذخیره و همگام‌سازی با پنل مدیریت من</span>
+            <button type="button" onclick="switchTab('tools')" class="gold-shimmer-btn text-[#0F251A] font-black py-2.5 px-5 rounded-2xl text-xs sm:text-sm transition-all flex items-center gap-2 shadow-lg cursor-pointer hover:scale-105 active:scale-95">
+              <span>✨ ورود به دستیار بودجه‌ریز کامل AI</span>
               <i data-lucide="arrow-left" class="w-4 h-4 text-[#0F251A]"></i>
             </button>
           </div>
 
           <!-- Console Main Content Grid (Result Price Display + Interactive Controls) -->
-          <div class="grid grid-cols-1 lg:grid-cols-12 gap-6 items-start">
+          <div class="grid grid-cols-1 lg:grid-cols-12 gap-6 items-center">
 
             <!-- Result Box: Large Striking Display with Ambient Gold Backlighting -->
-            <div class="lg:col-span-5 bg-[rgba(18,22,31,0.85)] border border-[rgba(197,160,89,0.35)] rounded-3xl p-6 text-center space-y-4 shadow-xl relative overflow-hidden group">
+            <div class="lg:col-span-5 bg-[rgba(20,26,38,0.85)] border border-[rgba(197,160,89,0.35)] rounded-3xl p-6 text-center space-y-3 shadow-xl relative overflow-hidden group">
               <div class="absolute -top-10 -right-10 w-32 h-32 bg-[#D4AF37]/15 rounded-full blur-2xl pointer-events-none"></div>
 
               <span class="text-xs font-bold text-slate-300 block">برآورد کل هزینه‌های اصلی مراسم:</span>
 
-              <div class="py-1">
+              <div class="py-2">
                 <h2 id="home-calc-result-price" class="text-2xl sm:text-3xl lg:text-4xl font-black text-[#F7F5F0] tracking-tight drop-shadow-[0_4px_15px_rgba(212,175,55,0.4)]">
                   ۳۸۰,۰۰۰,۰۰۰ تومان
                 </h2>
               </div>
 
-              <!-- One-Click Budget Scenario Presets -->
-              <div class="space-y-2 pt-2 border-t border-[#C5A059]/20">
-                <span class="text-[11px] font-bold text-amber-200 block text-right">سناریوهای آمادگی سریع:</span>
-                <div class="grid grid-cols-3 gap-2">
-                  <button type="button" onclick="applyBudgetScenario('economic')" class="bg-[#141A28] hover:bg-emerald-950/40 text-emerald-300 border border-emerald-500/40 font-bold py-2 rounded-xl text-xs transition-all flex flex-col items-center justify-center gap-0.5 cursor-pointer">
-                    <span class="text-[11px]">🟢 اقتصادی</span>
-                    <span class="text-[9px] text-emerald-400 font-bold">۱۵۰ میلیون تومان</span>
-                  </button>
-                  <button type="button" onclick="applyBudgetScenario('medium')" class="bg-[#1B3B2B] text-amber-300 border border-[#D4AF37] font-bold py-2 rounded-xl text-xs transition-all flex flex-col items-center justify-center gap-0.5 cursor-pointer shadow-md">
-                    <span class="text-[11px]">🟡 متوازن</span>
-                    <span class="text-[9px] text-amber-200 font-bold">۳۰۰ میلیون تومان</span>
-                  </button>
-                  <button type="button" onclick="applyBudgetScenario('luxury')" class="bg-[#141A28] hover:bg-amber-950/40 text-amber-300 border border-[#D4AF37]/50 font-bold py-2 rounded-xl text-xs transition-all flex flex-col items-center justify-center gap-0.5 cursor-pointer">
-                    <span class="text-[11px]">🌟 لوکس VIP</span>
-                    <span class="text-[9px] text-amber-300 font-bold">۶۰۰ میلیون تومان</span>
-                  </button>
-                </div>
-              </div>
-
-              <p class="text-[11px] text-amber-200/80 font-medium leading-relaxed bg-[#141A28] border border-[#C5A059]/20 rounded-2xl p-2.5 text-right">
-                💡 تفکیک هوشمند: تالار ۵۰٪ • عکاسی ۱۵٪ • میکاپ & لباس ۱۵٪ • تشریفات & تزئینات ۲۰٪
+              <p class="text-[11px] text-amber-200/80 font-medium leading-relaxed bg-[#141A28] border border-[#C5A059]/20 rounded-2xl p-2.5">
+                شامل ورودی تالار، شام، آتلیه، آرایشگاه، مزون لباس و شیرینی‌سرای یزد
               </p>
             </div>
 
-            <!-- Controls Box: Slider & Category Breakdown + AI Vendor Matching -->
-            <div class="lg:col-span-7 space-y-5 text-right">
+            <!-- Controls Box: Slider & Service Level Toggles -->
+            <div class="lg:col-span-7 bg-[rgba(20,26,38,0.85)] border border-[rgba(197,160,89,0.35)] rounded-3xl p-6 space-y-5 text-right shadow-xl">
 
               <!-- Guest Count Slider Row -->
-              <div class="bg-[rgba(18,22,31,0.85)] border border-[rgba(197,160,89,0.35)] rounded-3xl p-5 space-y-3 shadow-xl">
+              <div class="space-y-2">
                 <div class="flex items-center justify-between">
                   <span id="home-calc-guest-tag" class="text-xs font-black text-[#D4AF37] bg-[#D4AF37]/15 border border-[#D4AF37]/40 px-3 py-1 rounded-full shadow-sm">
                     250 نفر
                   </span>
-                  <label class="text-xs font-bold text-[#F7F5F0]">تعداد مهمانان تخمینی مراسم:</label>
+                  <label class="text-xs font-bold text-[#F7F5F0]">تعداد مهمانان تخمینی:</label>
                 </div>
 
                 <input type="range" id="home-calc-range" min="50" max="1000" step="25" value="250" oninput="updateHomeQuickBudget()" class="w-full accent-[#D4AF37] bg-[#141A28] h-2 rounded-lg cursor-pointer">
               </div>
 
-              <!-- AI Matched Directory Vendors Preview Container -->
-              <div class="bg-[rgba(18,22,31,0.85)] border border-[rgba(197,160,89,0.35)] rounded-3xl p-5 space-y-3 shadow-xl">
-                <div class="flex items-center justify-between border-b border-[#C5A059]/20 pb-2">
-                  <span class="text-[11px] font-black text-amber-300 flex items-center gap-1.5">
-                    <i data-lucide="store" class="w-3.5 h-3.5 text-[#D4AF37]"></i> پیشنهادهای منطبق در استان یزد
-                  </span>
-                  <span class="text-[10px] text-slate-400 font-bold">مطابق با رنج قیمتی شما</span>
-                </div>
+              <!-- Service Levels Toggles -->
+              <div class="space-y-2 pt-2 border-t border-[#C5A059]/20">
+                <label class="text-xs font-bold text-[#F7F5F0] block">سطح تشریفات و خدمات:</label>
 
-                <div id="ai-matched-vendors-container" class="grid grid-cols-1 sm:grid-cols-2 gap-3 pt-1">
-                  <!-- Rendered dynamically via updateHomeQuickBudget() -->
-                </div>
-              </div>
+                <div class="grid grid-cols-3 gap-2">
+                  <button type="button" onclick="setHomeCalcStyle('luxury')" id="home-style-luxury" class="s-btn bg-[#141A28] hover:bg-[#1E293B] text-slate-200 border border-[#C5A059]/30 font-bold py-2.5 px-3 rounded-2xl text-xs transition-all flex items-center justify-center gap-1.5 cursor-pointer">
+                    <i data-lucide="gem" class="w-3.5 h-3.5 text-[#D4AF37]"></i>
+                    <span>لوکس / VIP</span>
+                  </button>
 
-              <!-- AI Hidden Costs Warning Box -->
-              <div class="bg-amber-950/30 border border-amber-500/40 rounded-3xl p-4 text-xs space-y-2 text-amber-200">
-                <div class="flex items-center gap-2 font-black text-amber-300">
-                  <i data-lucide="alert-triangle" class="w-4 h-4 text-amber-300"></i>
-                  <span>💡 هشدارهای هوشمند AI (هزینه‌های پنهان مراسم)</span>
+                  <button type="button" onclick="setHomeCalcStyle('medium')" id="home-style-medium" class="s-btn active bg-[#1B3B2B] text-[#D4AF37] border border-[#D4AF37] font-bold py-2.5 px-3 rounded-2xl text-xs transition-all flex items-center justify-center gap-1.5 cursor-pointer shadow-md">
+                    <i data-lucide="star" class="w-3.5 h-3.5 text-[#D4AF37] fill-[#D4AF37]"></i>
+                    <span>متوسط</span>
+                  </button>
+
+                  <button type="button" onclick="setHomeCalcStyle('economic')" id="home-style-economic" class="s-btn bg-[#141A28] hover:bg-[#1E293B] text-slate-200 border border-[#C5A059]/30 font-bold py-2.5 px-3 rounded-2xl text-xs transition-all flex items-center justify-center gap-1.5 cursor-pointer">
+                    <i data-lucide="sparkles" class="w-3.5 h-3.5 text-[#D4AF37]"></i>
+                    <span>اقتصادی</span>
+                  </button>
                 </div>
-                <p class="text-[11px] leading-relaxed text-slate-200 font-medium">
-                  • **پاداش و انعام پرسنل کترینگ:** حداقل ۵ الی ۸ میلیون تومان جهت حق شارژ و خدمات سالن لحاظ نمایید.<br>
-                  • **ذخیره اضطراری (+۱۰٪):** مبلغ ۳۰ میلیون تومان را به عنوان بافر رزرو روز مراسم در نظر بگیرید.
-                </p>
               </div>
 
             </div>
@@ -7952,6 +7929,45 @@ window.shareReceiptWhatsApp = function() {
       const activeServices = bwState.services.filter(s => s.checked);
       const totalBudget = bwState.targetBudget;
 
+      // Sync userBudgetState for dashboard & planner summary
+      try {
+        localStorage.setItem('userBudgetState', JSON.stringify({
+          totalBudget: totalBudget,
+          scenario: bwState.style || 'medium',
+          guestsCount: bwState.guestCount || 250,
+          lastSyncedAt: new Date().toISOString(),
+          breakdown: {
+            venue: Math.round(totalBudget * 0.50),
+            photography: Math.round(totalBudget * 0.15),
+            beauty: Math.round(totalBudget * 0.10),
+            attire: Math.round(totalBudget * 0.05),
+            ceremony: Math.round(totalBudget * 0.20)
+          }
+        }));
+
+        let enterpriseState = {
+          totalBudget: totalBudget,
+          categories: [
+            { name: 'تالار و باغ پذیرایی', percentage: 50, icon: 'building' },
+            { name: 'عکاسی و فیلمبرداری', percentage: 15, icon: 'camera' },
+            { name: 'زیبایی و میکاپ', percentage: 10, icon: 'sparkles' },
+            { name: 'لباس و مزون', percentage: 5, icon: 'shirt' },
+            { name: 'تشریفات و تزئینات', percentage: 20, icon: 'flower-2' }
+          ],
+          lineItems: [
+            { id: 'bw-1', title: `ورودی تالار و کترینگ (${bwState.guestCount || 250} نفر)`, category: 'تالار و باغ پذیرایی', estimated: Math.round(totalBudget * 0.50), paid: 0, status: 'UNPAID', party: 'groom', notes: 'محاسبه شده توسط بودجه‌ریز AI' },
+            { id: 'bw-2', title: 'پکیج آتلیه عکاسی و فیلمبرداری', category: 'عکاسی و فیلمبرداری', estimated: Math.round(totalBudget * 0.15), paid: 0, status: 'UNPAID', party: 'shared', notes: 'محاسبه شده توسط بودجه‌ریز AI' },
+            { id: 'bw-3', title: 'پکیج میکاپ VIP عروس', category: 'زیبایی و میکاپ', estimated: Math.round(totalBudget * 0.10), paid: 0, status: 'UNPAID', party: 'bride', notes: 'محاسبه شده توسط بودجه‌ریز AI' },
+            { id: 'bw-4', title: 'اجاره لباس عروس و کت داماد', category: 'لباس و مزون', estimated: Math.round(totalBudget * 0.05), paid: 0, status: 'UNPAID', party: 'shared', notes: 'محاسبه شده توسط بودجه‌ریز AI' },
+            { id: 'bw-5', title: 'گل‌آرایی، سفره عقد و تشریفات', category: 'تشریفات و تزئینات', estimated: Math.round(totalBudget * 0.20), paid: 0, status: 'UNPAID', party: 'groom', notes: 'محاسبه شده توسط بودجه‌ریز AI' }
+          ]
+        };
+        localStorage.setItem('aroosi_enterprise_budget_db', JSON.stringify(enterpriseState));
+        if (typeof window.renderPlannerBudgetSummary === 'function') {
+          window.renderPlannerBudgetSummary();
+        }
+      } catch(e) {}
+
       // Separate custom fixed price services from weighted percentage services
       let sumFixedPrices = 0;
       activeServices.forEach(s => {
@@ -8000,22 +8016,45 @@ window.shareReceiptWhatsApp = function() {
         }
 
         const tr = document.createElement('tr');
-        tr.className = "hover:bg-slate-50 transition-colors";
+        tr.className = "hover:bg-[#1E293B]/60 transition-colors";
         tr.innerHTML = `
-          <td class="p-3.5 font-bold text-graphite flex items-center gap-2">
-            <div class="w-8 h-8 rounded-xl bg-primary/10 text-primary flex items-center justify-center shrink-0">
+          <td class="p-3.5 font-bold text-white flex items-center gap-2">
+            <div class="w-8 h-8 rounded-xl bg-[#D4AF37]/15 text-[#D4AF37] border border-[#D4AF37]/30 flex items-center justify-center shrink-0">
               <i data-lucide="${srv.icon}" class="w-4 h-4"></i>
             </div>
             <span>${srv.title}</span>
           </td>
-          <td class="p-3.5 font-bold text-primary">${percentageText}</td>
-          <td class="p-3.5 font-black text-graphite">${calculatedAmount.toLocaleString('fa-IR')} تومان</td>
-          <td class="p-3.5 text-secondary text-[11px] leading-relaxed">
+          <td class="p-3.5 font-bold text-amber-300">${percentageText}</td>
+          <td class="p-3.5 font-black text-[#D4AF37]">${calculatedAmount.toLocaleString('fa-IR')} تومان</td>
+          <td class="p-3.5 text-slate-300 text-[11px] leading-relaxed">
             برآورد سهم استاندارد متناسب با ${bwState.guestCount} نفر مهمان و سبک ${styleNames[bwState.style]}
           </td>
         `;
         tbody.appendChild(tr);
       });
+
+      // Render AI Matched Vendors for Wizard Result
+      const matchedGrid = document.getElementById('ai-wizard-matched-vendors-grid');
+      if (matchedGrid && typeof vendors !== 'undefined' && Array.isArray(vendors)) {
+        let matchedList = vendors.slice(0, 3);
+        if (totalBudget <= 200000000) {
+          matchedList = vendors.filter(v => parsePriceNumeric(v.priceRange) <= 45000000).slice(0, 3);
+        } else if (totalBudget >= 500000000) {
+          matchedList = vendors.filter(v => parsePriceNumeric(v.priceRange) >= 80000000).slice(0, 3);
+        }
+        if (matchedList.length === 0) matchedList = vendors.slice(0, 3);
+
+        matchedGrid.innerHTML = matchedList.map(v => `
+          <div onclick="openVendorDetailModal(${v.id})" class="bg-[#07090E] hover:bg-[#141A28] border border-[#C5A059]/30 hover:border-[#D4AF37] p-3 rounded-2xl flex items-center gap-3 cursor-pointer transition-all shadow-md group">
+            <img src="${v.image}" alt="${v.name}" class="w-14 h-14 rounded-xl object-cover border border-[#C5A059]/40 group-hover:scale-105 transition-transform shrink-0">
+            <div class="overflow-hidden space-y-0.5 text-right">
+              <span class="text-[9.5px] font-black text-amber-300 block truncate">${v.category}</span>
+              <h4 class="text-xs font-black text-white truncate">${v.name}</h4>
+              <span class="text-[10px] text-slate-300 font-bold block">${v.priceRange || 'استعلام قیمت'}</span>
+            </div>
+          </div>
+        `).join('');
+      }
 
       lucide.createIcons();
     }

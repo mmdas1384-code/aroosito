@@ -912,7 +912,7 @@
         </div>
       </section>
 
-      <!-- 6. GLASSMORPHISM AI BUDGET ESTIMATOR CONSOLE -->
+      <!-- 6. HIGH-TECH FROSTED GLASS CONSOLE: AI BUDGET CALCULATOR -->
       <section class="budget-calculator-section relative bg-[#0e121c]/90 backdrop-blur-xl border border-[#C5A059]/30 rounded-3xl p-6 shadow-2xl overflow-hidden my-8 text-white">
         <!-- Ambient Gold Radial Glow Background -->
         <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[450px] h-[450px] bg-[#D4AF37]/10 rounded-full blur-3xl pointer-events-none"></div>
@@ -922,95 +922,72 @@
           <div class="flex items-center justify-between border-b border-[#C5A059]/20 pb-4 flex-wrap gap-3">
             <div class="space-y-1 text-right">
               <span class="text-[11px] font-black text-[#D4AF37] tracking-wider flex items-center gap-1.5">
-                <i data-lucide="sparkles" class="w-4 h-4 text-[#D4AF37]"></i> دستیار و بودجه‌ریز هوشمند AI
+                <i data-lucide="bar-chart-3" class="w-4 h-4 text-[#D4AF37]"></i> پیش‌بینی سریع هزینه مراسم
               </span>
-              <h3 class="text-xl font-black text-[#F7F5F0]">کنسول هوشمند تخمین بودجه & تطبیق تامین‌کنندگان یزد</h3>
+              <h3 class="text-xl font-black text-[#F7F5F0]">کنسول تخمین سریع بودجه عروسی در استان یزد</h3>
             </div>
 
-            <button type="button" onclick="syncAiBudgetToUserDashboard()" class="gold-shimmer-btn text-[#0F251A] font-black py-2.5 px-5 rounded-2xl text-xs sm:text-sm transition-all flex items-center gap-2 shadow-lg cursor-pointer hover:scale-105 active:scale-95">
-              <span>✨ ذخیره و همگام‌سازی با پنل مدیریت من</span>
+            <button type="button" onclick="switchTab('tools')" class="gold-shimmer-btn text-[#0F251A] font-black py-2.5 px-5 rounded-2xl text-xs sm:text-sm transition-all flex items-center gap-2 shadow-lg cursor-pointer hover:scale-105 active:scale-95">
+              <span>✨ ورود به دستیار بودجه‌ریز کامل AI</span>
               <i data-lucide="arrow-left" class="w-4 h-4 text-[#0F251A]"></i>
             </button>
           </div>
 
           <!-- Console Main Content Grid (Result Price Display + Interactive Controls) -->
-          <div class="grid grid-cols-1 lg:grid-cols-12 gap-6 items-start">
+          <div class="grid grid-cols-1 lg:grid-cols-12 gap-6 items-center">
 
             <!-- Result Box: Large Striking Display with Ambient Gold Backlighting -->
-            <div class="lg:col-span-5 bg-[rgba(18,22,31,0.85)] border border-[rgba(197,160,89,0.35)] rounded-3xl p-6 text-center space-y-4 shadow-xl relative overflow-hidden group">
+            <div class="lg:col-span-5 bg-[rgba(20,26,38,0.85)] border border-[rgba(197,160,89,0.35)] rounded-3xl p-6 text-center space-y-3 shadow-xl relative overflow-hidden group">
               <div class="absolute -top-10 -right-10 w-32 h-32 bg-[#D4AF37]/15 rounded-full blur-2xl pointer-events-none"></div>
 
               <span class="text-xs font-bold text-slate-300 block">برآورد کل هزینه‌های اصلی مراسم:</span>
 
-              <div class="py-1">
+              <div class="py-2">
                 <h2 id="home-calc-result-price" class="text-2xl sm:text-3xl lg:text-4xl font-black text-[#F7F5F0] tracking-tight drop-shadow-[0_4px_15px_rgba(212,175,55,0.4)]">
                   ۳۸۰,۰۰۰,۰۰۰ تومان
                 </h2>
               </div>
 
-              <!-- One-Click Budget Scenario Presets -->
-              <div class="space-y-2 pt-2 border-t border-[#C5A059]/20">
-                <span class="text-[11px] font-bold text-amber-200 block text-right">سناریوهای آمادگی سریع:</span>
-                <div class="grid grid-cols-3 gap-2">
-                  <button type="button" onclick="applyBudgetScenario('economic')" class="bg-[#141A28] hover:bg-emerald-950/40 text-emerald-300 border border-emerald-500/40 font-bold py-2 rounded-xl text-xs transition-all flex flex-col items-center justify-center gap-0.5 cursor-pointer">
-                    <span class="text-[11px]">🟢 اقتصادی</span>
-                    <span class="text-[9px] text-emerald-400 font-bold">۱۵۰ میلیون تومان</span>
-                  </button>
-                  <button type="button" onclick="applyBudgetScenario('medium')" class="bg-[#1B3B2B] text-amber-300 border border-[#D4AF37] font-bold py-2 rounded-xl text-xs transition-all flex flex-col items-center justify-center gap-0.5 cursor-pointer shadow-md">
-                    <span class="text-[11px]">🟡 متوازن</span>
-                    <span class="text-[9px] text-amber-200 font-bold">۳۰۰ میلیون تومان</span>
-                  </button>
-                  <button type="button" onclick="applyBudgetScenario('luxury')" class="bg-[#141A28] hover:bg-amber-950/40 text-amber-300 border border-[#D4AF37]/50 font-bold py-2 rounded-xl text-xs transition-all flex flex-col items-center justify-center gap-0.5 cursor-pointer">
-                    <span class="text-[11px]">🌟 لوکس VIP</span>
-                    <span class="text-[9px] text-amber-300 font-bold">۶۰۰ میلیون تومان</span>
-                  </button>
-                </div>
-              </div>
-
-              <p class="text-[11px] text-amber-200/80 font-medium leading-relaxed bg-[#141A28] border border-[#C5A059]/20 rounded-2xl p-2.5 text-right">
-                💡 تفکیک هوشمند: تالار ۵۰٪ • عکاسی ۱۵٪ • میکاپ & لباس ۱۵٪ • تشریفات & تزئینات ۲۰٪
+              <p class="text-[11px] text-amber-200/80 font-medium leading-relaxed bg-[#141A28] border border-[#C5A059]/20 rounded-2xl p-2.5">
+                شامل ورودی تالار، شام، آتلیه، آرایشگاه، مزون لباس و شیرینی‌سرای یزد
               </p>
             </div>
 
-            <!-- Controls Box: Slider & Category Breakdown + AI Vendor Matching -->
-            <div class="lg:col-span-7 space-y-5 text-right">
+            <!-- Controls Box: Slider & Service Level Toggles -->
+            <div class="lg:col-span-7 bg-[rgba(20,26,38,0.85)] border border-[rgba(197,160,89,0.35)] rounded-3xl p-6 space-y-5 text-right shadow-xl">
 
               <!-- Guest Count Slider Row -->
-              <div class="bg-[rgba(18,22,31,0.85)] border border-[rgba(197,160,89,0.35)] rounded-3xl p-5 space-y-3 shadow-xl">
+              <div class="space-y-2">
                 <div class="flex items-center justify-between">
                   <span id="home-calc-guest-tag" class="text-xs font-black text-[#D4AF37] bg-[#D4AF37]/15 border border-[#D4AF37]/40 px-3 py-1 rounded-full shadow-sm">
                     250 نفر
                   </span>
-                  <label class="text-xs font-bold text-[#F7F5F0]">تعداد مهمانان تخمینی مراسم:</label>
+                  <label class="text-xs font-bold text-[#F7F5F0]">تعداد مهمانان تخمینی:</label>
                 </div>
 
                 <input type="range" id="home-calc-range" min="50" max="1000" step="25" value="250" oninput="updateHomeQuickBudget()" class="w-full accent-[#D4AF37] bg-[#141A28] h-2 rounded-lg cursor-pointer">
               </div>
 
-              <!-- AI Matched Directory Vendors Preview Container -->
-              <div class="bg-[rgba(18,22,31,0.85)] border border-[rgba(197,160,89,0.35)] rounded-3xl p-5 space-y-3 shadow-xl">
-                <div class="flex items-center justify-between border-b border-[#C5A059]/20 pb-2">
-                  <span class="text-[11px] font-black text-amber-300 flex items-center gap-1.5">
-                    <i data-lucide="store" class="w-3.5 h-3.5 text-[#D4AF37]"></i> پیشنهادهای منطبق در استان یزد
-                  </span>
-                  <span class="text-[10px] text-slate-400 font-bold">مطابق با رنج قیمتی شما</span>
-                </div>
+              <!-- Service Levels Toggles -->
+              <div class="space-y-2 pt-2 border-t border-[#C5A059]/20">
+                <label class="text-xs font-bold text-[#F7F5F0] block">سطح تشریفات و خدمات:</label>
 
-                <div id="ai-matched-vendors-container" class="grid grid-cols-1 sm:grid-cols-2 gap-3 pt-1">
-                  <!-- Rendered dynamically via updateHomeQuickBudget() -->
-                </div>
-              </div>
+                <div class="grid grid-cols-3 gap-2">
+                  <button type="button" onclick="setHomeCalcStyle('luxury')" id="home-style-luxury" class="s-btn bg-[#141A28] hover:bg-[#1E293B] text-slate-200 border border-[#C5A059]/30 font-bold py-2.5 px-3 rounded-2xl text-xs transition-all flex items-center justify-center gap-1.5 cursor-pointer">
+                    <i data-lucide="gem" class="w-3.5 h-3.5 text-[#D4AF37]"></i>
+                    <span>لوکس / VIP</span>
+                  </button>
 
-              <!-- AI Hidden Costs Warning Box -->
-              <div class="bg-amber-950/30 border border-amber-500/40 rounded-3xl p-4 text-xs space-y-2 text-amber-200">
-                <div class="flex items-center gap-2 font-black text-amber-300">
-                  <i data-lucide="alert-triangle" class="w-4 h-4 text-amber-300"></i>
-                  <span>💡 هشدارهای هوشمند AI (هزینه‌های پنهان مراسم)</span>
+                  <button type="button" onclick="setHomeCalcStyle('medium')" id="home-style-medium" class="s-btn active bg-[#1B3B2B] text-[#D4AF37] border border-[#D4AF37] font-bold py-2.5 px-3 rounded-2xl text-xs transition-all flex items-center justify-center gap-1.5 cursor-pointer shadow-md">
+                    <i data-lucide="star" class="w-3.5 h-3.5 text-[#D4AF37] fill-[#D4AF37]"></i>
+                    <span>متوسط</span>
+                  </button>
+
+                  <button type="button" onclick="setHomeCalcStyle('economic')" id="home-style-economic" class="s-btn bg-[#141A28] hover:bg-[#1E293B] text-slate-200 border border-[#C5A059]/30 font-bold py-2.5 px-3 rounded-2xl text-xs transition-all flex items-center justify-center gap-1.5 cursor-pointer">
+                    <i data-lucide="sparkles" class="w-3.5 h-3.5 text-[#D4AF37]"></i>
+                    <span>اقتصادی</span>
+                  </button>
                 </div>
-                <p class="text-[11px] leading-relaxed text-slate-200 font-medium">
-                  • **پاداش و انعام پرسنل کترینگ:** حداقل ۵ الی ۸ میلیون تومان جهت حق شارژ و خدمات سالن لحاظ نمایید.<br>
-                  • **ذخیره اضطراری (+۱۰٪):** مبلغ ۳۰ میلیون تومان را به عنوان بافر رزرو روز مراسم در نظر بگیرید.
-                </p>
               </div>
 
             </div>
@@ -4935,24 +4912,24 @@
     <!-- ========================================== -->
     <!-- VIEW 7: WEDDING BUDGET WIZARD MODULE      -->
     <!-- ========================================== -->
-    <div id="tab-tools" class="tab-content hidden space-y-8">
-      <section class="bg-white border border-accent rounded-3xl p-6 sm:p-10 shadow-xs space-y-8">
+    <div id="tab-tools" class="tab-content hidden space-y-8 text-white">
+      <section class="bg-[#0e121c]/90 backdrop-blur-2xl border border-[#C5A059]/40 rounded-3xl p-6 sm:p-10 shadow-2xl space-y-8">
 
         <!-- HEADER & STEPPER BAR -->
-        <div class="border-b border-accent pb-6 space-y-6">
+        <div class="border-b border-[#C5A059]/20 pb-6 space-y-6">
           <div class="flex flex-col sm:flex-row justify-between sm:items-center gap-4">
             <div class="flex items-center gap-3">
-              <div class="w-12 h-12 rounded-2xl bg-primary/10 flex items-center justify-center text-primary shrink-0">
-                <i data-lucide="calculator" class="w-6 h-6"></i>
+              <div class="w-12 h-12 rounded-2xl bg-[#D4AF37]/15 border border-[#D4AF37]/40 flex items-center justify-center text-[#D4AF37] shrink-0 shadow-md">
+                <i data-lucide="calculator" class="w-6 h-6 text-[#D4AF37]"></i>
               </div>
               <div>
-                <h2 class="text-xl font-bold text-graphite">موتور هوشمند برنامه‌ریزی و تخمین بودجه عروسی</h2>
-                <p class="text-xs text-secondary mt-0.5">Wedding Budget Wizard • محاسبه و تخصیص هوشمند سهم هزینه‌ها به تفکیک خدمات</p>
+                <h2 class="text-xl font-black text-[#F7F5F0]">موتور هوشمند برنامه‌ریزی و تخمین بودجه عروسی AI</h2>
+                <p class="text-xs text-slate-300 mt-0.5">Wedding Budget Wizard • محاسبه و تخصیص هوشمند سهم هزینه‌ها به تفکیک خدمات یزد</p>
               </div>
             </div>
 
-            <div id="wizard-step-badge" class="inline-flex items-center gap-2 bg-primary/10 text-primary border border-primary/20 px-4 py-2 rounded-2xl text-xs font-bold self-start sm:self-auto">
-              <i data-lucide="sparkles" class="w-4 h-4 text-primary"></i>
+            <div id="wizard-step-badge" class="inline-flex items-center gap-2 bg-[#D4AF37]/15 text-[#D4AF37] border border-[#D4AF37]/40 px-4 py-2 rounded-2xl text-xs font-bold self-start sm:self-auto shadow-sm">
+              <i data-lucide="sparkles" class="w-4 h-4 text-[#D4AF37]"></i>
               <span id="wizard-step-label">گام ۱ از ۴</span>
             </div>
           </div>
@@ -4960,11 +4937,11 @@
           <!-- Stepper Progress Bar -->
           <div class="space-y-2">
             <div class="flex justify-between items-center text-xs font-bold">
-              <span id="wizard-progress-title" class="text-primary">پایه مالی و موقعیت مکانی</span>
-              <span id="wizard-progress-percent" class="text-secondary">۲۵٪ تکمیل شده</span>
+              <span id="wizard-progress-title" class="text-amber-200">پایه مالی و موقعیت مکانی</span>
+              <span id="wizard-progress-percent" class="text-slate-300">۲۵٪ تکمیل شده</span>
             </div>
-            <div class="w-full bg-slate-100 rounded-full h-2.5 overflow-hidden border border-accent/60">
-              <div id="wizard-progress-bar" class="bg-primary h-full transition-all duration-300 rounded-full" style="width: 25%"></div>
+            <div class="w-full bg-[#141A28] rounded-full h-2.5 overflow-hidden border border-[#C5A059]/30">
+              <div id="wizard-progress-bar" class="bg-gradient-to-r from-[#D4AF37] to-[#F3E5AB] h-full transition-all duration-300 rounded-full" style="width: 25%"></div>
             </div>
           </div>
         </div>
@@ -4972,22 +4949,22 @@
         <!-- WIZARD STEP 1: FINANCIAL BASELINE & LOCATION -->
         <div id="bw-step-1" class="bw-step-panel space-y-6">
           <div class="space-y-1">
-            <h3 class="text-lg font-bold text-graphite flex items-center gap-2">
-              <span class="w-7 h-7 rounded-xl bg-primary text-white flex items-center justify-center text-xs font-black">۱</span>
+            <h3 class="text-lg font-black text-amber-200 flex items-center gap-2">
+              <span class="w-7 h-7 rounded-xl bg-[#D4AF37] text-[#0F251A] flex items-center justify-center text-xs font-black shadow-md">۱</span>
               <span>سقف بودجه کل و موقعیت برگزاری مراسم</span>
             </h3>
-            <p class="text-xs text-secondary mr-9">میزان بودجه مد نظر و استان محل برگزاری را جهت اعمال ضریب تورم منطقه‌ای مشخص کنید.</p>
+            <p class="text-xs text-slate-300 mr-9 font-medium">میزان بودجه مد نظر و استان محل برگزاری را جهت اعمال ضریب تورم منطقه‌ای مشخص کنید.</p>
           </div>
 
-          <div class="grid grid-cols-1 md:grid-cols-2 gap-6 bg-bgCustom p-6 rounded-2xl border border-accent">
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-6 bg-[#141A28]/90 p-6 rounded-3xl border border-[#C5A059]/30 shadow-xl">
             <!-- Target Budget Input -->
             <div class="space-y-2">
-              <label class="block text-xs font-bold text-graphite">سقف بودجه کل (تومان) *</label>
+              <label class="block text-xs font-bold text-slate-200">سقف بودجه کل (تومان) *</label>
               <div class="relative">
-                <input type="number" id="bw-budget-input" value="350000000" step="10000000" oninput="updateBudgetFormattedDisplay()" class="w-full bg-white border border-accent rounded-xl p-3 text-base font-black text-primary focus:outline-none focus:border-primary pl-16">
-                <span class="absolute left-3 top-3.5 text-xs font-bold text-secondary">تومان</span>
+                <input type="number" id="bw-budget-input" value="300000000" step="10000000" oninput="updateBudgetFormattedDisplay()" class="w-full bg-[#07090E] border border-[#C5A059]/40 rounded-xl p-3 text-base font-black text-[#D4AF37] focus:outline-none focus:border-[#D4AF37] pl-16">
+                <span class="absolute left-3 top-3.5 text-xs font-bold text-slate-400">تومان</span>
               </div>
-              <span id="bw-budget-formatted" class="block text-xs font-bold text-primary">۳۵۰,۰۰۰,۰۰۰ تومان (سیصد و پنجاه میلیون تومان)</span>
+              <span id="bw-budget-formatted" class="block text-xs font-bold text-[#D4AF37]">۳۰۰,۰۰۰,۰۰۰ تومان (سیصد میلیون تومان)</span>
             </div>
 
             <!-- Hidden Costs Buffer (+10%) Toggle -->
@@ -5007,19 +4984,19 @@
 
             <!-- Yazd Presets & Location Selection -->
             <div class="space-y-3 md:col-span-2">
-              <label class="block text-xs font-bold text-graphite">پکیج‌های بودجه پیشنهادی بازار یزد (Yazd Market Presets):</label>
+              <label class="block text-xs font-bold text-slate-200">پکیج‌های بودجه پیشنهادی بازار یزد (Yazd Market Presets):</label>
               <div class="grid grid-cols-1 sm:grid-cols-3 gap-2.5 text-xs font-bold">
-                <button type="button" onclick="applyYazdBudgetPreset(150000000)" class="p-3 bg-white hover:bg-emerald-50 border border-accent hover:border-primary rounded-xl text-right transition-all shadow-xs group">
-                  <span class="block text-primary font-black">🌱 اقتصادی (۱۵۰ میلیون)</span>
-                  <span class="text-[11px] text-secondary font-medium block mt-0.5">مراسم ضروری و صمیمی یزد</span>
+                <button type="button" onclick="applyYazdBudgetPreset(150000000)" class="p-3.5 bg-[#07090E] hover:bg-emerald-950/40 border border-emerald-500/40 hover:border-emerald-400 rounded-2xl text-right transition-all shadow-md group">
+                  <span class="block text-emerald-400 font-black text-sm">🟢 اقتصادی (۱۵۰ میلیون)</span>
+                  <span class="text-[11px] text-slate-300 font-medium block mt-1">مراسم ضروری و صمیمی یزد</span>
                 </button>
-                <button type="button" onclick="applyYazdBudgetPreset(350000000)" class="p-3 bg-primary/10 border-2 border-primary rounded-xl text-right transition-all shadow-xs group">
-                  <span class="block text-primary font-black">⭐️ متوسط و مرسوم (۳۵۰ میلیون)</span>
-                  <span class="text-[11px] text-secondary font-medium block mt-0.5">معیار بومی تالار و آتلیه یزد</span>
+                <button type="button" onclick="applyYazdBudgetPreset(300000000)" class="p-3.5 bg-[#1B3B2B] border-2 border-[#D4AF37] rounded-2xl text-right transition-all shadow-lg group">
+                  <span class="block text-amber-300 font-black text-sm">🟡 متوازن (۳۰۰ میلیون)</span>
+                  <span class="text-[11px] text-amber-200 font-medium block mt-1">معیار بومی تالار و آتلیه یزد</span>
                 </button>
-                <button type="button" onclick="applyYazdBudgetPreset(750000000)" class="p-3 bg-white hover:bg-emerald-50 border border-accent hover:border-primary rounded-xl text-right transition-all shadow-xs group">
-                  <span class="block text-primary font-black">👑 لوکس و تشریفاتی (۷۵۰ میلیون)</span>
-                  <span class="text-[11px] text-secondary font-medium block mt-0.5">صفائیه/قصر + فرمالیته کویر</span>
+                <button type="button" onclick="applyYazdBudgetPreset(600000000)" class="p-3.5 bg-[#07090E] hover:bg-amber-950/40 border border-[#D4AF37]/50 hover:border-[#D4AF37] rounded-2xl text-right transition-all shadow-md group">
+                  <span class="block text-amber-300 font-black text-sm">🌟 لوکس VIP (۶۰۰ میلیون)</span>
+                  <span class="text-[11px] text-slate-300 font-medium block mt-1">صفائیه/قصر + فرمالیته کویر</span>
                 </button>
               </div>
             </div>
@@ -5178,52 +5155,56 @@
 
         <!-- WIZARD STEP 5: DYNAMIC CALCULATED RESULT VIEW -->
         <div id="bw-step-result" class="bw-step-panel hidden space-y-8">
-          <div class="bg-primary/10 border border-primary/20 rounded-3xl p-6 sm:p-8 space-y-6">
-            <div class="flex flex-col sm:flex-row justify-between sm:items-center gap-4 border-b border-primary/20 pb-4">
+          <div class="bg-[#141A28]/90 border border-[#C5A059]/40 rounded-3xl p-6 sm:p-8 space-y-6 shadow-xl">
+            <div class="flex flex-col sm:flex-row justify-between sm:items-center gap-4 border-b border-[#C5A059]/30 pb-4">
               <div>
-                <span class="text-xs font-bold text-primary">نتیجه محاسبات هوشمند</span>
-                <h3 class="text-2xl font-black text-graphite mt-0.5">جدول برآورد و تخصیص بهینه بودجه</h3>
+                <span class="text-xs font-black text-amber-300">نتیجه محاسبات دستیار هوشمند AI</span>
+                <h3 class="text-2xl font-black text-[#F7F5F0] mt-0.5">جدول برآورد و تخصیص بهینه بودجه</h3>
               </div>
 
-              <div class="flex items-center gap-3">
-                <button type="button" onclick="exportBudgetSummaryCsv()" class="bg-white hover:bg-slate-50 text-graphite border border-accent px-4 py-2.5 rounded-xl text-xs font-bold transition-all flex items-center gap-1.5 shadow-xs">
-                  <i data-lucide="download" class="w-4 h-4 text-primary"></i>
-                  <span>دانلود خروجی CSV / چاپ</span>
+              <div class="flex items-center gap-3 flex-wrap">
+                <button type="button" onclick="syncAiBudgetToUserDashboard()" class="gold-shimmer-btn text-[#0F251A] font-black px-5 py-2.5 rounded-2xl text-xs transition-all flex items-center gap-1.5 shadow-lg hover:scale-105 active:scale-95 cursor-pointer">
+                  <i data-lucide="sparkles" class="w-4 h-4 text-[#0F251A]"></i>
+                  <span>✨ ذخیره و همگام‌سازی با پنل مدیریت من</span>
                 </button>
-                <button type="button" onclick="resetBwWizard()" class="bg-white hover:bg-slate-50 text-graphite border border-accent px-4 py-2.5 rounded-xl text-xs font-bold transition-all flex items-center gap-1.5 shadow-xs">
-                  <i data-lucide="rotate-ccw" class="w-4 h-4 text-primary"></i>
-                  <span>ویرایش مجدد پاسخ‌ها</span>
+                <button type="button" onclick="exportBudgetSummaryCsv()" class="bg-[#1E293B] hover:bg-[#2A384C] text-slate-200 border border-[#C5A059]/30 px-4 py-2.5 rounded-xl text-xs font-bold transition-all flex items-center gap-1.5 shadow-xs cursor-pointer">
+                  <i data-lucide="download" class="w-4 h-4 text-[#D4AF37]"></i>
+                  <span>دانلود CSV / چاپ</span>
+                </button>
+                <button type="button" onclick="resetBwWizard()" class="bg-[#1E293B] hover:bg-[#2A384C] text-slate-200 border border-[#C5A059]/30 px-4 py-2.5 rounded-xl text-xs font-bold transition-all flex items-center gap-1.5 shadow-xs cursor-pointer">
+                  <i data-lucide="rotate-ccw" class="w-4 h-4 text-[#D4AF37]"></i>
+                  <span>ویرایش پاسخ‌ها</span>
                 </button>
               </div>
             </div>
 
             <!-- Overall Summary Banner -->
             <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
-              <div class="bg-white p-4 rounded-2xl border border-accent">
-                <span class="text-[11px] font-bold text-secondary">سقف بودجه کل:</span>
-                <span id="res-total-budget" class="block text-lg font-black text-primary mt-1">۳۵۰,۰۰۰,۰۰۰ تومان</span>
+              <div class="bg-[#07090E] p-4 rounded-2xl border border-[#C5A059]/30 text-right">
+                <span class="text-[11px] font-bold text-slate-400 block">سقف بودجه کل:</span>
+                <span id="res-total-budget" class="block text-lg font-black text-[#D4AF37] mt-1">۳۰۰,۰۰۰,۰۰۰ تومان</span>
               </div>
-              <div class="bg-white p-4 rounded-2xl border border-accent">
-                <span class="text-[11px] font-bold text-secondary">سبک و شهر:</span>
-                <span id="res-style-city" class="block text-sm font-bold text-graphite mt-1">مدرن و شیک • تهران</span>
+              <div class="bg-[#07090E] p-4 rounded-2xl border border-[#C5A059]/30 text-right">
+                <span class="text-[11px] font-bold text-slate-400 block">سبک و شهر:</span>
+                <span id="res-style-city" class="block text-sm font-bold text-white mt-1">مدرن و شیک • یزد</span>
               </div>
-              <div class="bg-white p-4 rounded-2xl border border-accent">
-                <span class="text-[11px] font-bold text-secondary">تعداد خدمات فعال:</span>
-                <span id="res-active-services-count" class="block text-sm font-bold text-graphite mt-1">۸ خدمت منتخب</span>
+              <div class="bg-[#07090E] p-4 rounded-2xl border border-[#C5A059]/30 text-right">
+                <span class="text-[11px] font-bold text-slate-400 block">تعداد خدمات فعال:</span>
+                <span id="res-active-services-count" class="block text-sm font-bold text-white mt-1">۸ خدمت منتخب</span>
               </div>
             </div>
           </div>
 
           <!-- Itemized Breakdown Table -->
-          <div class="bg-white border border-accent rounded-3xl p-6 shadow-xs space-y-4">
-            <h4 class="text-base font-bold text-graphite flex items-center gap-2 border-b border-accent pb-3">
-              <i data-lucide="list-checks" class="w-5 h-5 text-primary"></i>
+          <div class="bg-[#141A28]/90 border border-[#C5A059]/40 rounded-3xl p-6 shadow-xl space-y-4 text-right">
+            <h4 class="text-base font-black text-[#D4AF37] flex items-center gap-2 border-b border-[#C5A059]/20 pb-3">
+              <i data-lucide="list-checks" class="w-5 h-5 text-[#D4AF37]"></i>
               <span>تفکیک دقیق بودجه هدف برای خدمات فعال</span>
             </h4>
 
             <div class="overflow-x-auto">
               <table class="w-full text-right text-xs">
-                <thead class="bg-bgCustom text-secondary border-b border-accent font-bold">
+                <thead class="bg-[#07090E] text-amber-200 border-b border-[#C5A059]/30 font-bold">
                   <tr>
                     <th class="p-3">عنوان خدمت</th>
                     <th class="p-3">درصد تخصیصی</th>
@@ -5231,11 +5212,38 @@
                     <th class="p-3">پیشنهاد هوشمند / توضیحات</th>
                   </tr>
                 </thead>
-                <tbody id="bw-result-table-body" class="divide-y divide-accent/60 font-medium">
+                <tbody id="bw-result-table-body" class="divide-y divide-slate-800 font-medium text-slate-200">
                   <!-- Dynamically populated via JS -->
                 </tbody>
               </table>
             </div>
+          </div>
+
+          <!-- AI Matched Directory Vendors Preview Container -->
+          <div class="bg-[#141A28]/90 border border-[#C5A059]/40 rounded-3xl p-6 space-y-4 text-right shadow-xl">
+            <div class="flex items-center justify-between border-b border-[#C5A059]/20 pb-3">
+              <h4 class="text-base font-black text-[#D4AF37] flex items-center gap-2">
+                <i data-lucide="store" class="w-5 h-5 text-[#D4AF37]"></i>
+                <span>تامین‌کنندگان پیشنهادی منطبق در استان یزد</span>
+              </h4>
+              <span class="text-xs text-slate-400 font-bold">بر اساس بودجه انتخابی</span>
+            </div>
+
+            <div id="ai-wizard-matched-vendors-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 pt-1">
+              <!-- Dynamically populated via JS -->
+            </div>
+          </div>
+
+          <!-- AI Hidden Costs Warning Box -->
+          <div class="bg-amber-950/40 border border-amber-500/50 rounded-3xl p-5 text-xs space-y-3 text-amber-200 text-right shadow-lg">
+            <div class="flex items-center gap-2 font-black text-amber-300 text-sm">
+              <i data-lucide="alert-triangle" class="w-5 h-5 text-amber-300"></i>
+              <span>💡 هشدارهای هوشمند AI (هزینه‌های پنهان و غیرقابل‌پیش‌بینی)</span>
+            </div>
+            <p class="text-xs leading-relaxed text-slate-200 font-medium">
+              • **حق شارژ و انعام پرسنل:** حداقل ۵ الی ۸ درصد مبلغ تالار جهت شارژ سالن و انعام پرسنل کترینگ محاسبه شود.<br>
+              • **بافر رزرو اضطراری (+۱۰٪):** همواره مبلغ ۱۰٪ کل بودجه را به عنوان رزرو در حساب نگه دارید تا از بروز کمبودهای مالی روز مراسم جلوگیری شود.
+            </p>
           </div>
         </div>
 
