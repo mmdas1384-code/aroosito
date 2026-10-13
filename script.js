@@ -1815,46 +1815,46 @@ if (document.readyState === "loading") {
       tbody.innerHTML = filtered.map(g => {
         let statusBadge = "";
         if (g.status === "CONFIRMED") {
-          statusBadge = '<span class="inline-flex items-center gap-1 px-2.5 py-1 rounded-full bg-emerald-100 text-emerald-800 text-[11px] font-bold"><i data-lucide="check" class="w-3 h-3"></i> تایید شده</span>';
+          statusBadge = '<span class="inline-flex items-center gap-1 px-2.5 py-1 rounded-full bg-emerald-950/80 text-emerald-400 border border-emerald-500/40 text-[11px] font-bold"><i data-lucide="check" class="w-3 h-3"></i> تایید شده</span>';
         } else if (g.status === "DECLINED") {
-          statusBadge = '<span class="inline-flex items-center gap-1 px-2.5 py-1 rounded-full bg-rose-100 text-rose-800 text-[11px] font-bold"><i data-lucide="x" class="w-3 h-3"></i> عذرخواهی کرده</span>';
+          statusBadge = '<span class="inline-flex items-center gap-1 px-2.5 py-1 rounded-full bg-rose-950/80 text-rose-400 border border-rose-500/40 text-[11px] font-bold"><i data-lucide="x" class="w-3 h-3"></i> عذرخواهی کرده</span>';
         } else {
-          statusBadge = '<span class="inline-flex items-center gap-1 px-2.5 py-1 rounded-full bg-amber-100 text-amber-800 text-[11px] font-bold"><i data-lucide="clock" class="w-3 h-3"></i> در انتظار</span>';
+          statusBadge = '<span class="inline-flex items-center gap-1 px-2.5 py-1 rounded-full bg-[#07090E] text-[#C5A059] border border-[#C5A059]/40 text-[11px] font-bold"><i data-lucide="clock" class="w-3 h-3"></i> در انتظار</span>';
         }
 
         const waMessage = encodeURIComponent("سلام " + g.name + " عزیز، کارت دعوت دیجیتال عروسی ما آماده است. خوشحال می‌شویم با کلیک روی لینک زیر حضور گرم خود را اعلام فرمایید:");
         const waLink = "https://wa.me/" + g.phone.replace(/^0/, "98") + "?text=" + waMessage;
 
         return `
-          <tr class="hover:bg-slate-50/80 transition-colors">
+          <tr class="hover:bg-[#1E293B]/50 transition-colors text-white">
             <td class="p-3.5">
-              <div class="font-bold text-graphite">${g.name}</div>
-              <span class="inline-block mt-0.5 text-[10px] bg-slate-100 text-secondary border border-accent px-2 py-0.5 rounded-md">${g.side}</span>
+              <div class="font-bold text-[#F7F5F0]">${g.name}</div>
+              <span class="inline-block mt-0.5 text-[10px] bg-[#07090E] text-slate-300 border border-[#C5A059]/30 px-2 py-0.5 rounded-md">${g.side}</span>
             </td>
             <td class="p-3.5">
-              <div class="text-xs text-graphite font-mono">${g.phone}</div>
-              <a href="${waLink}" target="_blank" class="inline-flex items-center gap-1 text-[11px] text-emerald-700 hover:text-emerald-900 font-bold mt-0.5">
+              <div class="text-xs text-slate-300 font-mono">${g.phone}</div>
+              <a href="${waLink}" target="_blank" class="inline-flex items-center gap-1 text-[11px] text-emerald-400 hover:underline font-bold mt-0.5">
                 <i data-lucide="send" class="w-3 h-3"></i> ارسال کارت در واتساپ
               </a>
             </td>
-            <td class="p-3.5 text-center font-bold">
+            <td class="p-3.5 text-center font-bold text-slate-200">
               + ${g.companions} همراه
             </td>
             <td class="p-3.5 text-center">
-              <span class="bg-emerald-50 text-primary border border-emerald-200 px-2.5 py-1 rounded-lg text-xs font-bold">${g.table || "تعیین نشده"}</span>
+              <span class="bg-[#07090E] text-[#C5A059] border border-[#C5A059]/30 px-2.5 py-1 rounded-lg text-xs font-bold">${g.table || "تعیین نشده"}</span>
             </td>
             <td class="p-3.5 text-center">
               ${statusBadge}
             </td>
             <td class="p-3.5 text-center">
               <div class="flex items-center justify-center gap-1.5">
-                <button onclick="toggleGuestRsvp('${g.id}')" title="تغییر سریع وضعیت RSVP" class="p-1.5 rounded-lg bg-bgCustom hover:bg-slate-200 border border-accent text-primary">
+                <button onclick="toggleGuestRsvp('${g.id}')" title="تغییر سریع وضعیت RSVP" class="p-1.5 rounded-lg bg-[#07090E] hover:bg-[#1E293B] border border-[#C5A059]/30 text-[#C5A059] cursor-pointer">
                   <i data-lucide="refresh-cw" class="w-3.5 h-3.5"></i>
                 </button>
-                <button onclick="editGuest('${g.id}')" title="ویرایش مهمان" class="p-1.5 rounded-lg bg-bgCustom hover:bg-slate-200 border border-accent text-graphite">
+                <button onclick="editGuest('${g.id}')" title="ویرایش مهمان" class="p-1.5 rounded-lg bg-[#07090E] hover:bg-[#1E293B] border border-[#C5A059]/30 text-[#F7F5F0] cursor-pointer">
                   <i data-lucide="edit-3" class="w-3.5 h-3.5"></i>
                 </button>
-                <button onclick="deleteGuest('${g.id}')" title="حذف مهمان" class="p-1.5 rounded-lg bg-rose-50 hover:bg-rose-100 border border-rose-200 text-rose-600">
+                <button onclick="deleteGuest('${g.id}')" title="حذف مهمان" class="p-1.5 rounded-lg bg-rose-950/60 border border-rose-800/50 text-rose-400 cursor-pointer">
                   <i data-lucide="trash-2" class="w-3.5 h-3.5"></i>
                 </button>
               </div>
@@ -1876,16 +1876,16 @@ if (document.readyState === "loading") {
       }
 
       tbody.innerHTML = giftLedgerState.map(g => `
-        <tr class="hover:bg-slate-50/80 transition-colors">
-          <td class="p-3.5 font-bold text-graphite">${g.guestName}</td>
+        <tr class="hover:bg-[#1E293B]/50 transition-colors text-white">
+          <td class="p-3.5 font-bold text-[#F7F5F0]">${g.guestName}</td>
           <td class="p-3.5">
-            <span class="px-2.5 py-1 bg-amber-50 text-amber-800 border border-amber-200 rounded-lg text-xs font-bold">${g.type}</span>
+            <span class="px-2.5 py-1 bg-[#07090E] text-[#C5A059] border border-[#C5A059]/40 rounded-lg text-xs font-bold">${g.type}</span>
           </td>
-          <td class="p-3.5 font-black text-primary">${(parseInt(g.amount) || 0).toLocaleString("fa-IR")} تومان</td>
-          <td class="p-3.5 text-secondary font-medium">${g.method}</td>
-          <td class="p-3.5 text-xs text-graphite">${g.notes || "-"}</td>
+          <td class="p-3.5 font-black text-[#C5A059]">${(parseInt(g.amount) || 0).toLocaleString("fa-IR")} تومان</td>
+          <td class="p-3.5 text-slate-300 font-medium">${g.method}</td>
+          <td class="p-3.5 text-xs text-slate-300">${g.notes || "-"}</td>
           <td class="p-3.5 text-center">
-            <button onclick="deleteGift('${g.id}')" class="p-1.5 rounded-lg bg-rose-50 hover:bg-rose-100 border border-rose-200 text-rose-600">
+            <button onclick="deleteGift('${g.id}')" class="p-1.5 rounded-lg bg-rose-950/60 border border-rose-800/50 text-rose-400 cursor-pointer">
               <i data-lucide="trash-2" class="w-3.5 h-3.5"></i>
             </button>
           </td>
@@ -5663,41 +5663,41 @@ if (document.readyState === "loading") {
       inquiries.forEach((inq, idx) => {
         const currentStatus = inq.status || 'pending';
         const card = document.createElement('div');
-        card.className = "bg-bgCustom border border-accent rounded-2xl p-5 space-y-3 shadow-xs hover:border-primary/40 transition-all";
+        card.className = "bg-[#141A28] border border-[#C5A059]/30 hover:border-[#C5A059]/60 rounded-2xl p-5 space-y-3 shadow-lg transition-all text-white";
         card.innerHTML = `
           <div class="flex flex-col sm:flex-row justify-between sm:items-center gap-2">
             <div>
-              <span class="text-xs font-bold text-secondary block">درخواست ثبت شده برای:</span>
-              <h4 class="text-base font-black text-graphite">${inq.vendorName || 'تامین‌کننده مجلل یزد'}</h4>
+              <span class="text-xs font-bold text-slate-400 block">درخواست ثبت شده برای:</span>
+              <h4 class="text-base font-black text-[#F7F5F0]">${inq.vendorName || 'تامین‌کننده مجلل یزد'}</h4>
             </div>
             <span class="text-xs font-bold px-3 py-1 rounded-full ${
-              currentStatus === 'booked' ? 'bg-emerald-100 text-emerald-800 border border-emerald-300' :
-              currentStatus === 'replied' ? 'bg-blue-100 text-blue-800 border border-blue-300' :
-              currentStatus === 'cancelled' ? 'bg-rose-100 text-rose-800 border border-rose-300' :
-              'bg-amber-100 text-amber-800 border border-amber-300'
+              currentStatus === 'booked' ? 'bg-emerald-950/80 text-emerald-400 border border-emerald-500/40' :
+              currentStatus === 'replied' ? 'bg-blue-950/80 text-blue-300 border border-blue-500/40' :
+              currentStatus === 'cancelled' ? 'bg-rose-950/80 text-rose-400 border border-rose-500/40' :
+              'bg-[#07090E] text-[#C5A059] border border-[#C5A059]/40'
             }">
               ${currentStatus === 'booked' ? 'رزرو نهایی شد 🎉' : currentStatus === 'replied' ? 'پاسخ و پیشنهاد جدید دریافت شد 📩' : currentStatus === 'cancelled' ? 'لغو شده' : 'در انتظار بررسی تامین‌کننده ⏳'}
             </span>
           </div>
 
-          <div class="flex flex-wrap items-center gap-4 text-xs text-secondary font-medium bg-white p-3 rounded-xl border border-accent/60">
-            <span><strong>تاریخ مراسم:</strong> ${inq.date || '۱۴۰۳/۰۶/۱۵'}</span>
-            <span><strong>تعداد مهمانان:</strong> ${inq.guests || 200} نفر</span>
-            <span><strong>پکیج درخواستی:</strong> ${inq.package || inq.service || 'پکیج اصلی'}</span>
+          <div class="flex flex-wrap items-center gap-4 text-xs text-slate-300 font-medium bg-[#07090E] p-3 rounded-xl border border-[#C5A059]/20">
+            <span><strong class="text-[#C5A059]">تاریخ مراسم:</strong> ${inq.date || '۱۴۰۳/۰۶/۱۵'}</span>
+            <span><strong class="text-[#C5A059]">تعداد مهمانان:</strong> ${inq.guests || 200} نفر</span>
+            <span><strong class="text-[#C5A059]">پکیج درخواستی:</strong> ${inq.package || inq.service || 'پکیج اصلی'}</span>
           </div>
 
           ${inq.replyMsg ? `
-            <div class="bg-emerald-50/80 border border-emerald-200 rounded-xl p-3.5 space-y-1.5 text-xs text-emerald-900">
-              <span class="font-bold text-primary flex items-center gap-1.5">
-                <i data-lucide="check-circle" class="w-4 h-4 text-primary"></i>
+            <div class="bg-[#07090E] border border-[#C5A059]/40 rounded-xl p-3.5 space-y-1.5 text-xs text-white">
+              <span class="font-bold text-[#C5A059] flex items-center gap-1.5">
+                <i data-lucide="check-circle" class="w-4 h-4 text-[#C5A059]"></i>
                 <span>پاسخ و کاتالوگ ارسالی تامین‌کننده:</span>
               </span>
-              <p class="font-medium leading-relaxed">${inq.replyMsg}</p>
+              <p class="font-medium leading-relaxed text-slate-200">${inq.replyMsg}</p>
             </div>
           ` : ''}
 
           <div class="flex justify-end gap-2 pt-1">
-            <button onclick="switchTab('messages')" class="bg-primary hover:bg-emerald-900 text-white font-bold px-4 py-2 rounded-xl text-xs transition-colors flex items-center gap-1.5 shadow-xs">
+            <button onclick="switchTab('messages')" class="bg-[#C5A059] hover:bg-[#D4AF37] text-[#07090E] font-black px-4 py-2 rounded-xl text-xs transition-all flex items-center gap-1.5 shadow-md cursor-pointer">
               <i data-lucide="message-circle" class="w-4 h-4"></i>
               <span>گفتگو و مشاهده پیش‌فاکتور</span>
             </button>
