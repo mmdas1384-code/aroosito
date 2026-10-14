@@ -2,6 +2,7 @@
 :root, html[data-theme="dark"] {
   --bg-main: #07090E;
   --bg-card: rgba(18, 22, 31, 0.85);
+  --bg-hero: radial-gradient(circle at top, #111622, #07090E);
   --bg-input: #12161F;
   --text-primary: #FFFFFF;
   --text-secondary: #9CA3AF;
@@ -25,6 +26,7 @@
 html[data-theme="light"] {
   --bg-main: #F4F1EA;
   --bg-card: rgba(255, 255, 255, 0.94);
+  --bg-hero: linear-gradient(135deg, #0B4F50, #0A3C3D);
   --bg-input: #FFFFFF;
   --text-primary: #0D131F;
   --text-secondary: #4A5568;
@@ -34,7 +36,7 @@ html[data-theme="light"] {
   --card-shadow: 0 10px 30px rgba(11, 79, 80, 0.08);
 
   /* Aliases for compatibility */
-  --accent-gold: var(--accent-main);
+  --accent-gold: #9E7728;
   --accent-hover: #083c3d;
   --border-color: var(--border-glow);
   --shadow-glow: var(--card-shadow);
@@ -128,6 +130,11 @@ body, .glass-card {
 [data-theme="light"] .text-slate-200,
 [data-theme="light"] .text-slate-300 {
   color: var(--text-primary) !important;
+}
+
+[data-theme="light"] .text-slate-400,
+[data-theme="light"] .text-gray-400 {
+  color: var(--text-secondary) !important;
 }
 
 [data-theme="light"] .text-amber-200,
