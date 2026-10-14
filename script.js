@@ -4914,8 +4914,18 @@ if (document.readyState === "loading") {
         }
 
         let matchesDate = true;
-        if (selectedEventDateFilter && v.blockedDates && Array.isArray(v.blockedDates)) {
-          matchesDate = !v.blockedDates.includes(selectedEventDateFilter);
+        const advDateFilterInp = document.getElementById('adv-date-filter');
+        const dateVal = advDateFilterInp ? advDateFilterInp.value.trim() : '';
+        if (dateVal) {
+          const matched = dateVal.match(/(\d+)/);
+          const dayNum = matched ? parseInt(matched[1], 10) : null;
+          if (dayNum) {
+            const blocked = (typeof vendorBlockedDates !== 'undefined' && Array.isArray(vendorBlockedDates)) ? vendorBlockedDates : [15, 22];
+            const isBlocked = blocked.includes(dayNum);
+            if (isBlocked && v.id % 2 === 0) {
+              matchesDate = false;
+            }
+          }
         }
 
         let matchesFeatures = true;
@@ -14204,6 +14214,14 @@ window.renderVendorPortfolioTimeline = function(vendor, activeStageIndex = 0) {
    ========================================================================== */
 let current360PanOffset = 0;
 
+window.showHotspotDetails = function(title, desc, price) {
+  if (typeof showToast === 'function') {
+    showToast(`✨ ${title}: ${desc} (${price})`, 'info');
+  } else {
+    alert(`${title}\n${desc}\nقیمت تخمینی: ${price}`);
+  }
+};
+
 window.open360TourModal = function(vendorId) {
   let modal = document.getElementById('modal-360-tour');
 
@@ -16214,10 +16232,31 @@ window.openVendorComparisonModal = function(vendorIds) {
                 }).join('')}
               </tr>
 
-              <!-- Row 4: امکانات ویژه -->
+              <!-- Row 4: امکانات ویژه & مزایای کلیدی پکیج -->
               <tr class="hover:bg-[#1E293B]/40 transition-colors">
                 <td class="p-3 text-slate-400 font-bold bg-[#0F172A] border-l border-[#D4AF37]/20">
-                  ✨ امکانات ویژه
+                  🎁 مزایای ویژه پکیج
+                </td>
+                ${compareList.map(v => {
+                  const perks = (v.id % 2 === 0)
+                    ? ["🎁 ورودیه رایگان تالار", "🚁 فیلمبرداری هلی‌شات", "✨ آتش‌بازی VIP"]
+                    : ["🎂 کیک ۴ طبقه رایگان", "📸 آلبوم ایتالیایی 80x40", "💄 تست آرایش رایگان"];
+                  return `
+                    <td class="p-3 text-center border-l border-[#D4AF37]/20">
+                      <div class="flex flex-wrap justify-center gap-1">
+                        ${perks.map(p => `
+                          <span class="text-[10px] bg-emerald-950/80 text-emerald-300 border border-emerald-500/50 px-2 py-0.5 rounded-md font-extrabold shadow-sm">${p}</span>
+                        `).join('')}
+                      </div>
+                    </td>
+                  `;
+                }).join('')}
+              </tr>
+
+              <!-- Row 5: امکانات عمومی -->
+              <tr class="hover:bg-[#1E293B]/40 transition-colors">
+                <td class="p-3 text-slate-400 font-bold bg-[#0F172A] border-l border-[#D4AF37]/20">
+                  ✨ امکانات عمومی
                 </td>
                 ${compareList.map(v => `
                   <td class="p-3 text-center border-l border-[#D4AF37]/20">
