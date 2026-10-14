@@ -17564,6 +17564,36 @@ window.sendChatMessageQuickAction = function(text) {
   }
 };
 
+/* Global Event Delegation for Inquiry & Reservation CTA Buttons */
+document.addEventListener('click', function(e) {
+  const target = e.target.closest('button, a');
+  if (!target) return;
+
+  const btnText = target.innerText || target.textContent || '';
+  if (btnText.includes('استعلام قیمت') || btnText.includes('رزرو اختصاصی')) {
+    const onclickAttr = target.getAttribute('onclick') || '';
+    if (onclickAttr.includes('openInquiryModal') || onclickAttr.includes('openQuoteModal')) {
+      return;
+    }
+
+    e.preventDefault();
+    const vendorCard = target.closest('[data-vendor-id], .minimal-vendor-card, .vendor-card, .vip-bento-card');
+    let vendorId = 1;
+    let vendorName = 'تامین‌کننده';
+
+    if (vendorCard) {
+      const vIdAttr = vendorCard.getAttribute('data-vendor-id');
+      if (vIdAttr) vendorId = parseInt(vIdAttr, 10);
+      const titleEl = vendorCard.querySelector('h3, h4, .vendor-name');
+      if (titleEl) vendorName = titleEl.innerText.trim();
+    }
+
+    if (typeof openInquiryModal === 'function') {
+      openInquiryModal(vendorId, vendorName);
+    }
+  }
+});
+
 /* Direct Hover Video Card Listeners */
 window.initCardVideoHoverListeners = function() {
   document.querySelectorAll('.minimal-vendor-card, .vendor-card').forEach(card => {
