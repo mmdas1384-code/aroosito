@@ -13054,16 +13054,12 @@ window.openVendorChatFromModal = function() {
   if (typeof showToast === 'function') showToast('💬 چت مستقیم با تامین‌کننده فعال شد', 'info');
 };
 
-window.openQuoteModal = function openQuoteModal(vendorId, vendorName) {
-  const modal = document.getElementById('quote-modal');
-  if (modal) {
-    modal.classList.remove('hidden');
-    if (vendorName) {
-      const titleEl = document.getElementById('quote-vendor-title');
-      if (titleEl) titleEl.innerText = `✨ استعلام قیمت و رزرو VIP از ${vendorName}`;
-    }
-  } else if (typeof openInquiryModal === 'function') {
-    openInquiryModal(vendorId || 1, vendorName || 'تامین‌کننده');
+window.openQuoteModal = function openQuoteModal(vendorId, vendorName, itemTitle, itemPrice, itemType) {
+  if (typeof openInquiryModal === 'function') {
+    openInquiryModal(vendorId || 1, vendorName || 'تامین‌کننده', itemTitle, itemPrice, itemType);
+  } else {
+    const modal = document.getElementById('quote-modal');
+    if (modal) modal.classList.remove('hidden');
   }
 };
 
