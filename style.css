@@ -21,21 +21,21 @@
   --accent-gold-hover: var(--accent-hover);
 }
 
-/* LIGHT THEME: WARM LUXURY IVORY & DEEP ROYAL TEAL */
+/* LIGHT THEME: WARM ALABASTER IVORY & RICH ROYAL TEAL */
 html[data-theme="light"] {
-  --bg-main: #F5F2EB;
-  --bg-card: rgba(255, 255, 255, 0.92);
+  --bg-main: #F4F1EA;
+  --bg-card: rgba(255, 255, 255, 0.94);
   --bg-input: #FFFFFF;
   --text-primary: #0D131F;
   --text-secondary: #4A5568;
-  --accent-main: #0A4D4E;
+  --accent-main: #0B4F50;
   --accent-sub: #9E7728;
-  --border-glow: rgba(10, 77, 78, 0.22);
-  --card-shadow: 0 10px 30px rgba(10, 77, 78, 0.08);
+  --border-glow: rgba(11, 79, 80, 0.22);
+  --card-shadow: 0 10px 30px rgba(11, 79, 80, 0.08);
 
   /* Aliases for compatibility */
   --accent-gold: var(--accent-main);
-  --accent-hover: #073839;
+  --accent-hover: #083c3d;
   --border-color: var(--border-glow);
   --shadow-glow: var(--card-shadow);
   --bg-primary: var(--bg-main);
@@ -48,12 +48,18 @@ html[data-theme="light"] {
   font-family: 'Vazirmatn', Tahoma, sans-serif;
 }
 
+html, body {
+  background-color: var(--bg-main) !important;
+  color: var(--text-primary) !important;
+  margin: 0;
+  padding: 0;
+  min-height: 100%;
+}
+
 body, .glass-card {
   font-family: 'Vazirmatn', Tahoma, sans-serif;
   background-color: var(--bg-main);
   color: var(--text-primary);
-  margin: 0;
-  padding: 0;
   transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease;
 }
 
