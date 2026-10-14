@@ -7228,14 +7228,14 @@ if (document.readyState === "loading") {
       const nonVenueContainer = document.getElementById('inquiry-nonvenue-container');
       const dateLabel = document.getElementById('inquiry-date-label');
 
-      if (cat.includes("آتلیه") || cat.includes("عکاسی") || cat.includes("فیلمبرداری") || cat.includes("مزون") || cat.includes("لباس") || cat.includes("سالن زیبایی") || cat.includes("میکاپ") || cat.includes("آرایشگاه") || cat.includes("طلا")) {
-        if (guestsContainer) guestsContainer.classList.add('hidden');
-        if (nonVenueContainer) nonVenueContainer.classList.remove('hidden');
-        if (dateLabel) dateLabel.innerText = "تاریخ تقریبی مراجعه / پرو / مراسم *";
-      } else {
+      if (cat.includes("تالار") || cat.includes("باغ") || cat.includes("تشریفات") || cat.includes("کترینگ") || cat.includes("پذیرایی") || cat.includes("عمارت") || cat.includes("سالن پذیرایی")) {
         if (guestsContainer) guestsContainer.classList.remove('hidden');
         if (nonVenueContainer) nonVenueContainer.classList.add('hidden');
-        if (dateLabel) dateLabel.innerText = "تاریخ تقریبی مراسم / مراجعه (شمسی) *";
+        if (dateLabel) dateLabel.innerText = "تاریخ تقریبی مراسم (شمسی) *";
+      } else {
+        if (guestsContainer) guestsContainer.classList.add('hidden');
+        if (nonVenueContainer) nonVenueContainer.classList.remove('hidden');
+        if (dateLabel) dateLabel.innerText = "تاریخ تقریبی مراجعه / پرو / مراسم (شمسی) *";
       }
 
       const venueFields = document.getElementById('inquiry-fields-venue');
