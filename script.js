@@ -7225,47 +7225,30 @@ if (document.readyState === "loading") {
       const cat = vendor ? (vendor.category || '') : '';
 
       const guestsContainer = document.getElementById('inquiry-guests-container');
-      const nonVenueContainer = document.getElementById('inquiry-nonvenue-container');
+      const packageTypeContainer = document.getElementById('inquiry-package-type-container');
       const dateLabel = document.getElementById('inquiry-date-label');
 
-      if (cat.includes("تالار") || cat.includes("باغ") || cat.includes("تشریفات") || cat.includes("کترینگ") || cat.includes("پذیرایی") || cat.includes("عمارت") || cat.includes("سالن پذیرایی")) {
+      const isVenueCategory = cat.includes("تالار") || cat.includes("باغ") || cat.includes("تشریفات") || cat.includes("کترینگ") || cat.includes("پذیرایی") || cat.includes("عمارت") || cat.includes("سالن پذیرایی");
+
+      if (isVenueCategory) {
         if (guestsContainer) guestsContainer.classList.remove('hidden');
-        if (nonVenueContainer) nonVenueContainer.classList.add('hidden');
+        if (packageTypeContainer) packageTypeContainer.classList.add('hidden');
         if (dateLabel) dateLabel.innerText = "تاریخ تقریبی مراسم (شمسی) *";
       } else {
         if (guestsContainer) guestsContainer.classList.add('hidden');
-        if (nonVenueContainer) nonVenueContainer.classList.remove('hidden');
+        if (packageTypeContainer) packageTypeContainer.classList.remove('hidden');
         if (dateLabel) dateLabel.innerText = "تاریخ تقریبی مراجعه / پرو / مراسم (شمسی) *";
       }
 
-      const venueFields = document.getElementById('inquiry-fields-venue');
-      const beautyFields = document.getElementById('inquiry-fields-beauty');
-      const photoFields = document.getElementById('inquiry-fields-photo');
-      const maisonFields = document.getElementById('inquiry-fields-maison');
       const servicesContainer = document.getElementById('inquiry-services-container');
 
       // Check if this inquiry is for a specific Package or Idea/Journal item
       const isSpecificItemInquiry = Boolean(itemTitle || typeVal === 'پکیج' || typeVal === 'ایده/ژورنال');
 
-      // Hide all dynamic category blocks initially
-      if (venueFields) venueFields.classList.add('hidden');
-      if (beautyFields) beautyFields.classList.add('hidden');
-      if (photoFields) photoFields.classList.add('hidden');
-      if (maisonFields) maisonFields.classList.add('hidden');
-
       if (!isSpecificItemInquiry) {
         if (servicesContainer) servicesContainer.classList.remove('hidden');
-        if (cat.includes("سالن زیبایی") || cat.includes("میکاپ") || cat.includes("آرایشگاه")) {
-          if (beautyFields) beautyFields.classList.remove('hidden');
-        } else if (cat.includes("آتلیه") || cat.includes("عکاسی") || cat.includes("فیلمبرداری")) {
-          if (photoFields) photoFields.classList.remove('hidden');
-        } else if (cat.includes("مزون") || cat.includes("لباس")) {
-          if (maisonFields) maisonFields.classList.remove('hidden');
-        } else {
-          if (venueFields) venueFields.classList.remove('hidden');
-        }
       } else {
-        // For Package or Idea specific inquiries, streamline form by hiding general category blocks & services checklist
+        // For Package or Idea specific inquiries, streamline form by hiding general services checklist
         if (servicesContainer) servicesContainer.classList.add('hidden');
       }
 
@@ -7408,6 +7391,14 @@ if (document.readyState === "loading") {
 
     function closeInquiryModal() {
       document.getElementById('inquiry-modal').classList.add('hidden');
+      const formEl = document.getElementById('inquiry-form');
+      const stepIndicators = document.getElementById('inquiry-step-indicators');
+      const receiptContainer = document.getElementById('inquiry-receipt-container');
+
+      if (formEl) formEl.classList.remove('hidden');
+      if (stepIndicators) stepIndicators.classList.remove('hidden');
+      if (receiptContainer) receiptContainer.classList.add('hidden');
+      if (typeof switchInquiryStep === 'function') switchInquiryStep(1);
     }
 
     function handleInquirySubmit(e) {
@@ -17566,30 +17557,47 @@ window.sendChatMessageQuickAction = function(text) {
 
 /* Global Event Delegation for Inquiry & Reservation CTA Buttons */
 document.addEventListener('click', function(e) {
-  const target = e.target.closest('button, a');
+  const target = e.target.closest('button, a, .btn-inquiry, [data-action="inquiry"]');
   if (!target) return;
 
-  const btnText = target.innerText || target.textContent || '';
-  if (btnText.includes('استعلام قیمت') || btnText.includes('رزرو اختصاصی')) {
+  const btnText = (target.innerText || target.textContent || '').trim();
+  const isInquiryClass = target.classList.contains('btn-inquiry');
+  const isActionInquiry = target.getAttribute('data-action') === 'inquiry';
+  const matchesText = btnText.includes('استعلام قیمت') || btnText.includes('رزرو اختصاصی') || btnText.includes('استعلام سریع') || btnText.includes('درخواست استعلام');
+
+  if (isInquiryClass || isActionInquiry || matchesText) {
     const onclickAttr = target.getAttribute('onclick') || '';
     if (onclickAttr.includes('openInquiryModal') || onclickAttr.includes('openQuoteModal')) {
       return;
     }
 
     e.preventDefault();
-    const vendorCard = target.closest('[data-vendor-id], .minimal-vendor-card, .vendor-card, .vip-bento-card');
+    const vendorCard = target.closest('[data-vendor-id], .minimal-vendor-card, .vendor-card, .vip-bento-card, .vendor-detail-container, body');
     let vendorId = 1;
     let vendorName = 'تامین‌کننده';
 
     if (vendorCard) {
-      const vIdAttr = vendorCard.getAttribute('data-vendor-id');
+      const vIdAttr = vendorCard.getAttribute('data-vendor-id') || target.getAttribute('data-vendor-id');
       if (vIdAttr) vendorId = parseInt(vIdAttr, 10);
-      const titleEl = vendorCard.querySelector('h3, h4, .vendor-name');
+      const titleEl = vendorCard.querySelector('h3, h4, .vendor-name, #vendor-main-title');
       if (titleEl) vendorName = titleEl.innerText.trim();
     }
 
+    // Try parsing url params if on standalone page vendor-detail.html
+    if (window.location.search) {
+      const urlParams = new URLSearchParams(window.location.search);
+      const paramId = urlParams.get('id');
+      if (paramId && !isNaN(parseInt(paramId))) {
+        vendorId = parseInt(paramId, 10);
+      }
+    }
+
+    const itemTitle = target.getAttribute('data-item-title') || '';
+    const itemPrice = target.getAttribute('data-item-price') || '';
+    const itemType = target.getAttribute('data-item-type') || '';
+
     if (typeof openInquiryModal === 'function') {
-      openInquiryModal(vendorId, vendorName);
+      openInquiryModal(vendorId, vendorName, itemTitle, itemPrice, itemType);
     }
   }
 });
