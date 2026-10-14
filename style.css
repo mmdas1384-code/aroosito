@@ -22,22 +22,23 @@
   --accent-gold-hover: var(--accent-hover);
 }
 
-/* LIGHT THEME: WARM ALABASTER IVORY & RICH ROYAL TEAL */
+/* LIGHT THEME: EXACT ROYAL LUXURY PALETTE HEX CODES */
 html[data-theme="light"] {
-  --bg-main: #F4F1EA;
-  --bg-card: rgba(255, 255, 255, 0.94);
-  --bg-hero: linear-gradient(135deg, #0B4F50, #0A3C3D);
+  --bg-main: #F5EFEB;
+  --bg-card: #FBF9F5;
+  --bg-hero: #1B3B2B;
   --bg-input: #FFFFFF;
-  --text-primary: #0D131F;
-  --text-secondary: #4A5568;
-  --accent-main: #0B4F50;
-  --accent-sub: #9E7728;
-  --border-glow: rgba(11, 79, 80, 0.22);
-  --card-shadow: 0 10px 30px rgba(11, 79, 80, 0.08);
+  --text-primary: #111E16;
+  --text-secondary: #1B3B2B;
+  --accent-gold: #D4AF37;
+  --accent-dark-green: #111E16;
+  --accent-main: #D4AF37;
+  --accent-sub: #1B3B2B;
+  --border-glow: rgba(212, 175, 55, 0.4);
+  --card-shadow: 0 10px 30px rgba(27, 59, 43, 0.08);
 
   /* Aliases for compatibility */
-  --accent-gold: #9E7728;
-  --accent-hover: #083c3d;
+  --accent-hover: #B89628;
   --border-color: var(--border-glow);
   --shadow-glow: var(--card-shadow);
   --bg-primary: var(--bg-main);
@@ -93,16 +94,16 @@ body, .glass-card {
 [data-theme="light"] .bg-\[\#12161F\],
 [data-theme="light"] div[class*="bg-[rgba(14,18,28"],
 [data-theme="light"] div[class*="bg-[rgba(20,26,38"] {
-  background-color: rgba(255, 255, 255, 0.92) !important;
-  border-color: rgba(10, 77, 78, 0.2) !important;
-  color: #0D131F !important;
+  background-color: var(--bg-card) !important;
+  border-color: var(--border-glow) !important;
+  color: var(--text-primary) !important;
 }
 
 /* 2. LIGHT MODE HERO & BANNER EXCEPTION */
 [data-theme="light"] #hero,
 [data-theme="light"] .hero-banner-teal {
-  background: linear-gradient(135deg, #0B4F50 0%, #0A3C3D 100%) !important;
-  border-color: #9E7728 !important;
+  background: var(--bg-hero) !important;
+  border-color: var(--accent-gold) !important;
   color: #FFFFFF !important;
 }
 
