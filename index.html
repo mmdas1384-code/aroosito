@@ -6185,49 +6185,49 @@
   </footer>
   <!-- SUBGROUPS MODAL OVERLAY -->
   <!-- Vendor Package Modal -->
-  <div id="modal-vendor-package" class="fixed inset-0 bg-black/60 backdrop-blur-xs z-[9999] hidden items-center justify-center p-4">
-    <div class="bg-white border border-accent rounded-3xl max-w-lg w-full p-6 shadow-2xl space-y-4 relative">
-      <div class="flex justify-between items-center border-b border-accent pb-3">
+  <div id="modal-vendor-package" class="fixed inset-0 bg-black/80 backdrop-blur-md z-[9999] hidden items-center justify-center p-4">
+    <div class="bg-[#0e121c] border border-[#C5A059]/50 rounded-3xl max-w-lg w-full p-6 shadow-2xl space-y-4 relative text-white text-right">
+      <div class="flex justify-between items-center border-b border-[#C5A059]/30 pb-3">
         <div>
-          <h3 id="modal-package-title" class="text-base font-bold text-graphite flex items-center gap-2">
-            <i data-lucide="package-plus" class="w-5 h-5 text-primary"></i>
+          <h3 id="modal-package-title" class="text-base font-bold text-[#C5A059] flex items-center gap-2">
+            <i data-lucide="package-plus" class="w-5 h-5 text-[#C5A059]"></i>
             <span>افزودن / ویرایش پکیج خدمات</span>
           </h3>
-          <p class="text-[11px] text-emerald-700 font-bold mt-0.5">دریافت مستقیم ۱۰۰٪ تسویه از مشتری (۰٪ کمیسیون پلتفرم)</p>
+          <p class="text-[11px] text-emerald-400 font-bold mt-0.5">دریافت مستقیم ۱۰۰٪ تسویه از مشتری (۰٪ کمیسیون پلتفرم)</p>
         </div>
-        <button type="button" onclick="toggleAddPackageModal(false)" class="text-secondary hover:text-graphite font-bold">
+        <button type="button" onclick="toggleAddPackageModal(false)" class="text-slate-400 hover:text-white font-bold">
           <i data-lucide="x" class="w-5 h-5"></i>
         </button>
       </div>
 
-      <form id="form-vendor-package" onsubmit="saveVendorPackageModal(event)" class="space-y-3 text-xs font-bold text-graphite">
+      <form id="form-vendor-package" onsubmit="saveVendorPackageModal(event)" class="space-y-3 text-xs font-bold text-white">
         <input type="hidden" id="pkg-edit-index" value="-1">
         <div>
-          <label class="block mb-1">عنوان پکیج *</label>
-          <input type="text" id="pkg-title" placeholder="مثلا: پکیج طلایی وی‌آی‌پی" required class="w-full bg-bgCustom border border-accent rounded-xl p-2.5 text-xs font-medium focus:outline-none focus:border-primary">
+          <label class="block mb-1 text-slate-300">عنوان پکیج *</label>
+          <input type="text" id="pkg-title" placeholder="مثلا: پکیج طلایی وی‌آی‌پی" required class="w-full bg-[#141A28] border border-[#C5A059]/30 rounded-xl p-2.5 text-xs font-medium text-white focus:outline-none focus:border-[#C5A059]">
         </div>
         <div class="grid grid-cols-2 gap-3">
           <div>
-            <label class="block mb-1">قیمت (تومان) *</label>
-            <input type="text" id="pkg-price" placeholder="مثلا: ۴۵,۰۰۰,۰۰۰" required class="w-full bg-bgCustom border border-accent rounded-xl p-2.5 text-xs font-medium focus:outline-none focus:border-primary">
+            <label class="block mb-1 text-slate-300">قیمت (تومان) *</label>
+            <input type="text" id="pkg-price" placeholder="مثلا: ۴۵,۰۰۰,۰۰۰" required class="w-full bg-[#141A28] border border-[#C5A059]/30 rounded-xl p-2.5 text-xs font-medium text-white focus:outline-none focus:border-[#C5A059]">
           </div>
           <div>
-            <label class="block mb-1">نشان تخفیف / ویژه‌سازی</label>
-            <input type="text" id="pkg-badge" placeholder="مثلا: ۱۵٪ تخفیف ویژه" class="w-full bg-bgCustom border border-accent rounded-xl p-2.5 text-xs font-medium focus:outline-none focus:border-primary">
+            <label class="block mb-1 text-slate-300">نشان تخفیف / ویژه‌سازی</label>
+            <input type="text" id="pkg-badge" placeholder="مثلا: ۱۵٪ تخفیف ویژه" class="w-full bg-[#141A28] border border-[#C5A059]/30 rounded-xl p-2.5 text-xs font-medium text-white focus:outline-none focus:border-[#C5A059]">
           </div>
         </div>
         <div>
-          <label class="block mb-1">ویژگی‌ها و اقلام پکیج (با خط جدید جدا کنید) *</label>
-          <textarea id="pkg-features" rows="4" placeholder="۲ نوبت عکاسی مجلل&#10;تصویربرداری هوایی با هلی‌شات&#10;آلبوم ایتالیایی ۶۰ در ۳۰" required class="w-full bg-bgCustom border border-accent rounded-xl p-2.5 text-xs font-medium focus:outline-none focus:border-primary"></textarea>
+          <label class="block mb-1 text-slate-300">ویژگی‌ها و اقلام پکیج (با خط جدید جدا کنید) *</label>
+          <textarea id="pkg-features" rows="4" placeholder="۲ نوبت عکاسی مجلل&#10;تصویربرداری هوایی با هلی‌شات&#10;آلبوم ایتالیایی ۶۰ در ۳۰" required class="w-full bg-[#141A28] border border-[#C5A059]/30 rounded-xl p-2.5 text-xs font-medium text-white focus:outline-none focus:border-[#C5A059]"></textarea>
         </div>
         <div>
-          <label class="block mb-1">الزامات و شروط اختصاصی استعلام</label>
-          <input type="text" id="pkg-requirements" placeholder="مثلا: حداقل ۱۵ روز قبل از تاریخ مراسم" class="w-full bg-bgCustom border border-accent rounded-xl p-2.5 text-xs font-medium focus:outline-none focus:border-primary">
+          <label class="block mb-1 text-slate-300">الزامات و شروط اختصاصی استعلام</label>
+          <input type="text" id="pkg-requirements" placeholder="مثلا: حداقل ۱۵ روز قبل از تاریخ مراسم" class="w-full bg-[#141A28] border border-[#C5A059]/30 rounded-xl p-2.5 text-xs font-medium text-white focus:outline-none focus:border-[#C5A059]">
         </div>
 
-        <div class="flex justify-end gap-2 pt-2 border-t border-accent">
-          <button type="button" onclick="toggleAddPackageModal(false)" class="bg-bgCustom hover:bg-slate-100 border border-accent text-graphite px-4 py-2 rounded-xl text-xs transition-colors">انصراف</button>
-          <button type="submit" class="bg-primary hover:bg-emerald-900 text-white font-bold px-5 py-2 rounded-xl text-xs transition-colors shadow-xs">ذخیره پکیج</button>
+        <div class="flex justify-end gap-2 pt-2 border-t border-[#C5A059]/30">
+          <button type="button" onclick="toggleAddPackageModal(false)" class="bg-[#141A28] hover:bg-[#1E293B] border border-[#C5A059]/30 text-white px-4 py-2 rounded-xl text-xs transition-colors">انصراف</button>
+          <button type="submit" class="bg-[#C5A059] hover:bg-[#D4AF37] text-[#07090E] font-black px-5 py-2 rounded-xl text-xs transition-colors shadow-md">ذخیره پکیج</button>
         </div>
       </form>
     </div>
@@ -6770,16 +6770,16 @@
   </div>
 
   <!-- PORTFOLIO MODAL (#portfolio-modal) -->
-  <div id="portfolio-modal" class="hidden fixed inset-0 bg-black/60 backdrop-blur-xs z-[999999] flex items-center justify-center p-4 transition-all animate-fadeIn" onclick="if(event.target === this) closePortfolioModal()">
-    <div class="bg-white rounded-3xl shadow-2xl max-w-lg w-full overflow-hidden border border-[#D4AF37]/50 flex flex-col animate-scaleUp relative">
-      <div class="bg-[#1B3B2B] text-white p-5 flex items-center justify-between border-b border-[#D4AF37]/30 shrink-0">
+  <div id="portfolio-modal" class="hidden fixed inset-0 bg-black/80 backdrop-blur-md z-[999999] flex items-center justify-center p-4 transition-all animate-fadeIn" onclick="if(event.target === this) closePortfolioModal()">
+    <div class="bg-[#0e121c] rounded-3xl shadow-2xl max-w-lg w-full overflow-hidden border border-[#C5A059]/50 flex flex-col animate-scaleUp relative text-white text-right">
+      <div class="bg-[#07090E] text-white p-5 flex items-center justify-between border-b border-[#C5A059]/30 shrink-0">
         <div class="flex items-center gap-2.5">
-          <div class="w-10 h-10 rounded-xl bg-[#D4AF37] text-[#1B3B2B] flex items-center justify-center shadow-sm">
-            <i data-lucide="image" class="w-5 h-5"></i>
+          <div class="w-10 h-10 rounded-xl bg-[#C5A059] text-[#07090E] flex items-center justify-center font-black shadow-md">
+            <i data-lucide="image" class="w-5 h-5 text-[#07090E]"></i>
           </div>
           <div>
-            <h3 id="portfolio-modal-title" class="text-base font-bold text-[#D4AF37]">افزودن / ویرایش نمونه‌کار</h3>
-            <span class="text-[11px] text-amber-200/80 font-medium">مدیریت تصاویر گالری عمومی و انتخاب کاور اصلی</span>
+            <h3 id="portfolio-modal-title" class="text-base font-bold text-[#C5A059]">افزودن / ویرایش نمونه‌کار</h3>
+            <span class="text-[11px] text-slate-300 font-medium">مدیریت تصاویر گالری عمومی و انتخاب کاور اصلی</span>
           </div>
         </div>
 
@@ -6788,17 +6788,17 @@
         </button>
       </div>
 
-      <form id="portfolio-form" onsubmit="savePortfolioModal(event)" class="p-6 space-y-4 text-xs font-bold text-graphite">
+      <form id="portfolio-form" onsubmit="savePortfolioModal(event)" class="p-6 space-y-4 text-xs font-bold text-white">
         <input type="hidden" id="port-id" value="">
 
         <div class="space-y-1">
-          <label class="block text-secondary">عنوان تصویر / نمونه‌کار *</label>
-          <input type="text" id="port-title" required placeholder="مثلاً: دیزاین ورودی باغ و سفره عقد VIP" class="w-full bg-[#F5EFEB] border border-[#E0D8C8] rounded-xl p-3 text-xs font-medium focus:outline-none focus:border-[#D4AF37]">
+          <label class="block text-slate-300">عنوان تصویر / نمونه‌کار *</label>
+          <input type="text" id="port-title" required placeholder="مثلاً: دیزاین ورودی باغ و سفره عقد VIP" class="w-full bg-[#141A28] border border-[#C5A059]/30 text-white rounded-xl p-3 text-xs font-medium focus:outline-none focus:border-[#C5A059]">
         </div>
 
         <div class="space-y-1">
-          <label class="block text-secondary">تگ دسته‌بندی تصویر *</label>
-          <select id="port-category" required class="w-full bg-[#F5EFEB] border border-[#E0D8C8] rounded-xl p-3 text-xs font-bold text-graphite focus:outline-none focus:border-[#D4AF37] cursor-pointer">
+          <label class="block text-slate-300">تگ دسته‌بندی تصویر *</label>
+          <select id="port-category" required class="w-full bg-[#141A28] border border-[#C5A059]/30 text-white rounded-xl p-3 text-xs font-bold focus:outline-none focus:border-[#C5A059] cursor-pointer">
             <option value="ورودی">ورودی & محوطه</option>
             <option value="سالن اصلی">سالن اصلی & استیج</option>
             <option value="سفره عقد">سفره عقد سنتی & VIP</option>
@@ -6809,20 +6809,20 @@
         </div>
 
         <div class="space-y-1">
-          <label class="block text-secondary">آدرس اینترنتی تصویر (Image URL) *</label>
-          <input type="text" id="port-img-url" required placeholder="https://images.unsplash.com/..." class="w-full bg-[#F5EFEB] border border-[#E0D8C8] rounded-xl p-3 text-xs font-mono dir-ltr focus:outline-none focus:border-[#D4AF37]">
+          <label class="block text-slate-300">آدرس اینترنتی تصویر (Image URL) *</label>
+          <input type="text" id="port-img-url" required placeholder="https://images.unsplash.com/..." class="w-full bg-[#141A28] border border-[#C5A059]/30 text-white rounded-xl p-3 text-xs font-mono dir-ltr focus:outline-none focus:border-[#C5A059]">
         </div>
 
         <div class="space-y-1">
-          <label class="block text-secondary">یا آپلود مستقیم تصویر از دستگاه:</label>
-          <input type="file" id="port-img-file" accept="image/*" class="w-full bg-[#F5EFEB] border border-[#E0D8C8] rounded-xl p-2 text-xs font-medium cursor-pointer">
+          <label class="block text-slate-300">یا آپلود مستقیم تصویر از دستگاه:</label>
+          <input type="file" id="port-img-file" accept="image/*" class="w-full bg-[#141A28] border border-[#C5A059]/30 text-white rounded-xl p-2 text-xs font-medium cursor-pointer">
         </div>
 
-        <div class="p-3 bg-amber-50 border border-amber-200 rounded-xl text-amber-900 text-[11px] font-medium leading-relaxed">
+        <div class="p-3 bg-[#141A28] border border-[#C5A059]/30 rounded-xl text-amber-200 text-[11px] font-medium leading-relaxed">
           💡 پس از افزودن، می‌توانید دکمه «انتخاب به‌عنوان کاور» را روی تصویر مربوطه بزنید.
         </div>
 
-        <button type="submit" class="w-full bg-[#D4AF37] hover:bg-amber-400 text-[#1B3B2B] font-black py-3 rounded-2xl text-xs shadow-md transition-all flex items-center justify-center gap-2 cursor-pointer">
+        <button type="submit" class="w-full bg-[#C5A059] hover:bg-[#D4AF37] text-[#07090E] font-black py-3 rounded-2xl text-xs shadow-md transition-all flex items-center justify-center gap-2 cursor-pointer">
           <i data-lucide="check" class="w-4 h-4"></i>
           <span>ذخیره نمونه‌کار</span>
         </button>
@@ -7966,71 +7966,71 @@
   </div>
 
   <!-- Parent Category CRUD Modal (#parent-cat-modal) -->
-  <div id="parent-cat-modal" class="hidden fixed inset-0 bg-black/60 backdrop-blur-xs z-[999999] flex items-center justify-center p-4 transition-all animate-fadeIn" onclick="if(event.target === this) closeParentCatModal()">
-    <div class="bg-white border border-accent rounded-3xl max-w-md w-full p-6 shadow-2xl space-y-5 animate-scaleUp">
-      <div class="flex justify-between items-center border-b border-accent pb-3">
-        <h3 id="parent-cat-modal-title" class="text-base font-bold text-graphite flex items-center gap-2">
-          <i data-lucide="layers" class="w-5 h-5 text-primary"></i>
+  <div id="parent-cat-modal" class="hidden fixed inset-0 bg-black/80 backdrop-blur-md z-[999999] flex items-center justify-center p-4 transition-all animate-fadeIn" onclick="if(event.target === this) closeParentCatModal()">
+    <div class="bg-[#0e121c] border border-[#C5A059]/50 rounded-3xl max-w-md w-full p-6 shadow-2xl space-y-5 animate-scaleUp text-white text-right">
+      <div class="flex justify-between items-center border-b border-[#C5A059]/30 pb-3">
+        <h3 id="parent-cat-modal-title" class="text-base font-bold text-[#C5A059] flex items-center gap-2">
+          <i data-lucide="layers" class="w-5 h-5 text-[#C5A059]"></i>
           <span>افزودن دسته اصلی جدید</span>
         </h3>
-        <button onclick="closeParentCatModal()" class="text-secondary hover:text-graphite font-bold text-sm">✕</button>
+        <button onclick="closeParentCatModal()" class="text-slate-400 hover:text-white font-bold text-sm">✕</button>
       </div>
 
       <input type="hidden" id="parent-cat-edit-id">
 
-      <div class="space-y-4 text-xs font-bold text-graphite">
+      <div class="space-y-4 text-xs font-bold text-white">
         <div class="space-y-1.5">
-          <label class="block">عنوان دسته اصلی *</label>
-          <input type="text" id="parent-cat-title" placeholder="مثلا: تشریفات و خدمات مجالس" class="w-full bg-slate-50 border border-accent rounded-xl p-3 font-medium focus:outline-none focus:border-primary">
+          <label class="block text-slate-300">عنوان دسته اصلی *</label>
+          <input type="text" id="parent-cat-title" placeholder="مثلا: تشریفات و خدمات مجالس" class="w-full bg-[#141A28] border border-[#C5A059]/30 text-white rounded-xl p-3 font-medium focus:outline-none focus:border-[#C5A059]">
         </div>
 
         <div class="space-y-1.5">
-          <label class="block">بج و زیرعنوان دسته</label>
-          <input type="text" id="parent-cat-badge" placeholder="مثلا: تالار، غذا و خدمات پذیرایی" class="w-full bg-slate-50 border border-accent rounded-xl p-3 font-medium focus:outline-none focus:border-primary">
+          <label class="block text-slate-300">بج و زیرعنوان دسته</label>
+          <input type="text" id="parent-cat-badge" placeholder="مثلا: تالار، غذا و خدمات پذیرایی" class="w-full bg-[#141A28] border border-[#C5A059]/30 text-white rounded-xl p-3 font-medium focus:outline-none focus:border-[#C5A059]">
         </div>
 
         <div class="space-y-1.5">
-          <label class="block">نام آیکون (Lucide Icon Name)</label>
-          <input type="text" id="parent-cat-icon" value="building" class="w-full bg-slate-50 border border-accent rounded-xl p-3 font-medium focus:outline-none focus:border-primary dir-ltr">
+          <label class="block text-slate-300">نام آیکون (Lucide Icon Name)</label>
+          <input type="text" id="parent-cat-icon" value="building" class="w-full bg-[#141A28] border border-[#C5A059]/30 text-white rounded-xl p-3 font-medium focus:outline-none focus:border-[#C5A059] dir-ltr">
         </div>
       </div>
 
-      <div class="flex justify-end gap-2 pt-2 border-t border-accent">
-        <button onclick="closeParentCatModal()" class="px-4 py-2 bg-slate-100 hover:bg-slate-200 text-graphite font-bold text-xs rounded-xl transition-colors">انصراف</button>
-        <button onclick="handleSaveParentCategory(event)" class="px-5 py-2 bg-primary hover:bg-emerald-900 text-white font-bold text-xs rounded-xl transition-colors shadow-xs">ذخیره دسته اصلی</button>
+      <div class="flex justify-end gap-2 pt-2 border-t border-[#C5A059]/30">
+        <button onclick="closeParentCatModal()" class="px-4 py-2 bg-[#141A28] hover:bg-[#1E293B] border border-[#C5A059]/30 text-white font-bold text-xs rounded-xl transition-colors">انصراف</button>
+        <button onclick="handleSaveParentCategory(event)" class="px-5 py-2 bg-[#C5A059] hover:bg-[#D4AF37] text-[#07090E] font-black text-xs rounded-xl transition-colors shadow-md">ذخیره دسته اصلی</button>
       </div>
     </div>
   </div>
 
   <!-- Sub-Category CRUD Modal (#sub-cat-modal) -->
-  <div id="sub-cat-modal" class="hidden fixed inset-0 bg-black/60 backdrop-blur-xs z-[999999] flex items-center justify-center p-4 transition-all animate-fadeIn" onclick="if(event.target === this) closeSubCatModal()">
-    <div class="bg-white border border-accent rounded-3xl max-w-md w-full p-6 shadow-2xl space-y-5 animate-scaleUp">
-      <div class="flex justify-between items-center border-b border-accent pb-3">
-        <h3 id="sub-cat-modal-title" class="text-base font-bold text-graphite flex items-center gap-2">
-          <i data-lucide="tag" class="w-5 h-5 text-primary"></i>
+  <div id="sub-cat-modal" class="hidden fixed inset-0 bg-black/80 backdrop-blur-md z-[999999] flex items-center justify-center p-4 transition-all animate-fadeIn" onclick="if(event.target === this) closeSubCatModal()">
+    <div class="bg-[#0e121c] border border-[#C5A059]/50 rounded-3xl max-w-md w-full p-6 shadow-2xl space-y-5 animate-scaleUp text-white text-right">
+      <div class="flex justify-between items-center border-b border-[#C5A059]/30 pb-3">
+        <h3 id="sub-cat-modal-title" class="text-base font-bold text-[#C5A059] flex items-center gap-2">
+          <i data-lucide="tag" class="w-5 h-5 text-[#C5A059]"></i>
           <span>افزودن زیرگروه جدید</span>
         </h3>
-        <button onclick="closeSubCatModal()" class="text-secondary hover:text-graphite font-bold text-sm">✕</button>
+        <button onclick="closeSubCatModal()" class="text-slate-400 hover:text-white font-bold text-sm">✕</button>
       </div>
 
       <input type="hidden" id="sub-cat-parent-id">
       <input type="hidden" id="sub-cat-index">
 
-      <div class="space-y-4 text-xs font-bold text-graphite">
+      <div class="space-y-4 text-xs font-bold text-white">
         <div class="space-y-1.5">
-          <label class="block">عنوان زیرگروه *</label>
-          <input type="text" id="sub-cat-title" placeholder="مثلا: کترینگ و غذای عروسی" class="w-full bg-slate-50 border border-accent rounded-xl p-3 font-medium focus:outline-none focus:border-primary">
+          <label class="block text-slate-300">عنوان زیرگروه *</label>
+          <input type="text" id="sub-cat-title" placeholder="مثلا: کترینگ و غذای عروسی" class="w-full bg-[#141A28] border border-[#C5A059]/30 text-white rounded-xl p-3 font-medium focus:outline-none focus:border-[#C5A059]">
         </div>
 
         <div class="space-y-1.5">
-          <label class="block">نام آیکون (Lucide Icon Name)</label>
-          <input type="text" id="sub-cat-icon" value="tag" class="w-full bg-slate-50 border border-accent rounded-xl p-3 font-medium focus:outline-none focus:border-primary dir-ltr">
+          <label class="block text-slate-300">نام آیکون (Lucide Icon Name)</label>
+          <input type="text" id="sub-cat-icon" value="tag" class="w-full bg-[#141A28] border border-[#C5A059]/30 text-white rounded-xl p-3 font-medium focus:outline-none focus:border-[#C5A059] dir-ltr">
         </div>
       </div>
 
-      <div class="flex justify-end gap-2 pt-2 border-t border-accent">
-        <button onclick="closeSubCatModal()" class="px-4 py-2 bg-slate-100 hover:bg-slate-200 text-graphite font-bold text-xs rounded-xl transition-colors">انصراف</button>
-        <button onclick="handleSaveSubCategory(event)" class="px-5 py-2 bg-primary hover:bg-emerald-900 text-white font-bold text-xs rounded-xl transition-colors shadow-xs">ذخیره زیرگروه</button>
+      <div class="flex justify-end gap-2 pt-2 border-t border-[#C5A059]/30">
+        <button onclick="closeSubCatModal()" class="px-4 py-2 bg-[#141A28] hover:bg-[#1E293B] border border-[#C5A059]/30 text-white font-bold text-xs rounded-xl transition-colors">انصراف</button>
+        <button onclick="handleSaveSubCategory(event)" class="px-5 py-2 bg-[#C5A059] hover:bg-[#D4AF37] text-[#07090E] font-black text-xs rounded-xl transition-colors shadow-md">ذخیره زیرگروه</button>
       </div>
     </div>
   </div>
