@@ -17357,6 +17357,7 @@ window.toggleThemeMode = function() {
   document.documentElement.setAttribute('data-theme', newTheme);
   try {
     localStorage.setItem('aroosi_theme_mode', newTheme);
+    localStorage.setItem('theme', newTheme);
   } catch(e) {}
 
   const btnText = document.getElementById('theme-toggle-text');
@@ -17376,7 +17377,7 @@ window.toggleThemeMode = function() {
 };
 
 document.addEventListener('DOMContentLoaded', () => {
-  const savedTheme = localStorage.getItem('aroosi_theme_mode') || 'dark';
+  const savedTheme = localStorage.getItem('theme') || localStorage.getItem('aroosi_theme_mode') || 'dark';
   document.documentElement.setAttribute('data-theme', savedTheme);
   const btnText = document.getElementById('theme-toggle-text');
   const icon = document.getElementById('theme-toggle-icon');

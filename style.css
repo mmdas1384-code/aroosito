@@ -1,42 +1,52 @@
 /* GLOBAL CSS VARIABLES MATRIX */
-:root {
-  --bg-primary: #07090E;
-  --bg-surface: rgba(14, 18, 28, 0.85);
-  --bg-input: rgba(20, 26, 38, 0.90);
-  --text-primary: #F7F5F0;
-  --text-secondary: #E6E8EC;
-  --text-muted: #9E9EA7;
+:root, [data-theme="dark"] {
+  --bg-main: #07090E;
+  --bg-card: rgba(18, 22, 31, 0.75);
+  --bg-input: #12161F;
+  --text-primary: #FFFFFF;
+  --text-secondary: #9CA3AF;
   --accent-gold: #C5A059;
-  --accent-gold-hover: #D4AF37;
-  --border-gold: rgba(197, 160, 89, 0.25);
-  --shadow-glow: rgba(197, 160, 89, 0.15);
+  --accent-hover: #D4AF37;
+  --border-color: rgba(197, 160, 89, 0.2);
+  --shadow-glow: 0 0 25px rgba(197, 160, 89, 0.2);
+
+  /* Aliases for compatibility */
+  --bg-primary: var(--bg-main);
+  --bg-surface: var(--bg-card);
+  --border-gold: var(--border-color);
+  --accent-gold-hover: var(--accent-hover);
 }
 
-/* LIGHT THEME (EXPLICIT OVERRIDES) */
+/* LIGHT THEME (COMPREHENSIVE ZERO-CLASH ENGINE) */
 [data-theme="light"] {
-  --bg-primary: #F9F8F3;
-  --bg-surface: rgba(255, 255, 255, 0.92);
+  --bg-main: #F8F5F0;
+  --bg-card: rgba(255, 255, 255, 0.85);
   --bg-input: #FFFFFF;
-  --text-primary: #0B0F19;
-  --text-secondary: #1A1D24;
-  --text-muted: #5A5D66;
-  --accent-gold: #A37F38;
-  --accent-gold-hover: #8C6A28;
-  --border-gold: rgba(163, 127, 56, 0.25);
-  --shadow-glow: rgba(0, 0, 0, 0.08);
+  --text-primary: #0F172A;
+  --text-secondary: #4B5563;
+  --accent-gold: #B8860B;
+  --accent-hover: #966D09;
+  --border-color: rgba(184, 134, 11, 0.25);
+  --shadow-glow: 0 8px 30px rgba(184, 134, 11, 0.12);
+
+  /* Aliases for compatibility */
+  --bg-primary: var(--bg-main);
+  --bg-surface: var(--bg-card);
+  --border-gold: var(--border-color);
+  --accent-gold-hover: var(--accent-hover);
 }
 
 * {
   font-family: 'Vazirmatn', Tahoma, sans-serif;
 }
 
-body {
+body, .glass-card {
   font-family: 'Vazirmatn', Tahoma, sans-serif;
-  background-color: var(--bg-primary) !important;
-  color: var(--text-primary) !important;
+  background-color: var(--bg-main);
+  color: var(--text-primary);
   margin: 0;
   padding: 0;
-  transition: background-color 0.3s ease, color 0.3s ease;
+  transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease;
 }
 
 [data-theme="light"] body {
