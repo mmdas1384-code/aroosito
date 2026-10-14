@@ -1,42 +1,68 @@
-/* GLOBAL CSS VARIABLES MATRIX */
-:root {
-  --bg-primary: #07090E;
-  --bg-surface: rgba(14, 18, 28, 0.85);
-  --bg-input: rgba(20, 26, 38, 0.90);
-  --text-primary: #F7F5F0;
-  --text-secondary: #E6E8EC;
-  --text-muted: #9E9EA7;
-  --accent-gold: #C5A059;
-  --accent-gold-hover: #D4AF37;
-  --border-gold: rgba(197, 160, 89, 0.25);
-  --shadow-glow: rgba(197, 160, 89, 0.15);
+/* پالت تم تاریک - اختصاصی عروسی تو */
+:root, html[data-theme="dark"] {
+  --bg-main: #07090E;         /* پس‌زمینه اصلی (مشکی آبسیدین) */
+  --bg-card: rgba(18, 22, 31, 0.85); /* پس‌زمینه کارت‌ها و باکس‌ها (دودی شیشه‌ای) */
+  --bg-hero: #0D111A;         /* پس‌زمینه بنر اصلی (دودی عمیق) */
+  --text-primary: #FFFFFF;    /* رنگ متن‌های اصلی (سفید) */
+  --text-secondary: #9CA3AF;  /* رنگ متن‌های فرعی (خاکستری دودی) */
+  --accent-gold: #C5A059;     /* رنگ حاشیه‌ها و دکمه‌ها (طلایی شامپاین) */
+  --border-color: rgba(197, 160, 89, 0.25); /* حاشیه طلایی درخشان */
+  --bg-input: #12161F;
+  --card-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+
+  /* Aliases */
+  --accent-main: var(--accent-gold);
+  --accent-sub: #10B981;
+  --accent-hover: #D4AF37;
+  --border-glow: var(--border-color);
+  --shadow-glow: var(--card-shadow);
+  --bg-primary: var(--bg-main);
+  --bg-surface: var(--bg-card);
+  --border-gold: var(--border-color);
+  --accent-gold-hover: var(--accent-hover);
 }
 
-/* LIGHT THEME (EXPLICIT OVERRIDES) */
-[data-theme="light"] {
-  --bg-primary: #F9F8F3;
-  --bg-surface: rgba(255, 255, 255, 0.92);
+/* پالت تم روشن - اختصاصی عروسی تو */
+html[data-theme="light"] {
+  --bg-main: #F5EFEB;         /* پس‌زمینه اصلی (کرم روشن) */
+  --bg-card: #FBF9F5;         /* پس‌زمینه کارت‌ها و باکس‌ها (سفید عاجی) */
+  --bg-hero: #1B3B2B;         /* پس‌زمینه بنر اصلی (سبز زمردی تیره) */
+  --text-primary: #111E16;    /* رنگ متن‌های اصلی (مشکی-سبز تیره) */
+  --text-secondary: #1B3B2B;  /* رنگ متن‌های فرعی (سبز زمردی) */
+  --accent-gold: #D4AF37;     /* رنگ حاشیه‌ها و دکمه‌ها (طلایی سلطنتی) */
+  --border-color: rgba(212, 175, 55, 0.35); /* حاشیه طلایی درخشان */
   --bg-input: #FFFFFF;
-  --text-primary: #0B0F19;
-  --text-secondary: #1A1D24;
-  --text-muted: #5A5D66;
-  --accent-gold: #A37F38;
-  --accent-gold-hover: #8C6A28;
-  --border-gold: rgba(163, 127, 56, 0.25);
-  --shadow-glow: rgba(0, 0, 0, 0.08);
+  --card-shadow: 0 10px 30px rgba(27, 59, 43, 0.08);
+
+  /* Aliases */
+  --accent-main: var(--accent-gold);
+  --accent-sub: #1B3B2B;
+  --accent-hover: #B89628;
+  --border-glow: var(--border-color);
+  --shadow-glow: var(--card-shadow);
+  --bg-primary: var(--bg-main);
+  --bg-surface: var(--bg-card);
+  --border-gold: var(--border-color);
+  --accent-gold-hover: var(--accent-hover);
 }
 
 * {
   font-family: 'Vazirmatn', Tahoma, sans-serif;
 }
 
-body {
-  font-family: 'Vazirmatn', Tahoma, sans-serif;
-  background-color: var(--bg-primary) !important;
+html, body {
+  background-color: var(--bg-main) !important;
   color: var(--text-primary) !important;
   margin: 0;
   padding: 0;
-  transition: background-color 0.3s ease, color 0.3s ease;
+  min-height: 100%;
+}
+
+body, .glass-card {
+  font-family: 'Vazirmatn', Tahoma, sans-serif;
+  background-color: var(--bg-main);
+  color: var(--text-primary);
+  transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease;
 }
 
 [data-theme="light"] body {
@@ -50,16 +76,74 @@ body {
 [data-theme="light"] .budget-tracker-card,
 [data-theme="light"] #directory-primary-filter-island,
 [data-theme="light"] #directory-advanced-filters-drawer {
-  background-color: var(--bg-surface) !important;
+  background-color: var(--bg-card) !important;
   color: var(--text-primary) !important;
   border-color: var(--border-gold) !important;
 }
 
-[data-theme="light"] .bg-\[\#0F172A\],
-[data-theme="light"] .bg-\[\#1E293B\] {
-  background-color: rgba(240, 238, 230, 0.95) !important;
+/* 1. LIGHT MODE HERO & BANNER EXCEPTION (#1B3B2B DARK EMERALD BACKGROUND) */
+[data-theme="light"] #hero,
+[data-theme="light"] .hero-bg-container,
+[data-theme="light"] .hero-banner-teal {
+    background-color: #1B3B2B !important;
+    background: #1B3B2B !important;
+    border: 1px solid #D4AF37 !important;
+    border-color: #D4AF37 !important;
+}
+
+[data-theme="light"] #hero h1,
+[data-theme="light"] #hero p,
+[data-theme="light"] #hero span:not(.gold-shimmer-btn *),
+[data-theme="light"] .hero-bg-container h1,
+[data-theme="light"] .hero-bg-container p,
+[data-theme="light"] .hero-bg-container span:not(.gold-shimmer-btn *),
+[data-theme="light"] .hero-banner-teal * {
+    color: #FFFFFF !important;
+}
+
+/* 2. GLOBAL FORCE-OVERRIDE FOR IVORY CARDS & INNER WIDGETS IN LIGHT MODE (#FBF9F5 & #111E16) */
+[data-theme="light"] .glass-card:not(#hero):not(.hero-bg-container),
+[data-theme="light"] .bg-darkslate,
+[data-theme="light"] .bg-\[\#0F172A\]:not(#hero),
+[data-theme="light"] .bg-\[\#1E293B\]:not(#hero),
+[data-theme="light"] .bg-\[\#07090E\]:not(#hero),
+[data-theme="light"] .bg-\[\#0b0f19\]:not(#hero),
+[data-theme="light"] .bg-\[\#0e121c\]:not(#hero),
+[data-theme="light"] .bg-\[\#141A28\]:not(#hero),
+[data-theme="light"] .bg-\[\#12161F\]:not(#hero),
+[data-theme="light"] .bg-\[\#0F251A\]:not(#hero),
+[data-theme="light"] div[class*="bg-"]:not(#hero):not(#hero *) {
+  background-color: #FBF9F5 !important;
+  border-color: rgba(212, 175, 55, 0.35) !important;
+  color: #111E16 !important;
+}
+
+[data-theme="light"] .glass-card:not(#hero) h1,
+[data-theme="light"] .glass-card:not(#hero) h2,
+[data-theme="light"] .glass-card:not(#hero) h3,
+[data-theme="light"] .glass-card:not(#hero) p,
+[data-theme="light"] .glass-card:not(#hero) span:not(.gold-shimmer-btn *) {
+  color: #111E16 !important;
+}
+
+[data-theme="light"] header div,
+[data-theme="light"] header span,
+[data-theme="light"] nav span,
+[data-theme="light"] nav button {
+  color: #111E16 !important;
+}
+
+[data-theme="light"] input,
+[data-theme="light"] select,
+[data-theme="light"] textarea {
+  background-color: var(--bg-input) !important;
   color: var(--text-primary) !important;
-  border-color: var(--border-gold) !important;
+  border-color: var(--border-glow) !important;
+}
+
+[data-theme="light"] select option {
+  background-color: #FFFFFF !important;
+  color: #0D131F !important;
 }
 
 [data-theme="light"] .text-white,
@@ -68,9 +152,21 @@ body {
   color: var(--text-primary) !important;
 }
 
+[data-theme="light"] .text-slate-400,
+[data-theme="light"] .text-gray-400 {
+  color: var(--text-secondary) !important;
+}
+
 [data-theme="light"] .text-amber-200,
-[data-theme="light"] .text-amber-100 {
-  color: var(--accent-gold) !important;
+[data-theme="light"] .text-amber-100,
+[data-theme="light"] .text-\[\#C5A059\],
+[data-theme="light"] .text-\[\#D4AF37\] {
+  color: var(--accent-main) !important;
+}
+
+[data-theme="light"] .border-\[\#C5A059\],
+[data-theme="light"] .border-\[\#D4AF37\] {
+  border-color: var(--border-glow) !important;
 }
 
 /* Global Layout Rules & Zero-Gap Below Header */
@@ -711,6 +807,65 @@ main#directory-view {
 
 #tab-planner .bridal-planner-group:hover {
   border-color: rgba(212, 175, 55, 0.6);
+}
+
+.planner-glass-card {
+  background: rgba(14, 18, 28, 0.85) !important;
+  backdrop-filter: blur(20px) !important;
+  -webkit-backdrop-filter: blur(20px) !important;
+  border: 1px solid rgba(197, 160, 89, 0.25) !important;
+  border-radius: 1.25rem !important;
+  box-shadow: 0 10px 30px rgba(7, 9, 14, 0.6), 0 0 20px rgba(197, 160, 89, 0.08) !important;
+  transition: all 0.3s ease-in-out !important;
+}
+
+.planner-glass-card:hover {
+  border-color: rgba(197, 160, 89, 0.45) !important;
+  box-shadow: 0 15px 35px rgba(7, 9, 14, 0.7), 0 0 25px rgba(197, 160, 89, 0.18) !important;
+}
+
+.planner-panel {
+  transition: opacity 0.3s ease-in-out, transform 0.3s ease-in-out;
+}
+
+.planner-panel.hidden {
+  display: none !important;
+  opacity: 0;
+  transform: translateY(8px);
+}
+
+.planner-panel:not(.hidden) {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+#tab-planner .planner-checkbox {
+  appearance: none;
+  width: 1.25rem;
+  height: 1.25rem;
+  border: 1.5px solid rgba(197, 160, 89, 0.4);
+  border-radius: 0.375rem;
+  background-color: rgba(7, 9, 14, 0.6);
+  cursor: pointer;
+  transition: all 0.2s ease;
+  position: relative;
+}
+
+#tab-planner .planner-checkbox:checked {
+  background-color: #C5A059;
+  border-color: #C5A059;
+  box-shadow: 0 0 10px rgba(197, 160, 89, 0.5);
+}
+
+#tab-planner .planner-checkbox:checked::after {
+  content: '✓';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  color: #07090E;
+  font-size: 0.85rem;
+  font-weight: 900;
 }
 
 /* ==========================================================================
@@ -2554,4 +2709,192 @@ main, #home-view, #directory-view {
 
 #directory-primary-filter-island {
   margin-top: 1rem;
+}
+
+
+/* ==========================================================================
+   FORCE OVERWRITE: FULL-WIDTH DIRECTORY & VENDOR VIP SHOWROOM
+   ========================================================================== */
+#tab-directory,
+#directory-view,
+.directory-container {
+  width: 100% !important;
+  max-width: 100% !important;
+  background-color: #07090E !important;
+  color: #F7F5F0 !important;
+}
+
+/* 100% Full-Width Bento Grid for Directory */
+#vendor-grid {
+  width: 100% !important;
+}
+
+/* Advanced Filters Slide-Over Drawer */
+#directory-advanced-filters-drawer {
+  position: fixed !important;
+  top: 0 !important;
+  bottom: 0 !important;
+  right: 0 !important;
+  left: 0 !important;
+  z-index: 999999 !important;
+  background-color: rgba(0, 0, 0, 0.8) !important;
+  backdrop-filter: blur(12px) !important;
+  -webkit-backdrop-filter: blur(12px) !important;
+}
+
+/* Standalone Vendor Profile VIP Showroom Page */
+body.vendor-detail-page,
+main.vendor-showroom-main {
+  width: 100% !important;
+  background-color: #07090E !important;
+  color: #F7F5F0 !important;
+}
+
+/* Sticky Concierge Footer Bar */
+.vdm-floating-concierge-bar {
+  position: fixed !important;
+  bottom: 0 !important;
+  left: 0 !important;
+  right: 0 !important;
+  z-index: 99999 !important;
+  background: rgba(7, 9, 14, 0.95) !important;
+  backdrop-filter: blur(20px) !important;
+  border-top: 1px solid rgba(197, 160, 89, 0.4) !important;
+}
+
+
+/* High Z-Index Lightbox & 360 Tour Modals */
+#modal-360-tour,
+#modal-story-lightbox {
+  position: fixed !important;
+  top: 0 !important;
+  left: 0 !important;
+  right: 0 !important;
+  bottom: 0 !important;
+  width: 100vw !important;
+  height: 100vh !important;
+  z-index: 999999 !important;
+  background-color: rgba(7, 9, 14, 0.95) !important;
+  backdrop-filter: blur(20px) !important;
+  -webkit-backdrop-filter: blur(20px) !important;
+}
+
+
+/* Cinematic Hover Video Teasers */
+.card-teaser-video {
+  position: absolute !important;
+  inset: 0 !important;
+  width: 100% !important;
+  height: 100% !important;
+  object-fit: cover !important;
+  opacity: 0;
+  transition: opacity 0.4s cubic-bezier(0.16, 1, 0.3, 1) !important;
+  pointer-events: none !important;
+}
+
+.card-img-container:hover .card-teaser-video {
+  opacity: 1 !important;
+}
+
+
+/* Advanced Filters Slide-Over Drawer - Force Top Z-Index Overlay */
+#directory-advanced-filters-drawer {
+  position: fixed !important;
+  top: 0 !important;
+  right: 0 !important;
+  width: 100% !important;
+  max-width: 420px !important;
+  height: 100vh !important;
+  z-index: 999999 !important;
+  background: #07090E !important;
+  box-shadow: -10px 0 30px rgba(0, 0, 0, 0.9) !important;
+  border-left: 1px solid rgba(197, 160, 89, 0.4) !important;
+  overflow-y: auto !important;
+}
+
+#directory-advanced-filters-drawer.hidden {
+  display: none !important;
+}
+
+
+/* Body-Level High Z-Index Lightboxes and 360 Modals */
+#modal-360-tour,
+#modal-story-lightbox {
+  position: fixed !important;
+  top: 0 !important;
+  left: 0 !important;
+  right: 0 !important;
+  bottom: 0 !important;
+  width: 100vw !important;
+  height: 100vh !important;
+  z-index: 9999999 !important;
+  background-color: rgba(7, 9, 14, 0.96) !important;
+  backdrop-filter: blur(25px) !important;
+  -webkit-backdrop-filter: blur(25px) !important;
+}
+
+
+/* Luxe Sticky Bottom Concierge Action Bar */
+.fixed.bottom-0.z-\[9999\],
+.fixed.bottom-0.z-50 {
+  position: fixed !important;
+  bottom: 0 !important;
+  left: 0 !important;
+  right: 0 !important;
+  width: 100% !important;
+  z-index: 9999 !important;
+  background: rgba(7, 9, 14, 0.95) !important;
+  backdrop-filter: blur(20px) !important;
+  -webkit-backdrop-filter: blur(20px) !important;
+  border-top: 1px solid rgba(197, 160, 89, 0.3) !important;
+  box-shadow: 0 -15px 40px rgba(0, 0, 0, 0.9) !important;
+}
+
+
+/* Direct Body-Level Maximum Z-Index Advanced Filter Drawer Overlay */
+#directory-advanced-filters-drawer {
+  position: fixed !important;
+  top: 0 !important;
+  right: 0 !important;
+  width: 100% !important;
+  max-width: 450px !important;
+  height: 100vh !important;
+  z-index: 2147483647 !important;
+  background: #07090E !important;
+  box-shadow: -10px 0 30px rgba(0, 0, 0, 0.9) !important;
+  border-left: 1px solid rgba(197, 160, 89, 0.4) !important;
+  overflow-y: auto !important;
+}
+
+#directory-advanced-filters-drawer.hidden {
+  display: none !important;
+}
+
+
+/* Refined Sticky Bottom Concierge Bar & Gallery Styling */
+.sticky-bottom-bar {
+  position: fixed !important;
+  bottom: 0 !important;
+  left: 0 !important;
+  width: 100% !important;
+  z-index: 99999 !important;
+  background: rgba(7, 9, 14, 0.95) !important;
+  backdrop-filter: blur(16px) !important;
+  border-top: 1px solid rgba(197, 160, 89, 0.3) !important;
+  box-shadow: 0 -10px 25px rgba(0,0,0,0.5) !important;
+}
+
+.cinematic-gallery-bento {
+  background: rgba(7, 9, 14, 0.8) !important;
+  border: 1px solid rgba(197, 160, 89, 0.2) !important;
+}
+
+.cinematic-gallery-bento img,
+.group:hover img {
+  transition: transform 0.5s ease !important;
+}
+
+.cinematic-gallery-bento img:hover,
+.group:hover img {
+  transform: scale(1.03) !important;
 }

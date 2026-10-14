@@ -3,6 +3,7 @@
 #directory-view {
   background-color: var(--bg-primary, #07090E);
   color: var(--text-primary, #F7F5F0);
+  width: 100% !important;
 }
 
 /* Glassmorphism Directory Filter Island */
@@ -27,7 +28,11 @@
   scrollbar-width: none;
 }
 
-/* Minimalist Bento Vendor Cards in Grid */
+/* Full-Width Bento Grid Container & Cards */
+#vendor-grid {
+  width: 100% !important;
+}
+
 .minimal-vendor-card {
   background: rgba(14, 18, 28, 0.88);
   border: 1px solid rgba(197, 160, 89, 0.25);
@@ -37,6 +42,77 @@
 
 .minimal-vendor-card:hover {
   border-color: #D4AF37;
-  box-shadow: 0 20px 45px rgba(212, 175, 55, 0.15);
+  box-shadow: 0 20px 45px rgba(212, 175, 55, 0.2);
   transform: translateY(-4px);
+}
+
+/* Slide-Over Filter Drawer Styling */
+#directory-advanced-filters-drawer {
+  transition: opacity 0.3s ease, visibility 0.3s ease;
+}
+
+#directory-advanced-filters-drawer > div {
+  animation: slideInRight 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+@keyframes slideInRight {
+  from { transform: translateX(100%); }
+  to { transform: translateX(0); }
+}
+
+
+/* Cinematic Hover Video Teasers */
+.card-teaser-video {
+  position: absolute !important;
+  inset: 0 !important;
+  width: 100% !important;
+  height: 100% !important;
+  object-fit: cover !important;
+  opacity: 0;
+  transition: opacity 0.4s cubic-bezier(0.16, 1, 0.3, 1) !important;
+  pointer-events: none !important;
+}
+
+.card-img-container:hover .card-teaser-video {
+  opacity: 1 !important;
+}
+
+
+/* Advanced Filters Slide-Over Drawer - Force Top Z-Index Overlay */
+#directory-advanced-filters-drawer {
+  position: fixed !important;
+  top: 0 !important;
+  right: 0 !important;
+  width: 100% !important;
+  max-width: 420px !important;
+  height: 100vh !important;
+  z-index: 999999 !important;
+  background: #07090E !important;
+  box-shadow: -10px 0 30px rgba(0, 0, 0, 0.9) !important;
+  border-left: 1px solid rgba(197, 160, 89, 0.4) !important;
+  overflow-y: auto !important;
+}
+
+#directory-advanced-filters-drawer.hidden {
+  display: none !important;
+}
+
+
+/* Direct Body-Level Maximum Z-Index Advanced Filter Drawer Overlay */
+#directory-advanced-filters-drawer {
+  position: fixed !important;
+  top: 0 !important;
+  right: 0 !important;
+  width: 100% !important;
+  max-width: 450px !important;
+  height: 100vh !important;
+  z-index: 2147483647 !important;
+  background: #07090E !important;
+  box-shadow: -10px 0 30px rgba(0, 0, 0, 0.9) !important;
+  border-left: 1px solid rgba(197, 160, 89, 0.4) !important;
+  overflow-y: auto !important;
+}
+
+#directory-advanced-filters-drawer.hidden {
+  display: none !important;
 }
