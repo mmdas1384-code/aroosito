@@ -24,26 +24,26 @@
 
 /* پالت تم روشن - اختصاصی عروسی تو */
 html[data-theme="light"] {
-  --bg-main: #F5EFEB;         /* پس‌زمینه اصلی (کرم روشن) */
-  --bg-card: #FBF9F5;         /* پس‌زمینه کارت‌ها و باکس‌ها (سفید عاجی) */
-  --bg-hero: #1B3B2B;         /* پس‌زمینه بنر اصلی (سبز زمردی تیره) */
-  --text-primary: #111E16;    /* رنگ متن‌های اصلی (مشکی-سبز تیره) */
-  --text-secondary: #1B3B2B;  /* رنگ متن‌های فرعی (سبز زمردی) */
-  --accent-gold: #D4AF37;     /* رنگ حاشیه‌ها و دکمه‌ها (طلایی سلطنتی) */
-  --border-color: rgba(212, 175, 55, 0.35); /* حاشیه طلایی درخشان */
-  --bg-input: #FFFFFF;
-  --card-shadow: 0 10px 30px rgba(27, 59, 43, 0.08);
+  --bg-main: #F5EFEB !important;         /* پس‌زمینه اصلی (کرم روشن) */
+  --bg-card: #FBF9F5 !important;         /* پس‌زمینه کارت‌ها و باکس‌ها (سفید عاجی) */
+  --bg-hero: #1B3B2B !important;         /* پس‌زمینه بنر اصلی (سبز زمردی تیره) */
+  --text-primary: #111E16 !important;    /* رنگ متن‌های اصلی (مشکی-سبز تیره) */
+  --text-secondary: #1B3B2B !important;  /* رنگ متن‌های فرعی (سبز زمردی) */
+  --accent-gold: #D4AF37 !important;     /* رنگ حاشیه‌ها و دکمه‌ها (طلایی سلطنتی) */
+  --border-color: rgba(212, 175, 55, 0.35) !important; /* حاشیه طلایی درخشان */
+  --bg-input: #FFFFFF !important;
+  --card-shadow: 0 10px 30px rgba(27, 59, 43, 0.08) !important;
 
   /* Aliases */
-  --accent-main: var(--accent-gold);
-  --accent-sub: #1B3B2B;
-  --accent-hover: #B89628;
-  --border-glow: var(--border-color);
-  --shadow-glow: var(--card-shadow);
-  --bg-primary: var(--bg-main);
-  --bg-surface: var(--bg-card);
-  --border-gold: var(--border-color);
-  --accent-gold-hover: var(--accent-hover);
+  --accent-main: var(--accent-gold) !important;
+  --accent-sub: #1B3B2B !important;
+  --accent-hover: #B89628 !important;
+  --border-glow: var(--border-color) !important;
+  --shadow-glow: var(--card-shadow) !important;
+  --bg-primary: var(--bg-main) !important;
+  --bg-surface: var(--bg-card) !important;
+  --border-gold: var(--border-color) !important;
+  --accent-gold-hover: var(--accent-hover) !important;
 }
 
 * {
@@ -81,14 +81,30 @@ body, .glass-card {
   border-color: var(--border-gold) !important;
 }
 
-/* 1. LIGHT MODE HERO & BANNER EXCEPTION (#1B3B2B DARK EMERALD BACKGROUND) */
-[data-theme="light"] #hero,
+[data-theme="light"] body {
+  background-color: var(--bg-main) !important;
+  color: var(--text-primary) !important;
+}
+
+[data-theme="light"] .glass-card:not(#hero):not(.hero-bg-container),
+[data-theme="light"] .bg-darkslate,
+[data-theme="light"] div[class*="bg-"]:not(#hero):not(#hero *),
+[data-theme="light"] section[class*="bg-"]:not(#hero):not(#hero *),
+[data-theme="light"] input,
+[data-theme="light"] select,
+[data-theme="light"] textarea {
+  background-color: var(--bg-card) !important;
+  color: var(--text-primary) !important;
+  border-color: var(--border-color) !important;
+}
+
 [data-theme="light"] .hero-bg-container,
+[data-theme="light"] #hero,
 [data-theme="light"] .hero-banner-teal {
-    background-color: #1B3B2B !important;
-    background: #1B3B2B !important;
-    border: 1px solid #D4AF37 !important;
-    border-color: #D4AF37 !important;
+  background-color: var(--bg-hero) !important;
+  background: var(--bg-hero) !important;
+  border-color: var(--accent-gold) !important;
+  color: #FFFFFF !important;
 }
 
 [data-theme="light"] #hero h1,
@@ -96,34 +112,19 @@ body, .glass-card {
 [data-theme="light"] #hero span:not(.gold-shimmer-btn *),
 [data-theme="light"] .hero-bg-container h1,
 [data-theme="light"] .hero-bg-container p,
-[data-theme="light"] .hero-bg-container span:not(.gold-shimmer-btn *),
-[data-theme="light"] .hero-banner-teal * {
-    color: #FFFFFF !important;
+[data-theme="light"] .hero-bg-container span:not(.gold-shimmer-btn *) {
+  color: #FFFFFF !important;
 }
 
-/* 2. GLOBAL FORCE-OVERRIDE FOR IVORY CARDS & INNER WIDGETS IN LIGHT MODE (#FBF9F5 & #111E16) */
-[data-theme="light"] .glass-card:not(#hero):not(.hero-bg-container),
-[data-theme="light"] .bg-darkslate,
-[data-theme="light"] .bg-\[\#0F172A\]:not(#hero),
-[data-theme="light"] .bg-\[\#1E293B\]:not(#hero),
-[data-theme="light"] .bg-\[\#07090E\]:not(#hero),
-[data-theme="light"] .bg-\[\#0b0f19\]:not(#hero),
-[data-theme="light"] .bg-\[\#0e121c\]:not(#hero),
-[data-theme="light"] .bg-\[\#141A28\]:not(#hero),
-[data-theme="light"] .bg-\[\#12161F\]:not(#hero),
-[data-theme="light"] .bg-\[\#0F251A\]:not(#hero),
-[data-theme="light"] div[class*="bg-"]:not(#hero):not(#hero *) {
-  background-color: #FBF9F5 !important;
-  border-color: rgba(212, 175, 55, 0.35) !important;
-  color: #111E16 !important;
-}
-
-[data-theme="light"] .glass-card:not(#hero) h1,
-[data-theme="light"] .glass-card:not(#hero) h2,
-[data-theme="light"] .glass-card:not(#hero) h3,
-[data-theme="light"] .glass-card:not(#hero) p,
-[data-theme="light"] .glass-card:not(#hero) span:not(.gold-shimmer-btn *) {
-  color: #111E16 !important;
+[data-theme="light"] h1:not(#hero *),
+[data-theme="light"] h2:not(#hero *),
+[data-theme="light"] h3:not(#hero *),
+[data-theme="light"] h4:not(#hero *),
+[data-theme="light"] p:not(#hero *),
+[data-theme="light"] span:not(#hero *):not(.gold-shimmer-btn *),
+[data-theme="light"] a:not(#hero *),
+[data-theme="light"] label {
+  color: var(--text-primary) !important;
 }
 
 [data-theme="light"] header div,
