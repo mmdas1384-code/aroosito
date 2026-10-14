@@ -7060,7 +7060,6 @@ if (document.readyState === "loading") {
       const prevBtn = document.getElementById('inquiry-prev-btn');
       const nextBtn = document.getElementById('inquiry-next-btn');
       const submitBtn = document.getElementById('inquiry-submit-btn');
-      const whatsappBtn = document.getElementById('inquiry-whatsapp-btn');
 
       if (s1) {
         if (step === 1) {
@@ -7097,7 +7096,6 @@ if (document.readyState === "loading") {
       if (prevBtn) prevBtn.classList.toggle('hidden', step === 1);
       if (nextBtn) nextBtn.classList.toggle('hidden', step === 3);
       if (submitBtn) submitBtn.classList.toggle('hidden', step !== 3);
-      if (whatsappBtn) whatsappBtn.classList.toggle('hidden', step !== 3);
 
       if (window.lucide) lucide.createIcons();
     };
@@ -7623,14 +7621,40 @@ if (document.readyState === "loading") {
 window.downloadReceiptPdf = function() {
   if (typeof openPreInvoicePrintModal === 'function') {
     openPreInvoicePrintModal(window.currentReceiptInvoiceData);
+  } else {
+    window.print();
   }
 };
 
 window.shareReceiptWhatsApp = function() {
   const d = window.currentReceiptInvoiceData;
   if (!d) return;
-  const msgText = encodeURIComponent(`سلام، درخواست استعلام قیمت #${d.num} برای ${d.vendorName}\nتاریخ: ${d.eventDate}\nخدمات: ${d.title}\nتماس: ${d.couplePhone}`);
-  window.open(`https://wa.me/?text=${msgText}`, '_blank');
+
+  const phoneRaw = d.vendorPhone || '09131112233';
+  let cleanPhone = phoneRaw.replace(/[^0-9]/g, '');
+  if (cleanPhone.startsWith('0')) {
+    cleanPhone = '98' + cleanPhone.substring(1);
+  } else if (!cleanPhone.startsWith('98')) {
+    cleanPhone = '98' + cleanPhone;
+  }
+
+  let textMsg = `سلام ${d.vendorName} عزیز،\n`;
+  textMsg += `درخواست استعلام قیمت رسمی با کد پیگیری #${d.num} در سامانه عروسی تو ثبت شد:\n\n`;
+  textMsg += `👤 نام متقاضی: ${d.coupleName}\n`;
+  textMsg += `📞 شماره تماس: ${d.couplePhone}\n`;
+  textMsg += `📅 تاریخ مراسم: ${d.eventDate}\n`;
+  if (d.guests) textMsg += `👥 تعداد مهمانان: ${d.guests}\n`;
+  if (d.title) textMsg += `📌 موضوع: ${d.title}\n`;
+  if (d.total) textMsg += `💰 محدوده بودجه: ${d.total}\n`;
+  if (d.items && d.items.length > 0) {
+    const serviceList = d.items.map(i => i.name).join(' ، ');
+    textMsg += `✨ خدمات درخواستی: ${serviceList}\n`;
+  }
+  textMsg += `\nلطفاً جهت بررسی و ارسال پیش‌فاکتور اقدام فرمایید. با تشکر!`;
+
+  const encodedMsg = encodeURIComponent(textMsg);
+  window.open(`https://wa.me/${cleanPhone}?text=${encodedMsg}`, '_blank');
+  if (typeof showToast === 'function') showToast('در حال انتقال به واتس‌اپ...', 'info');
 };
 
     function openRsvpModal() {
