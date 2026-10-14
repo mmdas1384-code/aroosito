@@ -1916,6 +1916,22 @@ if (document.readyState === "loading") {
       document.getElementById("guest-modal").classList.remove("hidden");
     }
 
+    function sendBulkRsvpReminders() {
+      const pendingGuests = guestListState.filter(g => g.status === 'PENDING' && g.phone);
+      if (pendingGuests.length === 0) {
+        showToast('ℹ️ همه میهمانان وضعیت حضور خود را مشخص کرده‌اند.', 'info');
+        return;
+      }
+
+      pendingGuests.forEach(g => {
+        const cleanPhone = g.phone.replace(/^0/, '98');
+        const waMsg = encodeURIComponent(`سلام ${g.name} عزیز،\nیادآوری حضور در جشن عروسی ما ✨\nلطفاً جهت هماهنگی نهایی، حضور خود را اعلام بفرمایید.`);
+        window.open(`https://wa.me/${cleanPhone}?text=${waMsg}`, '_blank');
+      });
+
+      showToast(`✨ ارسال یادآور برای ${pendingGuests.length} میهمان در واتس‌اپ انجام شد`, 'success');
+    }
+
     function closeGuestModal() {
       document.getElementById("guest-modal").classList.add("hidden");
     }
@@ -12756,6 +12772,26 @@ window.shareReceiptWhatsApp = function() {
 
     function showGlobalToast(message, type = 'success', duration = 3000) {
       showToast(message, type, duration);
+    }
+
+    function shareMoodboardToVendor() {
+      const savedIds = JSON.parse(localStorage.getItem('aroosi_saved_inspiration_db') || '["insp-1", "insp-3", "insp-5"]');
+      const savedItems = INSPIRATION_GALLERY_DB.filter(item => savedIds.includes(item.id));
+
+      if (savedItems.length === 0) {
+        showToast('⚠️ هنوز هیچ ایده‌ای در مودبورد شما ذخیره نشده است.', 'warning');
+        return;
+      }
+
+      let msg = `سلام! مودبورد ایده‌های منتخب عروسی ما در سامانه «عروسی تو»:\n\n`;
+      savedItems.forEach((item, index) => {
+        msg += `${index + 1}. ${item.title} (${item.categoryTitle})\n`;
+      });
+      msg += `\nلطفاً بر اساس این مودبورد، پیشنهادات و قیمت پکیج را ارسال فرمایید.`;
+
+      const encodedMsg = encodeURIComponent(msg);
+      window.open(`https://wa.me/?text=${encodedMsg}`, '_blank');
+      showToast('مودبورد جهت ارسال آماده گردید ✨', 'success');
     }
 
     function shareMoodboardLink() {
