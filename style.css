@@ -77,7 +77,7 @@ body, .glass-card {
 [data-theme="light"] .budget-tracker-card,
 [data-theme="light"] #directory-primary-filter-island,
 [data-theme="light"] #directory-advanced-filters-drawer {
-  background-color: var(--bg-surface) !important;
+  background-color: var(--bg-card) !important;
   color: var(--text-primary) !important;
   border-color: var(--border-gold) !important;
 }
@@ -92,10 +92,19 @@ body, .glass-card {
 [data-theme="light"] .bg-\[\#0e121c\],
 [data-theme="light"] .bg-\[\#141A28\],
 [data-theme="light"] .bg-\[\#12161F\],
+[data-theme="light"] .bg-\[\#0F251A\],
+[data-theme="light"] div[class*="bg-"],
 [data-theme="light"] div[class*="bg-[rgba(14,18,28"],
 [data-theme="light"] div[class*="bg-[rgba(20,26,38"] {
   background-color: var(--bg-card) !important;
   border-color: var(--border-glow) !important;
+  color: var(--text-primary) !important;
+}
+
+[data-theme="light"] header div,
+[data-theme="light"] header span,
+[data-theme="light"] nav span,
+[data-theme="light"] nav button {
   color: var(--text-primary) !important;
 }
 
