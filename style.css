@@ -1,49 +1,48 @@
-/* GLOBAL CSS VARIABLES MATRIX */
+/* پالت تم تاریک - اختصاصی عروسی تو */
 :root, html[data-theme="dark"] {
-  --bg-main: #07090E;
-  --bg-card: rgba(18, 22, 31, 0.85);
-  --bg-hero: radial-gradient(circle at top, #111622, #07090E);
+  --bg-main: #07090E;         /* پس‌زمینه اصلی (مشکی آبسیدین) */
+  --bg-card: rgba(18, 22, 31, 0.85); /* پس‌زمینه کارت‌ها و باکس‌ها (دودی شیشه‌ای) */
+  --bg-hero: #0D111A;         /* پس‌زمینه بنر اصلی (دودی عمیق) */
+  --text-primary: #FFFFFF;    /* رنگ متن‌های اصلی (سفید) */
+  --text-secondary: #9CA3AF;  /* رنگ متن‌های فرعی (خاکستری دودی) */
+  --accent-gold: #C5A059;     /* رنگ حاشیه‌ها و دکمه‌ها (طلایی شامپاین) */
+  --border-color: rgba(197, 160, 89, 0.25); /* حاشیه طلایی درخشان */
   --bg-input: #12161F;
-  --text-primary: #FFFFFF;
-  --text-secondary: #9CA3AF;
-  --accent-main: #C5A059;
-  --accent-sub: #10B981;
-  --border-glow: rgba(197, 160, 89, 0.25);
   --card-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
 
-  /* Aliases for compatibility */
-  --accent-gold: var(--accent-main);
+  /* Aliases */
+  --accent-main: var(--accent-gold);
+  --accent-sub: #10B981;
   --accent-hover: #D4AF37;
-  --border-color: var(--border-glow);
+  --border-glow: var(--border-color);
   --shadow-glow: var(--card-shadow);
   --bg-primary: var(--bg-main);
   --bg-surface: var(--bg-card);
-  --border-gold: var(--border-glow);
+  --border-gold: var(--border-color);
   --accent-gold-hover: var(--accent-hover);
 }
 
-/* LIGHT THEME: EXACT ROYAL LUXURY PALETTE HEX CODES */
+/* پالت تم روشن - اختصاصی عروسی تو */
 html[data-theme="light"] {
-  --bg-main: #F5EFEB;
-  --bg-card: #FBF9F5;
-  --bg-hero: #1B3B2B;
+  --bg-main: #F5EFEB;         /* پس‌زمینه اصلی (کرم روشن) */
+  --bg-card: #FBF9F5;         /* پس‌زمینه کارت‌ها و باکس‌ها (سفید عاجی) */
+  --bg-hero: #1B3B2B;         /* پس‌زمینه بنر اصلی (سبز زمردی تیره) */
+  --text-primary: #111E16;    /* رنگ متن‌های اصلی (مشکی-سبز تیره) */
+  --text-secondary: #1B3B2B;  /* رنگ متن‌های فرعی (سبز زمردی) */
+  --accent-gold: #D4AF37;     /* رنگ حاشیه‌ها و دکمه‌ها (طلایی سلطنتی) */
+  --border-color: rgba(212, 175, 55, 0.35); /* حاشیه طلایی درخشان */
   --bg-input: #FFFFFF;
-  --text-primary: #111E16;
-  --text-secondary: #1B3B2B;
-  --accent-gold: #D4AF37;
-  --accent-dark-green: #111E16;
-  --accent-main: #D4AF37;
-  --accent-sub: #1B3B2B;
-  --border-glow: rgba(212, 175, 55, 0.4);
   --card-shadow: 0 10px 30px rgba(27, 59, 43, 0.08);
 
-  /* Aliases for compatibility */
+  /* Aliases */
+  --accent-main: var(--accent-gold);
+  --accent-sub: #1B3B2B;
   --accent-hover: #B89628;
-  --border-color: var(--border-glow);
+  --border-glow: var(--border-color);
   --shadow-glow: var(--card-shadow);
   --bg-primary: var(--bg-main);
   --bg-surface: var(--bg-card);
-  --border-gold: var(--border-glow);
+  --border-gold: var(--border-color);
   --accent-gold-hover: var(--accent-hover);
 }
 
