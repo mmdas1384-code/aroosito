@@ -17364,13 +17364,13 @@ window.toggleThemeMode = function() {
   const icon = document.getElementById('theme-toggle-icon');
 
   if (newTheme === 'light') {
-    if (btnText) btnText.innerText = 'روز / Sunlit';
-    if (icon) icon.className = "w-4 h-4 text-[#A37F38]";
-    if (typeof showToast === 'function') showToast('تم دیداری: روز / Sunlit (روشن) فعال شد.', 'info');
+    if (btnText) btnText.innerText = 'روز / Ivory-Teal';
+    if (icon) icon.className = "w-4 h-4 text-[#0A4D4E]";
+    if (typeof showToast === 'function') showToast('تم دیداری: روز / Ivory-Teal (کرم عاجی) فعال شد.', 'info');
   } else {
-    if (btnText) btnText.innerText = 'شب / Midnight';
+    if (btnText) btnText.innerText = 'شب / Obsidian';
     if (icon) icon.className = "w-4 h-4 text-[#D4AF37]";
-    if (typeof showToast === 'function') showToast('تم دیداری: شب / Midnight Editorial (تاریک) فعال شد.', 'info');
+    if (typeof showToast === 'function') showToast('تم دیداری: شب / Dark Obsidian (تاریک) فعال شد.', 'info');
   }
 
   if (window.lucide) lucide.createIcons();
@@ -17382,10 +17382,10 @@ document.addEventListener('DOMContentLoaded', () => {
   const btnText = document.getElementById('theme-toggle-text');
   const icon = document.getElementById('theme-toggle-icon');
   if (savedTheme === 'light') {
-    if (btnText) btnText.innerText = 'روز / Sunlit';
-    if (icon) icon.className = "w-4 h-4 text-[#A37F38]";
+    if (btnText) btnText.innerText = 'روز / Ivory-Teal';
+    if (icon) icon.className = "w-4 h-4 text-[#0A4D4E]";
   } else {
-    if (btnText) btnText.innerText = 'شب / Midnight';
+    if (btnText) btnText.innerText = 'شب / Obsidian';
     if (icon) icon.className = "w-4 h-4 text-[#D4AF37]";
   }
 
