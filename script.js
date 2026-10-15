@@ -4277,13 +4277,14 @@ if (document.readyState === "loading") {
               </div>
             </div>
 
-              <!-- Prominent Dual CTA Action Buttons -->
+              <!-- Prominent Action CTA & Quick View Trigger -->
               <div class="p-3 pt-1 text-right flex items-center gap-2">
-                <button type="button" onclick="event.stopPropagation(); openInquiryModal(${v.id}, '${v.name}')" class="bg-[#1E293B] hover:bg-[#D4AF37]/20 text-amber-200 border border-[#D4AF37]/50 text-[11px] font-bold py-2 px-2.5 rounded-xl transition-all cursor-pointer flex items-center justify-center gap-1 shadow-sm" title="استعلام قیمت سریع">
-                  ⚡ <span>استعلام سریع</span>
+                <button type="button" onclick="event.stopPropagation(); openQuickViewDrawer(${v.id}, event)" class="bg-[#141A28] hover:bg-slate-800 text-amber-200 border border-[#D4AF37]/40 text-[11px] font-bold py-2 px-2.5 rounded-xl transition-all flex items-center justify-center gap-1 cursor-pointer shrink-0" title="مشاهده سریع">
+                  <i data-lucide="eye" class="w-3.5 h-3.5 text-[#D4AF37]"></i>
+                  <span>مشاهده سریع</span>
                 </button>
                 <button type="button" onclick="event.stopPropagation(); openVendorDetailModal(${v.id})" class="gold-shimmer-btn flex-1 text-[#0F251A] text-[11px] font-black py-2 px-3 rounded-xl shadow-lg transition-all flex items-center justify-center gap-1 cursor-pointer transform hover:scale-[1.02]">
-                  <span>مشاهده پروفایل & رزرو ➔</span>
+                  <span>مشاهده پروفایل ➔</span>
                 </button>
               </div>
           `;
