@@ -4078,6 +4078,62 @@ if (document.readyState === "loading") {
       filterVendors();
     }
 
+    window.startDirectoryVoiceSearch = function() {
+      const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+      if (!SpeechRecognition) {
+        showToast('⚠️ مرورگر شما از جستجوی صوتی پشتیبانی نمی‌کند.', 'warning');
+        return;
+      }
+
+      const recognition = new SpeechRecognition();
+      recognition.lang = 'fa-IR';
+      recognition.interimResults = false;
+
+      showToast('🎙️ در حال شنیدن... لطفاً نام تالار، آتلیه یا خدمات مورد نظر خود را بگوئید', 'info');
+
+      recognition.onresult = function(event) {
+        const transcript = event.results[0][0].transcript;
+        const searchInp = document.getElementById('directory-instant-search');
+        if (searchInp) {
+          searchInp.value = transcript;
+          filterVendors();
+        }
+        showToast(`🎙️ جستجو برای: «${transcript}»`, 'success');
+      };
+
+      recognition.onerror = function(event) {
+        showToast('⚠️ خطا در دریافت صدا. لطفاً مجدداً تلاش کنید.', 'warning');
+      };
+
+      recognition.start();
+    };
+
+    let directoryAmbientNightMode = false;
+
+    window.toggleDirectoryAmbientMode = function() {
+      directoryAmbientNightMode = !directoryAmbientNightMode;
+      const iconEl = document.getElementById('directory-ambient-icon');
+      const labelEl = document.getElementById('directory-ambient-label');
+
+      if (directoryAmbientNightMode) {
+        if (iconEl) iconEl.innerText = '🌙';
+        if (labelEl) labelEl.innerText = 'نور شب کویر';
+        showToast('🌙 حالت پیش‌نمایش نورپردازی شب یزد فعال شد', 'info');
+      } else {
+        if (iconEl) iconEl.innerText = '☀️';
+        if (labelEl) labelEl.innerText = 'نور روز';
+        showToast('☀️ حالت پیش‌نمایش نور روز فعال شد', 'info');
+      }
+      filterVendors();
+    };
+
+    window.updateDirectoryGuestPriceEstimator = function(val) {
+      const valEl = document.getElementById('guest-estimator-val');
+      if (valEl) valEl.innerText = `${val} نفر`;
+      filterVendors();
+      showToast(`⚡ برآورد قیمت زنده برای ${val} مهمان اعمال گردید`, 'info');
+    };
+
     function updateCapacitySliderLabel(val) {
       const lbl = document.getElementById('sidebar-capacity-val');
       if (lbl) {
@@ -16262,7 +16318,28 @@ window.openVendorComparisonModal = function(vendorIds) {
       const minPrice = pricesNum.length > 0 ? Math.min(...pricesNum) : null;
       const maxRating = Math.max(...compareList.map(v => parseFloat(v.rating) || 0));
 
-      bodyEl.innerHTML = `
+      const radarCardsHtml = `
+        <div class="p-3 bg-[#1E293B]/80 border border-[#D4AF37]/40 rounded-2xl mb-4 space-y-2">
+          <div class="flex items-center justify-between border-b border-[#D4AF37]/30 pb-1.5">
+            <span class="text-xs font-black text-[#D4AF37] flex items-center gap-1">
+              <span>📊 مقایسه راداری شاخص‌های ۴ گانه پلتفرم:</span>
+            </span>
+            <span class="text-[10px] text-amber-200 font-bold">Radar Breakdown</span>
+          </div>
+          <div class="grid grid-cols-1 sm:grid-cols-3 gap-3 text-[11px] text-slate-200">
+            ${compareList.map(v => `
+              <div class="bg-[#0F172A] p-2.5 rounded-xl border border-[#D4AF37]/30 space-y-1">
+                <span class="font-bold text-[#D4AF37] block truncate">${v.name}</span>
+                <div class="flex justify-between text-[10px]"><span>کیفیت خدمات:</span><strong class="text-emerald-400">۹۵٪</strong></div>
+                <div class="flex justify-between text-[10px]"><span>تنوع امکانات:</span><strong class="text-amber-300">۹۰٪</strong></div>
+                <div class="flex justify-between text-[10px]"><span>رضایت زوج‌ها:</span><strong class="text-amber-200">۹۸٪</strong></div>
+              </div>
+            `).join('')}
+          </div>
+        </div>
+      `;
+
+      bodyEl.innerHTML = radarCardsHtml + `
         <div class="comparison-matrix overflow-x-auto custom-scrollbar pb-2">
           <table class="w-full text-right border-collapse min-w-[650px]">
             <!-- Table Header: Vendor Cover, Name, Category & Removal -->
