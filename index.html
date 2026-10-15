@@ -20,6 +20,10 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Alex+Brush&family=Bodoni+Moda:ital,opsz,wght@0,6..96,400..900;1,6..96,400..900&family=Cinzel:wght@400..900&family=Cormorant+Garamond:ital,wght@0,400;0,600;0,700;1,400&family=Great+Vibes&family=Montserrat:wght@300;400;600;700&family=Playfair+Display:ital,wght@0,400..900;1,400..900&display=swap" rel="stylesheet">
 
+  <!-- PWA Web App Manifest -->
+  <link rel="manifest" href="manifest.json">
+  <meta name="theme-color" content="#07090E">
+
   <!-- External CSS Stylesheets -->
   <link rel="stylesheet" href="style.css">
   <link rel="stylesheet" href="directory.css">
@@ -1853,6 +1857,10 @@
           </div>
 
           <div class="flex items-center gap-2 w-full md:w-auto flex-wrap">
+            <button onclick="generateBulkGuestInvitationLinks()" class="flex-1 md:flex-initial bg-gradient-to-r from-[#D4AF37] to-[#F3E5AB] text-[#0F251A] px-4 py-2.5 rounded-xl text-xs font-black transition-all flex items-center justify-center gap-1.5 shadow-lg cursor-pointer hover:scale-105">
+              <i data-lucide="qr-code" class="w-4 h-4"></i>
+              <span>تولید دسته‌جمعی QR & کارت اختصاصی میهمانان</span>
+            </button>
             <button onclick="sendBulkRsvpReminders()" class="flex-1 md:flex-initial bg-emerald-600 hover:bg-emerald-500 text-white px-4 py-2.5 rounded-xl text-xs font-black transition-all flex items-center justify-center gap-1.5 shadow-lg cursor-pointer">
               <i data-lucide="send" class="w-4 h-4"></i>
               <span>ارسال خودکار یادآور RSVP</span>
@@ -3285,9 +3293,9 @@
             </div>
             <div class="flex items-center gap-2 flex-wrap">
               <span class="text-[#C5A059] font-bold">✨ پالت رنگی:</span>
-              <button onclick="filterInspirationByStyle('طلایی-سرمه‌ای')" class="bg-[#07090E] hover:bg-[#1E293B] border border-[#C5A059]/30 text-slate-200 px-3 py-1 rounded-xl">طلایی-سرمه‌ای</button>
-              <button onclick="filterInspirationByStyle('پاستلی')" class="bg-[#07090E] hover:bg-[#1E293B] border border-[#C5A059]/30 text-slate-200 px-3 py-1 rounded-xl">پاستلی</button>
-              <button onclick="filterInspirationByStyle('نود')" class="bg-[#07090E] hover:bg-[#1E293B] border border-[#C5A059]/30 text-slate-200 px-3 py-1 rounded-xl">نود</button>
+              <button onclick="filterInspirationByStyle('طلایی و زمردی')" class="bg-[#07090E] hover:bg-[#1E293B] border border-[#C5A059]/30 text-amber-200 px-3 py-1 rounded-xl flex items-center gap-1"><span>💚</span> طلایی & زمردی</button>
+              <button onclick="filterInspirationByStyle('شامپاینی و عاجی')" class="bg-[#07090E] hover:bg-[#1E293B] border border-[#C5A059]/30 text-amber-200 px-3 py-1 rounded-xl flex items-center gap-1"><span>💛</span> شامپاینی & عاجی</button>
+              <button onclick="filterInspirationByStyle('یاسی و نقره‌ای')" class="bg-[#07090E] hover:bg-[#1E293B] border border-[#C5A059]/30 text-amber-200 px-3 py-1 rounded-xl flex items-center gap-1"><span>💜</span> یاسی & نقره‌ای</button>
             </div>
           </div>
         </div>
@@ -3309,7 +3317,10 @@
                 <span class="absolute top-2 right-2 bg-[#07090E]/90 text-[#C5A059] text-[10px] font-bold px-2 py-0.5 rounded-md border border-[#C5A059]/30">باغ مشیرالممالک</span>
               </div>
               <h4 class="text-xs font-black text-[#F7F5F0]">جشن عروسی علیرضا & نسترن (مهر ۱۴۰۳)</h4>
-              <p class="text-[11px] text-slate-300">تامین‌کنندگان: آتلیه زمرد • تشریفات قصر • مزون طلایی</p>
+              <div class="flex items-center justify-between text-[11px] pt-1 border-t border-slate-800">
+                <span class="text-slate-300">تامین‌کنندگان: آتلیه زمرد • تشریفات قصر</span>
+                <button onclick="openVendorDetailModal(1)" class="text-[#D4AF37] font-bold hover:underline">مشاهده ➔</button>
+              </div>
             </div>
 
             <div class="bg-[#141A28] border border-[#C5A059]/30 rounded-2xl overflow-hidden p-3 space-y-2 group">
@@ -3318,7 +3329,10 @@
                 <span class="absolute top-2 right-2 bg-[#07090E]/90 text-[#C5A059] text-[10px] font-bold px-2 py-0.5 rounded-md border border-[#C5A059]/30">عمارت ارگ صفائیه</span>
               </div>
               <h4 class="text-xs font-black text-[#F7F5F0]">جشن عروسی سعید & مهسا (آبان ۱۴۰۳)</h4>
-              <p class="text-[11px] text-slate-300">تامین‌کنندگان: سالن زیبایی رویا • گل‌آرایی مگنولیا</p>
+              <div class="flex items-center justify-between text-[11px] pt-1 border-t border-slate-800">
+                <span class="text-slate-300">تامین‌کنندگان: سالن زیبایی رویا • گل‌آرایی مگنولیا</span>
+                <button onclick="openVendorDetailModal(2)" class="text-[#D4AF37] font-bold hover:underline">مشاهده ➔</button>
+              </div>
             </div>
 
             <div class="bg-[#141A28] border border-[#C5A059]/30 rounded-2xl overflow-hidden p-3 space-y-2 group">
@@ -3327,7 +3341,10 @@
                 <span class="absolute top-2 right-2 bg-[#07090E]/90 text-[#C5A059] text-[10px] font-bold px-2 py-0.5 rounded-md border border-[#C5A059]/30">تالار پذیرایی داد</span>
               </div>
               <h4 class="text-xs font-black text-[#F7F5F0]">جشن عروسی پوریا & هانیه (آذر ۱۴۰۳)</h4>
-              <p class="text-[11px] text-slate-300">تامین‌کنندگان: کیک حاج خلیفه • تشریفات زمرد</p>
+              <div class="flex items-center justify-between text-[11px] pt-1 border-t border-slate-800">
+                <span class="text-slate-300">تامین‌کنندگان: کیک حاج خلیفه • تشریفات زمرد</span>
+                <button onclick="openVendorDetailModal(3)" class="text-[#D4AF37] font-bold hover:underline">مشاهده ➔</button>
+              </div>
             </div>
           </div>
         </div>

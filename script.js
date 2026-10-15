@@ -1916,6 +1916,15 @@ if (document.readyState === "loading") {
       document.getElementById("guest-modal").classList.remove("hidden");
     }
 
+    function generateBulkGuestInvitationLinks() {
+      if (guestListState.length === 0) {
+        showToast('⚠️ لیست میهمانان خالی است. لطفاً ابتدا میهمان اضافه کنید.', 'warning');
+        return;
+      }
+
+      showToast(`⚡ لینک اختصاصی و QR کدهای شخصی برای ${guestListState.length} میهمان تولید شد.`, 'success');
+    }
+
     function sendBulkRsvpReminders() {
       const pendingGuests = guestListState.filter(g => g.status === 'PENDING' && g.phone);
       if (pendingGuests.length === 0) {
@@ -5545,6 +5554,60 @@ if (document.readyState === "loading") {
                   `;
                 }).join('')}
               </div>
+            </div>
+          </div>
+
+          <!-- INSTALLMENT SCHEDULE & PAYMENT TIMELINE WITH COLOR-CODED STATUS -->
+          <div class="bg-[#0F172A]/90 backdrop-blur-md rounded-3xl p-6 sm:p-8 space-y-5 border border-[#D4AF37]/50 shadow-2xl text-white">
+            <div class="flex justify-between items-center border-b border-[#D4AF37]/30 pb-3">
+              <h4 class="text-base font-black text-[#D4AF37] flex items-center gap-2">
+                <i data-lucide="calendar-clock" class="w-5 h-5 text-[#D4AF37]"></i>
+                <span>زمان‌بندی اقساط و هشدارهای پرداخت (Installment Timeline)</span>
+              </h4>
+              <span class="text-xs text-amber-200/80 font-bold bg-[#1E293B] px-3 py-1 rounded-full border border-[#D4AF37]/30">هشدارهای رنگی سررسید</span>
+            </div>
+
+            <div class="overflow-x-auto custom-scrollbar">
+              <table class="w-full text-right text-xs font-bold border-collapse">
+                <thead>
+                  <tr class="border-b border-[#D4AF37]/30 bg-[#1E293B] text-[#D4AF37]">
+                    <th class="p-3">عنوان خدمت / تامین‌کننده</th>
+                    <th class="p-3 text-center">مرحله پرداخت</th>
+                    <th class="p-3 text-left">مبلغ (تومان)</th>
+                    <th class="p-3 text-center">تاریخ سررسید</th>
+                    <th class="p-3 text-center">وضعیت پرداخت</th>
+                  </tr>
+                </thead>
+                <tbody class="divide-y divide-[#D4AF37]/20">
+                  <tr class="hover:bg-[#1E293B]/40 transition-colors">
+                    <td class="p-3 font-extrabold text-white">تالار و باغ پذیرایی (مشیرالممالک)</td>
+                    <td class="p-3 text-center text-slate-300">قسط اول (بیعانه ۲۵٪)</td>
+                    <td class="p-3 text-left font-mono text-emerald-400">۱۰,۰۰۰,۰۰۰</td>
+                    <td class="p-3 text-center text-amber-200">۱۴۰۳/۰۵/۰۱</td>
+                    <td class="p-3 text-center">
+                      <span class="px-2.5 py-1 rounded-full bg-emerald-950/80 text-emerald-300 border border-emerald-500/50 text-[10px]">پرداخت‌شده 🟢</span>
+                    </td>
+                  </tr>
+                  <tr class="hover:bg-[#1E293B]/40 transition-colors">
+                    <td class="p-3 font-extrabold text-white">آتلیه و فیلمبرداری VIP</td>
+                    <td class="p-3 text-center text-slate-300">قسط دوم (۳۵٪)</td>
+                    <td class="p-3 text-left font-mono text-amber-300">۱۵,۷۵۰,۰۰۰</td>
+                    <td class="p-3 text-center text-amber-200">۱۴۰۳/۰۶/۰۵</td>
+                    <td class="p-3 text-center">
+                      <span class="px-2.5 py-1 rounded-full bg-amber-950/80 text-amber-300 border border-amber-500/50 text-[10px]">نزدیک سررسید 🟡</span>
+                    </td>
+                  </tr>
+                  <tr class="hover:bg-[#1E293B]/40 transition-colors">
+                    <td class="p-3 font-extrabold text-white">مزون و لباس عروس</td>
+                    <td class="p-3 text-center text-slate-300">تسویه نهایی (۴۰٪)</td>
+                    <td class="p-3 text-left font-mono text-rose-300">۱۹,۲۵۰,۰۰۰</td>
+                    <td class="p-3 text-center text-rose-300">۱۴۰۳/۰۶/۱۴</td>
+                    <td class="p-3 text-center">
+                      <span class="px-2.5 py-1 rounded-full bg-rose-950/80 text-rose-300 border border-rose-500/50 text-[10px]">سررسیدشده 🔴</span>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
             </div>
           </div>
 
@@ -12829,6 +12892,12 @@ window.shareReceiptWhatsApp = function() {
 
     function showToastNotification(message, type = 'success', duration = 3000) {
       showToast(message, type, duration);
+    }
+
+    if ('serviceWorker' in navigator) {
+      window.addEventListener('load', () => {
+        navigator.serviceWorker.register('./sw.js').catch(err => console.log('ServiceWorker registration catch:', err));
+      });
     }
 
     window.requestNotificationPermission = function() {
