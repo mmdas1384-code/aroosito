@@ -7786,28 +7786,55 @@
             </div>
           </div>
 
-          <!-- Itemized Service Table -->
-          <div class="space-y-2">
-            <h4 class="font-black text-[#1B3B2B] text-xs flex items-center gap-1.5">
-              <i data-lucide="list-checks" class="w-4 h-4 text-[#D4AF37]"></i>
-              جدول جزئیات خدمات و ریز برآورد مالی:
-            </h4>
-            <div class="border border-accent rounded-2xl overflow-hidden shadow-2xs">
-              <table class="w-full text-right text-xs">
-                <thead class="bg-[#1B3B2B] text-white font-bold">
-                  <tr>
-                    <th class="p-3 text-center w-10">ردیف</th>
-                    <th class="p-3">شرح خدمت / آیتم‌های پکیج</th>
-                    <th class="p-3 text-center w-16">تعداد</th>
-                    <th class="p-3 text-left w-28">قیمت واحد (تومان)</th>
-                    <th class="p-3 text-left w-24">تخفیف</th>
-                    <th class="p-3 text-left w-32">مبلغ کل (تومان)</th>
-                  </tr>
-                </thead>
-                <tbody id="pip-items-tbody" class="divide-y divide-accent/60 bg-white">
-                  <!-- Dynamically populated rows -->
-                </tbody>
-              </table>
+          <!-- Itemized Service Table & Optional Add-ons -->
+          <div class="space-y-4">
+            <div class="space-y-2">
+              <h4 class="font-black text-[#1B3B2B] text-xs flex items-center gap-1.5">
+                <i data-lucide="list-checks" class="w-4 h-4 text-[#D4AF37]"></i>
+                جدول جزئیات خدمات و ریز برآورد مالی:
+              </h4>
+              <div class="border border-accent rounded-2xl overflow-hidden shadow-2xs">
+                <table class="w-full text-right text-xs">
+                  <thead class="bg-[#1B3B2B] text-white font-bold">
+                    <tr>
+                      <th class="p-3 text-center w-10">ردیف</th>
+                      <th class="p-3">شرح خدمت / آیتم‌های پکیج</th>
+                      <th class="p-3 text-center w-16">تعداد</th>
+                      <th class="p-3 text-left w-28">قیمت واحد (تومان)</th>
+                      <th class="p-3 text-left w-24">تخفیف</th>
+                      <th class="p-3 text-left w-32">مبلغ کل (تومان)</th>
+                    </tr>
+                  </thead>
+                  <tbody id="pip-items-tbody" class="divide-y divide-accent/60 bg-white">
+                    <!-- Dynamically populated rows -->
+                  </tbody>
+                </table>
+              </div>
+            </div>
+
+            <!-- Optional Add-ons Interactive Calculator Box -->
+            <div class="p-3.5 bg-amber-50/80 border border-[#D4AF37]/50 rounded-2xl space-y-2">
+              <div class="flex items-center justify-between border-b border-[#D4AF37]/30 pb-2">
+                <span class="text-xs font-black text-[#1B3B2B] flex items-center gap-1.5">
+                  <i data-lucide="plus-circle" class="w-4 h-4 text-[#D4AF37]"></i>
+                  افزودن خدمات و بندهای اختیاری به پیش‌فاکتور (محاسبه زنده قیمت):
+                </span>
+                <span class="text-[10px] text-amber-900 font-bold bg-amber-200/60 px-2 py-0.5 rounded-full">Interactive Add-ons</span>
+              </div>
+              <div class="grid grid-cols-1 sm:grid-cols-3 gap-2 text-xs font-bold text-slate-800">
+                <label class="flex items-center gap-2 cursor-pointer p-2 bg-white rounded-xl border border-amber-200 hover:border-[#D4AF37] transition-all">
+                  <input type="checkbox" data-addon-price="8000000" onchange="togglePreInvoiceAddon(this, 'نورپردازی ۳D و آتش‌بازی VIP')" class="accent-[#D4AF37] w-4 h-4 rounded cursor-pointer">
+                  <span>آتش‌بازی VIP (+۸ میلیون)</span>
+                </label>
+                <label class="flex items-center gap-2 cursor-pointer p-2 bg-white rounded-xl border border-amber-200 hover:border-[#D4AF37] transition-all">
+                  <input type="checkbox" data-addon-price="12000000" onchange="togglePreInvoiceAddon(this, 'تصویربرداری هلی‌شات هوایی')" class="accent-[#D4AF37] w-4 h-4 rounded cursor-pointer">
+                  <span>هلی‌شات (+۱۲ میلیون)</span>
+                </label>
+                <label class="flex items-center gap-2 cursor-pointer p-2 bg-white rounded-xl border border-amber-200 hover:border-[#D4AF37] transition-all">
+                  <input type="checkbox" data-addon-price="6000000" onchange="togglePreInvoiceAddon(this, 'منوی دسر بین‌المللی')" class="accent-[#D4AF37] w-4 h-4 rounded cursor-pointer">
+                  <span>منوی دسر (+۶ میلیون)</span>
+                </label>
+              </div>
             </div>
           </div>
 

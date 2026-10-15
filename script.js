@@ -7642,6 +7642,11 @@ if (document.readyState === "loading") {
 
       if (window.lucide) lucide.createIcons();
       showToast('درخواست استعلام قیمت شما با موفقیت ثبت شد ✨', 'success');
+      if (typeof window.triggerWebPushNotification === 'function') {
+        window.triggerWebPushNotification(`استعلام جدید ثبت شد: ${vendor.name}`, {
+          body: `درخواست استعلام قیمت برای تاریخ ${date} در سامانه عروسی تو ثبت گردید.`
+        });
+      }
     }
 
 window.downloadReceiptPdf = function() {
@@ -12770,6 +12775,32 @@ window.shareReceiptWhatsApp = function() {
       showToast(message, type, duration);
     }
 
+    window.requestNotificationPermission = function() {
+      if ('Notification' in window && Notification.permission !== 'granted') {
+        Notification.requestPermission().then(permission => {
+          if (permission === 'granted') {
+            showToast('🔔 اعلانات زنده مرورگر فعال گردید.', 'success');
+          }
+        });
+      }
+    };
+
+    window.triggerWebPushNotification = function(title, options = {}) {
+      if ('Notification' in window && Notification.permission === 'granted') {
+        try {
+          new Notification(title, {
+            icon: 'https://images.unsplash.com/photo-1519741497674-611481863552?auto=format&fit=crop&w=120&q=80',
+            badge: 'https://images.unsplash.com/photo-1519741497674-611481863552?auto=format&fit=crop&w=120&q=80',
+            dir: 'rtl',
+            lang: 'fa',
+            ...options
+          });
+        } catch(e) {
+          console.log('Web push notification dispatch:', e);
+        }
+      }
+    };
+
     function showGlobalToast(message, type = 'success', duration = 3000) {
       showToast(message, type, duration);
     }
@@ -15509,6 +15540,39 @@ window.handleSendInvoiceSubmit = function(e) {
   if (typeof showToast === 'function') {
     showToast(`🧾 پیش‌فاکتور دیجیتال به مبلغ ${total} تومان برای ${couple} ارسال شد.`, 'success');
   }
+};
+
+let currentInvoiceBaseTotal = 45000000;
+let activeAddonsSum = 0;
+
+window.togglePreInvoiceAddon = function(cb, addonName) {
+  const price = parseInt(cb.getAttribute('data-addon-price'), 10) || 0;
+  if (cb.checked) {
+    activeAddonsSum += price;
+  } else {
+    activeAddonsSum -= price;
+  }
+
+  const grandTotal = currentInvoiceBaseTotal + activeAddonsSum;
+  const deposit = Math.round(grandTotal * 0.25);
+  const inst2 = Math.round(grandTotal * 0.35);
+  const balance = grandTotal - deposit - inst2;
+
+  const fmt = num => num.toLocaleString('fa-IR') + ' تومان';
+
+  const subtotalEl = document.getElementById('pip-subtotal');
+  const totalEl = document.getElementById('pip-total-amount');
+  const depEl = document.getElementById('pip-deposit');
+  const inst2El = document.getElementById('pip-installment-2');
+  const balEl = document.getElementById('pip-balance');
+
+  if (subtotalEl) subtotalEl.innerText = fmt(grandTotal);
+  if (totalEl) totalEl.innerText = fmt(grandTotal);
+  if (depEl) depEl.innerText = fmt(deposit);
+  if (inst2El) inst2El.innerText = fmt(inst2);
+  if (balEl) balEl.innerText = fmt(balance);
+
+  showToast(`خدمت اختیاری «${addonName}» به محاسبات زنده اضافه شد ✨`, 'info');
 };
 
 window.openPreInvoicePrintModal = function(invoiceData) {
