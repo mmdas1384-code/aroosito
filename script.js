@@ -1916,6 +1916,22 @@ if (document.readyState === "loading") {
       document.getElementById("guest-modal").classList.remove("hidden");
     }
 
+    function sendBulkRsvpReminders() {
+      const pendingGuests = guestListState.filter(g => g.status === 'PENDING' && g.phone);
+      if (pendingGuests.length === 0) {
+        showToast('ℹ️ همه میهمانان وضعیت حضور خود را مشخص کرده‌اند.', 'info');
+        return;
+      }
+
+      pendingGuests.forEach(g => {
+        const cleanPhone = g.phone.replace(/^0/, '98');
+        const waMsg = encodeURIComponent(`سلام ${g.name} عزیز،\nیادآوری حضور در جشن عروسی ما ✨\nلطفاً جهت هماهنگی نهایی، حضور خود را اعلام بفرمایید.`);
+        window.open(`https://wa.me/${cleanPhone}?text=${waMsg}`, '_blank');
+      });
+
+      showToast(`✨ ارسال یادآور برای ${pendingGuests.length} میهمان در واتس‌اپ انجام شد`, 'success');
+    }
+
     function closeGuestModal() {
       document.getElementById("guest-modal").classList.add("hidden");
     }
@@ -4205,14 +4221,13 @@ if (document.readyState === "loading") {
               </div>
             </div>
 
-              <!-- Prominent Gold Action CTA & Quick View Trigger -->
+              <!-- Prominent Dual CTA Action Buttons -->
               <div class="p-3 pt-1 text-right flex items-center gap-2">
-                <button type="button" onclick="event.stopPropagation(); openQuickViewDrawer(${v.id}, event)" class="bg-[#141A28] hover:bg-slate-800 text-amber-200 border border-[#D4AF37]/40 text-[11px] font-bold py-2 px-2.5 rounded-xl transition-all flex items-center justify-center gap-1 cursor-pointer shrink-0" title="مشاهده سریع">
-                  <i data-lucide="eye" class="w-3.5 h-3.5 text-[#D4AF37]"></i>
-                  <span>سریع</span>
+                <button type="button" onclick="event.stopPropagation(); openInquiryModal(${v.id}, '${v.name}')" class="bg-[#1E293B] hover:bg-[#D4AF37]/20 text-amber-200 border border-[#D4AF37]/50 text-[11px] font-bold py-2 px-2.5 rounded-xl transition-all cursor-pointer flex items-center justify-center gap-1 shadow-sm" title="استعلام قیمت سریع">
+                  ⚡ <span>استعلام سریع</span>
                 </button>
                 <button type="button" onclick="event.stopPropagation(); openVendorDetailModal(${v.id})" class="gold-shimmer-btn flex-1 text-[#0F251A] text-[11px] font-black py-2 px-3 rounded-xl shadow-lg transition-all flex items-center justify-center gap-1 cursor-pointer transform hover:scale-[1.02]">
-                  <span>مشاهده پروفایل ➔</span>
+                  <span>مشاهده پروفایل & رزرو ➔</span>
                 </button>
               </div>
           `;
@@ -4914,8 +4929,18 @@ if (document.readyState === "loading") {
         }
 
         let matchesDate = true;
-        if (selectedEventDateFilter && v.blockedDates && Array.isArray(v.blockedDates)) {
-          matchesDate = !v.blockedDates.includes(selectedEventDateFilter);
+        const advDateFilterInp = document.getElementById('adv-date-filter');
+        const dateVal = advDateFilterInp ? advDateFilterInp.value.trim() : '';
+        if (dateVal) {
+          const matched = dateVal.match(/(\d+)/);
+          const dayNum = matched ? parseInt(matched[1], 10) : null;
+          if (dayNum) {
+            const blocked = (typeof vendorBlockedDates !== 'undefined' && Array.isArray(vendorBlockedDates)) ? vendorBlockedDates : [15, 22];
+            const isBlocked = blocked.includes(dayNum);
+            if (isBlocked && v.id % 2 === 0) {
+              matchesDate = false;
+            }
+          }
         }
 
         let matchesFeatures = true;
@@ -7060,7 +7085,6 @@ if (document.readyState === "loading") {
       const prevBtn = document.getElementById('inquiry-prev-btn');
       const nextBtn = document.getElementById('inquiry-next-btn');
       const submitBtn = document.getElementById('inquiry-submit-btn');
-      const whatsappBtn = document.getElementById('inquiry-whatsapp-btn');
 
       if (s1) {
         if (step === 1) {
@@ -7097,7 +7121,6 @@ if (document.readyState === "loading") {
       if (prevBtn) prevBtn.classList.toggle('hidden', step === 1);
       if (nextBtn) nextBtn.classList.toggle('hidden', step === 3);
       if (submitBtn) submitBtn.classList.toggle('hidden', step !== 3);
-      if (whatsappBtn) whatsappBtn.classList.toggle('hidden', step !== 3);
 
       if (window.lucide) lucide.createIcons();
     };
@@ -7225,47 +7248,30 @@ if (document.readyState === "loading") {
       const cat = vendor ? (vendor.category || '') : '';
 
       const guestsContainer = document.getElementById('inquiry-guests-container');
-      const nonVenueContainer = document.getElementById('inquiry-nonvenue-container');
+      const packageTypeContainer = document.getElementById('inquiry-package-type-container');
       const dateLabel = document.getElementById('inquiry-date-label');
 
-      if (cat.includes("تالار") || cat.includes("باغ") || cat.includes("تشریفات") || cat.includes("کترینگ") || cat.includes("پذیرایی") || cat.includes("عمارت") || cat.includes("سالن پذیرایی")) {
+      const isVenueCategory = cat.includes("تالار") || cat.includes("باغ") || cat.includes("تشریفات") || cat.includes("کترینگ") || cat.includes("پذیرایی") || cat.includes("عمارت") || cat.includes("سالن پذیرایی");
+
+      if (isVenueCategory) {
         if (guestsContainer) guestsContainer.classList.remove('hidden');
-        if (nonVenueContainer) nonVenueContainer.classList.add('hidden');
+        if (packageTypeContainer) packageTypeContainer.classList.add('hidden');
         if (dateLabel) dateLabel.innerText = "تاریخ تقریبی مراسم (شمسی) *";
       } else {
         if (guestsContainer) guestsContainer.classList.add('hidden');
-        if (nonVenueContainer) nonVenueContainer.classList.remove('hidden');
+        if (packageTypeContainer) packageTypeContainer.classList.remove('hidden');
         if (dateLabel) dateLabel.innerText = "تاریخ تقریبی مراجعه / پرو / مراسم (شمسی) *";
       }
 
-      const venueFields = document.getElementById('inquiry-fields-venue');
-      const beautyFields = document.getElementById('inquiry-fields-beauty');
-      const photoFields = document.getElementById('inquiry-fields-photo');
-      const maisonFields = document.getElementById('inquiry-fields-maison');
       const servicesContainer = document.getElementById('inquiry-services-container');
 
       // Check if this inquiry is for a specific Package or Idea/Journal item
       const isSpecificItemInquiry = Boolean(itemTitle || typeVal === 'پکیج' || typeVal === 'ایده/ژورنال');
 
-      // Hide all dynamic category blocks initially
-      if (venueFields) venueFields.classList.add('hidden');
-      if (beautyFields) beautyFields.classList.add('hidden');
-      if (photoFields) photoFields.classList.add('hidden');
-      if (maisonFields) maisonFields.classList.add('hidden');
-
       if (!isSpecificItemInquiry) {
         if (servicesContainer) servicesContainer.classList.remove('hidden');
-        if (cat.includes("سالن زیبایی") || cat.includes("میکاپ") || cat.includes("آرایشگاه")) {
-          if (beautyFields) beautyFields.classList.remove('hidden');
-        } else if (cat.includes("آتلیه") || cat.includes("عکاسی") || cat.includes("فیلمبرداری")) {
-          if (photoFields) photoFields.classList.remove('hidden');
-        } else if (cat.includes("مزون") || cat.includes("لباس")) {
-          if (maisonFields) maisonFields.classList.remove('hidden');
-        } else {
-          if (venueFields) venueFields.classList.remove('hidden');
-        }
       } else {
-        // For Package or Idea specific inquiries, streamline form by hiding general category blocks & services checklist
+        // For Package or Idea specific inquiries, streamline form by hiding general services checklist
         if (servicesContainer) servicesContainer.classList.add('hidden');
       }
 
@@ -7408,6 +7414,14 @@ if (document.readyState === "loading") {
 
     function closeInquiryModal() {
       document.getElementById('inquiry-modal').classList.add('hidden');
+      const formEl = document.getElementById('inquiry-form');
+      const stepIndicators = document.getElementById('inquiry-step-indicators');
+      const receiptContainer = document.getElementById('inquiry-receipt-container');
+
+      if (formEl) formEl.classList.remove('hidden');
+      if (stepIndicators) stepIndicators.classList.remove('hidden');
+      if (receiptContainer) receiptContainer.classList.add('hidden');
+      if (typeof switchInquiryStep === 'function') switchInquiryStep(1);
     }
 
     function handleInquirySubmit(e) {
@@ -7627,19 +7641,50 @@ if (document.readyState === "loading") {
 
       if (window.lucide) lucide.createIcons();
       showToast('درخواست استعلام قیمت شما با موفقیت ثبت شد ✨', 'success');
+      if (typeof window.triggerWebPushNotification === 'function') {
+        window.triggerWebPushNotification(`استعلام جدید ثبت شد: ${vendor.name}`, {
+          body: `درخواست استعلام قیمت برای تاریخ ${date} در سامانه عروسی تو ثبت گردید.`
+        });
+      }
     }
 
 window.downloadReceiptPdf = function() {
   if (typeof openPreInvoicePrintModal === 'function') {
     openPreInvoicePrintModal(window.currentReceiptInvoiceData);
+  } else {
+    window.print();
   }
 };
 
 window.shareReceiptWhatsApp = function() {
   const d = window.currentReceiptInvoiceData;
   if (!d) return;
-  const msgText = encodeURIComponent(`سلام، درخواست استعلام قیمت #${d.num} برای ${d.vendorName}\nتاریخ: ${d.eventDate}\nخدمات: ${d.title}\nتماس: ${d.couplePhone}`);
-  window.open(`https://wa.me/?text=${msgText}`, '_blank');
+
+  const phoneRaw = d.vendorPhone || '09131112233';
+  let cleanPhone = phoneRaw.replace(/[^0-9]/g, '');
+  if (cleanPhone.startsWith('0')) {
+    cleanPhone = '98' + cleanPhone.substring(1);
+  } else if (!cleanPhone.startsWith('98')) {
+    cleanPhone = '98' + cleanPhone;
+  }
+
+  let textMsg = `سلام ${d.vendorName} عزیز،\n`;
+  textMsg += `درخواست استعلام قیمت رسمی با کد پیگیری #${d.num} در سامانه عروسی تو ثبت شد:\n\n`;
+  textMsg += `👤 نام متقاضی: ${d.coupleName}\n`;
+  textMsg += `📞 شماره تماس: ${d.couplePhone}\n`;
+  textMsg += `📅 تاریخ مراسم: ${d.eventDate}\n`;
+  if (d.guests) textMsg += `👥 تعداد مهمانان: ${d.guests}\n`;
+  if (d.title) textMsg += `📌 موضوع: ${d.title}\n`;
+  if (d.total) textMsg += `💰 محدوده بودجه: ${d.total}\n`;
+  if (d.items && d.items.length > 0) {
+    const serviceList = d.items.map(i => i.name).join(' ، ');
+    textMsg += `✨ خدمات درخواستی: ${serviceList}\n`;
+  }
+  textMsg += `\nلطفاً جهت بررسی و ارسال پیش‌فاکتور اقدام فرمایید. با تشکر!`;
+
+  const encodedMsg = encodeURIComponent(textMsg);
+  window.open(`https://wa.me/${cleanPhone}?text=${encodedMsg}`, '_blank');
+  if (typeof showToast === 'function') showToast('در حال انتقال به واتس‌اپ...', 'info');
 };
 
     function openRsvpModal() {
@@ -12729,8 +12774,54 @@ window.shareReceiptWhatsApp = function() {
       showToast(message, type, duration);
     }
 
+    window.requestNotificationPermission = function() {
+      if ('Notification' in window && Notification.permission !== 'granted') {
+        Notification.requestPermission().then(permission => {
+          if (permission === 'granted') {
+            showToast('🔔 اعلانات زنده مرورگر فعال گردید.', 'success');
+          }
+        });
+      }
+    };
+
+    window.triggerWebPushNotification = function(title, options = {}) {
+      if ('Notification' in window && Notification.permission === 'granted') {
+        try {
+          new Notification(title, {
+            icon: 'https://images.unsplash.com/photo-1519741497674-611481863552?auto=format&fit=crop&w=120&q=80',
+            badge: 'https://images.unsplash.com/photo-1519741497674-611481863552?auto=format&fit=crop&w=120&q=80',
+            dir: 'rtl',
+            lang: 'fa',
+            ...options
+          });
+        } catch(e) {
+          console.log('Web push notification dispatch:', e);
+        }
+      }
+    };
+
     function showGlobalToast(message, type = 'success', duration = 3000) {
       showToast(message, type, duration);
+    }
+
+    function shareMoodboardToVendor() {
+      const savedIds = JSON.parse(localStorage.getItem('aroosi_saved_inspiration_db') || '["insp-1", "insp-3", "insp-5"]');
+      const savedItems = INSPIRATION_GALLERY_DB.filter(item => savedIds.includes(item.id));
+
+      if (savedItems.length === 0) {
+        showToast('⚠️ هنوز هیچ ایده‌ای در مودبورد شما ذخیره نشده است.', 'warning');
+        return;
+      }
+
+      let msg = `سلام! مودبورد ایده‌های منتخب عروسی ما در سامانه «عروسی تو»:\n\n`;
+      savedItems.forEach((item, index) => {
+        msg += `${index + 1}. ${item.title} (${item.categoryTitle})\n`;
+      });
+      msg += `\nلطفاً بر اساس این مودبورد، پیشنهادات و قیمت پکیج را ارسال فرمایید.`;
+
+      const encodedMsg = encodeURIComponent(msg);
+      window.open(`https://wa.me/?text=${encodedMsg}`, '_blank');
+      showToast('مودبورد جهت ارسال آماده گردید ✨', 'success');
     }
 
     function shareMoodboardLink() {
@@ -14189,6 +14280,14 @@ window.renderVendorPortfolioTimeline = function(vendor, activeStageIndex = 0) {
    ========================================================================== */
 let current360PanOffset = 0;
 
+window.showHotspotDetails = function(title, desc, price) {
+  if (typeof showToast === 'function') {
+    showToast(`✨ ${title}: ${desc} (${price})`, 'info');
+  } else {
+    alert(`${title}\n${desc}\nقیمت تخمینی: ${price}`);
+  }
+};
+
 window.open360TourModal = function(vendorId) {
   let modal = document.getElementById('modal-360-tour');
 
@@ -15442,6 +15541,39 @@ window.handleSendInvoiceSubmit = function(e) {
   }
 };
 
+let currentInvoiceBaseTotal = 45000000;
+let activeAddonsSum = 0;
+
+window.togglePreInvoiceAddon = function(cb, addonName) {
+  const price = parseInt(cb.getAttribute('data-addon-price'), 10) || 0;
+  if (cb.checked) {
+    activeAddonsSum += price;
+  } else {
+    activeAddonsSum -= price;
+  }
+
+  const grandTotal = currentInvoiceBaseTotal + activeAddonsSum;
+  const deposit = Math.round(grandTotal * 0.25);
+  const inst2 = Math.round(grandTotal * 0.35);
+  const balance = grandTotal - deposit - inst2;
+
+  const fmt = num => num.toLocaleString('fa-IR') + ' تومان';
+
+  const subtotalEl = document.getElementById('pip-subtotal');
+  const totalEl = document.getElementById('pip-total-amount');
+  const depEl = document.getElementById('pip-deposit');
+  const inst2El = document.getElementById('pip-installment-2');
+  const balEl = document.getElementById('pip-balance');
+
+  if (subtotalEl) subtotalEl.innerText = fmt(grandTotal);
+  if (totalEl) totalEl.innerText = fmt(grandTotal);
+  if (depEl) depEl.innerText = fmt(deposit);
+  if (inst2El) inst2El.innerText = fmt(inst2);
+  if (balEl) balEl.innerText = fmt(balance);
+
+  showToast(`خدمت اختیاری «${addonName}» به محاسبات زنده اضافه شد ✨`, 'info');
+};
+
 window.openPreInvoicePrintModal = function(invoiceData) {
   const modal = document.getElementById('modal-preinvoice-print');
   if (!modal) return;
@@ -16199,10 +16331,31 @@ window.openVendorComparisonModal = function(vendorIds) {
                 }).join('')}
               </tr>
 
-              <!-- Row 4: امکانات ویژه -->
+              <!-- Row 4: امکانات ویژه & مزایای کلیدی پکیج -->
               <tr class="hover:bg-[#1E293B]/40 transition-colors">
                 <td class="p-3 text-slate-400 font-bold bg-[#0F172A] border-l border-[#D4AF37]/20">
-                  ✨ امکانات ویژه
+                  🎁 مزایای ویژه پکیج
+                </td>
+                ${compareList.map(v => {
+                  const perks = (v.id % 2 === 0)
+                    ? ["🎁 ورودیه رایگان تالار", "🚁 فیلمبرداری هلی‌شات", "✨ آتش‌بازی VIP"]
+                    : ["🎂 کیک ۴ طبقه رایگان", "📸 آلبوم ایتالیایی 80x40", "💄 تست آرایش رایگان"];
+                  return `
+                    <td class="p-3 text-center border-l border-[#D4AF37]/20">
+                      <div class="flex flex-wrap justify-center gap-1">
+                        ${perks.map(p => `
+                          <span class="text-[10px] bg-emerald-950/80 text-emerald-300 border border-emerald-500/50 px-2 py-0.5 rounded-md font-extrabold shadow-sm">${p}</span>
+                        `).join('')}
+                      </div>
+                    </td>
+                  `;
+                }).join('')}
+              </tr>
+
+              <!-- Row 5: امکانات عمومی -->
+              <tr class="hover:bg-[#1E293B]/40 transition-colors">
+                <td class="p-3 text-slate-400 font-bold bg-[#0F172A] border-l border-[#D4AF37]/20">
+                  ✨ امکانات عمومی
                 </td>
                 ${compareList.map(v => `
                   <td class="p-3 text-center border-l border-[#D4AF37]/20">
@@ -17566,30 +17719,47 @@ window.sendChatMessageQuickAction = function(text) {
 
 /* Global Event Delegation for Inquiry & Reservation CTA Buttons */
 document.addEventListener('click', function(e) {
-  const target = e.target.closest('button, a');
+  const target = e.target.closest('button, a, .btn-inquiry, [data-action="inquiry"]');
   if (!target) return;
 
-  const btnText = target.innerText || target.textContent || '';
-  if (btnText.includes('استعلام قیمت') || btnText.includes('رزرو اختصاصی')) {
+  const btnText = (target.innerText || target.textContent || '').trim();
+  const isInquiryClass = target.classList.contains('btn-inquiry');
+  const isActionInquiry = target.getAttribute('data-action') === 'inquiry';
+  const matchesText = btnText.includes('استعلام قیمت') || btnText.includes('رزرو اختصاصی') || btnText.includes('استعلام سریع') || btnText.includes('درخواست استعلام');
+
+  if (isInquiryClass || isActionInquiry || matchesText) {
     const onclickAttr = target.getAttribute('onclick') || '';
     if (onclickAttr.includes('openInquiryModal') || onclickAttr.includes('openQuoteModal')) {
       return;
     }
 
     e.preventDefault();
-    const vendorCard = target.closest('[data-vendor-id], .minimal-vendor-card, .vendor-card, .vip-bento-card');
+    const vendorCard = target.closest('[data-vendor-id], .minimal-vendor-card, .vendor-card, .vip-bento-card, .vendor-detail-container, body');
     let vendorId = 1;
     let vendorName = 'تامین‌کننده';
 
     if (vendorCard) {
-      const vIdAttr = vendorCard.getAttribute('data-vendor-id');
+      const vIdAttr = vendorCard.getAttribute('data-vendor-id') || target.getAttribute('data-vendor-id');
       if (vIdAttr) vendorId = parseInt(vIdAttr, 10);
-      const titleEl = vendorCard.querySelector('h3, h4, .vendor-name');
+      const titleEl = vendorCard.querySelector('h3, h4, .vendor-name, #vendor-main-title');
       if (titleEl) vendorName = titleEl.innerText.trim();
     }
 
+    // Try parsing url params if on standalone page vendor-detail.html
+    if (window.location.search) {
+      const urlParams = new URLSearchParams(window.location.search);
+      const paramId = urlParams.get('id');
+      if (paramId && !isNaN(parseInt(paramId))) {
+        vendorId = parseInt(paramId, 10);
+      }
+    }
+
+    const itemTitle = target.getAttribute('data-item-title') || '';
+    const itemPrice = target.getAttribute('data-item-price') || '';
+    const itemType = target.getAttribute('data-item-type') || '';
+
     if (typeof openInquiryModal === 'function') {
-      openInquiryModal(vendorId, vendorName);
+      openInquiryModal(vendorId, vendorName, itemTitle, itemPrice, itemType);
     }
   }
 });
