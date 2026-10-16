@@ -48,7 +48,53 @@
   <!-- MAIN EXPLORATION HUB CONTAINER WITH CLEAR TOP BREATHING PADDING -->
   <main class="flex-1 max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 pt-10 pb-16 space-y-8">
 <!-- ISOLATED VENDOR DIRECTORY CONTENT MODULE (directory-view.html) -->
-<div id="tab-directory" class="tab-content space-y-8">
+<div id="tab-directory" class="tab-content space-y-8 relative">
+
+  <!-- STICKY GLASSMORPHIC QUICK FILTER BAR -->
+  <div id="directory-sticky-filter-bar" class="fixed top-0 left-0 right-0 z-[9990] bg-[#07090E]/95 backdrop-blur-2xl border-b border-[#C5A059]/40 shadow-2xl px-4 py-2.5 transition-all duration-300 opacity-0 pointer-events-none -translate-y-full">
+    <div class="max-w-7xl mx-auto flex items-center justify-between gap-3">
+      <!-- Brand Logo / Title Mini Badge -->
+      <div class="hidden sm:flex items-center gap-2 shrink-0">
+        <div class="w-8 h-8 rounded-xl bg-gradient-to-br from-[#D4AF37] to-[#966D09] p-0.5 shadow-md">
+          <div class="w-full h-full bg-[#07090E] rounded-[10px] flex items-center justify-center">
+            <span class="text-xs font-black text-[#D4AF37]">عروسی</span>
+          </div>
+        </div>
+        <span class="text-xs font-black text-white hidden md:inline">فیلتر سریع خدمات</span>
+      </div>
+
+      <!-- Category Switcher Chips (Horizontal Scroller) -->
+      <div class="flex items-center gap-1.5 overflow-x-auto no-scrollbar text-xs font-bold text-amber-200 py-1 w-full sm:w-auto">
+        <button type="button" onclick="filterVendorsByCategoryTitle('all')" class="bg-[#D4AF37] text-[#07090E] font-black px-3 py-1 rounded-xl shrink-0 transition-all cursor-pointer shadow-sm">
+          همه
+        </button>
+        <button type="button" onclick="filterVendorsByCategoryTitle('تالار و باغ تالار عروسی')" class="bg-[#141A28] hover:bg-[#1E293B] text-amber-200 border border-[#C5A059]/30 px-3 py-1 rounded-xl shrink-0 transition-all cursor-pointer">
+          🏰 تالار و باغ
+        </button>
+        <button type="button" onclick="filterVendorsByCategoryTitle('آتلیه عکاسی و فیلمبرداری')" class="bg-[#141A28] hover:bg-[#1E293B] text-amber-200 border border-[#C5A059]/30 px-3 py-1 rounded-xl shrink-0 transition-all cursor-pointer">
+          📸 آتلیه
+        </button>
+        <button type="button" onclick="filterVendorsByCategoryTitle('مزون لباس عروس')" class="bg-[#141A28] hover:bg-[#1E293B] text-amber-200 border border-[#C5A059]/30 px-3 py-1 rounded-xl shrink-0 transition-all cursor-pointer">
+          👗 مزون
+        </button>
+        <button type="button" onclick="filterVendorsByCategoryTitle('تشریفات و خدمات مجالس')" class="bg-[#141A28] hover:bg-[#1E293B] text-amber-200 border border-[#C5A059]/30 px-3 py-1 rounded-xl shrink-0 transition-all cursor-pointer">
+          ✨ تشریفات
+        </button>
+        <button type="button" onclick="filterVendorsByCategoryTitle('گروه موسیقی و دی‌جی')" class="bg-[#141A28] hover:bg-[#1E293B] text-amber-200 border border-[#C5A059]/30 px-3 py-1 rounded-xl shrink-0 transition-all cursor-pointer">
+          🎵 موزیک
+        </button>
+        <button type="button" onclick="filterVendorsByCategoryTitle('گالری طلا و جواهر')" class="bg-[#141A28] hover:bg-[#1E293B] text-amber-200 border border-[#C5A059]/30 px-3 py-1 rounded-xl shrink-0 transition-all cursor-pointer">
+          💎 طلا و جواهر
+        </button>
+      </div>
+
+      <!-- Filter Drawer Trigger Button -->
+      <button type="button" onclick="toggleAdvancedFiltersDrawer()" class="bg-gradient-to-r from-[#D4AF37] to-[#C5A059] text-[#07090E] font-black px-3.5 py-1.5 rounded-xl text-xs shrink-0 flex items-center gap-1.5 shadow-lg hover:scale-105 transition-all cursor-pointer">
+        <i data-lucide="sliders-horizontal" class="w-3.5 h-3.5"></i>
+        <span>فیلترها</span>
+      </button>
+    </div>
+  </div>
 
   <!-- 1. VENDOR STORIES & SHOWCASE HIGHLIGHTS CIRCLE BAR -->
   <div class="space-y-2">

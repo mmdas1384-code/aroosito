@@ -18226,6 +18226,31 @@ document.addEventListener('DOMContentLoaded', () => {
       }, 150);
     }
   } catch(e) {}
+
+  // Sticky Glassmorphic Quick Filter Bar Scroll Handler
+  window.addEventListener('scroll', () => {
+    const stickyBar = document.getElementById('directory-sticky-filter-bar');
+    if (!stickyBar) return;
+
+    const filterIsland = document.getElementById('directory-primary-filter-island');
+    let isPastIsland = window.scrollY > 280;
+
+    if (filterIsland) {
+      const rect = filterIsland.getBoundingClientRect();
+      isPastIsland = rect.bottom < 0;
+    }
+
+    const dirTab = document.getElementById('tab-directory');
+    const isDirectoryVisible = dirTab ? !dirTab.classList.contains('hidden') : true;
+
+    if (isPastIsland && isDirectoryVisible) {
+      stickyBar.classList.remove('opacity-0', 'pointer-events-none', '-translate-y-full');
+      stickyBar.classList.add('opacity-100', 'pointer-events-auto', 'translate-y-0');
+    } else {
+      stickyBar.classList.remove('opacity-100', 'pointer-events-auto', 'translate-y-0');
+      stickyBar.classList.add('opacity-0', 'pointer-events-none', '-translate-y-full');
+    }
+  });
 });
 
 /* ==========================================================================
