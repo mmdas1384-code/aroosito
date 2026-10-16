@@ -2379,6 +2379,36 @@ footer {
   backdrop-filter: blur(8px);
 }
 
+html[data-theme="dark"] .ivory-card {
+  background-color: rgba(14, 18, 28, 0.85) !important;
+  border-color: rgba(197, 160, 89, 0.35) !important;
+  color: #FFFFFF !important;
+}
+
+html[data-theme="dark"] .gold-badge-border {
+  border: 1px solid rgba(212, 175, 55, 0.5) !important;
+  background: linear-gradient(135deg, rgba(212, 175, 55, 0.2) 0%, rgba(14, 18, 28, 0.8) 100%) !important;
+  color: #D4AF37 !important;
+}
+
+html[data-theme="dark"] .health-badge-excellent {
+  background-color: rgba(6, 95, 70, 0.3) !important;
+  color: #34D399 !important;
+  border: 1px solid rgba(52, 211, 153, 0.4) !important;
+}
+
+html[data-theme="dark"] .health-badge-warning {
+  background-color: rgba(146, 64, 14, 0.3) !important;
+  color: #FBBF24 !important;
+  border: 1px solid rgba(251, 191, 36, 0.4) !important;
+}
+
+html[data-theme="dark"] .health-badge-critical {
+  background-color: rgba(153, 27, 27, 0.3) !important;
+  color: #F87171 !important;
+  border: 1px solid rgba(248, 113, 113, 0.4) !important;
+}
+
 .ivory-card-hover {
   transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 }

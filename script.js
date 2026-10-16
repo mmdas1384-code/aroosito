@@ -2342,21 +2342,21 @@ if (document.readyState === "loading") {
             </div>
 
             <!-- AESTHETIC SUMMARY GUIDANCE -->
-            <div class="p-4 bg-white rounded-2xl border border-accent/80 text-xs text-graphite leading-relaxed space-y-2">
-              <span class="font-bold text-primary block text-sm">راهنمای بصری و دکوراسیون پیشنهادی:</span>
-              <p>${styleDescriptions[dominantKey]}</p>
+            <div class="p-4 bg-[#161C2B] rounded-2xl border border-[#C5A059]/30 text-xs text-white leading-relaxed space-y-2">
+              <span class="font-bold text-[#D4AF37] block text-sm">راهنمای بصری و دکوراسیون پیشنهادی:</span>
+              <p class="text-slate-300">${styleDescriptions[dominantKey]}</p>
             </div>
 
             <!-- COLOR PALETTE SWATCHES -->
             <div class="space-y-2">
-              <span class="block text-xs font-bold text-graphite">پالت رنگی پیشنهادی برای تزئینات و گل‌آرایی:</span>
+              <span class="block text-xs font-bold text-slate-300">پالت رنگی پیشنهادی برای تزئینات و گل‌آرایی:</span>
               <div class="grid grid-cols-2 sm:grid-cols-4 gap-3">
                 ${currentPalette.map(c => `
-                  <div class="p-2.5 bg-white rounded-xl border border-accent flex items-center gap-2.5 shadow-xs">
-                    <div class="w-8 h-8 rounded-lg border border-accent shadow-xs shrink-0" style="background-color: ${c.hex}"></div>
+                  <div class="p-2.5 bg-[#161C2B] rounded-xl border border-[#C5A059]/30 flex items-center gap-2.5 shadow-xs">
+                    <div class="w-8 h-8 rounded-lg border border-[#C5A059]/40 shadow-xs shrink-0" style="background-color: ${c.hex}"></div>
                     <div>
-                      <span class="block text-xs font-bold text-graphite">${c.name}</span>
-                      <span class="text-[10px] text-secondary font-mono dir-ltr block">${c.hex}</span>
+                      <span class="block text-xs font-bold text-white">${c.name}</span>
+                      <span class="text-[10px] text-amber-300 font-mono dir-ltr block">${c.hex}</span>
                     </div>
                   </div>
                 `).join('')}
@@ -2452,24 +2452,24 @@ if (document.readyState === "loading") {
                 <p class="text-xs text-secondary font-medium">کارنامه تحلیل روان‌شناسی اختصاصی ${quiz.title}</p>
               </div>
 
-              <div class="text-left dir-ltr bg-white p-4 rounded-2xl border border-[#E0D8C8] shadow-xs shrink-0">
-                <span class="block text-3xl font-black text-[#1B3B2B]">${scorePercent}٪</span>
-                <span class="text-[10px] font-bold text-secondary">امتیاز نهایی آمادگی</span>
+              <div class="text-left dir-ltr bg-[#161C2B] p-4 rounded-2xl border border-[#C5A059]/30 shadow-xs shrink-0">
+                <span class="block text-3xl font-black text-[#D4AF37]">${scorePercent}٪</span>
+                <span class="text-[10px] font-bold text-slate-400">امتیاز نهایی آمادگی</span>
               </div>
             </div>
 
             <!-- KEY STRENGTHS & GROWTH AREAS GRID -->
             <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
               <!-- STRENGTHS -->
-              <div class="bg-emerald-50/60 border border-emerald-200 p-5 rounded-2xl space-y-3">
-                <h4 class="font-bold text-[#1B3B2B] text-xs flex items-center gap-2">
-                  <i data-lucide="check-circle-2" class="w-4 h-4 text-emerald-600"></i>
+              <div class="bg-emerald-950/40 border border-emerald-500/30 p-5 rounded-2xl space-y-3">
+                <h4 class="font-bold text-emerald-300 text-xs flex items-center gap-2">
+                  <i data-lucide="check-circle-2" class="w-4 h-4 text-emerald-400"></i>
                   <span>نقاط قوت و دارایی‌های ارتباطی زوج:</span>
                 </h4>
-                <ul class="space-y-2 text-xs text-graphite font-medium">
+                <ul class="space-y-2 text-xs text-slate-200 font-medium">
                   ${strengths.map(s => `
                     <li class="flex items-start gap-2">
-                      <span class="text-emerald-600 font-bold">•</span>
+                      <span class="text-emerald-400 font-bold">•</span>
                       <span>${s}</span>
                     </li>
                   `).join('')}
@@ -2477,15 +2477,15 @@ if (document.readyState === "loading") {
               </div>
 
               <!-- GROWTH AREAS -->
-              <div class="bg-amber-50/60 border border-amber-200 p-5 rounded-2xl space-y-3">
-                <h4 class="font-bold text-amber-900 text-xs flex items-center gap-2">
-                  <i data-lucide="trending-up" class="w-4 h-4 text-amber-600"></i>
+              <div class="bg-amber-950/40 border border-amber-500/30 p-5 rounded-2xl space-y-3">
+                <h4 class="font-bold text-amber-300 text-xs flex items-center gap-2">
+                  <i data-lucide="trending-up" class="w-4 h-4 text-amber-400"></i>
                   <span>محورهای پیشنهادی برای گفتگو و رشد:</span>
                 </h4>
-                <ul class="space-y-2 text-xs text-graphite font-medium">
+                <ul class="space-y-2 text-xs text-slate-200 font-medium">
                   ${growthAreas.map(g => `
                     <li class="flex items-start gap-2">
-                      <span class="text-amber-600 font-bold">•</span>
+                      <span class="text-amber-400 font-bold">•</span>
                       <span>${g}</span>
                     </li>
                   `).join('')}
@@ -2494,12 +2494,12 @@ if (document.readyState === "loading") {
             </div>
 
             <!-- EXPERT ADVICE BANNER -->
-            <div class="p-5 bg-white rounded-2xl border border-[#E0D8C8] space-y-2">
-              <span class="text-xs font-bold text-[#1B3B2B] flex items-center gap-2">
+            <div class="p-5 bg-[#161C2B] rounded-2xl border border-[#C5A059]/30 space-y-2">
+              <span class="text-xs font-bold text-[#D4AF37] flex items-center gap-2">
                 <i data-lucide="lightbulb" class="w-4 h-4 text-[#D4AF37]"></i>
                 <span>توصیه راهبردی مشاور خانواده عروسی تو:</span>
               </span>
-              <p class="text-xs text-graphite leading-relaxed font-medium">${expertAdvice}</p>
+              <p class="text-xs text-slate-200 leading-relaxed font-medium">${expertAdvice}</p>
             </div>
 
             <!-- COUNSELOR CONSULTATION CTA BANNER -->
@@ -2823,17 +2823,17 @@ if (document.readyState === "loading") {
                   <h4 class="text-xs font-bold text-graphite line-clamp-2 min-h-[2.25rem]">${item.title}</h4>
                 </div>
               </div>
-              <div class="p-3 pt-0 border-t border-accent/40 mt-2 space-y-2 text-xs font-bold">
-                <button type="button" onclick="setPortfolioAsCover('${item.id}')" class="w-full ${isCover ? 'bg-amber-100 text-amber-900 border border-amber-300' : 'bg-white hover:bg-emerald-50 text-graphite border border-accent'} py-1.5 px-2 rounded-xl transition-colors flex items-center justify-center gap-1 text-[11px]">
-                  <i data-lucide="star" class="w-3.5 h-3.5 text-primary"></i>
+              <div class="p-3 pt-0 border-t border-[#C5A059]/30 mt-2 space-y-2 text-xs font-bold">
+                <button type="button" onclick="setPortfolioAsCover('${item.id}')" class="w-full ${isCover ? 'bg-[#D4AF37]/20 text-[#D4AF37] border border-[#D4AF37]/60' : 'bg-[#161C2B] hover:bg-[#1E293B] text-white border border-[#C5A059]/30'} py-1.5 px-2 rounded-xl transition-colors flex items-center justify-center gap-1 text-[11px]">
+                  <i data-lucide="star" class="w-3.5 h-3.5 text-[#D4AF37]"></i>
                   <span>${isCover ? 'کاور اصلی فعال است' : 'انتخاب به‌عنوان کاور'}</span>
                 </button>
                 <div class="flex items-center justify-between gap-2">
-                  <button type="button" onclick="openPortfolioModal('${item.id}')" class="flex-1 bg-white hover:bg-slate-100 text-graphite border border-accent py-1.5 px-2 rounded-xl transition-colors flex items-center justify-center gap-1 text-[11px]">
-                    <i data-lucide="edit-2" class="w-3.5 h-3.5 text-primary"></i>
+                  <button type="button" onclick="openPortfolioModal('${item.id}')" class="flex-1 bg-[#161C2B] hover:bg-[#1E293B] text-white border border-[#C5A059]/30 py-1.5 px-2 rounded-xl transition-colors flex items-center justify-center gap-1 text-[11px]">
+                    <i data-lucide="edit-2" class="w-3.5 h-3.5 text-[#D4AF37]"></i>
                     <span>ویرایش</span>
                   </button>
-                  <button type="button" onclick="deletePortfolioItem('${item.id}')" class="bg-white hover:bg-rose-50 text-rose-600 border border-rose-200 py-1.5 px-2.5 rounded-xl transition-colors flex items-center justify-center gap-1 text-[11px]">
+                  <button type="button" onclick="deletePortfolioItem('${item.id}')" class="bg-rose-950/40 hover:bg-rose-900/50 text-rose-300 border border-rose-500/30 py-1.5 px-2.5 rounded-xl transition-colors flex items-center justify-center gap-1 text-[11px]">
                     <i data-lucide="trash-2" class="w-3.5 h-3.5"></i>
                     <span>حذف</span>
                   </button>
@@ -3105,14 +3105,14 @@ if (document.readyState === "loading") {
               <ul class="space-y-1 pt-2 border-t border-accent/60 text-secondary text-[11px]">
                 ${pkg.features.map(f => `<li class="flex items-center gap-1.5"><i data-lucide="check" class="w-3.5 h-3.5 text-primary"></i><span>${f}</span></li>`).join('')}
               </ul>
-              ${pkg.requirements ? `<p class="text-[10px] font-bold text-amber-900 bg-amber-50 p-1.5 rounded-lg border border-amber-200 mt-1">📌 شرط/الزام: ${pkg.requirements}</p>` : ''}
+              ${pkg.requirements ? `<p class="text-[10px] font-bold text-amber-300 bg-amber-950/40 p-1.5 rounded-lg border border-amber-500/30 mt-1">📌 شرط/الزام: ${pkg.requirements}</p>` : ''}
             </div>
 
-            <div class="flex items-center justify-end gap-2 pt-2 border-t border-accent/60">
-              <button onclick="editVendorPackage(${idx})" class="bg-white hover:bg-emerald-50 text-primary border border-primary/30 font-bold px-3 py-1 rounded-lg text-[11px] transition-colors flex items-center gap-1">
+            <div class="flex items-center justify-end gap-2 pt-2 border-t border-[#C5A059]/30">
+              <button onclick="editVendorPackage(${idx})" class="bg-[#D4AF37] hover:bg-[#C5A059] text-[#07090E] font-black px-3 py-1 rounded-lg text-[11px] transition-colors flex items-center gap-1 cursor-pointer">
                 <i data-lucide="edit-2" class="w-3 h-3"></i> ویرایش
               </button>
-              <button onclick="deletePackage('${pkg.id}')" class="bg-white hover:bg-rose-50 text-rose-600 border border-rose-200 font-bold px-3 py-1 rounded-lg text-[11px] transition-colors flex items-center gap-1">
+              <button onclick="deletePackage('${pkg.id}')" class="bg-rose-500/20 hover:bg-rose-500/30 text-rose-300 border border-rose-500/40 font-bold px-3 py-1 rounded-lg text-[11px] transition-colors flex items-center gap-1 cursor-pointer">
                 <i data-lucide="trash-2" class="w-3 h-3"></i> حذف
               </button>
             </div>
@@ -6500,27 +6500,27 @@ if (document.readyState === "loading") {
             </div>
           </div>
 
-          <div class="flex flex-wrap items-center gap-4 text-xs text-secondary font-medium bg-white/80 p-2.5 rounded-xl border border-accent/60">
-            <span><strong class="text-graphite">تاریخ درخواست:</strong> ${inq.date || '۱۴۰۳/۰۶/۱۵'}</span>
-            <span><strong class="text-graphite">تعداد مهمان:</strong> ${inq.guests || 200} نفر</span>
-            <span><strong class="text-graphite">خدمت/پکیج:</strong> ${inq.service || inq.package || 'خدمات عمومی'}</span>
+          <div class="flex flex-wrap items-center gap-4 text-xs text-slate-300 font-medium bg-[#161C2B] p-2.5 rounded-xl border border-[#C5A059]/30">
+            <span><strong class="text-white">تاریخ درخواست:</strong> ${inq.date || '۱۴۰۳/۰۶/۱۵'}</span>
+            <span><strong class="text-white">تعداد مهمان:</strong> ${inq.guests || 200} نفر</span>
+            <span><strong class="text-white">خدمت/پکیج:</strong> ${inq.service || inq.package || 'خدمات عمومی'}</span>
           </div>
 
           ${(inq.customAnswers && inq.customAnswers.length) ? `
-            <div class="bg-amber-50/80 p-3 rounded-xl border border-amber-200/80 text-xs font-bold text-amber-950 space-y-1">
-              <span class="block text-[11px] font-black text-amber-900 border-b border-amber-200 pb-1">📋 پاسخ‌های سوالات اختصاصی فرم استعلام:</span>
+            <div class="bg-amber-950/40 p-3 rounded-xl border border-amber-500/30 text-xs font-bold text-amber-200 space-y-1">
+              <span class="block text-[11px] font-black text-[#D4AF37] border-b border-amber-500/30 pb-1">📋 پاسخ‌های سوالات اختصاصی فرم استعلام:</span>
               <div class="space-y-0.5 pt-0.5">
-                ${inq.customAnswers.map(a => `<div class="flex items-center gap-1.5"><span class="text-amber-800 font-bold">• ${a.label}:</span> <span class="text-graphite font-black">${a.value}</span></div>`).join('')}
+                ${inq.customAnswers.map(a => `<div class="flex items-center gap-1.5"><span class="text-amber-300 font-bold">• ${a.label}:</span> <span class="text-white font-black">${a.value}</span></div>`).join('')}
               </div>
             </div>
           ` : ''}
 
-          <p class="text-xs text-graphite bg-white p-3 rounded-xl border border-accent/60 leading-relaxed">${inq.details || 'توضیحات و نیازمندی‌های اختصاصی زوج ثبت شده در سامانه عروسی تو.'}</p>
+          <p class="text-xs text-slate-200 bg-[#161C2B] p-3 rounded-xl border border-[#C5A059]/30 leading-relaxed">${inq.details || 'توضیحات و نیازمندی‌های اختصاصی زوج ثبت شده در سامانه عروسی تو.'}</p>
 
-          <div class="pt-2 flex flex-wrap items-center justify-between gap-2 border-t border-accent/60 text-xs">
+          <div class="pt-2 flex flex-wrap items-center justify-between gap-2 border-t border-[#C5A059]/30 text-xs">
             <div class="flex items-center gap-2">
-              <label class="text-secondary font-bold text-[11px]">تغییر وضعیت:</label>
-              <select onchange="updateInquiryStatus(${idx}, this.value)" class="bg-white border border-accent rounded-xl px-2.5 py-1 text-xs font-bold text-graphite focus:outline-none focus:border-primary">
+              <label class="text-slate-300 font-bold text-[11px]">تغییر وضعیت:</label>
+              <select onchange="updateInquiryStatus(${idx}, this.value)" class="bg-[#161C2B] border border-[#C5A059]/30 rounded-xl px-2.5 py-1 text-xs font-bold text-white focus:outline-none focus:border-[#D4AF37]">
                 <option value="pending" ${currentStatus === 'pending' ? 'selected' : ''}>جدید (در انتظار)</option>
                 <option value="replied" ${currentStatus === 'replied' ? 'selected' : ''}>پاسخ داده شده</option>
                 <option value="booked" ${currentStatus === 'booked' ? 'selected' : ''}>رزرو نهایی شد</option>
@@ -6762,14 +6762,14 @@ if (document.readyState === "loading") {
         ];
 
         packagesContainer.innerHTML = pkgs.map(pkg => `
-          <div class="bg-white border ${pkg.popular ? 'border-[#D4AF37] ring-2 ring-[#D4AF37]/30 shadow-md' : 'border-accent'} rounded-2xl p-5 flex flex-col justify-between space-y-4 relative overflow-hidden">
-            ${pkg.popular ? `<span class="absolute top-3 left-3 bg-[#D4AF37] text-[#1B3B2B] text-[10px] font-black px-2.5 py-0.5 rounded-full">پرطرفدارترین</span>` : ''}
+          <div class="bg-[#161C2B] border ${pkg.popular ? 'border-[#D4AF37] ring-2 ring-[#D4AF37]/30 shadow-md' : 'border-[#C5A059]/30'} rounded-2xl p-5 flex flex-col justify-between space-y-4 relative overflow-hidden text-white">
+            ${pkg.popular ? `<span class="absolute top-3 left-3 bg-[#D4AF37] text-[#07090E] text-[10px] font-black px-2.5 py-0.5 rounded-full">پرطرفدارترین</span>` : ''}
             <div class="space-y-3">
-              <h3 class="font-bold text-sm text-[#1B3B2B]">${pkg.name}</h3>
-              <div class="text-lg font-black text-[#1B3B2B] border-b border-accent/60 pb-3">
+              <h3 class="font-bold text-sm text-[#D4AF37]">${pkg.name}</h3>
+              <div class="text-lg font-black text-white border-b border-[#C5A059]/30 pb-3">
                 ${pkg.price}
               </div>
-              <ul class="space-y-2 text-xs text-graphite/80">
+              <ul class="space-y-2 text-xs text-slate-200">
                 ${(pkg.features || pkg.items || ["ارائه تمامی خدمات اصلی با بالاترین کیفیت"]).map(f => `<li class="flex items-center gap-2">✅ <span>${f}</span></li>`).join('')}
               </ul>
             </div>
@@ -7028,16 +7028,16 @@ if (document.readyState === "loading") {
       const reviewsList = document.getElementById('vdm-reviews-list');
       if (reviewsList) {
         const item = document.createElement('div');
-        item.className = "p-3.5 bg-white border border-gray-200 rounded-xl space-y-1.5 shadow-2xs animate-fadeIn";
+        item.className = "p-3.5 bg-[#161C2B] border border-[#C5A059]/30 rounded-xl space-y-1.5 shadow-2xs animate-fadeIn text-white";
         item.innerHTML = `
           <div class="flex items-center justify-between text-xs">
-            <strong class="text-[#1B3B2B] flex items-center gap-1.5">
-              <span class="w-6 h-6 rounded-full bg-[#1B3B2B] text-[#D4AF37] flex items-center justify-center font-bold text-[10px]">${author.substring(0, 2)}</span>
+            <strong class="text-white flex items-center gap-1.5">
+              <span class="w-6 h-6 rounded-full bg-[#07090E] text-[#D4AF37] flex items-center justify-center font-bold text-[10px] border border-[#D4AF37]/40">${author.substring(0, 2)}</span>
               <span>${author}</span>
             </strong>
-            <span class="text-amber-500 font-bold">⭐️ ${rating}.۰</span>
+            <span class="text-[#D4AF37] font-bold">⭐️ ${rating}.۰</span>
           </div>
-          <p class="text-[11px] text-gray-700 leading-relaxed">${comment}</p>
+          <p class="text-[11px] text-slate-300 leading-relaxed">${comment}</p>
         `;
         reviewsList.prepend(item);
       }
@@ -7165,9 +7165,9 @@ if (document.readyState === "loading") {
       const pills = document.querySelectorAll('.mgall-pill');
       pills.forEach(pill => {
         if (pill.innerText.includes(category) || (category === 'all' && pill.innerText.includes('همه'))) {
-          pill.className = "mgall-pill active px-3 py-1.5 rounded-xl bg-[#1B3B2B] text-white transition-all cursor-pointer";
+          pill.className = "mgall-pill active px-3 py-1.5 rounded-xl bg-[#D4AF37] text-[#07090E] font-black transition-all cursor-pointer shadow-md";
         } else {
-          pill.className = "mgall-pill px-3 py-1.5 rounded-xl bg-white border border-gray-200 hover:border-[#D4AF37] text-gray-700 transition-all cursor-pointer";
+          pill.className = "mgall-pill px-3 py-1.5 rounded-xl bg-[#161C2B] border border-[#C5A059]/30 hover:border-[#D4AF37] text-slate-200 transition-all cursor-pointer";
         }
       });
       showToast('گالری تصاویر فیلتر شد.', 'info');
@@ -7943,7 +7943,7 @@ window.shareReceiptWhatsApp = function() {
     function updateGuestBtnStyles(count) {
       const btns = document.querySelectorAll('.bw-guest-btn');
       btns.forEach(btn => {
-        btn.className = "bw-guest-btn py-3 px-4 rounded-xl text-xs font-bold border border-accent bg-white hover:border-primary text-graphite transition-all";
+        btn.className = "bw-guest-btn py-3 px-4 rounded-xl text-xs font-bold border border-[#C5A059]/30 bg-[#161C2B] hover:border-[#D4AF37] text-slate-200 transition-all cursor-pointer";
       });
 
       let targetIdx = 1;
@@ -10657,14 +10657,14 @@ window.shareReceiptWhatsApp = function() {
       } catch (e) {}
 
       document.querySelectorAll('.inv-theme-card').forEach(card => {
-        card.className = "inv-theme-card p-3.5 rounded-2xl border border-accent bg-white hover:border-primary cursor-pointer transition-all space-y-2";
+        card.className = "inv-theme-card p-3.5 rounded-2xl border border-[#C5A059]/30 bg-[#161C2B] hover:border-[#D4AF37] cursor-pointer transition-all space-y-2 text-white";
         const check = card.querySelector('.theme-check');
         if (check) check.classList.add('hidden');
       });
 
       const activeCard = document.getElementById('inv-theme-' + themeName);
       if (activeCard) {
-        activeCard.className = "inv-theme-card p-3.5 rounded-2xl border-2 border-primary bg-emerald-50/50 cursor-pointer transition-all space-y-2";
+        activeCard.className = "inv-theme-card p-3.5 rounded-2xl border-2 border-[#D4AF37] bg-[#D4AF37]/15 cursor-pointer transition-all space-y-2 text-white";
         const check = activeCard.querySelector('.theme-check');
         if (check) check.classList.remove('hidden');
       }
@@ -11144,14 +11144,14 @@ window.shareReceiptWhatsApp = function() {
 
           <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-3 text-xs">
             ${history.filter(h => h.quizCategory === 'psychology').map(h => `
-              <div class="p-3.5 bg-white border border-[#E0D8C8] rounded-2xl flex justify-between items-center gap-2 shadow-2xs">
+              <div class="p-3.5 bg-[#161C2B] border border-[#C5A059]/30 rounded-2xl flex justify-between items-center gap-2 shadow-2xs text-white">
                 <div>
-                  <span class="font-bold text-graphite block truncate max-w-[180px]">${h.quizTitle}</span>
-                  <span class="text-[10px] text-secondary block">${h.levelTitle}</span>
+                  <span class="font-bold text-white block truncate max-w-[180px]">${h.quizTitle}</span>
+                  <span class="text-[10px] text-slate-400 block">${h.levelTitle}</span>
                 </div>
                 <div class="text-left shrink-0 dir-ltr">
-                  <span class="font-black text-[#1B3B2B] text-sm block">${h.scorePercent}٪</span>
-                  <span class="text-[9px] text-secondary block">${h.date}</span>
+                  <span class="font-black text-[#D4AF37] text-sm block">${h.scorePercent}٪</span>
+                  <span class="text-[9px] text-slate-400 block">${h.date}</span>
                 </div>
               </div>
             `).join('')}
@@ -15372,35 +15372,35 @@ window.renderVendorPromoBadges = function() {
 
   vendorPromosState.forEach(promo => {
     const card = document.createElement('div');
-    card.className = `p-4 border rounded-2xl space-y-2.5 transition-all ${
-      promo.active ? 'bg-white border-primary/40 shadow-xs' : 'bg-bgCustom border-accent/80 opacity-75'
+    card.className = `p-4 border rounded-2xl space-y-2.5 transition-all text-white ${
+      promo.active ? 'bg-[#161C2B] border-[#C5A059]/40 shadow-xs' : 'bg-[#0E121C] border-[#C5A059]/20 opacity-75'
     }`;
     card.innerHTML = `
       <div class="flex justify-between items-center gap-2">
-        <span class="text-graphite font-black text-xs truncate">${promo.title}</span>
-        <span class="${promo.active ? 'bg-emerald-100 text-emerald-800' : 'bg-slate-200 text-slate-700'} text-[10px] font-bold px-2 py-0.5 rounded-md shrink-0">
-          ${promo.active ? 'فعال' : 'غیرفعال'}
+        <span class="text-white font-black text-xs truncate">${promo.title}</span>
+        <span class="${promo.active ? 'bg-emerald-500/20 text-emerald-300 border border-emerald-500/40' : 'bg-slate-800 text-slate-400'} text-[10px] font-bold px-2 py-0.5 rounded-md shrink-0">
+          ${promo.active ? 'فعال 🟢' : 'غیرفعال ⏸️'}
         </span>
       </div>
       <div class="flex items-center gap-2 flex-wrap text-[11px]">
-        <span class="bg-rose-100 text-rose-800 font-bold px-2 py-0.5 rounded-md flex items-center gap-1">
-          <i data-lucide="zap" class="w-3 h-3 text-rose-600"></i>
+        <span class="bg-rose-950/40 text-rose-300 font-bold px-2 py-0.5 rounded-md border border-rose-500/30 flex items-center gap-1">
+          <i data-lucide="zap" class="w-3 h-3 text-rose-400"></i>
           <span>${promo.discountPct}٪ تخفیف</span>
         </span>
-        <span class="bg-amber-100 text-amber-900 font-bold px-2 py-0.5 rounded-md flex items-center gap-1">
-          <i data-lucide="clock" class="w-3 h-3 text-amber-600"></i>
+        <span class="bg-amber-950/40 text-amber-300 font-bold px-2 py-0.5 rounded-md border border-amber-500/30 flex items-center gap-1">
+          <i data-lucide="clock" class="w-3 h-3 text-amber-400"></i>
           <span>${promo.expiryDays} روز باقی‌مانده</span>
         </span>
       </div>
-      <p class="text-[11px] text-secondary font-normal line-clamp-2">${promo.description || 'توضیحات پیشنهاد ویژه'}</p>
-      <div class="flex items-center justify-end gap-1.5 pt-2 border-t border-accent/60">
-        <button type="button" onclick="togglePromoBadgeStatus('${promo.id}')" class="bg-bgCustom hover:bg-slate-100 text-graphite border border-accent py-1 px-2.5 rounded-lg font-bold text-[11px] transition-colors cursor-pointer">
+      <p class="text-[11px] text-slate-300 font-normal line-clamp-2">${promo.description || 'توضیحات پیشنهاد ویژه'}</p>
+      <div class="flex items-center justify-end gap-1.5 pt-2 border-t border-[#C5A059]/20">
+        <button type="button" onclick="togglePromoBadgeStatus('${promo.id}')" class="bg-[#161C2B] hover:bg-[#1E293B] text-slate-300 border border-slate-700 py-1 px-2.5 rounded-lg font-bold text-[11px] transition-colors cursor-pointer">
           ${promo.active ? 'غیرفعال‌سازی' : 'فعال‌سازی'}
         </button>
-        <button type="button" onclick="openPromoBadgeModal('${promo.id}')" class="bg-white hover:bg-emerald-50 text-primary border border-primary/30 py-1 px-2.5 rounded-lg font-bold text-[11px] transition-colors cursor-pointer">
+        <button type="button" onclick="openPromoBadgeModal('${promo.id}')" class="bg-[#D4AF37] hover:bg-[#C5A059] text-[#07090E] font-black py-1 px-2.5 rounded-lg text-[11px] transition-colors cursor-pointer">
           ویرایش
         </button>
-        <button type="button" onclick="deletePromoBadge('${promo.id}')" class="bg-white hover:bg-rose-50 text-rose-600 border border-rose-200 py-1 px-2.5 rounded-lg font-bold text-[11px] transition-colors cursor-pointer">
+        <button type="button" onclick="deletePromoBadge('${promo.id}')" class="bg-rose-500/20 hover:bg-rose-500/30 text-rose-300 border border-rose-500/40 py-1 px-2.5 rounded-lg font-bold text-[11px] transition-colors cursor-pointer">
           حذف
         </button>
       </div>
@@ -16121,23 +16121,23 @@ window.renderVendorReviewsManager = function() {
         <span class="text-amber-500 font-bold">${r.stars || '★★★★★'} (${r.date || '۱۴۰۳'})</span>
       </div>
 
-      <p class="text-graphite font-medium bg-white p-3 rounded-xl border border-accent/60">${r.text}</p>
+      <p class="text-slate-200 font-medium bg-[#161C2B] p-3 rounded-xl border border-[#C5A059]/30">${r.text}</p>
 
       ${r.vendorReply ? `
-        <div class="bg-emerald-50 border-r-3 border-primary p-3 rounded-l-xl space-y-1">
-          <span class="font-black text-primary text-[11px] block flex items-center gap-1">
-            <i data-lucide="corner-down-left" class="w-3.5 h-3.5 text-primary"></i>
+        <div class="bg-emerald-950/40 border-r-3 border-[#D4AF37] p-3 rounded-l-xl space-y-1 border border-emerald-500/30">
+          <span class="font-black text-[#D4AF37] text-[11px] block flex items-center gap-1">
+            <i data-lucide="corner-down-left" class="w-3.5 h-3.5 text-[#D4AF37]"></i>
             پاسخ ثبت‌شده مدیر کسب‌وکار:
           </span>
-          <p class="text-graphite font-semibold text-xs">${r.vendorReply}</p>
+          <p class="text-slate-200 font-semibold text-xs">${r.vendorReply}</p>
         </div>
       ` : ''}
 
-      <div class="space-y-2 pt-2 border-t border-accent/60">
-        <label class="block text-secondary font-bold text-[11px]">ارسال / ویرایش پاسخ رسمی مدیر:</label>
+      <div class="space-y-2 pt-2 border-t border-[#C5A059]/30">
+        <label class="block text-slate-300 font-bold text-[11px]">ارسال / ویرایش پاسخ رسمی مدیر:</label>
         <div class="flex gap-2">
-          <input type="text" id="vd-review-reply-input-${idx}" value="${r.vendorReply || ''}" placeholder="پاسخ رسمی شما به این دیدگاه..." class="flex-1 bg-white border border-accent rounded-xl px-3 py-2 text-xs font-medium focus:outline-none focus:border-primary">
-          <button type="button" onclick="saveVendorReviewReply(${idx})" class="bg-primary hover:bg-emerald-900 text-white font-bold px-4 py-2 rounded-xl text-xs transition-colors shrink-0 shadow-2xs cursor-pointer">
+          <input type="text" id="vd-review-reply-input-${idx}" value="${r.vendorReply || ''}" placeholder="پاسخ رسمی شما به این دیدگاه..." class="flex-1 bg-[#161C2B] border border-[#C5A059]/30 text-white rounded-xl px-3 py-2 text-xs font-medium focus:outline-none focus:border-[#D4AF37]">
+          <button type="button" onclick="saveVendorReviewReply(${idx})" class="bg-[#D4AF37] hover:bg-[#C5A059] text-[#07090E] font-black px-4 py-2 rounded-xl text-xs transition-colors shrink-0 shadow-2xs cursor-pointer">
             ثبت پاسخ
           </button>
         </div>

@@ -7058,13 +7058,13 @@
 
   <!-- Admin Subscription Plan CRUD Modal (#admin-sub-plan-modal) -->
   <div id="admin-sub-plan-modal" class="hidden fixed inset-0 bg-black/60 backdrop-blur-xs z-[999999] flex items-center justify-center p-4 transition-all animate-fadeIn" onclick="if(event.target === this) closeAdminSubPlanModal()">
-    <div class="bg-white border border-accent rounded-3xl max-w-lg w-full p-6 shadow-2xl space-y-5 animate-scaleUp relative">
-      <div class="flex justify-between items-center border-b border-accent pb-3">
-        <h3 id="admin-sub-plan-modal-title" class="text-base font-bold text-graphite flex items-center gap-2">
-          <i data-lucide="crown" class="w-5 h-5 text-primary"></i>
+    <div class="bg-[#0E121C] border border-[#C5A059] rounded-3xl max-w-lg w-full p-6 shadow-2xl space-y-5 animate-scaleUp relative text-white">
+      <div class="flex justify-between items-center border-b border-[#C5A059]/30 pb-3">
+        <h3 id="admin-sub-plan-modal-title" class="text-base font-bold text-[#D4AF37] flex items-center gap-2">
+          <i data-lucide="crown" class="w-5 h-5 text-[#D4AF37]"></i>
           <span>افزودن / ویرایش پلن اشتراک</span>
         </h3>
-        <button type="button" onclick="closeAdminSubPlanModal()" class="text-secondary hover:text-graphite font-bold text-sm">✕</button>
+        <button type="button" onclick="closeAdminSubPlanModal()" class="text-slate-400 hover:text-white font-bold text-sm">✕</button>
       </div>
 
       <form id="admin-sub-plan-form" onsubmit="saveAdminSubPlan(event)" class="space-y-4 text-xs font-bold text-graphite">
@@ -7112,7 +7112,7 @@
 
   <!-- VENDOR REGISTRATION / ONBOARDING MODAL (#vendor-register-modal) -->
   <div id="vendor-register-modal" class="hidden fixed inset-0 bg-black/60 backdrop-blur-xs z-[999999] flex items-center justify-center p-4 transition-all animate-fadeIn" onclick="if(event.target === this) toggleVendorModalStatic(false)">
-    <div class="bg-white rounded-3xl shadow-2xl max-w-lg w-full overflow-hidden border border-[#D4AF37]/50 flex flex-col animate-scaleUp relative">
+    <div class="bg-[#0E121C] text-white rounded-3xl shadow-2xl max-w-lg w-full overflow-hidden border border-[#D4AF37]/50 flex flex-col animate-scaleUp relative">
       <!-- Modal Header -->
       <div class="bg-[#1B3B2B] text-white p-5 flex items-center justify-between border-b border-[#D4AF37]/30 shrink-0">
         <div class="flex items-center gap-2.5">
@@ -7208,14 +7208,14 @@
         <input type="hidden" id="bmi-id" value="">
 
         <div class="space-y-1">
-          <label class="block text-secondary">عنوان قلم هزینه / خدمت *</label>
-          <input type="text" id="bmi-title" required placeholder="مثلاً: بیعانه شام تالار یا رزرو عکاس کویر" class="w-full bg-white border border-[#E0D8C8] rounded-xl p-3 text-xs font-medium focus:outline-none focus:border-[#D4AF37]">
+          <label class="block text-slate-300">عنوان قلم هزینه / خدمت *</label>
+          <input type="text" id="bmi-title" required placeholder="مثلاً: بیعانه شام تالار یا رزرو عکاس کویر" class="w-full bg-[#161C2B] border border-[#C5A059]/30 rounded-xl p-3 text-xs text-white font-medium focus:outline-none focus:border-[#D4AF37]">
         </div>
 
         <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
           <div class="space-y-1">
-            <label class="block text-secondary">دسته‌بندی اصلی *</label>
-            <select id="bmi-category" required class="w-full bg-white border border-[#E0D8C8] rounded-xl p-3 text-xs font-bold text-graphite focus:outline-none focus:border-[#D4AF37] cursor-pointer">
+            <label class="block text-slate-300">دسته‌بندی اصلی *</label>
+            <select id="bmi-category" required class="w-full bg-[#161C2B] border border-[#C5A059]/30 rounded-xl p-3 text-xs font-bold text-white focus:outline-none focus:border-[#D4AF37] cursor-pointer">
               <option value="تالار و تشریفات پذیرایی">۱. تالار و تشریفات پذیرایی (~۴۰٪)</option>
               <option value="عکاسی و فیلم‌برداری">۲. عکاسی و فیلم‌برداری (~۱۵٪)</option>
               <option value="لباس، طلا و آرایشگاه">۳. لباس، طلا و آرایشگاه (~۲۰٪)</option>
@@ -7226,20 +7226,20 @@
           </div>
 
           <div class="space-y-1">
-            <label class="block text-secondary">مبلغ برآوردی / توافقی (تومان) *</label>
-            <input type="number" id="bmi-estimated" required placeholder="مثلاً: ۴۵۰۰۰۰۰۰" class="w-full bg-white border border-[#E0D8C8] rounded-xl p-3 text-xs font-medium focus:outline-none focus:border-[#D4AF37] dir-ltr">
+            <label class="block text-slate-300">مبلغ برآوردی / توافقی (تومان) *</label>
+            <input type="number" id="bmi-estimated" required placeholder="مثلاً: ۴۵۰۰۰۰۰۰" class="w-full bg-[#161C2B] border border-[#C5A059]/30 rounded-xl p-3 text-xs text-white font-medium focus:outline-none focus:border-[#D4AF37] dir-ltr">
           </div>
         </div>
 
         <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
           <div class="space-y-1">
-            <label class="block text-secondary">مبلغ پرداختی تاکنون (تومان)</label>
-            <input type="number" id="bmi-paid" value="0" placeholder="مثلاً: ۱۵۰۰۰۰۰۰" class="w-full bg-white border border-[#E0D8C8] rounded-xl p-3 text-xs font-medium focus:outline-none focus:border-[#D4AF37] dir-ltr">
+            <label class="block text-slate-300">مبلغ پرداختی تاکنون (تومان)</label>
+            <input type="number" id="bmi-paid" value="0" placeholder="مثلاً: ۱۵۰۰۰۰۰۰" class="w-full bg-[#161C2B] border border-[#C5A059]/30 rounded-xl p-3 text-xs text-white font-medium focus:outline-none focus:border-[#D4AF37] dir-ltr">
           </div>
 
           <div class="space-y-1">
-            <label class="block text-secondary">وضعیت پرداخت *</label>
-            <select id="bmi-status" required class="w-full bg-white border border-[#E0D8C8] rounded-xl p-3 text-xs font-bold text-graphite focus:outline-none focus:border-[#D4AF37] cursor-pointer">
+            <label class="block text-slate-300">وضعیت پرداخت *</label>
+            <select id="bmi-status" required class="w-full bg-[#161C2B] border border-[#C5A059]/30 rounded-xl p-3 text-xs font-bold text-white focus:outline-none focus:border-[#D4AF37] cursor-pointer">
               <option value="FULL">پرداخت کامل (تسویه)</option>
               <option value="ADVANCE">پیش‌پرداخت (بیعانه)</option>
               <option value="UNPAID">مانده (پرداخت‌نشده)</option>
@@ -7248,8 +7248,8 @@
         </div>
 
         <div class="space-y-1">
-          <label class="block text-secondary">طرف پرداخت‌کننده (سهم‌بندی ۲ طرفه)</label>
-          <select id="bmi-party" class="w-full bg-white border border-[#E0D8C8] rounded-xl p-3 text-xs font-bold text-graphite focus:outline-none focus:border-[#D4AF37] cursor-pointer">
+          <label class="block text-slate-300">طرف پرداخت‌کننده (سهم‌بندی ۲ طرفه)</label>
+          <select id="bmi-party" class="w-full bg-[#161C2B] border border-[#C5A059]/30 rounded-xl p-3 text-xs font-bold text-white focus:outline-none focus:border-[#D4AF37] cursor-pointer">
             <option value="groom">داماد / خانواده داماد</option>
             <option value="bride">عروس / خانواده عروس</option>
             <option value="shared">مشترک (۵۰ / ۵۰)</option>
@@ -7257,8 +7257,8 @@
         </div>
 
         <div class="space-y-1">
-          <label class="block text-secondary">یادداشت / شماره پیگیری / تامین‌کننده مرتبط:</label>
-          <input type="text" id="bmi-notes" placeholder="مثلاً: شماره رسید بانک، رزرو شده با تالار مشیرالممالک" class="w-full bg-white border border-[#E0D8C8] rounded-xl p-3 text-xs font-medium focus:outline-none focus:border-[#D4AF37]">
+          <label class="block text-slate-300">یادداشت / شماره پیگیری / تامین‌کننده مرتبط:</label>
+          <input type="text" id="bmi-notes" placeholder="مثلاً: شماره رسید بانک، رزرو شده با تالار مشیرالممالک" class="w-full bg-[#161C2B] border border-[#C5A059]/30 rounded-xl p-3 text-xs text-white font-medium focus:outline-none focus:border-[#D4AF37]">
         </div>
 
         <button type="submit" class="w-full bg-[#D4AF37] hover:bg-amber-400 text-[#1B3B2B] font-black py-3 rounded-2xl text-xs shadow-md transition-all flex items-center justify-center gap-2 cursor-pointer">
@@ -7271,7 +7271,7 @@
 
   <!-- VENDOR CUSTOM QUESTION MODAL (#modal-vendor-custom-question) -->
   <div id="modal-vendor-custom-question" class="hidden fixed inset-0 bg-black/60 backdrop-blur-xs z-[999999] flex items-center justify-center p-4 transition-all animate-fadeIn" onclick="if(event.target === this) closeCustomQuestionModal()">
-    <div class="bg-white rounded-3xl shadow-2xl max-w-lg w-full overflow-hidden border border-[#D4AF37]/50 flex flex-col animate-scaleUp relative">
+    <div class="bg-[#0E121C] text-white rounded-3xl shadow-2xl max-w-lg w-full overflow-hidden border border-[#D4AF37]/50 flex flex-col animate-scaleUp relative">
       <div class="bg-[#1B3B2B] text-white p-5 flex items-center justify-between border-b border-[#D4AF37]/30 shrink-0">
         <div class="flex items-center gap-2.5">
           <div class="w-10 h-10 rounded-xl bg-[#D4AF37] text-[#1B3B2B] flex items-center justify-center shadow-sm">
@@ -7352,22 +7352,22 @@
       <!-- MODAL BODY & FORM -->
       <form id="counselor-form" onsubmit="handleCounselorSubmit(event)" class="p-6 space-y-4 overflow-y-auto text-xs font-bold text-graphite">
         <!-- LOCAL COUNSELOR PARTNERS BANNER -->
-        <div class="bg-[#F5EFEB] border border-[#E0D8C8] p-4 rounded-2xl space-y-2">
-          <span class="text-[11px] font-bold text-[#1B3B2B] block">مشاورین منتخب طرف قرارداد عروسی تو در یزد:</span>
-          <div class="grid grid-cols-1 sm:grid-cols-2 gap-2 text-[11px] text-secondary">
-            <div class="flex items-center gap-2 bg-white p-2.5 rounded-xl border border-[#E0D8C8]">
+        <div class="bg-[#161C2B] border border-[#C5A059]/30 p-4 rounded-2xl space-y-2">
+          <span class="text-[11px] font-bold text-[#D4AF37] block">مشاورین منتخب طرف قرارداد عروسی تو در یزد:</span>
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-2 text-[11px] text-slate-300">
+            <div class="flex items-center gap-2 bg-[#0E121C] p-2.5 rounded-xl border border-[#C5A059]/30">
               <i data-lucide="user-check" class="w-4 h-4 text-[#D4AF37]"></i>
               <div>
-                <span class="font-bold text-graphite block">کلینیک مشاوره کاشانه یزد</span>
-                <span class="text-[10px] text-secondary">میدان اطلسی، صفائیه</span>
+                <span class="font-bold text-white block">کلینیک مشاوره کاشانه یزد</span>
+                <span class="text-[10px] text-slate-400">میدان اطلسی، صفائیه</span>
               </div>
             </div>
 
-            <div class="flex items-center gap-2 bg-white p-2.5 rounded-xl border border-[#E0D8C8]">
+            <div class="flex items-center gap-2 bg-[#0E121C] p-2.5 rounded-xl border border-[#C5A059]/30">
               <i data-lucide="award" class="w-4 h-4 text-[#D4AF37]"></i>
               <div>
-                <span class="font-bold text-graphite block">دکتر صادقی (مشاور خانواده)</span>
-                <span class="text-[10px] text-secondary">خیابان کاشانی، یزد</span>
+                <span class="font-bold text-white block">دکتر صادقی (مشاور خانواده)</span>
+                <span class="text-[10px] text-slate-400">خیابان کاشانی، یزد</span>
               </div>
             </div>
           </div>
@@ -7490,31 +7490,31 @@
           <i data-lucide="x" class="w-5 h-5"></i>
         </button>
       </div>
-      <div class="p-6 space-y-4 overflow-y-auto text-xs leading-relaxed font-medium text-graphite">
-        <div class="bg-white p-4 rounded-2xl border border-accent space-y-2 shadow-2xs">
-          <h4 class="font-black text-sm text-[#1B3B2B] flex items-center gap-2">
+      <div class="p-6 space-y-4 overflow-y-auto text-xs leading-relaxed font-medium text-white">
+        <div class="bg-[#161C2B] p-4 rounded-2xl border border-[#C5A059]/30 space-y-2 shadow-2xs">
+          <h4 class="font-black text-sm text-[#D4AF37] flex items-center gap-2">
             <i data-lucide="sparkles" class="w-4 h-4 text-[#D4AF37]"></i>
             ماموریت ما در عروسی‌تو
           </h4>
-          <p class="text-secondary">
+          <p class="text-slate-300">
             پلتفرم «عروسی‌تو» با هدف تسهیل، شفاف‌سازی و ارتقای کیفیت برنامه‌ریزی مراسم ازدواج در استان یزد طراحی شده است. ما با گردآوری برترین باغ‌تالارها، آتلیه‌ها، سالن‌های زیبایی، مزون‌ها و خدمات جانبی یزد، تجربیات شیرین و بدون استرسی برای زوجین فراهم می‌سازیم.
           </p>
         </div>
 
         <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
-          <div class="bg-white p-3.5 rounded-2xl border border-accent space-y-1">
+          <div class="bg-[#161C2B] p-3.5 rounded-2xl border border-[#C5A059]/30 space-y-1">
             <div class="text-[#D4AF37] font-black text-sm flex items-center gap-1.5">
-              <i data-lucide="shield-check" class="w-4 h-4 text-[#1B3B2B]"></i>
+              <i data-lucide="shield-check" class="w-4 h-4 text-[#D4AF37]"></i>
               تاییدیه ۱۰۰٪ اصالت
             </div>
-            <p class="text-[11px] text-secondary">تمام تامین‌کنندگان نشان‌دار دارای پروانه کسب رسمی و سابقه درخشان در استان یزد هستند.</p>
+            <p class="text-[11px] text-slate-300">تمام تامین‌کنندگان نشان‌دار دارای پروانه کسب رسمی و سابقه درخشان در استان یزد هستند.</p>
           </div>
-          <div class="bg-white p-3.5 rounded-2xl border border-accent space-y-1">
+          <div class="bg-[#161C2B] p-3.5 rounded-2xl border border-[#C5A059]/30 space-y-1">
             <div class="text-[#D4AF37] font-black text-sm flex items-center gap-1.5">
-              <i data-lucide="percent" class="w-4 h-4 text-[#1B3B2B]"></i>
+              <i data-lucide="percent" class="w-4 h-4 text-[#D4AF37]"></i>
               مدل ۰٪ کمیسیون
             </div>
-            <p class="text-[11px] text-secondary">هیچ هزینه اضافی یا کارمزدی روی استعلام قیمت و رزرو مستقیم خدمات از زوجین دریافت نمی‌شود.</p>
+            <p class="text-[11px] text-slate-300">هیچ هزینه اضافی یا کارمزدی روی استعلام قیمت و رزرو مستقیم خدمات از زوجین دریافت نمی‌شود.</p>
           </div>
         </div>
 
@@ -7544,43 +7544,43 @@
           <i data-lucide="x" class="w-5 h-5"></i>
         </button>
       </div>
-      <div class="p-6 space-y-3 overflow-y-auto text-xs font-medium text-graphite">
-        <details class="bg-white border border-accent rounded-2xl p-3.5 cursor-pointer group">
-          <summary class="font-black text-xs text-[#1B3B2B] flex justify-between items-center list-none">
+      <div class="p-6 space-y-3 overflow-y-auto text-xs font-medium text-white">
+        <details class="bg-[#161C2B] border border-[#C5A059]/30 rounded-2xl p-3.5 cursor-pointer group">
+          <summary class="font-black text-xs text-[#D4AF37] flex justify-between items-center list-none">
             <span>۱. چگونه قیمت و ظرفیت خالی باغ‌تالار یا آتلیه را استعلام کنم؟</span>
             <i data-lucide="chevron-down" class="w-4 h-4 text-[#D4AF37] transition-transform group-open:rotate-180"></i>
           </summary>
-          <p class="mt-2 text-secondary leading-relaxed border-t border-accent/60 pt-2 text-[11px]">
+          <p class="mt-2 text-slate-300 leading-relaxed border-t border-[#C5A059]/20 pt-2 text-[11px]">
             با کلیک روی دکمه «استعلام قیمت & رزرو» در کارت هر تامین‌کننده، فرم اختصاصی باز می‌شود. شما تاریخ Shamsi، ظرفیت مهمانان و پاسخ سوالات ویژه مجموعه را وارد می‌کنید و پیش‌فاکتور رسمی مستقیماً به پنل گفتگو ارسال می‌گردد.
           </p>
         </details>
 
-        <details class="bg-white border border-accent rounded-2xl p-3.5 cursor-pointer group">
-          <summary class="font-black text-xs text-[#1B3B2B] flex justify-between items-center list-none">
+        <details class="bg-[#161C2B] border border-[#C5A059]/30 rounded-2xl p-3.5 cursor-pointer group">
+          <summary class="font-black text-xs text-[#D4AF37] flex justify-between items-center list-none">
             <span>۲. آیا استفاده از ابزارهای برنامه‌ریزی و بودجه‌ریزی رایگان است؟</span>
             <i data-lucide="chevron-down" class="w-4 h-4 text-[#D4AF37] transition-transform group-open:rotate-180"></i>
           </summary>
-          <p class="mt-2 text-secondary leading-relaxed border-t border-accent/60 pt-2 text-[11px]">
+          <p class="mt-2 text-slate-300 leading-relaxed border-t border-[#C5A059]/20 pt-2 text-[11px]">
             بله! تمام ابزارهای هوشمند شامل محاسبه‌گر بودجه ویژه استان یزد، محاسبه‌گر شیرینی‌جات سنتی (قطاب و باقلوا)، مدیریت مهمانان RSVP، چک‌لیست ۱۲ ماهه و کارت دعوت آنلاین ۱۰۰٪ رایگان هستند.
           </p>
         </details>
 
-        <details class="bg-white border border-accent rounded-2xl p-3.5 cursor-pointer group">
-          <summary class="font-black text-xs text-[#1B3B2B] flex justify-between items-center list-none">
+        <details class="bg-[#161C2B] border border-[#C5A059]/30 rounded-2xl p-3.5 cursor-pointer group">
+          <summary class="font-black text-xs text-[#D4AF37] flex justify-between items-center list-none">
             <span>۳. چطور تامین‌کنندگان نشان اعتبار طلایی (VIP) دریافت می‌کنند؟</span>
             <i data-lucide="chevron-down" class="w-4 h-4 text-[#D4AF37] transition-transform group-open:rotate-180"></i>
           </summary>
-          <p class="mt-2 text-secondary leading-relaxed border-t border-accent/60 pt-2 text-[11px]">
+          <p class="mt-2 text-slate-300 leading-relaxed border-t border-[#C5A059]/20 pt-2 text-[11px]">
             تامین‌کنندگان پس از بررسی مدارک صنف، پروانه کسب، نظرات رضایت‌سنجی واقعی و تایید مدیریت پلتفرم، مدال اعتبار طلایی و ضمانت اصالت خدمات دریافت می‌نمایند.
           </p>
         </details>
 
-        <details class="bg-white border border-accent rounded-2xl p-3.5 cursor-pointer group">
-          <summary class="font-black text-xs text-[#1B3B2B] flex justify-between items-center list-none">
+        <details class="bg-[#161C2B] border border-[#C5A059]/30 rounded-2xl p-3.5 cursor-pointer group">
+          <summary class="font-black text-xs text-[#D4AF37] flex justify-between items-center list-none">
             <span>۴. چگونه صاحب یک کسب‌وکار تشریفات می‌توانند پنل خود را فعال کنند؟</span>
             <i data-lucide="chevron-down" class="w-4 h-4 text-[#D4AF37] transition-transform group-open:rotate-180"></i>
           </summary>
-          <p class="mt-2 text-secondary leading-relaxed border-t border-accent/60 pt-2 text-[11px]">
+          <p class="mt-2 text-slate-300 leading-relaxed border-t border-[#C5A059]/20 pt-2 text-[11px]">
             با کلیک روی «ثبت‌نام کسب‌وکارها» در هدر یا پنل ارشد، فرم ثبت درخواست را تکمیل فرمایید. پس از احراز هویت اولیه، دسترسی به پنل مدیریت سرلیدها، پکیج‌ها و تقویم شمسی فعال می‌شود.
           </p>
         </details>
@@ -7590,7 +7590,7 @@
 
   <!-- MODAL: TERMS & PRIVACY -->
   <div id="modal-terms" class="hidden fixed inset-0 bg-black/60 backdrop-blur-xs z-[999999] flex items-center justify-center p-4 transition-all animate-fadeIn" onclick="if(event.target === this) closeTermsModal()">
-    <div class="bg-[#FCFCFA] border border-[#D4AF37]/50 rounded-3xl max-w-xl w-full overflow-hidden shadow-2xl flex flex-col max-h-[90vh]">
+    <div class="bg-[#0E121C] border border-[#D4AF37]/50 rounded-3xl max-w-xl w-full overflow-hidden shadow-2xl flex flex-col max-h-[90vh] text-white">
       <div class="bg-[#1B3B2B] text-white p-5 flex items-center justify-between border-b border-[#D4AF37]/30 shrink-0">
         <div class="flex items-center gap-3">
           <div class="w-10 h-10 rounded-xl bg-[#D4AF37] text-[#1B3B2B] flex items-center justify-center font-bold shadow-xs">
@@ -7605,24 +7605,24 @@
           <i data-lucide="x" class="w-5 h-5"></i>
         </button>
       </div>
-      <div class="p-6 space-y-4 overflow-y-auto text-xs leading-relaxed font-medium text-graphite">
-        <div class="bg-white p-4 rounded-2xl border border-accent space-y-2">
-          <h4 class="font-black text-xs text-[#1B3B2B] border-b border-accent/60 pb-1">۱. حریم خصوصی شماره تماس و اطلاعات مهمانان</h4>
-          <p class="text-secondary text-[11px]">
+      <div class="p-6 space-y-4 overflow-y-auto text-xs leading-relaxed font-medium text-white">
+        <div class="bg-[#161C2B] p-4 rounded-2xl border border-[#C5A059]/30 space-y-2">
+          <h4 class="font-black text-xs text-[#D4AF37] border-b border-[#C5A059]/20 pb-1">۱. حریم خصوصی شماره تماس و اطلاعات مهمانان</h4>
+          <p class="text-slate-300 text-[11px]">
             شماره همراه و مشخصات شخصی ثبت‌شده زوجین و فهرست مهمانان کارت دعوت کاملاً محرمانه بوده و تنها جهت استعلام‌های مستقیم با تامین‌کنندگان انتخابی خودتان به اشتراک گذاشته می‌شود.
           </p>
         </div>
 
-        <div class="bg-white p-4 rounded-2xl border border-accent space-y-2">
-          <h4 class="font-black text-xs text-[#1B3B2B] border-b border-accent/60 pb-1">۲. صحت مندرجات پکیج‌ها و پیش‌فاکتورها</h4>
-          <p class="text-secondary text-[11px]">
+        <div class="bg-[#161C2B] p-4 rounded-2xl border border-[#C5A059]/30 space-y-2">
+          <h4 class="font-black text-xs text-[#D4AF37] border-b border-[#C5A059]/20 pb-1">۲. صحت مندرجات پکیج‌ها و پیش‌فاکتورها</h4>
+          <p class="text-slate-300 text-[11px]">
             قیمت‌ها و آیتم‌های مندرج در پکیج‌ها مستقیماً توسط مدیران مجموعه‌ها به‌روزرسانی شده و صادرکننده پیش‌فاکتور متعهد به رعایت مفاد اعلامی در زمان عقد قرارداد رسمی می‌باشد.
           </p>
         </div>
 
-        <div class="bg-white p-4 rounded-2xl border border-accent space-y-2">
-          <h4 class="font-black text-xs text-[#1B3B2B] border-b border-accent/60 pb-1">۳. قوانین ثبت نظرات و امتیازدهی</h4>
-          <p class="text-secondary text-[11px]">
+        <div class="bg-[#161C2B] p-4 rounded-2xl border border-[#C5A059]/30 space-y-2">
+          <h4 class="font-black text-xs text-[#D4AF37] border-b border-[#C5A059]/20 pb-1">۳. قوانین ثبت نظرات و امتیازدهی</h4>
+          <p class="text-slate-300 text-[11px]">
             نظرات و دیدگاه‌های ثبت‌شده برای تامین‌کنندگان پیش از انتشار عمومی توسط تیم نظارت عروسی‌تو پایش شده تا از درج محتوای خلاف موازین اخلاقی یا تبلیغاتی جلوگیری به عمل آید.
           </p>
         </div>
@@ -7727,7 +7727,7 @@
 
   <!-- GUEST ADD/EDIT MODAL (#guest-modal) -->
   <div id="guest-modal" class="hidden fixed inset-0 bg-black/60 backdrop-blur-xs z-[999999] flex items-center justify-center p-4 transition-all animate-fadeIn" onclick="if(event.target === this) closeGuestModal()">
-    <div class="bg-white rounded-3xl shadow-2xl max-w-md w-full overflow-hidden border border-[#D4AF37]/50 flex flex-col animate-scaleUp relative">
+    <div class="bg-[#0E121C] text-white rounded-3xl shadow-2xl max-w-md w-full overflow-hidden border border-[#D4AF37]/50 flex flex-col animate-scaleUp relative">
       <div class="bg-[#1B3B2B] text-white p-5 flex items-center justify-between border-b border-[#D4AF37]/30 shrink-0">
         <div class="flex items-center gap-2.5">
           <div class="w-10 h-10 rounded-xl bg-[#D4AF37] text-[#1B3B2B] flex items-center justify-center shadow-sm">
@@ -7743,18 +7743,18 @@
         </button>
       </div>
 
-      <form id="guest-form" onsubmit="handleGuestFormSubmit(event)" class="p-6 space-y-4 text-xs font-bold text-graphite">
+      <form id="guest-form" onsubmit="handleGuestFormSubmit(event)" class="p-6 space-y-4 text-xs font-bold text-white">
         <input type="hidden" id="guest-edit-id" value="">
 
         <div class="space-y-1">
-          <label class="block text-secondary">نام و نام خانوادگی مهمان *</label>
-          <input type="text" id="guest-modal-name" required placeholder="مثلاً: دکتر حمیدرضا احمدی" class="w-full bg-[#F5EFEB] border border-[#E0D8C8] rounded-xl p-3 text-xs font-medium focus:outline-none focus:border-[#D4AF37]">
+          <label class="block text-slate-300">نام و نام خانوادگی مهمان *</label>
+          <input type="text" id="guest-modal-name" required placeholder="مثلاً: دکتر حمیدرضا احمدی" class="w-full bg-[#161C2B] border border-[#C5A059]/30 rounded-xl p-3 text-xs text-white font-medium focus:outline-none focus:border-[#D4AF37]">
         </div>
 
         <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
           <div class="space-y-1">
-            <label class="block text-secondary">نسبت / گروه مهمان *</label>
-            <select id="guest-modal-side" required class="w-full bg-[#F5EFEB] border border-[#E0D8C8] rounded-xl p-3 text-xs font-bold text-graphite focus:outline-none focus:border-[#D4AF37] cursor-pointer">
+            <label class="block text-slate-300">نسبت / گروه مهمان *</label>
+            <select id="guest-modal-side" required class="w-full bg-[#161C2B] border border-[#C5A059]/30 rounded-xl p-3 text-xs font-bold text-white focus:outline-none focus:border-[#D4AF37] cursor-pointer">
               <option value="فامیل عروس">فامیل عروس</option>
               <option value="فامیل داماد">فامیل داماد</option>
               <option value="دوستان مشترک">دوستان مشترک</option>
@@ -7763,33 +7763,33 @@
           </div>
 
           <div class="space-y-1">
-            <label class="block text-secondary">تعداد همراهان (بدون مهمان اصلی)</label>
-            <input type="number" id="guest-modal-companions" value="0" min="0" max="20" class="w-full bg-[#F5EFEB] border border-[#E0D8C8] rounded-xl p-3 text-xs font-medium focus:outline-none focus:border-[#D4AF37]">
+            <label class="block text-slate-300">تعداد همراهان (بدون مهمان اصلی)</label>
+            <input type="number" id="guest-modal-companions" value="0" min="0" max="20" class="w-full bg-[#161C2B] border border-[#C5A059]/30 rounded-xl p-3 text-xs text-white font-medium focus:outline-none focus:border-[#D4AF37]">
           </div>
         </div>
 
         <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
           <div class="space-y-1">
-            <label class="block text-secondary">شماره همراه مهمان</label>
-            <input type="tel" id="guest-modal-phone" placeholder="۰۹۱۲۳۴۵۶۷۸۹" class="w-full bg-[#F5EFEB] border border-[#E0D8C8] rounded-xl p-3 text-xs font-medium focus:outline-none focus:border-[#D4AF37] dir-ltr text-right">
+            <label class="block text-slate-300">شماره همراه مهمان</label>
+            <input type="tel" id="guest-modal-phone" placeholder="۰۹۱۲۳۴۵۶۷۸۹" class="w-full bg-[#161C2B] border border-[#C5A059]/30 rounded-xl p-3 text-xs text-white font-medium focus:outline-none focus:border-[#D4AF37] dir-ltr text-right">
           </div>
 
           <div class="space-y-1">
-            <label class="block text-secondary">شماره یا عنوان میز اختصاصی</label>
-            <input type="text" id="guest-modal-table" placeholder="مثلاً: میز VIP ۱" class="w-full bg-[#F5EFEB] border border-[#E0D8C8] rounded-xl p-3 text-xs font-medium focus:outline-none focus:border-[#D4AF37]">
+            <label class="block text-slate-300">شماره یا عنوان میز اختصاصی</label>
+            <input type="text" id="guest-modal-table" placeholder="مثلاً: میز VIP ۱" class="w-full bg-[#161C2B] border border-[#C5A059]/30 rounded-xl p-3 text-xs text-white font-medium focus:outline-none focus:border-[#D4AF37]">
           </div>
         </div>
 
         <div class="space-y-1">
-          <label class="block text-secondary">وضعیت حضور (RSVP) *</label>
-          <select id="guest-modal-status" required class="w-full bg-[#F5EFEB] border border-[#E0D8C8] rounded-xl p-3 text-xs font-bold text-graphite focus:outline-none focus:border-[#D4AF37] cursor-pointer">
+          <label class="block text-slate-300">وضعیت حضور (RSVP) *</label>
+          <select id="guest-modal-status" required class="w-full bg-[#161C2B] border border-[#C5A059]/30 rounded-xl p-3 text-xs font-bold text-white focus:outline-none focus:border-[#D4AF37] cursor-pointer">
             <option value="CONFIRMED">قطعی / شرکت می‌کند (CONFIRMED)</option>
             <option value="PENDING">در انتظار پاسخ (PENDING)</option>
             <option value="DECLINED">عدم حضور / نمی‌تواند بیاید (DECLINED)</option>
           </select>
         </div>
 
-        <button type="submit" class="w-full bg-[#D4AF37] hover:bg-amber-400 text-[#1B3B2B] font-black py-3 rounded-2xl text-xs shadow-md transition-all flex items-center justify-center gap-2 cursor-pointer">
+        <button type="submit" class="w-full bg-[#D4AF37] hover:bg-amber-400 text-[#07090E] font-black py-3 rounded-2xl text-xs shadow-md transition-all flex items-center justify-center gap-2 cursor-pointer">
           <i data-lucide="check" class="w-4 h-4"></i>
           <span>ذخیره مشخصات مهمان</span>
         </button>
@@ -7799,7 +7799,7 @@
 
   <!-- CASH GIFT ADD MODAL (#gift-modal) -->
   <div id="gift-modal" class="hidden fixed inset-0 bg-black/60 backdrop-blur-xs z-[999999] flex items-center justify-center p-4 transition-all animate-fadeIn" onclick="if(event.target === this) closeGiftModal()">
-    <div class="bg-white rounded-3xl shadow-2xl max-w-md w-full overflow-hidden border border-[#D4AF37]/50 flex flex-col animate-scaleUp relative">
+    <div class="bg-[#0E121C] text-white rounded-3xl shadow-2xl max-w-md w-full overflow-hidden border border-[#D4AF37]/50 flex flex-col animate-scaleUp relative">
       <div class="bg-[#1B3B2B] text-white p-5 flex items-center justify-between border-b border-[#D4AF37]/30 shrink-0">
         <div class="flex items-center gap-2.5">
           <div class="w-10 h-10 rounded-xl bg-[#D4AF37] text-[#1B3B2B] flex items-center justify-center shadow-sm">
