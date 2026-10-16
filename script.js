@@ -14877,10 +14877,375 @@ window.deleteVendorStory = function(storyId) {
 };
 
 /* ==========================================================================
-   SUPER ADMIN PANEL REDESIGN
+   SUPER ADMIN PANEL REDESIGN & HOMEPAGE CMS & CATEGORIES MANAGEMENT
    ========================================================================== */
+const DEFAULT_HOMEPAGE_CATEGORIES = [
+  {
+    id: "cat-1",
+    key: "venue_catering",
+    title: "مکان، تشریفات و پذیرایی",
+    badge: "۴۵ مجموعه فعال",
+    desc: "باغ‌تالار، تالار تشریفاتی، کترینگ و شام عروسی، سفره عقد و گل‌آرایی",
+    image: "https://images.unsplash.com/photo-1519167758481-83f550bb49b3?auto=format&fit=crop&w=800&q=80",
+    colSpan: "md:col-span-7",
+    active: true
+  },
+  {
+    id: "cat-2",
+    key: "photo_music",
+    title: "ثبت لحظات و موسیقی",
+    badge: "۳۲ مجموعه فعال",
+    desc: "آتلیه تخصصی، عکاسی فرمالیته، هلی‌شات، دی‌جی و بند موزیک زنده",
+    image: "https://images.unsplash.com/photo-1537633552985-df8429e8048b?auto=format&fit=crop&w=800&q=80",
+    colSpan: "md:col-span-5",
+    active: true
+  },
+  {
+    id: "cat-3",
+    key: "beauty_style",
+    title: "زیبایی و استایل زوجین",
+    badge: "۲۸ مجموعه فعال",
+    desc: "میکاپ VIP عروس، گریم داماد، مزون لباس عروس و کت‌وشلوار",
+    image: "https://images.unsplash.com/photo-1522337360788-8b13dee7a37e?auto=format&fit=crop&w=800&q=80",
+    colSpan: "md:col-span-4",
+    active: true
+  },
+  {
+    id: "cat-4",
+    key: "gold_shopping",
+    title: "طلا، خرید و خدمات جانبی",
+    badge: "۲۴ مجموعه فعال",
+    desc: "سرویس طلا و جواهر، ست حلقه پلاتین، تور ماه عسل و اجاره ماشین عروس",
+    image: "https://images.unsplash.com/photo-1605100804763-247f67b3557e?auto=format&fit=crop&w=800&q=80",
+    colSpan: "md:col-span-4",
+    active: true
+  },
+  {
+    id: "cat-5",
+    key: "legal_ceremony",
+    title: "تشریفات قانونی، عقد و مشاوره",
+    badge: "۱۹ مجموعه فعال",
+    desc: "دفتر رسمی ازدواج، سالن عقد مجلل، سفره عقد سنتی و مشاوره خانواده",
+    image: "https://images.unsplash.com/photo-1511285560929-80b456fea0bc?auto=format&fit=crop&w=800&q=80",
+    colSpan: "md:col-span-4",
+    active: true
+  }
+];
+
+const DEFAULT_HOMEPAGE_CMS = {
+  heroTitle: "پلتفرم VIP خدمات و تشریفات عروسی یزد",
+  heroSubtitle: "رزرو مستقیم بهترین باغ‌تالارها، آتلیه‌ها و مزون‌ها با تضمین اصالت و قیمت",
+  heroBg: "https://images.unsplash.com/photo-1519741497674-611481863552?auto=format&fit=crop&w=1600&q=80",
+  heroBadge: "👑 جامع‌ترین سامانه تشریفات و برنامه‌ریزی عروسی استان یزد"
+};
+
+window.getHomepageCategories = function() {
+  const saved = localStorage.getItem('aroosi_homepage_categories_db');
+  if (!saved) {
+    localStorage.setItem('aroosi_homepage_categories_db', JSON.stringify(DEFAULT_HOMEPAGE_CATEGORIES));
+    return DEFAULT_HOMEPAGE_CATEGORIES;
+  }
+  try {
+    return JSON.parse(saved);
+  } catch (e) {
+    return DEFAULT_HOMEPAGE_CATEGORIES;
+  }
+};
+
+window.saveHomepageCategories = function(categories) {
+  localStorage.setItem('aroosi_homepage_categories_db', JSON.stringify(categories));
+};
+
+window.getHomepageBannerCMS = function() {
+  const saved = localStorage.getItem('aroosi_homepage_cms_db');
+  if (!saved) {
+    localStorage.setItem('aroosi_homepage_cms_db', JSON.stringify(DEFAULT_HOMEPAGE_CMS));
+    return DEFAULT_HOMEPAGE_CMS;
+  }
+  try {
+    return JSON.parse(saved);
+  } catch (e) {
+    return DEFAULT_HOMEPAGE_CMS;
+  }
+};
+
+window.saveHomepageBannerCMSData = function(cmsData) {
+  localStorage.setItem('aroosi_homepage_cms_db', JSON.stringify(cmsData));
+};
+
+window.renderMainCategoriesBentoGrid = function() {
+  const container = document.getElementById('main-categories-bento-grid');
+  if (!container) return;
+
+  const categories = window.getHomepageCategories().filter(c => c.active !== false);
+  if (categories.length === 0) {
+    container.innerHTML = `<div class="col-span-12 p-8 text-center text-slate-400 text-xs">هیچ دسته‌بندی فعالی ثبت نشده است.</div>`;
+    return;
+  }
+
+  container.innerHTML = categories.map(c => `
+    <div onclick="openCategorySubgroupsModal('${c.key}')" class="${c.colSpan || 'md:col-span-4'} group relative h-64 sm:h-72 rounded-3xl overflow-hidden border border-[#C5A059]/25 hover:border-[#D4AF37]/70 transition-all duration-300 shadow-2xl cursor-pointer bg-slate-900 flex flex-col justify-end p-6">
+      <img src="${c.image}" alt="${c.title}" class="absolute inset-0 w-full h-full object-cover group-hover:scale-108 transition-transform duration-700">
+      <div class="absolute inset-0 bg-gradient-to-t from-[#07090E] via-[#07090E]/60 to-transparent"></div>
+
+      <div class="relative z-10 space-y-2 text-right">
+        <div class="flex items-center justify-between">
+          <span class="text-[11px] font-black text-[#0F251A] bg-gradient-to-r from-[#D4AF37] to-[#F3E5AB] px-3 py-1 rounded-full border border-[#D4AF37] shadow-md">
+            ${c.badge || 'مجموعه‌های فعال'}
+          </span>
+          <span class="text-xs font-bold text-[#D4AF37] group-hover:translate-x-[-4px] transition-transform">مشاهده همه ➔</span>
+        </div>
+        <h3 class="text-xl font-black text-[#F7F5F0]">${c.title}</h3>
+        <p class="text-xs text-slate-300 font-medium">${c.desc || ''}</p>
+      </div>
+    </div>
+  `).join('');
+
+  if (window.lucide) lucide.createIcons();
+};
+
+window.renderAdminHomepageCategoriesCMS = function() {
+  const targets = ['admin-homepage-categories-list', 'admin-homepage-categories-list-idx'];
+  const categories = window.getHomepageCategories();
+
+  targets.forEach(targetId => {
+    const el = document.getElementById(targetId);
+    if (!el) return;
+
+    if (categories.length === 0) {
+      el.innerHTML = `<div class="col-span-full p-6 text-center text-slate-400 text-xs">هیچ دسته‌بندی وجود ندارد.</div>`;
+      return;
+    }
+
+    el.innerHTML = categories.map(c => `
+      <div class="bg-[#161C2B] border ${c.active ? 'border-[#C5A059]/40' : 'border-slate-800 opacity-60'} rounded-2xl p-4 space-y-3 relative flex flex-col justify-between">
+        <div class="relative h-32 rounded-xl overflow-hidden border border-[#C5A059]/30">
+          <img src="${c.image}" alt="${c.title}" class="w-full h-full object-cover">
+          <div class="absolute inset-0 bg-gradient-to-t from-[#07090E] via-transparent to-transparent"></div>
+          <span class="absolute top-2 right-2 text-[10px] font-bold ${c.active ? 'bg-emerald-500/90 text-white' : 'bg-rose-500/90 text-white'} px-2 py-0.5 rounded-full shadow-sm">
+            ${c.active ? 'فعال 🟢' : 'غیرفعال 🔴'}
+          </span>
+          <span class="absolute bottom-2 right-2 text-[10px] font-black text-[#D4AF37] bg-[#07090E]/80 px-2 py-0.5 rounded-lg border border-[#D4AF37]/40">
+            ${c.colSpan || 'md:col-span-4'}
+          </span>
+        </div>
+
+        <div class="space-y-1 text-right">
+          <div class="flex items-center justify-between">
+            <h4 class="text-sm font-black text-white">${c.title}</h4>
+            <span class="text-[10px] text-slate-400 font-mono">${c.key}</span>
+          </div>
+          <p class="text-[11px] text-slate-300 line-clamp-2">${c.desc || ''}</p>
+          <span class="inline-block text-[10px] text-[#D4AF37] font-bold pt-1">${c.badge || ''}</span>
+        </div>
+
+        <div class="flex items-center justify-between gap-2 pt-2 border-t border-[#C5A059]/20">
+          <button type="button" onclick="toggleAdminCategoryStatus('${c.id}')" class="px-2.5 py-1 rounded-xl text-[11px] font-bold ${c.active ? 'bg-amber-500/20 text-amber-300 border border-amber-500/30' : 'bg-emerald-500/20 text-emerald-300 border border-emerald-500/30'} hover:scale-102 transition-transform cursor-pointer">
+            ${c.active ? 'غیرفعال‌سازی ⏸️' : 'فعال‌سازی ▶️'}
+          </button>
+
+          <div class="flex items-center gap-1.5">
+            <button type="button" onclick="openAdminCategoryModal('${c.id}')" class="bg-[#D4AF37] hover:bg-[#C5A059] text-[#07090E] font-black px-3 py-1 rounded-xl text-[11px] transition-all cursor-pointer shadow-sm">
+              ویرایش ✏️
+            </button>
+            <button type="button" onclick="deleteAdminCategory('${c.id}')" class="bg-rose-500/20 hover:bg-rose-500/30 text-rose-300 border border-rose-500/40 px-2.5 py-1 rounded-xl text-[11px] font-bold transition-all cursor-pointer">
+              حذف 🗑️
+            </button>
+          </div>
+        </div>
+      </div>
+    `).join('');
+  });
+
+  if (window.lucide) lucide.createIcons();
+};
+
+window.renderAdminBannerCMS = function() {
+  const cms = window.getHomepageBannerCMS();
+
+  const title1 = document.getElementById('cms-hero-title');
+  const title2 = document.getElementById('cms-hero-title-idx');
+  if (title1) title1.value = cms.heroTitle || '';
+  if (title2) title2.value = cms.heroTitle || '';
+
+  const sub1 = document.getElementById('cms-hero-subtitle');
+  const sub2 = document.getElementById('cms-hero-subtitle-idx');
+  if (sub1) sub1.value = cms.heroSubtitle || '';
+  if (sub2) sub2.value = cms.heroSubtitle || '';
+
+  const bg1 = document.getElementById('cms-hero-bg');
+  const bg2 = document.getElementById('cms-hero-bg-idx');
+  if (bg1) bg1.value = cms.heroBg || '';
+  if (bg2) bg2.value = cms.heroBg || '';
+
+  const badge1 = document.getElementById('cms-hero-badge');
+  const badge2 = document.getElementById('cms-hero-badge-idx');
+  if (badge1) badge1.value = cms.heroBadge || '';
+  if (badge2) badge2.value = cms.heroBadge || '';
+};
+
+window.openAdminCategoryModal = function(catId = null) {
+  const modal = document.getElementById('modal-admin-category-crud');
+  if (!modal) return;
+
+  const categories = window.getHomepageCategories();
+  const cat = catId ? categories.find(c => c.id === catId) : null;
+
+  const getEl = (id1, id2) => document.getElementById(id1) || document.getElementById(id2);
+
+  const idInput = getEl('cat-crud-id', 'cat-crud-id-idx');
+  const keyInput = getEl('cat-crud-key', 'cat-crud-key-idx');
+  const titleInput = getEl('cat-crud-title', 'cat-crud-title-idx');
+  const badgeInput = getEl('cat-crud-badge', 'cat-crud-badge-idx');
+  const spanSelect = getEl('cat-crud-colspan', 'cat-crud-colspan-idx');
+  const imageInput = getEl('cat-crud-image', 'cat-crud-image-idx');
+  const descInput = getEl('cat-crud-desc', 'cat-crud-desc-idx');
+  const activeCheckbox = getEl('cat-crud-active', 'cat-crud-active-idx');
+  const titleText = getEl('modal-category-title-text', 'modal-category-title-text-idx');
+
+  if (cat) {
+    if (idInput) idInput.value = cat.id;
+    if (keyInput) keyInput.value = cat.key || '';
+    if (titleInput) titleInput.value = cat.title || '';
+    if (badgeInput) badgeInput.value = cat.badge || '';
+    if (spanSelect) spanSelect.value = cat.colSpan || 'md:col-span-4';
+    if (imageInput) imageInput.value = cat.image || '';
+    if (descInput) descInput.value = cat.desc || '';
+    if (activeCheckbox) activeCheckbox.checked = cat.active !== false;
+    if (titleText) titleText.innerText = `ویرایش دسته‌بندی: ${cat.title}`;
+  } else {
+    if (idInput) idInput.value = '';
+    if (keyInput) keyInput.value = '';
+    if (titleInput) titleInput.value = '';
+    if (badgeInput) badgeInput.value = '۳۰ مجموعه فعال';
+    if (spanSelect) spanSelect.value = 'md:col-span-4';
+    if (imageInput) imageInput.value = 'https://images.unsplash.com/photo-1519741497674-611481863552?auto=format&fit=crop&w=800&q=80';
+    if (descInput) descInput.value = '';
+    if (activeCheckbox) activeCheckbox.checked = true;
+    if (titleText) titleText.innerText = 'افزودن دسته‌بندی جدید';
+  }
+
+  modal.classList.remove('hidden');
+};
+
+window.closeAdminCategoryModal = function() {
+  const modal = document.getElementById('modal-admin-category-crud');
+  if (modal) modal.classList.add('hidden');
+};
+
+window.saveAdminCategory = function() {
+  const getVal = (id1, id2) => {
+    const el = document.getElementById(id1) || document.getElementById(id2);
+    return el ? el.value.trim() : '';
+  };
+  const getChecked = (id1, id2) => {
+    const el = document.getElementById(id1) || document.getElementById(id2);
+    return el ? el.checked : true;
+  };
+
+  const id = getVal('cat-crud-id', 'cat-crud-id-idx');
+  const key = getVal('cat-crud-key', 'cat-crud-key-idx');
+  const title = getVal('cat-crud-title', 'cat-crud-title-idx');
+  const badge = getVal('cat-crud-badge', 'cat-crud-badge-idx');
+  const colSpan = getVal('cat-crud-colspan', 'cat-crud-colspan-idx');
+  const image = getVal('cat-crud-image', 'cat-crud-image-idx');
+  const desc = getVal('cat-crud-desc', 'cat-crud-desc-idx');
+  const active = getChecked('cat-crud-active', 'cat-crud-active-idx');
+
+  if (!key || !title) {
+    if (typeof showToast === 'function') showToast('⚠️ لطفاً کلید و عنوان دسته‌بندی را وارد نمایید.', 'warning');
+    return;
+  }
+
+  const categories = window.getHomepageCategories();
+
+  if (id) {
+    const idx = categories.findIndex(c => c.id === id);
+    if (idx !== -1) {
+      categories[idx] = { ...categories[idx], key, title, badge, colSpan, image, desc, active };
+    }
+  } else {
+    categories.push({
+      id: `cat-${Date.now()}`,
+      key,
+      title,
+      badge,
+      colSpan: colSpan || 'md:col-span-4',
+      image: image || 'https://images.unsplash.com/photo-1519741497674-611481863552?auto=format&fit=crop&w=800&q=80',
+      desc,
+      active
+    });
+  }
+
+  window.saveHomepageCategories(categories);
+  window.closeAdminCategoryModal();
+  window.renderAdminHomepageCategoriesCMS();
+  window.renderMainCategoriesBentoGrid();
+
+  if (typeof showToast === 'function') {
+    showToast('دسته‌بندی با موفقیت ذخیره گردید ✨', 'success');
+  }
+};
+
+window.toggleAdminCategoryStatus = function(catId) {
+  const categories = window.getHomepageCategories();
+  const idx = categories.findIndex(c => c.id === catId);
+  if (idx !== -1) {
+    categories[idx].active = !categories[idx].active;
+    window.saveHomepageCategories(categories);
+    window.renderAdminHomepageCategoriesCMS();
+    window.renderMainCategoriesBentoGrid();
+    if (typeof showToast === 'function') {
+      showToast(`وضعیت دسته‌بندی به ${categories[idx].active ? 'فعال 🟢' : 'غیرفعال 🔴'} تغییر یافت.`, 'info');
+    }
+  }
+};
+
+window.deleteAdminCategory = function(catId) {
+  if (!confirm('آیا از حذف این دسته‌بندی از صفحه اصلی اطمینان دارید؟')) return;
+
+  let categories = window.getHomepageCategories();
+  categories = categories.filter(c => c.id !== catId);
+  window.saveHomepageCategories(categories);
+  window.renderAdminHomepageCategoriesCMS();
+  window.renderMainCategoriesBentoGrid();
+
+  if (typeof showToast === 'function') {
+    showToast('دسته‌بندی با موفقیت حذف گردید 🗑️', 'success');
+  }
+};
+
+window.saveAdminBannerCMS = function() {
+  const getVal = (id1, id2) => {
+    const el = document.getElementById(id1) || document.getElementById(id2);
+    return el ? el.value.trim() : '';
+  };
+
+  const heroTitle = getVal('cms-hero-title', 'cms-hero-title-idx');
+  const heroSubtitle = getVal('cms-hero-subtitle', 'cms-hero-subtitle-idx');
+  const heroBg = getVal('cms-hero-bg', 'cms-hero-bg-idx');
+  const heroBadge = getVal('cms-hero-badge', 'cms-hero-badge-idx');
+
+  const cmsData = { heroTitle, heroSubtitle, heroBg, heroBadge };
+  window.saveHomepageBannerCMSData(cmsData);
+
+  // Dynamically update Hero Elements on Homepage if present
+  const heroBadgeEl = document.querySelector('#hero span.bg-gradient-to-r');
+  if (heroBadgeEl && heroBadge) heroBadgeEl.innerText = heroBadge;
+
+  const heroTitleEl = document.querySelector('#hero h1');
+  if (heroTitleEl && heroTitle) heroTitleEl.innerText = heroTitle;
+
+  const heroSubEl = document.querySelector('#hero p');
+  if (heroSubEl && heroSubtitle) heroSubEl.innerText = heroSubtitle;
+
+  if (typeof showToast === 'function') {
+    showToast('تنظیمات بنر صفحه اصلی ذخیره گردید ✨', 'success');
+  }
+};
+
 window.switchAdminPanelTab = function(tabName) {
-  const tabs = ['analytics', 'vendors', 'content', 'subscriptions', 'reviews', 'settings'];
+  const tabs = ['analytics', 'vendors', 'cms', 'content', 'subscriptions', 'reviews', 'settings'];
   tabs.forEach(t => {
     const pane = document.getElementById(`apanel-pane-${t}`);
     const btn = document.getElementById(`apanel-tab-btn-${t}`);
@@ -14902,6 +15267,10 @@ window.switchAdminPanelTab = function(tabName) {
 
   if (tabName === 'vendors' && typeof renderAdminPendingApps === 'function') {
     renderAdminPendingApps();
+  }
+  if (tabName === 'cms') {
+    window.renderAdminHomepageCategoriesCMS();
+    window.renderAdminBannerCMS();
   }
   if (tabName === 'subscriptions' && typeof renderAdminSubscriptionPlansTable === 'function') {
     renderAdminSubscriptionPlansTable();
@@ -17832,6 +18201,9 @@ window.toggleThemeMode = function() {
 };
 
 document.addEventListener('DOMContentLoaded', () => {
+  if (typeof window.renderMainCategoriesBentoGrid === 'function') {
+    window.renderMainCategoriesBentoGrid();
+  }
   const savedTheme = localStorage.getItem('theme') || localStorage.getItem('aroosi_theme_mode') || 'dark';
   document.documentElement.setAttribute('data-theme', savedTheme);
   const btnText = document.getElementById('theme-toggle-text');

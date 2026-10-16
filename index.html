@@ -742,7 +742,7 @@
         </div>
 
         <!-- Bento Grid Gallery -->
-        <div class="grid grid-cols-1 md:grid-cols-12 gap-4">
+        <div id="main-categories-bento-grid" class="grid grid-cols-1 md:grid-cols-12 gap-4">
 
           <!-- Bento Item 1: Venue & Catering (Featured Wide Bento 7 cols) -->
           <div onclick="openCategorySubgroupsModal('venue_catering')" class="md:col-span-7 group relative h-64 sm:h-72 rounded-3xl overflow-hidden border border-[#C5A059]/25 hover:border-[#D4AF37]/70 transition-all duration-300 shadow-2xl cursor-pointer bg-slate-900 flex flex-col justify-end p-6">
@@ -2644,9 +2644,15 @@
             </div>
             <h2 class="text-xl sm:text-2xl font-black text-[#D4AF37]">نظارت بر عملکرد استان یزد، اعتبارسنجی و تنظیمات پلتفرم</h2>
           </div>
-          <span class="bg-emerald-950 text-emerald-400 font-bold text-xs px-4 py-2 rounded-xl border border-emerald-500/50 shrink-0">
-            وضعیت سیستم: فعال و آنلاین
-          </span>
+          <div class="flex items-center gap-2">
+            <a href="admin-dashboard.html" class="bg-[#D4AF37] hover:bg-[#C5A059] text-[#0F251A] font-black text-xs px-4 py-2 rounded-xl border border-[#D4AF37] shrink-0 flex items-center gap-1.5 shadow-md">
+              <i data-lucide="external-link" class="w-4 h-4"></i>
+              <span>صفحه اختصاصی مدیریت</span>
+            </a>
+            <span class="bg-emerald-950 text-emerald-400 font-bold text-xs px-4 py-2 rounded-xl border border-emerald-500/50 shrink-0">
+              وضعیت سیستم: آنلاین
+            </span>
+          </div>
         </div>
 
         <!-- 5 Key Operational Analytics KPI Cards -->
@@ -2723,6 +2729,10 @@
           <button type="button" id="apanel-tab-btn-vendors" onclick="switchAdminPanelTab('vendors')" class="px-3.5 py-2 rounded-2xl text-xs font-bold transition-all bg-slate-800 text-slate-300 hover:text-white border border-slate-700 cursor-pointer flex items-center gap-1.5">
             <i data-lucide="building-2" class="w-4 h-4 text-[#D4AF37]"></i>
             <span>مدیریت تامین‌کنندگان</span>
+          </button>
+          <button type="button" id="apanel-tab-btn-cms" onclick="switchAdminPanelTab('cms')" class="px-3.5 py-2 rounded-2xl text-xs font-bold transition-all bg-slate-800 text-slate-300 hover:text-white border border-slate-700 cursor-pointer flex items-center gap-1.5">
+            <i data-lucide="layout-grid" class="w-4 h-4 text-[#D4AF37]"></i>
+            <span>مدیریت صفحه اصلی & دسته‌بندی‌ها (CMS)</span>
           </button>
           <button type="button" id="apanel-tab-btn-content" onclick="switchAdminPanelTab('content')" class="px-3.5 py-2 rounded-2xl text-xs font-bold transition-all bg-slate-800 text-slate-300 hover:text-white border border-slate-700 cursor-pointer flex items-center gap-1.5">
             <i data-lucide="play-circle" class="w-4 h-4 text-[#D4AF37]"></i>
@@ -2995,6 +3005,71 @@
                 <!-- Dynamically populated via JS -->
               </tbody>
             </table>
+          </div>
+        </div>
+      </div>
+
+      <!-- ADMIN TAB PANE: HOMEPAGE CMS & CATEGORIES MANAGEMENT -->
+      <div id="apanel-pane-cms" class="hidden space-y-6">
+        <!-- HERO & BANNER CONTENT MANAGEMENT CARD -->
+        <div class="bg-[#0F172A] border border-[#D4AF37]/40 rounded-3xl p-6 shadow-2xl space-y-6 text-right text-white">
+          <div class="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 border-b border-slate-800 pb-4">
+            <div>
+              <span class="text-[10px] font-bold text-[#D4AF37] bg-[#D4AF37]/10 px-2.5 py-1 rounded-full border border-[#D4AF37]/30">
+                🖼️ مدیریت بنر و متن‌های صفحه اصلی (Hero CMS)
+              </span>
+              <h3 class="text-lg font-black text-white mt-1">ویرایش محتوای هدر و بنرهای تبلیغاتی صفحه اصلی</h3>
+              <p class="text-xs text-slate-300">تغییر عنوان اصلی، تیتر فرعی، عکس پس‌زمینه و بنرهای ویژه صفحه اول سایت</p>
+            </div>
+            <button type="button" onclick="saveAdminBannerCMS()" class="bg-[#D4AF37] hover:bg-[#C5A059] text-[#0F251A] font-black px-5 py-2 rounded-2xl text-xs transition-all shadow-lg flex items-center gap-2 cursor-pointer">
+              <i data-lucide="save" class="w-4 h-4"></i>
+              <span>ذخیره تغییرات بنر اصلی</span>
+            </button>
+          </div>
+
+          <form id="form-admin-banner-cms-index" onsubmit="event.preventDefault(); saveAdminBannerCMS();" class="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div class="space-y-1.5">
+              <label class="block text-xs font-bold text-slate-300">تیتر اصلی هدر (Hero Title):</label>
+              <input type="text" id="cms-hero-title-idx" class="w-full bg-[#1E293B] border border-[#D4AF37]/30 rounded-2xl px-4 py-2.5 text-xs text-white focus:outline-none focus:border-[#D4AF37]" placeholder="پلتفرم VIP خدمات و تشریفات عروسی یزد">
+            </div>
+
+            <div class="space-y-1.5">
+              <label class="block text-xs font-bold text-slate-300">توضیح فرعی هدر (Hero Subtitle):</label>
+              <input type="text" id="cms-hero-subtitle-idx" class="w-full bg-[#1E293B] border border-[#D4AF37]/30 rounded-2xl px-4 py-2.5 text-xs text-white focus:outline-none focus:border-[#D4AF37]" placeholder="رزرو مستقیم بهترین باغ‌تالارها، آتلیه‌ها و مزون‌ها با تضمین قیمت">
+            </div>
+
+            <div class="space-y-1.5">
+              <label class="block text-xs font-bold text-slate-300">لینک کاور/ویدئوی هدر (Background Media URL):</label>
+              <input type="text" id="cms-hero-bg-idx" class="w-full bg-[#1E293B] border border-[#D4AF37]/30 rounded-2xl px-4 py-2.5 text-xs text-white focus:outline-none focus:border-[#D4AF37]" placeholder="https://images.unsplash.com/photo-1519741497674-611481863552">
+            </div>
+
+            <div class="space-y-1.5">
+              <label class="block text-xs font-bold text-slate-300">متن نشان ویژه هدر (Announcement Badge):</label>
+              <input type="text" id="cms-hero-badge-idx" class="w-full bg-[#1E293B] border border-[#D4AF37]/30 rounded-2xl px-4 py-2.5 text-xs text-white focus:outline-none focus:border-[#D4AF37]" placeholder="👑 جامع‌ترین سامانه تشریفات و برنامه‌ریزی عروسی استان یزد">
+            </div>
+          </form>
+        </div>
+
+        <!-- MAIN HOMEPAGE CATEGORIES CMS GRID MANAGEMENT -->
+        <div class="bg-[#0F172A] border border-[#D4AF37]/40 rounded-3xl p-6 shadow-2xl space-y-6 text-right text-white">
+          <div class="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 border-b border-slate-800 pb-4">
+            <div>
+              <span class="text-[10px] font-bold text-[#D4AF37] bg-[#D4AF37]/10 px-2.5 py-1 rounded-full border border-[#D4AF37]/30">
+                🏛️ گرید بنتو دسته‌بندی‌های صفحه اصلی
+              </span>
+              <h3 class="text-lg font-black text-white mt-1">مدیریت کارت‌ها و کاور دسته‌بندی‌های صفحه اصلی (Categories CRUD)</h3>
+              <p class="text-xs text-slate-300">ویرایش عناوین، تصویر کاور، تعداد مجموعه‌های فعال، ترتیب و زیرگروه‌های تخصصی</p>
+            </div>
+
+            <button type="button" onclick="openAdminCategoryModal()" class="bg-[#D4AF37] hover:bg-[#C5A059] text-[#0F251A] font-black px-4 py-2 rounded-2xl text-xs transition-all shadow-lg flex items-center gap-1.5 cursor-pointer">
+              <i data-lucide="plus-circle" class="w-4 h-4"></i>
+              <span>افزودن دسته‌بندی جدید</span>
+            </button>
+          </div>
+
+          <!-- CATEGORIES LIST TABLE & BENTO CARDS PREVIEW -->
+          <div id="admin-homepage-categories-list-idx" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+            <!-- Populated dynamically via script.js -->
           </div>
         </div>
       </div>
@@ -8852,6 +8927,87 @@
         </div>
       </div>
 
+    </div>
+  </div>
+
+  <!-- CATEGORY CRUD MODAL (#modal-admin-category-crud) -->
+  <div id="modal-admin-category-crud" class="fixed inset-0 z-[100000] hidden flex items-center justify-center p-4 bg-black/80 backdrop-blur-md">
+    <div class="bg-[#0E121C] border border-[#C5A059] rounded-3xl max-w-2xl w-full p-6 sm:p-8 space-y-6 text-right text-white shadow-2xl relative max-h-[90vh] overflow-y-auto custom-scrollbar">
+      <button type="button" onclick="closeAdminCategoryModal()" class="absolute top-5 left-5 text-slate-400 hover:text-white bg-[#161C2B] p-2 rounded-full border border-[#C5A059]/30 transition-all cursor-pointer">
+        <i data-lucide="x" class="w-5 h-5"></i>
+      </button>
+
+      <div class="border-b border-[#C5A059]/30 pb-4">
+        <span class="text-[10px] font-bold text-[#D4AF37] bg-[#D4AF37]/10 px-2.5 py-1 rounded-full border border-[#D4AF37]/30">
+          🏛️ سیستم مدیریت دسته‌بندی
+        </span>
+        <h3 id="modal-category-title-text-idx" class="text-lg font-black text-white mt-2">افزودن / ویرایش دسته‌بندی اصلی</h3>
+        <p class="text-xs text-slate-300">مشخصات کارت گرید صفحه اصلی و زیرگروه‌های تخصصی آن را وارد نمایید.</p>
+      </div>
+
+      <form id="form-admin-category-idx" onsubmit="event.preventDefault(); saveAdminCategory();" class="space-y-4">
+        <input type="hidden" id="cat-crud-id-idx">
+
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+          <div class="space-y-1.5">
+            <label class="block text-xs font-bold text-slate-300">کلید یکتا (Key):</label>
+            <input type="text" id="cat-crud-key-idx" required class="w-full bg-[#161C2B] border border-[#C5A059]/30 rounded-2xl px-4 py-2.5 text-xs text-white focus:outline-none focus:border-[#D4AF37]" placeholder="مثلا: venue_catering">
+          </div>
+
+          <div class="space-y-1.5">
+            <label class="block text-xs font-bold text-slate-300">عنوان دسته‌بندی:</label>
+            <input type="text" id="cat-crud-title-idx" required class="w-full bg-[#161C2B] border border-[#C5A059]/30 rounded-2xl px-4 py-2.5 text-xs text-white focus:outline-none focus:border-[#D4AF37]" placeholder="مثلا: مکان، تشریفات و پذیرایی">
+          </div>
+        </div>
+
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+          <div class="space-y-1.5">
+            <label class="block text-xs font-bold text-slate-300">نشان تعداد مجموعه‌ها (Badge):</label>
+            <input type="text" id="cat-crud-badge-idx" class="w-full bg-[#161C2B] border border-[#C5A059]/30 rounded-2xl px-4 py-2.5 text-xs text-white focus:outline-none focus:border-[#D4AF37]" placeholder="مثلا: ۴۵ مجموعه فعال">
+          </div>
+
+          <div class="space-y-1.5">
+            <label class="block text-xs font-bold text-slate-300">اندازه کارت در گرید (Grid Span):</label>
+            <select id="cat-crud-colspan-idx" class="w-full bg-[#161C2B] border border-[#C5A059]/30 rounded-2xl px-4 py-2.5 text-xs text-white focus:outline-none focus:border-[#D4AF37]">
+              <option value="md:col-span-7">عریض برتر (۷ ستون)</option>
+              <option value="md:col-span-5">متوسط برتر (۵ ستون)</option>
+              <option value="md:col-span-4">استاندارد (۴ ستون)</option>
+              <option value="md:col-span-6">نیم‌صفحه (۶ ستون)</option>
+              <option value="md:col-span-12">کامل (۱۲ ستون)</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="space-y-1.5">
+          <label class="block text-xs font-bold text-slate-300">لینک تصویر کاور (Unsplash/Direct Image URL):</label>
+          <input type="text" id="cat-crud-image-idx" required class="w-full bg-[#161C2B] border border-[#C5A059]/30 rounded-2xl px-4 py-2.5 text-xs text-white focus:outline-none focus:border-[#D4AF37]" placeholder="https://images.unsplash.com/photo-...">
+        </div>
+
+        <div class="space-y-1.5">
+          <label class="block text-xs font-bold text-slate-300">توضیحات کوتاه (Subtitle):</label>
+          <input type="text" id="cat-crud-desc-idx" class="w-full bg-[#161C2B] border border-[#C5A059]/30 rounded-2xl px-4 py-2.5 text-xs text-white focus:outline-none focus:border-[#D4AF37]" placeholder="باغ‌تالار، تالار تشریفاتی، کترینگ و شام عروسی">
+        </div>
+
+        <div class="flex items-center justify-between bg-[#161C2B] p-3.5 rounded-2xl border border-[#C5A059]/20">
+          <div class="space-y-0.5">
+            <span class="text-xs font-bold text-white block">وضعیت نمایش در صفحه اصلی</span>
+            <span class="text-[10px] text-slate-400 block">در صورت غیرفعال بودن، کارت در گرید نمایش داده نخواهد شد.</span>
+          </div>
+          <label class="relative inline-flex items-center cursor-pointer">
+            <input type="checkbox" id="cat-crud-active-idx" checked class="sr-only peer">
+            <div class="w-11 h-6 bg-slate-700 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:right-[2px] after:bg-white after:border-slate-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-[#D4AF37]"></div>
+          </label>
+        </div>
+
+        <div class="flex items-center justify-end gap-3 pt-4 border-t border-[#C5A059]/30">
+          <button type="button" onclick="closeAdminCategoryModal()" class="px-5 py-2.5 rounded-2xl text-xs font-bold bg-[#161C2B] text-slate-300 hover:text-white border border-slate-700 cursor-pointer">
+            انصراف
+          </button>
+          <button type="submit" class="px-6 py-2.5 rounded-2xl text-xs font-black bg-[#D4AF37] hover:bg-[#C5A059] text-[#07090E] shadow-lg transition-all cursor-pointer">
+            ذخیره دسته‌بندی
+          </button>
+        </div>
+      </form>
     </div>
   </div>
 
