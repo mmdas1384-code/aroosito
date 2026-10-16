@@ -4283,6 +4283,9 @@ if (document.readyState === "loading") {
                   <span>📍 ${localTag}</span>
                   <span class="text-[#D4AF37] font-black text-xs">${v.priceRange || 'استعلام قیمت'}</span>
                 </div>
+                <div class="text-[10px] text-emerald-400 font-bold flex items-center gap-1">
+                  <span>🟢 پاسخگویی سریع (زیر ۱۵ دقیقه)</span>
+                </div>
               </div>
             </div>
 
