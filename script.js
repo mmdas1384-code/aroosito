@@ -4161,9 +4161,10 @@ if (document.readyState === "loading") {
         grid.className = "grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5";
       }
 
-      list.forEach(v => {
+      list.forEach((v, index) => {
         const card = document.createElement('div');
         const isComparing = selectedComparisonVendorIds.includes(v.id);
+        const isHeroVendor = (index === 0 && directoryViewMode === 'grid');
 
         const borderClasses = isComparing
           ? "border-2 border-[#D4AF37] shadow-[0_0_20px_rgba(212,175,55,0.4)]"
@@ -4171,6 +4172,8 @@ if (document.readyState === "loading") {
 
         if (directoryViewMode === 'list') {
           card.className = `minimal-vendor-card bg-[#0F172A]/90 backdrop-blur-md ${borderClasses} rounded-3xl overflow-hidden shadow-xl transition-all duration-300 flex flex-col md:flex-row group cursor-pointer relative`;
+        } else if (isHeroVendor) {
+          card.className = `minimal-vendor-card col-span-1 sm:col-span-2 bg-[#0F172A]/95 backdrop-blur-md ${borderClasses} rounded-3xl overflow-hidden shadow-2xl transition-all duration-300 flex flex-col justify-between group cursor-pointer relative border-[#D4AF37]/60`;
         } else {
           card.className = `minimal-vendor-card bg-[#0F172A]/90 backdrop-blur-md ${borderClasses} rounded-3xl overflow-hidden shadow-xl transition-all duration-300 flex flex-col justify-between group cursor-pointer relative`;
         }
