@@ -1924,6 +1924,7 @@ if (document.readyState === "loading") {
 
       showToast(`⚡ لینک اختصاصی و QR کدهای شخصی برای ${guestListState.length} میهمان تولید شد.`, 'success');
     }
+    window.generateBulkGuestInvitationLinks = generateBulkGuestInvitationLinks;
 
     function sendBulkRsvpReminders() {
       const pendingGuests = guestListState.filter(g => g.status === 'PENDING' && g.phone);
@@ -1940,6 +1941,7 @@ if (document.readyState === "loading") {
 
       showToast(`✨ ارسال یادآور برای ${pendingGuests.length} میهمان در واتس‌اپ انجام شد`, 'success');
     }
+    window.sendBulkRsvpReminders = sendBulkRsvpReminders;
 
     function closeGuestModal() {
       document.getElementById("guest-modal").classList.add("hidden");
@@ -12955,6 +12957,7 @@ window.shareReceiptWhatsApp = function() {
       window.open(`https://wa.me/?text=${encodedMsg}`, '_blank');
       showToast('مودبورد جهت ارسال آماده گردید ✨', 'success');
     }
+    window.shareMoodboardToVendor = shareMoodboardToVendor;
 
     function shareMoodboardLink() {
       const link = 'https://aroosito.com/moodboard/shared-couple-102';
