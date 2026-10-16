@@ -28,11 +28,11 @@ html[data-theme="light"] {
   --bg-card: #FFFFFF !important;         /* پس‌زمینه کارت‌ها و باکس‌ها (سفید خالص) */
   --bg-hero: #0F251A !important;         /* پس‌زمینه بنر اصلی (سبز زمردی اصیل یزد) */
   --text-primary: #0F172A !important;    /* رنگ متن‌های اصلی (سرمه‌ای تیره پرکنتراست) */
-  --text-secondary: #475569 !important;  /* رنگ متن‌های فرعی (خاکستری تیره) */
+  --text-secondary: #1E293B !important;  /* رنگ متن‌های فرعی (کنتراست بالا و خوانا) */
   --accent-gold: #B8860B !important;     /* رنگ طلایی گرم شامپاینی */
-  --border-color: rgba(184, 134, 11, 0.28) !important; /* حاشیه ظریف طلایی */
+  --border-color: rgba(184, 134, 11, 0.35) !important; /* حاشیه ظریف طلایی */
   --bg-input: #F8FAFC !important;
-  --card-shadow: 0 12px 32px rgba(15, 23, 42, 0.06), 0 2px 8px rgba(184, 134, 11, 0.08) !important;
+  --card-shadow: 0 12px 32px rgba(15, 23, 42, 0.08), 0 2px 8px rgba(184, 134, 11, 0.12) !important;
 
   /* Aliases */
   --accent-main: var(--accent-gold) !important;

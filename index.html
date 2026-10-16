@@ -8167,6 +8167,38 @@
     </div>
   </div>
 
+  <!-- VERTICAL 9:16 REELS VIDEO PLAYER MODAL (#modal-reels-player) -->
+  <div id="modal-reels-player" class="hidden fixed inset-0 bg-black/90 backdrop-blur-xl z-[9999999] flex items-center justify-center p-2 sm:p-4" onclick="if(event.target === this) closeReelsPlayer()">
+    <div class="relative w-full max-w-sm aspect-[9/16] bg-black rounded-3xl overflow-hidden border-2 border-[#D4AF37]/80 shadow-[0_0_50px_rgba(212,175,55,0.4)] flex flex-col justify-between">
+      <!-- Video Element -->
+      <video id="reels-video-element" class="w-full h-full object-cover" autoplay loop playsinline muted></video>
+
+      <!-- Top Overlay Header -->
+      <div class="absolute top-0 inset-x-0 p-4 bg-gradient-to-b from-black/80 via-black/40 to-transparent flex items-center justify-between text-white z-10">
+        <div class="flex items-center gap-2">
+          <img id="reels-vendor-logo" src="https://images.unsplash.com/photo-1519167758481-83f550bb49b3?w=100" class="w-9 h-9 rounded-full border border-[#D4AF37] object-cover">
+          <div>
+            <h4 id="reels-vendor-name" class="text-xs font-black text-white">نام تامین‌کننده</h4>
+            <span class="text-[10px] text-amber-300 font-bold flex items-center gap-1">🎥 ریلز نمونه‌کار یزد</span>
+          </div>
+        </div>
+        <button type="button" onclick="closeReelsPlayer()" class="w-8 h-8 rounded-full bg-black/60 border border-white/20 text-white flex items-center justify-center hover:bg-rose-600 transition-colors cursor-pointer">
+          ✕
+        </button>
+      </div>
+
+      <!-- Bottom Floating Overlay Actions -->
+      <div class="absolute bottom-0 inset-x-0 p-4 bg-gradient-to-t from-black/90 via-black/50 to-transparent flex items-center justify-between z-10">
+        <button type="button" onclick="toggleReelsMute()" id="reels-mute-btn" class="bg-black/60 border border-[#D4AF37]/50 text-amber-200 px-3 py-1.5 rounded-full text-xs font-bold flex items-center gap-1">
+          🔊 صدا
+        </button>
+        <button type="button" id="reels-inquire-btn" onclick="openInquiryModalFromReels()" class="gold-shimmer-btn bg-gradient-to-r from-[#D4AF37] to-[#F3E5AB] text-[#0F251A] text-xs font-black px-4 py-2 rounded-xl shadow-lg hover:scale-105 transition-transform cursor-pointer">
+          ✨ استعلام قیمت زنده
+        </button>
+      </div>
+    </div>
+  </div>
+
   <!-- QUICK VIEW MODAL / DRAWER (#quick-view-modal) -->
   <div id="quick-view-modal" class="quick-view-modal hidden fixed inset-0 bg-black/80 backdrop-blur-md z-[999999] flex items-center justify-center p-3 sm:p-5 transition-all animate-fadeIn" onclick="if(event.target === this) closeQuickViewModal()">
     <div class="bg-[#0F172A] text-white rounded-3xl shadow-2xl max-w-xl w-full overflow-hidden border border-[#D4AF37]/60 flex flex-col animate-scaleUp relative max-h-[90vh]">

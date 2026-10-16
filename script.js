@@ -13498,6 +13498,156 @@ window.closeVendorInvoiceBuilderModal = function() {
   }
 };
 
+/* SMART PWA INSTALL PROMPT BANNER ENGINE */
+let deferredPwaPrompt = null;
+
+window.addEventListener('beforeinstallprompt', (e) => {
+  e.preventDefault();
+  deferredPwaPrompt = e;
+  const pwaBanner = document.getElementById('pwa-install-banner');
+  if (pwaBanner) pwaBanner.classList.remove('hidden');
+});
+
+window.installPwaApp = function() {
+  if (deferredPwaPrompt) {
+    deferredPwaPrompt.prompt();
+    deferredPwaPrompt.userChoice.then((choice) => {
+      if (choice.outcome === 'accepted') {
+        if (typeof showToast === 'function') showToast('📲 اپلیکیشن عروسی تو روی گوشی شما نصب شد ✨', 'success');
+      }
+      deferredPwaPrompt = null;
+      const pwaBanner = document.getElementById('pwa-install-banner');
+      if (pwaBanner) pwaBanner.classList.add('hidden');
+    });
+  } else {
+    if (typeof showToast === 'function') showToast('📲 گزینه "افزودن به صفحه اصلی" را از منوی مرورگر کلیک کنید.', 'info');
+  }
+};
+
+window.dismissPwaBanner = function() {
+  const pwaBanner = document.getElementById('pwa-install-banner');
+  if (pwaBanner) pwaBanner.classList.add('hidden');
+};
+
+/* ICALENDAR (.ICS) EVENT GENERATOR */
+window.downloadCalendarIcs = function(title, dateStr, location, description) {
+  const eventTitle = title || 'مراسم عروسی لوکس یزد';
+  const eventLoc = location || 'استان یزد';
+  const eventDesc = description || 'برنامه‌ریزی شده در پلتفرم عروسی تو';
+
+  const icsContent = [
+    'BEGIN:VCALENDAR',
+    'VERSION:2.0',
+    'PRODID:-//Aroosi To Yazd Platform//NONSGML v1.0//FA',
+    'CALSCALE:GREGORIAN',
+    'BEGIN:VEVENT',
+    `SUMMARY:${eventTitle}`,
+    `DESCRIPTION:${eventDesc}`,
+    `LOCATION:${eventLoc}`,
+    'DTSTART:20251120T180000Z',
+    'DTEND:20251120T230000Z',
+    'STATUS:CONFIRMED',
+    'END:VEVENT',
+    'END:VCALENDAR'
+  ].join('\r\n');
+
+  const blob = new Blob([icsContent], { type: 'text/calendar;charset=utf-8' });
+  const link = document.createElement('a');
+  link.href = window.URL.createObjectURL(blob);
+  link.setAttribute('download', `${eventTitle.replace(/\s+/g, '_')}.ics`);
+  document.body.appendChild(link);
+  link.click();
+  document.body.removeChild(link);
+
+  if (typeof showToast === 'function') {
+    showToast('📅 فایل رویداد تقویم (.ics) دانلود شد.', 'success');
+  }
+};
+
+/* SIMULATED SMS & WHATSAPP WEBHOOK TRIGGER ENGINE */
+window.triggerSmsNotification = function(phone, msgType, details = {}) {
+  const targetPhone = phone || '09130000000';
+  const timestamp = new Date().toLocaleTimeString('fa-IR');
+
+  let bodyMsg = '';
+  switch(msgType) {
+    case 'INQUIRY_RECEIVED':
+      bodyMsg = `📩 عروسی تو: استعلام جدید برای ${details.vendorName || 'تامین‌کننده'} ثبت شد.\nکد پیگیری: ${details.inquiryId || 'YAZD-101'}\nتاریخ: ${details.eventDate || '۱۴۰۳/۰۸/۲۰'}`;
+      break;
+    case 'PREINVOICE_ISSUED':
+      bodyMsg = `🧾 عروسی تو: پیش‌فاکتور جدید به مبلغ ${details.totalAmount || '۰'} تومان صادر گردید.\nکد: ${details.invoiceId || 'INV-101'}`;
+      break;
+    default:
+      bodyMsg = `✨ عروسی تو: بروزرسانی جدید در سفارش شما ثبت شد.`;
+  }
+
+  // Store in LocalStorage logs
+  try {
+    const existingLogs = JSON.parse(localStorage.getItem('aroosi_sms_logs') || '[]');
+    existingLogs.unshift({ id: Date.now(), phone: targetPhone, msg: bodyMsg, time: timestamp });
+    localStorage.setItem('aroosi_sms_logs', JSON.stringify(existingLogs.slice(0, 20)));
+  } catch (e) {
+    console.error('Error logging SMS:', e);
+  }
+
+  // Show Toast
+  if (typeof showToast === 'function') {
+    showToast(`📱 پیامک اطلاع‌رسانی به ${targetPhone} ارسال گردید.`, 'success');
+  }
+};
+
+/* REELS 9:16 VERTICAL VIDEO PLAYER HANDLERS */
+let currentReelsVendor = null;
+
+window.openReelsPlayer = function(vendorId, videoUrl) {
+  let vId = vendorId;
+  if (typeof vendorId === 'string' && !isNaN(parseInt(vendorId))) vId = parseInt(vendorId);
+
+  const vendor = (typeof vendors !== 'undefined' && Array.isArray(vendors))
+    ? (vendors.find(v => v.id === vId) || vendors[0])
+    : null;
+
+  currentReelsVendor = vendor;
+  const modal = document.getElementById('modal-reels-player');
+  const videoEl = document.getElementById('reels-video-element');
+  const logoEl = document.getElementById('reels-vendor-logo');
+  const nameEl = document.getElementById('reels-vendor-name');
+
+  if (!modal || !videoEl) return;
+
+  const src = videoUrl || (vendor ? vendor.videoTeaser : '') || 'https://assets.mixkit.co/videos/preview/mixkit-wedding-couple-walking-in-a-park-41315-large.mp4';
+  videoEl.src = src;
+  if (logoEl && vendor) logoEl.src = vendor.image || logoEl.src;
+  if (nameEl && vendor) nameEl.innerText = vendor.name;
+
+  modal.classList.remove('hidden');
+  videoEl.muted = false;
+  videoEl.play().catch(() => { videoEl.muted = true; videoEl.play(); });
+};
+
+window.closeReelsPlayer = function() {
+  const modal = document.getElementById('modal-reels-player');
+  const videoEl = document.getElementById('reels-video-element');
+  if (videoEl) { videoEl.pause(); videoEl.src = ''; }
+  if (modal) modal.classList.add('hidden');
+};
+
+window.toggleReelsMute = function() {
+  const videoEl = document.getElementById('reels-video-element');
+  const btn = document.getElementById('reels-mute-btn');
+  if (!videoEl) return;
+  videoEl.muted = !videoEl.muted;
+  if (btn) btn.innerText = videoEl.muted ? '🔇 بی‌صدا' : '🔊 صدا';
+};
+
+window.openInquiryModalFromReels = function() {
+  const vendor = currentReelsVendor;
+  closeReelsPlayer();
+  if (vendor && typeof openInquiryModal === 'function') {
+    openInquiryModal(vendor.id, vendor.name);
+  }
+};
+
 /* ==========================================================================
    ATMOSPHERE LIGHTING SWITCHER (Day / Night Moods)
    ========================================================================== */
