@@ -1224,7 +1224,7 @@ if (document.readyState === "loading") {
     let selectedProvince = 'یزد';
     let selectedYazdDistrict = 'all';
 
-    let vendors = [
+    const DEFAULT_MOCK_VENDORS = [
       {
         id: 1,
         name: "هتل باغ و تشریفات مشیرالممالک یزد",
@@ -1486,6 +1486,26 @@ if (document.readyState === "loading") {
         ]
       }
     ];
+
+    window.getCentralizedVendors = function() {
+      const saved = localStorage.getItem('aroosi_vendors_db');
+      if (!saved) {
+        localStorage.setItem('aroosi_vendors_db', JSON.stringify(DEFAULT_MOCK_VENDORS));
+        return DEFAULT_MOCK_VENDORS;
+      }
+      try {
+        return JSON.parse(saved);
+      } catch (e) {
+        return DEFAULT_MOCK_VENDORS;
+      }
+    };
+
+    window.saveCentralizedVendors = function(vendorList) {
+      localStorage.setItem('aroosi_vendors_db', JSON.stringify(vendorList));
+      vendors = vendorList;
+    };
+
+    let vendors = window.getCentralizedVendors();
 
     let galleryPhotos = [
       "https://images.unsplash.com/photo-1519167758481-83f550bb49b3?auto=format&fit=crop&w=800&q=80",
@@ -2128,6 +2148,7 @@ if (document.readyState === "loading") {
           if (typeof renderSidebarCategoryCheckboxes === 'function') renderSidebarCategoryCheckboxes();
           if (typeof renderMultiCategoryPills === 'function') renderMultiCategoryPills();
           if (typeof filterVendors === 'function') filterVendors();
+          if (typeof restoreDirectoryState === 'function') restoreDirectoryState();
         }
       }
 
@@ -6950,7 +6971,44 @@ if (document.readyState === "loading") {
       if (typeof vendorId === 'string' && !isNaN(parseInt(vendorId))) {
         vId = parseInt(vendorId);
       }
+
+      // Save directory state & scroll position before navigating
+      try {
+        const searchInput = document.getElementById('directory-instant-search');
+        const state = {
+          scrollPosition: window.scrollY || 0,
+          searchQuery: searchInput ? searchInput.value : '',
+          activeCategory: window.currentSelectedCategory || 'all'
+        };
+        sessionStorage.setItem('aroosi_directory_state', JSON.stringify(state));
+      } catch (e) {}
+
       window.location.href = `vendor-detail.html?id=${vId}`;
+    };
+
+    window.restoreDirectoryState = function restoreDirectoryState() {
+      try {
+        const saved = sessionStorage.getItem('aroosi_directory_state');
+        if (!saved) return;
+        const state = JSON.parse(saved);
+        if (state.searchQuery) {
+          const searchInput = document.getElementById('directory-instant-search');
+          if (searchInput) {
+            searchInput.value = state.searchQuery;
+            if (typeof filterVendors === 'function') filterVendors();
+          }
+        }
+        if (state.activeCategory && state.activeCategory !== 'all') {
+          if (typeof filterVendorsByCategoryTitle === 'function') {
+            filterVendorsByCategoryTitle(state.activeCategory);
+          }
+        }
+        if (state.scrollPosition) {
+          setTimeout(() => {
+            window.scrollTo({ top: state.scrollPosition, behavior: 'smooth' });
+          }, 250);
+        }
+      } catch (e) {}
     };
 
     window.closeVendorDetailModal = function closeVendorDetailModal() {};
@@ -14631,9 +14689,22 @@ window.open360TourModal = function(vendorId) {
             <i data-lucide="x" class="w-4 h-4"></i>
           </button>
         </div>
-        <div class="relative w-full h-[350px] sm:h-[450px] rounded-2xl overflow-hidden border border-[#C5A059]/30 bg-black flex items-center justify-center">
+        <div class="relative w-full h-[350px] sm:h-[450px] rounded-2xl overflow-hidden border border-[#C5A059]/30 bg-black flex items-center justify-center group/pano">
           <img id="m360-pano-container" src="https://images.unsplash.com/photo-1519167758481-83f550bb49b3?w=1600" class="w-full h-full object-cover transition-transform duration-500 ease-out scale-110" alt="360 Panorama">
-          <div class="absolute bottom-4 left-1/2 -translate-x-1/2 flex items-center gap-3 bg-[#07090E]/80 backdrop-blur-md border border-[#D4AF37]/40 px-4 py-2 rounded-2xl shadow-xl z-20">
+
+          <!-- INTERACTIVE PANORAMA HOTSPOTS -->
+          <div class="absolute inset-0 pointer-events-none flex items-center justify-around px-8 sm:px-16 z-10">
+            <button type="button" onclick="showHotspotDetails('جایگاه سفره عقد سنتی', 'طراحی اختصاصی با ترمه و گل‌آرایی طبیعی یزد', '۱۵,۰۰۰,۰۰۰ تومان')" class="pointer-events-auto bg-[#07090E]/85 backdrop-blur-md border border-[#D4AF37] text-amber-200 px-3 py-1.5 rounded-full text-xs font-bold hover:scale-110 transition-transform shadow-2xl flex items-center gap-1.5 cursor-pointer">
+              <span class="w-2 h-2 rounded-full bg-[#D4AF37] animate-ping"></span>
+              <span>✨ جایگاه سفره عقد</span>
+            </button>
+            <button type="button" onclick="showHotspotDetails('استیج رقص و نورپردازی VIP', 'استیج LED هلندی با نورپردازی داینامیک', '۲۵,۰۰۰,۰۰۰ تومان')" class="pointer-events-auto bg-[#07090E]/85 backdrop-blur-md border border-[#D4AF37] text-amber-200 px-3 py-1.5 rounded-full text-xs font-bold hover:scale-110 transition-transform shadow-2xl flex items-center gap-1.5 cursor-pointer">
+              <span class="w-2 h-2 rounded-full bg-emerald-400 animate-ping"></span>
+              <span>🎵 استیج اصلی</span>
+            </button>
+          </div>
+
+          <div class="absolute bottom-4 left-1/2 -translate-x-1/2 flex items-center gap-3 bg-[#07090E]/90 backdrop-blur-md border border-[#D4AF37]/40 px-4 py-2 rounded-2xl shadow-2xl z-20">
             <button type="button" onclick="rotate360Panorama('left')" class="p-2 rounded-xl bg-[#141A28] text-amber-200 hover:bg-[#1E293B] cursor-pointer">
               <i data-lucide="chevron-right" class="w-5 h-5"></i>
             </button>
