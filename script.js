@@ -7774,6 +7774,8 @@ if (document.readyState === "loading") {
 
       thread.lastMessage = `استعلام قیمت ارسال گردید (${date})`;
       chatState.activeThreadId = thread.id;
+      window.currentReceiptThreadId = thread.id;
+      window.currentReceiptVendorId = vendor.id;
 
       renderInquiries();
 
@@ -7871,6 +7873,53 @@ window.shareReceiptWhatsApp = function() {
   const encodedMsg = encodeURIComponent(textMsg);
   window.open(`https://wa.me/${cleanPhone}?text=${encodedMsg}`, '_blank');
   if (typeof showToast === 'function') showToast('در حال انتقال به واتس‌اپ...', 'info');
+};
+
+window.goToInquiryChatThread = function(vendorId, threadId) {
+  const targetThreadId = threadId || window.currentReceiptThreadId;
+  const targetVendorId = vendorId || window.currentReceiptVendorId;
+
+  if (typeof chatState !== 'undefined' && chatState.threads) {
+    let target = null;
+    if (targetThreadId) {
+      target = chatState.threads.find(t => t.id === targetThreadId);
+    }
+    if (!target && targetVendorId) {
+      target = chatState.threads.find(t => t.vendorId == targetVendorId);
+    }
+    if (target) {
+      chatState.activeThreadId = target.id;
+      try {
+        localStorage.setItem('aroosi_chat_state', JSON.stringify(chatState));
+      } catch (e) {}
+    }
+  }
+
+  // 1. If on standalone vendor profile page, navigate to index.html?tab=messages
+  if (window.location.pathname.includes('vendor-detail.html')) {
+    window.location.href = 'index.html?tab=messages';
+    return;
+  }
+
+  // 2. Cleanly close inquiry modal & receipt container
+  if (typeof closeInquiryModal === 'function') closeInquiryModal();
+
+  // 3. Switch active platform tab directly to Direct Chat
+  if (typeof switchTab === 'function') switchTab('messages');
+
+  // 4. Render active chat thread and threads list
+  if (typeof renderChatThreadsList === 'function') renderChatThreadsList();
+  if (typeof renderChatActiveThread === 'function') renderChatActiveThread();
+
+  // 5. Scroll smoothly to the bottom of active chat stream
+  setTimeout(() => {
+    const chatStream = document.getElementById('chat-messages-stream-container') ||
+                       document.getElementById('chat-active-messages') ||
+                       document.getElementById('chat-messages-container');
+    if (chatStream) {
+      chatStream.scrollTo({ top: chatStream.scrollHeight, behavior: 'smooth' });
+    }
+  }, 250);
 };
 
     function openRsvpModal() {
