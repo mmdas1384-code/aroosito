@@ -6972,13 +6972,17 @@ if (document.readyState === "loading") {
         vId = parseInt(vendorId);
       }
 
-      // Save directory state & scroll position before navigating
+      // Save complete directory state & scroll position before navigating
       try {
         const searchInput = document.getElementById('directory-instant-search');
+        const guestSlider = document.getElementById('directory-guest-price-slider');
         const state = {
           scrollPosition: window.scrollY || 0,
           searchQuery: searchInput ? searchInput.value : '',
-          activeCategory: window.currentSelectedCategory || 'all'
+          activeCategory: window.currentSelectedCategory || 'all',
+          selectedDistrict: typeof selectedYazdDistrict !== 'undefined' ? selectedYazdDistrict : 'all',
+          viewMode: window.currentDirectoryViewMode || 'grid',
+          guestCount: guestSlider ? guestSlider.value : 250
         };
         sessionStorage.setItem('aroosi_directory_state', JSON.stringify(state));
       } catch (e) {}
@@ -6991,22 +6995,40 @@ if (document.readyState === "loading") {
         const saved = sessionStorage.getItem('aroosi_directory_state');
         if (!saved) return;
         const state = JSON.parse(saved);
+
+        if (state.viewMode && typeof toggleDirectoryMainView === 'function') {
+          toggleDirectoryMainView(state.viewMode);
+        }
+
         if (state.searchQuery) {
           const searchInput = document.getElementById('directory-instant-search');
           if (searchInput) {
             searchInput.value = state.searchQuery;
-            if (typeof filterVendors === 'function') filterVendors();
           }
         }
+
+        if (state.guestCount) {
+          const guestSlider = document.getElementById('directory-guest-price-slider');
+          if (guestSlider) {
+            guestSlider.value = state.guestCount;
+            if (typeof updateDirectoryGuestPriceEstimator === 'function') {
+              updateDirectoryGuestPriceEstimator(state.guestCount);
+            }
+          }
+        }
+
         if (state.activeCategory && state.activeCategory !== 'all') {
           if (typeof filterVendorsByCategoryTitle === 'function') {
             filterVendorsByCategoryTitle(state.activeCategory);
           }
+        } else if (typeof filterVendors === 'function') {
+          filterVendors();
         }
+
         if (state.scrollPosition) {
           setTimeout(() => {
-            window.scrollTo({ top: state.scrollPosition, behavior: 'smooth' });
-          }, 250);
+            window.scrollTo({ top: state.scrollPosition, behavior: 'auto' });
+          }, 100);
         }
       } catch (e) {}
     };
@@ -7017,7 +7039,8 @@ if (document.readyState === "loading") {
       if (!window.location.pathname.includes('vendor-detail.html')) return;
       const params = new URLSearchParams(window.location.search);
       const vendorId = parseInt(params.get('id')) || 1;
-      const vendor = vendors.find(v => v.id === vendorId) || vendors[0];
+      const currentVendors = typeof window.getCentralizedVendors === 'function' ? window.getCentralizedVendors() : vendors;
+      const vendor = currentVendors.find(v => v.id === vendorId) || currentVendors[0];
       if (!vendor) return;
 
       currentModalVendor = vendor;
