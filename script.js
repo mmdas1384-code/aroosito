@@ -292,7 +292,73 @@ const HOME_VIEW_HTML = `<main id="home-view" class="flex-1 max-w-7xl w-full mx-a
 
         </div>
 
-        <!-- ROW 2 (50% / 50% Split - Equal Symmetric Boxes) -->
+        <!-- ROW 2 (100% Full Width): Magazine & Ideas Hub -->
+        <div id="magazine-section" class="bg-[#0e121c]/90 backdrop-blur-xl border border-[#C5A059]/40 rounded-3xl p-5 sm:p-6 shadow-2xl space-y-4">
+          <div class="flex items-center justify-between border-b border-[#C5A059]/20 pb-3 flex-wrap gap-2">
+            <div class="space-y-0.5 text-right">
+              <span class="text-[11px] font-black text-[#D4AF37] flex items-center gap-1.5 block">
+                <i data-lucide="newspaper" class="w-3.5 h-3.5 text-[#D4AF37]"></i>
+                <span>مجله عروسی تو & ایده‌های الهام‌بخش</span>
+              </span>
+              <h2 class="text-base sm:text-lg font-black text-[#F7F5F0]">آخرین مقالات، ترندها و آلبوم‌های فرمالیته یزد</h2>
+            </div>
+            <button type="button" onclick="switchTab('inspiration')" class="text-xs font-bold text-[#D4AF37] hover:text-amber-300 transition-colors flex items-center gap-1 cursor-pointer">
+              <span>ورود به مجله کامل ➔</span>
+            </button>
+          </div>
+
+          <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+            <!-- Article Card 1 -->
+            <div onclick="switchTab('inspiration')" class="group bg-[#141A28]/80 border border-[#C5A059]/30 hover:border-[#D4AF37] rounded-2xl overflow-hidden transition-all cursor-pointer shadow-lg flex flex-col justify-between">
+              <div class="relative h-40 overflow-hidden">
+                <img src="https://images.unsplash.com/photo-1519741497674-611481863552?auto=format&fit=crop&w=600&q=80" alt="راهنمای عقد" class="w-full h-full object-cover group-hover:scale-108 transition-transform duration-700">
+                <span class="absolute top-2.5 right-2.5 bg-black/70 backdrop-blur-md text-[#D4AF37] border border-[#D4AF37]/40 text-[9.5px] font-bold px-2.5 py-0.5 rounded-full flex items-center gap-1">
+                  <i data-lucide="clock" class="w-3 h-3 text-[#D4AF37]"></i>
+                  <span>زمان مطالعه: ۵ دقیقه</span>
+                </span>
+              </div>
+              <div class="p-3.5 space-y-1.5 text-right">
+                <span class="text-[10px] font-bold text-[#D4AF37] block">راهنمای برگزاری</span>
+                <h3 class="text-xs sm:text-sm font-black text-white group-hover:text-[#D4AF37] transition-colors line-clamp-1">۱۰ نکته طلایی برای رزرو تالارهای سنتی و مدرن یزد</h3>
+                <p class="text-[10.5px] text-slate-300 font-medium line-clamp-2 leading-relaxed">چگونه بهترین باغ‌سراهای یزد را بر اساس ظرفیت مهمانان و بودجه انتخاب کنیم...</p>
+              </div>
+            </div>
+
+            <!-- Article Card 2 -->
+            <div onclick="switchTab('inspiration')" class="group bg-[#141A28]/80 border border-[#C5A059]/30 hover:border-[#D4AF37] rounded-2xl overflow-hidden transition-all cursor-pointer shadow-lg flex flex-col justify-between">
+              <div class="relative h-40 overflow-hidden">
+                <img src="https://images.unsplash.com/photo-1511285560929-80b456fea0bc?auto=format&fit=crop&w=600&q=80" alt="ترند میکاپ" class="w-full h-full object-cover group-hover:scale-108 transition-transform duration-700">
+                <span class="absolute top-2.5 right-2.5 bg-black/70 backdrop-blur-md text-[#D4AF37] border border-[#D4AF37]/40 text-[9.5px] font-bold px-2.5 py-0.5 rounded-full flex items-center gap-1">
+                  <i data-lucide="clock" class="w-3 h-3 text-[#D4AF37]"></i>
+                  <span>زمان مطالعه: ۴ دقیقه</span>
+                </span>
+              </div>
+              <div class="p-3.5 space-y-1.5 text-right">
+                <span class="text-[10px] font-bold text-[#D4AF37] block">زیبایی & استایل</span>
+                <h3 class="text-xs sm:text-sm font-black text-white group-hover:text-[#D4AF37] transition-colors line-clamp-1">ترندهای میکاپ عروس ۲۰۲۵: سبک‌های لایت و اروپایی</h3>
+                <p class="text-[10.5px] text-slate-300 font-medium line-clamp-2 leading-relaxed">معرفی برترین میکاپ آرتیست‌های یزد و استایل‌های محبوب سال جدید...</p>
+              </div>
+            </div>
+
+            <!-- Article Card 3 -->
+            <div onclick="switchTab('inspiration')" class="group bg-[#141A28]/80 border border-[#C5A059]/30 hover:border-[#D4AF37] rounded-2xl overflow-hidden transition-all cursor-pointer shadow-lg flex flex-col justify-between sm:col-span-2 lg:col-span-1">
+              <div class="relative h-40 overflow-hidden">
+                <img src="https://images.unsplash.com/photo-1537633552985-df8429e8048b?auto=format&fit=crop&w=600&q=80" alt="فرمالیته کویر" class="w-full h-full object-cover group-hover:scale-108 transition-transform duration-700">
+                <span class="absolute top-2.5 right-2.5 bg-black/70 backdrop-blur-md text-[#D4AF37] border border-[#D4AF37]/40 text-[9.5px] font-bold px-2.5 py-0.5 rounded-full flex items-center gap-1">
+                  <i data-lucide="clock" class="w-3 h-3 text-[#D4AF37]"></i>
+                  <span>زمان مطالعه: ۶ دقیقه</span>
+                </span>
+              </div>
+              <div class="p-3.5 space-y-1.5 text-right">
+                <span class="text-[10px] font-bold text-[#D4AF37] block">عکاسی & فرمالیته</span>
+                <h3 class="text-xs sm:text-sm font-black text-white group-hover:text-[#D4AF37] transition-colors line-clamp-1">لوکیشن‌های رویایی عکاسی فرمالیته در کویر و بافت تاریخی یزد</h3>
+                <p class="text-[10.5px] text-slate-300 font-medium line-clamp-2 leading-relaxed">ایده‌های خاص تصویربرداری و زاویه‌بندی دوربین برای زوج‌های خاص‌پسند...</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- ROW 3 (50% / 50% Split - Equal Symmetric Boxes) -->
         <div class="grid grid-cols-1 lg:grid-cols-12 gap-6 items-stretch">
 
           <!-- RIGHT BOX (50% width ratio - 6 cols): Testimonials & Couple Reviews -->
@@ -405,7 +471,7 @@ const HOME_VIEW_HTML = `<main id="home-view" class="flex-1 max-w-7xl w-full mx-a
 
         </div>
 
-        <!-- ROW 3 (100% Full Width): Full-Width Partner/Vendor Banner -->
+        <!-- ROW 4 (100% Full Width): Full-Width Partner/Vendor Banner -->
         <div class="bg-gradient-to-r from-[#0E121C] via-[#161C2B] to-[#0E121C] border border-[#D4AF37]/50 rounded-3xl p-6 shadow-2xl relative overflow-hidden flex flex-col md:flex-row items-center justify-between gap-6">
           <div class="absolute -right-12 -bottom-12 w-48 h-48 bg-[#D4AF37]/10 rounded-full blur-2xl pointer-events-none"></div>
 
