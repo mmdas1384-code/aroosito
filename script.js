@@ -13,8 +13,8 @@ const HOME_VIEW_HTML = `<main id="home-view" class="flex-1 max-w-7xl w-full mx-a
         <div class="grid grid-cols-1 lg:grid-cols-12 gap-6 items-stretch relative z-10">
 
           <!-- RIGHT / MAIN ACTION PANEL (7 cols) -->
-          <div class="lg:col-span-7 bg-[#0e121c]/90 backdrop-blur-xl border border-[#C5A059]/40 rounded-3xl p-5 sm:p-6 flex flex-col justify-between space-y-5 text-right shadow-2xl">
-            <div class="space-y-4">
+          <div class="lg:col-span-7 bg-[#0e121c]/90 backdrop-blur-xl border border-[#C5A059]/40 rounded-3xl p-5 sm:p-6 flex flex-col justify-between space-y-4 text-right shadow-2xl">
+            <div class="space-y-3">
               <div class="inline-flex items-center gap-2 bg-[#D4AF37]/15 text-[#D4AF37] border border-[#D4AF37]/40 px-3.5 py-1.5 rounded-full text-xs font-black">
                 <i data-lucide="crown" class="w-4 h-4 text-[#D4AF37]"></i>
                 <span>Aroosi No — پلتفرم جامع و هوشمند عروسی‌های مجلل استان یزد</span>
@@ -50,7 +50,7 @@ const HOME_VIEW_HTML = `<main id="home-view" class="flex-1 max-w-7xl w-full mx-a
             </div>
 
             <!-- QUICK ACCESS ACTION CHIPS (شروع برنامه‌ریزی, دستیار استعلام, توصیه هوشمند AI) -->
-            <div class="grid grid-cols-1 sm:grid-cols-3 gap-2.5 pt-2">
+            <div class="grid grid-cols-1 sm:grid-cols-3 gap-2.5 pt-1">
               <button type="button" onclick="openStartPlanningModal()" class="gold-shimmer-btn text-[#0F251A] font-black py-2.5 px-3 rounded-2xl text-xs transition-all transform hover:scale-[1.02] active:scale-[0.98] cursor-pointer flex items-center justify-center gap-1.5 shadow-md border border-[#D4AF37]">
                 <i data-lucide="sparkles" class="w-4 h-4 text-[#0F251A]"></i>
                 <span>شروع برنامه‌ریزی</span>
@@ -67,20 +67,39 @@ const HOME_VIEW_HTML = `<main id="home-view" class="flex-1 max-w-7xl w-full mx-a
               </button>
             </div>
 
-            <!-- TOP YAZD AREA NAVIGATION PILLS -->
-            <div class="space-y-1.5 pt-2 border-t border-[#C5A059]/20">
-              <span class="text-[11px] font-bold text-slate-300 block">منطقه‌بندی و محله‌های برتر یزد:</span>
-              <div class="flex flex-wrap gap-1.5 text-[10.5px] font-bold">
-                <button type="button" onclick="filterVendorsByArea('صفائیه')" class="bg-[#141A28] hover:bg-[#1E293B] text-amber-200 border border-[#C5A059]/30 px-3 py-1 rounded-xl transition-all cursor-pointer flex items-center gap-1">📍 صفائیه</button>
-                <button type="button" onclick="filterVendorsByArea('بافت تاریخی')" class="bg-[#141A28] hover:bg-[#1E293B] text-amber-200 border border-[#C5A059]/30 px-3 py-1 rounded-xl transition-all cursor-pointer flex items-center gap-1">🏛️ بافت تاریخی</button>
-                <button type="button" onclick="filterVendorsByArea('ملاصدرا')" class="bg-[#141A28] hover:bg-[#1E293B] text-amber-200 border border-[#C5A059]/30 px-3 py-1 rounded-xl transition-all cursor-pointer flex items-center gap-1">✨ ملاصدرا</button>
-                <button type="button" onclick="filterVendorsByArea('میدان اطلسی')" class="bg-[#141A28] hover:bg-[#1E293B] text-amber-200 border border-[#C5A059]/30 px-3 py-1 rounded-xl transition-all cursor-pointer flex items-center gap-1">🌆 میدان اطلسی</button>
+            <!-- COMPACT SLEEK GLASS PLATFORM STATS BAR (REPLACED DISTRICT CHIPS) -->
+            <div class="bg-[#141A28]/90 border border-[#C5A059]/30 rounded-2xl p-3 shadow-lg">
+              <div class="flex items-center justify-between pb-1.5 mb-2 border-b border-[#C5A059]/15">
+                <span class="text-[11px] font-black text-[#D4AF37] flex items-center gap-1.5">
+                  <i data-lucide="bar-chart-3" class="w-3.5 h-3.5 text-[#D4AF37]"></i>
+                  آمارها و ویژگی‌های کلیدی پلتفرم
+                </span>
+                <span class="text-[9.5px] font-bold text-slate-400">استودیوها & برندهای تاییدشده یزد</span>
+              </div>
+
+              <div class="grid grid-cols-2 sm:grid-cols-4 gap-2 text-center">
+                <div class="bg-[#0e121c]/80 border border-[#C5A059]/20 rounded-xl p-1.5 transition-all hover:border-[#D4AF37]/50">
+                  <span class="text-xs sm:text-sm font-black text-[#D4AF37] block">۵۰۰+</span>
+                  <span class="text-[9px] sm:text-[10px] text-slate-300 font-bold block">تامین‌کننده معتبر</span>
+                </div>
+                <div class="bg-[#0e121c]/80 border border-[#C5A059]/20 rounded-xl p-1.5 transition-all hover:border-[#D4AF37]/50">
+                  <span class="text-xs sm:text-sm font-black text-[#D4AF37] block">۲,۵۰۰+</span>
+                  <span class="text-[9px] sm:text-[10px] text-slate-300 font-bold block">استعلام موفق</span>
+                </div>
+                <div class="bg-[#0e121c]/80 border border-[#C5A059]/20 rounded-xl p-1.5 transition-all hover:border-[#D4AF37]/50">
+                  <span class="text-xs sm:text-sm font-black text-[#D4AF37] block">۱۰۰٪</span>
+                  <span class="text-[9px] sm:text-[10px] text-slate-300 font-bold block">تضمین اصالت</span>
+                </div>
+                <div class="bg-[#0e121c]/80 border border-[#C5A059]/20 rounded-xl p-1.5 transition-all hover:border-[#D4AF37]/50">
+                  <span class="text-xs sm:text-sm font-black text-[#D4AF37] block">۲۴/۷</span>
+                  <span class="text-[9px] sm:text-[10px] text-slate-300 font-bold block">پشتیبانی اختصاصی</span>
+                </div>
               </div>
             </div>
           </div>
 
           <!-- LEFT / CENTER FOCUSED VENDOR SHOWCASE CARDS (5 cols) -->
-          <div id="featured-vendors-section" class="lg:col-span-5 bg-[#0e121c]/90 backdrop-blur-xl border border-[#C5A059]/40 rounded-3xl p-5 flex flex-col justify-between space-y-4 shadow-2xl relative overflow-hidden">
+          <div id="hero-vendor-showcase-panel" class="lg:col-span-5 bg-[#0e121c]/90 backdrop-blur-xl border border-[#C5A059]/40 rounded-3xl p-4 sm:p-5 flex flex-col justify-between space-y-4 shadow-2xl relative overflow-hidden">
             <div class="flex items-center justify-between border-b border-[#C5A059]/20 pb-2.5">
               <div class="flex items-center gap-2">
                 <span class="w-2.5 h-2.5 rounded-full bg-[#D4AF37] animate-pulse"></span>
@@ -92,9 +111,9 @@ const HOME_VIEW_HTML = `<main id="home-view" class="flex-1 max-w-7xl w-full mx-a
               </div>
             </div>
 
-            <!-- Asymmetric Focal Carousel Container -->
-            <div id="vip-focal-stage" class="relative min-h-[220px] sm:min-h-[240px] flex items-center justify-center" onmouseenter="pauseVipFocalAutoScroll()" onmouseleave="resumeVipFocalAutoScroll()">
-              <div id="vip-showcase-container" class="w-full flex items-center justify-center transition-all duration-500">
+            <!-- Asymmetric Focal Carousel Container (Touch Swipe Supported) -->
+            <div id="vip-focal-stage" class="relative min-h-[260px] sm:min-h-[290px] flex items-center justify-center touch-pan-y" onmouseenter="pauseVipFocalAutoScroll()" onmouseleave="resumeVipFocalAutoScroll()">
+              <div id="vip-showcase-container" class="w-full flex items-center justify-center transition-all duration-500 gap-2 sm:gap-3">
                 <!-- Dynamically populated via renderVipFocalShowcase() -->
               </div>
             </div>
@@ -105,36 +124,6 @@ const HOME_VIEW_HTML = `<main id="home-view" class="flex-1 max-w-7xl w-full mx-a
             </div>
           </div>
 
-        </div>
-
-        <!-- LIVE METRICS / STATS BAR AT BOTTOM OF HERO -->
-        <div class="bg-[#0e121c]/95 backdrop-blur-2xl border border-[#C5A059]/30 rounded-2xl p-4 relative z-10 shadow-xl">
-          <div class="flex items-center justify-between pb-2 mb-3 border-b border-[#C5A059]/15">
-            <span class="text-xs font-black text-[#D4AF37] flex items-center gap-1.5">
-              <i data-lucide="bar-chart-3" class="w-4 h-4 text-[#D4AF37]"></i>
-              آمارها و ویژگی‌های کلیدی پلتفرم
-            </span>
-            <span class="text-[10px] font-bold text-slate-400">بروزرسانی زنده استاندارد‌های VIP یزد</span>
-          </div>
-
-          <div class="grid grid-cols-2 sm:grid-cols-4 gap-3 text-center">
-            <div class="bg-[#141A28]/80 border border-[#C5A059]/20 rounded-xl p-2.5 transition-all hover:border-[#D4AF37]/50">
-              <span class="text-sm sm:text-base font-black text-[#D4AF37] block">۵۰۰+</span>
-              <span class="text-[10px] sm:text-xs text-slate-300 font-bold block mt-0.5">تامین‌کننده معتبر یزد</span>
-            </div>
-            <div class="bg-[#141A28]/80 border border-[#C5A059]/20 rounded-xl p-2.5 transition-all hover:border-[#D4AF37]/50">
-              <span class="text-sm sm:text-base font-black text-[#D4AF37] block">۲,۵۰۰+</span>
-              <span class="text-[10px] sm:text-xs text-slate-300 font-bold block mt-0.5">استعلام قیمت موفق</span>
-            </div>
-            <div class="bg-[#141A28]/80 border border-[#C5A059]/20 rounded-xl p-2.5 transition-all hover:border-[#D4AF37]/50">
-              <span class="text-sm sm:text-base font-black text-[#D4AF37] block">۱۰۰٪</span>
-              <span class="text-[10px] sm:text-xs text-slate-300 font-bold block mt-0.5">تضمین اصالت & قیمت</span>
-            </div>
-            <div class="bg-[#141A28]/80 border border-[#C5A059]/20 rounded-xl p-2.5 transition-all hover:border-[#D4AF37]/50">
-              <span class="text-sm sm:text-base font-black text-[#D4AF37] block">۲۴/۷</span>
-              <span class="text-[10px] sm:text-xs text-slate-300 font-bold block mt-0.5">پشتیبانی اختصاصی</span>
-            </div>
-          </div>
         </div>
       </section>
 
@@ -12247,17 +12236,25 @@ window.goToInquiryChatThread = function(vendorId, threadId) {
         const isPrev = index === (currentVipFocalIndex - 1 + vipVendors.length) % vipVendors.length;
         const isNext = index === (currentVipFocalIndex + 1) % vipVendors.length;
 
+        if (!isCenter && !isPrev && !isNext) return;
+
         const card = document.createElement('div');
         card.setAttribute('data-vip-index', index);
 
-        let baseClass = "vip-focal-card group relative shrink-0 transition-all duration-500 ease-out cursor-pointer rounded-3xl overflow-hidden flex flex-col justify-between p-5 text-right ";
+        // Safe fallback properties to avoid "undefined"
+        const vTitle = vendor.name || vendor.title || "مجموعه تشریفاتی یزد";
+        const vCat = vendor.categoryTitle || vendor.category || "خدمات عروسی";
+        const vImg = vendor.image || vendor.coverImg || "https://images.unsplash.com/photo-1519167758481-83f550bb49b3?w=800";
+        const vLoc = vendor.district || vendor.address || "صفائیه، یزد";
+        const vPrice = vendor.price || vendor.priceFormatted || "تماس بگیرید";
+        const vRating = vendor.rating || "۴.۹";
+
+        let baseClass = "vip-focal-card group relative shrink-0 transition-all duration-500 ease-out cursor-pointer rounded-3xl overflow-hidden flex flex-col justify-between p-4 text-right shadow-2xl ";
 
         if (isCenter) {
-          baseClass += "w-[290px] sm:w-[350px] min-h-[300px] sm:min-h-[340px] bg-gradient-to-b from-[#0E121C] to-[#07090E] border-2 border-[#D4AF37] shadow-[0_0_35px_rgba(212,175,55,0.35)] scale-105 z-20 opacity-100";
-        } else if (isPrev || isNext) {
-          baseClass += "w-[220px] sm:w-[270px] min-h-[260px] sm:min-h-[290px] bg-[#0E121C]/80 border border-[#C5A059]/30 scale-90 z-10 opacity-70 hover:opacity-90 hidden sm:flex";
+          baseClass += "w-[240px] sm:w-[280px] min-h-[250px] sm:min-h-[280px] bg-gradient-to-b from-[#0E121C] to-[#07090E] border-2 border-[#D4AF37] shadow-[0_0_35px_rgba(212,175,55,0.4)] scale-105 z-20 opacity-100";
         } else {
-          baseClass += "hidden";
+          baseClass += "w-[170px] sm:w-[200px] min-h-[220px] sm:min-h-[240px] bg-[#0E121C]/80 border border-[#C5A059]/30 scale-90 z-10 opacity-65 hover:opacity-90 hidden sm:flex";
         }
 
         card.className = baseClass;
@@ -12272,33 +12269,32 @@ window.goToInquiryChatThread = function(vendorId, threadId) {
         card.innerHTML = `
           <!-- Cover Image Background -->
           <div class="absolute inset-0 z-0">
-            <img src="${vendor.image || vendor.coverImg}" alt="${vendor.title}" class="w-full h-full object-cover group-hover:scale-108 transition-transform duration-700">
-            <div class="absolute inset-0 bg-gradient-to-t from-[#07090E] via-[#07090E]/70 to-black/40"></div>
+            <img src="${vImg}" alt="${vTitle}" class="w-full h-full object-cover group-hover:scale-108 transition-transform duration-700">
+            <div class="absolute inset-0 bg-gradient-to-t from-[#07090E] via-[#07090E]/60 to-black/30"></div>
           </div>
 
           <!-- Top Badges -->
           <div class="relative z-10 flex items-center justify-between">
-            <span class="text-[10px] font-black text-[#07090E] bg-gradient-to-r from-[#D4AF37] to-[#F3E5AB] px-3 py-1 rounded-full border border-[#D4AF37] shadow-md flex items-center gap-1">
-              👑 VIP تاییدشده
+            <span class="text-[9.5px] font-black text-[#07090E] bg-gradient-to-r from-[#D4AF37] to-[#F3E5AB] px-2.5 py-0.5 rounded-full border border-[#D4AF37] shadow-md flex items-center gap-1">
+              👑 VIP
             </span>
-            <span class="text-xs font-black text-amber-300 bg-black/60 px-2.5 py-1 rounded-full border border-[#D4AF37]/30 backdrop-blur-md">
-              ⭐️ ${vendor.rating || '۴.۹'}
+            <span class="text-[10.5px] font-black text-amber-300 bg-black/60 px-2 py-0.5 rounded-full border border-[#D4AF37]/30 backdrop-blur-md">
+              ⭐️ ${vRating}
             </span>
           </div>
 
-          <!-- Bottom Vendor Details -->
-          <div class="relative z-10 space-y-2 pt-16">
+          <!-- Bottom Details -->
+          <div class="relative z-10 space-y-1.5 pt-12">
             <div class="space-y-0.5">
-              <span class="text-[11px] font-bold text-[#D4AF37] block">${vendor.categoryTitle || 'خدمات عروسی'}</span>
-              <h4 class="text-base sm:text-lg font-black text-white truncate drop-shadow-md">${vendor.title}</h4>
-              <p class="text-[11px] text-slate-300 font-medium truncate">📍 ${vendor.district || 'صفائیه، یزد'}</p>
+              <span class="text-[10px] font-bold text-[#D4AF37] block truncate">${vCat}</span>
+              <h4 class="text-xs sm:text-sm font-black text-white truncate drop-shadow-md">${vTitle}</h4>
+              <p class="text-[10px] text-slate-300 font-medium truncate">📍 ${vLoc}</p>
             </div>
 
-            <div class="flex items-center justify-between pt-2 border-t border-[#C5A059]/30">
-              <span class="text-xs font-bold text-amber-200">شروع: ${vendor.priceFormatted || vendor.price}</span>
-              <button type="button" onclick="event.stopPropagation(); openVendorDetailModal('${vendor.id}')" class="bg-[#D4AF37] hover:bg-[#C5A059] text-[#07090E] font-black text-xs px-3.5 py-1.5 rounded-xl transition-all shadow-md flex items-center gap-1 cursor-pointer">
+            <div class="flex items-center justify-between pt-1.5 border-t border-[#C5A059]/30">
+              <span class="text-[10px] sm:text-xs font-bold text-amber-200 truncate">شروع: ${vPrice}</span>
+              <button type="button" onclick="event.stopPropagation(); openVendorDetailModal('${vendor.id}')" class="bg-[#D4AF37] hover:bg-[#C5A059] text-[#07090E] font-black text-[10.5px] px-2.5 py-1 rounded-lg transition-all shadow-md flex items-center gap-1 cursor-pointer shrink-0">
                 <span>رزرو</span>
-                <i data-lucide="arrow-left" class="w-3.5 h-3.5"></i>
               </button>
             </div>
           </div>
@@ -12309,7 +12305,7 @@ window.goToInquiryChatThread = function(vendorId, threadId) {
 
       if (dotsContainer) {
         dotsContainer.innerHTML = vipVendors.map((_, idx) => `
-          <button type="button" onclick="goToVipCarouselSlide(${idx})" class="h-2 rounded-full transition-all duration-300 cursor-pointer ${idx === currentVipFocalIndex ? 'bg-[#D4AF37] w-7' : 'bg-[#C5A059]/30 hover:bg-[#C5A059]/60 w-2'}" title="اسلاید ${idx + 1}"></button>
+          <button type="button" onclick="goToVipCarouselSlide(${idx})" class="h-2 rounded-full transition-all duration-300 cursor-pointer ${idx === currentVipFocalIndex ? 'bg-[#D4AF37] w-6' : 'bg-[#C5A059]/30 hover:bg-[#C5A059]/60 w-2'}" title="اسلاید ${idx + 1}"></button>
         `).join('');
       }
 
@@ -19002,3 +18998,34 @@ window.initCardVideoHoverListeners = function() {
       filterVendors();
     }
   };
+
+    // Touch Swipe Support for Hero Focal Showcase
+    (function initVipFocalTouchSwipe() {
+      let touchStartX = 0;
+      let touchEndX = 0;
+
+      function handleTouchSwipe() {
+        const diff = touchStartX - touchEndX;
+        if (Math.abs(diff) > 35) {
+          if (diff > 0) {
+            window.slideVipFocalCarousel('next');
+          } else {
+            window.slideVipFocalCarousel('prev');
+          }
+        }
+      }
+
+      document.addEventListener('DOMContentLoaded', () => {
+        const stage = document.getElementById('vip-focal-stage');
+        if (!stage) return;
+
+        stage.addEventListener('touchstart', (e) => {
+          touchStartX = e.changedTouches[0].screenX;
+        }, { passive: true });
+
+        stage.addEventListener('touchend', (e) => {
+          touchEndX = e.changedTouches[0].screenX;
+          handleTouchSwipe();
+        }, { passive: true });
+      });
+    })();
