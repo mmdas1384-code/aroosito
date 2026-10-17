@@ -117,49 +117,55 @@
         </div>
       </section>
 
-      <!-- 2.5 EDITORIAL BENTO CAROUSEL FEATURED VENDORS SHOWCASE -->
-            <!-- 2.5 EDITORIAL BENTO CAROUSEL FEATURED VENDORS SHOWCASE -->
-      <section id="featured-vendors-section" class="bg-[#0e121c]/90 backdrop-blur-xl border border-[#C5A059]/30 rounded-3xl p-5 shadow-2xl relative space-y-4">
-        <!-- Section Header Bar with Category Filter Pills & Carousel Controls -->
-        <div class="flex items-center justify-between border-b border-[#C5A059]/20 pb-3 flex-wrap gap-3">
-          <div class="flex items-center gap-2">
-            <span class="text-[10px] text-[#0F251A] font-black bg-gradient-to-r from-[#D4AF37] to-[#F3E5AB] px-2.5 py-0.5 rounded-full border border-[#D4AF37] flex items-center gap-1 shadow-sm">
-              <i data-lucide="crown" class="w-3 h-3 text-[#0F251A]"></i> VIP
-            </span>
-            <h3 class="text-sm sm:text-base font-black text-[#F7F5F0]">ویترین تامین‌کنندگان برتر استان یزد</h3>
+      <!-- 2.5 ASYMMETRIC FOCAL FEATURED TOP VENDORS SHOWCASE -->
+      <section id="featured-vendors-section" class="bg-[#0e121c]/90 backdrop-blur-xl border border-[#C5A059]/40 rounded-3xl p-5 sm:p-7 shadow-2xl relative space-y-6 overflow-hidden">
+        <!-- Ambient Gold Glow Background -->
+        <div class="absolute -top-24 -right-24 w-72 h-72 bg-[#D4AF37]/10 rounded-full blur-3xl pointer-events-none"></div>
+
+        <!-- Section Header Bar -->
+        <div class="flex items-center justify-between border-b border-[#C5A059]/20 pb-4 flex-wrap gap-3 relative z-10">
+          <div class="space-y-1 text-right">
+            <div class="flex items-center gap-2">
+              <span class="text-[10px] text-[#07090E] font-black bg-gradient-to-r from-[#D4AF37] to-[#F3E5AB] px-2.5 py-0.5 rounded-full border border-[#D4AF37] flex items-center gap-1 shadow-md">
+                👑 برندهای تاییدشده VIP
+              </span>
+              <span class="text-xs text-[#D4AF37] font-bold">ویترین اختصاصی یزد</span>
+            </div>
+            <h3 class="text-base sm:text-xl font-black text-[#F7F5F0]">ویترین تامین‌کنندگان برتر استان یزد</h3>
           </div>
 
-          <!-- Category Pills & Floating Carousel Arrows -->
+          <!-- Category Filter Pills & Navigation Controls -->
           <div class="flex items-center gap-3">
             <div class="flex items-center gap-1.5 overflow-x-auto no-scrollbar text-[11px] font-bold">
-              <button type="button" onclick="filterVipShowcase('all')" id="vip-tab-all" class="vip-tab-btn px-3 py-1 rounded-full bg-[#1B3B2B] text-[#D4AF37] border border-[#D4AF37]/50 transition-all shrink-0 cursor-pointer shadow-sm">
+              <button type="button" onclick="filterVipShowcase('all')" id="vip-tab-all" class="vip-tab-btn px-3 py-1 rounded-full bg-[#D4AF37] text-[#07090E] font-black border border-[#D4AF37] transition-all shrink-0 cursor-pointer shadow-md">
                 همه برترین‌ها
               </button>
-              <button type="button" onclick="filterVipShowcase('hall')" id="vip-tab-hall" class="vip-tab-btn px-3 py-1 rounded-full bg-[#141A28] border border-[#C5A059]/25 text-[#E6E8EC] hover:text-[#D4AF37] hover:border-[#D4AF37] transition-all shrink-0 cursor-pointer">
-                تالار و باغ‌سرا
+              <button type="button" onclick="filterVipShowcase('hall')" id="vip-tab-hall" class="vip-tab-btn px-3 py-1 rounded-full bg-[#141A28] border border-[#C5A059]/30 text-slate-200 hover:text-[#D4AF37] hover:border-[#D4AF37] transition-all shrink-0 cursor-pointer">
+                🏰 تالار و باغ‌سرا
               </button>
-              <button type="button" onclick="filterVipShowcase('studio')" id="vip-tab-studio" class="vip-tab-btn px-3 py-1 rounded-full bg-[#141A28] border border-[#C5A059]/25 text-[#E6E8EC] hover:text-[#D4AF37] hover:border-[#D4AF37] transition-all shrink-0 cursor-pointer">
-                آتلیه و عکاسی
+              <button type="button" onclick="filterVipShowcase('studio')" id="vip-tab-studio" class="vip-tab-btn px-3 py-1 rounded-full bg-[#141A28] border border-[#C5A059]/30 text-slate-200 hover:text-[#D4AF37] hover:border-[#D4AF37] transition-all shrink-0 cursor-pointer">
+                📸 آتلیه و عکاسی
               </button>
-              <button type="button" onclick="filterVipShowcase('beauty')" id="vip-tab-beauty" class="vip-tab-btn px-3 py-1 rounded-full bg-[#141A28] border border-[#C5A059]/25 text-[#E6E8EC] hover:text-[#D4AF37] hover:border-[#D4AF37] transition-all shrink-0 cursor-pointer">
-                سالن زیبایی
+              <button type="button" onclick="filterVipShowcase('beauty')" id="vip-tab-beauty" class="vip-tab-btn px-3 py-1 rounded-full bg-[#141A28] border border-[#C5A059]/30 text-slate-200 hover:text-[#D4AF37] hover:border-[#D4AF37] transition-all shrink-0 cursor-pointer">
+                👗 مزون و زیبایی
               </button>
             </div>
 
-            <!-- Floating Navigation Controls -->
-            <div class="flex items-center gap-1.5 shrink-0">
-              <button type="button" onclick="scrollVipCarousel(-1)" class="w-8 h-8 rounded-full bg-[#141A28] hover:bg-[#1E293B] text-[#D4AF37] border border-[#C5A059]/30 flex items-center justify-center transition-all cursor-pointer hover:scale-110 active:scale-95 shadow-md" title="قبلی">
-                <i data-lucide="chevron-right" class="w-4 h-4"></i>
+            <!-- Floating Arrow Navigation Controls -->
+            <div class="flex items-center gap-2 shrink-0">
+              <button type="button" onclick="slideVipFocalCarousel('prev')" class="w-9 h-9 rounded-full bg-[#141A28] hover:bg-[#D4AF37] hover:text-[#07090E] text-[#D4AF37] border border-[#C5A059]/40 flex items-center justify-center transition-all cursor-pointer shadow-lg hover:scale-110 active:scale-95" title="قبلی">
+                <i data-lucide="chevron-right" class="w-5 h-5"></i>
               </button>
-              <button type="button" onclick="scrollVipCarousel(1)" class="w-8 h-8 rounded-full bg-[#141A28] hover:bg-[#1E293B] text-[#D4AF37] border border-[#C5A059]/30 flex items-center justify-center transition-all cursor-pointer hover:scale-110 active:scale-95 shadow-md" title="بعدی">
-                <i data-lucide="chevron-left" class="w-4 h-4"></i>
+              <button type="button" onclick="slideVipFocalCarousel('next')" class="w-9 h-9 rounded-full bg-[#141A28] hover:bg-[#D4AF37] hover:text-[#07090E] text-[#D4AF37] border border-[#C5A059]/40 flex items-center justify-center transition-all cursor-pointer shadow-lg hover:scale-110 active:scale-95" title="بعدی">
+                <i data-lucide="chevron-left" class="w-5 h-5"></i>
               </button>
             </div>
           </div>
         </div>
 
-        <!-- BENTO HORIZONTAL AUTO-SCROLL CAROUSEL CONTAINER -->
-        <div id="vip-showcase-container" class="bento-carousel-container flex gap-3 overflow-x-auto no-scrollbar p-1 cursor-grab active:cursor-grabbing select-none">
+        <!-- ASYMMETRIC 3D FOCAL SHOWCASE CAROUSEL STAGE -->
+        <div id="vip-focal-stage" class="relative w-full overflow-hidden py-2" onmouseenter="pauseVipFocalAutoScroll()" onmouseleave="resumeVipFocalAutoScroll()">
+          <div id="vip-showcase-container" class="flex items-center justify-center gap-3 sm:gap-6 transition-all duration-500 ease-out min-h-[300px] sm:min-h-[340px]">
 
           <!-- Bento Card 1 -->
           <div data-vip-cat="hall" class="vip-bento-card group relative shrink-0 w-[230px] sm:w-[250px] rounded-2xl bg-[rgba(14,18,28,0.85)] border border-[rgba(197,160,89,0.25)] hover:border-[#D4AF37] overflow-hidden transition-all duration-300 shadow-xl cursor-pointer" onclick="openVendorDetailModal(1)">
@@ -317,6 +323,11 @@
             </div>
           </div>
 
+        </div>
+
+        <!-- INTERACTIVE PAGINATION DOTS -->
+        <div id="vip-carousel-dots" class="flex items-center justify-center gap-2 pt-2 relative z-10">
+          <!-- Populated dynamically by script.js -->
         </div>
       </section>
 

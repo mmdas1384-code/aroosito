@@ -12016,132 +12016,168 @@ window.shareReceiptWhatsApp = function() {
       }
     });
 
-    function scrollVipCarousel(direction) {
-      const container = document.getElementById('vip-showcase-container');
-      if (!container) return;
-      const scrollAmount = 320 * direction;
-      container.scrollBy({ left: scrollAmount, behavior: 'smooth' });
-    }
+    let currentVipFocalIndex = 0;
+    let currentVipCategory = 'all';
+    let vipFocalAutoTimer = null;
+    let isVipAutoPaused = false;
 
-    function filterVipShowcase(categoryKey) {
+    window.getApprovedVipVendors = function(categoryKey = 'all') {
+      let vipList = vendors.filter(v => v.approved !== false && (v.isVerified || v.vipTag || v.badge));
+      if (categoryKey === 'hall') {
+        vipList = vipList.filter(v => v.categoryKey === 'venue_catering' || (v.categoryTitle && (v.categoryTitle.includes('تالار') || v.categoryTitle.includes('باغ'))));
+      } else if (categoryKey === 'studio') {
+        vipList = vipList.filter(v => v.categoryKey === 'photo_music' || (v.categoryTitle && (v.categoryTitle.includes('آتلیه') || v.categoryTitle.includes('عکاسی'))));
+      } else if (categoryKey === 'beauty') {
+        vipList = vipList.filter(v => v.categoryKey === 'beauty_style' || (v.categoryTitle && (v.categoryTitle.includes('زیبایی') || v.categoryTitle.includes('مزون'))));
+      }
+      return vipList.length > 0 ? vipList : vendors.slice(0, 5);
+    };
+
+    window.renderVipFocalShowcase = function() {
+      const container = document.getElementById('vip-showcase-container');
+      const dotsContainer = document.getElementById('vip-carousel-dots');
+      if (!container) return;
+
+      const vipVendors = window.getApprovedVipVendors(currentVipCategory);
+      if (vipVendors.length === 0) return;
+
+      if (currentVipFocalIndex >= vipVendors.length) currentVipFocalIndex = 0;
+      if (currentVipFocalIndex < 0) currentVipFocalIndex = vipVendors.length - 1;
+
+      container.innerHTML = '';
+
+      vipVendors.forEach((vendor, index) => {
+        const isCenter = index === currentVipFocalIndex;
+        const isPrev = index === (currentVipFocalIndex - 1 + vipVendors.length) % vipVendors.length;
+        const isNext = index === (currentVipFocalIndex + 1) % vipVendors.length;
+
+        const card = document.createElement('div');
+        card.setAttribute('data-vip-index', index);
+
+        let baseClass = "vip-focal-card group relative shrink-0 transition-all duration-500 ease-out cursor-pointer rounded-3xl overflow-hidden flex flex-col justify-between p-5 text-right ";
+
+        if (isCenter) {
+          baseClass += "w-[290px] sm:w-[350px] min-h-[300px] sm:min-h-[340px] bg-gradient-to-b from-[#0E121C] to-[#07090E] border-2 border-[#D4AF37] shadow-[0_0_35px_rgba(212,175,55,0.35)] scale-105 z-20 opacity-100";
+        } else if (isPrev || isNext) {
+          baseClass += "w-[220px] sm:w-[270px] min-h-[260px] sm:min-h-[290px] bg-[#0E121C]/80 border border-[#C5A059]/30 scale-90 z-10 opacity-70 hover:opacity-90 hidden sm:flex";
+        } else {
+          baseClass += "hidden";
+        }
+
+        card.className = baseClass;
+        card.onclick = () => {
+          if (isCenter) {
+            openVendorDetailModal(vendor.id);
+          } else {
+            window.goToVipCarouselSlide(index);
+          }
+        };
+
+        card.innerHTML = `
+          <!-- Cover Image Background -->
+          <div class="absolute inset-0 z-0">
+            <img src="${vendor.image || vendor.coverImg}" alt="${vendor.title}" class="w-full h-full object-cover group-hover:scale-108 transition-transform duration-700">
+            <div class="absolute inset-0 bg-gradient-to-t from-[#07090E] via-[#07090E]/70 to-black/40"></div>
+          </div>
+
+          <!-- Top Badges -->
+          <div class="relative z-10 flex items-center justify-between">
+            <span class="text-[10px] font-black text-[#07090E] bg-gradient-to-r from-[#D4AF37] to-[#F3E5AB] px-3 py-1 rounded-full border border-[#D4AF37] shadow-md flex items-center gap-1">
+              👑 VIP تاییدشده
+            </span>
+            <span class="text-xs font-black text-amber-300 bg-black/60 px-2.5 py-1 rounded-full border border-[#D4AF37]/30 backdrop-blur-md">
+              ⭐️ ${vendor.rating || '۴.۹'}
+            </span>
+          </div>
+
+          <!-- Bottom Vendor Details -->
+          <div class="relative z-10 space-y-2 pt-16">
+            <div class="space-y-0.5">
+              <span class="text-[11px] font-bold text-[#D4AF37] block">${vendor.categoryTitle || 'خدمات عروسی'}</span>
+              <h4 class="text-base sm:text-lg font-black text-white truncate drop-shadow-md">${vendor.title}</h4>
+              <p class="text-[11px] text-slate-300 font-medium truncate">📍 ${vendor.district || 'صفائیه، یزد'}</p>
+            </div>
+
+            <div class="flex items-center justify-between pt-2 border-t border-[#C5A059]/30">
+              <span class="text-xs font-bold text-amber-200">شروع: ${vendor.priceFormatted || vendor.price}</span>
+              <button type="button" onclick="event.stopPropagation(); openVendorDetailModal('${vendor.id}')" class="bg-[#D4AF37] hover:bg-[#C5A059] text-[#07090E] font-black text-xs px-3.5 py-1.5 rounded-xl transition-all shadow-md flex items-center gap-1 cursor-pointer">
+                <span>رزرو</span>
+                <i data-lucide="arrow-left" class="w-3.5 h-3.5"></i>
+              </button>
+            </div>
+          </div>
+        `;
+
+        container.appendChild(card);
+      });
+
+      if (dotsContainer) {
+        dotsContainer.innerHTML = vipVendors.map((_, idx) => `
+          <button type="button" onclick="goToVipCarouselSlide(${idx})" class="h-2 rounded-full transition-all duration-300 cursor-pointer ${idx === currentVipFocalIndex ? 'bg-[#D4AF37] w-7' : 'bg-[#C5A059]/30 hover:bg-[#C5A059]/60 w-2'}" title="اسلاید ${idx + 1}"></button>
+        `).join('');
+      }
+
+      if (window.lucide) lucide.createIcons();
+    };
+
+    window.slideVipFocalCarousel = function(dir) {
+      const vipVendors = window.getApprovedVipVendors(currentVipCategory);
+      if (vipVendors.length === 0) return;
+
+      if (dir === 'next') {
+        currentVipFocalIndex = (currentVipFocalIndex + 1) % vipVendors.length;
+      } else {
+        currentVipFocalIndex = (currentVipFocalIndex - 1 + vipVendors.length) % vipVendors.length;
+      }
+
+      window.renderVipFocalShowcase();
+    };
+
+    window.goToVipCarouselSlide = function(idx) {
+      currentVipFocalIndex = idx;
+      window.renderVipFocalShowcase();
+    };
+
+    window.pauseVipFocalAutoScroll = function() {
+      isVipAutoPaused = true;
+    };
+
+    window.resumeVipFocalAutoScroll = function() {
+      isVipAutoPaused = false;
+    };
+
+    window.initVipShowcaseAutoScroll = function() {
+      if (vipFocalAutoTimer) clearInterval(vipFocalAutoTimer);
+
+      window.renderVipFocalShowcase();
+
+      vipFocalAutoTimer = setInterval(() => {
+        if (!isVipAutoPaused) {
+          window.slideVipFocalCarousel('next');
+        }
+      }, 3500);
+    };
+
+    window.filterVipShowcase = function(categoryKey) {
+      currentVipCategory = categoryKey;
+      currentVipFocalIndex = 0;
+
       const tabs = ['all', 'hall', 'studio', 'beauty'];
       tabs.forEach(t => {
         const btn = document.getElementById('vip-tab-' + t);
         if (btn) {
           if (t === categoryKey) {
-            btn.className = "vip-tab-btn px-3 py-1 rounded-full bg-[#1B3B2B] text-[#D4AF37] border border-[#D4AF37]/50 transition-all shrink-0 cursor-pointer shadow-sm font-bold";
+            btn.className = "vip-tab-btn px-3 py-1 rounded-full bg-[#D4AF37] text-[#07090E] font-black border border-[#D4AF37] transition-all shrink-0 cursor-pointer shadow-md";
           } else {
-            btn.className = "vip-tab-btn px-3 py-1 rounded-full bg-[#141A28] border border-[#C5A059]/25 text-[#E6E8EC] hover:text-[#D4AF37] hover:border-[#D4AF37] transition-all shrink-0 cursor-pointer font-bold";
+            btn.className = "vip-tab-btn px-3 py-1 rounded-full bg-[#141A28] border border-[#C5A059]/30 text-slate-200 hover:text-[#D4AF37] hover:border-[#D4AF37] transition-all shrink-0 cursor-pointer font-bold";
           }
         }
       });
 
-      const cards = document.querySelectorAll('.vip-bento-card, .vip-3d-card, .vip-vendor-card');
-      cards.forEach(card => {
-        const cat = card.getAttribute('data-vip-cat');
-        if (categoryKey === 'all' || cat === categoryKey) {
-          card.classList.remove('hidden');
-        } else {
-          card.classList.add('hidden');
-        }
-      });
-    }
+      window.renderVipFocalShowcase();
+    };
 
-    window.scrollVipCarousel = scrollVipCarousel;
-
-    function initVipShowcaseAutoScroll() {
-      const showcaseContainer = document.getElementById('vip-showcase-container') ||
-                                document.querySelector('.bento-carousel-container');
-      if (!showcaseContainer) return;
-
-      // Disable CSS smooth scroll to ensure instant, unthrottled frame updates
-      showcaseContainer.style.scrollBehavior = 'auto';
-
-      // Clone children once to ensure a seamless infinite marquee scroll track
-      if (!showcaseContainer._isCloned) {
-        const originalCards = Array.from(showcaseContainer.children);
-        originalCards.forEach(card => {
-          const clone = card.cloneNode(true);
-          showcaseContainer.appendChild(clone);
-        });
-        showcaseContainer._isCloned = true;
-      }
-
-      let isPaused = false;
-
-      function autoScrollStep() {
-        if (!isPaused && showcaseContainer) {
-          const halfWidth = showcaseContainer.scrollWidth / 2;
-          const step = 0.85;
-
-          // Cross-browser RTL/LTR scrollLeft calculation
-          const isRTL = getComputedStyle(showcaseContainer).direction === 'rtl';
-
-          if (isRTL) {
-            if (showcaseContainer.scrollLeft < 0) {
-              showcaseContainer.scrollLeft -= step;
-              if (Math.abs(showcaseContainer.scrollLeft) >= halfWidth) {
-                showcaseContainer.scrollLeft = 0;
-              }
-            } else {
-              showcaseContainer.scrollLeft += step;
-              if (showcaseContainer.scrollLeft >= halfWidth) {
-                showcaseContainer.scrollLeft = 0;
-              }
-            }
-          } else {
-            showcaseContainer.scrollLeft += step;
-            if (showcaseContainer.scrollLeft >= halfWidth) {
-              showcaseContainer.scrollLeft = 0;
-            }
-          }
-        }
-        showcaseContainer._autoScrollTimer = requestAnimationFrame(autoScrollStep);
-      }
-
-      if (!showcaseContainer._listenersAttached) {
-        showcaseContainer.addEventListener('mouseenter', () => { isPaused = true; });
-        showcaseContainer.addEventListener('mouseleave', () => { isPaused = false; });
-        showcaseContainer.addEventListener('touchstart', () => { isPaused = true; }, { passive: true });
-        showcaseContainer.addEventListener('touchend', () => { isPaused = false; }, { passive: true });
-
-        let isDown = false;
-        let startX = 0;
-        let scrollLeft = 0;
-
-        showcaseContainer.addEventListener('mousedown', (e) => {
-          isDown = true;
-          isPaused = true;
-          startX = e.pageX - showcaseContainer.offsetLeft;
-          scrollLeft = showcaseContainer.scrollLeft;
-        });
-
-        showcaseContainer.addEventListener('mouseleave', () => {
-          isDown = false;
-          isPaused = false;
-        });
-
-        showcaseContainer.addEventListener('mouseup', () => {
-          isDown = false;
-          isPaused = false;
-        });
-
-        showcaseContainer.addEventListener('mousemove', (e) => {
-          if (!isDown) return;
-          e.preventDefault();
-          const x = e.pageX - showcaseContainer.offsetLeft;
-          const walk = (x - startX) * 1.5;
-          showcaseContainer.scrollLeft = scrollLeft - walk;
-        });
-
-        showcaseContainer._listenersAttached = true;
-      }
-
-      if (showcaseContainer._autoScrollTimer) {
-        cancelAnimationFrame(showcaseContainer._autoScrollTimer);
-      }
-      showcaseContainer._autoScrollTimer = requestAnimationFrame(autoScrollStep);
-    }
+    window.scrollVipCarousel = window.slideVipFocalCarousel;
 
     window.addEventListener('DOMContentLoaded', () => {
       updateRoleBasedUIVisibility();
