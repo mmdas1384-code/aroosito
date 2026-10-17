@@ -3729,6 +3729,26 @@
 
       <!-- TAB PANE 2: INQUIRIES & PRE-INVOICES (KANBAN CRM BOARD & LIST TOGGLE) -->
       <div id="vpanel-pane-inquiries" class="hidden space-y-6">
+
+        <!-- MATCHING TENDER REQUESTS (REVERSE BIDS) FOR VENDOR -->
+        <div class="bg-[#0E121C] border border-[#C5A059]/40 rounded-3xl p-6 shadow-xl space-y-4 text-white">
+          <div class="flex items-center justify-between border-b border-[#C5A059]/20 pb-3">
+            <div>
+              <h3 class="text-base font-black text-[#D4AF37] flex items-center gap-2">
+                <i data-lucide="gavel" class="w-5 h-5 text-[#D4AF37]"></i>
+                <span>درخواست‌های مناقصه معکوس مرتبط با دسته‌بندی شما (Tender Requests)</span>
+              </h3>
+              <p class="text-xs text-slate-300 mt-0.5">درخواست‌های ثبت‌شده توسط زوجین یزدی با امکان ارسال مستقیم پیشنهاد قیمت و پیش‌فاکتور</p>
+            </div>
+            <button type="button" onclick="renderVendorReverseBidsFeed()" class="bg-[#161C2B] text-[#D4AF37] border border-[#D4AF37]/40 px-3 py-1.5 rounded-xl text-xs font-bold transition-all cursor-pointer hover:bg-[#07090E]">
+              بروزرسانی لیست 🔄
+            </button>
+          </div>
+
+          <div id="vendor-reverse-bids-feed" class="space-y-3">
+            <!-- Populated dynamically via script.js -->
+          </div>
+        </div>
         <div class="bg-[#0F172A] border border-[#D4AF37]/40 rounded-3xl p-6 shadow-xl space-y-5 text-white">
           <div class="flex flex-col sm:flex-row justify-between sm:items-center gap-3 border-b border-slate-800 pb-4">
             <div>
@@ -5313,31 +5333,94 @@
     <!-- ========================================== -->
     <!-- TAB: BRIDAL COMMUNITY & FORUM             -->
     <!-- ========================================== -->
+    <!-- VIEW 6: DISCUSSIONS & REVERSE BIDS MODULE  -->
+    <!-- ========================================== -->
     <div id="tab-forum" class="tab-content hidden space-y-8">
       <section class="bg-[#0e121c]/90 backdrop-blur-2xl border border-[#C5A059]/40 rounded-3xl p-6 sm:p-8 shadow-2xl space-y-6 text-white">
+
+        <!-- Header & Dual Sub-Tab Switcher Bar -->
         <div class="flex flex-col sm:flex-row justify-between sm:items-center gap-4 border-b border-[#C5A059]/30 pb-4">
           <div>
-            <h2 class="text-xl font-bold text-[#F7F5F0] flex items-center gap-2">
-              <i data-lucide="messages-square" class="w-6 h-6 text-[#C5A059]"></i>
-              <span>تالار گفت‌وگو و تبادل تجربیات عروس‌ها (Bridal Forum)</span>
-            </h2>
-            <p class="text-xs text-slate-300 mt-1">پرسش و پاسخ در مورد سالن‌های زیبایی، تشریفات یزد، بودجه‌بندی و تجربیات واقعی</p>
+            <div class="inline-flex items-center gap-1.5 bg-[#D4AF37]/15 border border-[#D4AF37]/40 text-[#D4AF37] text-xs font-bold px-3 py-1 rounded-full mb-1">
+              <i data-lucide="sparkles" class="w-3.5 h-3.5 text-[#D4AF37]"></i>
+              <span>هاب ارتباطی زوجین و تامین‌کنندگان یزد</span>
+            </div>
+            <h2 class="text-xl sm:text-2xl font-black text-[#F7F5F0]">گفت‌وگو و مناقصه معکوس (Discussions & Reverse Bids)</h2>
+            <p class="text-xs text-slate-300 mt-1">تبادل نظر در تالار گفت‌وگو و ثبت درخواست استعلام قیمت رقابتی از برترین برندها</p>
+          </div>
+
+          <!-- Dual Sub-Tab Switcher Buttons -->
+          <div class="flex items-center gap-2 bg-[#141A28] border border-[#C5A059]/40 p-1.5 rounded-2xl shrink-0 shadow-lg">
+            <button type="button" id="forum-subtab-btn-community" onclick="switchForumSubTab('community')" class="px-4 py-2 rounded-xl text-xs font-black bg-[#D4AF37] text-[#07090E] shadow-md transition-all cursor-pointer flex items-center gap-1.5">
+              <i data-lucide="messages-square" class="w-4 h-4"></i>
+              <span>۱. تالار گفت‌وگو & تجربیات</span>
+            </button>
+            <button type="button" id="forum-subtab-btn-bids" onclick="switchForumSubTab('bids')" class="px-4 py-2 rounded-xl text-xs font-black text-slate-300 hover:text-white transition-all cursor-pointer flex items-center gap-1.5">
+              <i data-lucide="gavel" class="w-4 h-4 text-[#D4AF37]"></i>
+              <span>۲. مناقصه معکوس & استعلام رقابتی</span>
+            </button>
           </div>
         </div>
 
-        <!-- Create Forum Thread Form -->
-        <form onsubmit="handleCreateForumThread(event)" class="bg-[#0F172A] p-4 rounded-2xl border border-[#C5A059]/40 text-white space-y-3">
-          <span class="text-xs font-black text-[#C5A059] block">✍️ ایجاد مبحث گفت‌وگوی جدید:</span>
-          <input type="text" id="forum-thread-title" required placeholder="عنوان پرسش یا موضوع گفت‌وگو (مثلاً: تجربه میکاپ در سالن‌های صفائیه)..." class="w-full bg-[#1E293B] border border-[#C5A059]/30 text-white rounded-xl px-3.5 py-2 text-xs font-medium focus:outline-none focus:border-[#C5A059]">
-          <textarea id="forum-thread-content" rows="2" required placeholder="شرح سوال یا تجربه خود را بنویسید..." class="w-full bg-[#1E293B] border border-[#C5A059]/30 text-white rounded-xl p-3 text-xs font-medium focus:outline-none focus:border-[#C5A059]"></textarea>
-          <button type="submit" class="bg-gradient-to-r from-[#C5A059] to-[#F3E5AB] text-[#07090E] font-black px-4 py-2 rounded-xl text-xs shadow-lg transition-all cursor-pointer">
-            انتشار گفت‌وگو
-          </button>
-        </form>
+        <!-- SUB-TAB 1: COMMUNITY DISCUSSIONS -->
+        <div id="forum-pane-community" class="space-y-6">
+          <div class="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 bg-[#141A28] p-4 rounded-2xl border border-[#C5A059]/30">
+            <div class="space-y-0.5">
+              <h3 class="text-sm font-black text-white">تالار تبادل نظر و تجربیات عروس‌ها</h3>
+              <p class="text-xs text-slate-300">پرسش و پاسخ درباره تالارها، آتلیه‌ها، میکاپ و برنامه‌ریزی عروسی در یزد</p>
+            </div>
+          </div>
 
-        <div id="bridal-forum-feed" class="space-y-4">
-          <!-- Populated dynamically via JS renderBridalForum() -->
+          <!-- Create Forum Thread Inline Form -->
+          <form onsubmit="handleCreateForumThread(event)" class="bg-[#141A28] p-4 rounded-2xl border border-[#C5A059]/40 text-white space-y-3">
+            <span class="text-xs font-black text-[#D4AF37] block">✍️ ایجاد مبحث گفت‌وگوی جدید:</span>
+            <input type="text" id="forum-thread-title" required placeholder="عنوان پرسش یا موضوع گفت‌وگو (مثلاً: تجربه میکاپ در سالن‌های صفائیه)..." class="w-full bg-[#07090E] border border-[#C5A059]/30 text-white rounded-xl px-3.5 py-2 text-xs font-medium focus:outline-none focus:border-[#D4AF37]">
+            <textarea id="forum-thread-content" rows="2" required placeholder="شرح سوال یا تجربه خود را بنویسید..." class="w-full bg-[#07090E] border border-[#C5A059]/30 text-white rounded-xl p-3 text-xs font-medium focus:outline-none focus:border-[#D4AF37]"></textarea>
+            <button type="submit" class="bg-gradient-to-r from-[#D4AF37] to-[#F3E5AB] text-[#07090E] font-black px-4 py-2 rounded-xl text-xs shadow-lg transition-all cursor-pointer">
+              انتشار گفت‌وگو
+            </button>
+          </form>
+
+          <div id="bridal-forum-feed" class="space-y-4">
+            <!-- Populated dynamically via JS renderBridalForum() -->
+          </div>
         </div>
+
+        <!-- SUB-TAB 2: REVERSE AUCTION / REQUEST FOR BIDS -->
+        <div id="forum-pane-bids" class="hidden space-y-6">
+          <div class="bg-gradient-to-r from-[#141A28] via-[#161C2B] to-[#141A28] border border-[#C5A059]/40 p-5 rounded-3xl space-y-4 shadow-xl">
+            <div class="flex flex-col sm:flex-row justify-between sm:items-center gap-4">
+              <div class="space-y-1">
+                <span class="text-[10px] font-bold text-[#D4AF37] bg-[#D4AF37]/15 px-2.5 py-0.5 rounded-full border border-[#D4AF37]/40">
+                  ⚡ سیستم مناقصه معکوس یزد
+                </span>
+                <h3 class="text-base sm:text-lg font-black text-white">دریافت پیشنهادات قیمت رقابتی مستقیم از تامین‌کنندگان</h3>
+                <p class="text-xs text-slate-300">نیازمندی‌ها، بودجه و تاریخ مراسم خود را ثبت کنید تا تامین‌کنندگان برتر یزد بهترین پکیج را پیشنهاد دهند.</p>
+              </div>
+
+              <button type="button" onclick="openReverseBiddingModal()" class="bg-gradient-to-r from-[#D4AF37] to-[#F3E5AB] text-[#07090E] font-black px-5 py-2.5 rounded-2xl text-xs transition-all shadow-xl hover:scale-105 cursor-pointer flex items-center gap-2 shrink-0">
+                <i data-lucide="gavel" class="w-4 h-4"></i>
+                <span>✨ ثبت درخواست مناقصه معکوس</span>
+              </button>
+            </div>
+          </div>
+
+          <!-- Active Tender Bids Feed -->
+          <div class="space-y-3">
+            <div class="flex items-center justify-between border-b border-[#C5A059]/20 pb-2">
+              <h4 class="text-sm font-black text-[#D4AF37] flex items-center gap-2">
+                <i data-lucide="list-checks" class="w-4 h-4"></i>
+                <span>درخواست‌های مناقصه فعال در استان یزد</span>
+              </h4>
+              <span class="text-xs text-slate-400 font-bold" id="reverse-bids-count-label">ثبت‌شده توسط زوجین</span>
+            </div>
+
+            <div id="reverse-bids-feed-container" class="space-y-4">
+              <!-- Populated via JS renderReverseBidsFeed() -->
+            </div>
+          </div>
+        </div>
+
       </section>
     </div>
 
@@ -9062,6 +9145,75 @@
           </button>
           <button type="submit" class="px-6 py-2.5 rounded-2xl text-xs font-black bg-[#D4AF37] hover:bg-[#C5A059] text-[#07090E] shadow-lg transition-all cursor-pointer">
             ذخیره دسته‌بندی
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- REVERSE BIDDING MODAL (#modal-reverse-bidding) -->
+  <div id="modal-reverse-bidding" class="fixed inset-0 z-[100000] hidden flex items-center justify-center p-4 bg-black/80 backdrop-blur-md">
+    <div class="bg-[#0E121C] border border-[#C5A059] rounded-3xl max-w-xl w-full p-6 sm:p-8 space-y-6 text-right text-white shadow-2xl relative max-h-[90vh] overflow-y-auto custom-scrollbar">
+      <button type="button" onclick="closeReverseBiddingModal()" class="absolute top-5 left-5 text-slate-400 hover:text-white bg-[#161C2B] p-2 rounded-full border border-[#C5A059]/30 transition-all cursor-pointer">
+        <i data-lucide="x" class="w-5 h-5"></i>
+      </button>
+
+      <div class="border-b border-[#C5A059]/30 pb-4">
+        <span class="text-[10px] font-bold text-[#D4AF37] bg-[#D4AF37]/10 px-2.5 py-1 rounded-full border border-[#D4AF37]/30">
+          ⚖️ مناقصه معکوس
+        </span>
+        <h3 class="text-lg font-black text-white mt-2">ثبت درخواست استعلام قیمت و مناقصه رقابتی</h3>
+        <p class="text-xs text-slate-300">اطلاعات نیازمندی‌های خود را وارد کنید تا بهترین پیشنهادها برای شما ارسال شوند.</p>
+      </div>
+
+      <form id="form-reverse-bidding" onsubmit="event.preventDefault(); handleReverseBidSubmit(event);" class="space-y-4">
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+          <div class="space-y-1.5">
+            <label class="block text-xs font-bold text-slate-300">دسته‌بندی هدف (موضوع استعلام) *</label>
+            <select id="bid-target-category" required class="w-full bg-[#161C2B] border border-[#C5A059]/30 rounded-2xl px-4 py-2.5 text-xs text-white focus:outline-none focus:border-[#D4AF37] cursor-pointer">
+              <option value="venue_catering">🏰 مکان، تالار و کترینگ پذیرایی</option>
+              <option value="photo_music">📸 آتلیه عکاسی، فیلمبرداری & موزیک</option>
+              <option value="beauty_style">👗 سالن زیبایی، میکاپ VIP & مزون</option>
+              <option value="gold_shopping">💎 طلا، خرید & خدمات ماشین عروس</option>
+              <option value="legal_ceremony">📜 سفره عقد، سالن عقد & تشریفات</option>
+            </select>
+          </div>
+
+          <div class="space-y-1.5">
+            <label class="block text-xs font-bold text-slate-300">تاریخ تقریبی مراسم *</label>
+            <input type="text" id="bid-event-date" required class="w-full bg-[#161C2B] border border-[#C5A059]/30 rounded-2xl px-4 py-2.5 text-xs text-white focus:outline-none focus:border-[#D4AF37]" placeholder="مثلاً: ۱۵ شهریور ۱۴۰۴">
+          </div>
+        </div>
+
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+          <div class="space-y-1.5">
+            <label class="block text-xs font-bold text-slate-300">تعداد تخمینی مهمانان *</label>
+            <input type="number" id="bid-guest-count" required value="200" class="w-full bg-[#161C2B] border border-[#C5A059]/30 rounded-2xl px-4 py-2.5 text-xs text-white focus:outline-none focus:border-[#D4AF37]">
+          </div>
+
+          <div class="space-y-1.5">
+            <label class="block text-xs font-bold text-slate-300">سقف بودجه پیشنهادی (تومان) *</label>
+            <input type="text" id="bid-max-budget" required class="w-full bg-[#161C2B] border border-[#C5A059]/30 rounded-2xl px-4 py-2.5 text-xs text-white focus:outline-none focus:border-[#D4AF37]" placeholder="مثلاً: ۷۰,۰۰۰,۰۰۰ تومان">
+          </div>
+        </div>
+
+        <div class="space-y-1.5">
+          <label class="block text-xs font-bold text-slate-300">منطقه / محدوده موردنظر در یزد</label>
+          <input type="text" id="bid-location" class="w-full bg-[#161C2B] border border-[#C5A059]/30 rounded-2xl px-4 py-2.5 text-xs text-white focus:outline-none focus:border-[#D4AF37]" placeholder="مثلاً: صفائیه، پاسداران، بافت سنتی">
+        </div>
+
+        <div class="space-y-1.5">
+          <label class="block text-xs font-bold text-slate-300">توضیحات و نیازمندی‌های ویژه *</label>
+          <textarea id="bid-requirements" rows="3" required class="w-full bg-[#161C2B] border border-[#C5A059]/30 rounded-2xl p-3 text-xs text-white focus:outline-none focus:border-[#D4AF37]" placeholder="مثلاً: منوی سلف‌سرویس ۳ مدل غذا + نورپردازی استیج..."></textarea>
+        </div>
+
+        <div class="flex items-center justify-end gap-3 pt-4 border-t border-[#C5A059]/30">
+          <button type="button" onclick="closeReverseBiddingModal()" class="px-5 py-2.5 rounded-2xl text-xs font-bold bg-[#161C2B] text-slate-300 hover:text-white border border-slate-700 cursor-pointer">
+            انصراف
+          </button>
+          <button type="submit" class="px-6 py-2.5 rounded-2xl text-xs font-black bg-[#D4AF37] hover:bg-[#C5A059] text-[#07090E] shadow-lg transition-all cursor-pointer flex items-center gap-1.5">
+            <i data-lucide="send" class="w-4 h-4"></i>
+            <span>ثبت و ارسال به تامین‌کنندگان</span>
           </button>
         </div>
       </form>

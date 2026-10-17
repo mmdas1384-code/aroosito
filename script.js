@@ -14407,6 +14407,266 @@ window.renderBridalForum = function() {
   });
 };
 
+/* ==========================================================================
+   DISCUSSIONS & REVERSE BIDS MODULE (گفت‌وگو و مناقصه معکوس)
+   ========================================================================== */
+const DEFAULT_REVERSE_BIDS = [
+  {
+    id: "bid-101",
+    catKey: "venue_catering",
+    catTitle: "🏰 مکان، تالار و کترینگ پذیرایی",
+    coupleName: "علی و سارا (زوج یزدی)",
+    eventDate: "۱۵ شهریور ۱۴۰۴",
+    guestCount: 250,
+    maxBudget: "۸۰,۰۰۰,۰۰۰ تومان",
+    location: "صفائیه، یزد",
+    requirements: "باغ‌تالار با منوی سلف‌سرویس ۳ مدل غذا + نورپردازی استیج و ورودیه رایگان",
+    createdDate: "۱۴۰۳/۰۶/۱۰",
+    status: "active",
+    bidsCount: 3
+  },
+  {
+    id: "bid-102",
+    catKey: "photo_music",
+    catTitle: "📸 آتلیه عکاسی، فیلمبرداری & موزیک",
+    coupleName: "رضا و مریم",
+    eventDate: "۲۰ مهر ۱۴۰۴",
+    guestCount: 200,
+    maxBudget: "۴۵,۰۰۰,۰۰۰ تومان",
+    location: "کویر یزد & صفائیه",
+    requirements: "پکیج فرمالیته کویر یزد با تصویربرداری هلی‌شات 4K + آلبوم دیجیتال گالری",
+    createdDate: "۱۴۰۳/۰۶/۱۲",
+    status: "active",
+    bidsCount: 2
+  }
+];
+
+window.getReverseBidsData = function() {
+  const saved = localStorage.getItem('aroosi_reverse_bids_db');
+  if (!saved) {
+    localStorage.setItem('aroosi_reverse_bids_db', JSON.stringify(DEFAULT_REVERSE_BIDS));
+    return DEFAULT_REVERSE_BIDS;
+  }
+  try {
+    return JSON.parse(saved);
+  } catch (e) {
+    return DEFAULT_REVERSE_BIDS;
+  }
+};
+
+window.saveReverseBidsData = function(bidsList) {
+  localStorage.setItem('aroosi_reverse_bids_db', JSON.stringify(bidsList));
+};
+
+window.switchForumSubTab = function(subTabName) {
+  const communityPane = document.getElementById('forum-pane-community');
+  const bidsPane = document.getElementById('forum-pane-bids');
+
+  const communityBtn = document.getElementById('forum-subtab-btn-community');
+  const bidsBtn = document.getElementById('forum-subtab-btn-bids');
+
+  if (subTabName === 'community') {
+    if (communityPane) communityPane.classList.remove('hidden');
+    if (bidsPane) bidsPane.classList.add('hidden');
+
+    if (communityBtn) communityBtn.className = "px-4 py-2 rounded-xl text-xs font-black bg-[#D4AF37] text-[#07090E] shadow-md transition-all cursor-pointer flex items-center gap-1.5";
+    if (bidsBtn) bidsBtn.className = "px-4 py-2 rounded-xl text-xs font-black text-slate-300 hover:text-white transition-all cursor-pointer flex items-center gap-1.5";
+
+    if (typeof renderBridalForum === 'function') renderBridalForum();
+  } else if (subTabName === 'bids') {
+    if (communityPane) communityPane.classList.add('hidden');
+    if (bidsPane) bidsPane.classList.remove('hidden');
+
+    if (communityBtn) communityBtn.className = "px-4 py-2 rounded-xl text-xs font-black text-slate-300 hover:text-white transition-all cursor-pointer flex items-center gap-1.5";
+    if (bidsBtn) bidsBtn.className = "px-4 py-2 rounded-xl text-xs font-black bg-[#D4AF37] text-[#07090E] shadow-md transition-all cursor-pointer flex items-center gap-1.5";
+
+    window.renderReverseBidsFeed();
+  }
+
+  if (window.lucide) lucide.createIcons();
+};
+
+window.openReverseBiddingModal = function() {
+  const modal = document.getElementById('modal-reverse-bidding');
+  if (modal) modal.classList.remove('hidden');
+};
+
+window.closeReverseBiddingModal = function() {
+  const modal = document.getElementById('modal-reverse-bidding');
+  if (modal) modal.classList.add('hidden');
+};
+
+window.handleReverseBidSubmit = function(e) {
+  if (e && e.preventDefault) e.preventDefault();
+
+  const getVal = id => document.getElementById(id)?.value.trim() || '';
+
+  const catKey = getVal('bid-target-category');
+  const eventDate = getVal('bid-event-date');
+  const guestCount = parseInt(getVal('bid-guest-count')) || 200;
+  const maxBudget = getVal('bid-max-budget');
+  const location = getVal('bid-location') || 'استان یزد';
+  const requirements = getVal('bid-requirements');
+
+  if (!catKey || !eventDate || !maxBudget || !requirements) {
+    if (typeof showToast === 'function') showToast('⚠️ لطفاً تمامی اطلاعات نیازمندی‌های مناقصه را وارد نمایید.', 'warning');
+    return;
+  }
+
+  const categoryTitles = {
+    venue_catering: "🏰 مکان، تالار و کترینگ پذیرایی",
+    photo_music: "📸 آتلیه عکاسی، فیلمبرداری & موزیک",
+    beauty_style: "👗 سالن زیبایی، میکاپ VIP & مزون",
+    gold_shopping: "💎 طلا، خرید & خدمات ماشین عروس",
+    legal_ceremony: "📜 سفره عقد، سالن عقد & تشریفات"
+  };
+
+  const bids = window.getReverseBidsData();
+  const newBid = {
+    id: `bid-${Date.now()}`,
+    catKey,
+    catTitle: categoryTitles[catKey] || 'خدمات عمومی عروسی',
+    coupleName: 'زوج کاربر عروسی تو',
+    eventDate,
+    guestCount,
+    maxBudget,
+    location,
+    requirements,
+    createdDate: new Date().toLocaleDateString('fa-IR'),
+    status: 'active',
+    bidsCount: 0
+  };
+
+  bids.unshift(newBid);
+  window.saveReverseBidsData(bids);
+  window.closeReverseBiddingModal();
+  window.renderReverseBidsFeed();
+
+  if (typeof showToast === 'function') {
+    showToast('درخواست مناقصه معکوس شما با موفقیت ثبت شد و به تامین‌کنندگان ارسال گردید ✨', 'success');
+  }
+};
+
+window.renderReverseBidsFeed = function() {
+  const container = document.getElementById('reverse-bids-feed-container');
+  const countLabel = document.getElementById('reverse-bids-count-label');
+  if (!container) return;
+
+  const bids = window.getReverseBidsData();
+  if (countLabel) countLabel.innerText = `${bids.length} درخواست مناقصه فعال`;
+
+  if (bids.length === 0) {
+    container.innerHTML = `<div class="p-8 text-center text-slate-400 text-xs bg-[#141A28] rounded-2xl border border-[#C5A059]/20">هیچ درخواست مناقصه‌ای ثبت نشده است.</div>`;
+    return;
+  }
+
+  container.innerHTML = bids.map(b => `
+    <div class="bg-[#141A28] border border-[#C5A059]/30 rounded-2xl p-5 space-y-3.5 shadow-lg relative text-right text-white">
+      <div class="flex flex-col sm:flex-row justify-between sm:items-center gap-2 border-b border-[#C5A059]/20 pb-3">
+        <div class="flex items-center gap-2">
+          <span class="text-[10px] font-black text-[#07090E] bg-[#D4AF37] px-2.5 py-0.5 rounded-full shadow-sm">
+            ${b.id}
+          </span>
+          <h4 class="text-sm font-black text-white">${b.catTitle}</h4>
+        </div>
+        <span class="text-xs font-bold text-slate-300">ارسال‌شده توسط: ${b.coupleName} • <span class="text-slate-400">${b.createdDate}</span></span>
+      </div>
+
+      <div class="grid grid-cols-2 sm:grid-cols-4 gap-3 text-xs bg-[#07090E]/60 p-3 rounded-xl border border-[#C5A059]/20">
+        <div>
+          <span class="text-slate-400 text-[10px] block">تاریخ مراسم:</span>
+          <strong class="text-amber-200 font-bold">${b.eventDate}</strong>
+        </div>
+        <div>
+          <span class="text-slate-400 text-[10px] block">تعداد مهمانان:</span>
+          <strong class="text-white font-bold">${b.guestCount} نفر</strong>
+        </div>
+        <div>
+          <span class="text-slate-400 text-[10px] block">سقف بودجه:</span>
+          <strong class="text-[#D4AF37] font-black">${b.maxBudget}</strong>
+        </div>
+        <div>
+          <span class="text-slate-400 text-[10px] block">محدوده در یزد:</span>
+          <strong class="text-slate-200 font-medium">${b.location}</strong>
+        </div>
+      </div>
+
+      <div class="space-y-1 bg-[#161C2B] p-3 rounded-xl border border-[#C5A059]/20">
+        <span class="text-[11px] font-bold text-[#D4AF37] block">📋 شرح نیازمندی‌ها & مشخصات سفارشی:</span>
+        <p class="text-xs text-slate-200 leading-relaxed">${b.requirements}</p>
+      </div>
+
+      <div class="flex items-center justify-between gap-3 pt-2 border-t border-[#C5A059]/20">
+        <span class="text-xs font-bold text-emerald-400 flex items-center gap-1">
+          <i data-lucide="check-circle-2" class="w-4 h-4 text-emerald-400"></i>
+          <span>${b.bidsCount || 0} پیشنهاد دریافت شده</span>
+        </span>
+
+        <button type="button" onclick="sendReverseBidQuote('${b.id}')" class="bg-[#D4AF37] hover:bg-[#C5A059] text-[#07090E] font-black px-4 py-2 rounded-xl text-xs transition-all cursor-pointer shadow-md flex items-center gap-1.5">
+          <i data-lucide="send" class="w-3.5 h-3.5"></i>
+          <span>ارسال پیشنهاد قیمت & پیش‌فاکتور</span>
+        </button>
+      </div>
+    </div>
+  `).join('');
+
+  if (window.lucide) lucide.createIcons();
+};
+
+window.renderVendorReverseBidsFeed = function() {
+  const container = document.getElementById('vendor-reverse-bids-feed');
+  if (!container) return;
+
+  const bids = window.getReverseBidsData();
+  if (bids.length === 0) {
+    container.innerHTML = `<div class="p-6 text-center text-slate-400 text-xs">هیچ درخواست مناقصه‌ای ثبت نشده است.</div>`;
+    return;
+  }
+
+  container.innerHTML = bids.map(b => `
+    <div class="bg-[#161C2B] border border-[#C5A059]/30 rounded-2xl p-4 space-y-3 text-right text-white">
+      <div class="flex items-center justify-between border-b border-[#C5A059]/20 pb-2">
+        <div class="flex items-center gap-2">
+          <span class="text-[10px] font-black text-[#07090E] bg-[#D4AF37] px-2 py-0.5 rounded-full">${b.id}</span>
+          <h4 class="text-xs font-black text-white">${b.catTitle}</h4>
+        </div>
+        <span class="text-[11px] font-bold text-[#D4AF37]">سقف بودجه: ${b.maxBudget}</span>
+      </div>
+
+      <div class="text-xs space-y-1 text-slate-300">
+        <div><strong>زوج متقاضی:</strong> ${b.coupleName} • <strong>تاریخ:</strong> ${b.eventDate}</div>
+        <div><strong>شرح درخواست:</strong> ${b.requirements}</div>
+      </div>
+
+      <div class="flex items-center justify-between pt-2 border-t border-[#C5A059]/20">
+        <span class="text-[11px] text-emerald-400 font-bold">آماده دریافت پیشنهاد قیمت</span>
+        <button type="button" onclick="sendReverseBidQuote('${b.id}')" class="bg-[#D4AF37] hover:bg-[#C5A059] text-[#07090E] font-black px-3.5 py-1.5 rounded-xl text-xs transition-all shadow-md cursor-pointer flex items-center gap-1">
+          <i data-lucide="file-plus" class="w-3.5 h-3.5"></i>
+          <span>ارسال پیشنهاد به چت زوج</span>
+        </button>
+      </div>
+    </div>
+  `).join('');
+
+  if (window.lucide) lucide.createIcons();
+};
+
+window.sendReverseBidQuote = function(bidId) {
+  const bids = window.getReverseBidsData();
+  const bid = bids.find(b => b.id === bidId);
+  if (!bid) return;
+
+  bid.bidsCount = (bid.bidsCount || 0) + 1;
+  window.saveReverseBidsData(bids);
+
+  if (typeof showToast === 'function') {
+    showToast(`پیشنهاد قیمت رقابتی شما برای مناقصه ${bid.id} با موفقیت به چت زوج ارسال گردید 🚀`, 'success');
+  }
+  if (typeof goToInquiryChatThread === 'function') {
+    goToInquiryChatThread();
+  }
+};
+
 window.handleCreateForumThread = function(event) {
   event.preventDefault();
   const title = document.getElementById('forum-thread-title')?.value.trim();
