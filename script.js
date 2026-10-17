@@ -4217,31 +4217,31 @@ if (document.readyState === "loading") {
       let extraSpecHtml = "";
 
       if (cat.includes("تالار") || cat.includes("باغ")) {
-        badgeIcon = "🏰";
+        badgeIcon = '<i data-lucide="building-2" class="w-3.5 h-3.5 text-[#D4AF37]"></i>';
         extraSpecHtml = `
           <div class="flex items-center justify-between bg-[#141A28]/80 border border-[#C5A059]/20 rounded-xl px-2.5 py-1.5 text-[10.5px]">
-            <span class="text-slate-300 font-bold flex items-center gap-1">👥 ظرفیت سالن:</span>
+            <span class="text-slate-300 font-bold flex items-center gap-1"><i data-lucide="users" class="w-3 h-3 text-[#D4AF37]"></i> ظرفیت سالن:</span>
             <span class="text-[#D4AF37] font-black">${v.capacity || '۵۰۰ الی ۱,۲۰۰ نفر'}</span>
           </div>`;
       } else if (cat.includes("آتلیه") || cat.includes("عکاسی")) {
-        badgeIcon = "📸";
+        badgeIcon = '<i data-lucide="camera" class="w-3.5 h-3.5 text-[#D4AF37]"></i>';
         extraSpecHtml = `
           <div class="flex items-center justify-between bg-[#141A28]/80 border border-[#C5A059]/20 rounded-xl px-2.5 py-1.5 text-[10.5px]">
-            <span class="text-slate-300 font-bold flex items-center gap-1">🎞️ نمونه‌کار & فرمالیته:</span>
+            <span class="text-slate-300 font-bold flex items-center gap-1"><i data-lucide="film" class="w-3 h-3 text-[#D4AF37]"></i> نمونه‌کار & فرمالیته:</span>
             <span class="text-amber-200 font-bold">ویدیو تیزر + آلبوم 4K</span>
           </div>`;
       } else if (cat.includes("زیبایی") || cat.includes("آرایشگاه") || cat.includes("میکاپ")) {
-        badgeIcon = "💄";
+        badgeIcon = '<i data-lucide="scissors" class="w-3.5 h-3.5 text-[#D4AF37]"></i>';
         extraSpecHtml = `
           <div class="flex items-center justify-between bg-[#141A28]/80 border border-[#C5A059]/20 rounded-xl px-2.5 py-1.5 text-[10.5px]">
-            <span class="text-slate-300 font-bold flex items-center gap-1">👑 سبُک میکاپ:</span>
+            <span class="text-slate-300 font-bold flex items-center gap-1"><i data-lucide="sparkles" class="w-3 h-3 text-[#D4AF37]"></i> سبُک میکاپ:</span>
             <span class="text-amber-200 font-bold">لایت، اروپایی & VIP</span>
           </div>`;
       } else {
-        badgeIcon = "👗";
+        badgeIcon = '<i data-lucide="shirt" class="w-3.5 h-3.5 text-[#D4AF37]"></i>';
         extraSpecHtml = `
           <div class="flex items-center justify-between bg-[#141A28]/80 border border-[#C5A059]/20 rounded-xl px-2.5 py-1.5 text-[10.5px]">
-            <span class="text-slate-300 font-bold flex items-center gap-1">🎁 پکیج ویژه:</span>
+            <span class="text-slate-300 font-bold flex items-center gap-1"><i data-lucide="gift" class="w-3 h-3 text-[#D4AF37]"></i> پکیج ویژه:</span>
             <span class="text-amber-200 font-bold">سفارشی‌سازی کامل</span>
           </div>`;
       }
@@ -4319,10 +4319,10 @@ if (document.readyState === "loading") {
         grid.className = "flex flex-col space-y-8 w-full";
 
         const sectionsDef = [
-          { key: 'venue', title: '🏰 برترین تالارها و باغ‌های عروسی یزد', catFilter: (cat) => cat.includes('تالار') || cat.includes('باغ') || cat.includes('عمارت') },
-          { key: 'photo', title: '📸 استودیوها و آتلیه‌های عکاسی VIP', catFilter: (cat) => cat.includes('آتلیه') || cat.includes('عکاسی') || cat.includes('فیلمبرداری') },
-          { key: 'beauty', title: '💄 سالن‌های زیبایی و میکاپ اختصاصی عروس', catFilter: (cat) => cat.includes('زیبایی') || cat.includes('آرایشگاه') || cat.includes('میکاپ') },
-          { key: 'boutique', title: '👗 مزون‌ها و تشریفات تشریفاتی لوکس', catFilter: (cat) => cat.includes('مزون') || cat.includes('تشریفات') || cat.includes('لباس') }
+          { key: 'venue', title: 'برترین تالارها و باغ‌های عروسی یزد', catFilter: (cat) => cat.includes('تالار') || cat.includes('باغ') || cat.includes('عمارت') },
+          { key: 'photo', title: 'استودیوها و آتلیه‌های عکاسی VIP', catFilter: (cat) => cat.includes('آتلیه') || cat.includes('عکاسی') || cat.includes('فیلمبرداری') },
+          { key: 'beauty', title: 'سالن‌های زیبایی و میکاپ اختصاصی عروس', catFilter: (cat) => cat.includes('زیبایی') || cat.includes('آرایشگاه') || cat.includes('میکاپ') },
+          { key: 'boutique', title: 'مزون‌ها و تشریفات اختصاصی لوکس', catFilter: (cat) => cat.includes('مزون') || cat.includes('تشریفات') || cat.includes('لباس') }
         ];
 
         let hasSectionRendered = false;
