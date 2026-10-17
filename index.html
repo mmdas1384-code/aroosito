@@ -1321,7 +1321,40 @@
     </div>
   </div>
 
-  <!-- 2. STICKY TOP GLASS FILTER ISLAND & VIEW MODE SWITCHER -->
+  <!-- DYNAMIC CATEGORY TAB BAR (Multi-Category Scalability) -->
+  <div class="bg-[#0e121c]/90 backdrop-blur-2xl border border-[#D4AF37]/40 p-3 rounded-3xl shadow-2xl overflow-hidden">
+    <div class="flex items-center gap-2 overflow-x-auto no-scrollbar py-1 text-xs font-bold">
+      <button type="button" data-cat-title="all" onclick="switchDirectoryCategoryTab('all')" class="dir-cat-tab-btn px-4 py-2 rounded-2xl text-xs font-black bg-[#D4AF37] text-[#0F251A] shadow-[0_0_15px_rgba(212,175,55,0.4)] border border-[#D4AF37] shrink-0 cursor-pointer transition-all">
+        ✨ همه دسته‌ها
+      </button>
+      <button type="button" data-cat-title="venue" onclick="switchDirectoryCategoryTab('venue')" class="dir-cat-tab-btn px-4 py-2 rounded-2xl text-xs font-bold bg-[#141A28]/90 text-slate-300 hover:text-white hover:border-[#D4AF37]/50 border border-[#C5A059]/30 shrink-0 cursor-pointer transition-all">
+        🏰 تالار & باغ عروسی
+      </button>
+      <button type="button" data-cat-title="photo" onclick="switchDirectoryCategoryTab('photo')" class="dir-cat-tab-btn px-4 py-2 rounded-2xl text-xs font-bold bg-[#141A28]/90 text-slate-300 hover:text-white hover:border-[#D4AF37]/50 border border-[#C5A059]/30 shrink-0 cursor-pointer transition-all">
+        📸 آتلیه & عکاسی
+      </button>
+      <button type="button" data-cat-title="beauty" onclick="switchDirectoryCategoryTab('beauty')" class="dir-cat-tab-btn px-4 py-2 rounded-2xl text-xs font-bold bg-[#141A28]/90 text-slate-300 hover:text-white hover:border-[#D4AF37]/50 border border-[#C5A059]/30 shrink-0 cursor-pointer transition-all">
+        💄 سالن زیبایی & میکاپ
+      </button>
+      <button type="button" data-cat-title="boutique" onclick="switchDirectoryCategoryTab('boutique')" class="dir-cat-tab-btn px-4 py-2 rounded-2xl text-xs font-bold bg-[#141A28]/90 text-slate-300 hover:text-white hover:border-[#D4AF37]/50 border border-[#C5A059]/30 shrink-0 cursor-pointer transition-all">
+        👗 مزون & لباس عروس
+      </button>
+      <button type="button" data-cat-title="catering" onclick="switchDirectoryCategoryTab('catering')" class="dir-cat-tab-btn px-4 py-2 rounded-2xl text-xs font-bold bg-[#141A28]/90 text-slate-300 hover:text-white hover:border-[#D4AF37]/50 border border-[#C5A059]/30 shrink-0 cursor-pointer transition-all">
+        ✨ تشریفات & کترینگ
+      </button>
+      <button type="button" data-cat-title="flowers" onclick="switchDirectoryCategoryTab('flowers')" class="dir-cat-tab-btn px-4 py-2 rounded-2xl text-xs font-bold bg-[#141A28]/90 text-slate-300 hover:text-white hover:border-[#D4AF37]/50 border border-[#C5A059]/30 shrink-0 cursor-pointer transition-all">
+        💐 گل‌آرایی & ماشین عروس
+      </button>
+      <button type="button" data-cat-title="cake" onclick="switchDirectoryCategoryTab('cake')" class="dir-cat-tab-btn px-4 py-2 rounded-2xl text-xs font-bold bg-[#141A28]/90 text-slate-300 hover:text-white hover:border-[#D4AF37]/50 border border-[#C5A059]/30 shrink-0 cursor-pointer transition-all">
+        🎂 کیک & شیرینی
+      </button>
+      <button type="button" data-cat-title="music" onclick="switchDirectoryCategoryTab('music')" class="dir-cat-tab-btn px-4 py-2 rounded-2xl text-xs font-bold bg-[#141A28]/90 text-slate-300 hover:text-white hover:border-[#D4AF37]/50 border border-[#C5A059]/30 shrink-0 cursor-pointer transition-all">
+        🎵 موسیقی & دی‌جی
+      </button>
+    </div>
+  </div>
+
+    <!-- 2. STICKY TOP GLASS FILTER ISLAND & VIEW MODE SWITCHER -->
   <div id="directory-primary-filter-island" class="bg-[#0e121c]/90 backdrop-blur-xl border border-[#C5A059]/40 rounded-3xl p-4 sm:p-5 shadow-2xl text-white space-y-4">
 
     <!-- Header Row with Dual View Switcher -->

@@ -4192,164 +4192,211 @@ if (document.readyState === "loading") {
       }
     }
 
+    window.activeDirectoryCategoryTab = "all";
+
+    window.switchDirectoryCategoryTab = function(catTitle) {
+      window.activeDirectoryCategoryTab = catTitle;
+
+      // Update active state on tab buttons
+      const tabs = document.querySelectorAll('.dir-cat-tab-btn');
+      tabs.forEach(btn => {
+        const title = btn.getAttribute('data-cat-title');
+        if (title === catTitle) {
+          btn.className = "dir-cat-tab-btn px-4 py-2 rounded-2xl text-xs font-black bg-[#D4AF37] text-[#0F251A] shadow-[0_0_15px_rgba(212,175,55,0.4)] border border-[#D4AF37] shrink-0 cursor-pointer transition-all";
+        } else {
+          btn.className = "dir-cat-tab-btn px-4 py-2 rounded-2xl text-xs font-bold bg-[#141A28]/90 text-slate-300 hover:text-white hover:border-[#D4AF37]/50 border border-[#C5A059]/30 shrink-0 cursor-pointer transition-all";
+        }
+      });
+
+      if (typeof filterVendors === 'function') {
+        filterVendors();
+      }
+    };
+
+    function renderCategoryTailoredCard(v, isHeroVendor = false) {
+      const isComparing = selectedComparisonVendorIds.includes(v.id);
+      const isFav = favoriteVendorIds.includes(v.id);
+      const localTag = v.district || "صفائیه، یزد";
+      const ratingVal = v.rating || 4.9;
+      const cat = v.categoryTitle || v.category || "خدمات عروسی";
+
+      const borderClasses = isComparing
+        ? "border-2 border-[#D4AF37] shadow-[0_0_20px_rgba(212,175,55,0.4)]"
+        : "border border-[#D4AF37]/30 hover:border-[#D4AF37]";
+
+      let badgeIcon = "✨";
+      let extraSpecHtml = "";
+
+      if (cat.includes("تالار") || cat.includes("باغ")) {
+        badgeIcon = "🏰";
+        extraSpecHtml = `
+          <div class="flex items-center justify-between bg-[#141A28]/80 border border-[#C5A059]/20 rounded-xl px-2.5 py-1.5 text-[10.5px]">
+            <span class="text-slate-300 font-bold flex items-center gap-1">👥 ظرفیت سالن:</span>
+            <span class="text-[#D4AF37] font-black">${v.capacity || '۵۰۰ الی ۱,۲۰۰ نفر'}</span>
+          </div>`;
+      } else if (cat.includes("آتلیه") || cat.includes("عکاسی")) {
+        badgeIcon = "📸";
+        extraSpecHtml = `
+          <div class="flex items-center justify-between bg-[#141A28]/80 border border-[#C5A059]/20 rounded-xl px-2.5 py-1.5 text-[10.5px]">
+            <span class="text-slate-300 font-bold flex items-center gap-1">🎞️ نمونه‌کار & فرمالیته:</span>
+            <span class="text-amber-200 font-bold">ویدیو تیزر + آلبوم 4K</span>
+          </div>`;
+      } else if (cat.includes("زیبایی") || cat.includes("آرایشگاه") || cat.includes("میکاپ")) {
+        badgeIcon = "💄";
+        extraSpecHtml = `
+          <div class="flex items-center justify-between bg-[#141A28]/80 border border-[#C5A059]/20 rounded-xl px-2.5 py-1.5 text-[10.5px]">
+            <span class="text-slate-300 font-bold flex items-center gap-1">👑 سبُک میکاپ:</span>
+            <span class="text-amber-200 font-bold">لایت، اروپایی & VIP</span>
+          </div>`;
+      } else {
+        badgeIcon = "👗";
+        extraSpecHtml = `
+          <div class="flex items-center justify-between bg-[#141A28]/80 border border-[#C5A059]/20 rounded-xl px-2.5 py-1.5 text-[10.5px]">
+            <span class="text-slate-300 font-bold flex items-center gap-1">🎁 پکیج ویژه:</span>
+            <span class="text-amber-200 font-bold">سفارشی‌سازی کامل</span>
+          </div>`;
+      }
+
+      const card = document.createElement('div');
+      card.className = `minimal-vendor-card bg-[#0F172A]/90 backdrop-blur-md ${borderClasses} rounded-3xl overflow-hidden shadow-xl transition-all duration-300 flex flex-col justify-between group cursor-pointer relative ${isHeroVendor ? 'col-span-1 sm:col-span-2 border-[#D4AF37]/60' : ''}`;
+      card.setAttribute('onclick', `openVendorDetailModal(${v.id})`);
+
+      card.innerHTML = `
+        <div class="relative w-full h-48 overflow-hidden bg-slate-900" onmouseenter="playCardVideoTeaser(this)" onmouseleave="stopCardVideoTeaser(this)">
+          <img src="${v.image}" alt="${v.name}" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-108">
+          <video src="${v.videoTeaser || 'https://assets.mixkit.co/videos/preview/mixkit-wedding-couple-walking-in-a-park-41315-large.mp4'}" muted loop playsinline preload="none" class="card-teaser-video absolute inset-0 w-full h-full object-cover opacity-0 transition-opacity duration-500 pointer-events-none"></video>
+          <div class="absolute inset-0 bg-gradient-to-t from-[#0F172A] via-transparent to-black/40"></div>
+
+          <!-- Top Badges -->
+          <div class="absolute top-3 right-3 flex items-center gap-1.5 z-10">
+            <span class="bg-black/70 backdrop-blur-md text-amber-200 border border-[#D4AF37]/40 text-[10px] font-bold px-2.5 py-0.5 rounded-full shadow-sm flex items-center gap-1">
+              <span>${badgeIcon}</span>
+              <span>${cat}</span>
+            </span>
+          </div>
+
+          <div class="absolute top-3 left-3 flex items-center gap-1.5 z-10" onclick="event.stopPropagation()">
+            <button type="button" onclick="toggleVendorComparison(${v.id}, event)" class="w-7 h-7 rounded-full bg-black/60 hover:bg-[#D4AF37] hover:text-[#0F251A] text-white border border-[#D4AF37]/40 backdrop-blur-md flex items-center justify-center transition-all cursor-pointer shadow-sm" title="مقایسه">
+              <i data-lucide="scale" class="w-3.5 h-3.5"></i>
+            </button>
+            <button type="button" onclick="toggleFavoriteVendor(${v.id}, event)" class="w-7 h-7 rounded-full bg-black/60 hover:bg-rose-600 text-white border border-[#D4AF37]/40 backdrop-blur-md flex items-center justify-center transition-all cursor-pointer shadow-sm" title="نشان‌شده">
+              <i data-lucide="heart" class="w-3.5 h-3.5 ${isFav ? 'fill-rose-500 text-rose-500' : ''}"></i>
+            </button>
+          </div>
+
+          <!-- Rating Badge -->
+          <div class="absolute bottom-2.5 right-3 bg-black/70 backdrop-blur-md text-[#D4AF37] border border-[#D4AF37]/40 text-[10px] font-black px-2.5 py-0.5 rounded-full flex items-center gap-1">
+            <i data-lucide="star" class="w-3 h-3 fill-amber-400 text-amber-400"></i>
+            <span>${ratingVal}</span>
+          </div>
+        </div>
+
+        <div class="p-4 flex-1 flex flex-col justify-between space-y-3 text-right">
+          <div>
+            <div class="flex justify-between items-start gap-2">
+              <h3 class="text-sm sm:text-base font-black text-white group-hover:text-[#D4AF37] transition-colors leading-tight">${v.name}</h3>
+            </div>
+            <p class="text-[11px] text-slate-300 font-medium flex items-center gap-1 mt-1">
+              <i data-lucide="map-pin" class="w-3 h-3 text-[#D4AF37]"></i>
+              <span>${localTag}</span>
+            </p>
+          </div>
+
+          ${extraSpecHtml}
+
+          <div class="pt-2 border-t border-[#C5A059]/20 flex items-center justify-between">
+            <div>
+              <span class="text-[9.5px] text-slate-400 block font-medium">شروع قیمت:</span>
+              <span class="text-xs font-black text-[#D4AF37]">${v.price || 'تماس بگیرید'}</span>
+            </div>
+
+            <button type="button" onclick="event.stopPropagation(); openVendorDetailModal(${v.id})" class="gold-shimmer-btn text-[#0F251A] font-black px-3.5 py-1.5 rounded-xl text-xs transition-all cursor-pointer flex items-center gap-1 shadow-sm">
+              <span>پروفایل ➔</span>
+            </button>
+          </div>
+        </div>
+      `;
+      return card;
+    }
+
     function renderVendors(list) {
       const grid = document.getElementById('vendor-grid');
       if (!grid) return;
       grid.innerHTML = '';
 
-      if (directoryViewMode === 'list') {
-        grid.className = "flex flex-col gap-3";
+      const currentTab = window.activeDirectoryCategoryTab || 'all';
+
+      if (currentTab === 'all' && directoryViewMode === 'grid') {
+        grid.className = "flex flex-col space-y-8 w-full";
+
+        const sectionsDef = [
+          { key: 'venue', title: '🏰 برترین تالارها و باغ‌های عروسی یزد', catFilter: (cat) => cat.includes('تالار') || cat.includes('باغ') || cat.includes('عمارت') },
+          { key: 'photo', title: '📸 استودیوها و آتلیه‌های عکاسی VIP', catFilter: (cat) => cat.includes('آتلیه') || cat.includes('عکاسی') || cat.includes('فیلمبرداری') },
+          { key: 'beauty', title: '💄 سالن‌های زیبایی و میکاپ اختصاصی عروس', catFilter: (cat) => cat.includes('زیبایی') || cat.includes('آرایشگاه') || cat.includes('میکاپ') },
+          { key: 'boutique', title: '👗 مزون‌ها و تشریفات تشریفاتی لوکس', catFilter: (cat) => cat.includes('مزون') || cat.includes('تشریفات') || cat.includes('لباس') }
+        ];
+
+        let hasSectionRendered = false;
+
+        sectionsDef.forEach(sec => {
+          const secVendors = list.filter(v => sec.catFilter(v.categoryTitle || v.category || ''));
+          if (secVendors.length > 0) {
+            hasSectionRendered = true;
+            const secWrapper = document.createElement('div');
+            secWrapper.className = "space-y-4 bg-[#0e121c]/60 backdrop-blur-xl border border-[#C5A059]/30 rounded-3xl p-5 shadow-2xl";
+
+            secWrapper.innerHTML = `
+              <div class="flex items-center justify-between border-b border-[#C5A059]/20 pb-3">
+                <h3 class="text-sm sm:text-base font-black text-white flex items-center gap-2">
+                  <span class="w-2.5 h-2.5 rounded-full bg-[#D4AF37] animate-pulse"></span>
+                  <span>${sec.title}</span>
+                </h3>
+                <button type="button" onclick="switchDirectoryCategoryTab('${sec.key}')" class="text-xs font-bold text-[#D4AF37] hover:text-amber-300 transition-colors flex items-center gap-1 cursor-pointer">
+                  <span>مشاهده همه ➔</span>
+                </button>
+              </div>
+              <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sec-cards-grid"></div>
+            `;
+
+            const cardsGrid = secWrapper.querySelector('.sec-cards-grid');
+            secVendors.slice(0, 4).forEach(v => {
+              cardsGrid.appendChild(renderCategoryTailoredCard(v));
+            });
+
+            grid.appendChild(secWrapper);
+          }
+        });
+
+        if (!hasSectionRendered) {
+          grid.className = "grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5";
+          list.forEach((v, index) => {
+            grid.appendChild(renderCategoryTailoredCard(v, index === 0));
+          });
+        }
       } else {
-        grid.className = "grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5";
+        // Dedicated Tab Grid View
+        if (directoryViewMode === 'list') {
+          grid.className = "flex flex-col gap-3";
+        } else {
+          grid.className = "grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5";
+        }
+
+        if (list.length === 0) {
+          grid.innerHTML = `
+            <div class="col-span-full py-12 text-center text-slate-400 bg-[#0e121c]/80 border border-[#C5A059]/20 rounded-3xl p-6">
+              <p class="text-sm font-bold text-amber-200">هیچ تامین‌کننده‌ای با این مشخصات یافت نشد.</p>
+            </div>`;
+          return;
+        }
+
+        list.forEach((v, index) => {
+          grid.appendChild(renderCategoryTailoredCard(v, index === 0 && directoryViewMode === 'grid'));
+        });
       }
 
-      list.forEach((v, index) => {
-        const card = document.createElement('div');
-        const isComparing = selectedComparisonVendorIds.includes(v.id);
-        const isHeroVendor = (index === 0 && directoryViewMode === 'grid');
-
-        const borderClasses = isComparing
-          ? "border-2 border-[#D4AF37] shadow-[0_0_20px_rgba(212,175,55,0.4)]"
-          : "border border-[#D4AF37]/30 hover:border-[#D4AF37]";
-
-        if (directoryViewMode === 'list') {
-          card.className = `minimal-vendor-card bg-[#0F172A]/90 backdrop-blur-md ${borderClasses} rounded-3xl overflow-hidden shadow-xl transition-all duration-300 flex flex-col md:flex-row group cursor-pointer relative`;
-        } else if (isHeroVendor) {
-          card.className = `minimal-vendor-card col-span-1 sm:col-span-2 bg-[#0F172A]/95 backdrop-blur-md ${borderClasses} rounded-3xl overflow-hidden shadow-2xl transition-all duration-300 flex flex-col justify-between group cursor-pointer relative border-[#D4AF37]/60`;
-        } else {
-          card.className = `minimal-vendor-card bg-[#0F172A]/90 backdrop-blur-md ${borderClasses} rounded-3xl overflow-hidden shadow-xl transition-all duration-300 flex flex-col justify-between group cursor-pointer relative`;
-        }
-        card.setAttribute('onclick', `openVendorDetailModal(${v.id})`);
-
-        const localTag = v.district || "صفائیه، یزد";
-        const ratingVal = v.rating || 4.9;
-        const isFav = favoriteVendorIds.includes(v.id);
-
-        if (directoryViewMode === 'list') {
-          card.innerHTML = `
-            <div class="relative w-full md:w-64 h-40 overflow-hidden bg-slate-900 shrink-0" onmouseenter="playCardVideoTeaser(this)" onmouseleave="stopCardVideoTeaser(this)">
-              <img src="${v.image}" alt="${v.name}" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-108">
-                <video src="${v.videoTeaser || 'https://assets.mixkit.co/videos/preview/mixkit-wedding-couple-walking-in-a-park-41315-large.mp4'}" muted loop playsinline preload="none" class="card-teaser-video absolute inset-0 w-full h-full object-cover opacity-0 transition-opacity duration-500 pointer-events-none"></video>
-              <div class="absolute inset-0 bg-gradient-to-t from-[#0F172A] via-transparent to-black/40"></div>
-
-              <!-- Top Floating Pills -->
-              <div class="absolute top-2.5 right-2.5 flex items-center gap-1.5 z-10">
-                <span class="bg-black/60 backdrop-blur-md text-amber-200 border border-[#D4AF37]/40 text-[9.5px] font-bold px-2 py-0.5 rounded-full shadow-sm">
-                  ${v.category}
-                </span>
-              </div>
-
-              <div class="absolute top-2.5 left-2.5 flex items-center gap-1 z-10" onclick="event.stopPropagation()">
-                <button type="button" onclick="open360TourModal(${v.id})" class="px-2 py-0.5 rounded-full text-[9.5px] font-bold bg-[#1E293B]/90 text-amber-200 border border-[#D4AF37]/50 backdrop-blur-md flex items-center gap-1 shadow-xs hover:scale-105 cursor-pointer">
-                  <span>360°</span>
-                </button>
-
-                <div class="bg-black/70 backdrop-blur-md text-[#D4AF37] border border-[#D4AF37]/40 text-[10px] font-black px-2 py-0.5 rounded-full flex items-center gap-0.5">
-                  <i data-lucide="star" class="w-3 h-3 fill-amber-400 text-amber-400"></i>
-                  <span>${ratingVal}</span>
-                </div>
-              </div>
-            </div>
-
-            <div class="p-4 flex-1 flex flex-col justify-between space-y-2 text-right">
-              <div>
-                <div class="flex justify-between items-start gap-2">
-                  <h3 class="text-sm sm:text-base font-black text-white group-hover:text-[#D4AF37] transition-colors leading-tight">${v.name}</h3>
-                  <button type="button" onclick="toggleFavoriteVendor(${v.id}, event)" class="text-rose-500 hover:scale-110 transition-transform cursor-pointer" title="نشان‌شده">
-                    <i data-lucide="heart" class="w-4 h-4 ${isFav ? 'fill-rose-500' : ''}"></i>
-                  </button>
-                </div>
-                <span class="text-[11px] text-slate-300 font-medium block mt-1">📍 ${localTag}</span>
-              </div>
-
-              <div class="flex items-center justify-between pt-2 border-t border-slate-800 gap-2">
-                <span class="text-[#D4AF37] font-black text-xs sm:text-sm">${v.priceRange || 'استعلام قیمت'}</span>
-                <div class="flex items-center gap-2">
-                  <button type="button" onclick="event.stopPropagation(); openQuickViewDrawer(${v.id}, event)" class="bg-[#1E293B] hover:bg-slate-700 text-amber-200 border border-[#D4AF37]/40 text-[11px] font-bold px-2.5 py-1.5 rounded-xl transition-all cursor-pointer flex items-center gap-1" title="مشاهده سریع">
-                    <i data-lucide="eye" class="w-3.5 h-3.5 text-[#D4AF37]"></i>
-                    <span>سریع</span>
-                  </button>
-                  <button type="button" onclick="event.stopPropagation(); openVendorDetailModal(${v.id})" class="bg-gradient-to-r from-[#D4AF37] to-[#F3E5AB] text-[#0F251A] text-[11px] font-black px-3 py-1.5 rounded-xl shadow-md transition-all hover:scale-105 cursor-pointer">
-                    مشاهده & استعلام
-                  </button>
-                </div>
-              </div>
-            </div>
-          `;
-        } else {
-          card.innerHTML = `
-            <div>
-              <div class="card-img-container relative overflow-hidden bg-slate-900" onmouseenter="playCardVideoTeaser(this)" onmouseleave="stopCardVideoTeaser(this)">
-                <img src="${v.image}" alt="${v.name}" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-108">
-                <video src="${v.videoTeaser || 'https://assets.mixkit.co/videos/preview/mixkit-wedding-couple-walking-in-a-park-41315-large.mp4'}" muted loop playsinline preload="none" class="card-teaser-video absolute inset-0 w-full h-full object-cover opacity-0 transition-opacity duration-500 pointer-events-none"></video>
-                <div class="absolute inset-0 bg-gradient-to-t from-[#0F172A] via-transparent to-black/30"></div>
-
-                <!-- Corner Floating Micro-Pills -->
-                <!-- Top-Right: Gold Star Rating Badge & Verified Shield Badge -->
-                <div class="absolute top-2.5 right-2.5 flex items-center gap-1.5 z-10">
-                  <div class="bg-black/80 backdrop-blur-md text-[#D4AF37] border border-[#D4AF37]/60 text-[10px] font-black px-2.5 py-0.5 rounded-full flex items-center gap-1 shadow-lg">
-                    <i data-lucide="star" class="w-3 h-3 fill-amber-400 text-amber-400"></i>
-                    <span>⭐ ${ratingVal}</span>
-                  </div>
-                  ${v.verified ? `
-                    <div class="bg-emerald-950/90 backdrop-blur-md text-emerald-300 border border-emerald-500/60 text-[9.5px] font-black px-2 py-0.5 rounded-full shadow-md flex items-center gap-0.5">
-                      <span>تایید شده 🛡️</span>
-                    </div>
-                  ` : ''}
-                </div>
-
-                <!-- Top-Left: Heart, Scales/Compare, and 360 Tour Micro-Icons -->
-                <div class="absolute top-2.5 left-2.5 flex items-center gap-1.5 z-10" onclick="event.stopPropagation()">
-                  <button type="button" onclick="toggleFavoriteVendor(${v.id}, event)" class="w-7 h-7 rounded-full bg-black/70 backdrop-blur-md border border-white/20 flex items-center justify-center text-rose-500 shadow-sm transition-transform hover:scale-110 active:scale-95 cursor-pointer" title="نشان‌شده">
-                    <i data-lucide="heart" class="w-3.5 h-3.5 ${isFav ? 'fill-rose-500 text-rose-500' : 'text-rose-500'}"></i>
-                  </button>
-
-                  <button type="button" onclick="toggleVendorComparison(${v.id}, event)" class="w-7 h-7 rounded-full ${isComparing ? 'bg-[#D4AF37] text-[#0F251A]' : 'bg-black/70 text-amber-200 border border-amber-300/40'} backdrop-blur-md flex items-center justify-center shadow-sm transition-transform hover:scale-110 active:scale-95 cursor-pointer" title="مقایسه تامین‌کننده">
-                    <i data-lucide="columns-2" class="w-3.5 h-3.5"></i>
-                  </button>
-
-                  <button type="button" onclick="open360TourModal(${v.id})" class="px-2 py-0.5 rounded-full text-[9px] font-black bg-[#1E293B]/90 text-amber-200 border border-[#D4AF37]/50 backdrop-blur-md flex items-center gap-0.5 shadow-xs hover:scale-105 cursor-pointer" title="تور ۳۶۰°">
-                    <i data-lucide="compass" class="w-2.5 h-2.5 text-[#D4AF37]"></i>
-                    <span>۳۶۰°</span>
-                  </button>
-                </div>
-              </div>
-
-              <!-- Compact Body Content -->
-              <div class="p-3 space-y-1.5 text-right">
-                <div class="flex justify-between items-start gap-1">
-                  <h3 class="text-xs sm:text-sm font-black text-white group-hover:text-[#D4AF37] transition-colors leading-snug truncate">${v.name}</h3>
-                  <button type="button" onclick="toggleFavoriteVendor(${v.id}, event)" class="text-rose-500 hover:scale-110 transition-transform cursor-pointer shrink-0" title="نشان‌شده">
-                    <i data-lucide="heart" class="w-3.5 h-3.5 ${isFav ? 'fill-rose-500' : ''}"></i>
-                  </button>
-                </div>
-
-                <div class="flex justify-between items-center text-[10.5px] text-slate-300 font-medium">
-                  <span>📍 ${localTag}</span>
-                  <span class="text-[#D4AF37] font-black text-xs">${v.priceRange || 'استعلام قیمت'}</span>
-                </div>
-                <div class="text-[10px] text-emerald-400 font-bold flex items-center gap-1">
-                  <span>🟢 پاسخگویی سریع (زیر ۱۵ دقیقه)</span>
-                </div>
-              </div>
-            </div>
-
-              <!-- Prominent Action CTA & Quick View Trigger -->
-              <div class="p-3 pt-1 text-right flex items-center gap-2">
-                <button type="button" onclick="event.stopPropagation(); openQuickViewDrawer(${v.id}, event)" class="bg-[#141A28] hover:bg-slate-800 text-amber-200 border border-[#D4AF37]/40 text-[11px] font-bold py-2 px-2.5 rounded-xl transition-all flex items-center justify-center gap-1 cursor-pointer shrink-0" title="مشاهده سریع">
-                  <i data-lucide="eye" class="w-3.5 h-3.5 text-[#D4AF37]"></i>
-                  <span>مشاهده سریع</span>
-                </button>
-                <button type="button" onclick="event.stopPropagation(); openVendorDetailModal(${v.id})" class="gold-shimmer-btn flex-1 text-[#0F251A] text-[11px] font-black py-2 px-3 rounded-xl shadow-lg transition-all flex items-center justify-center gap-1 cursor-pointer transform hover:scale-[1.02]">
-                  <span>مشاهده پروفایل ➔</span>
-                </button>
-              </div>
-          `;
-        }
-        grid.appendChild(card);
-      });
-
-      lucide.createIcons();
+      if (window.lucide && typeof window.lucide.createIcons === 'function') {
+        window.lucide.createIcons();
+      }
     }
 
     function openLocationModal() {
