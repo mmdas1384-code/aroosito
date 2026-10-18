@@ -18743,3 +18743,103 @@ window.initCardVideoHoverListeners = function() {
         }, { passive: true });
       });
     })();
+
+  // Global Handlers for All-in-One Bento Planning Dashboard Overlay Modals
+  window.openExpandModal = function(type) {
+    const overlay = document.getElementById('planner-expand-overlay');
+    const titleContainer = document.getElementById('planner-overlay-title');
+    const bodyContainer = document.getElementById('planner-overlay-body');
+    if (!overlay || !titleContainer || !bodyContainer) return;
+
+    if (type === 'budget') {
+      titleContainer.innerHTML = '<span class="text-xs font-bold text-[#D4AF37] block">مدیریت کامل مالی</span><h2 class="text-xl font-black text-white">ریز هزینه‌ها و بودجه‌بندی هوشمند</h2>';
+      bodyContainer.innerHTML = `
+        <div class="bg-[#141A28] border border-[#C5A059]/30 rounded-3xl p-6 space-y-4 text-right">
+          <h3 class="text-sm font-black text-[#D4AF37]">فهرست اقلام و پیش‌فاکتورهای مالی:</h3>
+          <div class="space-y-2 text-xs font-bold">
+            <div class="p-3 bg-[#0E121C] rounded-xl flex justify-between"><span>تالار & ورودی باغ:</span><span class="text-amber-200">۱۲۰,۰۰۰,۰۰۰ تومان</span></div>
+            <div class="p-3 bg-[#0E121C] rounded-xl flex justify-between"><span>آتلیه & فیلمبرداری 4K:</span><span class="text-amber-200">۶۵,۰۰۰,۰۰۰ تومان</span></div>
+            <div class="p-3 bg-[#0E121C] rounded-xl flex justify-between"><span>سالن زیبایی & میکاپ VIP:</span><span class="text-amber-200">۲۵,۰۰۰,۰۰۰ تومان</span></div>
+            <div class="p-3 bg-[#0E121C] rounded-xl flex justify-between"><span>مزون لباس عروس:</span><span class="text-amber-200">۳۵,۰۰۰,۰۰۰ تومان</span></div>
+          </div>
+        </div>`;
+    } else if (type === 'timeline') {
+      titleContainer.innerHTML = '<span class="text-xs font-bold text-[#D4AF37] block">مدیریت کامل زمان‌بندی</span><h2 class="text-xl font-black text-white">جدول ساعتی و کرونولوژیک روز عروسی</h2>';
+      bodyContainer.innerHTML = `
+        <div class="bg-[#141A28] border border-[#C5A059]/30 rounded-3xl p-6 space-y-4 text-right">
+          <h3 class="text-sm font-black text-[#D4AF37]">جدول زمانی گام‌به‌گام مراسم:</h3>
+          <div class="space-y-2 text-xs font-bold">
+            <div class="p-3 bg-[#0E121C] rounded-xl flex justify-between"><span class="text-[#D4AF37]">۰۸:۰۰ - ۱۱:۳۰</span><span>حضور در سالن زیبایی & میکاپ</span></div>
+            <div class="p-3 bg-[#0E121C] rounded-xl flex justify-between"><span class="text-[#D4AF37]">۱۲:۰۰ - ۱۳:۳۰</span><span>تحویل گل ماشین & حرکت به سمت آتلیه</span></div>
+            <div class="p-3 bg-[#0E121C] rounded-xl flex justify-between"><span class="text-[#D4AF37]">۱۴:۰۰ - ۱۷:۳۰</span><span>عکاسی فرمالیته & لوکیشن کویر یزد</span></div>
+            <div class="p-3 bg-[#0E121C] rounded-xl flex justify-between"><span class="text-[#D4AF37]">۱۸:۳۰ - ۲۳:۰۰</span><span>ورود به تالار & برگزاری مراسم عقد و شام</span></div>
+          </div>
+        </div>`;
+    } else if (type === 'checklist') {
+      titleContainer.innerHTML = '<span class="text-xs font-bold text-[#D4AF37] block">مدیریت کامل چک‌لیست</span><h2 class="text-xl font-black text-white">چک‌لیست جامع ۱۲ ماهه وظایف</h2>';
+      bodyContainer.innerHTML = `
+        <div class="bg-[#141A28] border border-[#C5A059]/30 rounded-3xl p-6 space-y-4 text-right">
+          <h3 class="text-sm font-black text-[#D4AF37]">وظایف اولویت‌دار مراسم:</h3>
+          <div class="space-y-2 text-xs font-bold">
+            <label class="p-3 bg-[#0E121C] rounded-xl flex justify-between cursor-pointer"><span>تعیین تاریخ دقیق و رزرو اولیه تالار</span><input type="checkbox" checked class="accent-[#D4AF37] w-4 h-4"></label>
+            <label class="p-3 bg-[#0E121C] rounded-xl flex justify-between cursor-pointer"><span>انتخاب آتلیه و هماهنگی مجوز عکاسی</span><input type="checkbox" checked class="accent-[#D4AF37] w-4 h-4"></label>
+            <label class="p-3 bg-[#0E121C] rounded-xl flex justify-between cursor-pointer"><span>پرو و سفارش لباس عروس</span><input type="checkbox" class="accent-[#D4AF37] w-4 h-4"></label>
+            <label class="p-3 bg-[#0E121C] rounded-xl flex justify-between cursor-pointer"><span>چاپ یا ارسال کارت دعوت آنلاین</span><input type="checkbox" class="accent-[#D4AF37] w-4 h-4"></label>
+          </div>
+        </div>`;
+    } else if (type === 'guests') {
+      titleContainer.innerHTML = '<span class="text-xs font-bold text-[#D4AF37] block">مدیریت کامل کارت دعوت</span><h2 class="text-xl font-black text-white">لیست مهمانان و پاسخ‌های RSVP</h2>';
+      bodyContainer.innerHTML = `
+        <div class="bg-[#141A28] border border-[#C5A059]/30 rounded-3xl p-6 space-y-4 text-right">
+          <h3 class="text-sm font-black text-[#D4AF37]">لیست و وضعیت صندلی‌های مهمانان:</h3>
+          <p class="text-xs text-slate-300 font-medium">مهمانان تاییدشده (۱۸۰ نفر)، در انتظار پاسخ (۴۵ نفر) و عذرخواهی (۱۵ نفر).</p>
+        </div>`;
+    } else if (type === 'inquiries') {
+      titleContainer.innerHTML = '<span class="text-xs font-bold text-[#D4AF37] block">مرکز استعلام‌ها</span><h2 class="text-xl font-black text-white">چت مستقیم و پیگیری پیش‌فاکتورها</h2>';
+      bodyContainer.innerHTML = `
+        <div class="bg-[#141A28] border border-[#C5A059]/30 rounded-3xl p-6 space-y-4 text-right">
+          <h3 class="text-sm font-black text-[#D4AF37]">استعلام‌های فعال با مدیریت برندها:</h3>
+          <p class="text-xs text-slate-300 font-medium">جهت پیگیری گفت‌وگوها به مرکز چت متصل می‌شوید.</p>
+        </div>`;
+    } else {
+      titleContainer.innerHTML = '<span class="text-xs font-bold text-[#D4AF37] block">تامین‌کنندگان من</span><h2 class="text-xl font-black text-white">لیست بوک‌مارک‌ها & تامین‌کنندگان رزروشده</h2>';
+      bodyContainer.innerHTML = `
+        <div class="bg-[#141A28] border border-[#C5A059]/30 rounded-3xl p-6 space-y-4 text-right">
+          <h3 class="text-sm font-black text-[#D4AF37]">مجموعه‌های رزروشده در یزد:</h3>
+          <p class="text-xs text-slate-300 font-medium">تالار مشیرالممالک، آتلیه کویر، سالن زیبایی رویال و مزون لورنت.</p>
+        </div>`;
+    }
+
+    overlay.classList.remove('hidden');
+    if (window.lucide) lucide.createIcons();
+  };
+
+  window.closeExpandModal = function() {
+    const overlay = document.getElementById('planner-expand-overlay');
+    if (overlay) overlay.classList.add('hidden');
+  };
+
+  window.openInviteCompanionsModal = function() {
+    const m = document.getElementById('modal-invite-companions');
+    if (m) {
+      m.classList.remove('hidden');
+      m.classList.add('flex');
+    }
+  };
+
+  window.closeInviteCompanionsModal = function() {
+    const m = document.getElementById('modal-invite-companions');
+    if (m) {
+      m.classList.add('hidden');
+      m.classList.remove('flex');
+    }
+  };
+
+  window.copyCompanionInviteLink = function() {
+    const input = document.getElementById('companion-invite-link-input');
+    if (input) {
+      input.select();
+      navigator.clipboard.writeText(input.value);
+      alert('لینک دعوت همراه با موفقیت کپی شد! ✨');
+    }
+  };
