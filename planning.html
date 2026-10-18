@@ -129,7 +129,7 @@
     <!-- ROW 1 - ASYMMETRIC BENTO GRID: BUDGET (LARGE 5-COLS), TIMELINE (3-COLS), CHECKLIST (4-COLS) -->
     <div class="grid grid-cols-1 lg:grid-cols-12 gap-6 items-stretch">
 
-      <!-- BOX 1: BUDGET WIDGET (LARGE 5-COLS) WITH SVG DONUT CHART -->
+      <!-- CARD 1: خلاصه بودجه (BUDGET CARD) WITH EMBEDDED SVG DONUT RING CHART -->
       <div class="lg:col-span-5 bg-[#0e121c]/90 backdrop-blur-xl border border-[#C5A059]/40 rounded-3xl p-5 sm:p-6 flex flex-col justify-between space-y-4 shadow-2xl relative overflow-hidden">
         <div class="flex items-center justify-between border-b border-[#C5A059]/20 pb-3 z-10">
           <div class="space-y-0.5 text-right">
@@ -145,39 +145,39 @@
           </button>
         </div>
 
-        <!-- Donut Chart & Metrics Row -->
+        <!-- Embedded Donut Ring Chart & Metrics -->
         <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 items-center py-2 z-10">
-          <!-- Glassmorphism SVG Donut Chart -->
+          <!-- Glassmorphism SVG Donut Chart with Glowing Arcs -->
           <div class="relative w-36 h-36 mx-auto flex items-center justify-center">
             <svg class="w-full h-full -rotate-90 transform" viewBox="0 0 100 100">
-              <!-- Background Circle -->
+              <!-- Background Muted Circle -->
               <circle cx="50" cy="50" r="38" stroke="#1E293B" stroke-width="9" fill="transparent" />
-              <!-- Paid Arc (Green/Gold) - 60% -->
-              <circle cx="50" cy="50" r="38" stroke="#10B981" stroke-width="9" fill="transparent"
-                      stroke-dasharray="238.76" stroke-dashoffset="95.5" stroke-linecap="round" />
-              <!-- Remaining Arc (Gold) - 40% -->
-              <circle cx="50" cy="50" r="38" stroke="#D4AF37" stroke-width="9" fill="transparent"
-                      stroke-dasharray="238.76" stroke-dashoffset="143.25" stroke-linecap="round" class="drop-shadow-[0_0_8px_rgba(212,175,55,0.4)]" />
+              <!-- Paid Arc (Champagne Gold #C5A059) - 60% -->
+              <circle cx="50" cy="50" r="38" stroke="#C5A059" stroke-width="9" fill="transparent"
+                      stroke-dasharray="238.76" stroke-dashoffset="95.5" stroke-linecap="round" class="drop-shadow-[0_0_10px_rgba(197,160,89,0.5)]" />
+              <!-- Remaining Arc (Muted Obsidian/Cyan) - 40% -->
+              <circle cx="50" cy="50" r="38" stroke="#38BDF8" stroke-width="9" fill="transparent"
+                      stroke-dasharray="238.76" stroke-dashoffset="143.25" stroke-linecap="round" class="drop-shadow-[0_0_8px_rgba(56,189,248,0.4)]" />
             </svg>
             <div class="absolute inset-0 flex flex-col items-center justify-center text-center">
-              <span class="text-xs font-bold text-slate-400 block">پرداخت‌شده</span>
+              <span class="text-[10px] font-bold text-slate-400 block">پیشرفت مالی</span>
               <span class="text-lg font-black text-[#D4AF37]">۶۰٪</span>
             </div>
           </div>
 
           <!-- Budget Breakdown Badges -->
           <div class="space-y-2 text-right">
-            <div class="bg-[#141A28] border border-[#C5A059]/30 rounded-2xl p-2.5 space-y-0.5">
+            <div class="bg-[#141A28] border border-[#C5A059]/30 rounded-2xl p-2.5 space-y-0.5 shadow-sm">
               <span class="text-[10px] font-bold text-slate-400 block">سقف کل مصوب:</span>
               <span class="text-xs sm:text-sm font-black text-white block">۳۵۰,۰۰۰,۰۰۰ تومان</span>
             </div>
-            <div class="bg-[#141A28] border border-emerald-500/30 rounded-2xl p-2.5 space-y-0.5">
-              <span class="text-[10px] font-bold text-emerald-400 block">پرداخت‌شده (بیعانه + تسویه):</span>
-              <span class="text-xs font-black text-emerald-400 block">۲۱۰,۰۰۰,۰۰۰ تومان</span>
+            <div class="bg-[#141A28] border border-[#C5A059]/50 rounded-2xl p-2.5 space-y-0.5 shadow-sm">
+              <span class="text-[10px] font-bold text-[#C5A059] block">پرداخت‌شده (طلایی):</span>
+              <span class="text-xs font-black text-[#D4AF37] block">۲۱۰,۰۰۰,۰۰۰ تومان</span>
             </div>
-            <div class="bg-[#141A28] border border-amber-500/30 rounded-2xl p-2.5 space-y-0.5">
-              <span class="text-[10px] font-bold text-amber-300 block">باقیمانده اقساط:</span>
-              <span class="text-xs font-black text-amber-300 block">۱۴۰,۰۰۰,۰۰۰ تومان</span>
+            <div class="bg-[#141A28] border border-sky-500/30 rounded-2xl p-2.5 space-y-0.5 shadow-sm">
+              <span class="text-[10px] font-bold text-sky-400 block">باقیمانده اقساط:</span>
+              <span class="text-xs font-black text-sky-300 block">۱۴۰,۰۰۰,۰۰۰ تومان</span>
             </div>
           </div>
         </div>
@@ -188,7 +188,7 @@
         </button>
       </div>
 
-      <!-- BOX 2: TIMELINE WIDGET (3-COLS) WITH GLOWING CONNECTED NODES -->
+      <!-- CARD 2: زمان‌بندی روز عروسی (TIMELINE CARD) WITH GLOWING CONNECTED NODES -->
       <div class="lg:col-span-3 bg-[#0e121c]/90 backdrop-blur-xl border border-[#C5A059]/40 rounded-3xl p-5 sm:p-6 flex flex-col justify-between space-y-4 shadow-2xl">
         <div class="flex items-center justify-between border-b border-[#C5A059]/20 pb-3">
           <div class="space-y-0.5 text-right">
@@ -203,44 +203,41 @@
           </button>
         </div>
 
-        <!-- Glowing Vertical Connected Timeline Nodes -->
-        <div class="space-y-3 py-1 text-right text-xs">
-          <!-- Node 1 -->
-          <div class="flex items-start gap-3 relative">
-            <div class="w-3 h-3 rounded-full bg-[#D4AF37] ring-4 ring-[#D4AF37]/20 shrink-0 mt-1 shadow-[0_0_10px_#D4AF37]"></div>
+        <!-- Glowing Timeline Node Connector -->
+        <div class="space-y-3 py-1 text-right text-xs relative pl-2">
+          <!-- Continuous Vertical Glow Line -->
+          <div class="absolute right-1.5 top-3 bottom-3 w-0.5 bg-gradient-to-b from-[#D4AF37] via-emerald-400 to-[#D4AF37] shadow-[0_0_8px_#D4AF37]"></div>
+
+          <!-- Node 1: 08:00 -->
+          <div class="flex items-start gap-3 relative z-10">
+            <div class="w-3.5 h-3.5 rounded-full bg-[#D4AF37] ring-4 ring-[#D4AF37]/30 shrink-0 mt-0.5 shadow-[0_0_12px_#D4AF37] animate-pulse"></div>
             <div class="space-y-0.5">
               <div class="flex items-center gap-2">
-                <span class="font-black text-[#D4AF37]">۰۸:۰۰</span>
-                <span class="text-white font-black text-[11px]">آرایشگاه عروس & میکاپ VIP</span>
+                <span class="bg-[#D4AF37]/20 border border-[#D4AF37]/40 text-[#D4AF37] text-[10px] font-black px-2 py-0.5 rounded-md">۰۸:۰۰</span>
+                <span class="text-white font-black text-[11px]">آرایشگاه عروس & میکاپ</span>
               </div>
               <span class="text-[10px] text-slate-400 font-medium block">مسئول: مریم (ساقدوش)</span>
             </div>
           </div>
 
-          <!-- Connector Line -->
-          <div class="w-0.5 h-4 bg-gradient-to-b from-[#D4AF37] to-emerald-400 mr-1.5 -my-1"></div>
-
-          <!-- Node 2 -->
-          <div class="flex items-start gap-3 relative">
-            <div class="w-3 h-3 rounded-full bg-emerald-400 ring-4 ring-emerald-400/20 shrink-0 mt-1 shadow-[0_0_10px_#10B981]"></div>
+          <!-- Node 2: 11:30 -->
+          <div class="flex items-start gap-3 relative z-10">
+            <div class="w-3.5 h-3.5 rounded-full bg-emerald-400 ring-4 ring-emerald-400/30 shrink-0 mt-0.5 shadow-[0_0_12px_#10B981] animate-pulse"></div>
             <div class="space-y-0.5">
               <div class="flex items-center gap-2">
-                <span class="font-black text-emerald-400">۱۳:۳۰</span>
-                <span class="text-white font-black text-[11px]">تحویل گل ماشین & عکاسی</span>
+                <span class="bg-emerald-950/80 border border-emerald-500/40 text-emerald-400 text-[10px] font-black px-2 py-0.5 rounded-md">۱۱:۳۰</span>
+                <span class="text-white font-black text-[11px]">تحویل گل ماشین & فرمالیته</span>
               </div>
               <span class="text-[10px] text-slate-400 font-medium block">مسئول: علی (داماد)</span>
             </div>
           </div>
 
-          <!-- Connector Line -->
-          <div class="w-0.5 h-4 bg-gradient-to-b from-emerald-400 to-[#D4AF37] mr-1.5 -my-1"></div>
-
-          <!-- Node 3 -->
-          <div class="flex items-start gap-3 relative">
-            <div class="w-3 h-3 rounded-full bg-[#D4AF37] ring-4 ring-[#D4AF37]/20 shrink-0 mt-1 shadow-[0_0_10px_#D4AF37]"></div>
+          <!-- Node 3: 18:30 -->
+          <div class="flex items-start gap-3 relative z-10">
+            <div class="w-3.5 h-3.5 rounded-full bg-[#D4AF37] ring-4 ring-[#D4AF37]/30 shrink-0 mt-0.5 shadow-[0_0_12px_#D4AF37] animate-pulse"></div>
             <div class="space-y-0.5">
               <div class="flex items-center gap-2">
-                <span class="font-black text-[#D4AF37]">۱۸:۳۰</span>
+                <span class="bg-[#D4AF37]/20 border border-[#D4AF37]/40 text-[#D4AF37] text-[10px] font-black px-2 py-0.5 rounded-md">۱۸:۳۰</span>
                 <span class="text-white font-black text-[11px]">ورود به تالار & سفره عقد</span>
               </div>
               <span class="text-[10px] text-slate-400 font-medium block">تیم تشریفات تالار</span>
@@ -254,7 +251,7 @@
         </button>
       </div>
 
-      <!-- BOX 3: CHECKLIST WIDGET (4-COLS) WITH PRIORITY TAGS & METALLIC CHECKBOXES -->
+      <!-- CARD 3: چک‌لیست فوری (CHECKLIST CARD) WITH TOP PROGRESS BAR & PRIORITY TAGS -->
       <div class="lg:col-span-4 bg-[#0e121c]/90 backdrop-blur-xl border border-[#C5A059]/40 rounded-3xl p-5 sm:p-6 flex flex-col justify-between space-y-4 shadow-2xl">
         <div class="flex items-center justify-between border-b border-[#C5A059]/20 pb-3">
           <div class="space-y-0.5 text-right">
@@ -262,16 +259,27 @@
               <i data-lucide="check-square" class="w-3.5 h-3.5 text-[#D4AF37]"></i>
               <span>اقدامات اولویت‌دار</span>
             </span>
-            <h2 class="text-base font-black text-white">چک‌لیست جاری و اولویت‌ها</h2>
+            <h2 class="text-base font-black text-white">چک‌لیست جاری و آمادگی</h2>
           </div>
           <button type="button" onclick="openExpandModal('checklist')" class="text-xs font-bold text-[#D4AF37] hover:text-amber-300 transition-colors cursor-pointer">
             <i data-lucide="maximize-2" class="w-3.5 h-3.5 text-[#D4AF37]"></i>
           </button>
         </div>
 
+        <!-- Prominent Top Progress Bar (% تکمیل آمادگی) -->
+        <div class="space-y-1 text-right">
+          <div class="flex justify-between items-center text-xs font-black">
+            <span class="text-slate-300">میزان آمادگی کل:</span>
+            <span class="text-[#D4AF37]">۷۰٪ تکمیل‌حده</span>
+          </div>
+          <div class="w-full bg-slate-800 h-2 rounded-full overflow-hidden border border-slate-700">
+            <div class="bg-gradient-to-r from-[#C5A059] via-[#D4AF37] to-emerald-400 h-full rounded-full shadow-[0_0_10px_#D4AF37]" style="width: 70%;"></div>
+          </div>
+        </div>
+
         <!-- Task List with Priority Tags -->
         <div class="space-y-2.5 text-right text-xs font-bold">
-          <div class="bg-[#141A28] border border-[#C5A059]/30 rounded-2xl p-3 flex items-center justify-between gap-2 shadow-sm">
+          <div class="bg-[#141A28] border border-[#C5A059]/30 rounded-2xl p-2.5 flex items-center justify-between gap-2 shadow-sm">
             <div class="flex items-center gap-2.5">
               <input type="checkbox" checked class="accent-[#D4AF37] w-4 h-4 rounded cursor-pointer">
               <span class="text-white text-[11px]">تعیین سقف بودجه & رزرو تالار</span>
@@ -279,7 +287,7 @@
             <span class="bg-rose-950/80 text-rose-400 border border-rose-500/40 text-[9.5px] px-2 py-0.5 rounded-full font-black shrink-0">فوری</span>
           </div>
 
-          <div class="bg-[#141A28] border border-[#C5A059]/30 rounded-2xl p-3 flex items-center justify-between gap-2 shadow-sm">
+          <div class="bg-[#141A28] border border-[#C5A059]/30 rounded-2xl p-2.5 flex items-center justify-between gap-2 shadow-sm">
             <div class="flex items-center gap-2.5">
               <input type="checkbox" class="accent-[#D4AF37] w-4 h-4 rounded cursor-pointer">
               <span class="text-white text-[11px]">پرو نهایی لباس عروس در مزون</span>
@@ -287,7 +295,7 @@
             <span class="bg-amber-950/80 text-amber-300 border border-amber-500/40 text-[9.5px] px-2 py-0.5 rounded-full font-black shrink-0">ضروری</span>
           </div>
 
-          <div class="bg-[#141A28] border border-[#C5A059]/30 rounded-2xl p-3 flex items-center justify-between gap-2 shadow-sm">
+          <div class="bg-[#141A28] border border-[#C5A059]/30 rounded-2xl p-2.5 flex items-center justify-between gap-2 shadow-sm">
             <div class="flex items-center gap-2.5">
               <input type="checkbox" class="accent-[#D4AF37] w-4 h-4 rounded cursor-pointer">
               <span class="text-white text-[11px]">هماهنگی منوی شام با مدیریت باغ‌سرا</span>
@@ -307,7 +315,7 @@
     <!-- ROW 2 - GUESTS & RSVP (6-COLS), BRIDAL PARTY (3-COLS), INQUIRIES (3-COLS) -->
     <div class="grid grid-cols-1 lg:grid-cols-12 gap-6 items-stretch">
 
-      <!-- BOX 1: GUEST RSVP TRACKER (6-COLS) WITH GAUGES & PILL BADGES -->
+      <!-- CARD 4: مدیریت مهمانان & RSVP (GUEST CARD) WITH 3-PART SEGMENTED STATUS BAR -->
       <div class="lg:col-span-6 bg-[#0e121c]/90 backdrop-blur-xl border border-[#C5A059]/40 rounded-3xl p-5 sm:p-6 flex flex-col justify-between space-y-4 shadow-2xl">
         <div class="flex items-center justify-between border-b border-[#C5A059]/20 pb-3">
           <div class="space-y-0.5 text-right">
@@ -323,28 +331,32 @@
           </button>
         </div>
 
-        <!-- RSVP Gauge Cards -->
+        <!-- 3-Part Segmented Status Bar -->
+        <div class="space-y-2">
+          <div class="flex justify-between text-xs font-bold text-slate-300">
+            <span>مجموع مهمانان: ۲۴۰ نفر</span>
+            <span class="text-[#D4AF37]">تفکیک پاسخ‌ها</span>
+          </div>
+          <div class="w-full bg-slate-800 h-3 rounded-full overflow-hidden flex border border-slate-700 p-0.5 gap-0.5">
+            <div class="bg-emerald-400 h-full rounded-l-full" style="width: 75%;" title="قطعی ۷۵٪"></div>
+            <div class="bg-amber-400 h-full" style="width: 19%;" title="در انتظار ۱۹٪"></div>
+            <div class="bg-rose-500 h-full rounded-r-full" style="width: 6%;" title="عذرخواهی ۶٪"></div>
+          </div>
+        </div>
+
+        <!-- RSVP Status Pills -->
         <div class="grid grid-cols-3 gap-3 text-center">
-          <div class="bg-[#141A28] border border-emerald-500/30 rounded-2xl p-3 space-y-1 shadow-md">
-            <span class="text-xs font-black text-emerald-400 block">۱۸۰ نفر</span>
-            <span class="text-[10px] text-slate-300 font-bold block">حضور قطعی (۷۵٪)</span>
-            <div class="w-full bg-slate-800 h-1.5 rounded-full overflow-hidden mt-1">
-              <div class="bg-emerald-400 h-full" style="width: 75%;"></div>
-            </div>
+          <div class="bg-[#141A28] border border-emerald-500/40 rounded-2xl p-2.5 space-y-1 shadow-md">
+            <span class="bg-emerald-950/80 text-emerald-400 border border-emerald-500/40 text-[10px] font-black px-2.5 py-0.5 rounded-full inline-block">حضور قطعی</span>
+            <span class="text-sm font-black text-white block">۱۸۰ نفر (۷۵٪)</span>
           </div>
-          <div class="bg-[#141A28] border border-amber-500/30 rounded-2xl p-3 space-y-1 shadow-md">
-            <span class="text-xs font-black text-amber-300 block">۴۵ نفر</span>
-            <span class="text-[10px] text-slate-300 font-bold block">در انتظار پاسخ (۱۹٪)</span>
-            <div class="w-full bg-slate-800 h-1.5 rounded-full overflow-hidden mt-1">
-              <div class="bg-amber-300 h-full" style="width: 19%;"></div>
-            </div>
+          <div class="bg-[#141A28] border border-amber-500/40 rounded-2xl p-2.5 space-y-1 shadow-md">
+            <span class="bg-amber-950/80 text-amber-300 border border-amber-500/40 text-[10px] font-black px-2.5 py-0.5 rounded-full inline-block">در انتظار</span>
+            <span class="text-sm font-black text-white block">۴۵ نفر (۱۹٪)</span>
           </div>
-          <div class="bg-[#141A28] border border-rose-500/30 rounded-2xl p-3 space-y-1 shadow-md">
-            <span class="text-xs font-black text-rose-400 block">۱۵ نفر</span>
-            <span class="text-[10px] text-slate-300 font-bold block">عذرخواهی (۶٪)</span>
-            <div class="w-full bg-slate-800 h-1.5 rounded-full overflow-hidden mt-1">
-              <div class="bg-rose-400 h-full" style="width: 6%;"></div>
-            </div>
+          <div class="bg-[#141A28] border border-rose-500/40 rounded-2xl p-2.5 space-y-1 shadow-md">
+            <span class="bg-rose-950/80 text-rose-400 border border-rose-500/40 text-[10px] font-black px-2.5 py-0.5 rounded-full inline-block">عذرخواهی</span>
+            <span class="text-sm font-black text-white block">۱۵ نفر (۶٪)</span>
           </div>
         </div>
 
@@ -354,7 +366,7 @@
         </button>
       </div>
 
-      <!-- BOX 2: BRIDAL PARTY / COMPANIONS WIDGET (3-COLS) WITH AVATARS & PROGRESS -->
+      <!-- CARD 5: همراهان برنامه‌ریزی (BRIDAL PARTY CARD) WITH AVATAR STACKS & PERCENT BADGES -->
       <div class="lg:col-span-3 bg-[#0e121c]/90 backdrop-blur-xl border border-[#C5A059]/40 rounded-3xl p-5 sm:p-6 flex flex-col justify-between space-y-4 shadow-2xl">
         <div class="flex items-center justify-between border-b border-[#C5A059]/20 pb-3">
           <div class="space-y-0.5 text-right">
@@ -369,28 +381,36 @@
           </button>
         </div>
 
-        <!-- Companion Cards Stack -->
-        <div class="space-y-2.5 text-right">
+        <!-- Avatar Stacks with Colored Rings & Percent Badges -->
+        <div class="space-y-3 text-right">
+          <!-- Companion 1: سارا 100% -->
           <div class="bg-[#141A28] border border-[#C5A059]/30 rounded-2xl p-2.5 flex items-center justify-between shadow-sm">
-            <div class="flex items-center gap-2">
-              <img src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=100" class="w-8 h-8 rounded-full object-cover border border-[#D4AF37]">
+            <div class="flex items-center gap-2.5">
+              <div class="relative">
+                <img src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=100" class="w-9 h-9 rounded-full object-cover ring-2 ring-emerald-400 p-0.5">
+                <span class="absolute -top-1 -right-1 bg-emerald-500 text-[#07090E] text-[8.5px] font-black px-1 rounded-full">۱۰۰٪</span>
+              </div>
               <div>
-                <span class="text-xs font-black text-white block">مریم (ساقدوش)</span>
+                <span class="text-xs font-black text-white block">سارا (ساقدوش)</span>
                 <span class="text-[9.5px] text-slate-400 block">هماهنگی سالن زیبایی</span>
               </div>
             </div>
-            <span class="text-[10px] font-black text-emerald-400 bg-emerald-950/80 px-2 py-0.5 rounded-full border border-emerald-500/30">۱۰۰٪</span>
+            <span class="text-[10px] font-black text-emerald-400 bg-emerald-950/80 px-2 py-0.5 rounded-full border border-emerald-500/30">تکمیل</span>
           </div>
 
+          <!-- Companion 2: علی 50% -->
           <div class="bg-[#141A28] border border-[#C5A059]/30 rounded-2xl p-2.5 flex items-center justify-between shadow-sm">
-            <div class="flex items-center gap-2">
-              <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=100" class="w-8 h-8 rounded-full object-cover border border-[#D4AF37]">
+            <div class="flex items-center gap-2.5">
+              <div class="relative">
+                <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=100" class="w-9 h-9 rounded-full object-cover ring-2 ring-amber-400 p-0.5">
+                <span class="absolute -top-1 -right-1 bg-amber-400 text-[#07090E] text-[8.5px] font-black px-1 rounded-full">۵۰٪</span>
+              </div>
               <div>
-                <span class="text-xs font-black text-white block">رضا (ساقدوش)</span>
+                <span class="text-xs font-black text-white block">علی (ساقدوش)</span>
                 <span class="text-[9.5px] text-slate-400 block">تحویل گل & ماشین</span>
               </div>
             </div>
-            <span class="text-[10px] font-black text-amber-300 bg-amber-950/80 px-2 py-0.5 rounded-full border border-amber-500/30">۵۰٪</span>
+            <span class="text-[10px] font-black text-amber-300 bg-amber-950/80 px-2 py-0.5 rounded-full border border-amber-500/30">در جریان</span>
           </div>
         </div>
 
@@ -400,7 +420,7 @@
         </button>
       </div>
 
-      <!-- BOX 3: INQUIRIES & OFFERS WIDGET (3-COLS) -->
+      <!-- CARD 6: استعلام‌ها & پیش‌فاکتورها (INQUIRIES CARD) WITH PULSING GLOW STATUS CHIPS -->
       <div class="lg:col-span-3 bg-[#0e121c]/90 backdrop-blur-xl border border-[#C5A059]/40 rounded-3xl p-5 sm:p-6 flex flex-col justify-between space-y-4 shadow-2xl">
         <div class="flex items-center justify-between border-b border-[#C5A059]/20 pb-3">
           <div class="space-y-0.5 text-right">
@@ -415,21 +435,29 @@
           </button>
         </div>
 
-        <div class="space-y-2 text-right text-xs font-bold">
+        <div class="space-y-2.5 text-right text-xs font-bold">
+          <!-- Status Chip 1: Green Glow -->
           <div class="bg-[#141A28] border border-[#C5A059]/25 rounded-2xl p-2.5 flex items-center justify-between shadow-sm">
             <div>
               <span class="text-white block font-black text-[11px]">مشیرالممالک یزد</span>
               <span class="text-[9.5px] text-slate-400 font-medium block">منوی VIP صادر شد</span>
             </div>
-            <span class="text-[9.5px] font-black text-emerald-400 bg-emerald-950/60 px-2 py-0.5 rounded-full border border-emerald-500/30">تاییدشده</span>
+            <span class="relative flex items-center gap-1.5 bg-emerald-950/80 text-emerald-400 border border-emerald-500/40 px-2.5 py-1 rounded-full text-[9.5px] font-black shadow-[0_0_10px_rgba(16,185,129,0.3)]">
+              <span class="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-ping"></span>
+              <span>تاییدشده</span>
+            </span>
           </div>
 
+          <!-- Status Chip 2: Amber Glow -->
           <div class="bg-[#141A28] border border-[#C5A059]/25 rounded-2xl p-2.5 flex items-center justify-between shadow-sm">
             <div>
               <span class="text-white block font-black text-[11px]">استودیو کویر</span>
               <span class="text-[9.5px] text-slate-400 font-medium block">در انتظار تاریخ</span>
             </div>
-            <span class="text-[9.5px] font-black text-amber-300 bg-amber-950/60 px-2 py-0.5 rounded-full border border-amber-500/30">در جریان</span>
+            <span class="relative flex items-center gap-1.5 bg-amber-950/80 text-amber-300 border border-amber-500/40 px-2.5 py-1 rounded-full text-[9.5px] font-black shadow-[0_0_10px_rgba(245,158,11,0.3)]">
+              <span class="w-1.5 h-1.5 rounded-full bg-amber-300 animate-pulse"></span>
+              <span>در جریان</span>
+            </span>
           </div>
         </div>
 
