@@ -1275,6 +1275,15 @@ if (document.readyState === "loading") {
       { id: "chk-24", title: "مرور جدول ساعتی استاد روز مراسم و استراحت و آرامش", timeframe: "هفته و روز قبل", completed: false, dueDate: "روز قبل", priority: "urgent", category: "عمومی", attachedVendorId: null, vendorStatus: null }
     ];
 
+    try {
+      const savedChecklist = localStorage.getItem('aroosi_checklist_db');
+      if (savedChecklist) {
+        let parsed = JSON.parse(savedChecklist);
+        if (parsed && parsed.length) staticChecklist = parsed;
+      }
+    } catch(e) {}
+
+
     let activeChecklistFilter = "همه";
     let activeChecklistStatusFilter = "ALL"; // ALL | UNCOMPLETED | COMPLETED
 
@@ -19008,19 +19017,13 @@ window.initCardVideoHoverListeners = function() {
           <div class="bg-[#141A28] border border-[#C5A059]/30 rounded-2xl p-4 space-y-3 shadow-md">
             <span class="text-xs font-black text-[#D4AF37] block">ثبت هزینه جدید:</span>
             <div class="grid grid-cols-1 sm:grid-cols-4 gap-2">
-              <input type="text" placeholder="عنوان هزینه (مثلاً بیعانه فیلمبرداری)" class="bg-[#0E121C] border border-[#C5A059]/30 rounded-xl px-3 py-2 text-xs text-white">
-              <select class="bg-[#0E121C] border border-[#C5A059]/30 rounded-xl px-3 py-2 text-xs text-white">
-                <option value="venue">تالار & تشریفات</option>
-                <option value="atelier">آتلیه & عکاسی</option>
-                <option value="dress">مزون & لباس عروس</option>
-                <option value="beauty">سالن زیبایی & آرایشگاه</option>
-                <option value="catering">کترینگ & شام</option>
-              </select>
-              <select class="bg-[#0E121C] border border-[#C5A059]/30 rounded-xl px-3 py-2 text-xs text-white">
+              <input type="text" id="expense-input-title" placeholder="عنوان هزینه (مثلاً بیعانه فیلمبرداری)" class="bg-[#0E121C] border border-[#C5A059]/30 rounded-xl px-3 py-2 text-xs text-white">
+              <input type="text" id="expense-input-amount" placeholder="مبلغ (تومان) - مثلاً ۱۰,۰۰۰,۰۰۰" class="bg-[#0E121C] border border-[#C5A059]/30 rounded-xl px-3 py-2 text-xs text-white">
+              <select id="expense-input-method" class="bg-[#0E121C] border border-[#C5A059]/30 rounded-xl px-3 py-2 text-xs text-white">
                 <option value="cash">نقدی (تسویه یکجا)</option>
                 <option value="installments">اقساطی (جدول سررسید)</option>
               </select>
-              <button type="button" onclick="openBudgetItemModal()" class="gold-shimmer-btn text-[#0F251A] font-black px-4 py-2 rounded-xl text-xs cursor-pointer">+ ثبت هزینه</button>
+              <button type="button" onclick="handleDirectAddExpense()" class="gold-shimmer-btn text-[#0F251A] font-black px-4 py-2 rounded-xl text-xs cursor-pointer">+ ثبت هزینه</button>
             </div>
           </div>
 
@@ -19221,8 +19224,33 @@ window.initCardVideoHoverListeners = function() {
 
 // Global modal triggers for expandable overlay actions
 window.openAddTaskModal = function() {
-    let title = prompt("عنوان اقدام جدید برای چک‌لیست:");
-    if (!title || !title.trim()) return;
+    const modal = document.getElementById('modal-add-checklist-task');
+    if (modal) {
+      modal.classList.remove('hidden');
+      modal.classList.add('flex');
+    }
+};
+
+window.closeAddTaskModal = function() {
+    const modal = document.getElementById('modal-add-checklist-task');
+    if (modal) {
+      modal.classList.add('hidden');
+      modal.classList.remove('flex');
+    }
+};
+
+window.handleAddTaskSubmit = function(e) {
+    if (e && e.preventDefault) e.preventDefault();
+
+    const titleInput = document.getElementById('task-input-title');
+    const timeframeSelect = document.getElementById('task-input-timeframe');
+    const prioritySelect = document.getElementById('task-input-priority');
+    const categorySelect = document.getElementById('task-input-category');
+
+    if (!titleInput || !titleInput.value.trim()) {
+      showToast('لطفاً عنوان اقدام را وارد کنید.', 'warning');
+      return;
+    }
 
     let checklist = JSON.parse(localStorage.getItem('aroosi_checklist_db') || '[]');
     if (!checklist || !checklist.length) {
@@ -19231,12 +19259,12 @@ window.openAddTaskModal = function() {
 
     const newTask = {
       id: "chk-" + Date.now(),
-      title: title.trim(),
-      timeframe: "۱ ماه قبل",
+      title: titleInput.value.trim(),
+      timeframe: timeframeSelect ? timeframeSelect.value : "۱ ماه قبل",
       completed: false,
       dueDate: "بزودی",
-      priority: "urgent",
-      category: "عمومی",
+      priority: prioritySelect ? prioritySelect.value : "urgent",
+      category: categorySelect ? categorySelect.value : "عمومی",
       attachedVendorId: null,
       vendorStatus: null
     };
@@ -19245,9 +19273,11 @@ window.openAddTaskModal = function() {
     localStorage.setItem('aroosi_checklist_db', JSON.stringify(checklist));
     if (typeof staticChecklist !== 'undefined') staticChecklist = checklist;
 
+    titleInput.value = '';
+    window.closeAddTaskModal();
+    if (typeof window.renderOverlayChecklist === 'function') window.renderOverlayChecklist();
     if (typeof renderChecklistTimeline === 'function') renderChecklistTimeline();
-    if (typeof openExpandModal === 'function') openExpandModal('checklist');
-    showToast(`اقدام «${title.trim()}» به چک‌لیست اضافه شد.`, 'success');
+    showToast(`اقدام «${newTask.title}» با موفقیت به چک‌لیست اضافه شد ✨`, 'success');
 };
 
 window.openVendorSelectModal = function(taskId) {
@@ -19584,4 +19614,38 @@ window.deleteOverlayGuest = function(id) {
     localStorage.setItem('aroosi_guest_db', JSON.stringify(guests));
     window.renderOverlayGuests();
     showToast('مهمان با موفقیت حذف شد.', 'info');
+};
+
+
+window.handleDirectAddExpense = function() {
+    const titleInput = document.getElementById('expense-input-title');
+    const amountInput = document.getElementById('expense-input-amount');
+    const methodSelect = document.getElementById('expense-input-method');
+
+    if (!titleInput || !titleInput.value.trim()) {
+      showToast('لطفاً عنوان هزینه را وارد کنید.', 'warning');
+      return;
+    }
+
+    let amountStr = amountInput && amountInput.value ? amountInput.value.replace(/,/g, '') : "10000000";
+    let amount = parseInt(amountStr) || 10000000;
+
+    let userBudget = JSON.parse(localStorage.getItem('userBudgetState') || '{"totalBudget": 350000000, "spent": 210000000, "lineItems": []}');
+    if (!userBudget.lineItems) userBudget.lineItems = [];
+
+    userBudget.spent += amount;
+    userBudget.lineItems.push({
+      id: "exp-" + Date.now(),
+      title: titleInput.value.trim(),
+      amount: amount,
+      party: "groom",
+      status: methodSelect && methodSelect.value === 'cash' ? "paid" : "deposit"
+    });
+
+    localStorage.setItem('userBudgetState', JSON.stringify(userBudget));
+    titleInput.value = '';
+    if (amountInput) amountInput.value = '';
+    if (typeof renderPlannerBudgetSummary === 'function') renderPlannerBudgetSummary();
+    if (typeof openExpandModal === 'function') openExpandModal('budget');
+    showToast(`هزینه «${titleInput.value.trim()}» با موفقیت ثبت شد ✨`, 'success');
 };

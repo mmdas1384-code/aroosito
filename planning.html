@@ -570,6 +570,76 @@
   </div>
 
   <!-- INVITE COMPANIONS MODAL -->
+
+  <!-- HIGH-END GLASSMORPHISM ADD TASK MODAL (#modal-add-checklist-task) -->
+  <div id="modal-add-checklist-task" class="fixed inset-0 z-[100000] hidden items-center justify-center p-4 bg-black/80 backdrop-blur-md">
+    <div class="bg-[#0e121c] border border-[#C5A059] rounded-3xl max-w-lg w-full p-6 sm:p-8 space-y-6 text-right text-white shadow-2xl relative max-h-[90vh] overflow-y-auto no-scrollbar">
+      <div class="flex items-center justify-between border-b border-[#C5A059]/30 pb-4">
+        <div class="space-y-1">
+          <span class="text-[10px] font-bold text-[#D4AF37] bg-[#D4AF37]/10 px-2.5 py-1 rounded-full border border-[#D4AF37]/30">
+            برنامه‌ریزی و چک‌لیست
+          </span>
+          <h3 class="text-lg font-black text-white mt-1">افزودن اقدام جدید به چک‌لیست عروسی</h3>
+        </div>
+        <button type="button" onclick="closeAddTaskModal()" class="text-slate-400 hover:text-white bg-[#161C2B] p-2 rounded-full border border-[#C5A059]/30 transition-all cursor-pointer">
+          <i data-lucide="x" class="w-4 h-4"></i>
+        </button>
+      </div>
+
+      <form id="form-add-checklist-task" onsubmit="event.preventDefault(); handleAddTaskSubmit(event);" class="space-y-4">
+        <div>
+          <label class="block text-xs font-bold text-slate-300 mb-1.5">عنوان اقدام جدید *</label>
+          <input type="text" id="task-input-title" required class="w-full bg-[#161C2B] border border-[#C5A059]/30 rounded-2xl px-4 py-3 text-xs text-white focus:outline-none focus:border-[#D4AF37]" placeholder="مثلاً: رزرو کیک طبقاتی و شیرینی سنتی یزد">
+        </div>
+
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+          <div>
+            <label class="block text-xs font-bold text-slate-300 mb-1.5">فاز زمانی *</label>
+            <select id="task-input-timeframe" class="w-full bg-[#161C2B] border border-[#C5A059]/30 rounded-2xl px-3 py-2.5 text-xs text-white focus:outline-none focus:border-[#D4AF37]">
+              <option value="۱۲ تا ۹ ماه قبل">۱۲ تا ۹ ماه قبل</option>
+              <option value="۶ تا ۳ ماه قبل">۶ تا ۳ ماه قبل</option>
+              <option value="۱ ماه قبل" selected>۱ ماه قبل</option>
+              <option value="هفته و روز قبل">هفته و روز قبل</option>
+            </select>
+          </div>
+
+          <div>
+            <label class="block text-xs font-bold text-slate-300 mb-1.5">درجه اولویت *</label>
+            <select id="task-input-priority" class="w-full bg-[#161C2B] border border-[#C5A059]/30 rounded-2xl px-3 py-2.5 text-xs text-white focus:outline-none focus:border-[#D4AF37]">
+              <option value="urgent">فوری (قرمز)</option>
+              <option value="suggested">ضروری (طلایی)</option>
+              <option value="normal">عادی (آبی)</option>
+            </select>
+          </div>
+        </div>
+
+        <div>
+          <label class="block text-xs font-bold text-slate-300 mb-1.5">دسته‌بندی مربوطه</label>
+          <select id="task-input-category" class="w-full bg-[#161C2B] border border-[#C5A059]/30 rounded-2xl px-4 py-2.5 text-xs text-white focus:outline-none focus:border-[#D4AF37]">
+            <option value="عمومی">عمومی</option>
+            <option value="تالار و باغ تشریفات">تالار و باغ تشریفات</option>
+            <option value="آتلیه و عکاسی">آتلیه و عکاسی</option>
+            <option value="سالن زیبایی">سالن زیبایی</option>
+            <option value="مزون و لباس عروس">مزون و لباس عروس</option>
+            <option value="کیک و شیرینی‌فروشی">کیک و شیرینی‌فروشی</option>
+            <option value="طلافروشی و جواهرفروشی">طلافروشی و جواهرفروشی</option>
+            <option value="گل‌آرایی و ماشین عروس">گل‌آرایی و ماشین عروس</option>
+          </select>
+        </div>
+
+        <div class="flex items-center justify-end gap-3 pt-4 border-t border-[#C5A059]/30">
+          <button type="button" onclick="closeAddTaskModal()" class="px-5 py-2.5 rounded-2xl text-xs font-bold bg-[#161C2B] text-slate-300 hover:text-white border border-slate-700 cursor-pointer">
+            انصراف
+          </button>
+          <button type="submit" class="px-6 py-2.5 rounded-2xl text-xs font-black bg-[#D4AF37] hover:bg-[#C5A059] text-[#07090E] shadow-lg transition-all cursor-pointer flex items-center gap-1.5">
+            <i data-lucide="check" class="w-4 h-4"></i>
+            <span>ثبت اقدام جدید</span>
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+
   <div id="modal-invite-companions" class="fixed inset-0 z-[99999] bg-black/80 backdrop-blur-md items-center justify-center p-4 hidden">
     <div class="bg-[#0e121c] border border-[#C5A059]/50 rounded-3xl p-6 max-w-md w-full text-right space-y-5 shadow-2xl">
       <div class="flex items-center justify-between border-b border-[#C5A059]/20 pb-3">
