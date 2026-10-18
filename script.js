@@ -3868,11 +3868,14 @@ if (document.readyState === "loading") {
       filterVendors();
     };
 
-    window.updateDirectoryGuestPriceEstimator = function(val) {
-      const valEl = document.getElementById('guest-estimator-val');
-      if (valEl) valEl.innerText = `${val} نفر`;
-      filterVendors();
-      showToast(`⚡ برآورد قیمت زنده برای ${val} مهمان اعمال گردید`, 'info');
+        window.updateDirectoryGuestPriceEstimator = function(val) {
+      const drawerLbl = document.getElementById('drawer-guest-val');
+      const textVal = val >= 1000 ? 'همه ظرفیت‌ها' : `${val} نفر`;
+      if (drawerLbl) drawerLbl.textContent = textVal;
+
+      if (typeof filterVendors === 'function') {
+        filterVendors();
+      }
     };
 
     function updateCapacitySliderLabel(val) {
@@ -4694,6 +4697,8 @@ if (document.readyState === "loading") {
     }
 
     function filterVendors() {
+      const discountToggle = document.getElementById('adv-discount-toggle');
+      const discountOnly = discountToggle ? discountToggle.checked : false;
       const instantSearchInput = document.getElementById('directory-instant-search');
       const searchInput = document.getElementById('search-input');
       const headerSearchInput = document.getElementById('header-search-input');
@@ -4730,6 +4735,9 @@ if (document.readyState === "loading") {
       const featCatering = document.getElementById('feat-catering')?.checked || false;
 
       let filtered = vendors.filter(v => {
+        if (discountOnly && !(v.hasDiscount || v.discountBadge || (v.price && v.price.includes('تخفیف')))) {
+          return false;
+        }
         const matchesSearch = !search ||
                               v.name.toLowerCase().includes(search) ||
                               v.category.toLowerCase().includes(search) ||

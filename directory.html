@@ -276,6 +276,41 @@
       </button>
     </div>
 
+    <!-- DISCOUNTED VENDORS ONLY TOGGLE -->
+    <div class="bg-[#141A28] border border-[#C5A059]/30 rounded-2xl p-3 flex items-center justify-between">
+      <label for="adv-discount-toggle" class="text-xs font-black text-amber-300 flex items-center gap-1.5 cursor-pointer">
+        <i data-lucide="tag" class="w-4 h-4 text-[#D4AF37]"></i>
+        <span>فقط تامین‌کنندگان دارای تخفیف ویژه</span>
+      </label>
+      <input type="checkbox" id="adv-discount-toggle" onchange="filterVendors()" class="accent-[#D4AF37] w-4 h-4 rounded cursor-pointer">
+    </div>
+
+    <!-- GUEST CAPACITY SLIDER (INSIDE DRAWER) -->
+    <div class="space-y-2 pb-2 border-b border-slate-800">
+      <div class="flex items-center justify-between text-xs font-black text-amber-300">
+        <label class="flex items-center gap-1.5">
+          <i data-lucide="users" class="w-3.5 h-3.5 text-[#D4AF37]"></i>
+          <span>حداکثر ظرفیت مهمانان:</span>
+        </label>
+        <span id="drawer-guest-val" class="text-white font-bold">۵۰۰ نفر</span>
+      </div>
+      <input type="range" id="directory-guest-price-slider" min="50" max="1000" step="50" value="500" oninput="updateDirectoryGuestPriceEstimator(this.value)" class="w-full accent-[#D4AF37]">
+    </div>
+
+    <!-- STYLE & THEME OPTIONS (INSIDE DRAWER) -->
+    <div class="space-y-2 pb-2 border-b border-slate-800">
+      <label class="text-xs font-black text-amber-300 flex items-center gap-1.5">
+        <i data-lucide="sparkles" class="w-3.5 h-3.5 text-[#D4AF37]"></i>
+        <span>سبک و استایل برگزاری:</span>
+      </label>
+      <div class="grid grid-cols-2 gap-2 text-xs font-bold">
+        <button type="button" onclick="switchDirectoryCategoryTab('all')" class="bg-[#141A28] hover:bg-[#1E293B] text-amber-200 border border-[#C5A059]/30 py-2 rounded-xl text-center cursor-pointer">سنتی یزد</button>
+        <button type="button" onclick="switchDirectoryCategoryTab('all')" class="bg-[#141A28] hover:bg-[#1E293B] text-amber-200 border border-[#C5A059]/30 py-2 rounded-xl text-center cursor-pointer">مدرن & لوکس</button>
+        <button type="button" onclick="switchDirectoryCategoryTab('all')" class="bg-[#141A28] hover:bg-[#1E293B] text-amber-200 border border-[#C5A059]/30 py-2 rounded-xl text-center cursor-pointer">فضای باز</button>
+        <button type="button" onclick="switchDirectoryCategoryTab('all')" class="bg-[#141A28] hover:bg-[#1E293B] text-amber-300 border border-[#D4AF37]/50 py-2 rounded-xl text-center cursor-pointer font-black">VIP ویژه</button>
+      </div>
+    </div>
+
     <!-- 0. SORTING SELECTION DROPDOWN -->
     <div class="space-y-2 pb-2 border-b border-slate-800">
       <label class="text-xs font-black text-amber-300 flex items-center gap-1.5">
