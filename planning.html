@@ -1,0 +1,534 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl" class="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>عروسی تو | مرکز برنامه‌ریزی هوشمند جشن عروسی یزد</title>
+
+  <!-- Fontsource Vazirmatn -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fontsource/vazirmatn@5.0.0/index.css">
+
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          colors: {
+            gold: {
+              300: '#F3E5AB',
+              400: '#D4AF37',
+              500: '#C5A059',
+              600: '#B8860B',
+            },
+            obsidian: {
+              900: '#07090E',
+              800: '#0E121C',
+              700: '#141A28',
+            }
+          },
+          fontFamily: {
+            sans: ['Vazirmatn', 'sans-serif'],
+          }
+        }
+      }
+    }
+  </script>
+
+  <!-- Lucide Icons -->
+  <script src="https://unpkg.com/lucide@latest"></script>
+  <link rel="stylesheet" href="style.css">
+  <link rel="manifest" href="manifest.json">
+</head>
+<body class="bg-[#07090E] text-white font-sans antialiased min-h-screen selection:bg-[#D4AF37] selection:text-[#07090E] no-scrollbar">
+
+  <!-- TOP HEADER NAV BAR -->
+  <header class="sticky top-0 z-50 bg-[#07090E]/90 backdrop-blur-2xl border-b border-[#C5A059]/30 px-4 sm:px-8 py-3.5 shadow-2xl">
+    <div class="max-w-7xl mx-auto flex items-center justify-between">
+      <a href="index.html" class="flex items-center gap-3 group">
+        <div class="w-10 h-10 rounded-2xl bg-gradient-to-br from-[#D4AF37] to-[#8C6D23] p-0.5 shadow-lg group-hover:scale-105 transition-transform">
+          <div class="w-full h-full bg-[#07090E] rounded-[14px] flex items-center justify-center">
+            <i data-lucide="crown" class="w-5 h-5 text-[#D4AF37]"></i>
+          </div>
+        </div>
+        <div class="space-y-0.5 text-right">
+          <span class="text-sm font-black text-white group-hover:text-[#D4AF37] transition-colors block">عروسی تو</span>
+          <span class="text-[10px] text-slate-400 font-bold block">مرکز برنامه‌ریزی هوشمند یزد</span>
+        </div>
+      </a>
+
+      <div class="flex items-center gap-3">
+        <button type="button" onclick="openInviteCompanionsModal()" class="bg-[#141A28] hover:bg-[#1E293B] text-[#D4AF37] border border-[#C5A059]/40 px-3.5 py-2 rounded-2xl text-xs font-bold transition-all cursor-pointer flex items-center gap-1.5 shadow-md">
+          <i data-lucide="user-plus" class="w-4 h-4 text-[#D4AF37]"></i>
+          <span>دعوت همراه</span>
+        </button>
+
+        <a href="index.html?tab=planner" class="gold-shimmer-btn text-[#0F251A] font-black px-4 py-2 rounded-2xl text-xs transition-all shadow-md flex items-center gap-1.5 cursor-pointer">
+          <i data-lucide="layout-dashboard" class="w-4 h-4 text-[#0F251A]"></i>
+          <span>بازگشت به سایت اصلی</span>
+        </a>
+      </div>
+    </div>
+  </header>
+
+  <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 space-y-8 relative z-10">
+
+    <!-- TOP STATUS BANNER (خلاصه وضعیت & همراهان) -->
+    <div class="bg-[#0e121c]/95 backdrop-blur-2xl border border-[#C5A059]/40 rounded-3xl p-6 sm:p-8 shadow-2xl space-y-6">
+      <div class="flex flex-col lg:flex-row items-start lg:items-center justify-between gap-6">
+
+        <!-- Couple & Status Info -->
+        <div class="space-y-2 text-right">
+          <div class="inline-flex items-center gap-2 bg-[#D4AF37]/15 text-[#D4AF37] border border-[#D4AF37]/30 px-3.5 py-1 rounded-full text-xs font-black">
+            <i data-lucide="heart" class="w-3.5 h-3.5 text-[#D4AF37]"></i>
+            <span>داشبورد اختصاصی برنامه‌ریزی: علی & سارا</span>
+          </div>
+          <h1 class="text-2xl sm:text-3xl font-black text-[#F7F5F0]">اتاق فرمان و کنترل هوشمند برنامه‌ریزی عروسی</h1>
+          <p class="text-xs sm:text-sm text-slate-300 font-medium">پایش لحظه‌ای بودجه، چک‌لیست وظایف، مهمانان و تامین‌کنندگان بوک‌شده در استان یزد</p>
+        </div>
+
+        <!-- Countdown & Progress Stack -->
+        <div class="flex flex-col sm:flex-row items-center gap-4 w-full lg:w-auto shrink-0">
+
+          <!-- Wedding Countdown Card -->
+          <div class="bg-[#141A28] border border-[#C5A059]/30 rounded-2xl p-4 text-center space-y-1 w-full sm:w-auto shrink-0 shadow-lg">
+            <span class="text-[10.5px] font-bold text-slate-400 block">روزهای باقی‌مانده تا مراسم:</span>
+            <span class="text-2xl font-black text-[#D4AF37] block">۱۳۵ روز</span>
+            <span class="text-[9.5px] text-emerald-400 font-bold block">تاریخ: ۱۵ شهریور ۱۴۰۴</span>
+          </div>
+
+          <!-- Progress & Companion Stack -->
+          <div class="bg-[#141A28] border border-[#C5A059]/30 rounded-2xl p-4 space-y-3 w-full sm:w-64 shrink-0 shadow-lg">
+            <div class="space-y-1 text-right">
+              <div class="flex justify-between text-xs font-black">
+                <span class="text-slate-300">پیشرفت کل برنامه‌ریزی:</span>
+                <span class="text-[#D4AF37]">۶۸٪</span>
+              </div>
+              <div class="w-full bg-slate-800 h-2.5 rounded-full overflow-hidden border border-slate-700">
+                <div class="bg-gradient-to-r from-[#C5A059] to-[#D4AF37] h-full rounded-full transition-all duration-1000" style="width: 68%;"></div>
+              </div>
+            </div>
+
+            <!-- Companions Avatar Stack -->
+            <div class="flex items-center justify-between pt-1 border-t border-slate-800">
+              <span class="text-[10.5px] font-bold text-slate-400">همراهان فعال:</span>
+              <div class="flex items-center -space-x-2 space-x-reverse cursor-pointer" onclick="openInviteCompanionsModal()" title="مدیریت همراهان">
+                <img src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=100" class="w-7 h-7 rounded-full object-cover border-2 border-[#D4AF37]">
+                <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=100" class="w-7 h-7 rounded-full object-cover border-2 border-[#D4AF37]">
+                <span class="w-7 h-7 rounded-full bg-[#D4AF37] text-[#07090E] font-black text-[10px] flex items-center justify-center border-2 border-[#07090E]">+</span>
+              </div>
+            </div>
+          </div>
+
+        </div>
+
+      </div>
+    </div>
+
+    <!-- ROW 1 - FINANCIAL, TIMELINE & TASK GRID -->
+    <div class="grid grid-cols-1 lg:grid-cols-12 gap-6 items-stretch">
+
+      <!-- BOX 1: خلاصه بودجه (Budget Donut Widget) - 4 COLS -->
+      <div class="lg:col-span-4 bg-[#0e121c]/90 backdrop-blur-xl border border-[#C5A059]/40 rounded-3xl p-5 sm:p-6 flex flex-col justify-between space-y-4 shadow-2xl">
+        <div class="flex items-center justify-between border-b border-[#C5A059]/20 pb-3">
+          <div class="space-y-0.5 text-right">
+            <span class="text-[11px] font-black text-[#D4AF37] flex items-center gap-1.5 block">
+              <i data-lucide="calculator" class="w-3.5 h-3.5 text-[#D4AF37]"></i>
+              <span>مدیریت مالی</span>
+            </span>
+            <h2 class="text-base font-black text-white">خلاصه بودجه مراسم</h2>
+          </div>
+          <button type="button" onclick="openExpandModal('budget')" class="text-xs font-bold text-[#D4AF37] hover:text-amber-300 transition-colors flex items-center gap-1 cursor-pointer">
+            <i data-lucide="maximize-2" class="w-3.5 h-3.5 text-[#D4AF37]"></i>
+            <span class="hidden sm:inline">مدیریت کامل ←</span>
+          </button>
+        </div>
+
+        <!-- Budget Visual Overview -->
+        <div class="space-y-4 text-right">
+          <div class="bg-[#141A28] border border-[#C5A059]/25 rounded-2xl p-4 space-y-2 text-center shadow-md">
+            <span class="text-[11px] font-bold text-slate-400 block">سقف کل بودجه تعیین‌شده:</span>
+            <span class="text-xl sm:text-2xl font-black text-[#D4AF37] block">۳۵۰,۰۰۰,۰۰۰ تومان</span>
+          </div>
+
+          <div class="grid grid-cols-2 gap-2 text-center">
+            <div class="bg-[#141A28] border border-emerald-500/30 rounded-xl p-2.5 space-y-0.5">
+              <span class="text-[10px] font-bold text-slate-400 block">پرداخت‌شده:</span>
+              <span class="text-xs sm:text-sm font-black text-emerald-400 block">۲۱۰,۰۰۰,۰۰۰</span>
+            </div>
+            <div class="bg-[#141A28] border border-amber-500/30 rounded-xl p-2.5 space-y-0.5">
+              <span class="text-[10px] font-bold text-slate-400 block">باقیمانده:</span>
+              <span class="text-xs sm:text-sm font-black text-amber-300 block">۱۴۰,۰۰۰,۰۰۰</span>
+            </div>
+          </div>
+        </div>
+
+        <button type="button" onclick="openExpandModal('budget')" class="w-full bg-[#141A28] hover:bg-[#1E293B] text-slate-200 border border-[#C5A059]/30 py-2.5 rounded-2xl text-xs font-bold transition-all cursor-pointer flex items-center justify-center gap-1.5 shadow-md">
+          <i data-lucide="pie-chart" class="w-4 h-4 text-[#D4AF37]"></i>
+          <span>مشاهده و ویرایش ریز هزینه‌ها ➔</span>
+        </button>
+      </div>
+
+      <!-- BOX 2: زمان‌بندی روز عروسی (Wedding Day Timeline) - 4 COLS -->
+      <div class="lg:col-span-4 bg-[#0e121c]/90 backdrop-blur-xl border border-[#C5A059]/40 rounded-3xl p-5 sm:p-6 flex flex-col justify-between space-y-4 shadow-2xl">
+        <div class="flex items-center justify-between border-b border-[#C5A059]/20 pb-3">
+          <div class="space-y-0.5 text-right">
+            <span class="text-[11px] font-black text-[#D4AF37] flex items-center gap-1.5 block">
+              <i data-lucide="clock" class="w-3.5 h-3.5 text-[#D4AF37]"></i>
+              <span>جدول روز مراسم</span>
+            </span>
+            <h2 class="text-base font-black text-white">زمان‌بندی روز عروسی</h2>
+          </div>
+          <button type="button" onclick="openExpandModal('timeline')" class="text-xs font-bold text-[#D4AF37] hover:text-amber-300 transition-colors flex items-center gap-1 cursor-pointer">
+            <i data-lucide="maximize-2" class="w-3.5 h-3.5 text-[#D4AF37]"></i>
+            <span class="hidden sm:inline">مدیریت کامل ←</span>
+          </button>
+        </div>
+
+        <!-- Hour-by-Hour Mini Schedule -->
+        <div class="space-y-2 text-right text-xs font-bold">
+          <div class="bg-[#141A28] border border-[#C5A059]/25 rounded-2xl p-2.5 flex items-center justify-between">
+            <span class="text-[#D4AF37]">۰۸:۰۰ صبح</span>
+            <span class="text-white">حضور در سالن زیبایی & آرایشگاه</span>
+          </div>
+          <div class="bg-[#141A28] border border-[#C5A059]/25 rounded-2xl p-2.5 flex items-center justify-between">
+            <span class="text-[#D4AF37]">۱۳:۳۰ ظهر</span>
+            <span class="text-white">تحویل گل ماشین & حرکت به آتلیه</span>
+          </div>
+          <div class="bg-[#141A28] border border-[#C5A059]/25 rounded-2xl p-2.5 flex items-center justify-between">
+            <span class="text-[#D4AF37]">۱۸:۳۰ عصر</span>
+            <span class="text-white">ورود به تالار & مراسم سفره عقد</span>
+          </div>
+        </div>
+
+        <button type="button" onclick="openExpandModal('timeline')" class="w-full bg-[#141A28] hover:bg-[#1E293B] text-slate-200 border border-[#C5A059]/30 py-2.5 rounded-2xl text-xs font-bold transition-all cursor-pointer flex items-center justify-center gap-1.5 shadow-md">
+          <i data-lucide="calendar" class="w-4 h-4 text-[#D4AF37]"></i>
+          <span>ویرایش و تنظیم برنامه ساعتی ➔</span>
+        </button>
+      </div>
+
+      <!-- BOX 3: چک‌لیست وظایف (Smart Checklist) - 4 COLS -->
+      <div class="lg:col-span-4 bg-[#0e121c]/90 backdrop-blur-xl border border-[#C5A059]/40 rounded-3xl p-5 sm:p-6 flex flex-col justify-between space-y-4 shadow-2xl">
+        <div class="flex items-center justify-between border-b border-[#C5A059]/20 pb-3">
+          <div class="space-y-0.5 text-right">
+            <span class="text-[11px] font-black text-[#D4AF37] flex items-center gap-1.5 block">
+              <i data-lucide="check-square" class="w-3.5 h-3.5 text-[#D4AF37]"></i>
+              <span>اقدامات اولویت‌دار</span>
+            </span>
+            <h2 class="text-base font-black text-white">چک‌لیست وظایف جاری</h2>
+          </div>
+          <button type="button" onclick="openExpandModal('checklist')" class="text-xs font-bold text-[#D4AF37] hover:text-amber-300 transition-colors flex items-center gap-1 cursor-pointer">
+            <i data-lucide="maximize-2" class="w-3.5 h-3.5 text-[#D4AF37]"></i>
+            <span class="hidden sm:inline">مدیریت کامل ←</span>
+          </button>
+        </div>
+
+        <!-- Task List Sample -->
+        <div class="space-y-2 text-right text-xs font-bold">
+          <label class="bg-[#141A28] border border-[#C5A059]/25 rounded-2xl p-2.5 flex items-center justify-between cursor-pointer hover:border-[#D4AF37]">
+            <span class="text-slate-200">نهایی‌سازی لیست مهمانان & گروه سنی</span>
+            <input type="checkbox" checked class="accent-[#D4AF37] w-4 h-4 rounded">
+          </label>
+          <label class="bg-[#141A28] border border-[#C5A059]/25 rounded-2xl p-2.5 flex items-center justify-between cursor-pointer hover:border-[#D4AF37]">
+            <span class="text-slate-200">پرو نهایی لباس عروس در مزون لورنت</span>
+            <input type="checkbox" class="accent-[#D4AF37] w-4 h-4 rounded">
+          </label>
+          <label class="bg-[#141A28] border border-[#C5A059]/25 rounded-2xl p-2.5 flex items-center justify-between cursor-pointer hover:border-[#D4AF37]">
+            <span class="text-slate-200">هماهنگی منوی شام با مدیریت باغ‌سرا</span>
+            <input type="checkbox" class="accent-[#D4AF37] w-4 h-4 rounded">
+          </label>
+        </div>
+
+        <button type="button" onclick="openExpandModal('checklist')" class="w-full gold-shimmer-btn text-[#0F251A] font-black py-2.5 rounded-2xl text-xs transition-all cursor-pointer flex items-center justify-center gap-1.5 shadow-md">
+          <i data-lucide="plus-circle" class="w-4 h-4 text-[#0F251A]"></i>
+          <span>افزودن وظیفه جدید ➔</span>
+        </button>
+      </div>
+
+    </div>
+
+    <!-- ROW 2 - GUESTS, INQUIRIES & TOOLS -->
+    <div class="grid grid-cols-1 lg:grid-cols-12 gap-6 items-stretch">
+
+      <!-- BOX 1: مدیریت مهمانان & کارت دعوت (Guest RSVP Tracker) - 6 COLS -->
+      <div class="lg:col-span-6 bg-[#0e121c]/90 backdrop-blur-xl border border-[#C5A059]/40 rounded-3xl p-5 sm:p-6 flex flex-col justify-between space-y-4 shadow-2xl">
+        <div class="flex items-center justify-between border-b border-[#C5A059]/20 pb-3">
+          <div class="space-y-0.5 text-right">
+            <span class="text-[11px] font-black text-[#D4AF37] flex items-center gap-1.5 block">
+              <i data-lucide="users" class="w-3.5 h-3.5 text-[#D4AF37]"></i>
+              <span>کارت دعوت & RSVP</span>
+            </span>
+            <h2 class="text-base font-black text-white">مدیریت مهمانان & وضعیت حضور</h2>
+          </div>
+          <button type="button" onclick="openExpandModal('guests')" class="text-xs font-bold text-[#D4AF37] hover:text-amber-300 transition-colors flex items-center gap-1 cursor-pointer">
+            <i data-lucide="maximize-2" class="w-3.5 h-3.5 text-[#D4AF37]"></i>
+            <span>مدیریت کامل ←</span>
+          </button>
+        </div>
+
+        <div class="grid grid-cols-3 gap-3 text-center">
+          <div class="bg-[#141A28] border border-emerald-500/30 rounded-2xl p-3 space-y-1">
+            <span class="text-xs font-black text-emerald-400 block">۱۸۰ نفر</span>
+            <span class="text-[10px] text-slate-300 font-bold block">حضور قطعی</span>
+          </div>
+          <div class="bg-[#141A28] border border-amber-500/30 rounded-2xl p-3 space-y-1">
+            <span class="text-xs font-black text-amber-300 block">۴۵ نفر</span>
+            <span class="text-[10px] text-slate-300 font-bold block">در انتظار پاسخ</span>
+          </div>
+          <div class="bg-[#141A28] border border-rose-500/30 rounded-2xl p-3 space-y-1">
+            <span class="text-xs font-black text-rose-400 block">۱۵ نفر</span>
+            <span class="text-[10px] text-slate-300 font-bold block">عذرخواهی</span>
+          </div>
+        </div>
+
+        <button type="button" onclick="openExpandModal('guests')" class="w-full bg-[#141A28] hover:bg-[#1E293B] text-slate-200 border border-[#C5A059]/30 py-2.5 rounded-2xl text-xs font-bold transition-all cursor-pointer flex items-center justify-center gap-1.5 shadow-md">
+          <i data-lucide="qr-code" class="w-4 h-4 text-[#D4AF37]"></i>
+          <span>ارسال انبوه لینک کارت دعوت & دانلود QR ➔</span>
+        </button>
+      </div>
+
+      <!-- BOX 2: استعلام قیمت‌ها (Vendor Inquiries & Quotes) - 6 COLS -->
+      <div class="lg:col-span-6 bg-[#0e121c]/90 backdrop-blur-xl border border-[#C5A059]/40 rounded-3xl p-5 sm:p-6 flex flex-col justify-between space-y-4 shadow-2xl">
+        <div class="flex items-center justify-between border-b border-[#C5A059]/20 pb-3">
+          <div class="space-y-0.5 text-right">
+            <span class="text-[11px] font-black text-[#D4AF37] flex items-center gap-1.5 block">
+              <i data-lucide="message-square" class="w-3.5 h-3.5 text-[#D4AF37]"></i>
+              <span>پیگیری استعلام‌ها</span>
+            </span>
+            <h2 class="text-base font-black text-white">پیش‌فاکتورها & پیام‌های فعال</h2>
+          </div>
+          <button type="button" onclick="openExpandModal('inquiries')" class="text-xs font-bold text-[#D4AF37] hover:text-amber-300 transition-colors flex items-center gap-1 cursor-pointer">
+            <i data-lucide="maximize-2" class="w-3.5 h-3.5 text-[#D4AF37]"></i>
+            <span>مشاهده همه ←</span>
+          </button>
+        </div>
+
+        <div class="space-y-2 text-right text-xs font-bold">
+          <div class="bg-[#141A28] border border-[#C5A059]/25 rounded-2xl p-3 flex items-center justify-between">
+            <div>
+              <span class="text-white block font-black">هتل باغ مشیرالممالک</span>
+              <span class="text-[10px] text-slate-400 font-medium block">پیش‌فاکتور منوی VIP صادر شد</span>
+            </div>
+            <span class="text-[10px] font-black text-emerald-400 bg-emerald-950/60 px-2.5 py-1 rounded-full border border-emerald-500/30">تاییدشده</span>
+          </div>
+
+          <div class="bg-[#141A28] border border-[#C5A059]/25 rounded-2xl p-3 flex items-center justify-between">
+            <div>
+              <span class="text-white block font-black">استودیو عکاسی کویر</span>
+              <span class="text-[10px] text-slate-400 font-medium block">در انتظار تایید تاریخ فرمالیته</span>
+            </div>
+            <span class="text-[10px] font-black text-amber-300 bg-amber-950/60 px-2.5 py-1 rounded-full border border-amber-500/30">در جریان</span>
+          </div>
+        </div>
+
+        <button type="button" onclick="openExpandModal('inquiries')" class="w-full bg-[#141A28] hover:bg-[#1E293B] text-slate-200 border border-[#C5A059]/30 py-2.5 rounded-2xl text-xs font-bold transition-all cursor-pointer flex items-center justify-center gap-1.5 shadow-md">
+          <i data-lucide="send" class="w-4 h-4 text-[#D4AF37]"></i>
+          <span>ورود به مرکز گفت‌وگو و چت مستقیم ➔</span>
+        </button>
+      </div>
+
+    </div>
+
+    <!-- ROW 3 - MY SELECTED VENDORS CAROUSEL -->
+    <div class="bg-[#0e121c]/90 backdrop-blur-xl border border-[#C5A059]/40 rounded-3xl p-5 sm:p-6 shadow-2xl space-y-4">
+      <div class="flex items-center justify-between border-b border-[#C5A059]/20 pb-3 flex-wrap gap-2">
+        <div class="space-y-0.5 text-right">
+          <span class="text-[11px] font-black text-[#D4AF37] flex items-center gap-1.5 block">
+            <i data-lucide="heart" class="w-3.5 h-3.5 text-[#D4AF37]"></i>
+            <span>تامین‌کنندگان بوک‌شده & نشان‌شده</span>
+          </span>
+          <h2 class="text-base sm:text-lg font-black text-[#F7F5F0]">تامین‌کنندگان منتخب من در یزد</h2>
+        </div>
+        <button type="button" onclick="openExpandModal('vendors')" class="text-xs font-bold text-[#D4AF37] hover:text-amber-300 transition-colors flex items-center gap-1 cursor-pointer">
+          <i data-lucide="maximize-2" class="w-3.5 h-3.5 text-[#D4AF37]"></i>
+          <span>مدیریت کامل ←</span>
+        </button>
+      </div>
+
+      <!-- Horizontal Vendors Showcase -->
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 text-right">
+        <div class="bg-[#141A28] border border-[#C5A059]/30 rounded-2xl p-3.5 space-y-2 shadow-lg">
+          <img src="https://images.unsplash.com/photo-1519167758481-83f550bb49b3?w=500" class="w-full h-32 rounded-xl object-cover border border-[#C5A059]/20">
+          <div>
+            <span class="text-[9.5px] font-bold text-[#D4AF37] block">تالار & باغ</span>
+            <h3 class="text-xs sm:text-sm font-black text-white">مشیرالممالک یزد</h3>
+            <p class="text-[10px] text-emerald-400 font-bold mt-1">رزرو نهایی‌شده</p>
+          </div>
+        </div>
+
+        <div class="bg-[#141A28] border border-[#C5A059]/30 rounded-2xl p-3.5 space-y-2 shadow-lg">
+          <img src="https://images.unsplash.com/photo-1537633552985-df8429e8048b?w=500" class="w-full h-32 rounded-xl object-cover border border-[#C5A059]/20">
+          <div>
+            <span class="text-[9.5px] font-bold text-[#D4AF37] block">آتلیه & عکاسی</span>
+            <h3 class="text-xs sm:text-sm font-black text-white">استودیو کویر</h3>
+            <p class="text-[10px] text-amber-300 font-bold mt-1">بیعانه پرداخت‌شده</p>
+          </div>
+        </div>
+
+        <div class="bg-[#141A28] border border-[#C5A059]/30 rounded-2xl p-3.5 space-y-2 shadow-lg">
+          <img src="https://images.unsplash.com/photo-1511285560929-80b456fea0bc?w=500" class="w-full h-32 rounded-xl object-cover border border-[#C5A059]/20">
+          <div>
+            <span class="text-[9.5px] font-bold text-[#D4AF37] block">سالن زیبایی</span>
+            <h3 class="text-xs sm:text-sm font-black text-white">زیبایی رویال</h3>
+            <p class="text-[10px] text-emerald-400 font-bold mt-1">رزرو نهایی‌شده</p>
+          </div>
+        </div>
+
+        <div class="bg-[#141A28] border border-[#C5A059]/30 rounded-2xl p-3.5 space-y-2 shadow-lg">
+          <img src="https://images.unsplash.com/photo-1583939003579-730e3918a45a?w=500" class="w-full h-32 rounded-xl object-cover border border-[#C5A059]/20">
+          <div>
+            <span class="text-[9.5px] font-bold text-[#D4AF37] block">مزون عروس</span>
+            <h3 class="text-xs sm:text-sm font-black text-white">مزون لورنت</h3>
+            <p class="text-[10px] text-slate-400 font-bold mt-1">در حال بررسی پکیج</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </main>
+
+  <!-- OVERLAY EXPANDABLE MODALS CONTAINER -->
+  <div id="planner-expand-overlay" class="fixed inset-0 z-[99999] bg-[#07090E]/95 backdrop-blur-2xl p-4 sm:p-8 overflow-y-auto hidden text-white">
+    <div class="max-w-5xl mx-auto space-y-6">
+
+      <!-- Modal Top Header -->
+      <div class="flex items-center justify-between border-b border-[#C5A059]/40 pb-4">
+        <div id="planner-overlay-title" class="space-y-1 text-right">
+          <!-- Dynamically populated -->
+        </div>
+        <button type="button" onclick="closeExpandModal()" class="bg-[#141A28] hover:bg-[#D4AF37] hover:text-[#07090E] text-[#D4AF37] border border-[#C5A059]/40 px-4 py-2 rounded-2xl text-xs font-black transition-all cursor-pointer shadow-lg flex items-center gap-1.5">
+          <i data-lucide="x" class="w-4 h-4"></i>
+          <span>بازگشت به داشبورد</span>
+        </button>
+      </div>
+
+      <!-- Modal Body Content Container -->
+      <div id="planner-overlay-body" class="space-y-6 text-right">
+        <!-- Dynamically populated -->
+      </div>
+
+    </div>
+  </div>
+
+  <!-- INVITE COMPANIONS MODAL -->
+  <div id="modal-invite-companions" class="fixed inset-0 z-[99999] bg-black/80 backdrop-blur-md items-center justify-center p-4 hidden">
+    <div class="bg-[#0e121c] border border-[#C5A059]/50 rounded-3xl p-6 max-w-md w-full text-right space-y-5 shadow-2xl">
+      <div class="flex items-center justify-between border-b border-[#C5A059]/20 pb-3">
+        <h3 class="text-base font-black text-[#D4AF37] flex items-center gap-2">
+          <i data-lucide="user-plus" class="w-4 h-4 text-[#D4AF37]"></i>
+          <span>دعوت همراه برنامه‌ریزی</span>
+        </h3>
+        <button type="button" onclick="closeInviteCompanionsModal()" class="text-slate-400 hover:text-white cursor-pointer">✕</button>
+      </div>
+
+      <p class="text-xs text-slate-300 font-medium leading-relaxed">
+        لینک اختصاصی زیر را برای همسر، خواهر یا دوست نزدیک خود بفرستید تا بتوانند در ویرایش چک‌لیست و لیست مهمانان به شما کمک کنند.
+      </p>
+
+      <div class="space-y-2">
+        <label class="text-[11px] font-bold text-slate-300 block">لینک دعوت اختصاصی:</label>
+        <div class="flex items-center gap-2 bg-[#141A28] border border-[#C5A059]/30 rounded-2xl p-2">
+          <input id="companion-invite-link-input" type="text" readonly value="https://aroosi.app/planning?invite=couple_yazd_84" class="w-full bg-transparent text-xs text-amber-200 focus:outline-none">
+          <button type="button" onclick="copyCompanionInviteLink()" class="gold-shimmer-btn text-[#0F251A] font-black px-3 py-1.5 rounded-xl text-xs shrink-0 cursor-pointer">کپی</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Inline Script for Interactive Overlay Expansion -->
+  <script>
+    function openExpandModal(type) {
+      const overlay = document.getElementById('planner-expand-overlay');
+      const titleContainer = document.getElementById('planner-overlay-title');
+      const bodyContainer = document.getElementById('planner-overlay-body');
+      if (!overlay || !titleContainer || !bodyContainer) return;
+
+      if (type === 'budget') {
+        titleContainer.innerHTML = '<span class="text-xs font-bold text-[#D4AF37] block">مدیریت کامل مالی</span><h2 class="text-xl font-black text-white">ریز هزینه‌ها و بودجه‌بندی هوشمند</h2>';
+        bodyContainer.innerHTML = `
+          <div class="bg-[#141A28] border border-[#C5A059]/30 rounded-3xl p-6 space-y-4">
+            <h3 class="text-sm font-black text-[#D4AF37]">فهرست اقلام و پیش‌فاکتورها:</h3>
+            <div class="space-y-2 text-xs font-bold">
+              <div class="p-3 bg-[#0E121C] rounded-xl flex justify-between"><span>تالار & ورودی باغ:</span><span class="text-amber-200">۱۲۰,۰۰۰,۰۰۰ تومان</span></div>
+              <div class="p-3 bg-[#0E121C] rounded-xl flex justify-between"><span>آتلیه & فیلمبرداری 4K:</span><span class="text-amber-200">۶۵,۰۰۰,۰۰۰ تومان</span></div>
+              <div class="p-3 bg-[#0E121C] rounded-xl flex justify-between"><span>سالن زیبایی & میکاپ VIP:</span><span class="text-amber-200">۲۵,۰۰۰,۰۰۰ تومان</span></div>
+            </div>
+          </div>`;
+      } else if (type === 'timeline') {
+        titleContainer.innerHTML = '<span class="text-xs font-bold text-[#D4AF37] block">مدیریت کامل زمان‌بندی</span><h2 class="text-xl font-black text-white">جدول ساعتی روز عروسی</h2>';
+        bodyContainer.innerHTML = `
+          <div class="bg-[#141A28] border border-[#C5A059]/30 rounded-3xl p-6 space-y-4">
+            <h3 class="text-sm font-black text-[#D4AF37]">برنامه گام‌به‌گام روز مراسم:</h3>
+            <p class="text-xs text-slate-300">ساعت به ساعت برنامه‌های حضور در آرایشگاه، عکاسی و ورود به تالار را مدیریت کنید.</p>
+          </div>`;
+      } else if (type === 'checklist') {
+        titleContainer.innerHTML = '<span class="text-xs font-bold text-[#D4AF37] block">مدیریت کامل اقدامات</span><h2 class="text-xl font-black text-white">چک‌لیست ۱۲ ماهه وظایف</h2>';
+        bodyContainer.innerHTML = `
+          <div class="bg-[#141A28] border border-[#C5A059]/30 rounded-3xl p-6 space-y-4">
+            <h3 class="text-sm font-black text-[#D4AF37]">مدیریت وظایف بر اساس فاز زمانی:</h3>
+            <p class="text-xs text-slate-300">وظایف ۶ ماه قبل، ۳ ماه قبل و هفته نهایی مراسم را ویرایش کنید.</p>
+          </div>`;
+      } else if (type === 'guests') {
+        titleContainer.innerHTML = '<span class="text-xs font-bold text-[#D4AF37] block">مدیریت کامل کارت دعوت</span><h2 class="text-xl font-black text-white">لیست مهمانان و پاسخ‌های RSVP</h2>';
+        bodyContainer.innerHTML = `
+          <div class="bg-[#141A28] border border-[#C5A059]/30 rounded-3xl p-6 space-y-4">
+            <h3 class="text-sm font-black text-[#D4AF37]">لیست مهمانان و صندلی‌ها:</h3>
+            <p class="text-xs text-slate-300">پاسخ‌های ثبت‌شده مهمانان و گروه‌بندی تالار را مدیریت کنید.</p>
+          </div>`;
+      } else if (type === 'inquiries') {
+        titleContainer.innerHTML = '<span class="text-xs font-bold text-[#D4AF37] block">مرکز استعلام‌ها</span><h2 class="text-xl font-black text-white">چت مستقیم و پیش‌فاکتورها</h2>';
+        bodyContainer.innerHTML = `
+          <div class="bg-[#141A28] border border-[#C5A059]/30 rounded-3xl p-6 space-y-4">
+            <h3 class="text-sm font-black text-[#D4AF37]">تاریخچه پیام‌ها:</h3>
+            <p class="text-xs text-slate-300">برای پیگیری پیش‌فاکتور رسمی به بخش چت منتقل می‌شوید.</p>
+          </div>`;
+      } else {
+        titleContainer.innerHTML = '<span class="text-xs font-bold text-[#D4AF37] block">تامین‌کنندگان منتخب</span><h2 class="text-xl font-black text-white">لیست بوک‌مارک‌ها & رزروها</h2>';
+        bodyContainer.innerHTML = `
+          <div class="bg-[#141A28] border border-[#C5A059]/30 rounded-3xl p-6 space-y-4">
+            <h3 class="text-sm font-black text-[#D4AF37]">کارت‌های تامین‌کنندگان:</h3>
+            <p class="text-xs text-slate-300">تامین‌کنندگان ذخیره‌شده از دایرکتوری را مدیریت کنید.</p>
+          </div>`;
+      }
+
+      overlay.classList.remove('hidden');
+      if (window.lucide) lucide.createIcons();
+    }
+
+    function closeExpandModal() {
+      const overlay = document.getElementById('planner-expand-overlay');
+      if (overlay) overlay.classList.add('hidden');
+    }
+
+    function openInviteCompanionsModal() {
+      const m = document.getElementById('modal-invite-companions');
+      if (m) {
+        m.classList.remove('hidden');
+        m.classList.add('flex');
+      }
+    }
+
+    function closeInviteCompanionsModal() {
+      const m = document.getElementById('modal-invite-companions');
+      if (m) {
+        m.classList.add('hidden');
+        m.classList.remove('flex');
+      }
+    }
+
+    function copyCompanionInviteLink() {
+      const input = document.getElementById('companion-invite-link-input');
+      if (input) {
+        input.select();
+        navigator.clipboard.writeText(input.value);
+        alert('لینک دعوت همراه با موفقیت کپی شد! ✨');
+      }
+    }
+
+    document.addEventListener('DOMContentLoaded', () => {
+      if (window.lucide) lucide.createIcons();
+    });
+  </script>
+</body>
+</html>
