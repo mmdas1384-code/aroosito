@@ -18745,73 +18745,456 @@ window.initCardVideoHoverListeners = function() {
     })();
 
   // Global Handlers for All-in-One Bento Planning Dashboard Overlay Modals
-  window.openExpandModal = function(type) {
+    window.openExpandModal = function(type) {
     const overlay = document.getElementById('planner-expand-overlay');
     const titleContainer = document.getElementById('planner-overlay-title');
     const bodyContainer = document.getElementById('planner-overlay-body');
     if (!overlay || !titleContainer || !bodyContainer) return;
 
-    if (type === 'budget') {
-      titleContainer.innerHTML = '<span class="text-xs font-bold text-[#D4AF37] block">مدیریت کامل مالی</span><h2 class="text-xl font-black text-white">ریز هزینه‌ها و بودجه‌بندی هوشمند</h2>';
+    if (type === 'checklist') {
+      titleContainer.innerHTML = `
+        <div class="space-y-1 text-right">
+          <span class="text-xs font-bold text-[#D4AF37] flex items-center gap-1.5">
+            <i data-lucide="check-square" class="w-4 h-4 text-[#D4AF37]"></i>
+            <span>چک‌لیست جامع و مدیریت اقدامات</span>
+          </span>
+          <h2 class="text-xl font-black text-white">مدیریت تمام‌صفحه برنامه‌ریزی و چک‌لیست ۱۲ ماهه</h2>
+        </div>`;
       bodyContainer.innerHTML = `
-        <div class="bg-[#141A28] border border-[#C5A059]/30 rounded-3xl p-6 space-y-4 text-right">
-          <h3 class="text-sm font-black text-[#D4AF37]">فهرست اقلام و پیش‌فاکتورهای مالی:</h3>
-          <div class="space-y-2 text-xs font-bold">
-            <div class="p-3 bg-[#0E121C] rounded-xl flex justify-between"><span>تالار & ورودی باغ:</span><span class="text-amber-200">۱۲۰,۰۰۰,۰۰۰ تومان</span></div>
-            <div class="p-3 bg-[#0E121C] rounded-xl flex justify-between"><span>آتلیه & فیلمبرداری 4K:</span><span class="text-amber-200">۶۵,۰۰۰,۰۰۰ تومان</span></div>
-            <div class="p-3 bg-[#0E121C] rounded-xl flex justify-between"><span>سالن زیبایی & میکاپ VIP:</span><span class="text-amber-200">۲۵,۰۰۰,۰۰۰ تومان</span></div>
-            <div class="p-3 bg-[#0E121C] rounded-xl flex justify-between"><span>مزون لباس عروس:</span><span class="text-amber-200">۳۵,۰۰۰,۰۰۰ تومان</span></div>
+        <div class="space-y-6 text-right">
+          <!-- Header Metrics Bar -->
+          <div class="grid grid-cols-2 sm:grid-cols-4 gap-3">
+            <div class="bg-[#141A28] border border-[#C5A059]/30 rounded-2xl p-3 text-center space-y-1">
+              <span class="text-xs font-black text-amber-300 block">۱۲ مورد</span>
+              <span class="text-[10px] text-slate-400 font-bold block">اقدامات فوری باقی‌مانده</span>
+            </div>
+            <div class="bg-[#141A28] border border-emerald-500/30 rounded-2xl p-3 text-center space-y-1">
+              <span class="text-xs font-black text-emerald-400 block">۲۸ مورد</span>
+              <span class="text-[10px] text-slate-400 font-bold block">اقدامات تکمیل‌شده</span>
+            </div>
+            <div class="bg-[#141A28] border border-[#C5A059]/30 rounded-2xl p-3 text-center space-y-1">
+              <span class="text-xs font-black text-[#D4AF37] block">۷۰٪</span>
+              <span class="text-[10px] text-slate-400 font-bold block">آمادگی کلی مراسم</span>
+            </div>
+            <div class="bg-[#141A28] border border-[#C5A059]/30 rounded-2xl p-3 text-center space-y-1">
+              <span class="text-xs font-black text-white block">۱۳۵ روز</span>
+              <span class="text-[10px] text-slate-400 font-bold block">روزشماری تا مراسم</span>
+            </div>
+          </div>
+
+          <!-- Action & Filter Bar -->
+          <div class="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 bg-[#141A28] border border-[#C5A059]/30 rounded-2xl p-4 shadow-lg">
+            <div class="flex items-center gap-2 overflow-x-auto no-scrollbar text-xs font-bold w-full sm:w-auto">
+              <button type="button" class="bg-[#D4AF37] text-[#07090E] font-black px-3.5 py-1.5 rounded-xl cursor-pointer">همه فازها</button>
+              <button type="button" class="bg-[#0E121C] text-slate-300 hover:text-white border border-slate-700 px-3.5 py-1.5 rounded-xl cursor-pointer">۱۲ تا ۹ ماه قبل</button>
+              <button type="button" class="bg-[#0E121C] text-slate-300 hover:text-white border border-slate-700 px-3.5 py-1.5 rounded-xl cursor-pointer">۶ تا ۳ ماه قبل</button>
+              <button type="button" class="bg-[#0E121C] text-slate-300 hover:text-white border border-slate-700 px-3.5 py-1.5 rounded-xl cursor-pointer">هفته پایانی</button>
+            </div>
+            <div class="flex items-center gap-2 shrink-0 w-full sm:w-auto">
+              <button type="button" onclick="exportChecklistCsv()" class="bg-[#0E121C] hover:bg-slate-800 text-amber-200 border border-[#C5A059]/40 px-3.5 py-2 rounded-xl text-xs font-bold cursor-pointer">خروجی اکسل / چاپ</button>
+              <button type="button" onclick="openAddTaskModal()" class="gold-shimmer-btn text-[#0F251A] font-black px-4 py-2 rounded-xl text-xs flex items-center gap-1 cursor-pointer">
+                <i data-lucide="plus-circle" class="w-4 h-4 text-[#0F251A]"></i>
+                <span>افزودن مهم جدید</span>
+              </button>
+            </div>
+          </div>
+
+          <!-- Tasks List -->
+          <div class="space-y-3">
+            <div class="bg-[#141A28] border border-[#C5A059]/30 rounded-2xl p-4 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 shadow-md">
+              <div class="flex items-center gap-3">
+                <input type="checkbox" checked class="accent-[#D4AF37] w-4 h-4 rounded cursor-pointer">
+                <div>
+                  <span class="text-sm font-black text-white block">تعیین سقف بودجه، ظرفیت سالن و انتخاب تالار/باغ‌سرا</span>
+                  <div class="flex items-center gap-2 text-[10.5px] font-bold text-slate-400 mt-1">
+                    <span class="bg-[#0E121C] border border-[#C5A059]/30 text-[#D4AF37] px-2 py-0.5 rounded-md">تالار & تشریفات</span>
+                    <span>•</span>
+                    <span class="text-rose-400 font-black">اولویت: فوری</span>
+                    <span>•</span>
+                    <span class="text-emerald-400">۱۲ تا ۹ ماه قبل</span>
+                  </div>
+                </div>
+              </div>
+              <div class="flex items-center gap-2">
+                <button type="button" class="text-slate-400 hover:text-amber-300 text-xs font-bold">ویرایش</button>
+                <button type="button" class="text-slate-400 hover:text-rose-400 text-xs font-bold">حذف</button>
+              </div>
+            </div>
+
+            <div class="bg-[#141A28] border border-[#C5A059]/30 rounded-2xl p-4 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 shadow-md">
+              <div class="flex items-center gap-3">
+                <input type="checkbox" class="accent-[#D4AF37] w-4 h-4 rounded cursor-pointer">
+                <div>
+                  <span class="text-sm font-black text-white block">پرو نهایی لباس عروس در مزون لورنت</span>
+                  <div class="flex items-center gap-2 text-[10.5px] font-bold text-slate-400 mt-1">
+                    <span class="bg-[#0E121C] border border-[#C5A059]/30 text-[#D4AF37] px-2 py-0.5 rounded-md">مزون & لباس</span>
+                    <span>•</span>
+                    <span class="text-amber-300 font-bold">اولویت: ضروری</span>
+                    <span>•</span>
+                    <span class="text-amber-200">۱ ماه قبل</span>
+                  </div>
+                </div>
+              </div>
+              <div class="flex items-center gap-2">
+                <button type="button" class="text-slate-400 hover:text-amber-300 text-xs font-bold">ویرایش</button>
+                <button type="button" class="text-slate-400 hover:text-rose-400 text-xs font-bold">حذف</button>
+              </div>
+            </div>
           </div>
         </div>`;
     } else if (type === 'timeline') {
-      titleContainer.innerHTML = '<span class="text-xs font-bold text-[#D4AF37] block">مدیریت کامل زمان‌بندی</span><h2 class="text-xl font-black text-white">جدول ساعتی و کرونولوژیک روز عروسی</h2>';
+      titleContainer.innerHTML = `
+        <div class="space-y-1 text-right">
+          <span class="text-xs font-bold text-[#D4AF37] flex items-center gap-1.5">
+            <i data-lucide="clock" class="w-4 h-4 text-[#D4AF37]"></i>
+            <span>زمان‌بندی دقیق روز عروسی</span>
+          </span>
+          <h2 class="text-xl font-black text-white">برنامه‌ریزی کرونولوژیک ساعتی روز مراسم</h2>
+        </div>`;
       bodyContainer.innerHTML = `
-        <div class="bg-[#141A28] border border-[#C5A059]/30 rounded-3xl p-6 space-y-4 text-right">
-          <h3 class="text-sm font-black text-[#D4AF37]">جدول زمانی گام‌به‌گام مراسم:</h3>
-          <div class="space-y-2 text-xs font-bold">
-            <div class="p-3 bg-[#0E121C] rounded-xl flex justify-between"><span class="text-[#D4AF37]">۰۸:۰۰ - ۱۱:۳۰</span><span>حضور در سالن زیبایی & میکاپ</span></div>
-            <div class="p-3 bg-[#0E121C] rounded-xl flex justify-between"><span class="text-[#D4AF37]">۱۲:۰۰ - ۱۳:۳۰</span><span>تحویل گل ماشین & حرکت به سمت آتلیه</span></div>
-            <div class="p-3 bg-[#0E121C] rounded-xl flex justify-between"><span class="text-[#D4AF37]">۱۴:۰۰ - ۱۷:۳۰</span><span>عکاسی فرمالیته & لوکیشن کویر یزد</span></div>
-            <div class="p-3 bg-[#0E121C] rounded-xl flex justify-between"><span class="text-[#D4AF37]">۱۸:۳۰ - ۲۳:۰۰</span><span>ورود به تالار & برگزاری مراسم عقد و شام</span></div>
+        <div class="space-y-6 text-right">
+          <div class="flex items-center justify-between bg-[#141A28] border border-[#C5A059]/30 rounded-2xl p-4 shadow-lg flex-wrap gap-2">
+            <span class="text-xs font-bold text-slate-300">برنامه استاد ساعتی روز عروسی (۱۵ شهریور ۱۴۰۴)</span>
+            <button type="button" onclick="window.print()" class="bg-[#0E121C] hover:bg-slate-800 text-amber-200 border border-[#C5A059]/40 px-3.5 py-2 rounded-xl text-xs font-bold cursor-pointer">
+              چاپ و دریافت PDF برنامه
+            </button>
+          </div>
+
+          <!-- Add Timeline Slot Inline Form -->
+          <div class="bg-[#141A28] border border-[#C5A059]/30 rounded-2xl p-4 space-y-3">
+            <span class="text-xs font-black text-[#D4AF37] block">افزودن آیتم زمانی جدید:</span>
+            <div class="grid grid-cols-1 sm:grid-cols-4 gap-2">
+              <input type="text" placeholder="زمان (مثلاً ۰۸:۳۰)" class="bg-[#0E121C] border border-[#C5A059]/30 rounded-xl px-3 py-2 text-xs text-white">
+              <input type="text" placeholder="عنوان برنامه" class="bg-[#0E121C] border border-[#C5A059]/30 rounded-xl px-3 py-2 text-xs text-white">
+              <input type="text" placeholder="مسئول هماهنگی (مثلاً ساقدوش)" class="bg-[#0E121C] border border-[#C5A059]/30 rounded-xl px-3 py-2 text-xs text-white">
+              <button type="button" class="gold-shimmer-btn text-[#0F251A] font-black px-4 py-2 rounded-xl text-xs cursor-pointer">ثبت آیتم +</button>
+            </div>
+          </div>
+
+          <!-- Timeline Items -->
+          <div class="space-y-3">
+            <div class="bg-[#141A28] border border-[#C5A059]/30 rounded-2xl p-4 flex items-center justify-between shadow-md">
+              <div class="flex items-center gap-3">
+                <span class="w-12 h-12 rounded-2xl bg-[#D4AF37]/15 border border-[#D4AF37]/40 text-[#D4AF37] flex items-center justify-center font-black text-sm">۰۸:۰۰</span>
+                <div>
+                  <h4 class="text-sm font-black text-white">حضور در سالن زیبایی & میکاپ عروس</h4>
+                  <p class="text-[10.5px] text-slate-300 font-medium">مسئول هماهنگی: خواهرم مریم (۰۹۱۲۳۴۵۶۷۸۹)</p>
+                </div>
+              </div>
+              <div class="flex items-center gap-2">
+                <button type="button" class="text-slate-400 hover:text-amber-300 text-xs font-bold">ویرایش</button>
+                <button type="button" class="text-slate-400 hover:text-rose-400 text-xs font-bold">حذف</button>
+              </div>
+            </div>
+
+            <div class="bg-[#141A28] border border-[#C5A059]/30 rounded-2xl p-4 flex items-center justify-between shadow-md">
+              <div class="flex items-center gap-3">
+                <span class="w-12 h-12 rounded-2xl bg-[#D4AF37]/15 border border-[#D4AF37]/40 text-[#D4AF37] flex items-center justify-center font-black text-sm">۱۳:۳۰</span>
+                <div>
+                  <h4 class="text-sm font-black text-white">تحویل گل ماشین عروس & حرکت به آتلیه کویر</h4>
+                  <p class="text-[10.5px] text-slate-300 font-medium">مسئول هماهنگی: علی (داماد)</p>
+                </div>
+              </div>
+              <div class="flex items-center gap-2">
+                <button type="button" class="text-slate-400 hover:text-amber-300 text-xs font-bold">ویرایش</button>
+                <button type="button" class="text-slate-400 hover:text-rose-400 text-xs font-bold">حذف</button>
+              </div>
+            </div>
           </div>
         </div>`;
-    } else if (type === 'checklist') {
-      titleContainer.innerHTML = '<span class="text-xs font-bold text-[#D4AF37] block">مدیریت کامل چک‌لیست</span><h2 class="text-xl font-black text-white">چک‌لیست جامع ۱۲ ماهه وظایف</h2>';
+    } else if (type === 'party') {
+      titleContainer.innerHTML = `
+        <div class="space-y-1 text-right">
+          <span class="text-xs font-bold text-[#D4AF37] flex items-center gap-1.5">
+            <i data-lucide="users" class="w-4 h-4 text-[#D4AF37]"></i>
+            <span>مدیریت همراهان و تفویض وظایف</span>
+          </span>
+          <h2 class="text-xl font-black text-white">همراهان برنامه‌ریزی و سطح دسترسی</h2>
+        </div>`;
       bodyContainer.innerHTML = `
-        <div class="bg-[#141A28] border border-[#C5A059]/30 rounded-3xl p-6 space-y-4 text-right">
-          <h3 class="text-sm font-black text-[#D4AF37]">وظایف اولویت‌دار مراسم:</h3>
-          <div class="space-y-2 text-xs font-bold">
-            <label class="p-3 bg-[#0E121C] rounded-xl flex justify-between cursor-pointer"><span>تعیین تاریخ دقیق و رزرو اولیه تالار</span><input type="checkbox" checked class="accent-[#D4AF37] w-4 h-4"></label>
-            <label class="p-3 bg-[#0E121C] rounded-xl flex justify-between cursor-pointer"><span>انتخاب آتلیه و هماهنگی مجوز عکاسی</span><input type="checkbox" checked class="accent-[#D4AF37] w-4 h-4"></label>
-            <label class="p-3 bg-[#0E121C] rounded-xl flex justify-between cursor-pointer"><span>پرو و سفارش لباس عروس</span><input type="checkbox" class="accent-[#D4AF37] w-4 h-4"></label>
-            <label class="p-3 bg-[#0E121C] rounded-xl flex justify-between cursor-pointer"><span>چاپ یا ارسال کارت دعوت آنلاین</span><input type="checkbox" class="accent-[#D4AF37] w-4 h-4"></label>
+        <div class="space-y-6 text-right">
+          <!-- Add Companion Form -->
+          <div class="bg-[#141A28] border border-[#C5A059]/30 rounded-2xl p-4 space-y-3">
+            <span class="text-xs font-black text-[#D4AF37] block">افزودن همراه جدید:</span>
+            <div class="grid grid-cols-1 sm:grid-cols-3 gap-2">
+              <input type="text" placeholder="نام و نام خانوادگی" class="bg-[#0E121C] border border-[#C5A059]/30 rounded-xl px-3 py-2 text-xs text-white">
+              <select class="bg-[#0E121C] border border-[#C5A059]/30 rounded-xl px-3 py-2 text-xs text-white">
+                <option value="bridesmaid">ساقدوش عروس</option>
+                <option value="groomsman">ساقدوش داماد</option>
+                <option value="planner">برنامه‌ریز خانوادگی</option>
+              </select>
+              <button type="button" class="gold-shimmer-btn text-[#0F251A] font-black px-4 py-2 rounded-xl text-xs cursor-pointer">افزودن همراه +</button>
+            </div>
+          </div>
+
+          <!-- Companion Cards List -->
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+            <div class="bg-[#141A28] border border-[#C5A059]/30 rounded-2xl p-4 space-y-3 shadow-md">
+              <div class="flex items-center justify-between">
+                <div class="flex items-center gap-3">
+                  <img src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=100" class="w-10 h-10 rounded-full object-cover border border-[#D4AF37]">
+                  <div>
+                    <h4 class="text-sm font-black text-white">مریم (ساقدوش)</h4>
+                    <p class="text-[10.5px] text-slate-400 font-medium">مسئول هماهنگی سالن زیبایی</p>
+                  </div>
+                </div>
+                <span class="text-xs font-black text-emerald-400 bg-emerald-950/60 px-2.5 py-1 rounded-full border border-emerald-500/30">۱۰۰٪ پیشرفت</span>
+              </div>
+              <div class="space-y-1.5 pt-2 border-t border-slate-800">
+                <span class="text-[11px] font-bold text-slate-300 block">وظایف محوله:</span>
+                <div class="space-y-1 text-[11px]">
+                  <div class="flex items-center gap-1.5 text-slate-300"><i data-lucide="check" class="w-3 h-3 text-emerald-400"></i> رزرو نهایی آرایشگاه عروس</div>
+                </div>
+              </div>
+            </div>
+
+            <div class="bg-[#141A28] border border-[#C5A059]/30 rounded-2xl p-4 space-y-3 shadow-md">
+              <div class="flex items-center justify-between">
+                <div class="flex items-center gap-3">
+                  <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=100" class="w-10 h-10 rounded-full object-cover border border-[#D4AF37]">
+                  <div>
+                    <h4 class="text-sm font-black text-white">رضا (ساقدوش)</h4>
+                    <p class="text-[10.5px] text-slate-400 font-medium">مسئول تحویل گل و ماشین</p>
+                  </div>
+                </div>
+                <span class="text-xs font-black text-amber-300 bg-amber-950/60 px-2.5 py-1 rounded-full border border-amber-500/30">۵۰٪ پیشرفت</span>
+              </div>
+              <div class="space-y-1.5 pt-2 border-t border-slate-800">
+                <span class="text-[11px] font-bold text-slate-300 block">وظایف محوله:</span>
+                <div class="space-y-1 text-[11px]">
+                  <div class="flex items-center gap-1.5 text-slate-300"><i data-lucide="clock" class="w-3 h-3 text-amber-300"></i> تحویل خودرو به گل‌فروشی</div>
+                </div>
+              </div>
+            </div>
           </div>
         </div>`;
     } else if (type === 'guests') {
-      titleContainer.innerHTML = '<span class="text-xs font-bold text-[#D4AF37] block">مدیریت کامل کارت دعوت</span><h2 class="text-xl font-black text-white">لیست مهمانان و پاسخ‌های RSVP</h2>';
+      titleContainer.innerHTML = `
+        <div class="space-y-1 text-right">
+          <span class="text-xs font-bold text-[#D4AF37] flex items-center gap-1.5">
+            <i data-lucide="users" class="w-4 h-4 text-[#D4AF37]"></i>
+            <span>مدیریت جامع مهمانان & هدایا</span>
+          </span>
+          <h2 class="text-xl font-black text-white">فهرست کامل مهمانان، کارت دعوت هوشمند و صندلی‌ها</h2>
+        </div>`;
       bodyContainer.innerHTML = `
-        <div class="bg-[#141A28] border border-[#C5A059]/30 rounded-3xl p-6 space-y-4 text-right">
-          <h3 class="text-sm font-black text-[#D4AF37]">لیست و وضعیت صندلی‌های مهمانان:</h3>
-          <p class="text-xs text-slate-300 font-medium">مهمانان تاییدشده (۱۸۰ نفر)، در انتظار پاسخ (۴۵ نفر) و عذرخواهی (۱۵ نفر).</p>
+        <div class="space-y-6 text-right">
+          <!-- Metrics Bar -->
+          <div class="grid grid-cols-2 sm:grid-cols-4 gap-3">
+            <div class="bg-[#141A28] border border-[#C5A059]/30 rounded-2xl p-3 text-center space-y-1">
+              <span class="text-xs font-black text-white block">۲۴۰ نفر</span>
+              <span class="text-[10px] text-slate-400 font-bold block">کل مهمانان</span>
+            </div>
+            <div class="bg-[#141A28] border border-emerald-500/30 rounded-2xl p-3 text-center space-y-1">
+              <span class="text-xs font-black text-emerald-400 block">۱۸۰ نفر</span>
+              <span class="text-[10px] text-slate-400 font-bold block">حضور قطعی (RSVP)</span>
+            </div>
+            <div class="bg-[#141A28] border border-amber-500/30 rounded-2xl p-3 text-center space-y-1">
+              <span class="text-xs font-black text-amber-300 block">۴۵ نفر</span>
+              <span class="text-[10px] text-slate-400 font-bold block">در انتظار پاسخ</span>
+            </div>
+            <div class="bg-[#141A28] border border-[#C5A059]/30 rounded-2xl p-3 text-center space-y-1">
+              <span class="text-xs font-black text-[#D4AF37] block">۸۵,۰۰۰,۰۰۰ تومان</span>
+              <span class="text-[10px] text-slate-400 font-bold block">مجموع هدایای ثبت‌شده</span>
+            </div>
+          </div>
+
+          <!-- Action Bar -->
+          <div class="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 bg-[#141A28] border border-[#C5A059]/30 rounded-2xl p-4 shadow-lg">
+            <div class="flex items-center gap-2 flex-wrap">
+              <button type="button" class="gold-shimmer-btn text-[#0F251A] font-black px-3.5 py-2 rounded-xl text-xs flex items-center gap-1 cursor-pointer">
+                <i data-lucide="plus-circle" class="w-3.5 h-3.5 text-[#0F251A]"></i>
+                <span>افزودن مهمان جدید</span>
+              </button>
+              <button type="button" onclick="sendBulkRsvpReminders()" class="bg-[#0E121C] text-amber-200 border border-[#C5A059]/40 px-3.5 py-2 rounded-xl text-xs font-bold cursor-pointer hover:border-[#D4AF37]">
+                ارسال یادآور RSVP
+              </button>
+              <button type="button" onclick="generateBulkGuestInvitationLinks()" class="bg-[#0E121C] text-amber-200 border border-[#C5A059]/40 px-3.5 py-2 rounded-xl text-xs font-bold cursor-pointer hover:border-[#D4AF37]">
+                تولید QR & کارت دعوت
+              </button>
+              <button type="button" onclick="exportGuestsExcel()" class="bg-[#0E121C] text-slate-300 border border-slate-700 px-3.5 py-2 rounded-xl text-xs font-bold cursor-pointer">
+                خروجی CSV/Excel
+              </button>
+            </div>
+          </div>
+
+          <!-- Table -->
+          <div class="overflow-x-auto bg-[#141A28] border border-[#C5A059]/30 rounded-2xl p-2 shadow-lg">
+            <table class="w-full text-right text-xs font-bold">
+              <thead>
+                <tr class="border-b border-[#C5A059]/20 text-[#D4AF37] p-3">
+                  <th class="p-3">نام مهمان</th>
+                  <th class="p-3">گروه / نسبی</th>
+                  <th class="p-3">شماره تماس</th>
+                  <th class="p-3">تعداد افراد</th>
+                  <th class="p-3">شماره میز</th>
+                  <th class="p-3">وضعیت RSVP</th>
+                  <th class="p-3">عملیات</th>
+                </tr>
+              </thead>
+              <tbody class="divide-y divide-slate-800 text-slate-200">
+                <tr>
+                  <td class="p-3 font-black text-white">محمد رضایی & خانواده</td>
+                  <td class="p-3">فامیل داماد</td>
+                  <td class="p-3">۰۹۱۲۳۴۵۶۷۸۹</td>
+                  <td class="p-3">۴ نفر</td>
+                  <td class="p-3">میز ۵ VIP</td>
+                  <td class="p-3"><span class="bg-emerald-950/80 text-emerald-400 border border-emerald-500/30 px-2.5 py-0.5 rounded-full text-[10px]">تاییدشده</span></td>
+                  <td class="p-3"><button type="button" class="text-amber-300 hover:underline">ویرایش</button></td>
+                </tr>
+                <tr>
+                  <td class="p-3 font-black text-white">زهرا عباسی</td>
+                  <td class="p-3">دوستان عروس</td>
+                  <td class="p-3">۰۹۹۸۷۶۵۴۳۲۱</td>
+                  <td class="p-3">۱ نفر</td>
+                  <td class="p-3">میز ۸</td>
+                  <td class="p-3"><span class="bg-amber-950/80 text-amber-300 border border-amber-500/30 px-2.5 py-0.5 rounded-full text-[10px]">در انتظار</span></td>
+                  <td class="p-3"><button type="button" class="text-amber-300 hover:underline">ویرایش</button></td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>`;
+    } else if (type === 'budget') {
+      titleContainer.innerHTML = `
+        <div class="space-y-1 text-right">
+          <span class="text-xs font-bold text-[#D4AF37] flex items-center gap-1.5">
+            <i data-lucide="calculator" class="w-4 h-4 text-[#D4AF37]"></i>
+            <span>خلاصه بودجه و مدیریت مالی</span>
+          </span>
+          <h2 class="text-xl font-black text-white">تفکیک هزینه‌ها، اقساط و سهم عروس و داماد</h2>
+        </div>`;
+      bodyContainer.innerHTML = `
+        <div class="space-y-6 text-right">
+          <!-- Header Cards -->
+          <div class="grid grid-cols-2 sm:grid-cols-4 gap-3">
+            <div class="bg-[#141A28] border border-[#C5A059]/30 rounded-2xl p-3 text-center space-y-1">
+              <span class="text-xs font-black text-white block">۳۵۰,۰۰۰,۰۰۰ تومان</span>
+              <span class="text-[10px] text-slate-400 font-bold block">سقف کل مصوب</span>
+            </div>
+            <div class="bg-[#141A28] border border-emerald-500/30 rounded-2xl p-3 text-center space-y-1">
+              <span class="text-xs font-black text-emerald-400 block">۲۱۰,۰۰۰,۰۰۰ تومان</span>
+              <span class="text-[10px] text-slate-400 font-bold block">پرداخت‌شده</span>
+            </div>
+            <div class="bg-[#141A28] border border-amber-500/30 rounded-2xl p-3 text-center space-y-1">
+              <span class="text-xs font-black text-amber-300 block">۱۴۰,۰۰۰,۰۰۰ تومان</span>
+              <span class="text-[10px] text-slate-400 font-bold block">باقیمانده</span>
+            </div>
+            <div class="bg-[#141A28] border border-[#C5A059]/30 rounded-2xl p-3 text-center space-y-1">
+              <span class="text-xs font-black text-emerald-400 block">عالی (در حد بودجه)</span>
+              <span class="text-[10px] text-slate-400 font-bold block">وضعیت سلامت مالی</span>
+            </div>
+          </div>
+
+          <!-- Dual Budget Split -->
+          <div class="bg-[#141A28] border border-[#C5A059]/30 rounded-2xl p-4 space-y-3 shadow-lg">
+            <span class="text-xs font-black text-[#D4AF37] block">تفکیک سهم پرداخت:</span>
+            <div class="w-full bg-slate-800 h-3 rounded-full overflow-hidden flex">
+              <div class="bg-[#D4AF37] h-full" style="width: 60%;" title="سهم داماد ۶۰٪"></div>
+              <div class="bg-amber-500 h-full" style="width: 25%;" title="سهم عروس ۲۵٪"></div>
+              <div class="bg-emerald-500 h-full" style="width: 15%;" title="مشترک ۱۵٪"></div>
+            </div>
+            <div class="flex items-center justify-between text-[11px] font-bold text-slate-300">
+              <span class="flex items-center gap-1"><span class="w-2 h-2 rounded-full bg-[#D4AF37]"></span> سهم داماد: ۲۱۰ میلیون</span>
+              <span class="flex items-center gap-1"><span class="w-2 h-2 rounded-full bg-amber-500"></span> سهم عروس: ۹۰ میلیون</span>
+              <span class="flex items-center gap-1"><span class="w-2 h-2 rounded-full bg-emerald-500"></span> مشترک: ۵۰ میلیون</span>
+            </div>
+          </div>
+
+          <!-- Line Items Table -->
+          <div class="bg-[#141A28] border border-[#C5A059]/30 rounded-2xl p-4 space-y-3 shadow-lg">
+            <div class="flex items-center justify-between border-b border-[#C5A059]/20 pb-2">
+              <h3 class="text-xs sm:text-sm font-black text-[#D4AF37]">ریز اقلام ثبت‌شده:</h3>
+              <button type="button" onclick="openBudgetItemModal()" class="gold-shimmer-btn text-[#0F251A] font-black px-3.5 py-1.5 rounded-xl text-xs cursor-pointer">ثبت هزینه جدید +</button>
+            </div>
+
+            <div class="space-y-2 text-xs font-bold">
+              <div class="p-3 bg-[#0E121C] rounded-xl flex items-center justify-between">
+                <div>
+                  <span class="text-white block font-black">ورودی باغ‌سرا & منوی شام</span>
+                  <span class="text-[10px] text-slate-400 font-medium">سهم داماد • بودجه: ۱۵۰M • پرداختی: ۱۲۰M</span>
+                </div>
+                <span class="text-emerald-400 font-black">تسویه‌شده</span>
+              </div>
+              <div class="p-3 bg-[#0E121C] rounded-xl flex items-center justify-between">
+                <div>
+                  <span class="text-white block font-black">آتلیه و فرمالیته کویر</span>
+                  <span class="text-[10px] text-slate-400 font-medium">مشترک • بودجه: ۷۰M • پرداختی: ۴۵M</span>
+                </div>
+                <span class="text-amber-300 font-black">بیعانه</span>
+              </div>
+            </div>
+          </div>
         </div>`;
     } else if (type === 'inquiries') {
-      titleContainer.innerHTML = '<span class="text-xs font-bold text-[#D4AF37] block">مرکز استعلام‌ها</span><h2 class="text-xl font-black text-white">چت مستقیم و پیگیری پیش‌فاکتورها</h2>';
+      titleContainer.innerHTML = `
+        <div class="space-y-1 text-right">
+          <span class="text-xs font-bold text-[#D4AF37] flex items-center gap-1.5">
+            <i data-lucide="message-square" class="w-4 h-4 text-[#D4AF37]"></i>
+            <span>پیگیری استعلام‌ها & پیش‌فاکتورها</span>
+          </span>
+          <h2 class="text-xl font-black text-white">استعلام‌ها و درخواست‌های فعال رزرو</h2>
+        </div>`;
       bodyContainer.innerHTML = `
-        <div class="bg-[#141A28] border border-[#C5A059]/30 rounded-3xl p-6 space-y-4 text-right">
-          <h3 class="text-sm font-black text-[#D4AF37]">استعلام‌های فعال با مدیریت برندها:</h3>
-          <p class="text-xs text-slate-300 font-medium">جهت پیگیری گفت‌وگوها به مرکز چت متصل می‌شوید.</p>
+        <div class="space-y-6 text-right">
+          <div class="flex items-center justify-between bg-[#141A28] border border-[#C5A059]/30 rounded-2xl p-4 shadow-lg flex-wrap gap-2">
+            <span class="text-xs font-bold text-slate-300">استعلام‌های فعال با مدیریت برندها</span>
+            <div class="flex items-center gap-2">
+              <button type="button" onclick="openReverseBiddingModal()" class="gold-shimmer-btn text-[#0F251A] font-black px-4 py-2 rounded-xl text-xs flex items-center gap-1.5 cursor-pointer shadow-md">
+                <i data-lucide="key" class="w-4 h-4 text-[#0F251A]"></i>
+                <span>ثبت درخواست در مناقصه معکوس</span>
+              </button>
+            </div>
+          </div>
+
+          <div class="space-y-3">
+            <div class="bg-[#141A28] border border-[#C5A059]/30 rounded-2xl p-4 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 shadow-md">
+              <div>
+                <h4 class="text-sm font-black text-white">هتل باغ مشیرالممالک یزد</h4>
+                <p class="text-[10.5px] text-slate-300 font-medium mt-0.5">منوی VIP • ۲۵۰ نفر مهمان • ۱۵ شهریور ۱۴۰۴</p>
+              </div>
+              <button type="button" onclick="switchTab('messages')" class="gold-shimmer-btn text-[#0F251A] font-black px-4 py-2 rounded-xl text-xs cursor-pointer">
+                گفتگو و مشاهده پیش‌فاکتور 💬
+              </button>
+            </div>
+          </div>
         </div>`;
     } else {
-      titleContainer.innerHTML = '<span class="text-xs font-bold text-[#D4AF37] block">تامین‌کنندگان من</span><h2 class="text-xl font-black text-white">لیست بوک‌مارک‌ها & تامین‌کنندگان رزروشده</h2>';
+      titleContainer.innerHTML = `
+        <div class="space-y-1 text-right">
+          <span class="text-xs font-bold text-[#D4AF37] flex items-center gap-1.5">
+            <i data-lucide="heart" class="w-4 h-4 text-[#D4AF37]"></i>
+            <span>تامین‌کنندگان من</span>
+          </span>
+          <h2 class="text-xl font-black text-white">مجموعه‌های بوک‌شده & نشان‌شده در یزد</h2>
+        </div>`;
       bodyContainer.innerHTML = `
-        <div class="bg-[#141A28] border border-[#C5A059]/30 rounded-3xl p-6 space-y-4 text-right">
-          <h3 class="text-sm font-black text-[#D4AF37]">مجموعه‌های رزروشده در یزد:</h3>
-          <p class="text-xs text-slate-300 font-medium">تالار مشیرالممالک، آتلیه کویر، سالن زیبایی رویال و مزون لورنت.</p>
+        <div class="space-y-6 text-right">
+          <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+            <div class="bg-[#141A28] border border-[#C5A059]/30 rounded-2xl p-3.5 space-y-2 shadow-lg">
+              <img src="https://images.unsplash.com/photo-1519167758481-83f550bb49b3?w=500" class="w-full h-32 rounded-xl object-cover border border-[#C5A059]/20">
+              <div>
+                <span class="text-[9.5px] font-bold text-[#D4AF37] block">تالار & باغ</span>
+                <h3 class="text-xs sm:text-sm font-black text-white">مشیرالممالک یزد</h3>
+                <p class="text-[10px] text-emerald-400 font-bold mt-1">رزرو نهایی‌شده</p>
+              </div>
+            </div>
+            <div class="bg-[#141A28] border border-[#C5A059]/30 rounded-2xl p-3.5 space-y-2 shadow-lg">
+              <img src="https://images.unsplash.com/photo-1537633552985-df8429e8048b?w=500" class="w-full h-32 rounded-xl object-cover border border-[#C5A059]/20">
+              <div>
+                <span class="text-[9.5px] font-bold text-[#D4AF37] block">آتلیه & عکاسی</span>
+                <h3 class="text-xs sm:text-sm font-black text-white">استودیو کویر</h3>
+                <p class="text-[10px] text-amber-300 font-bold mt-1">بیعانه پرداخت‌شده</p>
+              </div>
+            </div>
+          </div>
         </div>`;
     }
 
     overlay.classList.remove('hidden');
-    if (window.lucide) lucide.createIcons();
+    if (window.lucide && typeof window.lucide.createIcons === 'function') {
+      window.lucide.createIcons();
+    }
   };
 
   window.closeExpandModal = function() {
