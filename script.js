@@ -18764,19 +18764,19 @@ window.initCardVideoHoverListeners = function() {
         <div class="space-y-6 text-right">
           <!-- Header Metrics Bar -->
           <div class="grid grid-cols-2 sm:grid-cols-4 gap-3">
-            <div class="bg-[#141A28] border border-[#C5A059]/30 rounded-2xl p-3 text-center space-y-1">
+            <div class="bg-[#141A28] border border-[#C5A059]/30 rounded-2xl p-3 text-center space-y-1 shadow-md">
               <span class="text-xs font-black text-amber-300 block">۱۲ مورد</span>
               <span class="text-[10px] text-slate-400 font-bold block">اقدامات فوری باقی‌مانده</span>
             </div>
-            <div class="bg-[#141A28] border border-emerald-500/30 rounded-2xl p-3 text-center space-y-1">
+            <div class="bg-[#141A28] border border-emerald-500/30 rounded-2xl p-3 text-center space-y-1 shadow-md">
               <span class="text-xs font-black text-emerald-400 block">۲۸ مورد</span>
               <span class="text-[10px] text-slate-400 font-bold block">اقدامات تکمیل‌شده</span>
             </div>
-            <div class="bg-[#141A28] border border-[#C5A059]/30 rounded-2xl p-3 text-center space-y-1">
+            <div class="bg-[#141A28] border border-[#C5A059]/30 rounded-2xl p-3 text-center space-y-1 shadow-md">
               <span class="text-xs font-black text-[#D4AF37] block">۷۰٪</span>
               <span class="text-[10px] text-slate-400 font-bold block">آمادگی کلی مراسم</span>
             </div>
-            <div class="bg-[#141A28] border border-[#C5A059]/30 rounded-2xl p-3 text-center space-y-1">
+            <div class="bg-[#141A28] border border-[#C5A059]/30 rounded-2xl p-3 text-center space-y-1 shadow-md">
               <span class="text-xs font-black text-white block">۱۳۵ روز</span>
               <span class="text-[10px] text-slate-400 font-bold block">روزشماری تا مراسم</span>
             </div>
@@ -18784,17 +18784,18 @@ window.initCardVideoHoverListeners = function() {
 
           <!-- Action & Filter Bar -->
           <div class="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 bg-[#141A28] border border-[#C5A059]/30 rounded-2xl p-4 shadow-lg">
-            <div class="flex items-center gap-2 overflow-x-auto no-scrollbar text-xs font-bold w-full sm:w-auto">
+            <div class="flex items-center gap-2 overflow-x-auto no-scrollbar text-xs font-bold w-full sm:w-auto flex-wrap">
               <button type="button" class="bg-[#D4AF37] text-[#07090E] font-black px-3.5 py-1.5 rounded-xl cursor-pointer">همه فازها</button>
               <button type="button" class="bg-[#0E121C] text-slate-300 hover:text-white border border-slate-700 px-3.5 py-1.5 rounded-xl cursor-pointer">۱۲ تا ۹ ماه قبل</button>
               <button type="button" class="bg-[#0E121C] text-slate-300 hover:text-white border border-slate-700 px-3.5 py-1.5 rounded-xl cursor-pointer">۶ تا ۳ ماه قبل</button>
+              <button type="button" class="bg-[#0E121C] text-slate-300 hover:text-white border border-slate-700 px-3.5 py-1.5 rounded-xl cursor-pointer">۱ ماه قبل</button>
               <button type="button" class="bg-[#0E121C] text-slate-300 hover:text-white border border-slate-700 px-3.5 py-1.5 rounded-xl cursor-pointer">هفته پایانی</button>
             </div>
             <div class="flex items-center gap-2 shrink-0 w-full sm:w-auto">
-              <button type="button" onclick="exportChecklistCsv()" class="bg-[#0E121C] hover:bg-slate-800 text-amber-200 border border-[#C5A059]/40 px-3.5 py-2 rounded-xl text-xs font-bold cursor-pointer">خروجی اکسل / چاپ</button>
+              <button type="button" onclick="exportChecklistCsv()" class="bg-[#0E121C] hover:bg-slate-800 text-amber-200 border border-[#C5A059]/40 px-3.5 py-2 rounded-xl text-xs font-bold cursor-pointer">📥 خروجی اکسل / چاپ</button>
               <button type="button" onclick="openAddTaskModal()" class="gold-shimmer-btn text-[#0F251A] font-black px-4 py-2 rounded-xl text-xs flex items-center gap-1 cursor-pointer">
                 <i data-lucide="plus-circle" class="w-4 h-4 text-[#0F251A]"></i>
-                <span>افزودن مهم جدید</span>
+                <span>+ افزودن مهم جدید</span>
               </button>
             </div>
           </div>
@@ -18816,8 +18817,8 @@ window.initCardVideoHoverListeners = function() {
                 </div>
               </div>
               <div class="flex items-center gap-2">
-                <button type="button" class="text-slate-400 hover:text-amber-300 text-xs font-bold">ویرایش</button>
-                <button type="button" class="text-slate-400 hover:text-rose-400 text-xs font-bold">حذف</button>
+                <button type="button" class="text-slate-400 hover:text-amber-300 text-xs font-bold cursor-pointer">ویرایش</button>
+                <button type="button" class="text-slate-400 hover:text-rose-400 text-xs font-bold cursor-pointer">حذف</button>
               </div>
             </div>
 
@@ -18836,8 +18837,8 @@ window.initCardVideoHoverListeners = function() {
                 </div>
               </div>
               <div class="flex items-center gap-2">
-                <button type="button" class="text-slate-400 hover:text-amber-300 text-xs font-bold">ویرایش</button>
-                <button type="button" class="text-slate-400 hover:text-rose-400 text-xs font-bold">حذف</button>
+                <button type="button" class="text-slate-400 hover:text-amber-300 text-xs font-bold cursor-pointer">ویرایش</button>
+                <button type="button" class="text-slate-400 hover:text-rose-400 text-xs font-bold cursor-pointer">حذف</button>
               </div>
             </div>
           </div>
@@ -18855,19 +18856,20 @@ window.initCardVideoHoverListeners = function() {
         <div class="space-y-6 text-right">
           <div class="flex items-center justify-between bg-[#141A28] border border-[#C5A059]/30 rounded-2xl p-4 shadow-lg flex-wrap gap-2">
             <span class="text-xs font-bold text-slate-300">برنامه استاد ساعتی روز عروسی (۱۵ شهریور ۱۴۰۴)</span>
-            <button type="button" onclick="window.print()" class="bg-[#0E121C] hover:bg-slate-800 text-amber-200 border border-[#C5A059]/40 px-3.5 py-2 rounded-xl text-xs font-bold cursor-pointer">
-              چاپ و دریافت PDF برنامه
+            <button type="button" onclick="window.print()" class="bg-[#0E121C] hover:bg-slate-800 text-amber-200 border border-[#C5A059]/40 px-3.5 py-2 rounded-xl text-xs font-bold cursor-pointer flex items-center gap-1.5">
+              <i data-lucide="printer" class="w-4 h-4 text-[#D4AF37]"></i>
+              <span>🖨️ چاپ و دریافت PDF برنامه</span>
             </button>
           </div>
 
           <!-- Add Timeline Slot Inline Form -->
-          <div class="bg-[#141A28] border border-[#C5A059]/30 rounded-2xl p-4 space-y-3">
+          <div class="bg-[#141A28] border border-[#C5A059]/30 rounded-2xl p-4 space-y-3 shadow-md">
             <span class="text-xs font-black text-[#D4AF37] block">افزودن آیتم زمانی جدید:</span>
             <div class="grid grid-cols-1 sm:grid-cols-4 gap-2">
               <input type="text" placeholder="زمان (مثلاً ۰۸:۳۰)" class="bg-[#0E121C] border border-[#C5A059]/30 rounded-xl px-3 py-2 text-xs text-white">
               <input type="text" placeholder="عنوان برنامه" class="bg-[#0E121C] border border-[#C5A059]/30 rounded-xl px-3 py-2 text-xs text-white">
               <input type="text" placeholder="مسئول هماهنگی (مثلاً ساقدوش)" class="bg-[#0E121C] border border-[#C5A059]/30 rounded-xl px-3 py-2 text-xs text-white">
-              <button type="button" class="gold-shimmer-btn text-[#0F251A] font-black px-4 py-2 rounded-xl text-xs cursor-pointer">ثبت آیتم +</button>
+              <button type="button" class="gold-shimmer-btn text-[#0F251A] font-black px-4 py-2 rounded-xl text-xs cursor-pointer">+ ثبت آیتم</button>
             </div>
           </div>
 
@@ -18882,8 +18884,8 @@ window.initCardVideoHoverListeners = function() {
                 </div>
               </div>
               <div class="flex items-center gap-2">
-                <button type="button" class="text-slate-400 hover:text-amber-300 text-xs font-bold">ویرایش</button>
-                <button type="button" class="text-slate-400 hover:text-rose-400 text-xs font-bold">حذف</button>
+                <button type="button" class="text-slate-400 hover:text-amber-300 text-xs font-bold cursor-pointer">ویرایش</button>
+                <button type="button" class="text-slate-400 hover:text-rose-400 text-xs font-bold cursor-pointer">حذف</button>
               </div>
             </div>
 
@@ -18896,8 +18898,8 @@ window.initCardVideoHoverListeners = function() {
                 </div>
               </div>
               <div class="flex items-center gap-2">
-                <button type="button" class="text-slate-400 hover:text-amber-300 text-xs font-bold">ویرایش</button>
-                <button type="button" class="text-slate-400 hover:text-rose-400 text-xs font-bold">حذف</button>
+                <button type="button" class="text-slate-400 hover:text-amber-300 text-xs font-bold cursor-pointer">ویرایش</button>
+                <button type="button" class="text-slate-400 hover:text-rose-400 text-xs font-bold cursor-pointer">حذف</button>
               </div>
             </div>
           </div>
@@ -18914,7 +18916,7 @@ window.initCardVideoHoverListeners = function() {
       bodyContainer.innerHTML = `
         <div class="space-y-6 text-right">
           <!-- Add Companion Form -->
-          <div class="bg-[#141A28] border border-[#C5A059]/30 rounded-2xl p-4 space-y-3">
+          <div class="bg-[#141A28] border border-[#C5A059]/30 rounded-2xl p-4 space-y-3 shadow-md">
             <span class="text-xs font-black text-[#D4AF37] block">افزودن همراه جدید:</span>
             <div class="grid grid-cols-1 sm:grid-cols-3 gap-2">
               <input type="text" placeholder="نام و نام خانوادگی" class="bg-[#0E121C] border border-[#C5A059]/30 rounded-xl px-3 py-2 text-xs text-white">
@@ -18923,7 +18925,7 @@ window.initCardVideoHoverListeners = function() {
                 <option value="groomsman">ساقدوش داماد</option>
                 <option value="planner">برنامه‌ریز خانوادگی</option>
               </select>
-              <button type="button" class="gold-shimmer-btn text-[#0F251A] font-black px-4 py-2 rounded-xl text-xs cursor-pointer">افزودن همراه +</button>
+              <button type="button" class="gold-shimmer-btn text-[#0F251A] font-black px-4 py-2 rounded-xl text-xs cursor-pointer">+ افزودن همراه</button>
             </div>
           </div>
 
@@ -18981,19 +18983,19 @@ window.initCardVideoHoverListeners = function() {
         <div class="space-y-6 text-right">
           <!-- Metrics Bar -->
           <div class="grid grid-cols-2 sm:grid-cols-4 gap-3">
-            <div class="bg-[#141A28] border border-[#C5A059]/30 rounded-2xl p-3 text-center space-y-1">
+            <div class="bg-[#141A28] border border-[#C5A059]/30 rounded-2xl p-3 text-center space-y-1 shadow-md">
               <span class="text-xs font-black text-white block">۲۴۰ نفر</span>
               <span class="text-[10px] text-slate-400 font-bold block">کل مهمانان</span>
             </div>
-            <div class="bg-[#141A28] border border-emerald-500/30 rounded-2xl p-3 text-center space-y-1">
+            <div class="bg-[#141A28] border border-emerald-500/30 rounded-2xl p-3 text-center space-y-1 shadow-md">
               <span class="text-xs font-black text-emerald-400 block">۱۸۰ نفر</span>
               <span class="text-[10px] text-slate-400 font-bold block">حضور قطعی (RSVP)</span>
             </div>
-            <div class="bg-[#141A28] border border-amber-500/30 rounded-2xl p-3 text-center space-y-1">
+            <div class="bg-[#141A28] border border-amber-500/30 rounded-2xl p-3 text-center space-y-1 shadow-md">
               <span class="text-xs font-black text-amber-300 block">۴۵ نفر</span>
               <span class="text-[10px] text-slate-400 font-bold block">در انتظار پاسخ</span>
             </div>
-            <div class="bg-[#141A28] border border-[#C5A059]/30 rounded-2xl p-3 text-center space-y-1">
+            <div class="bg-[#141A28] border border-[#C5A059]/30 rounded-2xl p-3 text-center space-y-1 shadow-md">
               <span class="text-xs font-black text-[#D4AF37] block">۸۵,۰۰۰,۰۰۰ تومان</span>
               <span class="text-[10px] text-slate-400 font-bold block">مجموع هدایای ثبت‌شده</span>
             </div>
@@ -19004,17 +19006,29 @@ window.initCardVideoHoverListeners = function() {
             <div class="flex items-center gap-2 flex-wrap">
               <button type="button" class="gold-shimmer-btn text-[#0F251A] font-black px-3.5 py-2 rounded-xl text-xs flex items-center gap-1 cursor-pointer">
                 <i data-lucide="plus-circle" class="w-3.5 h-3.5 text-[#0F251A]"></i>
-                <span>افزودن مهمان جدید</span>
+                <span>+ افزودن مهمان جدید</span>
               </button>
               <button type="button" onclick="sendBulkRsvpReminders()" class="bg-[#0E121C] text-amber-200 border border-[#C5A059]/40 px-3.5 py-2 rounded-xl text-xs font-bold cursor-pointer hover:border-[#D4AF37]">
-                ارسال یادآور RSVP
+                📩 ارسال یادآور RSVP
               </button>
               <button type="button" onclick="generateBulkGuestInvitationLinks()" class="bg-[#0E121C] text-amber-200 border border-[#C5A059]/40 px-3.5 py-2 rounded-xl text-xs font-bold cursor-pointer hover:border-[#D4AF37]">
-                تولید QR & کارت دعوت
+                🎫 کارت اختصاصی/QR
+              </button>
+              <button type="button" onclick="openGiftRecorderModal()" class="bg-[#0E121C] text-amber-200 border border-[#C5A059]/40 px-3.5 py-2 rounded-xl text-xs font-bold cursor-pointer hover:border-[#D4AF37]">
+                🎁 ثبت هدایا
               </button>
               <button type="button" onclick="exportGuestsExcel()" class="bg-[#0E121C] text-slate-300 border border-slate-700 px-3.5 py-2 rounded-xl text-xs font-bold cursor-pointer">
-                خروجی CSV/Excel
+                📥 خروجی Excel
               </button>
+            </div>
+            <div class="w-full sm:w-auto flex items-center gap-2">
+              <input type="text" placeholder="جستجوی مهمان..." class="bg-[#0E121C] border border-[#C5A059]/30 rounded-xl px-3 py-1.5 text-xs text-white">
+              <select class="bg-[#0E121C] border border-[#C5A059]/30 rounded-xl px-3 py-1.5 text-xs text-white">
+                <option value="all">همه گروه‌ها</option>
+                <option value="groom">فامیل داماد</option>
+                <option value="bride">فامیل عروس</option>
+                <option value="joint">دوستان مشترک</option>
+              </select>
             </div>
           </div>
 
@@ -19040,7 +19054,7 @@ window.initCardVideoHoverListeners = function() {
                   <td class="p-3">۴ نفر</td>
                   <td class="p-3">میز ۵ VIP</td>
                   <td class="p-3"><span class="bg-emerald-950/80 text-emerald-400 border border-emerald-500/30 px-2.5 py-0.5 rounded-full text-[10px]">تاییدشده</span></td>
-                  <td class="p-3"><button type="button" class="text-amber-300 hover:underline">ویرایش</button></td>
+                  <td class="p-3"><button type="button" class="text-amber-300 hover:underline cursor-pointer">ویرایش</button></td>
                 </tr>
                 <tr>
                   <td class="p-3 font-black text-white">زهرا عباسی</td>
@@ -19049,7 +19063,7 @@ window.initCardVideoHoverListeners = function() {
                   <td class="p-3">۱ نفر</td>
                   <td class="p-3">میز ۸</td>
                   <td class="p-3"><span class="bg-amber-950/80 text-amber-300 border border-amber-500/30 px-2.5 py-0.5 rounded-full text-[10px]">در انتظار</span></td>
-                  <td class="p-3"><button type="button" class="text-amber-300 hover:underline">ویرایش</button></td>
+                  <td class="p-3"><button type="button" class="text-amber-300 hover:underline cursor-pointer">ویرایش</button></td>
                 </tr>
               </tbody>
             </table>
@@ -19066,38 +19080,91 @@ window.initCardVideoHoverListeners = function() {
         </div>`;
       bodyContainer.innerHTML = `
         <div class="space-y-6 text-right">
-          <!-- Header Cards -->
+          <!-- Metric cards -->
           <div class="grid grid-cols-2 sm:grid-cols-4 gap-3">
-            <div class="bg-[#141A28] border border-[#C5A059]/30 rounded-2xl p-3 text-center space-y-1">
+            <div class="bg-[#141A28] border border-[#C5A059]/30 rounded-2xl p-3 text-center space-y-1 shadow-md">
               <span class="text-xs font-black text-white block">۳۵۰,۰۰۰,۰۰۰ تومان</span>
               <span class="text-[10px] text-slate-400 font-bold block">سقف کل مصوب</span>
             </div>
-            <div class="bg-[#141A28] border border-emerald-500/30 rounded-2xl p-3 text-center space-y-1">
+            <div class="bg-[#141A28] border border-emerald-500/30 rounded-2xl p-3 text-center space-y-1 shadow-md">
               <span class="text-xs font-black text-emerald-400 block">۲۱۰,۰۰۰,۰۰۰ تومان</span>
               <span class="text-[10px] text-slate-400 font-bold block">پرداخت‌شده</span>
             </div>
-            <div class="bg-[#141A28] border border-amber-500/30 rounded-2xl p-3 text-center space-y-1">
+            <div class="bg-[#141A28] border border-amber-500/30 rounded-2xl p-3 text-center space-y-1 shadow-md">
               <span class="text-xs font-black text-amber-300 block">۱۴۰,۰۰۰,۰۰۰ تومان</span>
               <span class="text-[10px] text-slate-400 font-bold block">باقیمانده</span>
             </div>
-            <div class="bg-[#141A28] border border-[#C5A059]/30 rounded-2xl p-3 text-center space-y-1">
+            <div class="bg-[#141A28] border border-[#C5A059]/30 rounded-2xl p-3 text-center space-y-1 shadow-md">
               <span class="text-xs font-black text-emerald-400 block">عالی (در حد بودجه)</span>
               <span class="text-[10px] text-slate-400 font-bold block">وضعیت سلامت مالی</span>
             </div>
           </div>
 
-          <!-- Dual Budget Split -->
-          <div class="bg-[#141A28] border border-[#C5A059]/30 rounded-2xl p-4 space-y-3 shadow-lg">
-            <span class="text-xs font-black text-[#D4AF37] block">تفکیک سهم پرداخت:</span>
-            <div class="w-full bg-slate-800 h-3 rounded-full overflow-hidden flex">
-              <div class="bg-[#D4AF37] h-full" style="width: 60%;" title="سهم داماد ۶۰٪"></div>
-              <div class="bg-amber-500 h-full" style="width: 25%;" title="سهم عروس ۲۵٪"></div>
-              <div class="bg-emerald-500 h-full" style="width: 15%;" title="مشترک ۱۵٪"></div>
+          <!-- Glassmorphic Donut Breakdown + 2-Way Split -->
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <!-- Glassmorphic Category Donut -->
+            <div class="bg-[#141A28] border border-[#C5A059]/30 rounded-2xl p-4 space-y-3 shadow-lg">
+              <span class="text-xs font-black text-[#D4AF37] block">تفکیک هزینه‌ها بر اساس دسته‌بندی:</span>
+              <div class="flex items-center gap-4">
+                <div class="relative w-28 h-28 shrink-0 flex items-center justify-center">
+                  <svg class="w-full h-full -rotate-90" viewBox="0 0 100 100">
+                    <circle cx="50" cy="50" r="38" stroke="#D4AF37" stroke-width="10" fill="transparent" stroke-dasharray="238.76" stroke-dashoffset="100" />
+                    <circle cx="50" cy="50" r="38" stroke="#10B981" stroke-width="10" fill="transparent" stroke-dasharray="238.76" stroke-dashoffset="180" />
+                    <circle cx="50" cy="50" r="38" stroke="#3B82F6" stroke-width="10" fill="transparent" stroke-dasharray="238.76" stroke-dashoffset="210" />
+                  </svg>
+                </div>
+                <div class="space-y-1 text-[11px] font-bold">
+                  <div class="flex items-center gap-1.5"><span class="w-2.5 h-2.5 rounded-full bg-[#D4AF37]"></span> تالار & تشریفات: ۵۰٪</div>
+                  <div class="flex items-center gap-1.5"><span class="w-2.5 h-2.5 rounded-full bg-emerald-500"></span> آتلیه & عکاسی: ۲۵٪</div>
+                  <div class="flex items-center gap-1.5"><span class="w-2.5 h-2.5 rounded-full bg-blue-500"></span> سالن زیبایی & لباس: ۲۵٪</div>
+                </div>
+              </div>
             </div>
-            <div class="flex items-center justify-between text-[11px] font-bold text-slate-300">
-              <span class="flex items-center gap-1"><span class="w-2 h-2 rounded-full bg-[#D4AF37]"></span> سهم داماد: ۲۱۰ میلیون</span>
-              <span class="flex items-center gap-1"><span class="w-2 h-2 rounded-full bg-amber-500"></span> سهم عروس: ۹۰ میلیون</span>
-              <span class="flex items-center gap-1"><span class="w-2 h-2 rounded-full bg-emerald-500"></span> مشترک: ۵۰ میلیون</span>
+
+            <!-- Dual Budget Split (سهم عروس vs سهم داماد) -->
+            <div class="bg-[#141A28] border border-[#C5A059]/30 rounded-2xl p-4 space-y-3 shadow-lg">
+              <span class="text-xs font-black text-[#D4AF37] block">تفکیک سهم پرداخت (سهم عروس vs سهم داماد):</span>
+              <div class="w-full bg-slate-800 h-3 rounded-full overflow-hidden flex mt-2">
+                <div class="bg-[#D4AF37] h-full" style="width: 60%;" title="سهم داماد ۶۰٪"></div>
+                <div class="bg-amber-500 h-full" style="width: 25%;" title="سهم عروس ۲۵٪"></div>
+                <div class="bg-emerald-500 h-full" style="width: 15%;" title="مشترک ۱۵٪"></div>
+              </div>
+              <div class="flex items-center justify-between text-[11px] font-bold text-slate-300 pt-2">
+                <span class="flex items-center gap-1"><span class="w-2 h-2 rounded-full bg-[#D4AF37]"></span> سهم داماد: ۲۱۰M</span>
+                <span class="flex items-center gap-1"><span class="w-2 h-2 rounded-full bg-amber-500"></span> سهم عروس: ۹۰M</span>
+                <span class="flex items-center gap-1"><span class="w-2 h-2 rounded-full bg-emerald-500"></span> مشترک: ۵۰M</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Installment Timeline Table -->
+          <div class="bg-[#141A28] border border-[#C5A059]/30 rounded-2xl p-4 space-y-3 shadow-lg">
+            <h3 class="text-xs font-black text-[#D4AF37]">جدول سررسید اقلا‌ط & بیعانه‌ها:</h3>
+            <div class="overflow-x-auto">
+              <table class="w-full text-right text-xs font-bold">
+                <thead>
+                  <tr class="border-b border-slate-700 text-slate-400">
+                    <th class="p-2">تامین‌کننده</th>
+                    <th class="p-2">تاریخ سررسید</th>
+                    <th class="p-2">مبلغ قسط</th>
+                    <th class="p-2">وضعیت</th>
+                  </tr>
+                </thead>
+                <tbody class="divide-y divide-slate-800">
+                  <tr>
+                    <td class="p-2 text-white">مشیرالممالک یزد</td>
+                    <td class="p-2">۱ مرداد ۱۴۰۴</td>
+                    <td class="p-2">۵۰,۰۰۰,۰۰۰ تومان</td>
+                    <td class="p-2"><span class="text-emerald-400">پرداخت‌شده</span></td>
+                  </tr>
+                  <tr>
+                    <td class="p-2 text-white">استودیو کویر</td>
+                    <td class="p-2">۲۵ مرداد ۱۴۰۴</td>
+                    <td class="p-2">۲۵,۰۰۰,۰۰۰ تومان</td>
+                    <td class="p-2"><span class="text-amber-300">در انتظار سررسید</span></td>
+                  </tr>
+                </tbody>
+              </table>
             </div>
           </div>
 
@@ -19105,7 +19172,7 @@ window.initCardVideoHoverListeners = function() {
           <div class="bg-[#141A28] border border-[#C5A059]/30 rounded-2xl p-4 space-y-3 shadow-lg">
             <div class="flex items-center justify-between border-b border-[#C5A059]/20 pb-2">
               <h3 class="text-xs sm:text-sm font-black text-[#D4AF37]">ریز اقلام ثبت‌شده:</h3>
-              <button type="button" onclick="openBudgetItemModal()" class="gold-shimmer-btn text-[#0F251A] font-black px-3.5 py-1.5 rounded-xl text-xs cursor-pointer">ثبت هزینه جدید +</button>
+              <button type="button" onclick="openBudgetItemModal()" class="gold-shimmer-btn text-[#0F251A] font-black px-3.5 py-1.5 rounded-xl text-xs cursor-pointer">+ ثبت هزینه جدید</button>
             </div>
 
             <div class="space-y-2 text-xs font-bold">
@@ -19114,14 +19181,10 @@ window.initCardVideoHoverListeners = function() {
                   <span class="text-white block font-black">ورودی باغ‌سرا & منوی شام</span>
                   <span class="text-[10px] text-slate-400 font-medium">سهم داماد • بودجه: ۱۵۰M • پرداختی: ۱۲۰M</span>
                 </div>
-                <span class="text-emerald-400 font-black">تسویه‌شده</span>
-              </div>
-              <div class="p-3 bg-[#0E121C] rounded-xl flex items-center justify-between">
-                <div>
-                  <span class="text-white block font-black">آتلیه و فرمالیته کویر</span>
-                  <span class="text-[10px] text-slate-400 font-medium">مشترک • بودجه: ۷۰M • پرداختی: ۴۵M</span>
+                <div class="flex items-center gap-2">
+                  <span class="text-emerald-400 font-black">تسویه‌شده</span>
+                  <button type="button" class="text-slate-400 hover:text-amber-300">ویرایش</button>
                 </div>
-                <span class="text-amber-300 font-black">بیعانه</span>
               </div>
             </div>
           </div>
@@ -19140,9 +19203,12 @@ window.initCardVideoHoverListeners = function() {
           <div class="flex items-center justify-between bg-[#141A28] border border-[#C5A059]/30 rounded-2xl p-4 shadow-lg flex-wrap gap-2">
             <span class="text-xs font-bold text-slate-300">استعلام‌های فعال با مدیریت برندها</span>
             <div class="flex items-center gap-2">
+              <button type="button" onclick="openInquiryModal()" class="bg-[#0E121C] text-amber-200 border border-[#C5A059]/40 px-3.5 py-2 rounded-xl text-xs font-bold cursor-pointer hover:border-[#D4AF37]">
+                + استعلام جدید
+              </button>
               <button type="button" onclick="openReverseBiddingModal()" class="gold-shimmer-btn text-[#0F251A] font-black px-4 py-2 rounded-xl text-xs flex items-center gap-1.5 cursor-pointer shadow-md">
                 <i data-lucide="key" class="w-4 h-4 text-[#0F251A]"></i>
-                <span>ثبت درخواست در مناقصه معکوس</span>
+                <span>🔑 ثبت در میز مناقصه معکوس</span>
               </button>
             </div>
           </div>
@@ -19153,8 +19219,9 @@ window.initCardVideoHoverListeners = function() {
                 <h4 class="text-sm font-black text-white">هتل باغ مشیرالممالک یزد</h4>
                 <p class="text-[10.5px] text-slate-300 font-medium mt-0.5">منوی VIP • ۲۵۰ نفر مهمان • ۱۵ شهریور ۱۴۰۴</p>
               </div>
-              <button type="button" onclick="switchTab('messages')" class="gold-shimmer-btn text-[#0F251A] font-black px-4 py-2 rounded-xl text-xs cursor-pointer">
-                گفتگو و مشاهده پیش‌فاکتور 💬
+              <button type="button" onclick="switchTab('messages')" class="gold-shimmer-btn text-[#0F251A] font-black px-4 py-2 rounded-xl text-xs cursor-pointer flex items-center gap-1.5">
+                <i data-lucide="message-square" class="w-4 h-4 text-[#0F251A]"></i>
+                <span>💬 گفتگو و پیش‌فاکتور</span>
               </button>
             </div>
           </div>
