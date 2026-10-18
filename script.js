@@ -19536,37 +19536,60 @@ window.handleDirectAddExpense = function() {
 
 let bwMode = 'fast'; // 'fast' (14 steps) or 'detailed' (25 steps)
 let bwCurrentStep = 1;
+
+let cbwMode = 'fast'; // 'fast' (14 steps) or 'detailed' (26 steps)
+let cbwCurrentStep = 1;
 let cbwState = {
   guests: 200,
-  city: 'yazd',
-  season: 'spring',
-  tier: 'mid',
-  venueQuality: 'mid',
-  venueType: 'garden',
+  city: 'yazd', // yazd, kerman, isfahan, shiraz, khorasan_s, other
+  season: 'midweek', // midweek, weekend
+  tier: 'mid', // eco, mid, lux
+  venueType: 'hall',
   cateringPerGuest: 350000,
-  dress: 25000000,
-  suit: 12000000,
-  goldSet: 60000000,
-  ringBride: 25000000,
-  ringGroom: 15000000,
-  photoFilm: 35000000,
-  music: 20000000,
   fruitPerGuest: 45000,
+  fruitType: '4_seasons',
   sweetPerGuest: 35000,
+  sweetType: 'yazdi_authentic',
+  fingerFoodPerGuest: 30000,
+  fingerFoodType: 'welcome_drink',
   drinkPerGuest: 25000,
   guestGift: 3000000,
-  cake: 8000000,
+  cakeGrams: 20,
+  cakePrice: 8000000,
+  dressType: 'rent',
+  dress: 25000000,
+  suitType: 'buy_domestic',
+  suit: 12000000,
+  goldGrams: 25,
+  goldMaterial: 'gold',
+  goldSet: 60000000,
+  ringBrideGrams: 5,
+  ringBrideMaterial: 'gold',
+  ringBride: 25000000,
+  ringGroomGrams: 6,
+  ringGroomMaterial: 'gold',
+  ringGroom: 15000000,
+  photoFilm: 35000000,
   prefilmAtelier: 20000000,
   carDecor: 5000000,
+  music: 20000000,
   lightEffects: 8000000,
   carRental: 7000000,
   digitalInvitation: 1500000,
-  honeymoon: 40000000
+  honeymoon: 40000000,
+  services: [
+    { id: 'venue', title: 'اجاره تالار / باغ', targetPercent: 25, active: true, desc: 'ورودی، سالن و تشریفات اولیه' },
+    { id: 'catering', title: 'منوی شام و پذیرایی', targetPercent: 30, active: true, desc: 'شام اصلی، میوه و شیرینی' },
+    { id: 'photo', title: 'عکاسی و فیلم‌برداری', targetPercent: 15, active: true, desc: 'آتلیه، فیلمبرداری و آلبوم' },
+    { id: 'attire', title: 'لباس و آرایشگاه', targetPercent: 12, active: true, desc: 'لباس عروس، داماد و میکاپ' },
+    { id: 'gold', title: 'طلا و حلقه ازدواج', targetPercent: 10, active: true, desc: 'سرویس طلا و حلقه‌ها' },
+    { id: 'music', title: 'موسیقی و نورپردازی', targetPercent: 8, active: true, desc: 'دی‌جی، نور و سیستم صوتی' }
+  ]
 };
 
 window.setBwMode = function(mode) {
-    bwMode = mode;
-    bwCurrentStep = 1;
+    cbwMode = mode;
+    cbwCurrentStep = 1;
     window.renderBwWizard();
 };
 
@@ -19582,22 +19605,22 @@ window.setBwStateVal = function(key, val) {
 };
 
 window.nextBwStep = function() {
-    const maxSteps = bwMode === 'fast' ? 14 : 25;
-    if (bwCurrentStep < maxSteps) {
-      bwCurrentStep++;
+    const maxSteps = cbwMode === 'fast' ? 14 : 26;
+    if (cbwCurrentStep < maxSteps) {
+      cbwCurrentStep++;
       window.renderBwWizard();
     }
 };
 
 window.prevBwStep = function() {
-    if (bwCurrentStep > 1) {
-      bwCurrentStep--;
+    if (cbwCurrentStep > 1) {
+      cbwCurrentStep--;
       window.renderBwWizard();
     }
 };
 
 window.restartBwWizard = function() {
-    bwCurrentStep = 1;
+    cbwCurrentStep = 1;
     window.renderBwWizard();
 };
 
@@ -19605,80 +19628,90 @@ window.renderBwWizard = function() {
     const container = document.getElementById('bw-assistant-container');
     if (!container) return;
 
-    const maxSteps = bwMode === 'fast' ? 14 : 25;
-    const isFinalStep = bwCurrentStep === maxSteps;
+    const maxSteps = cbwMode === 'fast' ? 14 : 26;
+    const isFinalStep = cbwCurrentStep === maxSteps;
 
-    // Step definitions
     const fastStepsList = [
       { step: 1, title: "۱. تعداد مهمانان", key: "guests" },
       { step: 2, title: "۲. شهر برگزاری", key: "city" },
-      { step: 3, title: "۳. زمان و فصل مراسم", key: "season" },
+      { step: 3, title: "۳. زمان و مناسبت برگزاری", key: "season" },
       { step: 4, title: "۴. کیفیت کلی مراسم", key: "tier" },
-      { step: 5, title: "۵. اجاره تالار و باغ‌سرا", key: "venueType" },
-      { step: 6, title: "۶. منوی شام (هر نفر)", key: "cateringPerGuest" },
+      { step: 5, title: "۵. اجاره تالار و فضای برگزاری", key: "venueType" },
+      { step: 6, title: "۶. منوی شام اصلی", key: "cateringPerGuest" },
       { step: 7, title: "۷. لباس عروس", key: "dress" },
       { step: 8, title: "۸. کت‌وشلوار داماد", key: "suit" },
       { step: 9, title: "۹. سرویس طلا", key: "goldSet" },
       { step: 10, title: "۱۰. حلقه عروس", key: "ringBride" },
       { step: 11, title: "۱۱. حلقه داماد", key: "ringGroom" },
       { step: 12, title: "۱۲. عکاسی و فیلم‌برداری", key: "photoFilm" },
-      { step: 13, title: "۱۳. موسیقی و دی‌جی", key: "music" },
+      { step: 13, title: "۱۳. موسیقی و سیستم صوتی", key: "music" },
       { step: 14, title: "۱۴. برآورد نهایی و کارنامه بودجه", key: "result" }
     ];
 
     const detailedStepsList = [
-      ...fastStepsList.slice(0, 13),
-      { step: 14, title: "۱۴. میوه پذیرایی (هر نفر)", key: "fruitPerGuest" },
-      { step: 15, title: "۱۵. شیرینی پذیرایی (هر نفر)", key: "sweetPerGuest" },
-      { step: 16, title: "۱۶. نوشیدنی و بار گرم/سرد", key: "drinkPerGuest" },
-      { step: 17, title: "۱۷. گیفت مهمانان", key: "guestGift" },
-      { step: 18, title: "۱۸. کیک عروسی", key: "cake" },
-      { step: 19, title: "۱۹. آتلیه فرمالیته کویر", key: "prefilmAtelier" },
+      { step: 1, title: "۱. تعداد مهمانان", key: "guests" },
+      { step: 2, title: "۲. شهر برگزاری (یزد و استان‌های همجوار)", key: "city" },
+      { step: 3, title: "۳. زمان و مناسبت برگزاری", key: "season" },
+      { step: 4, title: "۴. کیفیت کلی مراسم", key: "tier" },
+      { step: 5, title: "۵. اجاره تالار و فضای برگزاری", key: "venueType" },
+      { step: 6, title: "۶. شام اصلی (هر نفر)", key: "cateringPerGuest" },
+      { step: 7, title: "۷. میوه پذیرایی (هر نفر)", key: "fruitPerGuest" },
+      { step: 8, title: "۸. شیرینی اصیل یزدی و مدرن", key: "sweetPerGuest" },
+      { step: 9, title: "۹. فینگرفود و ولکام بار", key: "fingerFoodPerGuest" },
+      { step: 10, title: "۱۰. نوشیدنی و بار گرم/سرد", key: "drinkPerGuest" },
+      { step: 11, title: "۱۱. گیفت و یادبود مهمانان", key: "guestGift" },
+      { step: 12, title: "۱۲. کیک عروسی", key: "cakePrice" },
+      { step: 13, title: "۱۳. لباس عروس", key: "dress" },
+      { step: 14, title: "۱۴. کت‌وشلوار داماد", key: "suit" },
+      { step: 15, title: "۱۵. سرویس طلا / جواهر", key: "goldSet" },
+      { step: 16, title: "۱۶. حلقه عروس", key: "ringBride" },
+      { step: 17, title: "۱۷. حلقه داماد", key: "ringGroom" },
+      { step: 18, title: "۱۸. عکاسی و فیلم‌برداری", key: "photoFilm" },
+      { step: 19, title: "۱۹. آتلیه و فرمالیته", key: "prefilmAtelier" },
       { step: 20, title: "۲۰. تزئین ماشین عروس", key: "carDecor" },
-      { step: 21, title: "۲۱. نورپردازی و افکت", key: "lightEffects" },
-      { step: 22, title: "۲۲. اجاره ماشین عروس", key: "carRental" },
-      { step: 23, title: "۲۳. دعوت‌نامه دیجیتال", key: "digitalInvitation" },
-      { step: 24, title: "۲۴. سفر ماه عسل", key: "honeymoon" },
-      { step: 25, title: "۲۵. برآورد نهایی و کارنامه بودجه", key: "result" }
+      { step: 21, title: "۲۱. موسیقی و گروه زنده", key: "music" },
+      { step: 22, title: "۲۲. نورپردازی و افکت", key: "lightEffects" },
+      { step: 23, title: "۲۳. اجاره ماشین عروس", key: "carRental" },
+      { step: 24, title: "۲۴. دعوت‌نامه دیجیتال و چاپی", key: "digitalInvitation" },
+      { step: 25, title: "۲۵. سفر ماه عسل", key: "honeymoon" },
+      { step: 26, title: "۲۶. برآورد نهایی و کارنامه بودجه", key: "result" }
     ];
 
-    const currentStepsList = bwMode === 'fast' ? fastStepsList : detailedStepsList;
+    const currentStepsList = cbwMode === 'fast' ? fastStepsList : detailedStepsList;
 
     let stepHtml = '';
 
     if (isFinalStep) {
-      // Calculate totals
       let totalGold = cbwState.goldSet + cbwState.ringBride + cbwState.ringGroom;
-      let totalFood = (cbwState.cateringPerGuest + cbwState.fruitPerGuest + cbwState.sweetPerGuest + cbwState.drinkPerGuest) * cbwState.guests;
+      let foodPerPerson = cbwState.cateringPerGuest + cbwState.fruitPerGuest + cbwState.sweetPerGuest + cbwState.fingerFoodPerGuest + cbwState.drinkPerGuest;
+      let totalFood = foodPerPerson * cbwState.guests;
       let totalVenue = 40000000 + (cbwState.tier === 'lux' ? 50000000 : (cbwState.tier === 'mid' ? 20000000 : 0));
       let totalPhoto = cbwState.photoFilm + cbwState.prefilmAtelier;
       let totalFlower = cbwState.carDecor + cbwState.lightEffects;
       let totalAttire = cbwState.dress + cbwState.suit;
-      let grandTotal = totalGold + totalFood + totalVenue + totalPhoto + totalFlower + totalAttire;
+      let grandTotal = totalGold + totalFood + totalVenue + totalPhoto + totalFlower + totalAttire + cbwState.guestGift + cbwState.cakePrice + cbwState.carRental + cbwState.digitalInvitation + cbwState.honeymoon;
 
-      let minTotal = Math.round(grandTotal * 0.85);
-      let maxTotal = Math.round(grandTotal * 1.2);
+      let minTotal = Math.round(grandTotal * 0.88);
+      let maxTotal = Math.round(grandTotal * 1.15);
 
       stepHtml = `
         <div class="space-y-6 text-right">
-          <!-- Final Header -->
           <div class="bg-gradient-to-r from-[#141A28] via-[#1E293B] to-[#141A28] border border-[#C5A059] rounded-3xl p-6 shadow-2xl text-center space-y-2">
-            <span class="text-xs font-bold text-amber-300 block">برآورد نهایی هزینه‌های عروسی شما</span>
+            <span class="text-xs font-bold text-amber-300 block">برآورد نهایی و کارنامه هوشمند بودجه عروسی</span>
             <h3 class="text-2xl sm:text-3xl font-black text-[#D4AF37]">
               ${(minTotal / 1000000).toFixed(0)} میلیون تا ${(maxTotal / 1000000).toFixed(0)} میلیون تومان
             </h3>
             <p class="text-xs text-slate-300 font-medium">برآورد دقیق بر اساس ${cbwState.guests.toLocaleString('fa-IR')} نفر مهمان در ${cbwState.city === 'yazd' ? 'استان یزد' : 'شهر انتخابی'}</p>
           </div>
 
-          <!-- Interactive Donut Breakdown -->
           <div class="bg-[#141A28] border border-[#C5A059]/30 rounded-3xl p-6 space-y-4 shadow-xl">
-            <span class="text-xs font-black text-[#D4AF37] block">تفکیک درصد و سهم هزینه‌ها:</span>
+            <span class="text-xs font-black text-[#D4AF37] block">تفکیک نموداری و سهم هزینه‌ها:</span>
             <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 items-center">
               <div class="relative w-36 h-36 mx-auto flex items-center justify-center">
                 <svg class="w-full h-full -rotate-90" viewBox="0 0 100 100">
-                  <circle cx="50" cy="50" r="38" stroke="#D4AF37" stroke-width="10" fill="transparent" stroke-dasharray="238.76" stroke-dashoffset="80" />
-                  <circle cx="50" cy="50" r="38" stroke="#10B981" stroke-width="10" fill="transparent" stroke-dasharray="238.76" stroke-dashoffset="140" />
-                  <circle cx="50" cy="50" r="38" stroke="#3B82F6" stroke-width="10" fill="transparent" stroke-dasharray="238.76" stroke-dashoffset="190" />
+                  <circle cx="50" cy="50" r="38" stroke="#D4AF37" stroke-width="10" fill="transparent" stroke-dasharray="238.76" stroke-dashoffset="60" />
+                  <circle cx="50" cy="50" r="38" stroke="#10B981" stroke-width="10" fill="transparent" stroke-dasharray="238.76" stroke-dashoffset="130" />
+                  <circle cx="50" cy="50" r="38" stroke="#3B82F6" stroke-width="10" fill="transparent" stroke-dasharray="238.76" stroke-dashoffset="180" />
                 </svg>
                 <div class="absolute inset-0 flex flex-col items-center justify-center text-center">
                   <span class="text-[10px] text-slate-400 font-bold block">مجموع برآورد</span>
@@ -19687,26 +19720,24 @@ window.renderBwWizard = function() {
               </div>
               <div class="space-y-1.5 text-xs font-bold">
                 <div class="flex justify-between items-center bg-[#0E121C] p-2 rounded-xl border border-slate-800"><span class="text-amber-200">💎 طلا و جواهر:</span><span class="text-white">${(totalGold / 1000000).toFixed(0)}M</span></div>
-                <div class="flex justify-between items-center bg-[#0E121C] p-2 rounded-xl border border-slate-800"><span class="text-emerald-400">🍽️ غذا و پذیرایی:</span><span class="text-white">${(totalFood / 1000000).toFixed(0)}M</span></div>
+                <div class="flex justify-between items-center bg-[#0E121C] p-2 rounded-xl border border-slate-800"><span class="text-emerald-400">🍽️ پذیرایی و شیرینی یزدی:</span><span class="text-white">${(totalFood / 1000000).toFixed(0)}M</span></div>
                 <div class="flex justify-between items-center bg-[#0E121C] p-2 rounded-xl border border-slate-800"><span class="text-blue-400">🏰 تالار و ورودی:</span><span class="text-white">${(totalVenue / 1000000).toFixed(0)}M</span></div>
-                <div class="flex justify-between items-center bg-[#0E121C] p-2 rounded-xl border border-slate-800"><span class="text-purple-400">📸 عکس و فیلم:</span><span class="text-white">${(totalPhoto / 1000000).toFixed(0)}M</span></div>
+                <div class="flex justify-between items-center bg-[#0E121C] p-2 rounded-xl border border-slate-800"><span class="text-purple-400">📸 عکس و آتلیه:</span><span class="text-white">${(totalPhoto / 1000000).toFixed(0)}M</span></div>
                 <div class="flex justify-between items-center bg-[#0E121C] p-2 rounded-xl border border-slate-800"><span class="text-rose-400">👗 لباس و پوشاک:</span><span class="text-white">${(totalAttire / 1000000).toFixed(0)}M</span></div>
               </div>
             </div>
           </div>
 
-          <!-- Baseline Rate Footer -->
           <div class="bg-[#0E121C] border border-[#C5A059]/20 rounded-2xl p-3 text-center text-[10.5px] font-bold text-slate-400">
-            مبنای محاسبه: طلای ۱۸ عیار ۲۶,۲۵۰,۰۰۰ تومان | ضریب شهری: ${cbwState.city === 'yazd' ? '۱.۰ (یزد)' : '۱.۲ (کلان‌شهر)'} | ضریب فصل: ۱.۰۵
+            مبنای محاسبه: نرخ طلای ۱۸ عیار ۲۶,۲۵۰,۰۰۰ تومان | ضریب شهری: ${cbwState.city === 'yazd' ? '۱.۰ (یزد)' : '۱.۱۵ (استان همجوار)'}
           </div>
 
-          <!-- Action Control Bar -->
           <div class="flex flex-col sm:flex-row items-center justify-between gap-3 pt-2">
-            <button type="button" onclick="bwCurrentStep=1; renderBwWizard();" class="bg-[#141A28] hover:bg-[#1E293B] text-slate-200 border border-slate-700 px-4 py-2.5 rounded-2xl text-xs font-bold transition-all cursor-pointer">
-              ✏️ ویرایش انتخاب‌ها
+            <button type="button" onclick="cbwCurrentStep=1; renderBwWizard();" class="bg-[#141A28] hover:bg-[#1E293B] text-slate-200 border border-slate-700 px-4 py-2.5 rounded-2xl text-xs font-bold transition-all cursor-pointer">
+              ✏️ ویرایش پاسخ‌ها
             </button>
             <button type="button" onclick="restartBwWizard()" class="bg-[#141A28] hover:bg-[#1E293B] text-slate-200 border border-slate-700 px-4 py-2.5 rounded-2xl text-xs font-bold transition-all cursor-pointer">
-              🔄 محاسبه دوباره از اول
+              🔄 محاسبه مجدد
             </button>
             <button type="button" onclick="syncBwToDashboard(${grandTotal})" class="gold-shimmer-btn text-[#0F251A] font-black px-6 py-2.5 rounded-2xl text-xs transition-all shadow-lg cursor-pointer">
               📥 ارسال به خلاصه بودجه / Dashboard ➔
@@ -19714,51 +19745,93 @@ window.renderBwWizard = function() {
           </div>
         </div>`;
     } else {
-      // Step Question Rendering
-      if (bwCurrentStep === 1) {
+      if (cbwCurrentStep === 1) {
         stepHtml = `
           <div class="space-y-4 text-right">
-            <h4 class="text-sm font-black text-[#D4AF37]">تعداد تقریبی مهمانان مراسم شما چند نفر است؟</h4>
+            <h4 class="text-sm font-black text-[#D4AF37]">تعداد مهمانان مراسم عروسی شما چند نفر است؟</h4>
             <div class="flex items-center justify-center gap-4 bg-[#141A28] border border-[#C5A059]/30 rounded-2xl p-6 shadow-md">
               <button type="button" onclick="changeBwGuests(-10)" class="w-12 h-12 rounded-2xl bg-[#0E121C] border border-[#C5A059]/40 text-[#D4AF37] font-black text-xl hover:bg-[#D4AF37] hover:text-[#07090E] transition-all cursor-pointer">-</button>
               <span id="bw-guest-counter-val" class="text-2xl font-black text-white px-6">${cbwState.guests.toLocaleString('fa-IR')} نفر</span>
               <button type="button" onclick="changeBwGuests(10)" class="w-12 h-12 rounded-2xl bg-[#0E121C] border border-[#C5A059]/40 text-[#D4AF37] font-black text-xl hover:bg-[#D4AF37] hover:text-[#07090E] transition-all cursor-pointer">+</button>
             </div>
           </div>`;
-      } else if (bwCurrentStep === 2) {
+      } else if (cbwCurrentStep === 2) {
         stepHtml = `
           <div class="space-y-4 text-right">
-            <h4 class="text-sm font-black text-[#D4AF37]">شهر محل برگزاری مراسم را انتخاب کنید:</h4>
+            <h4 class="text-sm font-black text-[#D4AF37]">شهر محل برگزاری مراسم (یزد و استان‌های همجوار):</h4>
             <div class="grid grid-cols-2 sm:grid-cols-3 gap-3">
-              <button type="button" onclick="setBwStateVal('city', 'yazd')" class="p-4 rounded-2xl border text-xs font-black transition-all ${cbwState.city === 'yazd' ? 'bg-[#D4AF37] text-[#07090E] border-[#D4AF37]' : 'bg-[#141A28] text-white border-slate-700 hover:border-[#D4AF37]'}">استان یزد (مبدأ اصلی)</button>
-              <button type="button" onclick="setBwStateVal('city', 'tehran')" class="p-4 rounded-2xl border text-xs font-black transition-all ${cbwState.city === 'tehran' ? 'bg-[#D4AF37] text-[#07090E] border-[#D4AF37]' : 'bg-[#141A28] text-white border-slate-700 hover:border-[#D4AF37]'}">تهران & پایتخت</button>
-              <button type="button" onclick="setBwStateVal('city', 'isfahan')" class="p-4 rounded-2xl border text-xs font-black transition-all ${cbwState.city === 'isfahan' ? 'bg-[#D4AF37] text-[#07090E] border-[#D4AF37]' : 'bg-[#141A28] text-white border-slate-700 hover:border-[#D4AF37]'}">اصفهان & شیراز</button>
+              <button type="button" onclick="setBwStateVal('city', 'yazd')" class="p-4 rounded-2xl border text-xs font-black transition-all ${cbwState.city === 'yazd' ? 'bg-[#D4AF37] text-[#07090E] border-[#D4AF37]' : 'bg-[#141A28] text-white border-slate-700 hover:border-[#D4AF37]'}">🏛️ یزد (اصلی)</button>
+              <button type="button" onclick="setBwStateVal('city', 'kerman')" class="p-4 rounded-2xl border text-xs font-black transition-all ${cbwState.city === 'kerman' ? 'bg-[#D4AF37] text-[#07090E] border-[#D4AF37]' : 'bg-[#141A28] text-white border-slate-700 hover:border-[#D4AF37]'}">🌴 کرمان</button>
+              <button type="button" onclick="setBwStateVal('city', 'isfahan')" class="p-4 rounded-2xl border text-xs font-black transition-all ${cbwState.city === 'isfahan' ? 'bg-[#D4AF37] text-[#07090E] border-[#D4AF37]' : 'bg-[#141A28] text-white border-slate-700 hover:border-[#D4AF37]'}">🕌 اصفهان</button>
+              <button type="button" onclick="setBwStateVal('city', 'shiraz')" class="p-4 rounded-2xl border text-xs font-black transition-all ${cbwState.city === 'shiraz' ? 'bg-[#D4AF37] text-[#07090E] border-[#D4AF37]' : 'bg-[#141A28] text-white border-slate-700 hover:border-[#D4AF37]'}">🌸 شیراز</button>
+              <button type="button" onclick="setBwStateVal('city', 'khorasan_s')" class="p-4 rounded-2xl border text-xs font-black transition-all ${cbwState.city === 'khorasan_s' ? 'bg-[#D4AF37] text-[#07090E] border-[#D4AF37]' : 'bg-[#141A28] text-white border-slate-700 hover:border-[#D4AF37]'}">🏜️ خراسان جنوبی</button>
+              <button type="button" onclick="setBwStateVal('city', 'other')" class="p-4 rounded-2xl border text-xs font-black transition-all ${cbwState.city === 'other' ? 'bg-[#D4AF37] text-[#07090E] border-[#D4AF37]' : 'bg-[#141A28] text-white border-slate-700 hover:border-[#D4AF37]'}">📍 سایر شهرها</button>
             </div>
           </div>`;
-      } else if (bwCurrentStep === 3) {
+      } else if (cbwCurrentStep === 3) {
         stepHtml = `
           <div class="space-y-4 text-right">
-            <h4 class="text-sm font-black text-[#D4AF37]">فصل برگزاری مراسم عروسی:</h4>
-            <div class="grid grid-cols-2 sm:grid-cols-4 gap-3">
-              <button type="button" onclick="setBwStateVal('season', 'spring')" class="p-3.5 rounded-2xl border text-xs font-black transition-all ${cbwState.season === 'spring' ? 'bg-[#D4AF37] text-[#07090E] border-[#D4AF37]' : 'bg-[#141A28] text-white border-slate-700'}">🌸 بهار</button>
-              <button type="button" onclick="setBwStateVal('season', 'summer')" class="p-3.5 rounded-2xl border text-xs font-black transition-all ${cbwState.season === 'summer' ? 'bg-[#D4AF37] text-[#07090E] border-[#D4AF37]' : 'bg-[#141A28] text-white border-slate-700'}">☀️ تابستان</button>
-              <button type="button" onclick="setBwStateVal('season', 'autumn')" class="p-3.5 rounded-2xl border text-xs font-black transition-all ${cbwState.season === 'autumn' ? 'bg-[#D4AF37] text-[#07090E] border-[#D4AF37]' : 'bg-[#141A28] text-white border-slate-700'}">🍁 پاییز</button>
-              <button type="button" onclick="setBwStateVal('season', 'winter')" class="p-3.5 rounded-2xl border text-xs font-black transition-all ${cbwState.season === 'winter' ? 'bg-[#D4AF37] text-[#07090E] border-[#D4AF37]' : 'bg-[#141A28] text-white border-slate-700'}">❄️ زمستان</button>
+            <h4 class="text-sm font-black text-[#D4AF37]">زمان و مناسبت برگزاری مراسم:</h4>
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+              <button type="button" onclick="setBwStateVal('season', 'midweek')" class="p-4 rounded-2xl border text-xs font-black text-right transition-all ${cbwState.season === 'midweek' ? 'bg-[#D4AF37] text-[#07090E] border-[#D4AF37]' : 'bg-[#141A28] text-white border-slate-700'}">📅 روزهای عادی و وسط هفته<span class="block text-[10px] opacity-80 mt-1 font-normal">تخفیف تالارها و خدمات</span></button>
+              <button type="button" onclick="setBwStateVal('season', 'weekend')" class="p-4 rounded-2xl border text-xs font-black text-right transition-all ${cbwState.season === 'weekend' ? 'bg-[#D4AF37] text-[#07090E] border-[#D4AF37]' : 'bg-[#141A28] text-white border-slate-700'}">🌟 اعیاد، مناسبت‌ها و آخر هفته‌ها<span class="block text-[10px] opacity-80 mt-1 font-normal">تعرفه پیک بازار</span></button>
             </div>
           </div>`;
-      } else if (bwCurrentStep === 4) {
+      } else if (cbwCurrentStep === 4) {
         stepHtml = `
           <div class="space-y-4 text-right">
-            <h4 class="text-sm font-black text-[#D4AF37]">سطح کیفی کلی مدنظر برای مراسم:</h4>
+            <h4 class="text-sm font-black text-[#D4AF37]">سطح کیفی مدنظر برای مراسم:</h4>
             <div class="grid grid-cols-1 sm:grid-cols-3 gap-3">
-              <button type="button" onclick="setBwStateVal('tier', 'eco')" class="p-4 rounded-2xl border text-xs font-black text-right transition-all ${cbwState.tier === 'eco' ? 'bg-[#D4AF37] text-[#07090E] border-[#D4AF37]' : 'bg-[#141A28] text-white border-slate-700'}"><span class="block text-sm">اقتصادی & بهینه</span><span class="text-[10px] opacity-80 block font-normal mt-1">مدیریت دقیق هزینه‌ها</span></button>
-              <button type="button" onclick="setBwStateVal('tier', 'mid')" class="p-4 rounded-2xl border text-xs font-black text-right transition-all ${cbwState.tier === 'mid' ? 'bg-[#D4AF37] text-[#07090E] border-[#D4AF37]' : 'bg-[#141A28] text-white border-slate-700'}"><span class="block text-sm">متوسط & متوازن</span><span class="text-[10px] opacity-80 block font-normal mt-1">کیفیت عالی + قیمت مناسب</span></button>
-              <button type="button" onclick="setBwStateVal('tier', 'lux')" class="p-4 rounded-2xl border text-xs font-black text-right transition-all ${cbwState.tier === 'lux' ? 'bg-[#D4AF37] text-[#07090E] border-[#D4AF37]' : 'bg-[#141A28] text-white border-slate-700'}"><span class="block text-sm">لوکس & VIP</span><span class="text-[10px] opacity-80 block font-normal mt-1">بالاترین سطح تشریفات</span></button>
+              <button type="button" onclick="setBwStateVal('tier', 'eco')" class="p-4 rounded-2xl border text-xs font-black text-right transition-all ${cbwState.tier === 'eco' ? 'bg-[#D4AF37] text-[#07090E] border-[#D4AF37]' : 'bg-[#141A28] text-white border-slate-700'}"><span class="block text-sm">اقتصادی & صمیمی</span><span class="text-[10px] opacity-80 block font-normal mt-1">مدیریت دقیق هزینه‌ها</span></button>
+              <button type="button" onclick="setBwStateVal('tier', 'mid')" class="p-4 rounded-2xl border text-xs font-black text-right transition-all ${cbwState.tier === 'mid' ? 'bg-[#D4AF37] text-[#07090E] border-[#D4AF37]' : 'bg-[#141A28] text-white border-slate-700'}"><span class="block text-sm">متوسط & متوازن</span><span class="text-[10px] opacity-80 block font-normal mt-1">کیفیت عالی + قیمت استاندارد</span></button>
+              <button type="button" onclick="setBwStateVal('tier', 'lux')" class="p-4 rounded-2xl border text-xs font-black text-right transition-all ${cbwState.tier === 'lux' ? 'bg-[#D4AF37] text-[#07090E] border-[#D4AF37]' : 'bg-[#141A28] text-white border-slate-700'}"><span class="block text-sm">لوکس & VIP</span><span class="text-[10px] opacity-80 block font-normal mt-1">تشریفات کامل و خاص</span></button>
+            </div>
+          </div>`;
+      } else if (cbwCurrentStep === 5) {
+        stepHtml = `
+          <div class="space-y-4 text-right">
+            <h4 class="text-sm font-black text-[#D4AF37]">فضای برگزاری مراسم:</h4>
+            <div class="grid grid-cols-2 sm:grid-cols-4 gap-3">
+              <button type="button" onclick="setBwStateVal('venueType', 'hall')" class="p-3.5 rounded-2xl border text-xs font-black transition-all ${cbwState.venueType === 'hall' ? 'bg-[#D4AF37] text-[#07090E] border-[#D4AF37]' : 'bg-[#141A28] text-white border-slate-700'}">🏰 تالار پذیرایی</button>
+              <button type="button" onclick="setBwStateVal('venueType', 'garden')" class="p-3.5 rounded-2xl border text-xs font-black transition-all ${cbwState.venueType === 'garden' ? 'bg-[#D4AF37] text-[#07090E] border-[#D4AF37]' : 'bg-[#141A28] text-white border-slate-700'}">🏡 باغ‌تالار</button>
+              <button type="button" onclick="setBwStateVal('venueType', 'hotel')" class="p-3.5 rounded-2xl border text-xs font-black transition-all ${cbwState.venueType === 'hotel' ? 'bg-[#D4AF37] text-[#07090E] border-[#D4AF37]' : 'bg-[#141A28] text-white border-slate-700'}">🏨 هتل ۵ ستاره</button>
+              <button type="button" onclick="setBwStateVal('venueType', 'home')" class="p-3.5 rounded-2xl border text-xs font-black transition-all ${cbwState.venueType === 'home' ? 'bg-[#D4AF37] text-[#07090E] border-[#D4AF37]' : 'bg-[#141A28] text-white border-slate-700'}">🏠 منزل / سالن شخصی</button>
+            </div>
+          </div>`;
+      } else if (cbwMode === 'detailed' && cbwCurrentStep === 7) {
+        stepHtml = `
+          <div class="space-y-4 text-right">
+            <h4 class="text-sm font-black text-[#D4AF37]">میوه پذیرایی (هر نفر):</h4>
+            <div class="grid grid-cols-1 sm:grid-cols-3 gap-3">
+              <button type="button" onclick="setBwStateVal('fruitPerGuest', 35000); setBwStateVal('fruitType', '2_seasons');" class="p-4 rounded-2xl border text-xs font-black text-right transition-all ${cbwState.fruitType === '2_seasons' ? 'bg-[#D4AF37] text-[#07090E] border-[#D4AF37]' : 'bg-[#141A28] text-white border-slate-700'}">🍎 ۲ مدل میوه فصل<span class="block text-[10px] opacity-80 mt-1">۳۵,۰۰۰ تومان/نفر</span></button>
+              <button type="button" onclick="setBwStateVal('fruitPerGuest', 60000); setBwStateVal('fruitType', '4_seasons');" class="p-4 rounded-2xl border text-xs font-black text-right transition-all ${cbwState.fruitType === '4_seasons' ? 'bg-[#D4AF37] text-[#07090E] border-[#D4AF37]' : 'bg-[#141A28] text-white border-slate-700'}">🍍 ۴ مدل میوه + استوایی<span class="block text-[10px] opacity-80 mt-1">۶۰,۰۰۰ تومان/نفر</span></button>
+              <button type="button" onclick="setBwStateVal('fruitPerGuest', 0); setBwStateVal('fruitType', 'none');" class="p-4 rounded-2xl border text-xs font-black text-right transition-all ${cbwState.fruitType === 'none' ? 'bg-[#D4AF37] text-[#07090E] border-[#D4AF37]' : 'bg-[#141A28] text-white border-slate-700'}">❌ نمی‌خوام<span class="block text-[10px] opacity-80 mt-1">۰ تومان</span></button>
+            </div>
+          </div>`;
+      } else if (cbwMode === 'detailed' && cbwCurrentStep === 8) {
+        stepHtml = `
+          <div class="space-y-4 text-right">
+            <h4 class="text-sm font-black text-[#D4AF37]">شیرینی پذیرایی (شیرینی‌های اصیل یزدی و مدرن):</h4>
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+              <button type="button" onclick="setBwStateVal('sweetPerGuest', 45000); setBwStateVal('sweetType', 'yazdi_authentic');" class="p-4 rounded-2xl border text-xs font-black text-right transition-all ${cbwState.sweetType === 'yazdi_authentic' ? 'bg-[#D4AF37] text-[#07090E] border-[#D4AF37]' : 'bg-[#141A28] text-white border-slate-700'}">🧁 شیرینی اصیل یزدی (قطاب، نان منقا، لوز، نارگیلی)<span class="block text-[10px] opacity-80 mt-1">۴۵,۰۰۰ تومان/نفر</span></button>
+              <button type="button" onclick="setBwStateVal('sweetPerGuest', 35000); setBwStateVal('sweetType', 'modern');" class="p-4 rounded-2xl border text-xs font-black text-right transition-all ${cbwState.sweetType === 'modern' ? 'bg-[#D4AF37] text-[#07090E] border-[#D4AF37]' : 'bg-[#141A28] text-white border-slate-700'}">🍰 شیرینی تر و خشک مدرن<span class="block text-[10px] opacity-80 mt-1">۳۵,۰۰۰ تومان/نفر</span></button>
+              <button type="button" onclick="setBwStateVal('sweetPerGuest', 60000); setBwStateVal('sweetType', 'combo');" class="p-4 rounded-2xl border text-xs font-black text-right transition-all ${cbwState.sweetType === 'combo' ? 'bg-[#D4AF37] text-[#07090E] border-[#D4AF37]' : 'bg-[#141A28] text-white border-slate-700'}">✨ ترکیبی شیرینی یزدی + مدرن و کوکی<span class="block text-[10px] opacity-80 mt-1">۶۰,۰۰۰ تومان/نفر</span></button>
+              <button type="button" onclick="setBwStateVal('sweetPerGuest', 0); setBwStateVal('sweetType', 'none');" class="p-4 rounded-2xl border text-xs font-black text-right transition-all ${cbwState.sweetType === 'none' ? 'bg-[#D4AF37] text-[#07090E] border-[#D4AF37]' : 'bg-[#141A28] text-white border-slate-700'}">❌ نمی‌خوام<span class="block text-[10px] opacity-80 mt-1">۰ تومان</span></button>
+            </div>
+          </div>`;
+      } else if (cbwMode === 'detailed' && cbwCurrentStep === 9) {
+        stepHtml = `
+          <div class="space-y-4 text-right">
+            <h4 class="text-sm font-black text-[#D4AF37]">فینگرفود و ولکام بار (Welcome Drink & Fingerfood):</h4>
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+              <button type="button" onclick="setBwStateVal('fingerFoodPerGuest', 20000); setBwStateVal('fingerFoodType', 'welcome_drink');" class="p-4 rounded-2xl border text-xs font-black text-right transition-all ${cbwState.fingerFoodType === 'welcome_drink' ? 'bg-[#D4AF37] text-[#07090E] border-[#D4AF37]' : 'bg-[#141A28] text-white border-slate-700'}">🍹 بار نوشیدنی خوشامدگویی (Welcome Drink)<span class="block text-[10px] opacity-80 mt-1">۲۰,۰۰۰ تومان/نفر</span></button>
+              <button type="button" onclick="setBwStateVal('fingerFoodPerGuest', 45000); setBwStateVal('fingerFoodType', 'trays');" class="p-4 rounded-2xl border text-xs font-black text-right transition-all ${cbwState.fingerFoodType === 'trays' ? 'bg-[#D4AF37] text-[#07090E] border-[#D4AF37]' : 'bg-[#141A28] text-white border-slate-700'}">🍢 سینی‌های فینگرفود گرم و سرد<span class="block text-[10px] opacity-80 mt-1">۴۵,۰۰۰ تومان/نفر</span></button>
+              <button type="button" onclick="setBwStateVal('fingerFoodPerGuest', 75000); setBwStateVal('fingerFoodType', 'vip_full');" class="p-4 rounded-2xl border text-xs font-black text-right transition-all ${cbwState.fingerFoodType === 'vip_full' ? 'bg-[#D4AF37] text-[#07090E] border-[#D4AF37]' : 'bg-[#141A28] text-white border-slate-700'}">🌟 پکیج VIP (ولکام درینک + میز کامل فینگرفود و دسر)<span class="block text-[10px] opacity-80 mt-1">۷۵,۰۰۰ تومان/نفر</span></button>
+              <button type="button" onclick="setBwStateVal('fingerFoodPerGuest', 0); setBwStateVal('fingerFoodType', 'none');" class="p-4 rounded-2xl border text-xs font-black text-right transition-all ${cbwState.fingerFoodType === 'none' ? 'bg-[#D4AF37] text-[#07090E] border-[#D4AF37]' : 'bg-[#141A28] text-white border-slate-700'}">❌ نمی‌خوام<span class="block text-[10px] opacity-80 mt-1">۰ تومان</span></button>
             </div>
           </div>`;
       } else {
-        // Generic Step Renderer
-        const currentItem = currentStepsList[bwCurrentStep - 1];
+        const currentItem = currentStepsList[cbwCurrentStep - 1];
         stepHtml = `
           <div class="space-y-4 text-right">
             <h4 class="text-sm font-black text-[#D4AF37]">${currentItem.title}:</h4>
@@ -19772,53 +19845,45 @@ window.renderBwWizard = function() {
 
     container.innerHTML = `
       <div class="space-y-6 text-right">
-
-        <!-- Top Live Market Rate Banner -->
         <div class="bg-gradient-to-r from-[#141A28] via-[#1E293B] to-[#141A28] border border-[#C5A059]/40 rounded-2xl p-3 shadow-lg flex items-center justify-between flex-wrap gap-2 text-xs font-black text-white">
           <div class="flex items-center gap-1.5"><span class="text-[#D4AF37]">🟡 طلای ۱۸ عیار:</span> <span>۲۶,۲۵۰,۰۶۰ تومان/گرم</span></div>
           <div class="flex items-center gap-1.5"><span class="text-slate-300">⚪ نقره:</span> <span>۴۹۸,۳۰۰ تومان/گرم</span></div>
           <div class="flex items-center gap-1.5"><span class="text-emerald-400">💵 دلار:</span> <span>۲۶۵,۵۰۰ تومان</span></div>
         </div>
 
-        <!-- Assistant Welcome Bubble & Mode Selector -->
         <div class="bg-[#141A28] border border-[#C5A059]/30 rounded-3xl p-5 shadow-xl space-y-4">
           <div class="flex items-start gap-3">
             <div class="w-10 h-10 rounded-2xl bg-[#D4AF37]/20 border border-[#D4AF37] flex items-center justify-center text-[#D4AF37] shrink-0 font-black">🌿</div>
             <div class="space-y-1">
-              <h3 class="text-sm font-black text-white">سلام! من دستیار هوشمند هزینه عروسی‌ام.</h3>
-              <p class="text-xs text-slate-300 font-medium">دوست داری برآورد بودجه رو سریع بگیریم یا با همه‌ی جزئیات؟</p>
+              <h3 class="text-sm font-black text-white">سلام! من دستیار هوشمند هزینه عروسی یزد هستم.</h3>
+              <p class="text-xs text-slate-300 font-medium">می‌توانی برآورد بودجه را به روش سریع یا با جزئیات کامل شیرینی‌های یزدی و فینگرفود بگیری.</p>
             </div>
           </div>
 
           <div class="flex items-center gap-2 pt-2 border-t border-slate-800">
-            <button type="button" onclick="setBwMode('fast')" class="flex-1 py-2.5 px-4 rounded-xl text-xs font-black transition-all cursor-pointer ${bwMode === 'fast' ? 'bg-[#D4AF37] text-[#07090E] shadow-md' : 'bg-[#0E121C] text-slate-300 border border-slate-700 hover:text-white'}">
-              ⚡ روش سریع‌تر (فقط مهم‌ترین‌ها - ۱۴ مرحله)
+            <button type="button" onclick="setBwMode('fast')" class="flex-1 py-2.5 px-4 rounded-xl text-xs font-black transition-all cursor-pointer ${cbwMode === 'fast' ? 'bg-[#D4AF37] text-[#07090E] shadow-md' : 'bg-[#0E121C] text-slate-300 border border-slate-700 hover:text-white'}">
+              ⚡ روش سریع (۱۴ مرحله اصلی)
             </button>
-            <button type="button" onclick="setBwMode('detailed')" class="flex-1 py-2.5 px-4 rounded-xl text-xs font-black transition-all cursor-pointer ${bwMode === 'detailed' ? 'bg-[#D4AF37] text-[#07090E] shadow-md' : 'bg-[#0E121C] text-slate-300 border border-slate-700 hover:text-white'}">
-              🧮 روش کامل‌تر (همه‌ی جزئیات - ۲۵ مرحله)
+            <button type="button" onclick="setBwMode('detailed')" class="flex-1 py-2.5 px-4 rounded-xl text-xs font-black transition-all cursor-pointer ${cbwMode === 'detailed' ? 'bg-[#D4AF37] text-[#07090E] shadow-md' : 'bg-[#0E121C] text-slate-300 border border-slate-700 hover:text-white'}">
+              🧮 روش کامل و بومی (۲۶ مرحله دقیق)
             </button>
           </div>
         </div>
 
-        <!-- Wizard Main Area Split (Left Question Runner, Right Accordion Sidebar) -->
         <div class="grid grid-cols-1 lg:grid-cols-12 gap-6 items-start">
-
-          <!-- Step Question Runner (8 cols) -->
           <div class="lg:col-span-8 bg-[#141A28] border border-[#C5A059]/30 rounded-3xl p-6 shadow-xl space-y-6">
             <div class="flex items-center justify-between border-b border-slate-800 pb-3">
-              <span class="text-xs font-black text-[#D4AF37]">مرحله ${bwCurrentStep} از ${maxSteps}</span>
+              <span class="text-xs font-black text-[#D4AF37]">مرحله ${cbwCurrentStep} از ${maxSteps}</span>
               <div class="w-32 bg-slate-800 h-2 rounded-full overflow-hidden">
-                <div class="bg-[#D4AF37] h-full transition-all duration-300" style="width: ${(bwCurrentStep / maxSteps) * 100}%;"></div>
+                <div class="bg-[#D4AF37] h-full transition-all duration-300" style="width: ${(cbwCurrentStep / maxSteps) * 100}%;"></div>
               </div>
             </div>
 
-            <!-- Dynamic Question Content -->
             ${stepHtml}
 
-            <!-- Bottom Wizard Navigation Controls -->
             ${!isFinalStep ? `
               <div class="flex items-center justify-between pt-4 border-t border-slate-800">
-                <button type="button" onclick="prevBwStep()" ${bwCurrentStep === 1 ? 'disabled class="opacity-40 cursor-not-allowed text-slate-500 text-xs font-bold px-4 py-2"' : 'class="bg-[#0E121C] hover:bg-slate-800 text-slate-200 border border-slate-700 px-4 py-2 rounded-xl text-xs font-bold cursor-pointer"'}>
+                <button type="button" onclick="prevBwStep()" ${cbwCurrentStep === 1 ? 'disabled class="opacity-40 cursor-not-allowed text-slate-500 text-xs font-bold px-4 py-2"' : 'class="bg-[#0E121C] hover:bg-slate-800 text-slate-200 border border-slate-700 px-4 py-2 rounded-xl text-xs font-bold cursor-pointer"'}>
                   ← مرحله قبلی
                 </button>
                 <button type="button" onclick="nextBwStep()" class="gold-shimmer-btn text-[#0F251A] font-black px-6 py-2.5 rounded-xl text-xs transition-all shadow-md cursor-pointer">
@@ -19828,21 +19893,18 @@ window.renderBwWizard = function() {
             ` : ''}
           </div>
 
-          <!-- Live Progress Accordion Sidebar (4 cols) -->
           <div class="lg:col-span-4 bg-[#141A28] border border-[#C5A059]/30 rounded-3xl p-5 shadow-xl space-y-3">
-            <span class="text-xs font-black text-[#D4AF37] block border-b border-slate-800 pb-2">مراحل برآورد (${bwCurrentStep - 1}/${maxSteps})</span>
+            <span class="text-xs font-black text-[#D4AF37] block border-b border-slate-800 pb-2">مراحل برآورد (${cbwCurrentStep - 1}/${maxSteps})</span>
             <div class="space-y-1.5 max-h-80 overflow-y-auto custom-scrollbar text-xs font-bold">
               ${currentStepsList.map(s => `
-                <div onclick="bwCurrentStep=${s.step}; renderBwWizard();" class="p-2 rounded-xl cursor-pointer transition-all flex items-center justify-between ${s.step === bwCurrentStep ? 'bg-[#D4AF37]/20 border border-[#D4AF37] text-[#D4AF37]' : (s.step < bwCurrentStep ? 'bg-[#0E121C] text-emerald-400' : 'bg-[#0E121C] text-slate-400 opacity-60')}">
+                <div onclick="cbwCurrentStep=${s.step}; renderBwWizard();" class="p-2 rounded-xl cursor-pointer transition-all flex items-center justify-between ${s.step === cbwCurrentStep ? 'bg-[#D4AF37]/20 border border-[#D4AF37] text-[#D4AF37]' : (s.step < cbwCurrentStep ? 'bg-[#0E121C] text-emerald-400' : 'bg-[#0E121C] text-slate-400 opacity-60')}">
                   <span>${s.title}</span>
-                  <span>${s.step < bwCurrentStep ? '✓' : (s.step === bwCurrentStep ? '●' : '')}</span>
+                  <span>${s.step < cbwCurrentStep ? '✓' : (s.step === cbwCurrentStep ? '●' : '')}</span>
                 </div>
               `).join('')}
             </div>
           </div>
-
         </div>
-
       </div>`;
 };
 
