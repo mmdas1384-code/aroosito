@@ -1,0 +1,142 @@
+<!-- ISOLATED VENDOR DIRECTORY CONTENT MODULE (directory-view.html) -->
+<div id="tab-directory" class="tab-content hidden space-y-8">
+
+  <!-- HEADER BREADCRUMB & TOP CONTROL BAR -->
+  <div class="bg-white border border-accent rounded-3xl p-6 sm:p-8 shadow-xs space-y-4">
+    <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-accent pb-4">
+      <div class="space-y-1">
+        <nav class="flex items-center gap-2 text-xs text-secondary font-bold mb-1">
+          <button onclick="switchTab('home')" class="hover:text-primary transition-colors cursor-pointer">خانه</button>
+          <span>/</span>
+          <span class="text-graphite">دایرکتوری جامع تامین‌کنندگان یزد</span>
+        </nav>
+        <h1 class="text-2xl sm:text-3xl font-black text-graphite flex items-center gap-2.5">
+          <i data-lucide="building-2" class="w-7 h-7 text-primary"></i>
+          <span>دایرکتوری جامع تامین‌کنندگان و خدمات عروسی استان یزد</span>
+        </h1>
+        <p class="text-xs text-secondary font-medium">بررسی پروفایل رسمی، گالری تصاویر، لیست قیمت و استعلام آنلاین رزرو</p>
+      </div>
+
+      <button onclick="switchTab('home')" class="bg-bgCustom hover:bg-slate-100 text-graphite border border-accent px-4 py-2.5 rounded-2xl text-xs font-bold transition-all flex items-center gap-2 shadow-xs shrink-0 cursor-pointer">
+        <i data-lucide="arrow-right" class="w-4 h-4 text-primary"></i>
+        <span>بازگشت به صفحه اصلی</span>
+      </button>
+    </div>
+
+    <!-- Active Filter Chips Container -->
+    <div class="flex items-center justify-between gap-3 pt-2 text-xs font-bold flex-wrap">
+      <div class="flex items-center gap-2 flex-wrap" id="active-category-chips">
+        <span class="text-secondary">فیلترهای فعال:</span>
+        <div id="active-category-pills" class="flex items-center gap-1.5 flex-wrap">
+          <!-- Dynamic Category Pills rendered by renderMultiCategoryPills() -->
+        </div>
+      </div>
+
+      <button onclick="resetAllCategoryFilters()" class="text-xs font-bold text-rose-600 hover:text-rose-800 transition-colors flex items-center gap-1 cursor-pointer">
+        <i data-lucide="rotate-ccw" class="w-3.5 h-3.5"></i>
+        <span>پاک کردن همه فیلترها</span>
+      </button>
+    </div>
+  </div>
+
+  <!-- DIRECTORY MAIN 2-COLUMN LAYOUT -->
+  <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
+
+    <!-- SIDEBAR FILTERS (col-span-12 lg:col-span-3) -->
+    <aside class="lg:col-span-3 space-y-6 bg-white border border-accent rounded-3xl p-5 shadow-xs sticky top-28 directory-sidebar">
+      <div class="flex items-center justify-between border-b border-accent pb-3">
+        <h3 class="text-sm font-black text-graphite flex items-center gap-2">
+          <i data-lucide="filter" class="w-4 h-4 text-primary"></i>
+          <span>فیلترهای پیشرفته</span>
+        </h3>
+        <button onclick="resetAllCategoryFilters()" class="text-[11px] font-bold text-rose-600 hover:text-rose-800 bg-rose-50 hover:bg-rose-100 px-2.5 py-1 rounded-lg transition-colors cursor-pointer">
+          پاکسازی همه
+        </button>
+      </div>
+
+      <!-- Category Multi-Select Checklist -->
+      <div class="space-y-3">
+        <label class="text-xs font-extrabold text-graphite block">دسته‌بندی خدمات (چند انتخابی):</label>
+        <div id="sidebar-category-checkboxes" class="space-y-2 max-h-60 overflow-y-auto no-scrollbar text-xs font-bold text-graphite">
+          <!-- Populated dynamically via JS -->
+        </div>
+      </div>
+
+      <!-- City/Region Selector -->
+      <div class="space-y-2 pt-3 border-t border-accent">
+        <label for="sidebar-city-select" class="text-xs font-extrabold text-graphite block">شهر / منطقه:</label>
+        <select id="sidebar-city-select" onchange="syncAndFilterCity(this.value)" class="w-full bg-bgCustom border border-accent rounded-xl p-2.5 text-xs font-bold text-graphite focus:outline-none focus:border-primary cursor-pointer">
+          <option value="استان یزد" selected>همه مناطق استان یزد</option>
+          <option value="یزد">شهر یزد</option>
+          <option value="صفائیه">صفائیه یزد</option>
+          <option value="میدان اطلسی">میدان اطلسی</option>
+
+          <option value="میبد">میبد</option>
+          <option value="اردکان">اردکان</option>
+          <option value="تفت">تفت</option>
+          <option value="اصفهان">اصفهان</option>
+          <option value="شیراز">شیراز</option>
+        </select>
+      </div>
+
+      <!-- Price Range Selector -->
+      <div class="space-y-2 pt-3 border-t border-accent">
+        <label for="sidebar-price-select" class="text-xs font-extrabold text-graphite block">بازه قیمتی:</label>
+        <select id="sidebar-price-select" onchange="syncAndFilterPrice(this.value)" class="w-full bg-bgCustom border border-accent rounded-xl p-2.5 text-xs font-bold text-graphite focus:outline-none focus:border-primary cursor-pointer">
+          <option value="all" selected>همه بازه‌های قیمتی</option>
+          <option value="economic">اقتصادی 💰</option>
+          <option value="mid">متوسط 💰💰</option>
+          <option value="luxury">لوکس 💰💰💰</option>
+        </select>
+      </div>
+
+      <!-- Verified Badge Checkbox -->
+      <div class="pt-3 border-t border-accent">
+        <label class="flex items-center gap-2 cursor-pointer text-xs font-bold text-graphite">
+          <input type="checkbox" id="verified-only" checked onchange="filterVendors()" class="rounded text-primary focus:ring-primary w-4 h-4">
+          <span>فقط دارای تاییدیه رسمی اعتبار</span>
+        </label>
+      </div>
+    </aside>
+
+    <!-- MAIN DIRECTORY CONTENT (col-span-12 lg:col-span-9) -->
+    <div class="lg:col-span-9 space-y-6">
+
+      <!-- Dedicated Sorting Bar & Instant Search Box -->
+      <div id="vendor-sorting-bar" class="bg-white border border-accent rounded-2xl p-4 shadow-2xs flex flex-col sm:flex-row sm:items-center justify-between gap-4 text-xs font-bold text-graphite">
+        <!-- Instant Search Box -->
+        <div class="relative flex-1 max-w-md">
+          <i data-lucide="search" class="w-4 h-4 text-primary absolute right-3 top-2.5"></i>
+          <input type="text" id="directory-instant-search" oninput="filterVendors()" placeholder="جستجوی نام تالار، آتلیه یا مزون..." class="w-full bg-bgCustom border border-accent rounded-xl pr-9 pl-3 py-2 text-xs font-medium focus:outline-none focus:border-primary">
+        </div>
+
+        <div class="flex items-center gap-4 shrink-0 flex-wrap sm:flex-nowrap justify-between sm:justify-end">
+          <div class="flex items-center gap-2">
+            <span class="text-secondary">نتایج:</span>
+            <span id="directory-vendor-count-badge" class="bg-primary/10 text-primary border border-primary/20 text-xs font-black px-2.5 py-1 rounded-xl">
+              ۰ تامین‌کننده
+            </span>
+          </div>
+
+          <div class="flex items-center gap-2">
+            <label for="vendor-sort-select" class="text-secondary shrink-0">ترتیب:</label>
+            <select id="vendor-sort-select" onchange="filterVendors()" class="bg-bgCustom border border-accent rounded-xl px-3 py-1.5 text-xs font-bold text-graphite focus:outline-none focus:border-primary cursor-pointer">
+              <option value="popular" selected>محبوب‌ترین (امتیاز بالا) ⭐</option>
+              <option value="newest">جدیدترین 🆕</option>
+              <option value="price-asc">ارزان‌ترین (کمترین قیمت) 📈</option>
+              <option value="price-desc">گران‌ترین (بیشترین قیمت) 📉</option>
+            </select>
+          </div>
+        </div>
+      </div>
+
+      <!-- Dynamic Vendor Grid -->
+      <div id="vendor-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        <!-- Populated dynamically via JS -->
+      </div>
+
+    </div>
+
+  </div>
+
+</div>
