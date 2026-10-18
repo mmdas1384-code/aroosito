@@ -18756,29 +18756,23 @@ window.initCardVideoHoverListeners = function() {
         <div class="space-y-1 text-right">
           <span class="text-xs font-bold text-[#D4AF37] flex items-center gap-1.5">
             <i data-lucide="check-square" class="w-4 h-4 text-[#D4AF37]"></i>
-            <span>چک‌لیست جامع و مدیریت اقدامات</span>
+            <span>چک‌لیست و اقدامات حرفه‌ای عروسی</span>
           </span>
-          <h2 class="text-xl font-black text-white">مدیریت تمام‌صفحه برنامه‌ریزی و چک‌لیست ۱۲ ماهه</h2>
+          <h2 class="text-xl font-black text-white">مدیریت تمام‌صفحه برنامه‌ریزی، وظایف و اتصال به تامین‌کنندگان</h2>
         </div>`;
       bodyContainer.innerHTML = `
         <div class="space-y-6 text-right">
-          <!-- Header Metrics Bar -->
-          <div class="grid grid-cols-2 sm:grid-cols-4 gap-3">
-            <div class="bg-[#141A28] border border-[#C5A059]/30 rounded-2xl p-3 text-center space-y-1 shadow-md">
-              <span class="text-xs font-black text-amber-300 block">۱۲ مورد</span>
-              <span class="text-[10px] text-slate-400 font-bold block">اقدامات فوری باقی‌مانده</span>
+          <!-- Smart Timeline Progress Bar -->
+          <div class="bg-[#141A28] border border-[#C5A059]/30 rounded-2xl p-4 space-y-2 shadow-md">
+            <div class="flex justify-between items-center text-xs font-black">
+              <span class="text-slate-300">نوار زمان‌بندی هوشمند تا روز عروسی:</span>
+              <span class="text-[#D4AF37]">۷۰٪ اقدامات فازبندی‌شده تکمیل شد</span>
             </div>
-            <div class="bg-[#141A28] border border-emerald-500/30 rounded-2xl p-3 text-center space-y-1 shadow-md">
-              <span class="text-xs font-black text-emerald-400 block">۲۸ مورد</span>
-              <span class="text-[10px] text-slate-400 font-bold block">اقدامات تکمیل‌شده</span>
-            </div>
-            <div class="bg-[#141A28] border border-[#C5A059]/30 rounded-2xl p-3 text-center space-y-1 shadow-md">
-              <span class="text-xs font-black text-[#D4AF37] block">۷۰٪</span>
-              <span class="text-[10px] text-slate-400 font-bold block">آمادگی کلی مراسم</span>
-            </div>
-            <div class="bg-[#141A28] border border-[#C5A059]/30 rounded-2xl p-3 text-center space-y-1 shadow-md">
-              <span class="text-xs font-black text-white block">۱۳۵ روز</span>
-              <span class="text-[10px] text-slate-400 font-bold block">روزشماری تا مراسم</span>
+            <div class="grid grid-cols-4 gap-2 text-center text-[10px] font-bold text-slate-300 pt-1">
+              <span class="bg-[#0E121C] border border-emerald-500/40 text-emerald-400 p-1.5 rounded-xl">۱۲ تا ۹ ماه (تکمیل)</span>
+              <span class="bg-[#0E121C] border border-[#C5A059]/40 text-[#D4AF37] p-1.5 rounded-xl">۶ تا ۳ ماه (در حال انجام)</span>
+              <span class="bg-[#0E121C] border border-slate-700 text-slate-400 p-1.5 rounded-xl">۱ ماه قبل</span>
+              <span class="bg-[#0E121C] border border-slate-700 text-slate-400 p-1.5 rounded-xl">هفته پایانی</span>
             </div>
           </div>
 
@@ -18786,10 +18780,8 @@ window.initCardVideoHoverListeners = function() {
           <div class="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 bg-[#141A28] border border-[#C5A059]/30 rounded-2xl p-4 shadow-lg">
             <div class="flex items-center gap-2 overflow-x-auto no-scrollbar text-xs font-bold w-full sm:w-auto flex-wrap">
               <button type="button" class="bg-[#D4AF37] text-[#07090E] font-black px-3.5 py-1.5 rounded-xl cursor-pointer">همه فازها</button>
-              <button type="button" class="bg-[#0E121C] text-slate-300 hover:text-white border border-slate-700 px-3.5 py-1.5 rounded-xl cursor-pointer">۱۲ تا ۹ ماه قبل</button>
-              <button type="button" class="bg-[#0E121C] text-slate-300 hover:text-white border border-slate-700 px-3.5 py-1.5 rounded-xl cursor-pointer">۶ تا ۳ ماه قبل</button>
-              <button type="button" class="bg-[#0E121C] text-slate-300 hover:text-white border border-slate-700 px-3.5 py-1.5 rounded-xl cursor-pointer">۱ ماه قبل</button>
-              <button type="button" class="bg-[#0E121C] text-slate-300 hover:text-white border border-slate-700 px-3.5 py-1.5 rounded-xl cursor-pointer">هفته پایانی</button>
+              <button type="button" class="bg-[#0E121C] text-slate-300 hover:text-white border border-slate-700 px-3.5 py-1.5 rounded-xl cursor-pointer">انجام‌شده</button>
+              <button type="button" class="bg-[#0E121C] text-slate-300 hover:text-white border border-slate-700 px-3.5 py-1.5 rounded-xl cursor-pointer">انجام‌نشده</button>
             </div>
             <div class="flex items-center gap-2 shrink-0 w-full sm:w-auto">
               <button type="button" onclick="exportChecklistCsv()" class="bg-[#0E121C] hover:bg-slate-800 text-amber-200 border border-[#C5A059]/40 px-3.5 py-2 rounded-xl text-xs font-bold cursor-pointer">📥 خروجی اکسل / چاپ</button>
@@ -18800,23 +18792,24 @@ window.initCardVideoHoverListeners = function() {
             </div>
           </div>
 
-          <!-- Tasks List -->
+          <!-- Tasks List with Directory Attachments -->
           <div class="space-y-3">
             <div class="bg-[#141A28] border border-[#C5A059]/30 rounded-2xl p-4 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 shadow-md">
               <div class="flex items-center gap-3">
                 <input type="checkbox" checked class="accent-[#D4AF37] w-4 h-4 rounded cursor-pointer">
                 <div>
                   <span class="text-sm font-black text-white block">تعیین سقف بودجه، ظرفیت سالن و انتخاب تالار/باغ‌سرا</span>
-                  <div class="flex items-center gap-2 text-[10.5px] font-bold text-slate-400 mt-1">
+                  <div class="flex items-center gap-2 text-[10.5px] font-bold text-slate-400 mt-1 flex-wrap">
                     <span class="bg-[#0E121C] border border-[#C5A059]/30 text-[#D4AF37] px-2 py-0.5 rounded-md">تالار & تشریفات</span>
                     <span>•</span>
                     <span class="text-rose-400 font-black">اولویت: فوری</span>
                     <span>•</span>
-                    <span class="text-emerald-400">۱۲ تا ۹ ماه قبل</span>
+                    <span class="text-emerald-400">متصل به: هتل باغ مشیرالممالک</span>
                   </div>
                 </div>
               </div>
               <div class="flex items-center gap-2">
+                <button type="button" onclick="openVendorSelectModal(1)" class="bg-[#0E121C] text-amber-200 border border-[#C5A059]/40 px-2.5 py-1 rounded-lg text-xs font-bold hover:border-[#D4AF37]">تغییر تامین‌کننده 🔗</button>
                 <button type="button" class="text-slate-400 hover:text-amber-300 text-xs font-bold cursor-pointer">ویرایش</button>
                 <button type="button" class="text-slate-400 hover:text-rose-400 text-xs font-bold cursor-pointer">حذف</button>
               </div>
@@ -18827,16 +18820,17 @@ window.initCardVideoHoverListeners = function() {
                 <input type="checkbox" class="accent-[#D4AF37] w-4 h-4 rounded cursor-pointer">
                 <div>
                   <span class="text-sm font-black text-white block">پرو نهایی لباس عروس در مزون لورنت</span>
-                  <div class="flex items-center gap-2 text-[10.5px] font-bold text-slate-400 mt-1">
+                  <div class="flex items-center gap-2 text-[10.5px] font-bold text-slate-400 mt-1 flex-wrap">
                     <span class="bg-[#0E121C] border border-[#C5A059]/30 text-[#D4AF37] px-2 py-0.5 rounded-md">مزون & لباس</span>
                     <span>•</span>
                     <span class="text-amber-300 font-bold">اولویت: ضروری</span>
                     <span>•</span>
-                    <span class="text-amber-200">۱ ماه قبل</span>
+                    <span class="text-amber-200">متصل به: مزون لورنت</span>
                   </div>
                 </div>
               </div>
               <div class="flex items-center gap-2">
+                <button type="button" onclick="openVendorSelectModal(2)" class="bg-[#0E121C] text-amber-200 border border-[#C5A059]/40 px-2.5 py-1 rounded-lg text-xs font-bold hover:border-[#D4AF37]">اتصال به دایرکتوری 🔗</button>
                 <button type="button" class="text-slate-400 hover:text-amber-300 text-xs font-bold cursor-pointer">ویرایش</button>
                 <button type="button" class="text-slate-400 hover:text-rose-400 text-xs font-bold cursor-pointer">حذف</button>
               </div>
@@ -18862,13 +18856,17 @@ window.initCardVideoHoverListeners = function() {
             </button>
           </div>
 
-          <!-- Add Timeline Slot Inline Form -->
+          <!-- Add Timeline Slot Inline Form with Mini Time Picker & Companion Dropdown -->
           <div class="bg-[#141A28] border border-[#C5A059]/30 rounded-2xl p-4 space-y-3 shadow-md">
-            <span class="text-xs font-black text-[#D4AF37] block">افزودن آیتم زمانی جدید:</span>
+            <span class="text-xs font-black text-[#D4AF37] block">افزودن آیتم زمانی جدید با مسئول هماهنگی:</span>
             <div class="grid grid-cols-1 sm:grid-cols-4 gap-2">
-              <input type="text" placeholder="زمان (مثلاً ۰۸:۳۰)" class="bg-[#0E121C] border border-[#C5A059]/30 rounded-xl px-3 py-2 text-xs text-white">
-              <input type="text" placeholder="عنوان برنامه" class="bg-[#0E121C] border border-[#C5A059]/30 rounded-xl px-3 py-2 text-xs text-white">
-              <input type="text" placeholder="مسئول هماهنگی (مثلاً ساقدوش)" class="bg-[#0E121C] border border-[#C5A059]/30 rounded-xl px-3 py-2 text-xs text-white">
+              <input type="time" value="08:00" class="bg-[#0E121C] border border-[#C5A059]/30 rounded-xl px-3 py-2 text-xs text-white">
+              <input type="text" placeholder="عنوان برنامه (مثلاً آرایشگاه)" class="bg-[#0E121C] border border-[#C5A059]/30 rounded-xl px-3 py-2 text-xs text-white">
+              <select class="bg-[#0E121C] border border-[#C5A059]/30 rounded-xl px-3 py-2 text-xs text-white">
+                <option value="maryam">مسئول: مریم (ساقدوش عروس)</option>
+                <option value="ali">مسئول: علی (داماد)</option>
+                <option value="reza">مسئول: رضا (ساقدوش داماد)</option>
+              </select>
               <button type="button" class="gold-shimmer-btn text-[#0F251A] font-black px-4 py-2 rounded-xl text-xs cursor-pointer">+ ثبت آیتم</button>
             </div>
           </div>
@@ -18877,10 +18875,11 @@ window.initCardVideoHoverListeners = function() {
           <div class="space-y-3">
             <div class="bg-[#141A28] border border-[#C5A059]/30 rounded-2xl p-4 flex items-center justify-between shadow-md">
               <div class="flex items-center gap-3">
+                <input type="checkbox" checked class="accent-[#D4AF37] w-4 h-4 rounded cursor-pointer">
                 <span class="w-12 h-12 rounded-2xl bg-[#D4AF37]/15 border border-[#D4AF37]/40 text-[#D4AF37] flex items-center justify-center font-black text-sm">۰۸:۰۰</span>
                 <div>
                   <h4 class="text-sm font-black text-white">حضور در سالن زیبایی & میکاپ عروس</h4>
-                  <p class="text-[10.5px] text-slate-300 font-medium">مسئول هماهنگی: خواهرم مریم (۰۹۱۲۳۴۵۶۷۸۹)</p>
+                  <p class="text-[10.5px] text-slate-300 font-medium">مسئول هماهنگی: مریم (ساقدوش) • ۰۹۱۲۳۴۵۶۷۸۹</p>
                 </div>
               </div>
               <div class="flex items-center gap-2">
@@ -18891,6 +18890,7 @@ window.initCardVideoHoverListeners = function() {
 
             <div class="bg-[#141A28] border border-[#C5A059]/30 rounded-2xl p-4 flex items-center justify-between shadow-md">
               <div class="flex items-center gap-3">
+                <input type="checkbox" class="accent-[#D4AF37] w-4 h-4 rounded cursor-pointer">
                 <span class="w-12 h-12 rounded-2xl bg-[#D4AF37]/15 border border-[#D4AF37]/40 text-[#D4AF37] flex items-center justify-center font-black text-sm">۱۳:۳۰</span>
                 <div>
                   <h4 class="text-sm font-black text-white">تحویل گل ماشین عروس & حرکت به آتلیه کویر</h4>
@@ -18929,7 +18929,7 @@ window.initCardVideoHoverListeners = function() {
             </div>
           </div>
 
-          <!-- Companion Cards List -->
+          <!-- Companion Cards List with Sub-task Creator Input -->
           <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
             <div class="bg-[#141A28] border border-[#C5A059]/30 rounded-2xl p-4 space-y-3 shadow-md">
               <div class="flex items-center justify-between">
@@ -18946,6 +18946,10 @@ window.initCardVideoHoverListeners = function() {
                 <span class="text-[11px] font-bold text-slate-300 block">وظایف محوله:</span>
                 <div class="space-y-1 text-[11px]">
                   <div class="flex items-center gap-1.5 text-slate-300"><i data-lucide="check" class="w-3 h-3 text-emerald-400"></i> رزرو نهایی آرایشگاه عروس</div>
+                </div>
+                <div class="flex items-center gap-2 pt-2">
+                  <input type="text" placeholder="+ افزودن وظیفه جدید به مریم..." class="w-full bg-[#0E121C] border border-[#C5A059]/30 rounded-xl px-3 py-1.5 text-xs text-white">
+                  <button type="button" class="gold-shimmer-btn text-[#0F251A] font-black px-3 py-1.5 rounded-xl text-xs shrink-0 cursor-pointer">ثبت</button>
                 </div>
               </div>
             </div>
@@ -18965,6 +18969,10 @@ window.initCardVideoHoverListeners = function() {
                 <span class="text-[11px] font-bold text-slate-300 block">وظایف محوله:</span>
                 <div class="space-y-1 text-[11px]">
                   <div class="flex items-center gap-1.5 text-slate-300"><i data-lucide="clock" class="w-3 h-3 text-amber-300"></i> تحویل خودرو به گل‌فروشی</div>
+                </div>
+                <div class="flex items-center gap-2 pt-2">
+                  <input type="text" placeholder="+ افزودن وظیفه جدید به رضا..." class="w-full bg-[#0E121C] border border-[#C5A059]/30 rounded-xl px-3 py-1.5 text-xs text-white">
+                  <button type="button" class="gold-shimmer-btn text-[#0F251A] font-black px-3 py-1.5 rounded-xl text-xs shrink-0 cursor-pointer">ثبت</button>
                 </div>
               </div>
             </div>
@@ -19001,15 +19009,29 @@ window.initCardVideoHoverListeners = function() {
             </div>
           </div>
 
+          <!-- Add Guest Form with Relation/Side Selector -->
+          <div class="bg-[#141A28] border border-[#C5A059]/30 rounded-2xl p-4 space-y-3 shadow-md">
+            <span class="text-xs font-black text-[#D4AF37] block">افزودن مهمان جدید:</span>
+            <div class="grid grid-cols-1 sm:grid-cols-4 gap-2">
+              <input type="text" placeholder="نام و نام خانوادگی مهمان" class="bg-[#0E121C] border border-[#C5A059]/30 rounded-xl px-3 py-2 text-xs text-white">
+              <select class="bg-[#0E121C] border border-[#C5A059]/30 rounded-xl px-3 py-2 text-xs text-white">
+                <option value="groom_family">خانواده داماد</option>
+                <option value="bride_family">خانواده عروس</option>
+                <option value="groom_friends">دوستان داماد</option>
+                <option value="bride_friends">دوستان عروس</option>
+                <option value="colleagues">همکاران</option>
+                <option value="other">سایر</option>
+              </select>
+              <input type="text" placeholder="شماره همراه (برای پیامک)" class="bg-[#0E121C] border border-[#C5A059]/30 rounded-xl px-3 py-2 text-xs text-white">
+              <button type="button" class="gold-shimmer-btn text-[#0F251A] font-black px-4 py-2 rounded-xl text-xs cursor-pointer">+ ثبت مهمان</button>
+            </div>
+          </div>
+
           <!-- Action Bar -->
           <div class="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 bg-[#141A28] border border-[#C5A059]/30 rounded-2xl p-4 shadow-lg">
             <div class="flex items-center gap-2 flex-wrap">
-              <button type="button" class="gold-shimmer-btn text-[#0F251A] font-black px-3.5 py-2 rounded-xl text-xs flex items-center gap-1 cursor-pointer">
-                <i data-lucide="plus-circle" class="w-3.5 h-3.5 text-[#0F251A]"></i>
-                <span>+ افزودن مهمان جدید</span>
-              </button>
               <button type="button" onclick="sendBulkRsvpReminders()" class="bg-[#0E121C] text-amber-200 border border-[#C5A059]/40 px-3.5 py-2 rounded-xl text-xs font-bold cursor-pointer hover:border-[#D4AF37]">
-                📩 ارسال یادآور RSVP
+                📩 ارسال خودکار یادآور RSVP
               </button>
               <button type="button" onclick="generateBulkGuestInvitationLinks()" class="bg-[#0E121C] text-amber-200 border border-[#C5A059]/40 px-3.5 py-2 rounded-xl text-xs font-bold cursor-pointer hover:border-[#D4AF37]">
                 🎫 کارت اختصاصی/QR
@@ -19018,17 +19040,8 @@ window.initCardVideoHoverListeners = function() {
                 🎁 ثبت هدایا
               </button>
               <button type="button" onclick="exportGuestsExcel()" class="bg-[#0E121C] text-slate-300 border border-slate-700 px-3.5 py-2 rounded-xl text-xs font-bold cursor-pointer">
-                📥 خروجی Excel
+                📥 خروجی Excel/CSV
               </button>
-            </div>
-            <div class="w-full sm:w-auto flex items-center gap-2">
-              <input type="text" placeholder="جستجوی مهمان..." class="bg-[#0E121C] border border-[#C5A059]/30 rounded-xl px-3 py-1.5 text-xs text-white">
-              <select class="bg-[#0E121C] border border-[#C5A059]/30 rounded-xl px-3 py-1.5 text-xs text-white">
-                <option value="all">همه گروه‌ها</option>
-                <option value="groom">فامیل داماد</option>
-                <option value="bride">فامیل عروس</option>
-                <option value="joint">دوستان مشترک</option>
-              </select>
             </div>
           </div>
 
@@ -19049,7 +19062,7 @@ window.initCardVideoHoverListeners = function() {
               <tbody class="divide-y divide-slate-800 text-slate-200">
                 <tr>
                   <td class="p-3 font-black text-white">محمد رضایی & خانواده</td>
-                  <td class="p-3">فامیل داماد</td>
+                  <td class="p-3">خانواده داماد</td>
                   <td class="p-3">۰۹۱۲۳۴۵۶۷۸۹</td>
                   <td class="p-3">۴ نفر</td>
                   <td class="p-3">میز ۵ VIP</td>
@@ -19100,6 +19113,26 @@ window.initCardVideoHoverListeners = function() {
             </div>
           </div>
 
+          <!-- Add Expense Form with Payment Method & Site Categories Dropdown -->
+          <div class="bg-[#141A28] border border-[#C5A059]/30 rounded-2xl p-4 space-y-3 shadow-md">
+            <span class="text-xs font-black text-[#D4AF37] block">ثبت هزینه جدید:</span>
+            <div class="grid grid-cols-1 sm:grid-cols-4 gap-2">
+              <input type="text" placeholder="عنوان هزینه (مثلاً بیعانه فیلمبرداری)" class="bg-[#0E121C] border border-[#C5A059]/30 rounded-xl px-3 py-2 text-xs text-white">
+              <select class="bg-[#0E121C] border border-[#C5A059]/30 rounded-xl px-3 py-2 text-xs text-white">
+                <option value="venue">تالار & تشریفات</option>
+                <option value="atelier">آتلیه & عکاسی</option>
+                <option value="dress">مزون & لباس عروس</option>
+                <option value="beauty">سالن زیبایی & آرایشگاه</option>
+                <option value="catering">کترینگ & شام</option>
+              </select>
+              <select class="bg-[#0E121C] border border-[#C5A059]/30 rounded-xl px-3 py-2 text-xs text-white">
+                <option value="cash">نقدی (تسویه یکجا)</option>
+                <option value="installments">اقساطی (جدول سررسید)</option>
+              </select>
+              <button type="button" class="gold-shimmer-btn text-[#0F251A] font-black px-4 py-2 rounded-xl text-xs cursor-pointer">+ ثبت هزینه</button>
+            </div>
+          </div>
+
           <!-- Glassmorphic Donut Breakdown + 2-Way Split -->
           <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
             <!-- Glassmorphic Category Donut -->
@@ -19121,9 +19154,9 @@ window.initCardVideoHoverListeners = function() {
               </div>
             </div>
 
-            <!-- Dual Budget Split (سهم عروس vs سهم داماد) -->
+            <!-- Dual Budget Split (سهم عروس vs سهم داماد vs مشترک) -->
             <div class="bg-[#141A28] border border-[#C5A059]/30 rounded-2xl p-4 space-y-3 shadow-lg">
-              <span class="text-xs font-black text-[#D4AF37] block">تفکیک سهم پرداخت (سهم عروس vs سهم داماد):</span>
+              <span class="text-xs font-black text-[#D4AF37] block">تفکیک سهم پرداخت (خانواده عروس vs داماد vs مشترک):</span>
               <div class="w-full bg-slate-800 h-3 rounded-full overflow-hidden flex mt-2">
                 <div class="bg-[#D4AF37] h-full" style="width: 60%;" title="سهم داماد ۶۰٪"></div>
                 <div class="bg-amber-500 h-full" style="width: 25%;" title="سهم عروس ۲۵٪"></div>
@@ -19144,7 +19177,7 @@ window.initCardVideoHoverListeners = function() {
               <table class="w-full text-right text-xs font-bold">
                 <thead>
                   <tr class="border-b border-slate-700 text-slate-400">
-                    <th class="p-2">تامین‌کننده</th>
+                    <th class="p-2">تامین‌کننده / عنوان قسط</th>
                     <th class="p-2">تاریخ سررسید</th>
                     <th class="p-2">مبلغ قسط</th>
                     <th class="p-2">وضعیت</th>
@@ -19152,13 +19185,13 @@ window.initCardVideoHoverListeners = function() {
                 </thead>
                 <tbody class="divide-y divide-slate-800">
                   <tr>
-                    <td class="p-2 text-white">مشیرالممالک یزد</td>
+                    <td class="p-2 text-white">مشیرالممالک یزد (قسط اول)</td>
                     <td class="p-2">۱ مرداد ۱۴۰۴</td>
                     <td class="p-2">۵۰,۰۰۰,۰۰۰ تومان</td>
                     <td class="p-2"><span class="text-emerald-400">پرداخت‌شده</span></td>
                   </tr>
                   <tr>
-                    <td class="p-2 text-white">استودیو کویر</td>
+                    <td class="p-2 text-white">استودیو کویر (قسط دوم)</td>
                     <td class="p-2">۲۵ مرداد ۱۴۰۴</td>
                     <td class="p-2">۲۵,۰۰۰,۰۰۰ تومان</td>
                     <td class="p-2"><span class="text-amber-300">در انتظار سررسید</span></td>
@@ -19221,7 +19254,7 @@ window.initCardVideoHoverListeners = function() {
               </div>
               <button type="button" onclick="switchTab('messages')" class="gold-shimmer-btn text-[#0F251A] font-black px-4 py-2 rounded-xl text-xs cursor-pointer flex items-center gap-1.5">
                 <i data-lucide="message-square" class="w-4 h-4 text-[#0F251A]"></i>
-                <span>💬 گفتگو و پیش‌فاکتور</span>
+                <span>💬 گفتگو و مشاهده پیش‌فاکتور</span>
               </button>
             </div>
           </div>

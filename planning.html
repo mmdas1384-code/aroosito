@@ -270,7 +270,7 @@
         <div class="space-y-1 text-right">
           <div class="flex justify-between items-center text-xs font-black">
             <span class="text-slate-300">میزان آمادگی کل:</span>
-            <span class="text-[#D4AF37]">۷۰٪ تکمیل‌حده</span>
+            <span class="text-[#D4AF37]">۷۰٪ تکمیل‌مدار</span>
           </div>
           <div class="w-full bg-slate-800 h-2 rounded-full overflow-hidden border border-slate-700">
             <div class="bg-gradient-to-r from-[#C5A059] via-[#D4AF37] to-emerald-400 h-full rounded-full shadow-[0_0_10px_#D4AF37]" style="width: 70%;"></div>
@@ -469,31 +469,38 @@
 
     </div>
 
-    <!-- ROW 3 - MY SELECTED VENDORS HORIZONTAL CAROUSEL -->
-    <div class="bg-[#0e121c]/90 backdrop-blur-xl border border-[#C5A059]/40 rounded-3xl p-5 sm:p-6 shadow-2xl space-y-4">
-      <div class="flex items-center justify-between border-b border-[#C5A059]/20 pb-3 flex-wrap gap-2">
+    <!-- ROW 3 - DUAL-TAB VENDORS SHOWCASE: BOOKMARKED (FAVORITES) VS MY CONNECTED VENDORS -->
+    <div class="bg-[#0e121c]/90 backdrop-blur-xl border border-[#C5A059]/40 rounded-3xl p-5 sm:p-6 shadow-2xl space-y-5">
+      <div class="flex flex-col sm:flex-row items-start sm:items-center justify-between border-b border-[#C5A059]/20 pb-4 gap-3">
         <div class="space-y-0.5 text-right">
           <span class="text-[11px] font-black text-[#D4AF37] flex items-center gap-1.5 block">
             <i data-lucide="heart" class="w-3.5 h-3.5 text-[#D4AF37]"></i>
-            <span>تامین‌کنندگان بوک‌شده & نشان‌شده</span>
+            <span>تامین‌کنندگان برنامه‌ریزی</span>
           </span>
-          <h2 class="text-base sm:text-lg font-black text-[#F7F5F0]">تامین‌کنندگان منتخب من در استان یزد</h2>
+          <h2 class="text-base sm:text-lg font-black text-[#F7F5F0]">تامین‌کنندگان من و برندهای نشان‌شده در یزد</h2>
         </div>
-        <button type="button" onclick="openExpandModal('vendors')" class="text-xs font-bold text-[#D4AF37] hover:text-amber-300 transition-colors flex items-center gap-1 cursor-pointer">
-          <i data-lucide="maximize-2" class="w-3.5 h-3.5 text-[#D4AF37]"></i>
-          <span>مدیریت کامل ←</span>
-        </button>
+
+        <!-- Dual Tab Switcher -->
+        <div class="flex items-center bg-[#141A28] border border-[#C5A059]/30 p-1 rounded-2xl gap-1 text-xs font-black">
+          <button type="button" id="tab-btn-bookmarked" onclick="switchPlannerVendorTab('bookmarked')" class="px-4 py-2 rounded-xl bg-[#D4AF37] text-[#07090E] transition-all cursor-pointer shadow-md">
+            تامین‌کنندگان نشان‌شده (علاقه‌مندی‌ها)
+          </button>
+          <button type="button" id="tab-btn-connected" onclick="switchPlannerVendorTab('connected')" class="px-4 py-2 rounded-xl text-slate-300 hover:text-white transition-all cursor-pointer">
+            تامین‌کنندگان من (رزرو و متصل)
+          </button>
+        </div>
       </div>
 
-      <!-- Horizontal Vendors Showcase Grid/Carousel -->
-      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 text-right">
+      <!-- Tab 1: Bookmarked Vendors Carousel / Grid -->
+      <div id="planner-vendors-pane-bookmarked" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 text-right">
         <div class="bg-[#141A28] border border-[#C5A059]/30 rounded-2xl p-3.5 space-y-2 shadow-lg hover:border-[#D4AF37] transition-all">
           <img src="https://images.unsplash.com/photo-1519167758481-83f550bb49b3?w=500" class="w-full h-32 rounded-xl object-cover border border-[#C5A059]/20">
           <div>
             <span class="text-[9.5px] font-bold text-[#D4AF37] block">تالار & باغ</span>
             <h3 class="text-xs sm:text-sm font-black text-white">مشیرالممالک یزد</h3>
-            <p class="text-[10px] text-emerald-400 font-bold mt-1">رزرو نهایی‌شده</p>
+            <p class="text-[10px] text-amber-300 font-bold mt-1">نشان‌شده در علاقه‌مندی‌ها</p>
           </div>
+          <button type="button" onclick="openVendorDetailModal(1)" class="w-full bg-[#0E121C] hover:bg-[#1E293B] text-slate-200 border border-slate-700 py-1.5 rounded-xl text-[11px] font-bold cursor-pointer">مشاهده پروفایل ➔</button>
         </div>
 
         <div class="bg-[#141A28] border border-[#C5A059]/30 rounded-2xl p-3.5 space-y-2 shadow-lg hover:border-[#D4AF37] transition-all">
@@ -501,17 +508,25 @@
           <div>
             <span class="text-[9.5px] font-bold text-[#D4AF37] block">آتلیه & عکاسی</span>
             <h3 class="text-xs sm:text-sm font-black text-white">استودیو کویر</h3>
-            <p class="text-[10px] text-amber-300 font-bold mt-1">بیعانه پرداخت‌شده</p>
+            <p class="text-[10px] text-amber-300 font-bold mt-1">نشان‌شده در علاقه‌مندی‌ها</p>
           </div>
+          <button type="button" onclick="openVendorDetailModal(2)" class="w-full bg-[#0E121C] hover:bg-[#1E293B] text-slate-200 border border-slate-700 py-1.5 rounded-xl text-[11px] font-bold cursor-pointer">مشاهده پروفایل ➔</button>
         </div>
+      </div>
 
+      <!-- Tab 2: Connected / Booked Vendors Carousel / Grid -->
+      <div id="planner-vendors-pane-connected" class="hidden grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 text-right">
         <div class="bg-[#141A28] border border-[#C5A059]/30 rounded-2xl p-3.5 space-y-2 shadow-lg hover:border-[#D4AF37] transition-all">
           <img src="https://images.unsplash.com/photo-1511285560929-80b456fea0bc?w=500" class="w-full h-32 rounded-xl object-cover border border-[#C5A059]/20">
           <div>
             <span class="text-[9.5px] font-bold text-[#D4AF37] block">سالن زیبایی</span>
             <h3 class="text-xs sm:text-sm font-black text-white">زیبایی رویال</h3>
-            <p class="text-[10px] text-emerald-400 font-bold mt-1">رزرو نهایی‌شده</p>
+            <div class="flex items-center justify-between text-[10px] font-bold mt-1">
+              <span class="text-emerald-400">رزرو نهایی‌شده</span>
+              <span class="text-slate-400">پیشرفت ۱۰۰٪</span>
+            </div>
           </div>
+          <button type="button" onclick="openVendorDetailModal(3)" class="w-full bg-[#0E121C] hover:bg-[#1E293B] text-slate-200 border border-slate-700 py-1.5 rounded-xl text-[11px] font-bold cursor-pointer">پیگیری همکاری ➔</button>
         </div>
 
         <div class="bg-[#141A28] border border-[#C5A059]/30 rounded-2xl p-3.5 space-y-2 shadow-lg hover:border-[#D4AF37] transition-all">
@@ -519,8 +534,12 @@
           <div>
             <span class="text-[9.5px] font-bold text-[#D4AF37] block">مزون عروس</span>
             <h3 class="text-xs sm:text-sm font-black text-white">مزون لورنت</h3>
-            <p class="text-[10px] text-slate-400 font-bold mt-1">در حال بررسی پکیج</p>
+            <div class="flex items-center justify-between text-[10px] font-bold mt-1">
+              <span class="text-amber-300">در حال بررسی پکیج</span>
+              <span class="text-slate-400">پیشرفت ۵۰٪</span>
+            </div>
           </div>
+          <button type="button" onclick="openVendorDetailModal(4)" class="w-full bg-[#0E121C] hover:bg-[#1E293B] text-slate-200 border border-slate-700 py-1.5 rounded-xl text-[11px] font-bold cursor-pointer">پیگیری همکاری ➔</button>
         </div>
       </div>
     </div>
@@ -604,6 +623,27 @@
         input.select();
         navigator.clipboard.writeText(input.value);
         alert('لینک دعوت همراه با موفقیت کپی شد! ✨');
+      }
+    }
+
+    function switchPlannerVendorTab(tabType) {
+      const btnBookmarked = document.getElementById('tab-btn-bookmarked');
+      const btnConnected = document.getElementById('tab-btn-connected');
+      const paneBookmarked = document.getElementById('planner-vendors-pane-bookmarked');
+      const paneConnected = document.getElementById('planner-vendors-pane-connected');
+
+      if (!btnBookmarked || !btnConnected || !paneBookmarked || !paneConnected) return;
+
+      if (tabType === 'bookmarked') {
+        btnBookmarked.className = 'px-4 py-2 rounded-xl bg-[#D4AF37] text-[#07090E] transition-all cursor-pointer shadow-md';
+        btnConnected.className = 'px-4 py-2 rounded-xl text-slate-300 hover:text-white transition-all cursor-pointer';
+        paneBookmarked.classList.remove('hidden');
+        paneConnected.classList.add('hidden');
+      } else {
+        btnConnected.className = 'px-4 py-2 rounded-xl bg-[#D4AF37] text-[#07090E] transition-all cursor-pointer shadow-md';
+        btnBookmarked.className = 'px-4 py-2 rounded-xl text-slate-300 hover:text-white transition-all cursor-pointer';
+        paneConnected.classList.remove('hidden');
+        paneBookmarked.classList.add('hidden');
       }
     }
 
