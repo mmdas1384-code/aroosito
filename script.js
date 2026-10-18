@@ -5665,7 +5665,7 @@ if (document.readyState === "loading") {
           ` : ''}
 
           <div class="flex justify-end gap-2 pt-1">
-            <button onclick="switchTab('messages')" class="bg-[#C5A059] hover:bg-[#D4AF37] text-[#07090E] font-black px-4 py-2 rounded-xl text-xs transition-all flex items-center gap-1.5 shadow-md cursor-pointer">
+            <button onclick="closeExpandModal(); if (document.getElementById('tab-messages')) { switchTab('messages'); } else { window.location.href = 'index.html?tab=messages'; }" class="bg-[#C5A059] hover:bg-[#D4AF37] text-[#07090E] font-black px-4 py-2 rounded-xl text-xs transition-all flex items-center gap-1.5 shadow-md cursor-pointer">
               <i data-lucide="message-circle" class="w-4 h-4"></i>
               <span>گفتگو و مشاهده پیش‌فاکتور</span>
             </button>
@@ -18779,22 +18779,25 @@ window.initCardVideoHoverListeners = function() {
           <div class="bg-[#141A28] border border-[#C5A059]/30 rounded-2xl p-4 space-y-2 shadow-md">
             <div class="flex justify-between items-center text-xs font-black">
               <span class="text-slate-300">نوار زمان‌بندی هوشمند تا روز عروسی:</span>
-              <span class="text-[#D4AF37]">۷۰٪ اقدامات فازبندی‌شده تکمیل شد</span>
+              <span id="overlay-checklist-progress-text" class="text-[#D4AF37]">۷۰٪ اقدامات فازبندی‌شده تکمیل شد</span>
+            </div>
+            <div class="w-full bg-slate-800 h-2.5 rounded-full overflow-hidden border border-slate-700">
+              <div id="overlay-checklist-progress-bar" class="bg-gradient-to-r from-[#C5A059] via-[#D4AF37] to-emerald-400 h-full rounded-full transition-all duration-500" style="width: 70%;"></div>
             </div>
             <div class="grid grid-cols-4 gap-2 text-center text-[10px] font-bold text-slate-300 pt-1">
-              <span class="bg-[#0E121C] border border-emerald-500/40 text-emerald-400 p-1.5 rounded-xl">۱۲ تا ۹ ماه (تکمیل)</span>
-              <span class="bg-[#0E121C] border border-[#C5A059]/40 text-[#D4AF37] p-1.5 rounded-xl">۶ تا ۳ ماه (در حال انجام)</span>
-              <span class="bg-[#0E121C] border border-slate-700 text-slate-400 p-1.5 rounded-xl">۱ ماه قبل</span>
-              <span class="bg-[#0E121C] border border-slate-700 text-slate-400 p-1.5 rounded-xl">هفته پایانی</span>
+              <span onclick="filterOverlayChecklist('۱۲ تا ۹ ماه قبل', null)" class="bg-[#0E121C] hover:bg-[#1E293B] border border-emerald-500/40 text-emerald-400 p-1.5 rounded-xl cursor-pointer">۱۲ تا ۹ ماه (تکمیل)</span>
+              <span onclick="filterOverlayChecklist('۶ تا ۳ ماه قبل', null)" class="bg-[#0E121C] hover:bg-[#1E293B] border border-[#C5A059]/40 text-[#D4AF37] p-1.5 rounded-xl cursor-pointer">۶ تا ۳ ماه (در حال انجام)</span>
+              <span onclick="filterOverlayChecklist('۱ ماه قبل', null)" class="bg-[#0E121C] hover:bg-[#1E293B] border border-slate-700 text-slate-400 p-1.5 rounded-xl cursor-pointer">۱ ماه قبل</span>
+              <span onclick="filterOverlayChecklist('هفته و روز قبل', null)" class="bg-[#0E121C] hover:bg-[#1E293B] border border-slate-700 text-slate-400 p-1.5 rounded-xl cursor-pointer">هفته پایانی</span>
             </div>
           </div>
 
           <!-- Action & Filter Bar -->
           <div class="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 bg-[#141A28] border border-[#C5A059]/30 rounded-2xl p-4 shadow-lg">
             <div class="flex items-center gap-2 overflow-x-auto no-scrollbar text-xs font-bold w-full sm:w-auto flex-wrap">
-              <button type="button" class="bg-[#D4AF37] text-[#07090E] font-black px-3.5 py-1.5 rounded-xl cursor-pointer">همه فازها</button>
-              <button type="button" class="bg-[#0E121C] text-slate-300 hover:text-white border border-slate-700 px-3.5 py-1.5 rounded-xl cursor-pointer">انجام‌شده</button>
-              <button type="button" class="bg-[#0E121C] text-slate-300 hover:text-white border border-slate-700 px-3.5 py-1.5 rounded-xl cursor-pointer">انجام‌نشده</button>
+              <button type="button" onclick="filterOverlayChecklist('ALL', 'ALL')" class="bg-[#D4AF37] text-[#07090E] font-black px-3.5 py-1.5 rounded-xl cursor-pointer">همه فازها</button>
+              <button type="button" onclick="filterOverlayChecklist('ALL', 'COMPLETED')" class="bg-[#0E121C] text-slate-300 hover:text-white border border-slate-700 px-3.5 py-1.5 rounded-xl cursor-pointer">انجام‌شده</button>
+              <button type="button" onclick="filterOverlayChecklist('ALL', 'UNCOMPLETED')" class="bg-[#0E121C] text-slate-300 hover:text-white border border-slate-700 px-3.5 py-1.5 rounded-xl cursor-pointer">انجام‌نشده</button>
             </div>
             <div class="flex items-center gap-2 shrink-0 w-full sm:w-auto">
               <button type="button" onclick="exportChecklistCsv()" class="bg-[#0E121C] hover:bg-slate-800 text-amber-200 border border-[#C5A059]/40 px-3.5 py-2 rounded-xl text-xs font-bold cursor-pointer">📥 خروجی اکسل / چاپ</button>
@@ -18805,51 +18808,12 @@ window.initCardVideoHoverListeners = function() {
             </div>
           </div>
 
-          <!-- Tasks List with Directory Attachments -->
-          <div class="space-y-3">
-            <div class="bg-[#141A28] border border-[#C5A059]/30 rounded-2xl p-4 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 shadow-md">
-              <div class="flex items-center gap-3">
-                <input type="checkbox" checked class="accent-[#D4AF37] w-4 h-4 rounded cursor-pointer">
-                <div>
-                  <span class="text-sm font-black text-white block">تعیین سقف بودجه، ظرفیت سالن و انتخاب تالار/باغ‌سرا</span>
-                  <div class="flex items-center gap-2 text-[10.5px] font-bold text-slate-400 mt-1 flex-wrap">
-                    <span class="bg-[#0E121C] border border-[#C5A059]/30 text-[#D4AF37] px-2 py-0.5 rounded-md">تالار & تشریفات</span>
-                    <span>•</span>
-                    <span class="text-rose-400 font-black">اولویت: فوری</span>
-                    <span>•</span>
-                    <span class="text-emerald-400">متصل به: هتل باغ مشیرالممالک</span>
-                  </div>
-                </div>
-              </div>
-              <div class="flex items-center gap-2">
-                <button type="button" onclick="openVendorSelectModal(1)" class="bg-[#0E121C] text-amber-200 border border-[#C5A059]/40 px-2.5 py-1 rounded-lg text-xs font-bold hover:border-[#D4AF37]">تغییر تامین‌کننده 🔗</button>
-                <button type="button" class="text-slate-400 hover:text-amber-300 text-xs font-bold cursor-pointer">ویرایش</button>
-                <button type="button" class="text-slate-400 hover:text-rose-400 text-xs font-bold cursor-pointer">حذف</button>
-              </div>
-            </div>
-
-            <div class="bg-[#141A28] border border-[#C5A059]/30 rounded-2xl p-4 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 shadow-md">
-              <div class="flex items-center gap-3">
-                <input type="checkbox" class="accent-[#D4AF37] w-4 h-4 rounded cursor-pointer">
-                <div>
-                  <span class="text-sm font-black text-white block">پرو نهایی لباس عروس در مزون لورنت</span>
-                  <div class="flex items-center gap-2 text-[10.5px] font-bold text-slate-400 mt-1 flex-wrap">
-                    <span class="bg-[#0E121C] border border-[#C5A059]/30 text-[#D4AF37] px-2 py-0.5 rounded-md">مزون & لباس</span>
-                    <span>•</span>
-                    <span class="text-amber-300 font-bold">اولویت: ضروری</span>
-                    <span>•</span>
-                    <span class="text-amber-200">متصل به: مزون لورنت</span>
-                  </div>
-                </div>
-              </div>
-              <div class="flex items-center gap-2">
-                <button type="button" onclick="openVendorSelectModal(2)" class="bg-[#0E121C] text-amber-200 border border-[#C5A059]/40 px-2.5 py-1 rounded-lg text-xs font-bold hover:border-[#D4AF37]">اتصال به دایرکتوری 🔗</button>
-                <button type="button" class="text-slate-400 hover:text-amber-300 text-xs font-bold cursor-pointer">ویرایش</button>
-                <button type="button" class="text-slate-400 hover:text-rose-400 text-xs font-bold cursor-pointer">حذف</button>
-              </div>
-            </div>
+          <!-- Dynamic Tasks Container -->
+          <div id="overlay-checklist-items-container" class="space-y-3">
+            <!-- Dynamically populated from window.renderOverlayChecklist() -->
           </div>
         </div>`;
+      setTimeout(() => { if (typeof window.renderOverlayChecklist === 'function') window.renderOverlayChecklist(); }, 50);
     } else if (type === 'timeline') {
       titleContainer.innerHTML = `
         <div class="space-y-1 text-right">
@@ -18873,50 +18837,23 @@ window.initCardVideoHoverListeners = function() {
           <div class="bg-[#141A28] border border-[#C5A059]/30 rounded-2xl p-4 space-y-3 shadow-md">
             <span class="text-xs font-black text-[#D4AF37] block">افزودن آیتم زمانی جدید با مسئول هماهنگی:</span>
             <div class="grid grid-cols-1 sm:grid-cols-4 gap-2">
-              <input type="time" value="08:00" class="bg-[#0E121C] border border-[#C5A059]/30 rounded-xl px-3 py-2 text-xs text-white">
-              <input type="text" placeholder="عنوان برنامه (مثلاً آرایشگاه)" class="bg-[#0E121C] border border-[#C5A059]/30 rounded-xl px-3 py-2 text-xs text-white">
-              <select class="bg-[#0E121C] border border-[#C5A059]/30 rounded-xl px-3 py-2 text-xs text-white">
+              <input type="time" id="timeline-new-time" value="12:00" class="bg-[#0E121C] border border-[#C5A059]/30 rounded-xl px-3 py-2 text-xs text-white">
+              <input type="text" id="timeline-new-title" placeholder="عنوان برنامه (مثلاً آرایشگاه)" class="bg-[#0E121C] border border-[#C5A059]/30 rounded-xl px-3 py-2 text-xs text-white">
+              <select id="timeline-new-assignee" class="bg-[#0E121C] border border-[#C5A059]/30 rounded-xl px-3 py-2 text-xs text-white">
                 <option value="maryam">مسئول: مریم (ساقدوش عروس)</option>
                 <option value="ali">مسئول: علی (داماد)</option>
                 <option value="reza">مسئول: رضا (ساقدوش داماد)</option>
               </select>
-              <button type="button" class="gold-shimmer-btn text-[#0F251A] font-black px-4 py-2 rounded-xl text-xs cursor-pointer">+ ثبت آیتم</button>
+              <button type="button" onclick="addOverlayTimelineSlot()" class="gold-shimmer-btn text-[#0F251A] font-black px-4 py-2 rounded-xl text-xs cursor-pointer">+ ثبت آیتم</button>
             </div>
           </div>
 
-          <!-- Timeline Items -->
-          <div class="space-y-3">
-            <div class="bg-[#141A28] border border-[#C5A059]/30 rounded-2xl p-4 flex items-center justify-between shadow-md">
-              <div class="flex items-center gap-3">
-                <input type="checkbox" checked class="accent-[#D4AF37] w-4 h-4 rounded cursor-pointer">
-                <span class="w-12 h-12 rounded-2xl bg-[#D4AF37]/15 border border-[#D4AF37]/40 text-[#D4AF37] flex items-center justify-center font-black text-sm">۰۸:۰۰</span>
-                <div>
-                  <h4 class="text-sm font-black text-white">حضور در سالن زیبایی & میکاپ عروس</h4>
-                  <p class="text-[10.5px] text-slate-300 font-medium">مسئول هماهنگی: مریم (ساقدوش) • ۰۹۱۲۳۴۵۶۷۸۹</p>
-                </div>
-              </div>
-              <div class="flex items-center gap-2">
-                <button type="button" class="text-slate-400 hover:text-amber-300 text-xs font-bold cursor-pointer">ویرایش</button>
-                <button type="button" class="text-slate-400 hover:text-rose-400 text-xs font-bold cursor-pointer">حذف</button>
-              </div>
-            </div>
-
-            <div class="bg-[#141A28] border border-[#C5A059]/30 rounded-2xl p-4 flex items-center justify-between shadow-md">
-              <div class="flex items-center gap-3">
-                <input type="checkbox" class="accent-[#D4AF37] w-4 h-4 rounded cursor-pointer">
-                <span class="w-12 h-12 rounded-2xl bg-[#D4AF37]/15 border border-[#D4AF37]/40 text-[#D4AF37] flex items-center justify-center font-black text-sm">۱۳:۳۰</span>
-                <div>
-                  <h4 class="text-sm font-black text-white">تحویل گل ماشین عروس & حرکت به آتلیه کویر</h4>
-                  <p class="text-[10.5px] text-slate-300 font-medium">مسئول هماهنگی: علی (داماد)</p>
-                </div>
-              </div>
-              <div class="flex items-center gap-2">
-                <button type="button" class="text-slate-400 hover:text-amber-300 text-xs font-bold cursor-pointer">ویرایش</button>
-                <button type="button" class="text-slate-400 hover:text-rose-400 text-xs font-bold cursor-pointer">حذف</button>
-              </div>
-            </div>
+          <!-- Dynamic Timeline Container -->
+          <div id="overlay-timeline-items-container" class="space-y-3">
+            <!-- Dynamically populated from window.renderOverlayTimeline() -->
           </div>
         </div>`;
+      setTimeout(() => { if (typeof window.renderOverlayTimeline === 'function') window.renderOverlayTimeline(); }, 50);
     } else if (type === 'party') {
       titleContainer.innerHTML = `
         <div class="space-y-1 text-right">
@@ -18932,65 +18869,22 @@ window.initCardVideoHoverListeners = function() {
           <div class="bg-[#141A28] border border-[#C5A059]/30 rounded-2xl p-4 space-y-3 shadow-md">
             <span class="text-xs font-black text-[#D4AF37] block">افزودن همراه جدید:</span>
             <div class="grid grid-cols-1 sm:grid-cols-3 gap-2">
-              <input type="text" placeholder="نام و نام خانوادگی" class="bg-[#0E121C] border border-[#C5A059]/30 rounded-xl px-3 py-2 text-xs text-white">
-              <select class="bg-[#0E121C] border border-[#C5A059]/30 rounded-xl px-3 py-2 text-xs text-white">
+              <input type="text" id="companion-new-name" placeholder="نام و نام خانوادگی" class="bg-[#0E121C] border border-[#C5A059]/30 rounded-xl px-3 py-2 text-xs text-white">
+              <select id="companion-new-role" class="bg-[#0E121C] border border-[#C5A059]/30 rounded-xl px-3 py-2 text-xs text-white">
                 <option value="bridesmaid">ساقدوش عروس</option>
                 <option value="groomsman">ساقدوش داماد</option>
                 <option value="planner">برنامه‌ریز خانوادگی</option>
               </select>
-              <button type="button" class="gold-shimmer-btn text-[#0F251A] font-black px-4 py-2 rounded-xl text-xs cursor-pointer">+ افزودن همراه</button>
+              <button type="button" onclick="addOverlayCompanion()" class="gold-shimmer-btn text-[#0F251A] font-black px-4 py-2 rounded-xl text-xs cursor-pointer">+ افزودن همراه</button>
             </div>
           </div>
 
-          <!-- Companion Cards List with Sub-task Creator Input -->
-          <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
-            <div class="bg-[#141A28] border border-[#C5A059]/30 rounded-2xl p-4 space-y-3 shadow-md">
-              <div class="flex items-center justify-between">
-                <div class="flex items-center gap-3">
-                  <img src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=100" class="w-10 h-10 rounded-full object-cover border border-[#D4AF37]">
-                  <div>
-                    <h4 class="text-sm font-black text-white">مریم (ساقدوش)</h4>
-                    <p class="text-[10.5px] text-slate-400 font-medium">مسئول هماهنگی سالن زیبایی</p>
-                  </div>
-                </div>
-                <span class="text-xs font-black text-emerald-400 bg-emerald-950/60 px-2.5 py-1 rounded-full border border-emerald-500/30">۱۰۰٪ پیشرفت</span>
-              </div>
-              <div class="space-y-1.5 pt-2 border-t border-slate-800">
-                <span class="text-[11px] font-bold text-slate-300 block">وظایف محوله:</span>
-                <div class="space-y-1 text-[11px]">
-                  <div class="flex items-center gap-1.5 text-slate-300"><i data-lucide="check" class="w-3 h-3 text-emerald-400"></i> رزرو نهایی آرایشگاه عروس</div>
-                </div>
-                <div class="flex items-center gap-2 pt-2">
-                  <input type="text" placeholder="+ افزودن وظیفه جدید به مریم..." class="w-full bg-[#0E121C] border border-[#C5A059]/30 rounded-xl px-3 py-1.5 text-xs text-white">
-                  <button type="button" class="gold-shimmer-btn text-[#0F251A] font-black px-3 py-1.5 rounded-xl text-xs shrink-0 cursor-pointer">ثبت</button>
-                </div>
-              </div>
-            </div>
-
-            <div class="bg-[#141A28] border border-[#C5A059]/30 rounded-2xl p-4 space-y-3 shadow-md">
-              <div class="flex items-center justify-between">
-                <div class="flex items-center gap-3">
-                  <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=100" class="w-10 h-10 rounded-full object-cover border border-[#D4AF37]">
-                  <div>
-                    <h4 class="text-sm font-black text-white">رضا (ساقدوش)</h4>
-                    <p class="text-[10.5px] text-slate-400 font-medium">مسئول تحویل گل و ماشین</p>
-                  </div>
-                </div>
-                <span class="text-xs font-black text-amber-300 bg-amber-950/60 px-2.5 py-1 rounded-full border border-amber-500/30">۵۰٪ پیشرفت</span>
-              </div>
-              <div class="space-y-1.5 pt-2 border-t border-slate-800">
-                <span class="text-[11px] font-bold text-slate-300 block">وظایف محوله:</span>
-                <div class="space-y-1 text-[11px]">
-                  <div class="flex items-center gap-1.5 text-slate-300"><i data-lucide="clock" class="w-3 h-3 text-amber-300"></i> تحویل خودرو به گل‌فروشی</div>
-                </div>
-                <div class="flex items-center gap-2 pt-2">
-                  <input type="text" placeholder="+ افزودن وظیفه جدید به رضا..." class="w-full bg-[#0E121C] border border-[#C5A059]/30 rounded-xl px-3 py-1.5 text-xs text-white">
-                  <button type="button" class="gold-shimmer-btn text-[#0F251A] font-black px-3 py-1.5 rounded-xl text-xs shrink-0 cursor-pointer">ثبت</button>
-                </div>
-              </div>
-            </div>
+          <!-- Dynamic Companion Cards Container -->
+          <div id="overlay-companions-cards-container" class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+            <!-- Dynamically populated from window.renderOverlayCompanions() -->
           </div>
         </div>`;
+      setTimeout(() => { if (typeof window.renderOverlayCompanions === 'function') window.renderOverlayCompanions(); }, 50);
     } else if (type === 'guests') {
       titleContainer.innerHTML = `
         <div class="space-y-1 text-right">
@@ -19026,8 +18920,8 @@ window.initCardVideoHoverListeners = function() {
           <div class="bg-[#141A28] border border-[#C5A059]/30 rounded-2xl p-4 space-y-3 shadow-md">
             <span class="text-xs font-black text-[#D4AF37] block">افزودن مهمان جدید:</span>
             <div class="grid grid-cols-1 sm:grid-cols-4 gap-2">
-              <input type="text" placeholder="نام و نام خانوادگی مهمان" class="bg-[#0E121C] border border-[#C5A059]/30 rounded-xl px-3 py-2 text-xs text-white">
-              <select class="bg-[#0E121C] border border-[#C5A059]/30 rounded-xl px-3 py-2 text-xs text-white">
+              <input type="text" id="guest-new-name" placeholder="نام و نام خانوادگی مهمان" class="bg-[#0E121C] border border-[#C5A059]/30 rounded-xl px-3 py-2 text-xs text-white">
+              <select id="guest-new-relation" class="bg-[#0E121C] border border-[#C5A059]/30 rounded-xl px-3 py-2 text-xs text-white">
                 <option value="groom_family">خانواده داماد</option>
                 <option value="bride_family">خانواده عروس</option>
                 <option value="groom_friends">دوستان داماد</option>
@@ -19035,8 +18929,8 @@ window.initCardVideoHoverListeners = function() {
                 <option value="colleagues">همکاران</option>
                 <option value="other">سایر</option>
               </select>
-              <input type="text" placeholder="شماره همراه (برای پیامک)" class="bg-[#0E121C] border border-[#C5A059]/30 rounded-xl px-3 py-2 text-xs text-white">
-              <button type="button" class="gold-shimmer-btn text-[#0F251A] font-black px-4 py-2 rounded-xl text-xs cursor-pointer">+ ثبت مهمان</button>
+              <input type="text" id="guest-new-phone" placeholder="شماره همراه (برای پیامک)" class="bg-[#0E121C] border border-[#C5A059]/30 rounded-xl px-3 py-2 text-xs text-white">
+              <button type="button" onclick="addOverlayGuest()" class="gold-shimmer-btn text-[#0F251A] font-black px-4 py-2 rounded-xl text-xs cursor-pointer">+ ثبت مهمان</button>
             </div>
           </div>
 
@@ -19058,7 +18952,7 @@ window.initCardVideoHoverListeners = function() {
             </div>
           </div>
 
-          <!-- Table -->
+          <!-- Dynamic Guest Table Container -->
           <div class="overflow-x-auto bg-[#141A28] border border-[#C5A059]/30 rounded-2xl p-2 shadow-lg">
             <table class="w-full text-right text-xs font-bold">
               <thead>
@@ -19072,29 +18966,13 @@ window.initCardVideoHoverListeners = function() {
                   <th class="p-3">عملیات</th>
                 </tr>
               </thead>
-              <tbody class="divide-y divide-slate-800 text-slate-200">
-                <tr>
-                  <td class="p-3 font-black text-white">محمد رضایی & خانواده</td>
-                  <td class="p-3">خانواده داماد</td>
-                  <td class="p-3">۰۹۱۲۳۴۵۶۷۸۹</td>
-                  <td class="p-3">۴ نفر</td>
-                  <td class="p-3">میز ۵ VIP</td>
-                  <td class="p-3"><span class="bg-emerald-950/80 text-emerald-400 border border-emerald-500/30 px-2.5 py-0.5 rounded-full text-[10px]">تاییدشده</span></td>
-                  <td class="p-3"><button type="button" class="text-amber-300 hover:underline cursor-pointer">ویرایش</button></td>
-                </tr>
-                <tr>
-                  <td class="p-3 font-black text-white">زهرا عباسی</td>
-                  <td class="p-3">دوستان عروس</td>
-                  <td class="p-3">۰۹۹۸۷۶۵۴۳۲۱</td>
-                  <td class="p-3">۱ نفر</td>
-                  <td class="p-3">میز ۸</td>
-                  <td class="p-3"><span class="bg-amber-950/80 text-amber-300 border border-amber-500/30 px-2.5 py-0.5 rounded-full text-[10px]">در انتظار</span></td>
-                  <td class="p-3"><button type="button" class="text-amber-300 hover:underline cursor-pointer">ویرایش</button></td>
-                </tr>
+              <tbody id="overlay-guests-tbody" class="divide-y divide-slate-800 text-slate-200">
+                <!-- Dynamically populated from window.renderOverlayGuests() -->
               </tbody>
             </table>
           </div>
         </div>`;
+      setTimeout(() => { if (typeof window.renderOverlayGuests === 'function') window.renderOverlayGuests(); }, 50);
     } else if (type === 'budget') {
       titleContainer.innerHTML = `
         <div class="space-y-1 text-right">
@@ -19142,7 +19020,7 @@ window.initCardVideoHoverListeners = function() {
                 <option value="cash">نقدی (تسویه یکجا)</option>
                 <option value="installments">اقساطی (جدول سررسید)</option>
               </select>
-              <button type="button" class="gold-shimmer-btn text-[#0F251A] font-black px-4 py-2 rounded-xl text-xs cursor-pointer">+ ثبت هزینه</button>
+              <button type="button" onclick="openBudgetItemModal()" class="gold-shimmer-btn text-[#0F251A] font-black px-4 py-2 rounded-xl text-xs cursor-pointer">+ ثبت هزینه</button>
             </div>
           </div>
 
@@ -19265,7 +19143,7 @@ window.initCardVideoHoverListeners = function() {
                 <h4 class="text-sm font-black text-white">هتل باغ مشیرالممالک یزد</h4>
                 <p class="text-[10.5px] text-slate-300 font-medium mt-0.5">منوی VIP • ۲۵۰ نفر مهمان • ۱۵ شهریور ۱۴۰۴</p>
               </div>
-              <button type="button" onclick="switchTab('messages')" class="gold-shimmer-btn text-[#0F251A] font-black px-4 py-2 rounded-xl text-xs cursor-pointer flex items-center gap-1.5">
+              <button type="button" onclick="closeExpandModal(); if (document.getElementById('tab-messages')) { switchTab('messages'); } else { window.location.href = 'index.html?tab=messages'; }" class="gold-shimmer-btn text-[#0F251A] font-black px-4 py-2 rounded-xl text-xs cursor-pointer flex items-center gap-1.5">
                 <i data-lucide="message-square" class="w-4 h-4 text-[#0F251A]"></i>
                 <span>💬 گفتگو و مشاهده پیش‌فاکتور</span>
               </button>
@@ -19402,4 +19280,308 @@ window.openGiftRecorderModal = function() {
     if (!giftStr) return;
 
     showToast(`هدیه «${name.trim()}» به مبلغ ${giftStr} تومان با موفقیت در دفتر هدایا ثبت گردید ✨`, 'success');
+};
+
+
+// DYNAMIC STATEFUL OVERLAY RENDERERS & HANDLERS
+
+let overlayChecklistPhase = "ALL";
+let overlayChecklistStatus = "ALL";
+
+window.filterOverlayChecklist = function(phase, status) {
+    if (phase !== null) overlayChecklistPhase = phase;
+    if (status !== null) overlayChecklistStatus = status;
+    window.renderOverlayChecklist();
+};
+
+window.renderOverlayChecklist = function() {
+    const listContainer = document.getElementById('overlay-checklist-items-container');
+    const progressBar = document.getElementById('overlay-checklist-progress-bar');
+    const progressText = document.getElementById('overlay-checklist-progress-text');
+    if (!listContainer) return;
+
+    let checklist = JSON.parse(localStorage.getItem('aroosi_checklist_db') || '[]');
+    if (!checklist || !checklist.length) {
+      checklist = typeof staticChecklist !== 'undefined' ? staticChecklist : [];
+      localStorage.setItem('aroosi_checklist_db', JSON.stringify(checklist));
+    }
+
+    let completedCount = checklist.filter(t => t.completed).length;
+    let totalCount = checklist.length;
+    let percent = totalCount > 0 ? Math.round((completedCount / totalCount) * 100) : 0;
+
+    if (progressBar) progressBar.style.width = percent + '%';
+    if (progressText) progressText.innerText = `${percent}٪ اقدامات تکمیل شد (${completedCount} از ${totalCount})`;
+
+    let filtered = checklist.filter(t => {
+      if (overlayChecklistPhase !== 'ALL' && t.timeframe !== overlayChecklistPhase) return false;
+      if (overlayChecklistStatus === 'COMPLETED' && !t.completed) return false;
+      if (overlayChecklistStatus === 'UNCOMPLETED' && t.completed) return false;
+      return true;
+    });
+
+    if (!filtered.length) {
+      listContainer.innerHTML = `<div class="p-8 text-center text-slate-400 font-bold text-xs">هیچ اقدامی برای این فاز یا وضعیت یافت نشد.</div>`;
+      return;
+    }
+
+    listContainer.innerHTML = filtered.map(t => `
+      <div class="bg-[#141A28] border border-[#C5A059]/30 rounded-2xl p-4 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 shadow-md hover:border-[#D4AF37] transition-all">
+        <div class="flex items-center gap-3">
+          <input type="checkbox" ${t.completed ? 'checked' : ''} onchange="toggleOverlayChecklistTask('${t.id}')" class="accent-[#D4AF37] w-4 h-4 rounded cursor-pointer">
+          <div>
+            <span class="text-sm font-black ${t.completed ? 'line-through text-slate-400' : 'text-white'} block">${t.title}</span>
+            <div class="flex items-center gap-2 text-[10.5px] font-bold text-slate-400 mt-1 flex-wrap">
+              <span class="bg-[#0E121C] border border-[#C5A059]/30 text-[#D4AF37] px-2 py-0.5 rounded-md">${t.category || 'عمومی'}</span>
+              <span>•</span>
+              <span class="${t.priority === 'urgent' ? 'text-rose-400 font-black' : 'text-amber-300'}">اولویت: ${t.priority === 'urgent' ? 'فوری' : (t.priority === 'suggested' ? 'ضروری' : 'عادی')}</span>
+              <span>•</span>
+              <span class="text-emerald-400">${t.timeframe}</span>
+            </div>
+          </div>
+        </div>
+        <div class="flex items-center gap-2">
+          <button type="button" onclick="openVendorSelectModal('${t.id}')" class="bg-[#0E121C] text-amber-200 border border-[#C5A059]/40 px-2.5 py-1 rounded-lg text-xs font-bold hover:border-[#D4AF37]">اتصال به تامین‌کننده 🔗</button>
+          <button type="button" onclick="deleteOverlayChecklistTask('${t.id}')" class="text-slate-400 hover:text-rose-400 text-xs font-bold cursor-pointer">حذف</button>
+        </div>
+      </div>
+    `).join('');
+};
+
+window.toggleOverlayChecklistTask = function(id) {
+    let checklist = JSON.parse(localStorage.getItem('aroosi_checklist_db') || '[]');
+    let task = checklist.find(t => t.id === id);
+    if (task) {
+      task.completed = !task.completed;
+      localStorage.setItem('aroosi_checklist_db', JSON.stringify(checklist));
+      if (typeof staticChecklist !== 'undefined') staticChecklist = checklist;
+      window.renderOverlayChecklist();
+      showToast('وضعیت اقدام به روز شد.', 'success');
+    }
+};
+
+window.deleteOverlayChecklistTask = function(id) {
+    if (!confirm('آیا از حذف این اقدام مطمئن هستید؟')) return;
+    let checklist = JSON.parse(localStorage.getItem('aroosi_checklist_db') || '[]');
+    checklist = checklist.filter(t => t.id !== id);
+    localStorage.setItem('aroosi_checklist_db', JSON.stringify(checklist));
+    if (typeof staticChecklist !== 'undefined') staticChecklist = checklist;
+    window.renderOverlayChecklist();
+    showToast('اقدام با موفقیت حذف شد.', 'info');
+};
+
+// TIMELINE OVERLAY STATE & HANDLERS
+window.renderOverlayTimeline = function() {
+    const container = document.getElementById('overlay-timeline-items-container');
+    if (!container) return;
+
+    let timeline = JSON.parse(localStorage.getItem('aroosi_timeline_db') || '[]');
+    if (!timeline.length) {
+      timeline = [
+        { id: "tm-1", time: "۰۸:۰۰", title: "حضور در سالن زیبایی & میکاپ عروس", assignee: "مریم (ساقدوش عروس)", phone: "۰۹۱۲۳۴۵۶۷۸۹", completed: true },
+        { id: "tm-2", time: "۱۳:۳۰", title: "تحویل گل ماشین عروس & حرکت به آتلیه کویر", assignee: "علی (داماد)", phone: "۰۹۱۲۰۰۰۰۰۰۰", completed: false },
+        { id: "tm-3", time: "۱۸:۳۰", title: "ورود به تالار & مراسم سفره عقد", assignee: "تیم تشریفات تالار", phone: "۰۹۱۳۰۰۰۰۰۰۰", completed: false }
+      ];
+      localStorage.setItem('aroosi_timeline_db', JSON.stringify(timeline));
+    }
+
+    container.innerHTML = timeline.map(slot => `
+      <div class="bg-[#141A28] border border-[#C5A059]/30 rounded-2xl p-4 flex items-center justify-between shadow-md hover:border-[#D4AF37] transition-all">
+        <div class="flex items-center gap-3">
+          <input type="checkbox" ${slot.completed ? 'checked' : ''} onchange="toggleOverlayTimelineSlot('${slot.id}')" class="accent-[#D4AF37] w-4 h-4 rounded cursor-pointer">
+          <span class="w-12 h-12 rounded-2xl bg-[#D4AF37]/15 border border-[#D4AF37]/40 text-[#D4AF37] flex items-center justify-center font-black text-sm shrink-0">${slot.time}</span>
+          <div>
+            <h4 class="text-sm font-black ${slot.completed ? 'line-through text-slate-400' : 'text-white'}">${slot.title}</h4>
+            <p class="text-[10.5px] text-slate-300 font-medium">مسئول هماهنگی: ${slot.assignee}</p>
+          </div>
+        </div>
+        <div class="flex items-center gap-2">
+          <button type="button" onclick="deleteOverlayTimelineSlot('${slot.id}')" class="text-slate-400 hover:text-rose-400 text-xs font-bold cursor-pointer">حذف</button>
+        </div>
+      </div>
+    `).join('');
+};
+
+window.addOverlayTimelineSlot = function() {
+    const timeInput = document.getElementById('timeline-new-time');
+    const titleInput = document.getElementById('timeline-new-title');
+    const assigneeSelect = document.getElementById('timeline-new-assignee');
+
+    if (!titleInput || !titleInput.value.trim()) {
+      showToast('لطفاً عنوان برنامه را وارد کنید.', 'warning');
+      return;
+    }
+
+    let timeline = JSON.parse(localStorage.getItem('aroosi_timeline_db') || '[]');
+    timeline.push({
+      id: "tm-" + Date.now(),
+      time: timeInput ? timeInput.value : "12:00",
+      title: titleInput.value.trim(),
+      assignee: assigneeSelect ? assigneeSelect.options[assigneeSelect.selectedIndex].text : "همراه",
+      completed: false
+    });
+
+    localStorage.setItem('aroosi_timeline_db', JSON.stringify(timeline));
+    titleInput.value = '';
+    window.renderOverlayTimeline();
+    showToast('آیتم زمانی به جدول روز مراسم اضافه شد ✨', 'success');
+};
+
+window.toggleOverlayTimelineSlot = function(id) {
+    let timeline = JSON.parse(localStorage.getItem('aroosi_timeline_db') || '[]');
+    let slot = timeline.find(s => s.id === id);
+    if (slot) {
+      slot.completed = !slot.completed;
+      localStorage.setItem('aroosi_timeline_db', JSON.stringify(timeline));
+      window.renderOverlayTimeline();
+    }
+};
+
+window.deleteOverlayTimelineSlot = function(id) {
+    let timeline = JSON.parse(localStorage.getItem('aroosi_timeline_db') || '[]');
+    timeline = timeline.filter(s => s.id !== id);
+    localStorage.setItem('aroosi_timeline_db', JSON.stringify(timeline));
+    window.renderOverlayTimeline();
+    showToast('آیتم زمانی حذف شد.', 'info');
+};
+
+// COMPANIONS OVERLAY STATE & HANDLERS
+window.renderOverlayCompanions = function() {
+    const container = document.getElementById('overlay-companions-cards-container');
+    if (!container) return;
+
+    let companions = JSON.parse(localStorage.getItem('aroosi_companions_db') || '[]');
+    if (!companions.length) {
+      companions = [
+        { id: "comp-1", name: "مریم (ساقدوش عروس)", role: "ساقدوش عروس", desc: "مسئول هماهنگی سالن زیبایی و عکس", percent: 100, tasks: ["رزرو نهایی آرایشگاه عروس"] },
+        { id: "comp-2", name: "رضا (ساقدوش داماد)", role: "ساقدوش داماد", desc: "مسئول تحویل گل و ماشین عروس", percent: 50, tasks: ["تحویل خودرو به گل‌فروشی"] }
+      ];
+      localStorage.setItem('aroosi_companions_db', JSON.stringify(companions));
+    }
+
+    container.innerHTML = companions.map(c => `
+      <div class="bg-[#141A28] border border-[#C5A059]/30 rounded-2xl p-4 space-y-3 shadow-md hover:border-[#D4AF37] transition-all">
+        <div class="flex items-center justify-between">
+          <div class="flex items-center gap-3">
+            <img src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=100" class="w-10 h-10 rounded-full object-cover border border-[#D4AF37]">
+            <div>
+              <h4 class="text-sm font-black text-white">${c.name}</h4>
+              <p class="text-[10.5px] text-slate-400 font-medium">${c.desc}</p>
+            </div>
+          </div>
+          <span class="text-xs font-black ${c.percent === 100 ? 'text-emerald-400 bg-emerald-950/60 border-emerald-500/30' : 'text-amber-300 bg-amber-950/60 border-amber-500/30'} px-2.5 py-1 rounded-full border">${c.percent}٪ پیشرفت</span>
+        </div>
+        <div class="space-y-1.5 pt-2 border-t border-slate-800">
+          <span class="text-[11px] font-bold text-slate-300 block">وظایف محوله:</span>
+          <div class="space-y-1 text-[11px]">
+            ${c.tasks.map(t => `<div class="flex items-center gap-1.5 text-slate-300"><i data-lucide="check" class="w-3 h-3 text-emerald-400"></i> ${t}</div>`).join('')}
+          </div>
+          <div class="flex items-center gap-2 pt-2">
+            <input type="text" id="subtask-input-${c.id}" placeholder="+ افزودن وظیفه جدید به ${c.name}..." class="w-full bg-[#0E121C] border border-[#C5A059]/30 rounded-xl px-3 py-1.5 text-xs text-white">
+            <button type="button" onclick="addCompanionSubtask('${c.id}')" class="gold-shimmer-btn text-[#0F251A] font-black px-3 py-1.5 rounded-xl text-xs shrink-0 cursor-pointer">ثبت</button>
+          </div>
+        </div>
+      </div>
+    `).join('');
+};
+
+window.addOverlayCompanion = function() {
+    const nameInput = document.getElementById('companion-new-name');
+    const roleSelect = document.getElementById('companion-new-role');
+
+    if (!nameInput || !nameInput.value.trim()) {
+      showToast('لطفاً نام و نام خانوادگی همراه را وارد کنید.', 'warning');
+      return;
+    }
+
+    let companions = JSON.parse(localStorage.getItem('aroosi_companions_db') || '[]');
+    companions.push({
+      id: "comp-" + Date.now(),
+      name: nameInput.value.trim(),
+      role: roleSelect ? roleSelect.options[roleSelect.selectedIndex].text : "همراه",
+      desc: "مسئولیت جدید محوله",
+      percent: 0,
+      tasks: ["پیگیری امور مربوطه"]
+    });
+
+    localStorage.setItem('aroosi_companions_db', JSON.stringify(companions));
+    nameInput.value = '';
+    window.renderOverlayCompanions();
+    showToast('همراه جدید با موفقیت اضافه شد ✨', 'success');
+};
+
+window.addCompanionSubtask = function(compCode) {
+    const input = document.getElementById('subtask-input-' + compCode);
+    if (!input || !input.value.trim()) return;
+
+    let companions = JSON.parse(localStorage.getItem('aroosi_companions_db') || '[]');
+    let companion = companions.find(c => c.id === compCode);
+    if (companion) {
+      companion.tasks.push(input.value.trim());
+      localStorage.setItem('aroosi_companions_db', JSON.stringify(companions));
+      window.renderOverlayCompanions();
+      showToast('وظیفه به همراه محول شد.', 'success');
+    }
+};
+
+// GUESTS OVERLAY STATE & HANDLERS
+window.renderOverlayGuests = function() {
+    const tbody = document.getElementById('overlay-guests-tbody');
+    if (!tbody) return;
+
+    let guests = JSON.parse(localStorage.getItem('aroosi_guest_db') || '[]');
+    if (!guests.length) {
+      guests = [
+        { id: "gst-1", name: "محمد رضایی & خانواده", relation: "خانواده داماد", phone: "۰۹۱۲۳۴۵۶۷۸۹", count: 4, tableNo: "میز ۵ VIP", rsvp: "confirmed" },
+        { id: "gst-2", name: "زهرا عباسی", relation: "دوستان عروس", phone: "۰۹۹۸۷۶۵۴۳۲۱", count: 1, tableNo: "میز ۸", rsvp: "pending" }
+      ];
+      localStorage.setItem('aroosi_guest_db', JSON.stringify(guests));
+    }
+
+    tbody.innerHTML = guests.map(g => `
+      <tr>
+        <td class="p-3 font-black text-white">${g.name}</td>
+        <td class="p-3">${g.relation}</td>
+        <td class="p-3">${g.phone}</td>
+        <td class="p-3">${g.count} نفر</td>
+        <td class="p-3">${g.tableNo}</td>
+        <td class="p-3"><span class="${g.rsvp === 'confirmed' ? 'bg-emerald-950/80 text-emerald-400 border-emerald-500/30' : 'bg-amber-950/80 text-amber-300 border-amber-500/30'} border px-2.5 py-0.5 rounded-full text-[10px]">${g.rsvp === 'confirmed' ? 'تاییدشده' : 'در انتظار'}</span></td>
+        <td class="p-3"><button type="button" onclick="deleteOverlayGuest('${g.id}')" class="text-rose-400 hover:underline cursor-pointer">حذف</button></td>
+      </tr>
+    `).join('');
+};
+
+window.addOverlayGuest = function() {
+    const nameInput = document.getElementById('guest-new-name');
+    const relationSelect = document.getElementById('guest-new-relation');
+    const phoneInput = document.getElementById('guest-new-phone');
+
+    if (!nameInput || !nameInput.value.trim()) {
+      showToast('لطفاً نام مهمان را وارد کنید.', 'warning');
+      return;
+    }
+
+    let guests = JSON.parse(localStorage.getItem('aroosi_guest_db') || '[]');
+    guests.push({
+      id: "gst-" + Date.now(),
+      name: nameInput.value.trim(),
+      relation: relationSelect ? relationSelect.options[relationSelect.selectedIndex].text : "فامیل",
+      phone: phoneInput && phoneInput.value ? phoneInput.value : "۰۹۱۲۰۰۰۰۰۰۰",
+      count: 2,
+      tableNo: "تعیین‌نشده",
+      rsvp: "pending"
+    });
+
+    localStorage.setItem('aroosi_guest_db', JSON.stringify(guests));
+    nameInput.value = '';
+    window.renderOverlayGuests();
+    showToast('مهمان جدید به لیست اضافه شد ✨', 'success');
+};
+
+window.deleteOverlayGuest = function(id) {
+    let guests = JSON.parse(localStorage.getItem('aroosi_guest_db') || '[]');
+    guests = guests.filter(g => g.id !== id);
+    localStorage.setItem('aroosi_guest_db', JSON.stringify(guests));
+    window.renderOverlayGuests();
+    showToast('مهمان با موفقیت حذف شد.', 'info');
 };
