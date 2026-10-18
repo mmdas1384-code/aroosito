@@ -1241,25 +1241,38 @@ if (document.readyState === "loading") {
       "هفته و روز قبل"
     ];
 
-    let staticChecklist = [
+        let staticChecklist = [
       // ۱۲ تا ۹ ماه قبل
       { id: "chk-1", title: "برنامه‌ریزی اولیه، تعیین سقف بودجه و تعداد مهمانان", timeframe: "۱۲ تا ۹ ماه قبل", completed: true, dueDate: "۱۲ ماه قبل", priority: "urgent", category: "عمومی", attachedVendorId: null, vendorStatus: "finalized" },
       { id: "chk-2", title: "رزرو باغ/تالارهای سنتی و عمارت‌های معتبر یزد (مشیرالممالک، قصر)", timeframe: "۱۲ تا ۹ ماه قبل", completed: true, dueDate: "۱۰ ماه قبل", priority: "urgent", category: "تالار و باغ تشریفات", attachedVendorId: 1, vendorStatus: "finalized" },
       { id: "chk-3", title: "انتخاب آتلیه تخصصی و اخذ مجوز رسمی عکاسی فرمالیته کویر یزد", timeframe: "۱۲ تا ۹ ماه قبل", completed: true, dueDate: "۹ ماه قبل", priority: "urgent", category: "آتلیه و عکاسی", attachedVendorId: 2, vendorStatus: "deposit_paid" },
+      { id: "chk-4", title: "تنظیم لیست اولیه مهمانان و تفکیک خانواده عروس و داماد", timeframe: "۱۲ تا ۹ ماه قبل", completed: true, dueDate: "۹ ماه قبل", priority: "urgent", category: "عمومی", attachedVendorId: null, vendorStatus: "finalized" },
+      { id: "chk-5", title: "تعیین تاریخ رسمی عقد و عروسی در دفترخانه و ثبت احوال", timeframe: "۱۲ تا ۹ ماه قبل", completed: true, dueDate: "۹ ماه قبل", priority: "urgent", category: "عمومی", attachedVendorId: null, vendorStatus: "finalized" },
 
       // ۶ تا ۳ ماه قبل
-      { id: "chk-4", title: "تست آرایش و گریم عروس در سالن‌های زیبایی لوکس یزد", timeframe: "۶ تا ۳ ماه قبل", completed: false, dueDate: "۵ ماه قبل", priority: "urgent", category: "سالن زیبایی", attachedVendorId: 3, vendorStatus: "quote_received" },
-      { id: "chk-5", title: "سفارش و دوخت سفارشی لباس عروس در مزون‌های تخصصی یزد", timeframe: "۶ تا ۳ ماه قبل", completed: false, dueDate: "۴ ماه قبل", priority: "urgent", category: "مزون و لباس عروس", attachedVendorId: 4, vendorStatus: "deposit_paid" },
-      { id: "chk-6", title: "خرید حلقه‌های ازدواج و سرویس طلا از بازار خان یزد", timeframe: "۶ تا ۳ ماه قبل", completed: false, dueDate: "۳ ماه قبل", priority: "suggested", category: "طلافروشی و جواهرفروشی", attachedVendorId: 8, vendorStatus: "quote_received" },
+      { id: "chk-6", title: "خرید و دوخت سفارشی لباس عروس در مزون‌های لوکس یزد", timeframe: "۶ تا ۳ ماه قبل", completed: false, dueDate: "۵ ماه قبل", priority: "urgent", category: "مزون و لباس عروس", attachedVendorId: 4, vendorStatus: "deposit_paid" },
+      { id: "chk-7", title: "خرید کت‌وشلوار، کفش و اکسسوری‌های دامادی", timeframe: "۶ تا ۳ ماه قبل", completed: false, dueDate: "۵ ماه قبل", priority: "suggested", category: "مزون و لباس عروس", attachedVendorId: null, vendorStatus: "quote_received" },
+      { id: "chk-8", title: "تست آرایش و گریم VIP عروس در سالن‌های زیبایی تخصصی", timeframe: "۶ تا ۳ ماه قبل", completed: false, dueDate: "۴ ماه قبل", priority: "urgent", category: "سالن زیبایی", attachedVendorId: 3, vendorStatus: "quote_received" },
+      { id: "chk-9", title: "طراحی، سفارش چاپ و تنظیم لینک کارت دعوت دیجیتال هوشمند", timeframe: "۶ تا ۳ ماه قبل", completed: false, dueDate: "۴ ماه قبل", priority: "urgent", category: "عمومی", attachedVendorId: null, vendorStatus: "quote_received" },
+      { id: "chk-10", title: "هماهنگی موزیک، دی‌جی و نورپردازی استیج تالار", timeframe: "۶ تا ۳ ماه قبل", completed: false, dueDate: "۳ ماه قبل", priority: "suggested", category: "موزیک و دی‌جی", attachedVendorId: 6, vendorStatus: "quote_received" },
+      { id: "chk-11", title: "خرید حلقه‌های ازدواج و سرویس طلا از بازار خان یزد", timeframe: "۶ تا ۳ ماه قبل", completed: false, dueDate: "۳ ماه قبل", priority: "suggested", category: "طلافروشی و جواهرفروشی", attachedVendorId: 8, vendorStatus: "quote_received" },
+      { id: "chk-12", title: "انجام آزمایش‌های پیش از ازدواج و کلاس‌های مشاوره زوجین", timeframe: "۶ تا ۳ ماه قبل", completed: true, dueDate: "۳ ماه قبل", priority: "urgent", category: "عمومی", attachedVendorId: null, vendorStatus: "finalized" },
 
       // ۱ ماه قبل
-      { id: "chk-7", title: "رزرو کیک و شیرینی‌های سنتی اصیل یزد (قطاب، باقلوا حاج خلیفه)", timeframe: "۱ ماه قبل", completed: false, dueDate: "۳ هفته قبل", priority: "urgent", category: "کیک و شیرینی‌فروشی", attachedVendorId: 7, vendorStatus: "quote_received" },
-      { id: "chk-8", title: "طراحی، تنظیم آدرس نقشه و ارسال کارت دعوت دیجیتال با سیستم RSVP", timeframe: "۱ ماه قبل", completed: false, dueDate: "۲ هفته قبل", priority: "urgent", category: "عمومی", attachedVendorId: null, vendorStatus: null },
-      { id: "chk-9", title: "هماهنگی گل‌آرایی ماشین عروس و سفره عقد سنتی/VIP", timeframe: "۱ ماه قبل", completed: false, dueDate: "۱۰ روز قبل", priority: "suggested", category: "گل‌آرایی و ماشین عروس", attachedVendorId: null, vendorStatus: null },
+      { id: "chk-13", title: "توزیع و ارسال کارت‌های دعوت دیجیتال و چاپی با پیگیری RSVP", timeframe: "۱ ماه قبل", completed: false, dueDate: "۳ هفته قبل", priority: "urgent", category: "عمومی", attachedVendorId: null, vendorStatus: "quote_received" },
+      { id: "chk-14", title: "پرو نهایی لباس عروس و تست هماهنگی تاج و تور", timeframe: "۱ ماه قبل", completed: false, dueDate: "۲ هفته قبل", priority: "urgent", category: "مزون و لباس عروس", attachedVendorId: 4, vendorStatus: "deposit_paid" },
+      { id: "chk-15", title: "هماهنگی نهایی منوی شام، نوشیدنی‌ها و تشریفات با باغ‌تالار", timeframe: "۱ ماه قبل", completed: false, dueDate: "۲ هفته قبل", priority: "urgent", category: "تالار و باغ تشریفات", attachedVendorId: 1, vendorStatus: "deposit_paid" },
+      { id: "chk-16", title: "رزرو شیرینی‌های سنتی اصیل یزد (قطاب، باقلوا) و کیک طبقاتی", timeframe: "۱ ماه قبل", completed: false, dueDate: "۲ هفته قبل", priority: "suggested", category: "کیک و شیرینی‌فروشی", attachedVendorId: 7, vendorStatus: "quote_received" },
+      { id: "chk-17", title: "قطعی کردن برنامه‌ریزی سفر ماه عسل و رزرو بلیت و هتل", timeframe: "۱ ماه قبل", completed: false, dueDate: "۱۰ روز قبل", priority: "normal", category: "عمومی", attachedVendorId: null, vendorStatus: null },
+      { id: "chk-18", title: "هماهنگی با عاقد، دفترخانه و تنظیم مدارک رسمی عقد", timeframe: "۱ ماه قبل", completed: false, dueDate: "۱۰ روز قبل", priority: "urgent", category: "عمومی", attachedVendorId: null, vendorStatus: "finalized" },
 
       // هفته و روز قبل
-      { id: "chk-10", title: "هماهنگی نهایی سینک زمانی با مدیریت تالار، آتلیه و موزیک", timeframe: "هفته و روز قبل", completed: false, dueDate: "۳ روز قبل", priority: "urgent", category: "عمومی", attachedVendorId: null, vendorStatus: null },
-      { id: "chk-11", title: "تسویه‌حساب‌ها، تحویل‌ها و آرامش قبل از شب جشن عروسی", timeframe: "هفته و روز قبل", completed: false, dueDate: "روز قبل", priority: "urgent", category: "عمومی", attachedVendorId: null, vendorStatus: null }
+      { id: "chk-19", title: "تحویل لباس عروس، کت‌وشلوار و آراستن اکسسوری‌ها", timeframe: "هفته و روز قبل", completed: false, dueDate: "۴ روز قبل", priority: "urgent", category: "مزون و لباس عروس", attachedVendorId: 4, vendorStatus: "finalized" },
+      { id: "chk-20", title: "آماده‌سازی پکیج وسایل شخصی و کیف اضطراری عروس و داماد", timeframe: "هفته و روز قبل", completed: false, dueDate: "۳ روز قبل", priority: "urgent", category: "عمومی", attachedVendorId: null, vendorStatus: null },
+      { id: "chk-21", title: "هماهنگی نهایی ساعتی با ساقدوش‌ها و همراهان برنامه‌ریزی", timeframe: "هفته و روز قبل", completed: false, dueDate: "۲ روز قبل", priority: "urgent", category: "عمومی", attachedVendorId: null, vendorStatus: null },
+      { id: "chk-22", title: "تحویل ماشین عروس به گل‌فروشی برای گل‌آرایی و تزئین VIP", timeframe: "هفته و روز قبل", completed: false, dueDate: "روز قبل", priority: "urgent", category: "گل‌آرایی و ماشین عروس", attachedVendorId: null, vendorStatus: null },
+      { id: "chk-23", title: "تسویه‌حساب نهایی اقساط تالار، آتلیه، آرایشگاه و موزیک", timeframe: "هفته و روز قبل", completed: false, dueDate: "روز قبل", priority: "urgent", category: "عمومی", attachedVendorId: null, vendorStatus: "finalized" },
+      { id: "chk-24", title: "مرور جدول ساعتی استاد روز مراسم و استراحت و آرامش", timeframe: "هفته و روز قبل", completed: false, dueDate: "روز قبل", priority: "urgent", category: "عمومی", attachedVendorId: null, vendorStatus: null }
     ];
 
     let activeChecklistFilter = "همه";
@@ -19326,3 +19339,67 @@ window.initCardVideoHoverListeners = function() {
       alert('لینک دعوت همراه با موفقیت کپی شد! ✨');
     }
   };
+
+
+// Global modal triggers for expandable overlay actions
+window.openAddTaskModal = function() {
+    let title = prompt("عنوان اقدام جدید برای چک‌لیست:");
+    if (!title || !title.trim()) return;
+
+    let checklist = JSON.parse(localStorage.getItem('aroosi_checklist_db') || '[]');
+    if (!checklist || !checklist.length) {
+      checklist = typeof staticChecklist !== 'undefined' ? staticChecklist : [];
+    }
+
+    const newTask = {
+      id: "chk-" + Date.now(),
+      title: title.trim(),
+      timeframe: "۱ ماه قبل",
+      completed: false,
+      dueDate: "بزودی",
+      priority: "urgent",
+      category: "عمومی",
+      attachedVendorId: null,
+      vendorStatus: null
+    };
+
+    checklist.push(newTask);
+    localStorage.setItem('aroosi_checklist_db', JSON.stringify(checklist));
+    if (typeof staticChecklist !== 'undefined') staticChecklist = checklist;
+
+    if (typeof renderChecklistTimeline === 'function') renderChecklistTimeline();
+    if (typeof openExpandModal === 'function') openExpandModal('checklist');
+    showToast(`اقدام «${title.trim()}» به چک‌لیست اضافه شد.`, 'success');
+};
+
+window.openVendorSelectModal = function(taskId) {
+    let vendorName = prompt("نام یا کد تامین‌کننده برای اتصال به این اقدام (مثلاً: هتل باغ مشیرالممالک):");
+    if (!vendorName || !vendorName.trim()) return;
+
+    let checklist = JSON.parse(localStorage.getItem('aroosi_checklist_db') || '[]');
+    if (!checklist || !checklist.length) {
+      checklist = typeof staticChecklist !== 'undefined' ? staticChecklist : [];
+    }
+
+    let task = checklist.find(t => t.id === "chk-" + taskId || t.id === taskId);
+    if (task) {
+      task.vendorStatus = "deposit_paid";
+    }
+
+    localStorage.setItem('aroosi_checklist_db', JSON.stringify(checklist));
+    if (typeof openExpandModal === 'function') openExpandModal('checklist');
+    showToast(`تامین‌کننده «${vendorName.trim()}» با موفقیت به اقدام متصل شد ✨`, 'success');
+};
+
+window.openGiftRecorderModal = function() {
+    if (typeof openGiftModal === 'function') {
+      openGiftModal();
+      return;
+    }
+    let name = prompt("نام اهداکننده هدیه:");
+    if (!name || !name.trim()) return;
+    let giftStr = prompt("مبلغ یا عنوان هدیه (تومان):", "5000000");
+    if (!giftStr) return;
+
+    showToast(`هدیه «${name.trim()}» به مبلغ ${giftStr} تومان با موفقیت در دفتر هدایا ثبت گردید ✨`, 'success');
+};
