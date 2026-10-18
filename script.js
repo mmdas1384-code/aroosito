@@ -3957,11 +3957,15 @@ if (document.readyState === "loading") {
           <video src="${v.videoTeaser || 'https://assets.mixkit.co/videos/preview/mixkit-wedding-couple-walking-in-a-park-41315-large.mp4'}" muted loop playsinline preload="none" class="card-teaser-video absolute inset-0 w-full h-full object-cover opacity-0 transition-opacity duration-500 pointer-events-none"></video>
           <div class="absolute inset-0 bg-gradient-to-t from-[#0F172A] via-transparent to-black/40"></div>
 
-          <!-- Top Badges -->
+          <!-- Top Badges with Glassmorphic Discount Badge -->
           <div class="absolute top-3 right-3 flex items-center gap-1.5 z-10">
             <span class="bg-black/70 backdrop-blur-md text-amber-200 border border-[#D4AF37]/40 text-[10px] font-bold px-2.5 py-0.5 rounded-full shadow-sm flex items-center gap-1">
               <span>${badgeIcon}</span>
               <span>${cat}</span>
+            </span>
+            <span class="bg-gradient-to-r from-rose-600 to-amber-500 text-white border border-rose-400/40 text-[9.5px] font-black px-2 py-0.5 rounded-full shadow-md flex items-center gap-1">
+              <i data-lucide="percent" class="w-3 h-3 text-white"></i>
+              <span>٪۱۵ تخفیف</span>
             </span>
           </div>
 
