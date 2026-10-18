@@ -10,6 +10,8 @@ async def main():
         filepath = os.path.abspath("index.html")
         await page.goto(f"file://{filepath}")
         await page.wait_for_timeout(1000)
+        await page.click("#demo-tab-planner")
+        await page.wait_for_timeout(500)
 
         # Scroll to checklist section
         checklist = page.locator("text=زمان‌بندی و چک‌لیست حرفه‌ای عروسی")
