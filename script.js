@@ -1,423 +1,441 @@
 
 // MODULAR VIEW TEMPLATE LOADERS & FALLBACKS
 const HOME_VIEW_HTML = `<!-- HOMEPAGE CONTENT MODULE (home-view.html) -->
-<div id="tab-home" class="tab-content space-y-12">
+    <div id="tab-home" class="tab-content space-y-12">
 
-  <!-- HERO SECTION -->
-  <section id="hero" class="relative bg-white border border-accent rounded-3xl p-6 lg:p-8 shadow-xs overflow-hidden hero-section">
-    <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-stretch">
+      <!-- 2. HERO SECTION ("برنامه‌ریزی رویایی‌ترین شب زندگی با عروسی تو") -->
+      <section id="hero" class="relative bg-white border border-accent rounded-3xl p-6 lg:p-8 shadow-xs overflow-hidden hero-section">
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-stretch">
 
-      <!-- Left Column: Compact Squared Hero Intro -->
-      <div class="lg:col-span-7 bg-slate-50/70 border border-accent/80 rounded-3xl p-6 sm:p-8 flex flex-col justify-between space-y-6 shadow-2xs relative overflow-hidden">
-        <div class="space-y-4">
-          <div class="inline-flex items-center gap-2 bg-primary/10 text-primary border border-primary/20 px-3.5 py-1.5 rounded-full text-xs font-bold">
-            <i data-lucide="sparkles" class="w-4 h-4"></i>
-            <span>پلتفرم تخصصی و هوشمند برنامه‌ریزی عروسی</span>
-          </div>
-
-          <h1 class="text-2xl sm:text-3xl lg:text-4xl font-black text-graphite leading-snug">
-            برنامه‌ریزی رویایی‌ترین شب زندگی با <span class="text-primary underline decoration-accent underline-offset-8">عروسی تو</span>
-          </h1>
-
-          <p class="text-xs sm:text-sm text-graphite/80 leading-relaxed max-w-xl">
-            بهترین باغ تالارها، آتلیه‌ها، سالن‌های زیبایی و خدمات مجالس را با تضمین قیمت، تاییدیه رسمی اعتبار و استعلام آنلاین رزرو کنید.
-          </p>
-        </div>
-
-        <!-- Stats Bar -->
-        <div class="grid grid-cols-3 gap-3 pt-4 border-t border-accent/80 text-center">
-          <div class="bg-white p-3 rounded-2xl border border-accent/60 shadow-2xs">
-            <p class="text-base sm:text-lg font-black text-primary">+۱,۲۰۰</p>
-            <p class="text-[10px] sm:text-xs text-secondary font-medium">کسب‌وکار معتبر</p>
-          </div>
-          <div class="bg-white p-3 rounded-2xl border border-accent/60 shadow-2xs">
-            <p class="text-base sm:text-lg font-black text-primary">+۱۵,۰۰۰</p>
-            <p class="text-[10px] sm:text-xs text-secondary font-medium">زوج موفق</p>
-          </div>
-          <div class="bg-white p-3 rounded-2xl border border-accent/60 shadow-2xs">
-            <p class="text-base sm:text-lg font-black text-primary">۹۸٪</p>
-            <p class="text-[10px] sm:text-xs text-secondary font-medium">رضایتمندی</p>
-          </div>
-        </div>
-      </div>
-
-      <!-- Right Column: Interactive VIP Vendors Showcase -->
-      <div class="lg:col-span-5 bg-gradient-to-b from-slate-50 to-amber-50/30 border border-accent/80 rounded-3xl p-5 flex flex-col shadow-2xs relative space-y-3">
-        <div class="flex items-center justify-between border-b border-accent/80 pb-2 flex-wrap gap-2">
-          <div class="flex items-center gap-2">
-            <span class="text-[10px] text-amber-800 font-bold bg-amber-100 px-2 py-0.5 rounded-full border border-amber-300">⭐ VIP</span>
-            <h3 class="text-xs sm:text-sm font-black text-graphite">ویترین تامین‌کنندگان برتر استان یزد (VIP Showcase)</h3>
-          </div>
-          <span class="text-[10px] text-slate-600 font-bold bg-slate-100 px-2 py-0.5 rounded-full border border-slate-200">🛡️ تضمین اصالت & قیمت یزد</span>
-        </div>
-
-        <!-- Tabbed Category Quick Filter -->
-        <div class="flex items-center gap-1.5 overflow-x-auto no-scrollbar pb-1 text-[11px] font-bold">
-          <button type="button" onclick="filterVipShowcase('all')" id="vip-tab-all" class="vip-tab-btn pill-btn px-3 py-1 rounded-xl bg-[#1B3B2B] text-[#D4AF37] transition-all shrink-0 cursor-pointer shadow-xs">
-            همه برترین‌ها
-          </button>
-          <button type="button" onclick="filterVipShowcase('hall')" id="vip-tab-hall" class="vip-tab-btn pill-btn px-3 py-1 rounded-xl bg-white border border-accent hover:border-[#D4AF37] text-graphite transition-all shrink-0 cursor-pointer">
-            تالار و باغ‌سرا
-          </button>
-          <button type="button" onclick="filterVipShowcase('studio')" id="vip-tab-studio" class="vip-tab-btn pill-btn px-3 py-1 rounded-xl bg-white border border-accent hover:border-[#D4AF37] text-graphite transition-all shrink-0 cursor-pointer">
-            آتلیه و عکاسی
-          </button>
-          <button type="button" onclick="filterVipShowcase('beauty')" id="vip-tab-beauty" class="vip-tab-btn pill-btn px-3 py-1 rounded-xl bg-white border border-accent hover:border-[#D4AF37] text-graphite transition-all shrink-0 cursor-pointer">
-            سالن زیبایی
-          </button>
-        </div>
-
-        <!-- Horizontal Auto-Scrolling Carousel Grid Wrapper -->
-        <div id="vip-showcase-container" class="relative overflow-x-auto vip-showcase-container flex gap-3 p-1">
-          <!-- Item 1 (Venue) -->
-          <div data-vip-cat="hall" class="vip-vendor-card bg-white border border-accent/80 hover:border-[#D4AF37] p-3 rounded-2xl shadow-2xs hover:shadow-lg transition-all flex flex-col gap-2.5 group relative overflow-hidden">
-            <div class="relative h-28 rounded-xl overflow-hidden bg-slate-900">
-              <img src="https://images.unsplash.com/photo-1519167758481-83f550bb49b3?auto=format&fit=crop&w=600&q=80" alt="هتل باغ و تشریفات مشیرالممالک" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
-              <span class="absolute top-2 right-2 bg-[#1B3B2B] text-[#D4AF37] border border-[#D4AF37]/50 text-[10px] font-black px-2.5 py-0.5 rounded-full shadow-md flex items-center gap-1">
-                <i data-lucide="shield-check" class="w-3 h-3 text-[#D4AF37]"></i>
-                <span>تأییدشده عروسی‌تو</span>
-              </span>
-              <span class="absolute bottom-2 left-2 bg-black/60 backdrop-blur-xs text-white text-[10px] font-bold px-2 py-0.5 rounded-md">
-                💰💰 VIP / لوکس
-              </span>
-            </div>
-
-            <div class="space-y-1">
-              <div class="flex justify-between items-center">
-                <h4 class="text-xs font-bold text-graphite group-hover:text-primary transition-colors">هتل باغ و تشریفات مشیرالممالک یزد</h4>
-                <span class="text-amber-500 font-bold text-[11px]">۴.۹ ★ (۴۲ نظر)</span>
+          <!-- Left Column: Compact Squared Hero Intro -->
+          <div class="lg:col-span-7 bg-slate-50/70 border border-accent/80 rounded-3xl p-6 sm:p-8 flex flex-col justify-between space-y-6 shadow-2xs relative overflow-hidden">
+            <div class="space-y-4">
+              <div class="inline-flex items-center gap-2 bg-primary/10 text-primary border border-primary/20 px-3.5 py-1.5 rounded-full text-xs font-bold">
+                <i data-lucide="sparkles" class="w-4 h-4"></i>
+                <span>پلتفرم تخصصی و هوشمند برنامه‌ریزی عروسی</span>
               </div>
-              <p class="text-[10px] text-secondary font-medium flex items-center gap-1">
-                <i data-lucide="map-pin" class="w-3 h-3 text-emerald-600"></i>
-                <span>صفائیه، یزد</span>
+
+              <h1 class="text-2xl sm:text-3xl lg:text-4xl font-black text-graphite leading-snug">
+                برنامه‌ریزی رویایی‌ترین شب زندگی با <span class="text-primary underline decoration-accent underline-offset-8">عروسی تو</span>
+              </h1>
+
+              <p class="text-xs sm:text-sm text-graphite/80 leading-relaxed max-w-xl">
+                بهترین باغ تالارها، آتلیه‌ها، سالن‌های زیبایی و خدمات مجالس را با تضمین قیمت، تاییدیه رسمی اعتبار و استعلام آنلاین رزرو کنید.
               </p>
+
             </div>
 
-            <div class="flex items-center gap-2 pt-1 border-t border-accent/60">
-              <button onclick="openVendorDetailModal(1)" class="flex-1 bg-[#1B3B2B] hover:bg-emerald-900 text-white text-[11px] font-bold py-1.5 rounded-xl transition-all shadow-xs flex items-center justify-center gap-1 cursor-pointer">
-                <span>مشاهده پروفایل</span>
-              </button>
-              <button onclick="openInquiryModal(1, 'هتل باغ و تشریفات مشیرالممالک یزد')" class="flex-1 bg-[#D4AF37] hover:bg-amber-400 text-[#1B3B2B] text-[11px] font-black py-1.5 rounded-xl transition-all shadow-xs flex items-center justify-center gap-1 cursor-pointer">
-                <span>استعلام قیمت سریع</span>
-              </button>
-            </div>
-          </div>
-
-          <!-- Item 2 (Studio) -->
-          <div data-vip-cat="studio" class="vip-vendor-card bg-white border border-accent/80 hover:border-[#D4AF37] p-3 rounded-2xl shadow-2xs hover:shadow-lg transition-all flex flex-col gap-2.5 group relative overflow-hidden">
-            <div class="relative h-28 rounded-xl overflow-hidden bg-slate-900">
-              <img src="https://images.unsplash.com/photo-1537633552985-df8429e8048b?auto=format&fit=crop&w=600&q=80" alt="استودیو و آتلیه تخصصی کویر یزد" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
-              <span class="absolute top-2 right-2 bg-[#1B3B2B] text-[#D4AF37] border border-[#D4AF37]/50 text-[10px] font-black px-2.5 py-0.5 rounded-full shadow-md flex items-center gap-1">
-                <i data-lucide="shield-check" class="w-3 h-3 text-[#D4AF37]"></i>
-                <span>تأییدشده عروسی‌تو</span>
-              </span>
-              <span class="absolute bottom-2 left-2 bg-black/60 backdrop-blur-xs text-white text-[10px] font-bold px-2 py-0.5 rounded-md">
-                💰💰 اقتصادی‌لوکس
-              </span>
-            </div>
-
-            <div class="space-y-1">
-              <div class="flex justify-between items-center">
-                <h4 class="text-xs font-bold text-graphite group-hover:text-primary transition-colors">استودیو و آتلیه تخصصی کویر یزد</h4>
-                <span class="text-amber-500 font-bold text-[11px]">۴.۸ ★ (۳۸ نظر)</span>
+            <!-- Stats Bar -->
+            <div class="grid grid-cols-3 gap-3 pt-4 border-t border-accent/80 text-center">
+              <div class="bg-white p-3 rounded-2xl border border-accent/60 shadow-2xs">
+                <p class="text-base sm:text-lg font-black text-primary">+۱,۲۰۰</p>
+                <p class="text-[10px] sm:text-xs text-secondary font-medium">کسب‌وکار معتبر</p>
               </div>
-              <p class="text-[10px] text-secondary font-medium flex items-center gap-1">
-                <i data-lucide="map-pin" class="w-3 h-3 text-emerald-600"></i>
-                <span>میدان اطلسی، یزد</span>
-              </p>
-            </div>
-
-            <div class="flex items-center gap-2 pt-1 border-t border-accent/60">
-              <button onclick="openVendorDetailModal(2)" class="flex-1 bg-[#1B3B2B] hover:bg-emerald-900 text-white text-[11px] font-bold py-1.5 rounded-xl transition-all shadow-xs flex items-center justify-center gap-1 cursor-pointer">
-                <span>مشاهده پروفایل</span>
-              </button>
-              <button onclick="openInquiryModal(2, 'استودیو و آتلیه تخصصی کویر یزد')" class="flex-1 bg-[#D4AF37] hover:bg-amber-400 text-[#1B3B2B] text-[11px] font-black py-1.5 rounded-xl transition-all shadow-xs flex items-center justify-center gap-1 cursor-pointer">
-                <span>استعلام قیمت سریع</span>
-              </button>
-            </div>
-          </div>
-
-          <!-- Item 3 (Beauty) -->
-          <div data-vip-cat="beauty" class="vip-vendor-card bg-white border border-accent/80 hover:border-[#D4AF37] p-3 rounded-2xl shadow-2xs hover:shadow-lg transition-all flex flex-col gap-2.5 group relative overflow-hidden">
-            <div class="relative h-28 rounded-xl overflow-hidden bg-slate-900">
-              <img src="https://images.unsplash.com/photo-1487412720507-e7ab37603c6f?auto=format&fit=crop&w=600&q=80" alt="سالن زیبایی تخصصی رویال یزد" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
-              <span class="absolute top-2 right-2 bg-[#1B3B2B] text-[#D4AF37] border border-[#D4AF37]/50 text-[10px] font-black px-2.5 py-0.5 rounded-full shadow-md flex items-center gap-1">
-                <i data-lucide="shield-check" class="w-3 h-3 text-[#D4AF37]"></i>
-                <span>تأییدشده عروسی‌تو</span>
-              </span>
-              <span class="absolute bottom-2 left-2 bg-black/60 backdrop-blur-xs text-white text-[10px] font-bold px-2 py-0.5 rounded-md">
-                💰💰 VIP / خاص
-              </span>
-            </div>
-
-            <div class="space-y-1">
-              <div class="flex justify-between items-center">
-                <h4 class="text-xs font-bold text-graphite group-hover:text-primary transition-colors">سالن زیبایی تخصصی رویال یزد</h4>
-                <span class="text-amber-500 font-bold text-[11px]">۴.۹ ★ (۵۱ نظر)</span>
+              <div class="bg-white p-3 rounded-2xl border border-accent/60 shadow-2xs">
+                <p class="text-base sm:text-lg font-black text-primary">+۱۵,۰۰۰</p>
+                <p class="text-[10px] sm:text-xs text-secondary font-medium">زوج موفق</p>
               </div>
-              <p class="text-[10px] text-secondary font-medium flex items-center gap-1">
-                <i data-lucide="map-pin" class="w-3 h-3 text-emerald-600"></i>
-                <span>خیابان کاشانی، یزد</span>
-              </p>
-            </div>
-
-            <div class="flex items-center gap-2 pt-1 border-t border-accent/60">
-              <button onclick="openVendorDetailModal(4)" class="flex-1 bg-[#1B3B2B] hover:bg-emerald-900 text-white text-[11px] font-bold py-1.5 rounded-xl transition-all shadow-xs flex items-center justify-center gap-1 cursor-pointer">
-                <span>مشاهده پروفایل</span>
-              </button>
-              <button onclick="openInquiryModal(4, 'سالن زیبایی تخصصی رویال یزد')" class="flex-1 bg-[#D4AF37] hover:bg-amber-400 text-[#1B3B2B] text-[11px] font-black py-1.5 rounded-xl transition-all shadow-xs flex items-center justify-center gap-1 cursor-pointer">
-                <span>استعلام قیمت سریع</span>
-              </button>
+              <div class="bg-white p-3 rounded-2xl border border-accent/60 shadow-2xs">
+                <p class="text-base sm:text-lg font-black text-primary">۹۸٪</p>
+                <p class="text-[10px] sm:text-xs text-secondary font-medium">رضایتمندی</p>
+              </div>
             </div>
           </div>
+
+          <!-- Right Column: Interactive VIP Vendors Showcase -->
+          <div class="lg:col-span-5 bg-gradient-to-b from-slate-50 to-amber-50/30 border border-accent/80 rounded-3xl p-5 flex flex-col shadow-2xs relative space-y-3">
+            <div class="flex items-center justify-between border-b border-accent/80 pb-2 flex-wrap gap-2">
+              <div class="flex items-center gap-2">
+                <span class="text-[10px] text-amber-800 font-bold bg-amber-100 px-2 py-0.5 rounded-full border border-amber-300 flex items-center gap-1"><i data-lucide="crown" class="w-3 h-3 text-[#D4AF37]"></i> VIP</span>
+                <h3 class="text-xs sm:text-sm font-black text-graphite">ویترین تامین‌کنندگان برتر استان یزد (VIP Showcase)</h3>
+              </div>
+              <span class="text-[10px] text-slate-600 font-bold bg-slate-100 px-2 py-0.5 rounded-full border border-slate-200 flex items-center gap-1"><i data-lucide="shield-check" class="w-3 h-3 text-[#1B3B2B]"></i> تضمین اصالت & قیمت یزد</span>
+            </div>
+
+            <!-- Tabbed Category Quick Filter -->
+            <div class="flex items-center gap-1.5 overflow-x-auto no-scrollbar pb-1 text-[11px] font-bold">
+              <button type="button" onclick="filterVipShowcase('all')" id="vip-tab-all" class="vip-tab-btn pill-btn px-3 py-1 rounded-xl bg-[#1B3B2B] text-[#D4AF37] transition-all shrink-0 cursor-pointer shadow-xs">
+                همه برترین‌ها
+              </button>
+              <button type="button" onclick="filterVipShowcase('hall')" id="vip-tab-hall" class="vip-tab-btn pill-btn px-3 py-1 rounded-xl bg-white border border-accent hover:border-[#D4AF37] text-graphite transition-all shrink-0 cursor-pointer">
+                تالار و باغ‌سرا
+              </button>
+              <button type="button" onclick="filterVipShowcase('studio')" id="vip-tab-studio" class="vip-tab-btn pill-btn px-3 py-1 rounded-xl bg-white border border-accent hover:border-[#D4AF37] text-graphite transition-all shrink-0 cursor-pointer">
+                آتلیه و عکاسی
+              </button>
+              <button type="button" onclick="filterVipShowcase('beauty')" id="vip-tab-beauty" class="vip-tab-btn pill-btn px-3 py-1 rounded-xl bg-white border border-accent hover:border-[#D4AF37] text-graphite transition-all shrink-0 cursor-pointer">
+                سالن زیبایی
+              </button>
+            </div>
+
+            <!-- Horizontal Auto-Scrolling Carousel Grid Wrapper -->
+            <div id="vip-showcase-container" class="relative overflow-x-auto vip-showcase-container flex gap-3 p-1">
+              <!-- Item 1 (Venue) -->
+              <div data-vip-cat="hall" class="vip-vendor-card bg-white border border-accent/80 hover:border-[#D4AF37] p-3 rounded-2xl shadow-2xs hover:shadow-lg transition-all flex flex-col gap-2.5 group relative overflow-hidden">
+                <div class="relative h-28 rounded-xl overflow-hidden bg-slate-900">
+                  <img src="https://images.unsplash.com/photo-1519167758481-83f550bb49b3?auto=format&fit=crop&w=600&q=80" alt="هتل باغ و تشریفات مشیرالممالک" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
+                  <span class="absolute top-2 right-2 bg-[#1B3B2B] text-[#D4AF37] border border-[#D4AF37]/50 text-[10px] font-black px-2.5 py-0.5 rounded-full shadow-md flex items-center gap-1">
+                    <i data-lucide="shield-check" class="w-3 h-3 text-[#D4AF37]"></i>
+                    <span>تأییدشده عروسی‌تو</span>
+                  </span>
+                  <span class="absolute bottom-2 left-2 bg-black/60 backdrop-blur-xs text-[#D4AF37] text-[10px] font-bold px-2 py-0.5 rounded-md flex items-center gap-1">
+                    <i data-lucide="crown" class="w-3 h-3 text-[#D4AF37]"></i> VIP / لوکس
+                  </span>
+                </div>
+
+                <div class="space-y-1">
+                  <div class="flex justify-between items-center">
+                    <h4 class="text-xs font-bold text-graphite group-hover:text-primary transition-colors">هتل باغ و تشریفات مشیرالممالک یزد</h4>
+                    <span class="text-amber-500 font-bold text-[11px] flex items-center gap-0.5">۴.۹ <i data-lucide="star" class="w-3 h-3 fill-amber-500 text-amber-500"></i> <span class="text-gray-400 font-normal">(۴۲)</span></span>
+                  </div>
+                  <p class="text-[10px] text-secondary font-medium flex items-center gap-1">
+                    <i data-lucide="map-pin" class="w-3 h-3 text-emerald-600"></i>
+                    <span>صفائیه، یزد</span>
+                  </p>
+                </div>
+
+                <div class="flex items-center gap-2 pt-1 border-t border-accent/60">
+                  <button onclick="openVendorDetailModal(1)" class="flex-1 bg-[#1B3B2B] hover:bg-emerald-900 text-white text-[11px] font-bold py-1.5 rounded-xl transition-all shadow-xs flex items-center justify-center gap-1 cursor-pointer">
+                    <span>مشاهده پروفایل</span>
+                  </button>
+                  <button onclick="openInquiryModal(1, 'هتل باغ و تشریفات مشیرالممالک یزد')" class="flex-1 bg-[#D4AF37] hover:bg-amber-400 text-[#1B3B2B] text-[11px] font-black py-1.5 rounded-xl transition-all shadow-xs flex items-center justify-center gap-1 cursor-pointer">
+                    <span>استعلام قیمت سریع</span>
+                  </button>
+                </div>
+              </div>
+
+              <!-- Item 2 (Studio) -->
+              <div data-vip-cat="studio" class="vip-vendor-card bg-white border border-accent/80 hover:border-[#D4AF37] p-3 rounded-2xl shadow-2xs hover:shadow-lg transition-all flex flex-col gap-2.5 group relative overflow-hidden">
+                <div class="relative h-28 rounded-xl overflow-hidden bg-slate-900">
+                  <img src="https://images.unsplash.com/photo-1537633552985-df8429e8048b?auto=format&fit=crop&w=600&q=80" alt="استودیو و آتلیه تخصصی کویر یزد" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
+                  <span class="absolute top-2 right-2 bg-[#1B3B2B] text-[#D4AF37] border border-[#D4AF37]/50 text-[10px] font-black px-2.5 py-0.5 rounded-full shadow-md flex items-center gap-1">
+                    <i data-lucide="shield-check" class="w-3 h-3 text-[#D4AF37]"></i>
+                    <span>تأییدشده عروسی‌تو</span>
+                  </span>
+                  <span class="absolute bottom-2 left-2 bg-black/60 backdrop-blur-xs text-[#D4AF37] text-[10px] font-bold px-2 py-0.5 rounded-md flex items-center gap-1">
+                    <i data-lucide="sparkles" class="w-3 h-3 text-[#D4AF37]"></i> اقتصادی‌لوکس
+                  </span>
+                </div>
+
+                <div class="space-y-1">
+                  <div class="flex justify-between items-center">
+                    <h4 class="text-xs font-bold text-graphite group-hover:text-primary transition-colors">استودیو و آتلیه تخصصی کویر یزد</h4>
+                    <span class="text-amber-500 font-bold text-[11px] flex items-center gap-0.5">۴.۸ <i data-lucide="star" class="w-3 h-3 fill-amber-500 text-amber-500"></i> <span class="text-gray-400 font-normal">(۳۸)</span></span>
+                  </div>
+                  <p class="text-[10px] text-secondary font-medium flex items-center gap-1">
+                    <i data-lucide="map-pin" class="w-3 h-3 text-emerald-600"></i>
+                    <span>میدان اطلسی، یزد</span>
+                  </p>
+                </div>
+
+                <div class="flex items-center gap-2 pt-1 border-t border-accent/60">
+                  <button onclick="openVendorDetailModal(2)" class="flex-1 bg-[#1B3B2B] hover:bg-emerald-900 text-white text-[11px] font-bold py-1.5 rounded-xl transition-all shadow-xs flex items-center justify-center gap-1 cursor-pointer">
+                    <span>مشاهده پروفایل</span>
+                  </button>
+                  <button onclick="openInquiryModal(2, 'استودیو و آتلیه تخصصی کویر یزد')" class="flex-1 bg-[#D4AF37] hover:bg-amber-400 text-[#1B3B2B] text-[11px] font-black py-1.5 rounded-xl transition-all shadow-xs flex items-center justify-center gap-1 cursor-pointer">
+                    <span>استعلام قیمت سریع</span>
+                  </button>
+                </div>
+              </div>
+
+              <!-- Item 3 (Beauty) -->
+              <div data-vip-cat="beauty" class="vip-vendor-card bg-white border border-accent/80 hover:border-[#D4AF37] p-3 rounded-2xl shadow-2xs hover:shadow-lg transition-all flex flex-col gap-2.5 group relative overflow-hidden">
+                <div class="relative h-28 rounded-xl overflow-hidden bg-slate-900">
+                  <img src="https://images.unsplash.com/photo-1487412720507-e7ab37603c6f?auto=format&fit=crop&w=600&q=80" alt="سالن زیبایی تخصصی رویال یزد" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
+                  <span class="absolute top-2 right-2 bg-[#1B3B2B] text-[#D4AF37] border border-[#D4AF37]/50 text-[10px] font-black px-2.5 py-0.5 rounded-full shadow-md flex items-center gap-1">
+                    <i data-lucide="shield-check" class="w-3 h-3 text-[#D4AF37]"></i>
+                    <span>تأییدشده عروسی‌تو</span>
+                  </span>
+                  <span class="absolute bottom-2 left-2 bg-black/60 backdrop-blur-xs text-[#D4AF37] text-[10px] font-bold px-2 py-0.5 rounded-md flex items-center gap-1">
+                    <i data-lucide="crown" class="w-3 h-3 text-[#D4AF37]"></i> VIP / خاص
+                  </span>
+                </div>
+
+                <div class="space-y-1">
+                  <div class="flex justify-between items-center">
+                    <h4 class="text-xs font-bold text-graphite group-hover:text-primary transition-colors">سالن زیبایی تخصصی رویال یزد</h4>
+                    <span class="text-amber-500 font-bold text-[11px] flex items-center gap-0.5">۴.۹ <i data-lucide="star" class="w-3 h-3 fill-amber-500 text-amber-500"></i> <span class="text-gray-400 font-normal">(۵۱)</span></span>
+                  </div>
+                  <p class="text-[10px] text-secondary font-medium flex items-center gap-1">
+                    <i data-lucide="map-pin" class="w-3 h-3 text-emerald-600"></i>
+                    <span>خیابان کاشانی، یزد</span>
+                  </p>
+                </div>
+
+                <div class="flex items-center gap-2 pt-1 border-t border-accent/60">
+                  <button onclick="openVendorDetailModal(4)" class="flex-1 bg-[#1B3B2B] hover:bg-emerald-900 text-white text-[11px] font-bold py-1.5 rounded-xl transition-all shadow-xs flex items-center justify-center gap-1 cursor-pointer">
+                    <span>مشاهده پروفایل</span>
+                  </button>
+                  <button onclick="openInquiryModal(4, 'سالن زیبایی تخصصی رویال یزد')" class="flex-1 bg-[#D4AF37] hover:bg-amber-400 text-[#1B3B2B] text-[11px] font-black py-1.5 rounded-xl transition-all shadow-xs flex items-center justify-center gap-1 cursor-pointer">
+                    <span>استعلام قیمت سریع</span>
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+
         </div>
-      </div>
+      </section>
 
-    </div>
-  </section>
-
-  <!-- CATEGORY SHOWCASE GRID SECTION -->
-  <section class="bg-white border border-accent rounded-3xl p-4 sm:p-5 py-4 my-2 shadow-xs space-y-5">
-    <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 border-b border-accent pb-3">
-      <div>
-        <h2 class="text-lg sm:text-xl font-bold text-graphite flex items-center gap-2">
-          <i data-lucide="layers" class="w-5 h-5 text-[#1B3B2B]"></i>
-          <span class="text-[#1B3B2B]">دسته‌بندی جامع خدمات و تشریفات عروسی</span>
-        </h2>
-        <p class="text-[11px] sm:text-xs text-secondary mt-0.5">انتخاب رسته اصلی جهت باز کردن کشوی اختصاصی زیرگروه‌ها و استعلام قیمت</p>
-      </div>
-
-      <div class="flex items-center gap-2">
-        <button onclick="switchTab('directory')" class="bg-primary hover:bg-emerald-900 text-white font-bold text-xs px-4 py-2 rounded-xl transition-all flex items-center gap-2 shadow-xs">
-          <span>مشاهده همه تامین‌کنندگان</span>
-          <i data-lucide="arrow-left" class="w-4 h-4"></i>
-        </button>
-      </div>
-    </div>
-
-    <!-- Static 5-Card Fixed-Height Category Grid -->
-    <div id="category-hierarchical-container" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 gap-5">
-      <!-- Populated dynamically via renderCategoryCards() -->
-    </div>
-  </section>
-
-  <!-- PLANNING TOOLS & RSVP SUMMARY SECTION -->
-  <section class="bg-white border border-accent rounded-3xl p-6 sm:p-8 shadow-xs space-y-6">
-    <div class="flex flex-col sm:flex-row justify-between sm:items-center gap-4 border-b border-accent pb-4">
-      <div>
-        <div class="inline-flex items-center gap-1.5 bg-primary/10 text-primary text-xs font-bold px-3 py-1 rounded-full mb-1">
-          <i data-lucide="sparkles" class="w-3.5 h-3.5"></i>
-          <span>ابزارهای هوشمند برنامه‌ریزی عروسی</span>
-        </div>
-        <h2 class="text-xl sm:text-2xl font-bold text-graphite">میان‌برهای سریع مدیریت مراسم و دعوت مهمانان</h2>
-      </div>
-    </div>
-
-    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
-      <div onclick="switchTab('planner')" class="bg-bgCustom border border-accent/80 hover:border-primary p-5 rounded-2xl transition-all cursor-pointer space-y-3 shadow-2xs hover:shadow-md">
-        <div class="w-12 h-12 rounded-xl bg-primary/10 text-primary flex items-center justify-center font-bold">
-          <i data-lucide="check-square" class="w-6 h-6"></i>
-        </div>
-        <h3 class="text-sm font-bold text-graphite">چک‌لیست ۱۲ ماهه</h3>
-        <p class="text-xs text-secondary leading-relaxed">مدیریت گام‌به‌گام کارهای ضروری از ۱۲ ماه قبل تا شب مراسم</p>
-      </div>
-
-      <div onclick="switchTab('tools')" class="bg-bgCustom border border-accent/80 hover:border-primary p-5 rounded-2xl transition-all cursor-pointer space-y-3 shadow-2xs hover:shadow-md">
-        <div class="w-12 h-12 rounded-xl bg-primary/10 text-primary flex items-center justify-center font-bold">
-          <i data-lucide="calculator" class="w-6 h-6"></i>
-        </div>
-        <h3 class="text-sm font-bold text-graphite">مدیریت بودجه AI</h3>
-        <p class="text-xs text-secondary leading-relaxed">محاسبه هوشمند هزینه‌ها و شیرینی‌پزی سنتی یزد</p>
-      </div>
-
-      <div onclick="switchTab('guests')" class="bg-bgCustom border border-accent/80 hover:border-primary p-5 rounded-2xl transition-all cursor-pointer space-y-3 shadow-2xs hover:shadow-md">
-        <div class="w-12 h-12 rounded-xl bg-primary/10 text-primary flex items-center justify-center font-bold">
-          <i data-lucide="users" class="w-6 h-6"></i>
-        </div>
-        <h3 class="text-sm font-bold text-graphite">مدیریت مهمانان & RSVP</h3>
-        <p class="text-xs text-secondary leading-relaxed">پیگیری وضعیت حضور مدعوین و ثبت هدایای نقدی</p>
-      </div>
-
-      <div onclick="switchTab('invitation')" class="bg-bgCustom border border-accent/80 hover:border-primary p-5 rounded-2xl transition-all cursor-pointer space-y-3 shadow-2xs hover:shadow-md">
-        <div class="w-12 h-12 rounded-xl bg-primary/10 text-primary flex items-center justify-center font-bold">
-          <i data-lucide="mail" class="w-6 h-6"></i>
-        </div>
-        <h3 class="text-sm font-bold text-graphite">کارت دعوت دیجیتال</h3>
-        <p class="text-xs text-secondary leading-relaxed">ارسال کارت آنلاین با آدرس نقشه، منوی غذا و موزیک</p>
-      </div>
-    </div>
-  </section>
-
-  <!-- 1. BUDGET CALCULATOR PREVIEW SECTION -->
-  <section class="bg-gradient-to-br from-[#1B3B2B] via-[#234A37] to-[#1B3B2B] border border-[#D4AF37]/40 rounded-3xl p-6 sm:p-8 text-white shadow-xl space-y-6">
-    <div class="flex flex-col md:flex-row justify-between md:items-center gap-4 border-b border-[#D4AF37]/30 pb-4">
-      <div>
-        <div class="inline-flex items-center gap-1.5 bg-[#D4AF37]/20 text-[#D4AF37] border border-[#D4AF37]/40 text-xs font-bold px-3 py-1 rounded-full mb-1">
-          <i data-lucide="calculator" class="w-3.5 h-3.5"></i>
-          <span>پیش‌برآورد هوشمند هزینه مراسم</span>
-        </div>
-        <h2 class="text-xl sm:text-2xl font-black text-[#D4AF37]">محاسبه تخمینی بودجه عروسی در استان یزد</h2>
-      </div>
-      <button onclick="switchTab('tools')" class="bg-[#D4AF37] hover:bg-amber-400 text-[#1B3B2B] font-black text-xs px-5 py-2.5 rounded-2xl shadow-md transition-all flex items-center gap-1.5 self-start md:self-auto cursor-pointer">
-        <span>ورود به بودجه‌ریز کامل AI</span>
-        <i data-lucide="arrow-left" class="w-4 h-4"></i>
-      </button>
-    </div>
-
-    <div class="grid grid-cols-1 lg:grid-cols-12 gap-6 items-center">
-      <div class="lg:col-span-7 space-y-5">
-        <div>
-          <label for="home-guest-count-slider" class="flex justify-between text-xs font-bold text-amber-200 mb-2">
-            <span>تعداد مهمانان تخمینی:</span>
-            <span id="home-guest-count-label" class="text-[#D4AF37] text-sm font-black">۲۵۰ نفر</span>
-          </label>
-          <input type="range" id="home-guest-count-slider" min="50" max="800" step="10" value="250" oninput="calculateHomeBudgetPreview()" class="w-full accent-[#D4AF37] cursor-pointer h-2 bg-white/20 rounded-lg">
-        </div>
-
-        <div>
-          <label class="block text-xs font-bold text-amber-200 mb-2">سطح تشریفات و خدمات:</label>
-          <div class="grid grid-cols-3 gap-3">
-            <button type="button" onclick="setHomeBudgetTier('economic')" id="home-tier-economic" class="home-tier-btn bg-white/10 hover:bg-white/20 border border-[#D4AF37]/40 py-2.5 px-3 rounded-2xl text-xs font-bold text-center transition-all cursor-pointer">
-              اقتصادی 💰
-            </button>
-            <button type="button" onclick="setHomeBudgetTier('mid')" id="home-tier-mid" class="home-tier-btn bg-[#D4AF37] text-[#1B3B2B] border border-[#D4AF37] py-2.5 px-3 rounded-2xl text-xs font-black text-center transition-all shadow-md cursor-pointer">
-              متوسط 💰💰
-            </button>
-            <button type="button" onclick="setHomeBudgetTier('luxury')" id="home-tier-luxury" class="home-tier-btn bg-white/10 hover:bg-white/20 border border-[#D4AF37]/40 py-2.5 px-3 rounded-2xl text-xs font-bold text-center transition-all cursor-pointer">
-              لوکس 💰💰💰
+      <!-- 4. MAIN CATEGORIES GRID ("دسته‌بندی جامع خدمات و تشریفات عروسی") -->
+      <section class="main-categories-section">
+        <div class="categories-header">
+          <div class="categories-title-wrapper">
+            <h2 class="categories-main-title">
+              <svg class="title-icon" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#D4AF37" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <rect x="3" y="3" width="7" height="7"></rect>
+                <rect x="14" y="3" width="7" height="7"></rect>
+                <rect x="14" y="14" width="7" height="7"></rect>
+                <rect x="3" y="14" width="7" height="7"></rect>
+              </svg>
+              <span>دسته‌بندی‌های اصلی خدمات و تشریفات عروسی</span>
+            </h2>
+            <p class="categories-sub-title">بررسی و انتخاب از بین ۵ رسته اصلی با دسترسی سریع به تمامی زیرگروه‌ها</p>
+          </div>
+          <div class="categories-action">
+            <button onclick="switchTab('directory')" class="btn-all-categories">
+              <span>مشاهده همه خدمات</span>
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
             </button>
           </div>
         </div>
-      </div>
 
-      <div class="lg:col-span-5 bg-white/10 border border-[#D4AF37]/40 rounded-2xl p-5 text-center space-y-3 backdrop-blur-xs">
-        <span class="text-xs font-bold text-amber-200 block">برآورد کل هزینه‌های اصلی مراسم:</span>
-        <p id="home-budget-estimated-price" class="text-2xl sm:text-3xl font-black text-[#D4AF37]">۳۵۰,۰۰۰,۰۰۰ <span class="text-xs font-medium text-white">تومان</span></p>
-        <p class="text-[11px] text-slate-200 font-medium leading-relaxed">شامل ورودی تالار، شام، آتلیه، آرایشگاه، مزون لباس و شیرینی سنتی یزد</p>
-      </div>
-    </div>
-  </section>
+        <div class="categories-grid">
+          <!-- Card 1 -->
+          <div class="category-card" onclick="openCategorySubgroupsModal('legal_ceremony')">
+            <div class="category-badge">۵ زیرگروه</div>
+            <div class="category-icon-box">
+              <svg width="28" height="24" viewBox="0 0 24 24" fill="none" stroke="#D4AF37" stroke-width="2"><path d="M3 21h18M3 10h18M5 6l7-3 7 3M4 10v11M20 10v11M8 14v3M12 14v3M16 14v3"/></svg>
+            </div>
+            <h3 class="category-title">تشریفات قانونی، عقد و مشاوره</h3>
+            <p class="category-desc">دفتر ازدواج، مشاوره و سفره عقد</p>
+            <div class="category-card-footer">
+              <span class="vendor-count">+۵ کسب‌وکار</span>
+              <span class="subgroups-link">مشاهده زیرگروه‌ها ←</span>
+            </div>
+          </div>
 
-  <!-- 2. WHY CHOOSE US / TRUST BADGES (4 Cards) -->
-  <section class="space-y-6">
-    <div class="text-center space-y-2 max-w-xl mx-auto">
-      <h2 class="text-xl sm:text-2xl font-black text-graphite">چرا زوج‌های یزدی "عروسی تو" را انتخاب می‌کنند؟</h2>
-      <p class="text-xs text-secondary font-medium">پلتفرمی امن و هوشمند جهت تجربه‌ای بی‌دغدغه در برنامه‌ریزی رویایی‌ترین جشن زندگی</p>
-    </div>
+          <!-- Card 2 -->
+          <div class="category-card" onclick="openCategorySubgroupsModal('gold_shopping')">
+            <div class="category-badge">۵ زیرگروه</div>
+            <div class="category-icon-box">
+              <svg width="28" height="24" viewBox="0 0 24 24" fill="none" stroke="#D4AF37" stroke-width="2"><path d="M6 3h12l4 6-10 12L2 9z"/><path d="M11 3v6M2 9h20"/></svg>
+            </div>
+            <h3 class="category-title">طلا، خرید و خدمات جانبی</h3>
+            <p class="category-desc">حلقه، طلا و خدمات مسافرتی</p>
+            <div class="category-card-footer">
+              <span class="vendor-count">+۱۰ کسب‌وکار</span>
+              <span class="subgroups-link">مشاهده زیرگروه‌ها ←</span>
+            </div>
+          </div>
 
-    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
-      <div class="bg-white border border-accent rounded-3xl p-6 shadow-xs hover:shadow-md transition-all space-y-3 text-center group border-t-4 border-t-[#D4AF37]">
-        <div class="w-14 h-14 rounded-2xl bg-[#1B3B2B] text-[#D4AF37] mx-auto flex items-center justify-center font-bold shadow-md group-hover:scale-105 transition-transform">
-          <i data-lucide="shield-check" class="w-7 h-7"></i>
+          <!-- Card 3 -->
+          <div class="category-card" onclick="openCategorySubgroupsModal('beauty_style')">
+            <div class="category-badge">۶ زیرگروه</div>
+            <div class="category-icon-box">
+              <svg width="28" height="24" viewBox="0 0 24 24" fill="none" stroke="#D4AF37" stroke-width="2"><path d="M12 2a5 5 0 0 1 5 5v3a5 5 0 0 1-10 0V7a5 5 0 0 1 5-2z"/><path d="M19 11v1a7 7 0 0 1-14 0v-1M12 19v3"/></svg>
+            </div>
+            <h3 class="category-title">زیبایی و استایل زوجین</h3>
+            <p class="category-desc">آرایشگاه زنانه، مزون و پوشاک</p>
+            <div class="category-card-footer">
+              <span class="vendor-count">+۱۵ کسب‌وکار</span>
+              <span class="subgroups-link">مشاهده زیرگروه‌ها ←</span>
+            </div>
+          </div>
+
+          <!-- Card 4 -->
+          <div class="category-card" onclick="openCategorySubgroupsModal('photo_music')">
+            <div class="category-badge">۹ زیرگروه</div>
+            <div class="category-icon-box">
+              <svg width="28" height="24" viewBox="0 0 24 24" fill="none" stroke="#D4AF37" stroke-width="2"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/><circle cx="12" cy="13" r="4"/></svg>
+            </div>
+            <h3 class="category-title">ثبت لحظات و موسیقی</h3>
+            <p class="category-desc">عکاسی، فیلمبرداری و موزیک</p>
+            <div class="category-card-footer">
+              <span class="vendor-count">+۱۲ کسب‌وکار</span>
+              <span class="subgroups-link">مشاهده زیرگروه‌ها ←</span>
+            </div>
+          </div>
+
+          <!-- Card 5 -->
+          <div class="category-card" onclick="openCategorySubgroupsModal('venue_catering')">
+            <div class="category-badge">۶ زیرگروه</div>
+            <div class="category-icon-box">
+              <svg width="28" height="24" viewBox="0 0 24 24" fill="none" stroke="#D4AF37" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M9 3v18M15 3v18M3 9h18M3 15h18"/></svg>
+            </div>
+            <h3 class="category-title">مکان، تشریفات و پذیرایی</h3>
+            <p class="category-desc">تالار، خدمات غذا و پذیرایی</p>
+            <div class="category-card-footer">
+              <span class="vendor-count">+۴ کسب‌وکار</span>
+              <span class="subgroups-link">مشاهده زیرگروه‌ها ←</span>
+            </div>
+          </div>
         </div>
-        <h3 class="text-sm font-bold text-graphite">کسب‌وکارهای تاییدشده یزد</h3>
-        <p class="text-xs text-secondary leading-relaxed">استعلام جواز کسب، بررسی سوابق و اصالت سنجی کامل تمامی تامین‌کنندگان استان یزد</p>
-      </div>
+      </section>
 
-      <div class="bg-white border border-accent rounded-3xl p-6 shadow-xs hover:shadow-md transition-all space-y-3 text-center group border-t-4 border-t-[#D4AF37]">
-        <div class="w-14 h-14 rounded-2xl bg-[#1B3B2B] text-[#D4AF37] mx-auto flex items-center justify-center font-bold shadow-md group-hover:scale-105 transition-transform">
-          <i data-lucide="coins" class="w-7 h-7"></i>
+      <!-- 5. QUICK TOOLS SHORTCUTS ("میان‌برهای سریع مدیریت مراسم و دعوت مهمانان") -->
+      <section class="quick-tools-section">
+        <div class="container text-center">
+          <span class="sub-title flex items-center justify-center gap-1.5 mx-auto w-fit"><i data-lucide="wrench" class="w-3.5 h-3.5 text-[#D4AF37]"></i> ابزارهای هوشمند برنامه‌ریزی عروسی</span>
+          <h2>میان‌برهای سریع مدیریت مراسم و دعوت مهمانان</h2>
+          <div class="tools-grid-4">
+            <div class="tool-card" onclick="switchTab('planner')">
+              <div class="tool-icon text-[#D4AF37] mb-2 flex justify-end"><i data-lucide="calendar-check" class="w-8 h-8"></i></div>
+              <h3>چک‌لیست ۱۲ ماهه</h3>
+              <p>مدیریت گام‌به‌گام کارهای ضروری از ۱۲ ماه قبل تا شب مراسم</p>
+            </div>
+            <div class="tool-card" onclick="switchTab('tools')">
+              <div class="tool-icon text-[#D4AF37] mb-2 flex justify-end"><i data-lucide="calculator" class="w-8 h-8"></i></div>
+              <h3>مدیریت بودجه AI</h3>
+              <p>محاسبه هوشمند هزینه‌ها و شیرینی‌پزی مبتنی بر یزد</p>
+            </div>
+            <div class="tool-card" onclick="switchTab('guests')">
+              <div class="tool-icon text-[#D4AF37] mb-2 flex justify-end"><i data-lucide="users" class="w-8 h-8"></i></div>
+              <h3>مدیریت مهمانان & RSVP</h3>
+              <p>پیگیری وضعیت حضور مدعوین و ثبت هدایای نقدی</p>
+            </div>
+            <div class="tool-card" onclick="switchTab('invitation')">
+              <div class="tool-icon text-[#D4AF37] mb-2 flex justify-end"><i data-lucide="mail" class="w-8 h-8"></i></div>
+              <h3>کارت دعوت دیجیتال</h3>
+              <p>ارسال کارت آنلاین با آدرس نقشه، منوی غذا و موزیک</p>
+            </div>
+          </div>
         </div>
-        <h3 class="text-sm font-bold text-graphite">تضمین بهترین قیمت</h3>
-        <p class="text-xs text-secondary leading-relaxed">ارائه پکیج‌های شفاف قیمتی بدون هزینه پنهان و تضمین قیمت عادلانه در بازار یزد</p>
-      </div>
+      </section>
 
-      <div class="bg-white border border-accent rounded-3xl p-6 shadow-xs hover:shadow-md transition-all space-y-3 text-center group border-t-4 border-t-[#D4AF37]">
-        <div class="w-14 h-14 rounded-2xl bg-[#1B3B2B] text-[#D4AF37] mx-auto flex items-center justify-center font-bold shadow-md group-hover:scale-105 transition-transform">
-          <i data-lucide="sparkles" class="w-7 h-7"></i>
+      <!-- 6. BUDGET CALCULATOR BANNER ("محاسبه تخمینی بودجه عروسی در استان یزد") -->
+      <section class="budget-calculator-section">
+        <div class="dark-calc-card">
+          <div class="calc-top-row">
+            <a href="#" onclick="switchTab('tools'); return false;" class="btn-gold-sm flex items-center gap-1">ورود به بودجه‌ریز کامل AI <i data-lucide="arrow-left" class="w-4 h-4"></i></a>
+            <div class="calc-title-box">
+              <span class="calc-badge flex items-center gap-1.5"><i data-lucide="bar-chart-3" class="w-3.5 h-3.5 text-[#D4AF37]"></i> پیش‌بینی هوشمند هزینه مراسم</span>
+              <h3>محاسبه تخمینی بودجه عروسی در استان یزد</h3>
+            </div>
+          </div>
+
+          <div class="calc-main-content">
+            <div class="calc-result-box">
+              <span>برآورد کل هزینه‌های اصلی مراسم:</span>
+              <h2>۳۵۰,۰۰۰,۰۰۰ تومان</h2>
+              <small>شامل ورودی تالار، شام، آتلیه، آرایشگاه، مزون لباس و شیرینی‌سرای یزد</small>
+            </div>
+
+            <div class="calc-controls-box">
+              <div class="slider-row">
+                <span class="val-tag">250 نفر</span>
+                <label>تعداد مهمانان تخمینی:</label>
+              </div>
+              <input type="range" min="50" max="1000" value="250" class="custom-range-slider">
+
+              <div class="style-row">
+                <label>سطح تشریفات و خدمات:</label>
+                <div class="style-btns">
+                  <button class="s-btn flex items-center justify-center gap-1"><i data-lucide="gem" class="w-3.5 h-3.5 text-[#D4AF37]"></i> لوکس / VIP</button>
+                  <button class="s-btn active flex items-center justify-center gap-1"><i data-lucide="star" class="w-3.5 h-3.5 text-[#D4AF37] fill-[#D4AF37]"></i> متوسط</button>
+                  <button class="s-btn flex items-center justify-center gap-1"><i data-lucide="sparkles" class="w-3.5 h-3.5 text-[#D4AF37]"></i> اقتصادی</button>
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
-        <h3 class="text-sm font-bold text-graphite">ابزارهای هوشمند AI</h3>
-        <p class="text-xs text-secondary leading-relaxed">چک‌لیست ۱۲ ماهه، بودجه‌ریز تخصصی شیرینی یزدی و کارت دعوت دیجیتال با RSVP</p>
-      </div>
+      </section>
 
-      <div class="bg-white border border-accent rounded-3xl p-6 shadow-xs hover:shadow-md transition-all space-y-3 text-center group border-t-4 border-t-[#D4AF37]">
-        <div class="w-14 h-14 rounded-2xl bg-[#1B3B2B] text-[#D4AF37] mx-auto flex items-center justify-center font-bold shadow-md group-hover:scale-105 transition-transform">
-          <i data-lucide="headset" class="w-7 h-7"></i>
+      <!-- 7. WHY CHOOSE US ("چرا زوج‌های یزدی عروسی تو را انتخاب می‌کنند؟") -->
+      <section class="why-us-section">
+        <div class="container text-center">
+          <h2>چرا زوج‌های یزدی "عروسی تو" را انتخاب می‌کنند؟</h2>
+          <p class="section-subtext">پلتفرمی امن و هوشمند جهت تجربه‌ای بی‌دغدغه در برنامه‌ریزی رویاپردازی‌ترین جشن زندگی</p>
+
+          <div class="why-grid-4">
+            <div class="why-card">
+              <div class="why-icon"><i data-lucide="shield-check" class="w-6 h-6"></i></div>
+              <h3>کسب‌وکارهای تاییدشده یزد</h3>
+              <p>استعلام جواز کسب، بررسی سوابق و اصالت‌سنجی کامل تمامی تامین‌کنندگان استان یزد</p>
+            </div>
+            <div class="why-card">
+              <div class="why-icon"><i data-lucide="tag" class="w-6 h-6"></i></div>
+              <h3>تضمین بهترین قیمت</h3>
+              <p>ارائه پکیج‌های شفاف، قیمت بدون هزینه پنهان و تضمین قیمت عادلانه در بازار یزد</p>
+            </div>
+            <div class="why-card">
+              <div class="why-icon"><i data-lucide="bot" class="w-6 h-6"></i></div>
+              <h3>ابزارهای هوشمند AI</h3>
+              <p>چک‌لیست ۱۲ ماهه، بودجه‌ریز تخصصی و کارت دعوت دیجیتال با RSVP</p>
+            </div>
+            <div class="why-card">
+              <div class="why-icon"><i data-lucide="headphones" class="w-6 h-6"></i></div>
+              <h3>پشتیبانی اختصاصی</h3>
+              <p>مشاوره تلفنی و آنلاین گام‌به‌گام در برنامه‌ریزی تا شب برگزاری مراسم</p>
+            </div>
+          </div>
         </div>
-        <h3 class="text-sm font-bold text-graphite">پشتیبانی اختصاصی</h3>
-        <p class="text-xs text-secondary leading-relaxed">مشاوره تلفنی و آنلاین گام‌به‌گام از اولین روز برنامه‌ریزی تا شب برگزاری مراسم</p>
-      </div>
-    </div>
-  </section>
+      </section>
 
-  <!-- 3. REAL YAZDI WEDDINGS SHOWCASE -->
-  <section class="bg-white border border-accent rounded-3xl p-6 sm:p-8 shadow-xs space-y-6">
-    <div class="flex flex-col sm:flex-row justify-between sm:items-center gap-4 border-b border-accent pb-4">
-      <div>
-        <div class="inline-flex items-center gap-1.5 bg-rose-50 text-rose-700 text-xs font-bold px-3 py-1 rounded-full mb-1 border border-rose-200">
-          <i data-lucide="heart" class="w-3.5 h-3.5 fill-rose-500"></i>
-          <span>داستان‌های واقعی پیوند عشاق یزد</span>
+      <!-- 8. REAL WEDDINGS GALLERY ("گالری و روایت عروسی‌های واقعی استان یزد") -->
+      <section class="weddings-gallery-section">
+        <div class="container">
+          <div class="gallery-top-bar">
+            <a href="#" onclick="switchTab('inspiration'); return false;" class="btn-gold-sm flex items-center gap-1">مشاهده مجله ایده‌ها & مودبورد <i data-lucide="arrow-left" class="w-4 h-4"></i></a>
+            <div class="gallery-titles">
+              <span class="rose-tag flex items-center gap-1 justify-end"><i data-lucide="heart" class="w-3.5 h-3.5 fill-[#E11D48] text-[#E11D48]"></i> داستان‌های واقعی پیوند عشاق یزد</span>
+              <h2>گالری و روایت عروسی‌های واقعی استان یزد</h2>
+            </div>
+          </div>
+
+          <div class="gallery-grid-3">
+            <div class="wedding-card">
+              <div class="img-box">
+                <span class="location-badge">صفائیه یزد</span>
+                <img src="https://images.unsplash.com/photo-1519741497674-611481863552?w=500" alt="عروسی">
+              </div>
+              <div class="card-info">
+                <h3>جشن عروسی زمردین: امیر & مریم</h3>
+                <p>مراسم باشکوه در باغ تالار مشیرالممالک با تم زمردی و گل‌آرایی مگنولیا</p>
+              </div>
+            </div>
+
+            <div class="wedding-card">
+              <div class="img-box">
+                <span class="location-badge">کویر سندباد یزد</span>
+                <img src="https://images.unsplash.com/photo-1511285560929-80b456fea0bc?w=500" alt="فرمالیته">
+              </div>
+              <div class="card-info">
+                <h3>فرمالیته طلایی کویر: رضا & سارا</h3>
+                <p>عکاسی فرمالیته روی رمل‌های طلایی کویر یزد توسط استودیو تخصصی کویر</p>
+              </div>
+            </div>
+
+            <div class="wedding-card">
+              <div class="img-box">
+                <span class="location-badge">بافت تاریخی یزد</span>
+                <img src="https://images.unsplash.com/photo-1583939003579-730e3918a45a?w=500" alt="عقد سنتی">
+              </div>
+              <div class="card-info">
+                <h3>عقد سنتی در خانه تاریخی: مهدی & زهرا</h3>
+                <p>سفره عقد اسلیمی و پذیرایی اصیل با شیرینی سنتی حاج خلیفه رهبر</p>
+              </div>
+            </div>
+          </div>
         </div>
-        <h2 class="text-xl sm:text-2xl font-bold text-graphite">گالری و روایت عروسی‌های واقعی استان یزد</h2>
-      </div>
+      </section>
 
-      <button onclick="switchTab('inspiration')" class="bg-primary hover:bg-emerald-900 text-white font-bold text-xs px-4 py-2.5 rounded-xl shadow-xs transition-all flex items-center gap-1.5 cursor-pointer">
-        <span>مشاهده مجله ایده‌ها & مودبورد</span>
-        <i data-lucide="arrow-left" class="w-4 h-4"></i>
-      </button>
-    </div>
-
-    <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-      <div onclick="switchTab('inspiration')" class="bg-bgCustom border border-accent rounded-2xl overflow-hidden shadow-2xs hover:shadow-md transition-all cursor-pointer group">
-        <div class="h-48 overflow-hidden relative">
-          <img src="https://images.unsplash.com/photo-1519741497674-611481863552?auto=format&fit=crop&w=800&q=80" alt="عروسی امیر & مریم" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
-          <span class="absolute top-3 right-3 bg-[#1B3B2B] text-[#D4AF37] text-[10px] font-bold px-2.5 py-1 rounded-full">صفائیه یزد</span>
+      <!-- 9. VENDOR REGISTRATION BANNER ("کسب‌وکار عروسی خود را به ۱۵,۰۰۰+ زوج یزدی معرفی کنید") -->
+      <section class="vendor-banner-dark">
+        <div class="container flex-banner">
+          <div class="banner-btns">
+            <a href="#" onclick="toggleVendorModalStatic(true); return false;" class="btn-gold-md flex items-center gap-1.5"><i data-lucide="plus-circle" class="w-4 h-4"></i> ثبت‌نام رایگان کسب‌وکار</a>
+            <a href="#" onclick="switchRole('vendor'); return false;" class="btn-dark-md flex items-center gap-1.5"><i data-lucide="building-2" class="w-4 h-4"></i> ورود به پنل تامین‌کننده</a>
+          </div>
+          <div class="banner-info">
+            <span class="badge-gold flex items-center gap-1 justify-end"><i data-lucide="award" class="w-3.5 h-3.5 text-[#D4AF37]"></i> ویژه صاحب‌امتیازان تالار، آتلیه، سالن زیبایی و خدمات مجالس یزد</span>
+            <h2>کسب‌وکار عروسی خود را به ۱۵,۰۰۰+ زوج یزدی معرفی کنید</h2>
+            <p>با ثبت‌نام در پلتفرم عروسی تو، دریافت نشان تاییدیه رسمی و مدیریت استعلام‌های آنلاین رزرو، درآمد خود را افزایش دهید.</p>
+          </div>
         </div>
-        <div class="p-4 space-y-2">
-          <h3 class="text-sm font-bold text-graphite group-hover:text-primary transition-colors">جشن عروسی زمردین: امیر & مریم</h3>
-          <p class="text-xs text-secondary leading-relaxed">مراسم باشکوه در باغ تالار مشیرالممالک با تم زمردی و گل‌آرایی مگنولیا</p>
-        </div>
-      </div>
+      </section>
 
-      <div onclick="switchTab('inspiration')" class="bg-bgCustom border border-accent rounded-2xl overflow-hidden shadow-2xs hover:shadow-md transition-all cursor-pointer group">
-        <div class="h-48 overflow-hidden relative">
-          <img src="https://images.unsplash.com/photo-1509316975850-ff9c5deb0cd9?auto=format&fit=crop&w=800&q=80" alt="فرمالیته کویر: رضا & سارا" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
-          <span class="absolute top-3 right-3 bg-[#1B3B2B] text-[#D4AF37] text-[10px] font-bold px-2.5 py-1 rounded-full">کویر سندباد یزد</span>
-        </div>
-        <div class="p-4 space-y-2">
-          <h3 class="text-sm font-bold text-graphite group-hover:text-primary transition-colors">فرمالیته طلایی کویر: رضا & سارا</h3>
-          <p class="text-xs text-secondary leading-relaxed">عکاسی فرمالیته روی رمل‌های طلایی کویر یزد توسط استودیو تخصصی کویر</p>
-        </div>
-      </div>
-
-      <div onclick="switchTab('inspiration')" class="bg-bgCustom border border-accent rounded-2xl overflow-hidden shadow-2xs hover:shadow-md transition-all cursor-pointer group">
-        <div class="h-48 overflow-hidden relative">
-          <img src="https://images.unsplash.com/photo-1511285560929-80b456fea0bc?auto=format&fit=crop&w=800&q=80" alt="عقد سنتی: مهدی & زهرا" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
-          <span class="absolute top-3 right-3 bg-[#1B3B2B] text-[#D4AF37] text-[10px] font-bold px-2.5 py-1 rounded-full">بافت تاریخی یزد</span>
-        </div>
-        <div class="p-4 space-y-2">
-          <h3 class="text-sm font-bold text-graphite group-hover:text-primary transition-colors">عقد سنتی در خانه تاریخی: مهدی & زهرا</h3>
-          <p class="text-xs text-secondary leading-relaxed">سفره عقد اسلیمی و پذیرایی اصیل با شیرینی سنتی حاج خلیفه رهبر</p>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- 4. VENDOR ONBOARDING BANNER (CTA) -->
-  <section class="bg-gradient-to-r from-[#1B3B2B] via-[#2D5A3D] to-[#1B3B2B] border border-[#D4AF37]/50 rounded-3xl p-8 text-white shadow-xl flex flex-col md:flex-row items-center justify-between gap-6 relative overflow-hidden">
-    <div class="space-y-3 max-w-xl text-center md:text-right">
-      <div class="inline-flex items-center gap-2 bg-[#D4AF37]/20 text-[#D4AF37] border border-[#D4AF37]/40 px-3.5 py-1 rounded-full text-xs font-bold">
-        <i data-lucide="building-2" class="w-4 h-4"></i>
-        <span>ویژه صاحب‌امتیازان تالار، آتلیه، سالن زیبایی و خدمات مجالس یزد</span>
-      </div>
-      <h2 class="text-2xl sm:text-3xl font-black text-[#D4AF37] leading-snug">کسب‌وکار عروسی خود را به ۱۵,۰۰۰+ زوج یزدی معرفی کنید</h2>
-      <p class="text-xs sm:text-sm text-slate-200 leading-relaxed font-medium">با ثبت‌نام در پلتفرم عروسی تو، دریافت نشان تاییدیه رسمی و مدیریت استعلام‌های آنلاین رزرو، درآمد خود را افزایش دهید.</p>
-    </div>
-
-    <div class="flex flex-col sm:flex-row items-center gap-3 shrink-0 w-full md:w-auto">
-      <button onclick="toggleVendorModalStatic(true)" class="w-full sm:w-auto bg-[#D4AF37] hover:bg-amber-400 text-[#1B3B2B] font-black text-sm px-6 py-3.5 rounded-2xl shadow-lg transition-all flex items-center justify-center gap-2 transform hover:-translate-y-0.5 cursor-pointer">
-        <i data-lucide="plus-circle" class="w-5 h-5"></i>
-        <span>ثبت‌نام رایگان کسب‌وکار</span>
-      </button>
-      <button onclick="switchRole('vendor')" class="w-full sm:w-auto bg-white/10 hover:bg-white/20 text-white border border-[#D4AF37]/40 font-bold text-sm px-5 py-3.5 rounded-2xl transition-all flex items-center justify-center gap-2 cursor-pointer">
-        <i data-lucide="layout-dashboard" class="w-5 h-5 text-[#D4AF37]"></i>
-        <span>ورود به پنل تامین‌کننده</span>
-      </button>
-    </div>
-  </section>
-
-</div>
-`;
+    </div>`;
 const DIRECTORY_VIEW_HTML = `<!-- ISOLATED VENDOR DIRECTORY CONTENT MODULE (directory-view.html) -->
 <div id="tab-directory" class="tab-content hidden space-y-8">
 
@@ -462,7 +480,7 @@ const DIRECTORY_VIEW_HTML = `<!-- ISOLATED VENDOR DIRECTORY CONTENT MODULE (dire
   <!-- DIRECTORY MAIN 2-COLUMN LAYOUT -->
   <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
 
-    <!-- SIDEBAR FILTERS (col-span-12 lg:col-span-3) -->
+    <!-- SIDEBAR ADVANCED FILTERS (col-span-12 lg:col-span-3) -->
     <aside class="lg:col-span-3 space-y-6 bg-white border border-accent rounded-3xl p-5 shadow-xs sticky top-28 directory-sidebar">
       <div class="flex items-center justify-between border-b border-accent pb-3">
         <h3 class="text-sm font-black text-graphite flex items-center gap-2">
@@ -474,35 +492,61 @@ const DIRECTORY_VIEW_HTML = `<!-- ISOLATED VENDOR DIRECTORY CONTENT MODULE (dire
         </button>
       </div>
 
-      <!-- Category Multi-Select Checklist -->
+      <!-- Verified Badge Toggle Switch -->
+      <div class="p-3 bg-[#1B3B2B]/5 border border-[#D4AF37]/30 rounded-2xl flex items-center justify-between">
+        <div class="flex items-center gap-2">
+          <i data-lucide="shield-check" class="w-4 h-4 text-[#D4AF37]"></i>
+          <span class="text-xs font-bold text-[#1B3B2B]">فقط تامین‌کنندگان تاییدشده</span>
+        </div>
+        <label class="relative inline-flex items-center cursor-pointer">
+          <input type="checkbox" id="verified-only" checked onchange="filterVendors()" class="sr-only peer">
+          <div class="w-9 h-5 bg-slate-300 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:start-[2px] after:bg-white after:border-slate-300 after:border after:rounded-full after:h-4 after:w-4 after:transition-all peer-checked:bg-[#1B3B2B]"></div>
+        </label>
+      </div>
+
+      <!-- Category & Subgroup Accordions / Multi-Select Checklist -->
       <div class="space-y-3">
-        <label class="text-xs font-extrabold text-graphite block">دسته‌بندی خدمات (چند انتخابی):</label>
-        <div id="sidebar-category-checkboxes" class="space-y-2 max-h-60 overflow-y-auto no-scrollbar text-xs font-bold text-graphite">
+        <label class="text-xs font-extrabold text-graphite block flex items-center justify-between">
+          <span>دسته‌بندی خدمات:</span>
+          <span class="text-[10px] text-secondary font-normal">(چند انتخابی)</span>
+        </label>
+        <div id="sidebar-category-checkboxes" class="space-y-2 max-h-60 overflow-y-auto custom-scrollbar text-xs font-bold text-graphite pr-1">
           <!-- Populated dynamically via JS -->
         </div>
       </div>
 
-      <!-- City/Region Selector -->
+      <!-- Capacity Range Slider -->
       <div class="space-y-2 pt-3 border-t border-accent">
-        <label for="sidebar-city-select" class="text-xs font-extrabold text-graphite block">شهر / منطقه:</label>
-        <select id="sidebar-city-select" onchange="syncAndFilterCity(this.value)" class="w-full bg-bgCustom border border-accent rounded-xl p-2.5 text-xs font-bold text-graphite focus:outline-none focus:border-primary cursor-pointer">
-          <option value="استان یزد" selected>همه مناطق استان یزد</option>
-          <option value="یزد">شهر یزد</option>
+        <div class="flex justify-between items-center text-xs font-extrabold text-graphite">
+          <span>ظرفیت پذیرش (مهمان):</span>
+          <span id="sidebar-capacity-val" class="text-primary font-black">همه ظرفیت‌ها</span>
+        </div>
+        <input type="range" id="sidebar-capacity-slider" min="50" max="1000" step="50" value="1000" oninput="updateCapacitySliderLabel(this.value); filterVendors();" class="w-full h-2 bg-slate-200 rounded-lg appearance-none cursor-pointer accent-[#1B3B2B]">
+        <div class="flex justify-between text-[10px] text-secondary font-semibold">
+          <span>۵۰ نفر</span>
+          <span>۱,۰۰۰+ نفر</span>
+        </div>
+      </div>
+
+      <!-- City / District Selector -->
+      <div class="space-y-2 pt-3 border-t border-accent">
+        <label for="sidebar-city-select" class="text-xs font-extrabold text-graphite block">شهر / منطقه یزد:</label>
+        <select id="sidebar-city-select" onchange="syncAndFilterCity(this.value)" class="w-full bg-bgCustom border border-accent rounded-xl p-2.5 text-xs font-bold text-graphite focus:outline-none focus:ring-2 focus:ring-[#1B3B2B] focus:border-[#D4AF37] cursor-pointer">
+          <option value="استان یزد" selected>همه مناطق استان یزد 📍</option>
           <option value="صفائیه">صفائیه یزد</option>
           <option value="میدان اطلسی">میدان اطلسی</option>
-
+          <option value="خیابان کاشانی">خیابان کاشانی & ملاصدرا</option>
+          <option value="بافت تاریخی">بافت تاریخی یزد</option>
           <option value="میبد">میبد</option>
           <option value="اردکان">اردکان</option>
           <option value="تفت">تفت</option>
-          <option value="اصفهان">اصفهان</option>
-          <option value="شیراز">شیراز</option>
         </select>
       </div>
 
       <!-- Price Range Selector -->
       <div class="space-y-2 pt-3 border-t border-accent">
         <label for="sidebar-price-select" class="text-xs font-extrabold text-graphite block">بازه قیمتی:</label>
-        <select id="sidebar-price-select" onchange="syncAndFilterPrice(this.value)" class="w-full bg-bgCustom border border-accent rounded-xl p-2.5 text-xs font-bold text-graphite focus:outline-none focus:border-primary cursor-pointer">
+        <select id="sidebar-price-select" onchange="syncAndFilterPrice(this.value)" class="w-full bg-bgCustom border border-accent rounded-xl p-2.5 text-xs font-bold text-graphite focus:outline-none focus:ring-2 focus:ring-[#1B3B2B] focus:border-[#D4AF37] cursor-pointer">
           <option value="all" selected>همه بازه‌های قیمتی</option>
           <option value="economic">اقتصادی 💰</option>
           <option value="mid">متوسط 💰💰</option>
@@ -510,42 +554,69 @@ const DIRECTORY_VIEW_HTML = `<!-- ISOLATED VENDOR DIRECTORY CONTENT MODULE (dire
         </select>
       </div>
 
-      <!-- Verified Badge Checkbox -->
-      <div class="pt-3 border-t border-accent">
-        <label class="flex items-center gap-2 cursor-pointer text-xs font-bold text-graphite">
-          <input type="checkbox" id="verified-only" checked onchange="filterVendors()" class="rounded text-primary focus:ring-primary w-4 h-4">
-          <span>فقط دارای تاییدیه رسمی اعتبار</span>
-        </label>
+      <!-- Feature Checkboxes -->
+      <div class="space-y-2 pt-3 border-t border-accent text-xs font-bold text-graphite">
+        <label class="block text-xs font-extrabold text-graphite mb-2">امکانات و ویژگی‌های خاص:</label>
+        <div class="space-y-2">
+          <label class="flex items-center gap-2 cursor-pointer hover:text-primary transition-colors">
+            <input type="checkbox" id="feat-parking" onchange="filterVendors()" class="rounded text-[#1B3B2B] focus:ring-[#1B3B2B] w-4 h-4">
+            <span>پارکینگ اختصاصی</span>
+          </label>
+          <label class="flex items-center gap-2 cursor-pointer hover:text-primary transition-colors">
+            <input type="checkbox" id="feat-sofreh" onchange="filterVendors()" class="rounded text-[#1B3B2B] focus:ring-[#1B3B2B] w-4 h-4">
+            <span>سفره عقد سنتی & VIP</span>
+          </label>
+          <label class="flex items-center gap-2 cursor-pointer hover:text-primary transition-colors">
+            <input type="checkbox" id="feat-garden" onchange="filterVendors()" class="rounded text-[#1B3B2B] focus:ring-[#1B3B2B] w-4 h-4">
+            <span>فضای باز & باغ اختصاصی</span>
+          </label>
+          <label class="flex items-center gap-2 cursor-pointer hover:text-primary transition-colors">
+            <input type="checkbox" id="feat-catering" onchange="filterVendors()" class="rounded text-[#1B3B2B] focus:ring-[#1B3B2B] w-4 h-4">
+            <span>کترینگ و پذیرایی VIP</span>
+          </label>
+        </div>
       </div>
     </aside>
 
     <!-- MAIN DIRECTORY CONTENT (col-span-12 lg:col-span-9) -->
     <div class="lg:col-span-9 space-y-6">
 
-      <!-- Dedicated Sorting Bar & Instant Search Box -->
+      <!-- Sorting & View Controls Bar -->
       <div id="vendor-sorting-bar" class="bg-white border border-accent rounded-2xl p-4 shadow-2xs flex flex-col sm:flex-row sm:items-center justify-between gap-4 text-xs font-bold text-graphite">
         <!-- Instant Search Box -->
         <div class="relative flex-1 max-w-md">
           <i data-lucide="search" class="w-4 h-4 text-primary absolute right-3 top-2.5"></i>
-          <input type="text" id="directory-instant-search" oninput="filterVendors()" placeholder="جستجوی نام تالار، آتلیه یا مزون..." class="w-full bg-bgCustom border border-accent rounded-xl pr-9 pl-3 py-2 text-xs font-medium focus:outline-none focus:border-primary">
+          <input type="text" id="directory-instant-search" oninput="filterVendors()" placeholder="جستجوی نام تالار، آتلیه یا مزون..." class="w-full bg-bgCustom border border-accent rounded-xl pr-9 pl-3 py-2 text-xs font-medium focus:outline-none focus:ring-2 focus:ring-[#1B3B2B] focus:border-[#D4AF37]">
         </div>
 
         <div class="flex items-center gap-4 shrink-0 flex-wrap sm:flex-nowrap justify-between sm:justify-end">
           <div class="flex items-center gap-2">
             <span class="text-secondary">نتایج:</span>
-            <span id="directory-vendor-count-badge" class="bg-primary/10 text-primary border border-primary/20 text-xs font-black px-2.5 py-1 rounded-xl">
-              ۰ تامین‌کننده
+            <span id="directory-vendor-count-badge" class="bg-[#1B3B2B]/10 text-[#1B3B2B] border border-[#1B3B2B]/20 text-xs font-black px-2.5 py-1 rounded-xl">
+              نمایش ۴۸ تامین‌کننده در استان یزد
             </span>
           </div>
 
-          <div class="flex items-center gap-2">
-            <label for="vendor-sort-select" class="text-secondary shrink-0">ترتیب:</label>
-            <select id="vendor-sort-select" onchange="filterVendors()" class="bg-bgCustom border border-accent rounded-xl px-3 py-1.5 text-xs font-bold text-graphite focus:outline-none focus:border-primary cursor-pointer">
-              <option value="popular" selected>محبوب‌ترین (امتیاز بالا) ⭐</option>
-              <option value="newest">جدیدترین 🆕</option>
-              <option value="price-asc">ارزان‌ترین (کمترین قیمت) 📈</option>
-              <option value="price-desc">گران‌ترین (بیشترین قیمت) 📉</option>
-            </select>
+          <div class="flex items-center gap-3">
+            <div class="flex items-center gap-1.5">
+              <label for="vendor-sort-select" class="text-secondary shrink-0">مرتب‌سازی:</label>
+              <select id="vendor-sort-select" onchange="filterVendors()" class="bg-bgCustom border border-accent rounded-xl px-3 py-1.5 text-xs font-bold text-graphite focus:outline-none focus:ring-2 focus:ring-[#1B3B2B] focus:border-[#D4AF37] cursor-pointer">
+                <option value="popular" selected>محبوب‌ترین ⭐</option>
+                <option value="newest">جدیدترین 🆕</option>
+                <option value="price-asc">ارزان‌ترین 📈</option>
+                <option value="price-desc">گران‌ترین 📉</option>
+              </select>
+            </div>
+
+            <!-- View Layout Toggle Icons (Grid / List) -->
+            <div class="flex items-center bg-bgCustom border border-accent rounded-xl p-1 gap-1">
+              <button type="button" id="view-mode-grid" onclick="setDirectoryViewMode('grid')" class="p-1.5 rounded-lg bg-[#1B3B2B] text-white shadow-2xs transition-all cursor-pointer" title="نمای شبکه‌ای">
+                <i data-lucide="grid" class="w-4 h-4"></i>
+              </button>
+              <button type="button" id="view-mode-list" onclick="setDirectoryViewMode('list')" class="p-1.5 rounded-lg text-secondary hover:text-graphite transition-all cursor-pointer" title="نمای لیستی">
+                <i data-lucide="list" class="w-4 h-4"></i>
+              </button>
+            </div>
           </div>
         </div>
       </div>
@@ -1429,21 +1500,19 @@ if (document.readyState === "loading") {
       const homeView = document.getElementById('home-view');
       const directoryView = document.getElementById('directory-view');
 
-      if (tabId === 'home') {
-        if (homeView) homeView.classList.remove('hidden');
-        if (directoryView) directoryView.classList.add('hidden');
-      } else if (tabId === 'directory') {
+      if (tabId === 'directory') {
         if (homeView) homeView.classList.add('hidden');
         if (directoryView) directoryView.classList.remove('hidden');
         if (typeof renderSidebarCategoryCheckboxes === 'function') renderSidebarCategoryCheckboxes();
         if (typeof renderMultiCategoryPills === 'function') renderMultiCategoryPills();
         if (typeof filterVendors === 'function') filterVendors();
       } else {
-        if (homeView) homeView.classList.add('hidden');
+        if (homeView) homeView.classList.remove('hidden');
         if (directoryView) directoryView.classList.add('hidden');
       }
 
       if (tabId === 'guests') renderGuestsAndGifts();
+      if (tabId === 'vendor-dash' && typeof renderVendorCustomQuestionsList === 'function') renderVendorCustomQuestionsList(1);
 
       const target = document.getElementById('tab-' + tabId);
       if (target) target.classList.remove('hidden');
@@ -1954,6 +2023,7 @@ if (document.readyState === "loading") {
           `;
         } else {
           vendorPortfolio.forEach(item => {
+            const isCover = item.isCover || false;
             const card = document.createElement('div');
             card.className = "bg-bgCustom border border-accent rounded-2xl overflow-hidden shadow-xs hover:shadow-md transition-shadow flex flex-col justify-between";
             card.innerHTML = `
@@ -1963,20 +2033,31 @@ if (document.readyState === "loading") {
                   <span class="absolute top-2.5 right-2.5 bg-graphite/80 backdrop-blur-xs text-white text-[10px] font-bold px-2.5 py-1 rounded-full">
                     ${item.category}
                   </span>
+                  ${isCover ? `
+                    <span class="absolute top-2.5 left-2.5 bg-[#D4AF37] text-[#1B3B2B] text-[10px] font-black px-2 py-0.5 rounded-full shadow-md flex items-center gap-1">
+                      ⭐ کاور اصلی
+                    </span>
+                  ` : ''}
                 </div>
                 <div class="p-3 space-y-1">
                   <h4 class="text-xs font-bold text-graphite line-clamp-2 min-h-[2.25rem]">${item.title}</h4>
                 </div>
               </div>
-              <div class="p-3 pt-0 border-t border-accent/40 mt-2 flex items-center justify-between gap-2 text-xs font-bold">
-                <button type="button" onclick="openPortfolioModal('${item.id}')" class="flex-1 bg-white hover:bg-slate-100 text-graphite border border-accent py-1.5 px-2 rounded-xl transition-colors flex items-center justify-center gap-1 text-[11px]">
-                  <i data-lucide="edit-2" class="w-3.5 h-3.5 text-primary"></i>
-                  <span>ویرایش</span>
+              <div class="p-3 pt-0 border-t border-accent/40 mt-2 space-y-2 text-xs font-bold">
+                <button type="button" onclick="setPortfolioAsCover('${item.id}')" class="w-full ${isCover ? 'bg-amber-100 text-amber-900 border border-amber-300' : 'bg-white hover:bg-emerald-50 text-graphite border border-accent'} py-1.5 px-2 rounded-xl transition-colors flex items-center justify-center gap-1 text-[11px]">
+                  <i data-lucide="star" class="w-3.5 h-3.5 text-primary"></i>
+                  <span>${isCover ? 'کاور اصلی فعال است' : 'انتخاب به‌عنوان کاور'}</span>
                 </button>
-                <button type="button" onclick="deletePortfolioItem('${item.id}')" class="bg-white hover:bg-rose-50 text-rose-600 border border-rose-200 py-1.5 px-2.5 rounded-xl transition-colors flex items-center justify-center gap-1 text-[11px]">
-                  <i data-lucide="trash-2" class="w-3.5 h-3.5"></i>
-                  <span>حذف</span>
-                </button>
+                <div class="flex items-center justify-between gap-2">
+                  <button type="button" onclick="openPortfolioModal('${item.id}')" class="flex-1 bg-white hover:bg-slate-100 text-graphite border border-accent py-1.5 px-2 rounded-xl transition-colors flex items-center justify-center gap-1 text-[11px]">
+                    <i data-lucide="edit-2" class="w-3.5 h-3.5 text-primary"></i>
+                    <span>ویرایش</span>
+                  </button>
+                  <button type="button" onclick="deletePortfolioItem('${item.id}')" class="bg-white hover:bg-rose-50 text-rose-600 border border-rose-200 py-1.5 px-2.5 rounded-xl transition-colors flex items-center justify-center gap-1 text-[11px]">
+                    <i data-lucide="trash-2" class="w-3.5 h-3.5"></i>
+                    <span>حذف</span>
+                  </button>
+                </div>
               </div>
             `;
             dashContainer.appendChild(card);
@@ -2145,6 +2226,28 @@ if (document.readyState === "loading") {
       }
     }
 
+    function setPortfolioAsCover(id) {
+      vendorPortfolio.forEach(p => {
+        p.isCover = (p.id === id);
+      });
+      const selected = vendorPortfolio.find(p => p.id === id);
+      if (selected) {
+        const coverImg = document.getElementById('vp-cover');
+        const vdmCover = document.getElementById('vdm-cover');
+        if (coverImg) coverImg.src = selected.image;
+        if (vdmCover) vdmCover.src = selected.image;
+      }
+      renderPortfolioUI();
+      if (typeof showToast === 'function') {
+        showToast('⭐ تصویر انتخاب‌شده به‌عنوان کاور اصلی ثبت گردید.', 'success');
+      }
+    }
+
+    window.setPortfolioAsCover = setPortfolioAsCover;
+    window.deletePortfolioItem = deletePortfolioItem;
+    window.openPortfolioModal = openPortfolioModal;
+    window.closePortfolioModal = closePortfolioModal;
+
 
     function renderGallery() {
       const container = document.getElementById('vp-gallery-grid');
@@ -2187,7 +2290,10 @@ if (document.readyState === "loading") {
           card.className = "bg-bgCustom border border-accent rounded-2xl p-5 space-y-4 shadow-xs hover:border-primary transition-all flex flex-col justify-between";
           card.innerHTML = `
             <div class="space-y-2">
-              <span class="text-[11px] font-bold text-primary bg-primary/10 px-2.5 py-0.5 rounded-full">پکیج رسمی</span>
+              <div class="flex items-center justify-between">
+                <span class="text-[11px] font-bold text-primary bg-primary/10 px-2.5 py-0.5 rounded-full">پکیج رسمی</span>
+                ${pkg.badge ? `<span class="text-[10px] font-bold text-amber-800 bg-amber-100 px-2 py-0.5 rounded-full">${pkg.badge}</span>` : ''}
+              </div>
               <h4 class="text-base font-bold text-graphite">${pkg.name}</h4>
               <p class="text-sm font-black text-primary">${pkg.price}</p>
 
@@ -2206,16 +2312,29 @@ if (document.readyState === "loading") {
 
       if (dashContainer) {
         dashContainer.innerHTML = '';
-        vendorPackages.forEach(pkg => {
+        vendorPackages.forEach((pkg, idx) => {
           const card = document.createElement('div');
-          card.className = "bg-bgCustom border border-accent rounded-2xl p-4 space-y-2 text-xs";
+          card.className = "bg-bgCustom border border-accent rounded-2xl p-4 space-y-3 text-xs shadow-xs hover:border-primary/50 transition-all flex flex-col justify-between";
           card.innerHTML = `
-            <div class="flex justify-between items-center font-bold text-graphite">
-              <span>${pkg.name}</span>
-              <button onclick="deletePackage('${pkg.id}')" class="text-rose-600 hover:underline text-[11px]">حذف</button>
+            <div class="space-y-1.5">
+              <div class="flex justify-between items-start font-bold text-graphite">
+                <span class="text-sm text-graphite font-black">${pkg.name}</span>
+                ${pkg.badge ? `<span class="text-[10px] font-bold text-amber-800 bg-amber-100 px-2 py-0.5 rounded-full shrink-0">${pkg.badge}</span>` : ''}
+              </div>
+              <p class="text-primary font-black text-xs">${pkg.price}</p>
+              <ul class="space-y-1 pt-2 border-t border-accent/60 text-secondary text-[11px]">
+                ${pkg.features.map(f => `<li class="flex items-center gap-1.5"><i data-lucide="check" class="w-3.5 h-3.5 text-primary"></i><span>${f}</span></li>`).join('')}
+              </ul>
             </div>
-            <p class="text-primary font-bold">${pkg.price}</p>
-            <p class="text-secondary text-[11px] truncate">${pkg.features.join(' ، ')}</p>
+
+            <div class="flex items-center justify-end gap-2 pt-2 border-t border-accent/60">
+              <button onclick="editVendorPackage(${idx})" class="bg-white hover:bg-emerald-50 text-primary border border-primary/30 font-bold px-3 py-1 rounded-lg text-[11px] transition-colors flex items-center gap-1">
+                <i data-lucide="edit-2" class="w-3 h-3"></i> ویرایش
+              </button>
+              <button onclick="deletePackage('${pkg.id}')" class="bg-white hover:bg-rose-50 text-rose-600 border border-rose-200 font-bold px-3 py-1 rounded-lg text-[11px] transition-colors flex items-center gap-1">
+                <i data-lucide="trash-2" class="w-3 h-3"></i> حذف
+              </button>
+            </div>
           `;
           dashContainer.appendChild(card);
         });
@@ -2225,33 +2344,62 @@ if (document.readyState === "loading") {
     }
 
     function toggleAddPackageModal(show) {
-      const modal = document.getElementById('package-modal');
+      const modal = document.getElementById('modal-vendor-package') || document.getElementById('package-modal');
       if (modal) {
-        if (show) modal.classList.remove('hidden');
-        else modal.classList.add('hidden');
+        if (show) {
+          document.getElementById('pkg-edit-index').value = '-1';
+          document.getElementById('form-vendor-package')?.reset();
+          document.getElementById('modal-package-title').innerHTML = '<i data-lucide="package-plus" class="w-5 h-5 text-primary"></i><span>افزودن پکیج جدید</span>';
+          modal.classList.remove('hidden');
+          modal.classList.add('flex');
+        } else {
+          modal.classList.add('hidden');
+          modal.classList.remove('flex');
+        }
       }
     }
 
-    function handleAddPackageSubmit(e) {
+    function editVendorPackage(idx) {
+      const pkg = vendorPackages[idx];
+      if (!pkg) return;
+      const modal = document.getElementById('modal-vendor-package');
+      if (!modal) return;
+      document.getElementById('pkg-edit-index').value = idx;
+      document.getElementById('pkg-title').value = pkg.name || '';
+      document.getElementById('pkg-price').value = pkg.price || '';
+      document.getElementById('pkg-badge').value = pkg.badge || '';
+      document.getElementById('pkg-features').value = pkg.features ? pkg.features.join('\n') : '';
+      document.getElementById('modal-package-title').innerHTML = '<i data-lucide="edit-3" class="w-5 h-5 text-primary"></i><span>ویرایش پکیج خدمات</span>';
+      modal.classList.remove('hidden');
+      modal.classList.add('flex');
+    }
+
+    function saveVendorPackageModal(e) {
       e.preventDefault();
-      const name = document.getElementById('pkg-name').value.trim();
+      const editIdx = parseInt(document.getElementById('pkg-edit-index').value);
+      const name = document.getElementById('pkg-title').value.trim();
       const price = document.getElementById('pkg-price').value.trim();
+      const badge = document.getElementById('pkg-badge').value.trim();
       const featuresRaw = document.getElementById('pkg-features').value.trim();
 
       if (!name || !price) return;
+      const features = featuresRaw ? featuresRaw.split('\n').map(f => f.trim()).filter(Boolean) : ['خدمات باکیفیت کامل'];
 
-      const features = featuresRaw ? featuresRaw.split(',').map(f => f.trim()) : ['خدمات با کیفیت کامل'];
+      if (editIdx >= 0 && vendorPackages[editIdx]) {
+        vendorPackages[editIdx] = { ...vendorPackages[editIdx], name, price, badge, features };
+        showToast('پکیج خدمات با موفقیت به روزرسانی شد.', 'success');
+      } else {
+        vendorPackages.push({ id: 'pkg-' + Date.now(), name, price, badge, features });
+        showToast('پکیج جدید با موفقیت اضافه گردید.', 'success');
+      }
 
-      vendorPackages.push({ id: 'pkg-' + Date.now(), name, price, features });
       renderVendorPackages();
       toggleAddPackageModal(false);
-      document.getElementById('pkg-name').value = '';
-      document.getElementById('pkg-price').value = '';
-      document.getElementById('pkg-features').value = '';
     }
 
     function deletePackage(id) {
       vendorPackages = vendorPackages.filter(p => p.id !== id);
+      showToast('پکیج موردنظر حذف گردید.', 'info');
       renderVendorPackages();
     }
 
@@ -2477,6 +2625,44 @@ if (document.readyState === "loading") {
       filterVendors();
       const vendorSection = document.getElementById('tab-directory');
       if (vendorSection) vendorSection.scrollIntoView({ behavior: 'smooth' });
+    }
+
+    function handleHeroSearch() {
+      const heroSearchInput = document.getElementById('hero-search-input');
+      const heroCitySelect = document.getElementById('hero-city-select');
+      const heroCatSelect = document.getElementById('hero-cat-select');
+
+      const query = heroSearchInput ? heroSearchInput.value.trim() : '';
+      const city = heroCitySelect ? heroCitySelect.value : 'استان یزد';
+      const cat = heroCatSelect ? heroCatSelect.value : 'all';
+
+      // 1. Sync header search inputs
+      const headerSearch = document.getElementById('header-search-input');
+      if (headerSearch) headerSearch.value = query;
+
+      const directSearch = document.getElementById('directory-instant-search');
+      if (directSearch) directSearch.value = query;
+
+      const mainSearch = document.getElementById('search-input');
+      if (mainSearch) mainSearch.value = query;
+
+      // 2. Sync City
+      const headerCity = document.getElementById('header-city-select');
+      if (headerCity) headerCity.value = city;
+      const sidebarCity = document.getElementById('sidebar-city-select');
+      if (sidebarCity) sidebarCity.value = city;
+
+      // 3. Sync Category
+      activeCategoryFilters.clear();
+      if (cat !== 'all') {
+        activeCategoryFilters.add(cat);
+      }
+
+      // 4. Transition to directory tab & re-filter
+      switchTab('directory');
+      if (typeof renderSidebarCategoryCheckboxes === 'function') renderSidebarCategoryCheckboxes();
+      if (typeof renderMultiCategoryPills === 'function') renderMultiCategoryPills();
+      if (typeof filterVendors === 'function') filterVendors();
     }
 
     function filterVendorsFromMega(title) {
@@ -2956,31 +3142,67 @@ if (document.readyState === "loading") {
       } catch(e) {}
     }
 
+    let directoryViewMode = 'grid'; // 'grid' | 'list'
+
+    function setDirectoryViewMode(mode) {
+      directoryViewMode = mode;
+      const gridBtn = document.getElementById('view-mode-grid');
+      const listBtn = document.getElementById('view-mode-list');
+      if (gridBtn && listBtn) {
+        if (mode === 'grid') {
+          gridBtn.className = "p-1.5 rounded-lg bg-[#1B3B2B] text-white shadow-2xs transition-all cursor-pointer";
+          listBtn.className = "p-1.5 rounded-lg text-secondary hover:text-graphite transition-all cursor-pointer";
+        } else {
+          listBtn.className = "p-1.5 rounded-lg bg-[#1B3B2B] text-white shadow-2xs transition-all cursor-pointer";
+          gridBtn.className = "p-1.5 rounded-lg text-secondary hover:text-graphite transition-all cursor-pointer";
+        }
+      }
+      filterVendors();
+    }
+
+    function updateCapacitySliderLabel(val) {
+      const lbl = document.getElementById('sidebar-capacity-val');
+      if (lbl) {
+        lbl.textContent = val >= 1000 ? 'همه ظرفیت‌ها' : `تا ${val} نفر`;
+      }
+    }
+
     function renderVendors(list) {
       const grid = document.getElementById('vendor-grid');
       if (!grid) return;
       grid.innerHTML = '';
 
+      if (directoryViewMode === 'list') {
+        grid.className = "flex flex-col gap-4";
+      } else {
+        grid.className = "grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6";
+      }
+
       list.forEach(v => {
         const card = document.createElement('div');
-        card.className = "bg-white border border-accent rounded-3xl overflow-hidden shadow-xs hover:shadow-lg transition-all duration-300 flex flex-col justify-between group hover:-translate-y-1";
 
-        const localTag = v.district || "استان یزد";
-        const ratingVal = v.rating || 4.8;
-        const reviewCount = v.reviewCount || 34;
+        if (directoryViewMode === 'list') {
+          card.className = "bg-white border border-accent rounded-3xl overflow-hidden shadow-xs hover:shadow-lg transition-all duration-300 flex flex-col md:flex-row group hover:-translate-y-0.5";
+        } else {
+          card.className = "bg-white border border-accent rounded-3xl overflow-hidden shadow-xs hover:shadow-lg transition-all duration-300 flex flex-col justify-between group hover:-translate-y-1";
+        }
+
+        const localTag = v.district || "صفائیه یزد";
+        const ratingVal = v.rating || 4.9;
+        const reviewCount = v.reviewCount || 32;
         const isFav = favoriteVendorIds.includes(v.id);
 
-        card.innerHTML = `
-          <div>
-            <div class="relative h-52 overflow-hidden bg-slate-100">
+        if (directoryViewMode === 'list') {
+          card.innerHTML = `
+            <div class="relative w-full md:w-72 h-56 md:h-auto overflow-hidden bg-slate-100 shrink-0">
               <img src="${v.image}" alt="${v.name}" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105">
               <div class="absolute inset-0 bg-gradient-to-t from-graphite/60 via-transparent to-transparent opacity-80"></div>
 
               <div class="absolute top-3 right-3 flex flex-col gap-1.5 items-end">
                 ${v.verified ? `
-                  <div class="bg-primary text-white text-[11px] font-bold px-3 py-1 rounded-full flex items-center gap-1 shadow-md border border-white/20">
-                    <i data-lucide="shield-check" class="w-3.5 h-3.5"></i>
-                    <span>تاییدیه رسمی عروسی تو</span>
+                  <div class="bg-[#1B3B2B] text-[#D4AF37] border border-[#D4AF37]/50 text-[10px] font-black px-2.5 py-0.5 rounded-full shadow-md flex items-center gap-1">
+                    <i data-lucide="shield-check" class="w-3 h-3 text-[#D4AF37]"></i>
+                    <span>تأییدشده عروسی‌تو</span>
                   </div>
                 ` : `
                   <div class="bg-slate-800/80 text-slate-200 text-[10px] font-bold px-2.5 py-0.5 rounded-full backdrop-blur-xs">
@@ -2993,11 +3215,6 @@ if (document.readyState === "loading") {
                 <button type="button" onclick="toggleFavoriteVendor(${v.id}, event)" class="w-8 h-8 rounded-xl bg-white/90 backdrop-blur-md flex items-center justify-center text-rose-500 shadow-sm transition-transform active:scale-95 hover:bg-white cursor-pointer" title="افزودن به نشان‌شده‌ها">
                   <i data-lucide="heart" class="w-4 h-4 ${isFav ? 'fill-rose-500 text-rose-500' : 'text-rose-500'}"></i>
                 </button>
-                <div class="bg-white/90 backdrop-blur-md text-amber-600 text-xs font-black px-2.5 py-1 rounded-xl shadow-xs flex items-center gap-1">
-                  <i data-lucide="star" class="w-3.5 h-3.5 fill-amber-400 text-amber-400"></i>
-                  <span>${ratingVal}</span>
-                  <span class="text-[10px] text-secondary font-normal">(${reviewCount})</span>
-                </div>
               </div>
 
               <div class="absolute bottom-3 right-3 left-3 flex justify-between items-center text-white text-xs">
@@ -3005,62 +3222,150 @@ if (document.readyState === "loading") {
                   <i data-lucide="map-pin" class="w-3 h-3 text-emerald-400"></i>
                   <span>${localTag}</span>
                 </span>
-                <span class="bg-emerald-600/90 text-white font-bold px-2.5 py-1 rounded-lg text-[10px]">
-                  💰💰 قیمت مناسب
-                </span>
               </div>
             </div>
 
-            <div class="p-5 space-y-3">
-              <div>
-                <span class="text-[11px] font-bold text-primary bg-primary/10 px-2.5 py-0.5 rounded-md inline-block mb-1">${v.category}</span>
-                <h3 class="text-base font-bold text-graphite leading-tight group-hover:text-primary transition-colors">${v.name}</h3>
-                <span class="text-xs text-secondary flex items-center gap-1 mt-1 font-medium">
-                  <i data-lucide="check-circle-2" class="w-3.5 h-3.5 text-primary"></i>
-                  <span>${v.city}</span>
-                </span>
+            <div class="p-5 flex-1 flex flex-col justify-between space-y-4">
+              <div class="space-y-2">
+                <div class="flex justify-between items-start flex-wrap gap-2">
+                  <div>
+                    <span class="text-[11px] font-bold text-primary bg-primary/10 px-2.5 py-0.5 rounded-md inline-block mb-1">${v.category}</span>
+                    <h3 class="text-base sm:text-lg font-bold text-graphite leading-tight group-hover:text-primary transition-colors">${v.name}</h3>
+                  </div>
+                  <div class="bg-amber-50 border border-amber-200 text-amber-700 text-xs font-black px-3 py-1 rounded-xl flex items-center gap-1">
+                    <i data-lucide="star" class="w-3.5 h-3.5 fill-amber-400 text-amber-400"></i>
+                    <span>${ratingVal}</span>
+                    <span class="text-[10px] text-secondary font-normal">(${reviewCount} نظر)</span>
+                  </div>
+                </div>
+
+                <p class="text-xs text-secondary font-medium line-clamp-2">
+                  ${v.description || 'برترین ارائه دهنده خدمات تشریفات و برگزاری جشن ازدواج در استان یزد با تضمین قیمت و کیفیت عالی.'}
+                </p>
+
+                <!-- Capability Tags -->
+                <div class="flex flex-wrap gap-1.5 pt-1">
+                  ${(v.capabilityTags || ["تاییدیه کیفیت", "پذیرایی VIP", "پارکینگ اختصاصی"]).map(tag => `
+                    <span class="bg-amber-50 text-amber-900 border border-amber-200/80 text-[10px] font-bold px-2.5 py-0.5 rounded-md flex items-center gap-1">
+                      <i data-lucide="check-circle" class="w-2.5 h-2.5 text-amber-600"></i>
+                      <span>${tag}</span>
+                    </span>
+                  `).join('')}
+                </div>
               </div>
 
-              <!-- Yazd Capability Tags -->
-              <div class="flex flex-wrap gap-1 pt-1">
-                ${(v.capabilityTags || ["مجوز رسمی عکاسی کویر", "تجهیزات هلی‌شات & نور کویر", "سرو شیرینی‌های سنتی یزد (حاج خلیفه)", "فضای باز & سالن سرپوشیده"]).map(tag => `
-                  <span class="bg-amber-50 text-amber-900 border border-amber-200/80 text-[10px] font-bold px-2 py-0.5 rounded-md flex items-center gap-1">
-                    <i data-lucide="check-circle" class="w-2.5 h-2.5 text-amber-600"></i>
-                    <span>${tag}</span>
-                  </span>
-                `).join('')}
-              </div>
+              <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pt-3 border-t border-accent/60">
+                <div class="text-xs font-bold text-graphite">
+                  <span class="text-secondary font-normal block text-[10px]">شروع قیمت پایه از:</span>
+                  <span class="text-primary font-black text-base">${v.priceRange || 'شروع از ۶۵,۰۰۰,۰۰۰ تومان'}</span>
+                </div>
 
-              <div class="text-xs font-bold text-graphite bg-bgCustom p-3 rounded-2xl border border-accent flex justify-between items-center">
-                <span class="text-secondary font-normal">قیمت پایه شروع از:</span>
-                <span class="text-primary font-black text-sm">${v.priceRange}</span>
-              </div>
-
-              <!-- Private Note Block for Couple -->
-              <div class="pt-2 border-t border-accent/60 space-y-1" onclick="event.stopPropagation()">
-                <label class="block text-[10px] font-bold text-secondary flex items-center gap-1">
-                  <i data-lucide="lock" class="w-3 h-3 text-primary"></i>
-                  <span>یادداشت خصوصی زوجین (فقط شما می‌بینید):</span>
-                </label>
-                <div class="flex gap-1.5">
-                  <input type="text" id="private-note-input-${v.id}" value="${getPrivateNote(v.id)}" placeholder="مثلا: هماهنگی جهت تخفیف ۱۰٪..." class="w-full bg-slate-50 border border-accent rounded-xl px-2.5 py-1 text-[11px] font-medium text-graphite focus:outline-none focus:border-primary">
-                  <button onclick="savePrivateNote(${v.id})" class="bg-primary hover:bg-emerald-900 text-white font-bold text-[10px] px-2.5 py-1 rounded-xl shrink-0 transition-colors">ثبت</button>
+                <div class="flex items-center gap-2">
+                  <button onclick="openVendorDetailModal(${v.id})" class="bg-[#D4AF37] hover:bg-amber-400 text-[#1B3B2B] font-black px-4 py-2.5 rounded-xl text-xs transition-all shadow-xs flex items-center justify-center gap-1.5 cursor-pointer">
+                    <i data-lucide="user" class="w-3.5 h-3.5"></i>
+                    <span>مشاهده پروفایل کامل</span>
+                  </button>
+                  <button onclick="openInquiryModal(${v.id}, '${v.name}')" class="bg-white hover:bg-emerald-50 border border-[#1B3B2B] text-[#1B3B2B] font-bold px-4 py-2.5 rounded-xl text-xs transition-all flex items-center justify-center gap-1.5 cursor-pointer">
+                    <i data-lucide="message-square-quote" class="w-3.5 h-3.5"></i>
+                    <span>استعلام سریع قیمت</span>
+                  </button>
                 </div>
               </div>
             </div>
-          </div>
+          `;
+        } else {
+          card.innerHTML = `
+            <div>
+              <div class="relative h-52 overflow-hidden bg-slate-100">
+                <img src="${v.image}" alt="${v.name}" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105">
+                <div class="absolute inset-0 bg-gradient-to-t from-graphite/60 via-transparent to-transparent opacity-80"></div>
 
-          <div class="p-5 pt-0 flex gap-2">
-            <button onclick="openVendorDetailModal(${v.id})" class="flex-1 bg-white hover:bg-slate-50 border border-accent text-graphite hover:border-primary py-2.5 rounded-xl text-xs font-bold transition-all shadow-2xs flex items-center justify-center gap-1">
-              <i data-lucide="info" class="w-3.5 h-3.5 text-primary"></i>
-              <span>نمونه‌کارها و اطلاعات</span>
-            </button>
-            <button onclick="openInquiryModal(${v.id}, '${v.name}')" class="flex-1 bg-primary hover:bg-emerald-900 text-white py-2.5 rounded-xl text-xs font-bold transition-all shadow-xs flex items-center justify-center gap-1">
-              <i data-lucide="message-square" class="w-3.5 h-3.5"></i>
-              <span>استعلام & چت</span>
-            </button>
-          </div>
-        `;
+                <div class="absolute top-3 right-3 flex flex-col gap-1.5 items-end">
+                  ${v.verified ? `
+                    <div class="bg-[#1B3B2B] text-[#D4AF37] border border-[#D4AF37]/50 text-[10px] font-black px-2.5 py-1 rounded-full shadow-md flex items-center gap-1">
+                      <i data-lucide="shield-check" class="w-3.5 h-3.5 text-[#D4AF37]"></i>
+                      <span>تأییدشده عروسی‌تو</span>
+                    </div>
+                  ` : `
+                    <div class="bg-slate-800/80 text-slate-200 text-[10px] font-bold px-2.5 py-0.5 rounded-full backdrop-blur-xs">
+                      تأمین‌کننده مجاز
+                    </div>
+                  `}
+                </div>
+
+                <div class="absolute top-3 left-3 flex items-center gap-2">
+                  <button type="button" onclick="toggleFavoriteVendor(${v.id}, event)" class="w-8 h-8 rounded-xl bg-white/90 backdrop-blur-md flex items-center justify-center text-rose-500 shadow-sm transition-transform active:scale-95 hover:bg-white cursor-pointer" title="افزودن به نشان‌شده‌ها">
+                    <i data-lucide="heart" class="w-4 h-4 ${isFav ? 'fill-rose-500 text-rose-500' : 'text-rose-500'}"></i>
+                  </button>
+                  <div class="bg-white/90 backdrop-blur-md text-amber-600 text-xs font-black px-2.5 py-1 rounded-xl shadow-xs flex items-center gap-1">
+                    <i data-lucide="star" class="w-3.5 h-3.5 fill-amber-400 text-amber-400"></i>
+                    <span>${ratingVal}</span>
+                    <span class="text-[10px] text-secondary font-normal">(${reviewCount})</span>
+                  </div>
+                </div>
+
+                <div class="absolute bottom-3 right-3 left-3 flex justify-between items-center text-white text-xs">
+                  <span class="bg-black/40 backdrop-blur-md px-2.5 py-1 rounded-lg border border-white/10 font-bold flex items-center gap-1">
+                    <i data-lucide="map-pin" class="w-3 h-3 text-emerald-400"></i>
+                    <span>${localTag}</span>
+                  </span>
+                  <span class="bg-emerald-600/90 text-white font-bold px-2.5 py-1 rounded-lg text-[10px]">
+                    قیمت عادلانه
+                  </span>
+                </div>
+              </div>
+
+              <div class="p-5 space-y-3">
+                <div>
+                  <span class="text-[11px] font-bold text-primary bg-primary/10 px-2.5 py-0.5 rounded-md inline-block mb-1">${v.category}</span>
+                  <h3 class="text-base font-bold text-graphite leading-tight group-hover:text-primary transition-colors">${v.name}</h3>
+                  <span class="text-xs text-secondary flex items-center gap-1 mt-1 font-medium">
+                    <i data-lucide="check-circle-2" class="w-3.5 h-3.5 text-primary"></i>
+                    <span>${v.city || 'یزد'}</span>
+                  </span>
+                </div>
+
+                <!-- Capability Tags -->
+                <div class="flex flex-wrap gap-1 pt-1">
+                  ${(v.capabilityTags || ["مجوز رسمی عکاسی کویر", "تجهیزات هلی‌شات", "سرو شیرینی‌های سنتی یزد"]).map(tag => `
+                    <span class="bg-amber-50 text-amber-900 border border-amber-200/80 text-[10px] font-bold px-2 py-0.5 rounded-md flex items-center gap-1">
+                      <i data-lucide="check-circle" class="w-2.5 h-2.5 text-amber-600"></i>
+                      <span>${tag}</span>
+                    </span>
+                  `).join('')}
+                </div>
+
+                <div class="text-xs font-bold text-graphite bg-bgCustom p-3 rounded-2xl border border-accent flex justify-between items-center">
+                  <span class="text-secondary font-normal">قیمت پایه شروع از:</span>
+                  <span class="text-primary font-black text-sm">${v.priceRange || 'استعلام قیمت'}</span>
+                </div>
+
+                <!-- Private Note Block for Couple -->
+                <div class="pt-2 border-t border-accent/60 space-y-1" onclick="event.stopPropagation()">
+                  <label class="block text-[10px] font-bold text-secondary flex items-center gap-1">
+                    <i data-lucide="lock" class="w-3 h-3 text-primary"></i>
+                    <span>یادداشت خصوصی زوجین (فقط شما می‌بینید):</span>
+                  </label>
+                  <div class="flex gap-1.5">
+                    <input type="text" id="private-note-input-${v.id}" value="${getPrivateNote(v.id)}" placeholder="مثلا: هماهنگی جهت تخفیف ۱۰٪..." class="w-full bg-slate-50 border border-accent rounded-xl px-2.5 py-1 text-[11px] font-medium text-graphite focus:outline-none focus:border-primary">
+                    <button onclick="savePrivateNote(${v.id})" class="bg-primary hover:bg-emerald-900 text-white font-bold text-[10px] px-2.5 py-1 rounded-xl shrink-0 transition-colors">ثبت</button>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="p-5 pt-0 flex flex-col sm:flex-row gap-2">
+              <button onclick="openVendorDetailModal(${v.id})" class="flex-1 bg-[#D4AF37] hover:bg-amber-400 text-[#1B3B2B] font-black py-2.5 rounded-xl text-xs transition-all shadow-xs flex items-center justify-center gap-1.5 cursor-pointer">
+                <i data-lucide="user" class="w-3.5 h-3.5"></i>
+                <span>مشاهده پروفایل کامل</span>
+              </button>
+              <button onclick="openInquiryModal(${v.id}, '${v.name}')" class="flex-1 bg-white hover:bg-emerald-50 border border-[#1B3B2B] text-[#1B3B2B] font-bold py-2.5 rounded-xl text-xs transition-all flex items-center justify-center gap-1.5 cursor-pointer">
+                <i data-lucide="message-square-quote" class="w-3.5 h-3.5"></i>
+                <span>استعلام سریع قیمت</span>
+              </button>
+            </div>
+          `;
+        }
         grid.appendChild(card);
       });
 
@@ -3168,10 +3473,14 @@ if (document.readyState === "loading") {
 
       switchTab('directory');
 
-      // Sync with main search input
+      // Sync with main and directory instant search inputs
       const mainSearch = document.getElementById('search-input');
       if (mainSearch) {
         mainSearch.value = query;
+      }
+      const directSearch = document.getElementById('directory-instant-search');
+      if (directSearch) {
+        directSearch.value = query;
       }
 
       // Match vendors and subcategories
@@ -3378,6 +3687,14 @@ if (document.readyState === "loading") {
         ? sidebarPriceSelect.value
         : (headerPriceSelect ? headerPriceSelect.value : 'all');
 
+      const capacitySlider = document.getElementById('sidebar-capacity-slider');
+      const maxCapacity = capacitySlider ? parseInt(capacitySlider.value, 10) : 1000;
+
+      const featParking = document.getElementById('feat-parking')?.checked || false;
+      const featSofreh = document.getElementById('feat-sofreh')?.checked || false;
+      const featGarden = document.getElementById('feat-garden')?.checked || false;
+      const featCatering = document.getElementById('feat-catering')?.checked || false;
+
       let filtered = vendors.filter(v => {
         const matchesSearch = !search ||
                               v.name.toLowerCase().includes(search) ||
@@ -3415,7 +3732,21 @@ if (document.readyState === "loading") {
           }
         }
 
-        return matchesSearch && matchesCat && matchesVerified && matchesCity && matchesPrice;
+        let matchesCapacity = true;
+        if (maxCapacity < 1000 && v.capacity) {
+          matchesCapacity = (v.capacity || 0) <= maxCapacity;
+        }
+
+        let matchesFeatures = true;
+        const tagsAndCapabilities = [...(v.tags || []), ...(v.capabilityTags || []), v.description || ''];
+        const tagText = tagsAndCapabilities.join(' ').toLowerCase();
+
+        if (featParking && !tagText.includes('پارکینگ')) matchesFeatures = false;
+        if (featSofreh && !tagText.includes('عقد') && !tagText.includes('سفره')) matchesFeatures = false;
+        if (featGarden && !tagText.includes('باغ') && !tagText.includes('فضای باز')) matchesFeatures = false;
+        if (featCatering && !tagText.includes('کترینگ') && !tagText.includes('پذیرایی') && !tagText.includes('شیرینی')) matchesFeatures = false;
+
+        return matchesSearch && matchesCat && matchesVerified && matchesCity && matchesPrice && matchesCapacity && matchesFeatures;
       });
 
       // Apply dynamic sorting
@@ -3445,7 +3776,7 @@ if (document.readyState === "loading") {
 
       const countBadge = document.getElementById('directory-vendor-count-badge');
       if (countBadge) {
-        countBadge.textContent = `${filtered.length} تامین‌کننده`;
+        countBadge.textContent = `نمایش ${filtered.length} تامین‌کننده در استان یزد`;
       }
     }
 
@@ -3493,7 +3824,7 @@ if (document.readyState === "loading") {
     function switchPlannerSubTab(subTabKey) {
       activePlannerSubTab = subTabKey;
 
-      ['checklist', 'vendors', 'budget'].forEach(key => {
+      ['checklist', 'vendors', 'budget', 'offers'].forEach(key => {
         const btn = document.getElementById('planner-subtab-' + key);
         const panel = document.getElementById('planner-panel-' + key);
         if (btn) {
@@ -3513,6 +3844,8 @@ if (document.readyState === "loading") {
         renderPlannerAttachedVendors();
       } else if (subTabKey === 'budget') {
         renderPlannerBudgetSummary();
+      } else if (subTabKey === 'offers') {
+        renderPlannerOffersTab();
       }
 
       lucide.createIcons();
@@ -3607,22 +3940,63 @@ if (document.readyState === "loading") {
       const totalTasks = staticChecklist.length;
       const completedTasks = staticChecklist.filter(t => t.completed).length;
 
+      const totalBudgetNum = 350000000;
+      const totalSpentNum = 180000000;
+      const remainingNum = totalBudgetNum - totalSpentNum;
+      const spentPercent = Math.round((totalSpentNum / totalBudgetNum) * 100);
+
+      const categoriesBreakdown = [
+        { name: 'تالار و باغ عروسی', budgeted: 140000000, spent: 95000000, color: 'bg-primary' },
+        { name: 'عکاسی و فیلم‌برداری', budgeted: 70000000, spent: 45000000, color: 'bg-emerald-600' },
+        { name: 'سالن زیبایی و آرایش عروس', budgeted: 40000000, spent: 25000000, color: 'bg-amber-500' },
+        { name: 'مزون و لباس عروس/داماد', budgeted: 50000000, spent: 15000000, color: 'bg-rose-500' },
+        { name: 'موسیقی، گل‌آرایی و سایر', budgeted: 50000000, spent: 0, color: 'bg-slate-400' }
+      ];
+
       container.innerHTML = `
         <div class="space-y-6">
           <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
             <div class="bg-bgCustom p-5 rounded-2xl border border-accent space-y-1">
-              <span class="text-xs font-bold text-secondary">تعداد کل اقدامات برنامه:</span>
-              <span class="block text-xl font-black text-graphite">${totalTasks} کار اصلی</span>
+              <span class="text-xs font-bold text-secondary">بودجه کل مصوب:</span>
+              <span class="block text-xl font-black text-graphite">${totalBudgetNum.toLocaleString('fa-IR')} <span class="text-xs font-normal text-secondary">تومان</span></span>
             </div>
 
             <div class="bg-bgCustom p-5 rounded-2xl border border-accent space-y-1">
-              <span class="text-xs font-bold text-secondary">قراردادهای بسته‌شده:</span>
-              <span class="block text-xl font-black text-primary">${attachedTasks.length} تامین‌کننده</span>
+              <span class="text-xs font-bold text-secondary">هزینه‌های پرداخت‌شده:</span>
+              <span class="block text-xl font-black text-primary">${totalSpentNum.toLocaleString('fa-IR')} <span class="text-xs font-normal text-secondary">تومان (${spentPercent}٪)</span></span>
             </div>
 
             <div class="bg-bgCustom p-5 rounded-2xl border border-accent space-y-1">
-              <span class="text-xs font-bold text-secondary">اقدامات نهایی شده:</span>
-              <span class="block text-xl font-black text-emerald-700">${completedTasks} مورد (${Math.round((completedTasks/totalTasks)*100)}٪)</span>
+              <span class="text-xs font-bold text-secondary">مانده بودجه در دسترس:</span>
+              <span class="block text-xl font-black text-emerald-700">${remainingNum.toLocaleString('fa-IR')} <span class="text-xs font-normal text-secondary">تومان</span></span>
+            </div>
+          </div>
+
+          <!-- Real-Time Interactive Category Progress Bars -->
+          <div class="bg-white border border-accent rounded-2xl p-5 space-y-4">
+            <h4 class="text-sm font-bold text-graphite flex items-center justify-between border-b border-accent pb-3">
+              <span class="flex items-center gap-2">
+                <i data-lucide="bar-chart-3" class="w-4 h-4 text-primary"></i>
+                <span>تفکیک سهم دسته‌بندی‌ها از بودجه و میزان پیشرفت</span>
+              </span>
+              <span class="text-xs font-bold text-secondary">${spentPercent}٪ از کل بودجه صرف شده</span>
+            </h4>
+
+            <div class="space-y-3.5">
+              ${categoriesBreakdown.map(cat => {
+                const catPercent = Math.round((cat.spent / cat.budgeted) * 100);
+                return `
+                  <div class="space-y-1">
+                    <div class="flex justify-between text-xs font-bold text-graphite">
+                      <span>${cat.name}</span>
+                      <span class="text-secondary">${cat.spent.toLocaleString('fa-IR')} از ${cat.budgeted.toLocaleString('fa-IR')} تومان (${catPercent}٪)</span>
+                    </div>
+                    <div class="w-full bg-slate-100 h-2.5 rounded-full overflow-hidden border border-accent/40">
+                      <div class="${cat.color} h-full rounded-full transition-all duration-500" style="width: ${catPercent}%;"></div>
+                    </div>
+                  </div>
+                `;
+              }).join('')}
             </div>
           </div>
 
@@ -3640,6 +4014,73 @@ if (document.readyState === "loading") {
           </div>
         </div>
       `;
+
+      lucide.createIcons();
+    }
+
+    function renderPlannerOffersTab() {
+      const container = document.getElementById('planner-offers-list');
+      if (!container) return;
+
+      container.innerHTML = '';
+
+      if (!inquiries || inquiries.length === 0) {
+        container.innerHTML = `
+          <div class="p-8 text-center text-secondary space-y-3 bg-bgCustom rounded-3xl border border-accent">
+            <i data-lucide="message-square" class="w-10 h-10 mx-auto text-secondary/50"></i>
+            <p class="text-xs font-bold text-graphite">هنوز هیچ استعلام قیمتی ارسال نکرده‌اید.</p>
+            <button onclick="switchTab('directory')" class="bg-primary text-white font-bold px-4 py-2 rounded-xl text-xs">مشاهده دایرکتوری و ارسال استعلام</button>
+          </div>
+        `;
+        lucide.createIcons();
+        return;
+      }
+
+      inquiries.forEach((inq, idx) => {
+        const currentStatus = inq.status || 'pending';
+        const card = document.createElement('div');
+        card.className = "bg-bgCustom border border-accent rounded-2xl p-5 space-y-3 shadow-xs hover:border-primary/40 transition-all";
+        card.innerHTML = `
+          <div class="flex flex-col sm:flex-row justify-between sm:items-center gap-2">
+            <div>
+              <span class="text-xs font-bold text-secondary block">درخواست ثبت شده برای:</span>
+              <h4 class="text-base font-black text-graphite">${inq.vendorName || 'تامین‌کننده مجلل یزد'}</h4>
+            </div>
+            <span class="text-xs font-bold px-3 py-1 rounded-full ${
+              currentStatus === 'booked' ? 'bg-emerald-100 text-emerald-800 border border-emerald-300' :
+              currentStatus === 'replied' ? 'bg-blue-100 text-blue-800 border border-blue-300' :
+              currentStatus === 'cancelled' ? 'bg-rose-100 text-rose-800 border border-rose-300' :
+              'bg-amber-100 text-amber-800 border border-amber-300'
+            }">
+              ${currentStatus === 'booked' ? 'رزرو نهایی شد 🎉' : currentStatus === 'replied' ? 'پاسخ و پیشنهاد جدید دریافت شد 📩' : currentStatus === 'cancelled' ? 'لغو شده' : 'در انتظار بررسی تامین‌کننده ⏳'}
+            </span>
+          </div>
+
+          <div class="flex flex-wrap items-center gap-4 text-xs text-secondary font-medium bg-white p-3 rounded-xl border border-accent/60">
+            <span><strong>تاریخ مراسم:</strong> ${inq.date || '۱۴۰۳/۰۶/۱۵'}</span>
+            <span><strong>تعداد مهمانان:</strong> ${inq.guests || 200} نفر</span>
+            <span><strong>پکیج درخواستی:</strong> ${inq.package || inq.service || 'پکیج اصلی'}</span>
+          </div>
+
+          ${inq.replyMsg ? `
+            <div class="bg-emerald-50/80 border border-emerald-200 rounded-xl p-3.5 space-y-1.5 text-xs text-emerald-900">
+              <span class="font-bold text-primary flex items-center gap-1.5">
+                <i data-lucide="check-circle" class="w-4 h-4 text-primary"></i>
+                <span>پاسخ و کاتالوگ ارسالی تامین‌کننده:</span>
+              </span>
+              <p class="font-medium leading-relaxed">${inq.replyMsg}</p>
+            </div>
+          ` : ''}
+
+          <div class="flex justify-end gap-2 pt-1">
+            <button onclick="switchTab('messages')" class="bg-primary hover:bg-emerald-900 text-white font-bold px-4 py-2 rounded-xl text-xs transition-colors flex items-center gap-1.5 shadow-xs">
+              <i data-lucide="message-circle" class="w-4 h-4"></i>
+              <span>گفتگو و مشاهده پیش‌فاکتور</span>
+            </button>
+          </div>
+        `;
+        container.appendChild(card);
+      });
 
       lucide.createIcons();
     }
@@ -3880,17 +4321,23 @@ if (document.readyState === "loading") {
         tr.className = "hover:bg-slate-50";
         tr.innerHTML = `
           <td class="p-3 font-bold text-graphite">${app.name}</td>
-          <td class="p-3 text-primary">${app.category}</td>
+          <td class="p-3 text-primary font-semibold">${app.category}</td>
           <td class="p-3 font-semibold text-graphite">${app.manager} (${app.phone})</td>
-          <td class="p-3 text-secondary">${app.city}</td>
+          <td class="p-3 text-secondary font-medium">${app.city}</td>
           <td class="p-3 text-center">
-            <button onclick="approveVendorAppStatic('${app.id}')" class="bg-primary text-white font-bold text-xs px-3 py-1.5 rounded-lg hover:bg-emerald-900 transition-colors">
-              تایید و اعطای پنل
-            </button>
+            <div class="flex items-center justify-center gap-1.5">
+              <button onclick="approveVendorAppStatic('${app.id}')" class="bg-primary hover:bg-emerald-900 text-white font-bold text-xs px-3 py-1.5 rounded-xl transition-colors shadow-xs flex items-center gap-1">
+                <i data-lucide="check" class="w-3.5 h-3.5"></i> تایید و اعطا
+              </button>
+              <button onclick="rejectVendorAppStatic('${app.id}')" class="bg-white hover:bg-rose-50 text-rose-600 border border-rose-200 font-bold text-xs px-2.5 py-1.5 rounded-xl transition-colors flex items-center gap-1">
+                <i data-lucide="x" class="w-3.5 h-3.5"></i> عدم تایید
+              </button>
+            </div>
           </td>
         `;
         tbody.appendChild(tr);
       });
+      lucide.createIcons();
     }
 
     function approveVendorAppStatic(appId) {
@@ -3905,12 +4352,22 @@ if (document.readyState === "loading") {
           rating: 5.0,
           verified: true,
           capabilityTags: ["مجوز رسمی عکاسی کویر", "تجهیزات هلی‌شات & نور کویر", "سرو شیرینی‌های سنتی یزد (حاج خلیفه)", "فضای باز & سالن سرپوشیده"],
-        priceRange: "استعلام قیمت",
+          priceRange: "استعلام قیمت",
           image: "https://images.unsplash.com/photo-1519167758481-83f550bb49b3?auto=format&fit=crop&w=800&q=80"
         });
+        showToast(`مجموعه ${app.name} با موفقیت تایید و به لیست اصلی متصل شد.`, 'success');
         renderVendors(vendors);
         renderAdminPendingApps();
         renderAdminTable();
+      }
+    }
+
+    function rejectVendorAppStatic(appId) {
+      const app = staticVendorApplications.find(a => a.id === appId);
+      if (app) {
+        app.status = 'rejected';
+        showToast(`درخواست مجموعه ${app.name} رد شد.`, 'info');
+        renderAdminPendingApps();
       }
     }
 
@@ -3965,56 +4422,113 @@ if (document.readyState === "loading") {
 
       inquiries.forEach((inq, idx) => {
         const card = document.createElement('div');
-        card.className = "p-4 bg-bgCustom rounded-2xl border border-accent space-y-2.5";
+        card.className = "p-4 bg-bgCustom rounded-2xl border border-accent space-y-3 shadow-xs hover:border-primary/40 transition-all";
         const currentStatus = inq.status || 'pending';
 
         card.innerHTML = `
-          <div class="flex flex-col sm:flex-row justify-between sm:items-center gap-2 text-xs">
+          <div class="flex flex-col sm:flex-row justify-between sm:items-center gap-2">
             <div class="flex items-center gap-2">
-              <span class="font-bold text-graphite text-sm">${inq.name} (${inq.phone})</span>
-              <span class="text-[10px] font-bold px-2 py-0.5 rounded-full ${
-                currentStatus === 'booked' ? 'bg-emerald-100 text-emerald-800' :
-                currentStatus === 'replied' ? 'bg-blue-100 text-blue-800' :
-                currentStatus === 'cancelled' ? 'bg-rose-100 text-rose-800' : 'bg-amber-100 text-amber-800'
+              <span class="font-black text-graphite text-sm">${inq.name || 'زوج محترم'}</span>
+              <span class="text-secondary text-xs font-medium dir-ltr">(${inq.phone || '۰۹۱۲۰۰۰۰۰۰۰'})</span>
+            </div>
+            <div class="flex items-center gap-2">
+              <span class="text-[11px] font-bold px-2.5 py-0.5 rounded-full ${
+                currentStatus === 'booked' ? 'bg-emerald-100 text-emerald-800 border border-emerald-300' :
+                currentStatus === 'replied' ? 'bg-blue-100 text-blue-800 border border-blue-300' :
+                currentStatus === 'cancelled' ? 'bg-rose-100 text-rose-800 border border-rose-300' :
+                'bg-amber-100 text-amber-800 border border-amber-300'
               }">
-                ${currentStatus === 'booked' ? 'نهایی / رزرو شده' : currentStatus === 'replied' ? 'پاسخ داده شده' : currentStatus === 'cancelled' ? 'لغو شده' : 'در انتظار پاسخ'}
+                ${currentStatus === 'booked' ? 'رزرو نهایی' : currentStatus === 'replied' ? 'پاسخ داده شده' : currentStatus === 'cancelled' ? 'لغو شده' : 'جدید / در انتظار پاسخ'}
               </span>
             </div>
-            <span class="text-secondary font-medium">تاریخ مراسم: ${inq.date} | ${inq.guests || 200} مهمان</span>
           </div>
 
-          <p class="text-xs text-graphite/90 bg-white p-2.5 rounded-xl border border-accent/60">${inq.details}</p>
+          <div class="flex flex-wrap items-center gap-4 text-xs text-secondary font-medium bg-white/80 p-2.5 rounded-xl border border-accent/60">
+            <span><strong class="text-graphite">تاریخ درخواست:</strong> ${inq.date || '۱۴۰۳/۰۶/۱۵'}</span>
+            <span><strong class="text-graphite">تعداد مهمان:</strong> ${inq.guests || 200} نفر</span>
+            <span><strong class="text-graphite">خدمت/پکیج:</strong> ${inq.service || inq.package || 'خدمات عمومی'}</span>
+          </div>
 
-          <div class="pt-1 flex flex-wrap items-center justify-between gap-2 border-t border-accent/60 text-xs">
+          ${(inq.customAnswers && inq.customAnswers.length) ? `
+            <div class="bg-amber-50/80 p-3 rounded-xl border border-amber-200/80 text-xs font-bold text-amber-950 space-y-1">
+              <span class="block text-[11px] font-black text-amber-900 border-b border-amber-200 pb-1">📋 پاسخ‌های سوالات اختصاصی فرم استعلام:</span>
+              <div class="space-y-0.5 pt-0.5">
+                ${inq.customAnswers.map(a => `<div class="flex items-center gap-1.5"><span class="text-amber-800 font-bold">• ${a.label}:</span> <span class="text-graphite font-black">${a.value}</span></div>`).join('')}
+              </div>
+            </div>
+          ` : ''}
+
+          <p class="text-xs text-graphite bg-white p-3 rounded-xl border border-accent/60 leading-relaxed">${inq.details || 'توضیحات و نیازمندی‌های اختصاصی زوج ثبت شده در سامانه عروسی تو.'}</p>
+
+          <div class="pt-2 flex flex-wrap items-center justify-between gap-2 border-t border-accent/60 text-xs">
             <div class="flex items-center gap-2">
-              <label class="text-secondary font-bold text-[11px]">تغییر وضعیت لید:</label>
-              <select onchange="updateInquiryStatus(${idx}, this.value)" class="bg-white border border-accent rounded-lg px-2 py-1 text-xs font-bold text-graphite focus:outline-none">
-                <option value="pending" ${currentStatus === 'pending' ? 'selected' : ''}>در انتظار پاسخ</option>
+              <label class="text-secondary font-bold text-[11px]">تغییر وضعیت:</label>
+              <select onchange="updateInquiryStatus(${idx}, this.value)" class="bg-white border border-accent rounded-xl px-2.5 py-1 text-xs font-bold text-graphite focus:outline-none focus:border-primary">
+                <option value="pending" ${currentStatus === 'pending' ? 'selected' : ''}>جدید (در انتظار)</option>
                 <option value="replied" ${currentStatus === 'replied' ? 'selected' : ''}>پاسخ داده شده</option>
                 <option value="booked" ${currentStatus === 'booked' ? 'selected' : ''}>رزرو نهایی شد</option>
                 <option value="cancelled" ${currentStatus === 'cancelled' ? 'selected' : ''}>لغو شد</option>
               </select>
             </div>
 
-            <div class="flex items-center gap-1.5">
-              <button onclick="openPreInvoiceModal()" class="bg-primary hover:bg-emerald-900 text-white px-3 py-1.5 rounded-lg text-xs font-bold transition-colors cursor-pointer">
-                صدور پیش‌فاکتور
+            <div class="flex items-center gap-2">
+              <button onclick="openInquiryReplyModal(${idx})" class="bg-primary hover:bg-emerald-900 text-white px-3.5 py-1.5 rounded-xl text-xs font-bold transition-colors cursor-pointer shadow-xs flex items-center gap-1">
+                <i data-lucide="send" class="w-3.5 h-3.5"></i> پاسخ سریع
               </button>
-              <button onclick="exportInquiriesCsv()" class="bg-white border border-accent hover:border-primary text-graphite px-2.5 py-1.5 rounded-lg text-xs font-bold transition-colors cursor-pointer">
-                خروجی CSV
+              <button onclick="openPreInvoiceModal()" class="bg-bgCustom hover:bg-slate-100 border border-accent text-graphite px-3 py-1.5 rounded-xl text-xs font-bold transition-colors cursor-pointer">
+                پیش‌فاکتور
               </button>
             </div>
           </div>
         `;
         container.appendChild(card);
       });
+      lucide.createIcons();
+    }
+
+    function openInquiryReplyModal(idx) {
+      const inq = inquiries[idx];
+      if (!inq) return;
+      const modal = document.getElementById('modal-inquiry-reply');
+      if (!modal) return;
+      document.getElementById('inquiry-reply-id').value = idx;
+      document.getElementById('reply-couple-name').innerText = inq.name || 'زوج محترم';
+      document.getElementById('reply-inquiry-details').innerText = `تاریخ مراسم: ${inq.date || 'نامشخص'} | مهمانان: ${inq.guests || '۲۰۰'} نفر | خدمت: ${inq.service || 'عمومی'}`;
+      document.getElementById('reply-status-select').value = 'replied';
+      document.getElementById('reply-message-text').value = `سلام ${inq.name || 'گرامی'} عزیز! درخواست استعلام شما برای تاریخ ${inq.date || 'مربوطه'} بررسی شد. پکیج و کاتالوگ قیمت همراه با تخفیف ویژه پلتفرم عروسی تو برای شما فعال گردید.`;
+      modal.classList.remove('hidden');
+      modal.classList.add('flex');
+    }
+
+    function closeInquiryReplyModal() {
+      const modal = document.getElementById('modal-inquiry-reply');
+      if (modal) {
+        modal.classList.add('hidden');
+        modal.classList.remove('flex');
+      }
+    }
+
+    function sendInquiryReply() {
+      const idx = parseInt(document.getElementById('inquiry-reply-id').value);
+      const newStatus = document.getElementById('reply-status-select').value;
+      const replyMsg = document.getElementById('reply-message-text').value;
+
+      if (inquiries[idx]) {
+        inquiries[idx].status = newStatus;
+        inquiries[idx].replyMsg = replyMsg;
+        showToast('پاسخ و پیشنهاد قیمت با موفقیت برای زوج ارسال شد.', 'success');
+        renderInquiries();
+        closeInquiryReplyModal();
+        if (typeof renderPlannerOffersTab === 'function') renderPlannerOffersTab();
+      }
     }
 
     function updateInquiryStatus(index, newStatus) {
       if (inquiries[index]) {
         inquiries[index].status = newStatus;
-        showToast('وضعیت لید مشتری به روزرسانی شد.', 'success');
+        showToast('وضعیت استعلام به روزرسانی شد.', 'success');
         renderInquiries();
+        if (typeof renderPlannerOffersTab === 'function') renderPlannerOffersTab();
       }
     }
 
@@ -4030,10 +4544,17 @@ if (document.readyState === "loading") {
     }
 
     function toggleVendorModalStatic(show) {
-      const modal = document.getElementById('vendor-onboarding-modal');
+      const modal = document.getElementById('vendor-register-modal') || document.getElementById('vendor-onboarding-modal');
       if (modal) {
-        if (show) modal.classList.remove('hidden');
-        else modal.classList.add('hidden');
+        if (show) {
+          modal.classList.remove('hidden');
+          modal.classList.add('flex');
+        } else {
+          modal.classList.add('hidden');
+          modal.classList.remove('flex');
+        }
+      } else if (show) {
+        openAuthModal('vendor');
       }
     }
 
@@ -4057,9 +4578,8 @@ if (document.readyState === "loading") {
         status: 'pending'
       });
 
-      document.getElementById('vendor-onboarding-form').classList.add('hidden');
-      document.getElementById('v-modal-success').classList.remove('hidden');
-
+      toggleVendorModalStatic(false);
+      showToast('درخواست عضویت شما با موفقیت ثبت شد. به‌زودی با شما تماس می‌گیریم.', 'success');
       renderAdminPendingApps();
     }
 
@@ -4075,7 +4595,270 @@ if (document.readyState === "loading") {
     }
 
 
-    // VENDOR DETAIL MODAL CONTROLLER
+    // STANDALONE VENDOR PROFILE (& MODAL) CONTROLLERS
+
+    let currentProfileVendorId = 1;
+    let currentProfileMonth = 'اردیبهشت';
+
+    function loadVendorProfile(vendorId) {
+      let vId = vendorId;
+      if (typeof vendorId === 'string' && !isNaN(parseInt(vendorId))) {
+        vId = parseInt(vendorId);
+      }
+      const vendor = vendors.find(v => v.id === vId) || vendors[0];
+      if (!vendor) return;
+
+      currentProfileVendorId = vendor.id;
+
+      // Populate Text & Image Header
+      const nameEl = document.getElementById('vp-name');
+      const coverEl = document.getElementById('vp-cover');
+      const logoEl = document.getElementById('vp-logo');
+      const catEl = document.getElementById('vp-category');
+      const districtEl = document.getElementById('vp-district');
+      const ratingEl = document.getElementById('vp-rating');
+
+      if (nameEl) nameEl.innerText = vendor.name;
+      if (coverEl) coverEl.src = vendor.image || "https://images.unsplash.com/photo-1519167758481-83f550bb49b3?auto=format&fit=crop&w=1600&q=80";
+      if (logoEl) logoEl.src = vendor.image || "https://images.unsplash.com/photo-1519167758481-83f550bb49b3?auto=format&fit=crop&w=400&q=80";
+      if (catEl) catEl.innerText = vendor.category;
+      if (districtEl) districtEl.innerText = `📍 ${vendor.province || 'استان یزد'}، ${vendor.district || 'صفائیه'}`;
+      const reviewCount = Array.isArray(vendor.reviews) ? vendor.reviews.length : (vendor.reviews || 38);
+      if (ratingEl) ratingEl.innerHTML = `<i data-lucide="star" class="w-4 h-4 fill-amber-400 text-amber-400"></i> ${vendor.rating || '۴.۹'} (${reviewCount} دیدگاه)`;
+
+      // Populate Info Bar
+      const hoursEl = document.getElementById('vp-hours');
+      const phoneLinkEl = document.getElementById('vp-phone-link');
+      const instaEl = document.getElementById('vp-instagram');
+      const addressEl = document.getElementById('vp-address');
+      const mapLabelEl = document.getElementById('vp-map-label');
+
+      if (hoursEl) hoursEl.innerText = vendor.hours || "همه روزه از ۱۰:۰۰ الی ۲۱:۰۰";
+      if (phoneLinkEl) {
+        phoneLinkEl.href = `tel:${vendor.phone || '03538240000'}`;
+        phoneLinkEl.innerText = vendor.phone || "۰۳۵-۳۸۲۴۰۰۰۰";
+      }
+      if (instaEl) {
+        instaEl.href = `https://instagram.com/${(vendor.instagram || 'yazd_wedding').replace('@', '')}`;
+        instaEl.innerText = vendor.instagram || "@yazd_wedding_studio";
+      }
+      if (addressEl) addressEl.innerText = vendor.address || `یزد، ${vendor.district || 'صفائیه'}، انتهای خیابان تیمسار فلاحی`;
+      if (mapLabelEl) mapLabelEl.innerText = `موقعیت دقیق ${vendor.name} در یزد`;
+
+      // About Text
+      const aboutEl = document.getElementById('vp-about-text');
+      if (aboutEl) {
+        aboutEl.innerText = vendor.about || `${vendor.name} یکی از برترین و معتبرترین مجموعه‌های ارائه‌دهنده خدمات ${vendor.category} در استان یزد است که با بهره‌گیری از کادر مجرب، تجهیزات حرفه‌ای و تضمین کیفیت عروسی‌تو آماده پذیرایی و ارائه خدمات به زوجین عزیز می‌باشد.`;
+      }
+
+      // Portfolio Lightbox Gallery Grid
+      const galleryGrid = document.getElementById('vp-gallery-grid');
+      const galleryCounter = document.getElementById('vp-gallery-counter');
+      const portfolio = vendor.portfolio || [
+        { url: vendor.image, tag: "نمونه‌کار اصلی" },
+        { url: "https://images.unsplash.com/photo-1519741497674-611481863552?auto=format&fit=crop&w=800&q=80", tag: "دکور و سالن" },
+        { url: "https://images.unsplash.com/photo-1511285560929-80b456fea0bc?auto=format&fit=crop&w=800&q=80", tag: "سفره عقد" },
+        { url: "https://images.unsplash.com/photo-1522673607200-164d1b6ce486?auto=format&fit=crop&w=800&q=80", tag: "فضای باز" },
+        { url: "https://images.unsplash.com/photo-1519225421980-715cb0215aed?auto=format&fit=crop&w=800&q=80", tag: "پذیرایی VIP" },
+        { url: "https://images.unsplash.com/photo-1519741497674-611481863552?auto=format&fit=crop&w=800&q=80", tag: "نورپردازی" }
+      ];
+
+      if (galleryCounter) galleryCounter.innerText = `${portfolio.length} تصویر آلبوم`;
+      if (galleryGrid) {
+        galleryGrid.innerHTML = portfolio.map(item => `
+          <div class="aspect-4/3 rounded-2xl overflow-hidden bg-slate-100 border border-accent/80 relative group cursor-pointer shadow-2xs" onclick="openLightbox('${item.url}')">
+            <img src="${item.url}" alt="${item.tag || 'تصویر نمونه کار'}" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
+            <div class="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center text-white text-xs font-bold gap-1">
+              <i data-lucide="zoom-in" class="w-4 h-4"></i>
+              <span>بزرگ‌نمایی</span>
+            </div>
+            <span class="absolute top-2.5 right-2.5 bg-black/60 text-white text-[10px] font-bold px-2.5 py-0.5 rounded-lg backdrop-blur-md">${item.tag || 'تصویر'}</span>
+          </div>
+        `).join('');
+      }
+
+      // Packages
+      const packagesContainer = document.getElementById('vp-packages-container');
+      if (packagesContainer) {
+        const pkgs = vendor.packages || [
+          { name: "پکیج برنز (اقتصادی)", price: vendor.priceRange || "۴۵,۰۰۰,۰۰۰ تومان", features: ["منوی کلاسیک تک‌پرس", "سیستم صوتی پایه", "اتاق عقد مجزا", "پارکینگ مهمانان"] },
+          { name: "پکیج نقره‌ای (استاندارد)", price: "۷۵,۰۰۰,۰۰۰ تومان", popular: true, features: ["منوی دیس‌پرس ۳ مدل غذا", "سیستم نورپردازی dynamic", "سفره عقد سنتی & گل‌آرایی", "پذیرایی شیرینی حاج خلیفه"] },
+          { name: "پکیج طلایی (VIP)", price: "۱۲۰,۰۰۰,۰۰۰ تومان", features: ["منوی سلف‌سرویس کامل VIP", "نورپردازی حرفه‌ای & استیج LED", "گروه موزیک زنده اختصاصی", "تشریفات ورودی & آتش‌بازی"] }
+        ];
+
+        packagesContainer.innerHTML = pkgs.map(pkg => `
+          <div class="bg-white border ${pkg.popular ? 'border-[#D4AF37] ring-2 ring-[#D4AF37]/30 shadow-md' : 'border-accent'} rounded-2xl p-5 flex flex-col justify-between space-y-4 relative overflow-hidden">
+            ${pkg.popular ? `<span class="absolute top-3 left-3 bg-[#D4AF37] text-[#1B3B2B] text-[10px] font-black px-2.5 py-0.5 rounded-full">پرطرفدارترین</span>` : ''}
+            <div class="space-y-3">
+              <h3 class="font-bold text-sm text-[#1B3B2B]">${pkg.name}</h3>
+              <div class="text-lg font-black text-[#1B3B2B] border-b border-accent/60 pb-3">
+                ${pkg.price}
+              </div>
+              <ul class="space-y-2 text-xs text-graphite/80">
+                ${(pkg.features || pkg.items || ["ارائه تمامی خدمات اصلی با بالاترین کیفیت"]).map(f => `<li class="flex items-center gap-2">✅ <span>${f}</span></li>`).join('')}
+              </ul>
+            </div>
+            <button onclick="openInquiryModal(${vendor.id}, '${vendor.name}')" class="w-full bg-[#1B3B2B] hover:bg-emerald-900 text-white font-bold py-2.5 rounded-xl text-xs transition-colors shadow-2xs flex items-center justify-center gap-1.5 cursor-pointer">
+              <i data-lucide="message-square-quote" class="w-4 h-4 text-[#D4AF37]"></i>
+              <span>انتخاب پکیج & استعلام</span>
+            </button>
+          </div>
+        `).join('');
+      }
+
+      // Reviews
+      const reviewsContainer = document.getElementById('vp-reviews-container');
+      if (reviewsContainer) {
+        const reviews = [
+          { author: "علی و سارا (عروسی مهر ۱۴۰۳)", rating: 5, date: "۲ هفته پیش", comment: "کیفیت خدمات و برخورد پرسنل عالی بود. پذیرایی به بهترین نحو انجام شد و همگی مهمانان رضایت کامل داشتند." },
+          { author: "محمد و مریم (مراسم عقد)", rating: 5, date: "۱ ماه پیش", comment: "از پلتفرم عروسی‌تو رزرو کردیم و قیمت دقیقاً مطابق با تخفیف اولیه اعلامی بود. کاملاً پیشنهاد می‌کنم." }
+        ];
+
+        reviewsContainer.innerHTML = reviews.map(r => `
+          <div class="bg-bgCustom/80 border border-accent/70 rounded-2xl p-4 space-y-2">
+            <div class="flex items-center justify-between">
+              <div class="flex items-center gap-2">
+                <span class="font-bold text-xs text-[#1B3B2B]">${r.author}</span>
+                <span class="bg-emerald-100 text-emerald-800 text-[9px] font-bold px-2 py-0.5 rounded-full border border-emerald-200">زوج تاییدشده</span>
+              </div>
+              <span class="text-[10px] text-secondary font-medium">${r.date}</span>
+            </div>
+            <p class="text-xs text-graphite/80 leading-relaxed">${r.comment}</p>
+          </div>
+        `).join('');
+      }
+
+      renderProfileCalendar('اردیبهشت');
+      switchTab('vendor-profile');
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+      if (typeof lucide !== 'undefined' && lucide.createIcons) lucide.createIcons();
+    }
+
+    function renderProfileCalendar(monthName) {
+      currentProfileMonth = monthName || 'اردیبهشت';
+      const grid = document.getElementById('vp-calendar-grid');
+      if (!grid) return;
+
+      document.querySelectorAll('.vp-month-pill').forEach(btn => {
+        if (btn.innerText.includes(currentProfileMonth)) {
+          btn.className = "vp-month-pill active px-3 py-1 rounded-xl bg-[#1B3B2B] text-white transition-all cursor-pointer font-bold";
+        } else {
+          btn.className = "vp-month-pill px-3 py-1 rounded-xl bg-gray-100 hover:bg-[#1B3B2B] hover:text-white transition-all cursor-pointer text-gray-700";
+        }
+      });
+
+      grid.innerHTML = '';
+
+      // Render Day Name Headers
+      const dayHeaders = ['ش', 'ی', 'د', 'س', 'چ', 'پ', 'ج'];
+      dayHeaders.forEach(h => {
+        const hEl = document.createElement('div');
+        hEl.className = "font-bold text-[10px] text-secondary py-1";
+        hEl.innerText = h;
+        grid.appendChild(hEl);
+      });
+
+      const bookedDays = [3, 8, 12, 15, 19, 24, 27];
+      const vipDays = [5, 14, 28];
+
+      for (let day = 1; day <= 30; day++) {
+        const dayBtn = document.createElement('button');
+        dayBtn.type = 'button';
+        const isBooked = bookedDays.includes(day);
+        const isVip = vipDays.includes(day);
+
+        let bgClass = "bg-emerald-50 text-emerald-900 border-emerald-200 hover:bg-emerald-100 cursor-pointer";
+        let statusTitle = "آزاد جهت استعلام و رزرو";
+
+        if (isBooked) {
+          bgClass = "bg-rose-50 text-rose-400 border-rose-200 cursor-not-allowed opacity-60";
+          statusTitle = "رزرو شده";
+        } else if (isVip) {
+          bgClass = "bg-amber-100 text-amber-900 border-amber-300 font-black cursor-pointer hover:bg-amber-200";
+          statusTitle = "روز ویژه VIP با تخفیف";
+        }
+
+        dayBtn.className = `p-2 rounded-xl border text-xs font-bold transition-all ${bgClass}`;
+        dayBtn.title = `روز ${day} ${currentProfileMonth} - ${statusTitle}`;
+        dayBtn.innerText = day;
+
+        dayBtn.onclick = function() {
+          if (isBooked) {
+            showToast(`روز ${day} ${currentProfileMonth} توسط زوج دیگری رزرو شده است.`, 'warning');
+          } else {
+            const vendor = vendors.find(v => v.id === currentProfileVendorId) || vendors[0];
+            showToast(`تاریخ ${day} ${currentProfileMonth} جهت استعلام قیمت انتخاب گردید.`, 'success');
+            openInquiryModal(vendor.id, vendor.name, `${day} ${currentProfileMonth} ۱۴۰۴`);
+          }
+        };
+
+        grid.appendChild(dayBtn);
+      }
+    }
+
+    function triggerProfileInquiry() {
+      const vendor = vendors.find(v => v.id === currentProfileVendorId) || vendors[0];
+      openInquiryModal(vendor.id, vendor.name);
+    }
+
+    function triggerProfileChat() {
+      const vendor = vendors.find(v => v.id === currentProfileVendorId) || vendors[0];
+      closeVendorDetailModal();
+      openInquiryModal(vendor.id, vendor.name);
+    }
+
+    function shareVendorProfile() {
+      const vendor = vendors.find(v => v.id === currentProfileVendorId) || vendors[0];
+      if (navigator.share) {
+        navigator.share({
+          title: vendor.name,
+          text: `مشاهده مشخصات و پکیج‌های ${vendor.name} در پلتفرم عروسی‌تو`,
+          url: window.location.href
+        }).catch(() => {});
+      } else {
+        showToast('لینک پروفایل این تامین‌کننده در حافظه کپی شد.', 'info');
+      }
+    }
+
+    function toggleFavoriteCurrentVendor(e) {
+      if (e) e.stopPropagation();
+      toggleFavoriteVendor(currentProfileVendorId, e);
+    }
+
+    function toggleProfileReviewForm() {
+      const drawer = document.getElementById('vp-review-form-drawer');
+      if (drawer) drawer.classList.toggle('hidden');
+    }
+
+    function handleProfileReviewSubmit(e) {
+      e.preventDefault();
+      const author = document.getElementById('vp-review-author')?.value.trim();
+      const rating = document.getElementById('vp-review-rating')?.value || '5';
+      const comment = document.getElementById('vp-review-comment')?.value.trim();
+
+      if (!author || !comment) return;
+
+      const container = document.getElementById('vp-reviews-container');
+      if (container) {
+        const card = document.createElement('div');
+        card.className = "bg-bgCustom/80 border border-accent/70 rounded-2xl p-4 space-y-2 animate-fadeIn";
+        card.innerHTML = `
+          <div class="flex items-center justify-between">
+            <div class="flex items-center gap-2">
+              <span class="font-bold text-xs text-[#1B3B2B]">${author}</span>
+              <span class="bg-emerald-100 text-emerald-800 text-[9px] font-bold px-2 py-0.5 rounded-full border border-emerald-200">جدید</span>
+            </div>
+            <span class="text-[10px] text-amber-600 font-bold">⭐️ ${rating} از ۵</span>
+          </div>
+          <p class="text-xs text-graphite/80 leading-relaxed">${comment}</p>
+        `;
+        container.prepend(card);
+      }
+
+      toggleProfileReviewForm();
+      showToast('دیدگاه شما با موفقیت ثبت شد و پس از تایید مدیریت نمایش داده خواهد شد.', 'success');
+      document.getElementById('vp-review-form')?.reset();
+    }
 
     function handleSelectCalendarDay(dayNum, isAvailable) {
       if (!isAvailable) {
@@ -4085,7 +4868,10 @@ if (document.readyState === "loading") {
       }
     }
 
-    function openVendorDetailModal(vendorId) {
+    let currentModalVendor = null;
+
+    window.openVendorDetailModal = function openVendorDetailModal(vendorId) {
+    window.closeVendorDetailModal = closeVendorDetailModal;
       let vId = vendorId;
       if (typeof vendorId === 'string' && !isNaN(parseInt(vendorId))) {
         vId = parseInt(vendorId);
@@ -4093,39 +4879,49 @@ if (document.readyState === "loading") {
       const vendor = vendors.find(v => v.id === vId) || vendors[0];
       if (!vendor) return;
 
+      currentModalVendor = vendor;
+
       const modal = document.getElementById('vendor-detail-modal');
       if (modal) {
         modal.classList.remove('hidden');
         modal.classList.add('active');
+        modal.classList.add('is-open');
         document.body.style.overflow = 'hidden';
       }
 
       const titleEl = document.getElementById('vdm-title');
       const coverEl = document.getElementById('vdm-cover');
-      const avatarEl = document.getElementById('vdm-avatar');
+      let avatarEl = document.getElementById('vdm-avatar');
+      if (avatarEl && avatarEl.tagName !== 'IMG') {
+        const childImg = avatarEl.querySelector('img');
+        if (childImg) avatarEl = childImg;
+      }
       const catEl = document.getElementById('vdm-category');
-      const districtEl = document.getElementById('vdm-district');
-      const bottomPriceEl = document.getElementById('vdm-bottom-price');
-      const chatBtn = document.getElementById('vdm-chat-btn');
-      const favBtn = document.getElementById('vdm-fav-btn');
+      const districtEl = document.getElementById('vdm-district') || document.getElementById('vdm-address');
+      const bottomPriceBarEl = document.getElementById('vdm-bottom-price-bar') || document.getElementById('vdm-price');
+      const aboutEl = document.getElementById('vdm-about') || document.getElementById('vdm-about-text');
+      const inquireCta = document.getElementById('vdm-modal-inquire-cta');
+      const chatCta = document.getElementById('vdm-modal-chat-cta');
 
       if (titleEl) titleEl.innerText = vendor.name;
       if (coverEl) coverEl.src = vendor.image || "https://images.unsplash.com/photo-1519167758481-83f550bb49b3?auto=format&fit=crop&w=1200&q=80";
-      if (avatarEl) avatarEl.src = vendor.image || "https://images.unsplash.com/photo-1519167758481-83f550bb49b3?auto=format&fit=crop&w=400&q=80";
+      if (avatarEl && avatarEl.tagName === 'IMG') avatarEl.src = vendor.image || "https://images.unsplash.com/photo-1519167758481-83f550bb49b3?auto=format&fit=crop&w=400&q=80";
       if (catEl) catEl.innerText = vendor.category;
       if (districtEl) districtEl.innerText = `📍 ${vendor.province || 'استان یزد'}، ${vendor.district || 'صفائیه'}`;
-      if (bottomPriceEl) bottomPriceEl.innerText = vendor.priceRange || "۶۵,۰۰۰,۰۰۰ تومان";
+      if (bottomPriceBarEl) bottomPriceBarEl.innerText = vendor.priceRange || "۶۵,۰۰۰,۰۰۰ تومان";
+      if (aboutEl) aboutEl.innerText = vendor.description || vendor.about || "توضیحات جامع مجموعه و خدمات تخصصی آن.";
 
-      if (chatBtn) {
-        chatBtn.onclick = function() {
+      if (inquireCta) {
+        inquireCta.onclick = function() {
           closeVendorDetailModal();
           openInquiryModal(vendor.id, vendor.name);
         };
       }
 
-      if (favBtn) {
-        favBtn.onclick = function(e) {
-          toggleFavoriteVendor(vendor.id, e);
+      if (chatCta) {
+        chatCta.onclick = function() {
+          closeVendorDetailModal();
+          switchTab('messages');
         };
       }
 
@@ -4133,7 +4929,7 @@ if (document.readyState === "loading") {
       const tagsContainer = document.getElementById('vdm-capability-tags');
       if (tagsContainer) {
         const tags = vendor.capabilityTags || ["مجوز رسمی عکاسی کویر", "تجهیزات هلی‌شات & نور کویر", "سرو شیرینی‌های سنتی یزد (حاج خلیفه)", "فضای باز & سالن سرپوشیده"];
-        tagsContainer.innerHTML = tags.map(t => `<span class="bg-amber-100 text-amber-900 border border-amber-300 text-[10px] font-bold px-2.5 py-1 rounded-full flex items-center gap-1">✅ ${t}</span>`).join('');
+        tagsContainer.innerHTML = tags.map(t => `<span class="bg-amber-100 text-amber-900 border border-amber-300 text-[11px] font-bold px-3 py-1 rounded-full flex items-center gap-1">✅ ${t}</span>`).join('');
       }
 
       // Populate Portfolio Gallery Grid
@@ -4153,15 +4949,71 @@ if (document.readyState === "loading") {
         `).join('');
       }
 
-      // Populate Contact Tab
-      const phoneEl = document.getElementById('vdm-contact-phone');
-      const addressEl = document.getElementById('vdm-contact-address');
+      // Populate Packages Container
+      const packagesContainer = document.getElementById('vdm-packages-container');
+      if (packagesContainer) {
+        const pkgs = vendor.packages || [
+          { name: "برنزی (پایه)", price: "۶۵,۰۰۰,۰۰۰ تومان", items: ["منوی شام ۲ رنگ سلف‌سرویس", "ورودی باغ تالار", "سیستم صوتی"] },
+          { name: "نقره‌ای (VIP)", price: "۹۵,۰۰۰,۰۰۰ تومان", items: ["منوی شام ۳ رنگ با کترینگ یزدی", "شمع‌آرایی کامل", "تست غذا برای ۴ نفر"] },
+          { name: "طلایی (Luxury)", price: "۱۴۰,۰۰۰,۰۰۰ تومان", items: ["تمام امکانات نقره‌ای + سفره عقد", "آتش‌بازی ورودی", "اقامت سوئیت عروس"] }
+        ];
+        packagesContainer.innerHTML = pkgs.map(p => `
+          <div class="bg-white border border-stone-200 rounded-2xl p-5 shadow-sm space-y-3 flex flex-col justify-between">
+            <div>
+              <div class="flex justify-between items-center border-b border-stone-100 pb-2 mb-2">
+                <h4 class="font-bold text-[#1B3B2B] text-sm">${p.name}</h4>
+                <span class="text-xs font-black text-[#D4AF37] bg-amber-50 px-2 py-0.5 rounded-md border border-amber-200">${p.price}</span>
+              </div>
+              <ul class="space-y-1.5 text-xs text-stone-600">
+                ${(p.items || []).map(item => `<li class="flex items-center gap-1.5"><span class="text-emerald-600">✓</span> <span>${item}</span></li>`).join('')}
+              </ul>
+            </div>
+            <button onclick="triggerPackageInquiry('${p.name}', '${p.price}')" class="w-full bg-[#1B3B2B] hover:bg-emerald-900 text-white font-bold py-2 rounded-xl text-xs transition-colors mt-3">
+              رزرو این پکیج
+            </button>
+          </div>
+        `).join('');
+      }
+
+      // Populate Amenities Container
+      const amenitiesContainer = document.getElementById('vdm-amenities-container');
+      if (amenitiesContainer) {
+        const amenities = vendor.capabilityTags || ["پارکینگ اختصاصی (۳۰۰ خودرو)", "سیستم صوتی و نورپردازی حرفه‌ای", "سفره عقد سنتی و سنتی-مدرن", "ژنراتور برق اضطراری", "اتاق پرو و میکاپ اختصاصی عروس", "کترینگ غذا و پذیرایی یزدی"];
+        amenitiesContainer.innerHTML = amenities.map(a => `
+          <div class="bg-white border border-stone-200 rounded-xl p-3 flex items-center gap-2 text-xs font-semibold text-stone-800 shadow-2xs">
+            <span class="text-[#D4AF37]">✨</span>
+            <span>${a}</span>
+          </div>
+        `).join('');
+      }
+
+      // Populate Reviews Container
+      const reviewsContainer = document.getElementById('vdm-reviews-container') || document.getElementById('vdm-reviews-list');
+      if (reviewsContainer) {
+        const reviews = vendor.reviews || [
+          { author: "رضا و مریم", text: "کیفیت غذا و میزبانی مجموعه بی‌نظیر بود.", stars: "★★★★★", date: "اردیبهشت ۱۴۰۳" },
+          { author: "محمد و سارا", text: "فضای باغ سنتی بسیار شیک و عکس‌ها رویایی شدند.", stars: "★★★★★", date: "فروردین ۱۴۰۳" }
+        ];
+        reviewsContainer.innerHTML = reviews.map(r => `
+          <div class="bg-white border border-stone-200 rounded-xl p-4 space-y-1.5 shadow-2xs">
+            <div class="flex justify-between items-center text-xs">
+              <strong class="text-[#1B3B2B]">${r.author}</strong>
+              <span class="text-amber-500 font-bold">${r.stars || '★★★★★'} (${r.date || '۱۴۰۳'})</span>
+            </div>
+            <p class="text-xs text-stone-600 leading-relaxed">${r.text}</p>
+          </div>
+        `).join('');
+      }
+
+      // Populate Contact Tab & Map Links
+      const phoneEl = document.getElementById('vdm-contact-phone') || document.getElementById('vdm-phone');
+      const addressEl = document.getElementById('vdm-contact-address') || document.getElementById('vdm-full-address');
       const hoursEl = document.getElementById('vdm-contact-hours');
       const instaEl = document.getElementById('vdm-contact-insta');
 
       if (phoneEl) phoneEl.innerText = vendor.phone || "۰۳۵-۳۸۲۴۰۰۰۰";
-      if (addressEl) addressEl.innerText = vendor.address || `یزد، ${vendor.district || 'صفائیه'}`;
-      if (hoursEl) hoursEl.innerText = vendor.hours || "همه روزه از ۱۰:۰۰ الی ۲۱:۰۰";
+      if (addressEl) addressEl.innerText = vendor.address || `استان یزد، ${vendor.district || 'صفائیه'}`;
+      if (hoursEl) hoursEl.innerText = vendor.hours || "همه روزه از ۱۰:۰۰ الی ۲۲:۰۰";
       if (instaEl) instaEl.innerText = vendor.instagram || "@yazd_wedding_studio";
 
       renderModalAvailabilityCalendar('اردیبهشت');
@@ -4169,11 +5021,72 @@ if (document.readyState === "loading") {
       if (typeof lucide !== 'undefined' && lucide.createIcons) lucide.createIcons();
     }
 
+    function triggerPackageInquiry(packageName, packagePrice) {
+      if (!currentModalVendor) return;
+      const vName = currentModalVendor.name;
+      const vId = currentModalVendor.id;
+      closeVendorDetailModal();
+      openInquiryModal(vId, vName, packageName, packagePrice);
+    }
+
+    function toggleFavoriteVendorModal() {
+      if (!currentModalVendor) return;
+      toggleFavoriteVendor(currentModalVendor.id);
+      showToast('وضعیت علاقه‌مندی‌ها بروزرسانی شد', 'success');
+    }
+
+    function shareVendorProfile() {
+      if (!currentModalVendor) return;
+      if (navigator.share) {
+        navigator.share({
+          title: currentModalVendor.name,
+          text: `مشاهده پروفایل ${currentModalVendor.name} در عروسی تو`,
+          url: window.location.href
+        }).catch(() => {});
+      } else {
+        showToast('لینک پروفایل تأمین‌کننده در حافظه کپی شد', 'info');
+      }
+    }
+
+    function makeVendorCall() {
+      if (!currentModalVendor) return;
+      const phone = currentModalVendor.phone || '03538240000';
+      window.location.href = `tel:${phone}`;
+    }
+
+    function handleModalReviewSubmit(e) {
+      e.preventDefault();
+      const author = document.getElementById('vdm-review-author')?.value || 'زوج عزیز';
+      const rating = document.getElementById('vdm-review-rating')?.value || '5';
+      const comment = document.getElementById('vdm-review-comment')?.value || '';
+
+      const reviewsList = document.getElementById('vdm-reviews-list');
+      if (reviewsList) {
+        const item = document.createElement('div');
+        item.className = "p-3.5 bg-white border border-gray-200 rounded-xl space-y-1.5 shadow-2xs animate-fadeIn";
+        item.innerHTML = `
+          <div class="flex items-center justify-between text-xs">
+            <strong class="text-[#1B3B2B] flex items-center gap-1.5">
+              <span class="w-6 h-6 rounded-full bg-[#1B3B2B] text-[#D4AF37] flex items-center justify-center font-bold text-[10px]">${author.substring(0, 2)}</span>
+              <span>${author}</span>
+            </strong>
+            <span class="text-amber-500 font-bold">⭐️ ${rating}.۰</span>
+          </div>
+          <p class="text-[11px] text-gray-700 leading-relaxed">${comment}</p>
+        `;
+        reviewsList.prepend(item);
+      }
+
+      showToast('دیدگاه شما با موفقیت ثبت شد و پس از تایید مدیریت نمایش داده خواهد شد.', 'success');
+      e.target.reset();
+    }
+
     function closeVendorDetailModal() {
       const modal = document.getElementById('vendor-detail-modal');
       if (modal) {
         modal.classList.add('hidden');
         modal.classList.remove('active');
+        modal.classList.remove('is-open');
         document.body.style.overflow = '';
       }
     }
@@ -4218,12 +5131,32 @@ if (document.readyState === "loading") {
     }
 
     function renderModalAvailabilityCalendar(monthName) {
+      const container = document.getElementById('vdm-calendar-container');
+      if (container && (!document.getElementById('vdm-calendar-days-grid') || !container.querySelector('.vcal-month-pill'))) {
+        container.innerHTML = `
+          <div class="flex flex-wrap items-center justify-between gap-2 border-b border-stone-100 pb-3 mb-4">
+            <span class="text-xs font-bold text-stone-700">انتخاب ماه:</span>
+            <div class="flex flex-wrap gap-1.5">
+              <button onclick="renderModalAvailabilityCalendar('اردیبهشت')" class="vcal-month-pill px-3 py-1 rounded-xl text-xs font-bold transition-all">اردیبهشت</button>
+              <button onclick="renderModalAvailabilityCalendar('خرداد')" class="vcal-month-pill px-3 py-1 rounded-xl text-xs font-bold transition-all">خرداد</button>
+              <button onclick="renderModalAvailabilityCalendar('تیر')" class="vcal-month-pill px-3 py-1 rounded-xl text-xs font-bold transition-all">تیر</button>
+            </div>
+          </div>
+          <div class="flex items-center justify-around text-xs font-semibold text-stone-500 mb-3 bg-stone-50 py-2 rounded-xl border border-stone-100">
+            <span class="flex items-center gap-1"><span class="w-2.5 h-2.5 rounded-full bg-emerald-500 inline-block"></span> آزاد</span>
+            <span class="flex items-center gap-1"><span class="w-2.5 h-2.5 rounded-full bg-amber-500 inline-block"></span> استعلام</span>
+            <span class="flex items-center gap-1"><span class="w-2.5 h-2.5 rounded-full bg-rose-500 inline-block"></span> رزرو شده</span>
+          </div>
+          <div id="vdm-calendar-days-grid" class="grid grid-cols-5 sm:grid-cols-7 gap-2 sm:gap-2.5"></div>
+        `;
+      }
+
       const pills = document.querySelectorAll('.vcal-month-pill');
       pills.forEach(pill => {
         if (pill.innerText.includes(monthName)) {
-          pill.className = "vcal-month-pill active px-3 py-1.5 rounded-xl bg-[#1B3B2B] text-white transition-all cursor-pointer";
+          pill.className = "vcal-month-pill active px-3 py-1 rounded-xl bg-[#1B3B2B] text-white transition-all cursor-pointer font-bold text-xs";
         } else {
-          pill.className = "vcal-month-pill px-3 py-1.5 rounded-xl bg-white border border-gray-200 text-gray-700 hover:border-[#D4AF37] transition-all cursor-pointer";
+          pill.className = "vcal-month-pill px-3 py-1 rounded-xl bg-white border border-stone-200 text-stone-700 hover:border-[#D4AF37] transition-all cursor-pointer font-bold text-xs";
         }
       });
 
@@ -4307,18 +5240,29 @@ if (document.readyState === "loading") {
       document.getElementById('inquiry-vendor-id').value = vendor ? vendor.id : 1;
       document.getElementById('modal-vendor-name').innerText = targetName;
 
-      // Dynamic Category Field Toggling (Guest count for venues vs package for others)
-      const guestsContainer = document.getElementById('inquiry-guests-container');
-      const nonVenueContainer = document.getElementById('inquiry-nonvenue-container');
+      // Category-Specific Dynamic Fields Toggling
       const cat = vendor ? (vendor.category || '') : '';
-      const isVenue = cat.includes("تالار") || cat.includes("باغ") || cat.includes("سالن عقد") || cat.includes("پذیرایی");
 
-      if (isVenue) {
-        if (guestsContainer) guestsContainer.classList.remove('hidden');
-        if (nonVenueContainer) nonVenueContainer.classList.add('hidden');
+      const venueFields = document.getElementById('inquiry-fields-venue');
+      const beautyFields = document.getElementById('inquiry-fields-beauty');
+      const photoFields = document.getElementById('inquiry-fields-photo');
+      const maisonFields = document.getElementById('inquiry-fields-maison');
+
+      // Hide all dynamic blocks initially
+      if (venueFields) venueFields.classList.add('hidden');
+      if (beautyFields) beautyFields.classList.add('hidden');
+      if (photoFields) photoFields.classList.add('hidden');
+      if (maisonFields) maisonFields.classList.add('hidden');
+
+      if (cat.includes("سالن زیبایی") || cat.includes("میکاپ") || cat.includes("آرایشگاه")) {
+        if (beautyFields) beautyFields.classList.remove('hidden');
+      } else if (cat.includes("آتلیه") || cat.includes("عکاسی") || cat.includes("فیلمبرداری")) {
+        if (photoFields) photoFields.classList.remove('hidden');
+      } else if (cat.includes("مزون") || cat.includes("لباس")) {
+        if (maisonFields) maisonFields.classList.remove('hidden');
       } else {
-        if (guestsContainer) guestsContainer.classList.add('hidden');
-        if (nonVenueContainer) nonVenueContainer.classList.remove('hidden');
+        // Garden, Hall, Catering, or General Venues
+        if (venueFields) venueFields.classList.remove('hidden');
       }
 
       // Pre-fill Package Details into Note & Budget fields if package requested
@@ -4333,138 +5277,83 @@ if (document.readyState === "loading") {
         if (customBudgetInp) customBudgetInp.value = '';
       }
 
-      // Update checkboxes dynamically according to vendor category if available
+      // Dynamic Vendor Services Checklist Rendering
       const container = document.getElementById('inquiry-services-checklist');
       if (container && vendor) {
-        if (cat.includes("آتلیه") || cat.includes("عکاسی") || cat.includes("فیلمبرداری")) {
-          container.innerHTML = `
-            <label class="flex items-center gap-2 cursor-pointer p-1.5 hover:bg-white rounded-lg">
-              <input type="checkbox" value="عکاسی و فیلمبرداری روز عروسی" checked class="rounded text-primary focus:ring-primary w-4 h-4">
-              <span>عکاسی و فیلمبرداری روز عروسی</span>
-            </label>
-            <label class="flex items-center gap-2 cursor-pointer p-1.5 hover:bg-white rounded-lg">
-              <input type="checkbox" value="کلیپ فرمالیته شمال / کویر" checked class="rounded text-primary focus:ring-primary w-4 h-4">
-              <span>کلیپ فرمالیته شمال / کویر</span>
-            </label>
-            <label class="flex items-center gap-2 cursor-pointer p-1.5 hover:bg-white rounded-lg">
-              <input type="checkbox" value="آلبوم ایتالیایی 80x40" checked class="rounded text-primary focus:ring-primary w-4 h-4">
-              <span>آلبوم ایتالیایی 80x40</span>
-            </label>
-            <label class="flex items-center gap-2 cursor-pointer p-1.5 hover:bg-white rounded-lg">
-              <input type="checkbox" value="تصویربرداری هلی‌شات & کرین" class="rounded text-primary focus:ring-primary w-4 h-4">
-              <span>تصویربرداری هلی‌شات & کرین</span>
-            </label>
+        let availableServices = vendor.services || [];
+
+        // If vendor services list is empty, supply category fallback services
+        if (!availableServices || availableServices.length === 0) {
+          if (cat.includes("آتلیه") || cat.includes("عکاسی")) {
+            availableServices = ["عکاسی و فیلمبرداری روز عروسی", "کلیپ فرمالیته شمال / کویر", "آلبوم ایتالیایی 80x40", "تصویربرداری هلی‌شات & کرین"];
+          } else if (cat.includes("سالن زیبایی") || cat.includes("میکاپ")) {
+            availableServices = ["میکاپ و گریم اختصاصی عروس", "شینیون و استایل مو", "تست گریم قبلی", "میکاپ همراهان"];
+          } else if (cat.includes("مزون") || cat.includes("لباس")) {
+            availableServices = ["دوخت سفارشی لباس عروس", "اجاره لباس عروس VIP", "تور و تاج عروس", "اکسسوری و جواهرات"];
+          } else {
+            availableServices = ["ورودی سالن / باغ اصلی", "منوی شام VIP / سلف سرویس", "شمع‌آرایی & آتش‌بازی", "سفره عقد اختصاصی"];
+          }
+        }
+
+        container.innerHTML = availableServices.map((service, index) => `
+          <label class="flex items-center gap-2 cursor-pointer p-1.5 hover:bg-white rounded-lg transition-colors">
+            <input type="checkbox" value="${service}" ${index < 3 ? 'checked' : ''} class="rounded text-primary focus:ring-primary w-4 h-4 cursor-pointer">
+            <span class="text-xs text-graphite font-medium">${service}</span>
+          </label>
+        `).join('');
+      }
+
+      // Dynamic Custom Questions Rendering for Vendor
+      const customContainer = document.getElementById('inquiry-custom-fields-container');
+      if (customContainer) {
+        const customQuestions = (typeof getVendorCustomQuestions === 'function') ? getVendorCustomQuestions(vendor ? vendor.id : 1) : [];
+        if (customQuestions && customQuestions.length > 0) {
+          customContainer.innerHTML = `
+            <div class="border-b border-amber-200 pb-1 mb-2 flex items-center justify-between">
+              <span class="text-xs font-bold text-amber-900 flex items-center gap-1">
+                <i data-lucide="help-circle" class="w-3.5 h-3.5 text-amber-700"></i>
+                <span>سوالات اختصاصی مجموعه ${targetName}:</span>
+              </span>
+              <span class="text-[10px] text-amber-800">پاسخ‌های شما جهت ارزیابی دقیق‌تر</span>
+            </div>
+            <div class="space-y-3">
+              ${customQuestions.map((q, idx) => {
+                const reqAttr = q.required ? 'required' : '';
+                const reqAsterisk = q.required ? '<span class="text-rose-600 mr-0.5">*</span>' : '';
+
+                if (q.type === 'select') {
+                  const optionsHtml = (q.options || []).map(opt => `<option value="${opt}">${opt}</option>`).join('');
+                  return `
+                    <div class="space-y-1">
+                      <label class="block text-xs font-bold text-graphite">${q.label} ${reqAsterisk}</label>
+                      <select data-custom-q-id="${q.id}" data-custom-q-label="${q.label}" ${reqAttr} class="inquiry-custom-input w-full bg-white border border-accent rounded-xl p-2.5 text-xs font-semibold focus:outline-none focus:border-primary cursor-pointer">
+                        ${optionsHtml}
+                      </select>
+                    </div>
+                  `;
+                } else if (q.type === 'number') {
+                  return `
+                    <div class="space-y-1">
+                      <label class="block text-xs font-bold text-graphite">${q.label} ${reqAsterisk}</label>
+                      <input type="number" data-custom-q-id="${q.id}" data-custom-q-label="${q.label}" ${reqAttr} placeholder="ورود عدد..." class="inquiry-custom-input w-full bg-white border border-accent rounded-xl p-2.5 text-xs font-medium focus:outline-none focus:border-primary">
+                    </div>
+                  `;
+                } else {
+                  return `
+                    <div class="space-y-1">
+                      <label class="block text-xs font-bold text-graphite">${q.label} ${reqAsterisk}</label>
+                      <input type="text" data-custom-q-id="${q.id}" data-custom-q-label="${q.label}" ${reqAttr} placeholder="توضیحات شما..." class="inquiry-custom-input w-full bg-white border border-accent rounded-xl p-2.5 text-xs font-medium focus:outline-none focus:border-primary">
+                    </div>
+                  `;
+                }
+              }).join('')}
+            </div>
           `;
-        } else if (cat.includes("سالن زیبایی") || cat.includes("میکاپ") || cat.includes("آرایشگاه")) {
-          container.innerHTML = `
-            <label class="flex items-center gap-2 cursor-pointer p-1.5 hover:bg-white rounded-lg">
-              <input type="checkbox" value="میکاپ و گریم اختصاصی عروس" checked class="rounded text-primary focus:ring-primary w-4 h-4">
-              <span>میکاپ و گریم اختصاصی عروس</span>
-            </label>
-            <label class="flex items-center gap-2 cursor-pointer p-1.5 hover:bg-white rounded-lg">
-              <input type="checkbox" value="شینیون و استایل مو" checked class="rounded text-primary focus:ring-primary w-4 h-4">
-              <span>شینیون و استایل مو</span>
-            </label>
-            <label class="flex items-center gap-2 cursor-pointer p-1.5 hover:bg-white rounded-lg">
-              <input type="checkbox" value="درخواست تست گریم قبلی" class="rounded text-primary focus:ring-primary w-4 h-4">
-              <span>درخواست تست گریم قبلی</span>
-            </label>
-            <label class="flex items-center gap-2 cursor-pointer p-1.5 hover:bg-white rounded-lg">
-              <input type="checkbox" value="میکاپ همراهان" class="rounded text-primary focus:ring-primary w-4 h-4">
-              <span>میکاپ همراهان</span>
-            </label>
-          `;
-        } else if (cat.includes("موزیک") || cat.includes("دی‌جی") || cat.includes("موسیقی")) {
-          container.innerHTML = `
-            <label class="flex items-center gap-2 cursor-pointer p-1.5 hover:bg-white rounded-lg">
-              <input type="checkbox" value="بند زنده و ارکستر کامل" checked class="rounded text-primary focus:ring-primary w-4 h-4">
-              <span>بند زنده و ارکستر کامل</span>
-            </label>
-            <label class="flex items-center gap-2 cursor-pointer p-1.5 hover:bg-white rounded-lg">
-              <input type="checkbox" value="دی‌جی حرفه‌ای و پرکاشن" checked class="rounded text-primary focus:ring-primary w-4 h-4">
-              <span>دی‌جی حرفه‌ای و پرکاشن</span>
-            </label>
-            <label class="flex items-center gap-2 cursor-pointer p-1.5 hover:bg-white rounded-lg">
-              <input type="checkbox" value="تجهیزات سیستم صوت VIP & استیج LED" class="rounded text-primary focus:ring-primary w-4 h-4">
-              <span>تجهیزات سیستم صوت VIP & استیج LED</span>
-            </label>
-          `;
-        } else if (cat.includes("گل") || cat.includes("ماشین")) {
-          container.innerHTML = `
-            <label class="flex items-center gap-2 cursor-pointer p-1.5 hover:bg-white rounded-lg">
-              <input type="checkbox" value="دسته گل عروس (رز/ارکیده VIP)" checked class="rounded text-primary focus:ring-primary w-4 h-4">
-              <span>دسته گل عروس (رز/ارکیده VIP)</span>
-            </label>
-            <label class="flex items-center gap-2 cursor-pointer p-1.5 hover:bg-white rounded-lg">
-              <input type="checkbox" value="گل‌آرایی کامل ماشین عروس" checked class="rounded text-primary focus:ring-primary w-4 h-4">
-              <span>گل‌آرایی کامل ماشین عروس</span>
-            </label>
-            <label class="flex items-center gap-2 cursor-pointer p-1.5 hover:bg-white rounded-lg">
-              <input type="checkbox" value="گل‌آرایی ورودی و جایگاه عروس‌وداماد" class="rounded text-primary focus:ring-primary w-4 h-4">
-              <span>گل‌آرایی ورودی و جایگاه عروس‌وداماد</span>
-            </label>
-            <label class="flex items-center gap-2 cursor-pointer p-1.5 hover:bg-white rounded-lg">
-              <input type="checkbox" value="گل‌آرایی میزهای مهمانان" class="rounded text-primary focus:ring-primary w-4 h-4">
-              <span>گل‌آرایی میزهای مهمانان</span>
-            </label>
-          `;
-        } else if (cat.includes("کیک") || cat.includes("شیرینی")) {
-          container.innerHTML = `
-            <label class="flex items-center gap-2 cursor-pointer p-1.5 hover:bg-white rounded-lg">
-              <input type="checkbox" value="کیک چندطبقه فوندانت/خامه" checked class="rounded text-primary focus:ring-primary w-4 h-4">
-              <span>کیک چندطبقه فوندانت/خامه</span>
-            </label>
-            <label class="flex items-center gap-2 cursor-pointer p-1.5 hover:bg-white rounded-lg">
-              <input type="checkbox" value="مینی‌کیک و کندی‌بار پذیرایی" checked class="rounded text-primary focus:ring-primary w-4 h-4">
-              <span>مینی‌کیک و کندی‌بار پذیرایی</span>
-            </label>
-            <label class="flex items-center gap-2 cursor-pointer p-1.5 hover:bg-white rounded-lg">
-              <input type="checkbox" value="شیرینی مخصوص پذیرایی عروسی" class="rounded text-primary focus:ring-primary w-4 h-4">
-              <span>شیرینی مخصوص پذیرایی عروسی</span>
-            </label>
-            <label class="flex items-center gap-2 cursor-pointer p-1.5 hover:bg-white rounded-lg">
-              <input type="checkbox" value="گیفت و یادبود خوراکی مهمانان" class="rounded text-primary focus:ring-primary w-4 h-4">
-              <span>گیفت و یادبود خوراکی مهمانان</span>
-            </label>
-          `;
-        } else if (cat.includes("مزون") || cat.includes("لباس")) {
-          container.innerHTML = `
-            <label class="flex items-center gap-2 cursor-pointer p-1.5 hover:bg-white rounded-lg">
-              <input type="checkbox" value="دوخت و اجاره لباس عروس VIP" checked class="rounded text-primary focus:ring-primary w-4 h-4">
-              <span>دوخت و اجاره لباس عروس VIP</span>
-            </label>
-            <label class="flex items-center gap-2 cursor-pointer p-1.5 hover:bg-white rounded-lg">
-              <input type="checkbox" value="تور و تاج عروس" checked class="rounded text-primary focus:ring-primary w-4 h-4">
-              <span>تور و تاج عروس</span>
-            </label>
-            <label class="flex items-center gap-2 cursor-pointer p-1.5 hover:bg-white rounded-lg">
-              <input type="checkbox" value="کت و شلوار دامادی" class="rounded text-primary focus:ring-primary w-4 h-4">
-              <span>کت و شلوار دامادی</span>
-            </label>
-            <label class="flex items-center gap-2 cursor-pointer p-1.5 hover:bg-white rounded-lg">
-              <input type="checkbox" value="اکسسوری و جواهرات" class="rounded text-primary focus:ring-primary w-4 h-4">
-              <span>اکسسوری و جواهرات</span>
-            </label>
-          `;
+          customContainer.classList.remove('hidden');
+          if (window.lucide) lucide.createIcons();
         } else {
-          container.innerHTML = `
-            <label class="flex items-center gap-2 cursor-pointer p-1.5 hover:bg-white rounded-lg">
-              <input type="checkbox" value="منوی شام VIP / سلف سرویس" checked class="rounded text-primary focus:ring-primary w-4 h-4">
-              <span>منوی شام VIP / سلف سرویس</span>
-            </label>
-            <label class="flex items-center gap-2 cursor-pointer p-1.5 hover:bg-white rounded-lg">
-              <input type="checkbox" value="ورودی باغ و سالن اصلی" checked class="rounded text-primary focus:ring-primary w-4 h-4">
-              <span>ورودی باغ و سالن اصلی</span>
-            </label>
-            <label class="flex items-center gap-2 cursor-pointer p-1.5 hover:bg-white rounded-lg">
-              <input type="checkbox" value="شمع‌آرایی & آتش‌بازی" checked class="rounded text-primary focus:ring-primary w-4 h-4">
-              <span>شمع‌آرایی & آتش‌بازی</span>
-            </label>
-            <label class="flex items-center gap-2 cursor-pointer p-1.5 hover:bg-white rounded-lg">
-              <input type="checkbox" value="سفره عقد اختصاصی" class="rounded text-primary focus:ring-primary w-4 h-4">
-              <span>سفره عقد اختصاصی</span>
-            </label>
-          `;
+          customContainer.innerHTML = '';
+          customContainer.classList.add('hidden');
         }
       }
 
@@ -4482,10 +5371,34 @@ if (document.readyState === "loading") {
       const name = document.getElementById('inquiry-name').value.trim();
       const phone = document.getElementById('inquiry-phone').value.trim();
       const date = document.getElementById('inquiry-date').value.trim() || '۱۴۰۳/۰۶/۱۵';
-      const guests = parseInt(document.getElementById('inquiry-guests').value) || 200;
       const budgetRange = document.getElementById('inquiry-budget-range').value;
       const customBudget = (document.getElementById('inquiry-budget-custom') ? document.getElementById('inquiry-budget-custom').value.trim() : '');
       const note = document.getElementById('inquiry-note').value.trim();
+
+      const cat = vendor ? (vendor.category || '') : '';
+      let categoryDetails = {};
+
+      if (cat.includes("سالن زیبایی") || cat.includes("میکاپ")) {
+        categoryDetails = {
+          bridalPackage: document.getElementById('inquiry-bridal-pkg')?.value || '',
+          companions: document.getElementById('inquiry-beauty-companions')?.value || ''
+        };
+      } else if (cat.includes("آتلیه") || cat.includes("عکاسی")) {
+        categoryDetails = {
+          shootingStyle: document.getElementById('inquiry-photo-style')?.value || '',
+          equipment: document.getElementById('inquiry-photo-equip')?.value || ''
+        };
+      } else if (cat.includes("مزون") || cat.includes("لباس")) {
+        categoryDetails = {
+          maisonType: document.getElementById('inquiry-maison-type')?.value || '',
+          fittingDate: document.getElementById('inquiry-fitting-date')?.value || ''
+        };
+      } else {
+        categoryDetails = {
+          guestCount: document.getElementById('inquiry-guests-select')?.value || '۲۰۰ تا ۴۰۰ نفر',
+          cateringStyle: document.getElementById('inquiry-catering-style')?.value || ''
+        };
+      }
 
       const finalBudgetStr = customBudget ? `${budgetRange} (بودجه پیشنهادی: ${customBudget})` : budgetRange;
 
@@ -4494,14 +5407,27 @@ if (document.readyState === "loading") {
         checkedServices.push(cb.value);
       });
 
+      const customAnswers = [];
+      document.querySelectorAll('#inquiry-custom-fields-container .inquiry-custom-input').forEach(inp => {
+        const qLabel = inp.getAttribute('data-custom-q-label') || '';
+        const qVal = inp.value.trim();
+        if (qLabel && qVal) {
+          customAnswers.push({ label: qLabel, value: qVal });
+        }
+      });
+
+      const guestsNum = document.getElementById('inquiry-guests')?.value || 200;
+
       const inquiryPayload = {
         vendorId: vendor.id,
         vendorName: vendor.name,
+        category: vendor.category,
         userName: name,
         userPhone: phone,
         eventDate: date,
-        guestCount: guests,
         budget: finalBudgetStr,
+        categoryDetails: categoryDetails,
+        customAnswers: customAnswers,
         services: checkedServices,
         note: note,
         submittedAt: new Date().toISOString()
@@ -4530,13 +5456,17 @@ if (document.readyState === "loading") {
         console.log('Static client environment submit:', err);
       }
 
+      const customAnswersStr = customAnswers.map(a => `${a.label}: ${a.value}`).join(' | ');
+      const combinedDetails = customAnswersStr ? `${customAnswersStr} — ${note || ''}` : (note || `استعلام ${vendor.name} - ${checkedServices.join('، ')}`);
+
       inquiries.push({
         id: Date.now(),
         name,
         phone,
         date,
-        guests,
-        details: `استعلام ${vendor.name} - ${checkedServices.join('، ')}`
+        guests: guestsNum,
+        customAnswers,
+        details: combinedDetails
       });
 
       // Find or create active thread in chatState
@@ -4559,7 +5489,7 @@ if (document.readyState === "loading") {
           lastTime: currentTimeStr,
           inquiryData: {
             date,
-            guests,
+            guests: guestsNum,
             services: checkedServices,
             budget: finalBudgetStr,
             note
@@ -4573,14 +5503,14 @@ if (document.readyState === "loading") {
         thread.lastTime = currentTimeStr;
         thread.inquiryData = {
           date,
-          guests,
+          guests: guestsNum,
           services: checkedServices,
           budget: finalBudgetStr,
           note
         };
       }
 
-      const inquirySummaryText = `ارسال استعلام قیمت سریع:\n• دسته بندی: ${vendor.category}\n• تاریخ مراسم: ${date}\n• تعداد مهمانان: ${guests} نفر\n• خدمات درخواستی: ${checkedServices.join('، ')}\n• بودجه: ${finalBudgetStr}\n• توضیحات: ${note || '-'}`;
+      const inquirySummaryText = `ارسال استعلام قیمت سریع:\n• دسته بندی: ${vendor.category}\n• تاریخ مراسم: ${date}\n• تعداد مهمانان: ${guestsNum} نفر\n• خدمات درخواستی: ${checkedServices.join('، ')}\n• بودجه: ${finalBudgetStr}\n• توضیحات: ${note || '-'}`;
 
       thread.messages.push({
         id: "msg-" + Date.now(),
@@ -7997,19 +8927,21 @@ if (document.readyState === "loading") {
     }
 
     function initVipShowcaseAutoScroll() {
-      const showcaseContainer = document.getElementById('vip-showcase-container') || document.querySelector('.vip-showcase-container');
+      const showcaseContainer = document.querySelector('.vip-carousel-wrapper') ||
+                                document.querySelector('.vendors-showcase-grid') ||
+                                document.getElementById('vipCarouselWrapper') ||
+                                document.getElementById('vip-showcase-container') ||
+                                document.querySelector('.vip-showcase-container');
       if (!showcaseContainer) return;
 
       let autoScrollTimer = null;
-      const scrollStep = 340; // Approx card width + gap
+      const scrollStep = 320; // Width of card + gap
       const intervalTime = 3000; // 3 seconds
 
       function startAutoScroll() {
         if (autoScrollTimer) clearInterval(autoScrollTimer);
         autoScrollTimer = setInterval(() => {
           const maxScroll = showcaseContainer.scrollWidth - showcaseContainer.clientWidth;
-
-          // RTL auto-scroll check
           if (Math.abs(showcaseContainer.scrollLeft) >= maxScroll - 20) {
             showcaseContainer.scrollTo({ left: 0, behavior: 'smooth' });
           } else {
@@ -8022,10 +8954,8 @@ if (document.readyState === "loading") {
         if (autoScrollTimer) clearInterval(autoScrollTimer);
       }
 
-      // Start auto scroll
       startAutoScroll();
 
-      // Pause on hover, resume on leave
       showcaseContainer.addEventListener("mouseenter", stopAutoScroll);
       showcaseContainer.addEventListener("mouseleave", startAutoScroll);
       showcaseContainer.addEventListener("touchstart", stopAutoScroll, { passive: true });
@@ -8644,6 +9574,39 @@ if (document.readyState === "loading") {
     }
 
   // Super Admin Hero Logo update function
+const CATEGORY_SUBGROUPS_MAP = {
+  legal_ceremony: {
+    title: "تشریفات قانونی، عقد و مشاوره",
+    badge: "۵ زیرگروه تخصصی",
+    icon: "🏛️",
+    subgroups: ["دفتر رسمی ازدواج و طلاق", "سفره عقد و دیزاین مراسم", "مشاوره خانواده و زوج‌درمانی", "سالن عقد و نامزدی", "خدمات حقوقی و ثبت قرارداد"]
+  },
+  gold_shopping: {
+    title: "طلا، خرید و خدمات جانبی",
+    badge: "۵ زیرگروه تخصصی",
+    icon: "💎",
+    subgroups: ["گالری طلا و جواهرات عروس", "حلقه ازدواج و پشت‌حلقه", "خدمات مسافرتی و تور ماه عسل", "اجاره خودرو لوکس و تشریفاتی", "ساعت و اکسسوری"]
+  },
+  beauty_style: {
+    title: "زیبایی و استایل زوجین",
+    badge: "۶ زیرگروه تخصصی",
+    icon: "✨",
+    subgroups: ["سالن زیبایی و میکاپ VIP عروس", "آرایشگاه و گریم داماد", "مزون لباس عروس و شب", "پوشاک و کت‌وشلوار داماد", "تاج، تور و اکسسوری", "خدمات ناخن و مژه"]
+  },
+  photo_music: {
+    title: "ثبت لحظات و موسیقی",
+    badge: "۹ زیرگروه تخصصی",
+    icon: "📸",
+    subgroups: ["آتلیه عکاسی و فیلمبرداری", "تصویربرداری هوایی (هلی‌شات)", "ساخت کلیپ فرمالیته کویر", "گروه موسیقی و دی‌جی زنده", "نورپردازی و استیج", "سیستم صوتی و اکو", "آتلیه کودک و بارداری", "فرمالیته شمال و جنوب", "تصویربرداری ۴K و ۳۶۰ درجه"]
+  },
+  venue_catering: {
+    title: "مکان، تشریفات و پذیرایی",
+    badge: "۶ زیرگروه تخصصی",
+    icon: "🏰",
+    subgroups: ["تالار عروسی و باغ‌تالار", "عمارت اختصاصی و هتل", "کترینگ و خدمات غذا و شام", "کیک و شیرینی سنتی یزد (حاج خلیفه)", "گل‌آرایی و ماشین عروس", "تشریفات پذیرایی و فینگرفود"]
+  }
+};
+
 const subgroupData = {
   1: ["دفتر رسمی ازدواج و طلاق", "سفره عقد و دیزاین مراسم", "مشاوره خانواده و زوج‌درمانی", "خدمات حقوقی و ثبت قرارداد"],
   2: ["گالری طلا و جواهرات عروس", "حلقه ازدواج و پشت‌حلقه", "خدمات مسافرتی و تور ماه عسل", "اجاره خودرو لوکس"],
@@ -8652,24 +9615,103 @@ const subgroupData = {
   5: ["تالار عروسی و باغ‌تالار", "عمارت اختصاصی و هتل", "کترینگ و خدمات غذا", "تشریفات و گل‌آرایی ورودی"]
 };
 
-function openSubgroupsModal(catId, catTitle) {
-  const modal = document.getElementById('subgroups-modal');
-  const titleElem = document.getElementById('subgroups-title');
-  const listElem = document.getElementById('subgroups-list');
+function openCategorySubgroupsModal(catKey) {
+  const data = CATEGORY_SUBGROUPS_MAP[catKey] || CATEGORY_SUBGROUPS_MAP.venue_catering;
 
-  if (!modal || !titleElem || !listElem) return;
+  const modalTitle = document.getElementById('modalCatTitle');
+  const modalBadge = document.getElementById('modalCatBadge');
+  const modalIcon = document.getElementById('modalCatIcon');
+  const gridContainer = document.getElementById('subgroupGridList');
+  const modal1 = document.getElementById('subgroupModal');
+  const modal2 = document.getElementById('subgroups-modal');
 
-  titleElem.innerText = `زیرگروه‌های ${catTitle}`;
-  const subgroups = subgroupData[catId] || [];
-  listElem.innerHTML = subgroups.map(sub => `
-    <div class="subgroup-item">
-      <span class="text-xs font-bold text-graphite">📌 ${sub}</span>
-      <button onclick="switchTab('directory'); document.getElementById('subgroups-modal').classList.add('hidden');" class="btn-sub-view cursor-pointer">مشاهده کسب‌وکارها</button>
-    </div>
-  `).join('');
+  if (modalTitle) modalTitle.innerText = data.title;
+  if (modalBadge) modalBadge.innerText = data.badge;
+  if (modalIcon) modalIcon.innerText = data.icon;
 
-  modal.classList.remove('hidden');
+  if (gridContainer) {
+    gridContainer.innerHTML = data.subgroups.map(sub => `
+      <div class="subgroup-item-card">
+        <span class="subgroup-name">📍 ${sub}</span>
+        <button onclick="switchTab('directory'); filterVendorsByCategoryTitle('${sub}'); closeSubgroupModal();" class="btn-subgroup-view">مشاهده لیست ←</button>
+      </div>
+    `).join('');
+  }
+
+  if (modal1) {
+    modal1.style.display = 'flex';
+    modal1.classList.remove('hidden');
+  }
+  if (modal2) {
+    modal2.style.display = 'flex';
+    modal2.classList.remove('hidden');
+  }
 }
+
+function openCategorySubgroups(catId, fallbackTitle) {
+  const catKeyMap = {
+    1: 'legal_ceremony',
+    2: 'gold_shopping',
+    3: 'beauty_style',
+    4: 'photo_music',
+    5: 'venue_catering'
+  };
+  if (typeof catId === 'string' && CATEGORY_SUBGROUPS_MAP[catId]) {
+    openCategorySubgroupsModal(catId);
+    return;
+  }
+  if (catKeyMap[catId]) {
+    openCategorySubgroupsModal(catKeyMap[catId]);
+    return;
+  }
+
+  // Fallback for custom categories
+  let subgroups = subgroupData[catId] || subgroupData[1] || [];
+  const modal = document.getElementById('subgroupModal');
+  const title = document.getElementById('modalCatTitle');
+  const container = document.getElementById('subgroupGridList');
+
+  if (title) title.innerText = fallbackTitle || "خدمات";
+  if (container) {
+    container.innerHTML = subgroups.map(sub => `
+      <div class="subgroup-item-card">
+        <span class="subgroup-name">📍 ${sub}</span>
+        <button onclick="switchTab('directory'); filterVendorsByCategoryTitle('${sub}'); closeSubgroupModal();" class="btn-subgroup-view">مشاهده لیست ←</button>
+      </div>
+    `).join('');
+  }
+  if (modal) {
+    modal.style.display = 'flex';
+    modal.classList.remove('hidden');
+  }
+}
+
+function openSubgroupsModal(catId, catTitle) {
+  openCategorySubgroups(catId, catTitle);
+}
+
+function closeSubgroupModal() {
+  const modal1 = document.getElementById('subgroupModal');
+  if (modal1) {
+    modal1.style.display = 'none';
+    modal1.classList.add('hidden');
+  }
+
+  const modal2 = document.getElementById('subgroups-modal');
+  if (modal2) {
+    modal2.style.display = 'none';
+    modal2.classList.add('hidden');
+  }
+}
+
+// Close modal when clicking outside of it
+window.addEventListener('click', (e) => {
+  const modal1 = document.getElementById('subgroupModal');
+  if (e.target === modal1) closeSubgroupModal();
+
+  const modal2 = document.getElementById('subgroups-modal');
+  if (e.target === modal2) closeSubgroupModal();
+});
 
   function handleUpdateHeroLogo() {
     const input = document.getElementById('admin-hero-logo-url-input');
@@ -8685,3 +9727,373 @@ function openSubgroupsModal(catId, catTitle) {
       }
     }
   }
+
+
+// Expose modal functions to window globally
+try {
+  window.openVendorDetailModal = openVendorDetailModal;
+  window.closeVendorDetailModal = closeVendorDetailModal;
+  window.switchModalTab = switchModalTab;
+  window.switchVdmSubTab = switchVdmSubTab;
+  window.toggleFavoriteVendorModal = toggleFavoriteVendorModal;
+  window.triggerPackageInquiry = triggerPackageInquiry;
+  window.handleModalReviewSubmit = handleModalReviewSubmit;
+  window.renderModalAvailabilityCalendar = renderModalAvailabilityCalendar;
+} catch(e) {}
+
+
+// Helper functions for vendor profile modal actions
+window.openVendorChatFromModal = function() {
+  if (typeof closeVendorDetailModal === 'function') closeVendorDetailModal();
+  if (typeof switchTab === 'function') switchTab('messages');
+  if (typeof showToast === 'function') showToast('💬 چت مستقیم با تامین‌کننده فعال شد', 'info');
+};
+
+window.openInquireFromVendorModal = function() {
+  const v = (typeof currentModalVendor !== 'undefined' && currentModalVendor) ? currentModalVendor : null;
+  if (typeof closeVendorDetailModal === 'function') closeVendorDetailModal();
+  if (v && typeof openInquiryModal === 'function') {
+    openInquiryModal(v.id, v.name);
+  } else if (typeof openInquiryModal === 'function') {
+    openInquiryModal(1, 'تامین‌کننده');
+  }
+};
+
+window.shareVendorModal = function(e) {
+  if (e && e.stopPropagation) e.stopPropagation();
+  if (navigator.share) {
+    navigator.share({ title: document.title, url: window.location.href }).catch(() => {});
+  } else {
+    if (navigator.clipboard) navigator.clipboard.writeText(window.location.href);
+    if (typeof showToast === 'function') showToast('🔗 لینک اشتراک‌گذاری کپی شد!', 'success');
+  }
+};
+
+window.toggleReviewSubmitDrawer = function() {
+  const form = document.getElementById('vdm-add-review-form');
+  if (form) {
+    form.classList.toggle('hidden');
+  } else if (typeof showToast === 'function') {
+    showToast('✍️ فرم ثبت نظر جدید باز شد', 'info');
+  }
+};
+
+// Subscription Matrix & Billing History Handlers
+window.toggleBillingHistoryDrawer = function() {
+  const drawer = document.getElementById('vd-billing-history-drawer');
+  if (drawer) {
+    drawer.classList.toggle('hidden');
+    if (window.lucide) lucide.createIcons();
+  }
+};
+
+window.openSubscriptionMatrixModal = function() {
+  const modal = document.getElementById('modal-subscription-matrix');
+  if (modal) {
+    modal.classList.remove('hidden');
+    if (window.lucide) lucide.createIcons();
+  }
+};
+
+window.closeSubscriptionMatrixModal = function() {
+  const modal = document.getElementById('modal-subscription-matrix');
+  if (modal) {
+    modal.classList.add('hidden');
+  }
+};
+
+window.selectSubscriptionPlan = function(planName, priceText) {
+  closeSubscriptionMatrixModal();
+  const titleElem = document.getElementById('vd-active-plan-title');
+  if (titleElem) {
+    titleElem.innerText = `اشتراک فعال: ${planName} (${priceText})`;
+  }
+  if (typeof showToast === 'function') {
+    showToast(`✨ درخواست ارتقا/تمدید به پلن ${planName} ثبت شد. فاکتور صادر گردید.`, 'success');
+  }
+};
+
+// Vendor Invoice Builder Handlers
+window.openVendorInvoiceBuilderModal = function(coupleName = 'علی و سارا', pkgTitle = 'پکیج طلایی خدمات عروسی') {
+  const modal = document.getElementById('modal-vendor-invoice-builder');
+  if (modal) {
+    const coupleInput = document.getElementById('inv-builder-couple');
+    const titleInput = document.getElementById('inv-builder-title');
+    if (coupleInput) coupleInput.value = coupleName;
+    if (titleInput) titleInput.value = pkgTitle;
+    modal.classList.remove('hidden');
+    if (window.lucide) lucide.createIcons();
+  }
+};
+
+window.closeVendorInvoiceBuilderModal = function() {
+  const modal = document.getElementById('modal-vendor-invoice-builder');
+  if (modal) {
+    modal.classList.add('hidden');
+  }
+};
+
+window.toggleMasterDiscountBadge = function(isCheck) {
+  const label = document.getElementById('vd-discount-toggle-label');
+  if (label) {
+    label.innerText = isCheck ? 'نشان تخفیف روی پروفایل: فعال' : 'نشان تخفیف روی پروفایل: غیرفعال';
+  }
+  if (typeof showToast === 'function') {
+    showToast(isCheck ? '🏷️ نشان تخفیف‌های ویژه روی پروفایل عمومی فعال شد.' : 'نشان تخفیف‌های عمومی غیرفعال گردید.', 'info');
+  }
+};
+
+window.toggleDiscountPreset = function(presetKey) {
+  const badge = document.getElementById(`badge-status-${presetKey}`);
+  if (!badge) return;
+
+  const isActive = badge.classList.contains('bg-emerald-100');
+  if (isActive) {
+    badge.className = 'bg-slate-200 text-slate-700 text-[10px] font-bold px-2 py-0.5 rounded-md';
+    badge.innerText = 'غیرفعال';
+    if (typeof showToast === 'function') showToast('پیشنهاد تخفیف غیرفعال شد.', 'info');
+  } else {
+    badge.className = 'bg-emerald-100 text-emerald-800 text-[10px] font-bold px-2 py-0.5 rounded-md';
+    badge.innerText = 'فعال';
+    if (typeof showToast === 'function') showToast('🎉 پیشنهاد تخفیف ویژه روی پروفایل عمومی فعال شد.', 'success');
+  }
+};
+
+window.handleSendInvoiceSubmit = function(e) {
+  if (e && e.preventDefault) e.preventDefault();
+  closeVendorInvoiceBuilderModal();
+
+  const couple = document.getElementById('inv-builder-couple')?.value || 'علی و سارا';
+  const title = document.getElementById('inv-builder-title')?.value || 'پکیج خدمات';
+  const date = document.getElementById('inv-builder-date')?.value || '۱۴۰۳/۰۶/۱۵';
+  const total = document.getElementById('inv-builder-total')?.value || '۴۵,۰۰۰,۰۰۰';
+  const deposit = document.getElementById('inv-builder-deposit')?.value || '۱۰,۰۰۰,۰۰۰';
+  const items = document.getElementById('inv-builder-items')?.value || '';
+
+  // Append new invoice message if chat state exists
+  if (typeof activeChatThreadId !== 'undefined' && typeof chatThreads !== 'undefined') {
+    const thread = chatThreads.find(t => t.id === activeChatThreadId) || chatThreads[0];
+    if (thread) {
+      thread.messages.push({
+        id: 'msg-' + Date.now(),
+        sender: 'vendor',
+        text: `📄 پیش‌فاکتور دیجیتال رسمی صادر شد:\nعنوان: ${title}\nتاریخ: ${date}\nمبلغ کل: ${total} تومان\nبیعانه: ${deposit} تومان\nشرح خدمات:\n${items}`,
+        time: 'الان'
+      });
+      if (typeof renderActiveChatThread === 'function') renderActiveChatThread();
+    }
+  }
+
+  if (typeof showToast === 'function') {
+    showToast(`🧾 پیش‌فاکتور دیجیتال به مبلغ ${total} تومان برای ${couple} ارسال شد.`, 'success');
+  }
+};
+
+// ==========================================
+// VENDOR CUSTOM INQUIRY FORM BUILDER LOGIC
+// ==========================================
+
+function getVendorCustomQuestions(vendorId = 1) {
+  try {
+    const stored = localStorage.getItem(`aroosi_vendor_custom_questions_${vendorId}`);
+    if (stored) {
+      return JSON.parse(stored);
+    }
+  } catch (e) {
+    console.error('Error reading vendor custom questions from localStorage:', e);
+  }
+
+  const v = vendors.find(v => v.id === vendorId) || vendors[0];
+  if (v && v.customQuestions) {
+    return v.customQuestions;
+  }
+
+  // Default fallback initial questions for vendor 1
+  const defaultQuestions = [
+    { id: 'cq-1', label: 'حدود تعداد مهمانان مدنظر شما؟', type: 'select', options: ['زیر ۱۵۰ نفر', '۱۵۰ تا ۳۰۰ نفر', '۳۰۰ تا ۵۰۰ نفر', 'بالای ۵۰۰ نفر'], required: true },
+    { id: 'cq-2', label: 'نوع منوی شام و پذیرایی مدنظر؟', type: 'select', options: ['منوی تک‌پرسی کلاسیک', 'منوی ۲ رنگ با دسر', 'منوی VIP بوفه سلف‌سرویس'], required: true },
+    { id: 'cq-3', label: 'توضیحات و نیازمندی‌های خاص مراسم شما؟', type: 'text', options: [], required: false }
+  ];
+
+  if (v) v.customQuestions = defaultQuestions;
+  return defaultQuestions;
+}
+
+function saveVendorCustomQuestions(vendorId = 1, questions = []) {
+  try {
+    localStorage.setItem(`aroosi_vendor_custom_questions_${vendorId}`, JSON.stringify(questions));
+  } catch (e) {
+    console.error('Error saving vendor custom questions:', e);
+  }
+  const v = vendors.find(v => v.id === vendorId) || vendors[0];
+  if (v) {
+    v.customQuestions = questions;
+  }
+}
+
+window.renderVendorCustomQuestionsList = function(vendorId = 1) {
+  const container = document.getElementById('vd-custom-questions-list');
+  if (!container) return;
+
+  const questions = getVendorCustomQuestions(vendorId);
+  container.innerHTML = '';
+
+  if (!questions || questions.length === 0) {
+    container.innerHTML = `
+      <div class="col-span-1 md:col-span-2 p-6 text-center text-secondary bg-bgCustom rounded-2xl border border-accent space-y-2">
+        <p class="text-xs font-bold text-graphite">هنوز هیچ سوال اختصاصی برای فرم استعلام خود اضافه نکرده‌اید.</p>
+        <p class="text-[11px] text-secondary">زوج‌ها هنگام استعلام فقط فیلدهای عمومی را مشاهده خواهند کرد.</p>
+        <button type="button" onclick="openCustomQuestionModal()" class="bg-primary hover:bg-emerald-900 text-white font-bold px-4 py-2 rounded-xl text-xs transition-colors shadow-2xs mt-1">
+          + افزودن اولین سوال اختصاصی
+        </button>
+      </div>
+    `;
+    if (window.lucide) lucide.createIcons();
+    return;
+  }
+
+  questions.forEach((q, idx) => {
+    const card = document.createElement('div');
+    card.className = "p-4 bg-bgCustom border border-accent rounded-2xl space-y-2 hover:border-primary/50 transition-all flex flex-col justify-between";
+
+    const typeLabel = q.type === 'select' ? 'منوی کشویی' : q.type === 'number' ? 'عددی' : 'متنی';
+    const reqBadge = q.required ? '<span class="bg-amber-100 text-amber-800 text-[10px] font-bold px-2 py-0.5 rounded-md">الزامی</span>' : '<span class="bg-slate-100 text-slate-600 text-[10px] font-bold px-2 py-0.5 rounded-md">اختیاری</span>';
+    const optsText = (q.type === 'select' && q.options && q.options.length) ? `گزینه‌ها: ${q.options.join(' ، ')}` : '';
+
+    card.innerHTML = `
+      <div class="space-y-1">
+        <div class="flex items-center justify-between gap-2">
+          <span class="font-black text-graphite text-xs flex items-center gap-1.5">
+            <span class="w-5 h-5 rounded-full bg-primary/10 text-primary flex items-center justify-center text-[10px] font-black">${idx + 1}</span>
+            <span>${q.label}</span>
+          </span>
+          <div class="flex items-center gap-1 shrink-0">
+            <span class="bg-emerald-100 text-emerald-800 text-[10px] font-bold px-2 py-0.5 rounded-md">${typeLabel}</span>
+            ${reqBadge}
+          </div>
+        </div>
+        ${optsText ? `<p class="text-[11px] text-secondary font-medium mr-6 truncate">${optsText}</p>` : ''}
+      </div>
+
+      <div class="flex items-center justify-end gap-2 pt-2 border-t border-accent/60">
+        <button type="button" onclick="openCustomQuestionModal('${q.id}')" class="text-xs text-primary hover:underline font-bold">ویرایش</button>
+        <span class="text-accent">|</span>
+        <button type="button" onclick="deleteCustomQuestion('${q.id}')" class="text-xs text-rose-600 hover:underline font-bold">حذف</button>
+      </div>
+    `;
+    container.appendChild(card);
+  });
+
+  if (window.lucide) lucide.createIcons();
+};
+
+window.openCustomQuestionModal = function(qId = null) {
+  const modal = document.getElementById('modal-vendor-custom-question');
+  if (!modal) return;
+
+  const idInp = document.getElementById('cq-id');
+  const labelInp = document.getElementById('cq-label');
+  const typeInp = document.getElementById('cq-type');
+  const reqInp = document.getElementById('cq-required');
+  const optsInp = document.getElementById('cq-options');
+  const titleElem = document.getElementById('custom-q-modal-title');
+
+  const questions = getVendorCustomQuestions(1);
+
+  if (qId) {
+    const q = questions.find(item => item.id === qId);
+    if (q) {
+      if (idInp) idInp.value = q.id;
+      if (labelInp) labelInp.value = q.label;
+      if (typeInp) typeInp.value = q.type || 'text';
+      if (reqInp) reqInp.checked = !!q.required;
+      if (optsInp) optsInp.value = (q.options || []).join('، ');
+      if (titleElem) titleElem.innerText = 'ویرایش سوال اختصاصی فرم استعلام';
+      toggleCustomQuestionOptions(q.type || 'text');
+    }
+  } else {
+    if (idInp) idInp.value = '';
+    if (labelInp) labelInp.value = '';
+    if (typeInp) typeInp.value = 'text';
+    if (reqInp) reqInp.checked = true;
+    if (optsInp) optsInp.value = '';
+    if (titleElem) titleElem.innerText = 'افزودن سوال اختصاصی جدید';
+    toggleCustomQuestionOptions('text');
+  }
+
+  modal.classList.remove('hidden');
+  if (window.lucide) lucide.createIcons();
+};
+
+window.closeCustomQuestionModal = function() {
+  const modal = document.getElementById('modal-vendor-custom-question');
+  if (modal) modal.classList.add('hidden');
+};
+
+window.toggleCustomQuestionOptions = function(typeVal) {
+  const optsBox = document.getElementById('cq-options-container');
+  if (!optsBox) return;
+  if (typeVal === 'select') {
+    optsBox.classList.remove('hidden');
+  } else {
+    optsBox.classList.add('hidden');
+  }
+};
+
+window.saveCustomQuestion = function(e) {
+  if (e && e.preventDefault) e.preventDefault();
+
+  const idVal = document.getElementById('cq-id')?.value;
+  const labelVal = document.getElementById('cq-label')?.value.trim();
+  const typeVal = document.getElementById('cq-type')?.value || 'text';
+  const reqVal = document.getElementById('cq-required')?.checked;
+  const optsRaw = document.getElementById('cq-options')?.value.trim() || '';
+
+  if (!labelVal) {
+    if (typeof showToast === 'function') showToast('لطفاً عنوان سوال را وارد کنید.', 'danger');
+    return;
+  }
+
+  const optionsArr = typeVal === 'select' ? optsRaw.split(/[,،]/).map(s => s.trim()).filter(Boolean) : [];
+
+  const questions = getVendorCustomQuestions(1);
+
+  if (idVal) {
+    const idx = questions.findIndex(q => q.id === idVal);
+    if (idx !== -1) {
+      questions[idx] = {
+        id: idVal,
+        label: labelVal,
+        type: typeVal,
+        required: reqVal,
+        options: optionsArr
+      };
+    }
+  } else {
+    questions.push({
+      id: 'cq-' + Date.now(),
+      label: labelVal,
+      type: typeVal,
+      required: reqVal,
+      options: optionsArr
+    });
+  }
+
+  saveVendorCustomQuestions(1, questions);
+  closeCustomQuestionModal();
+  renderVendorCustomQuestionsList(1);
+
+  if (typeof showToast === 'function') {
+    showToast('✨ سوال اختصاصی با موفقیت در فرم استعلام قرار گرفت.', 'success');
+  }
+};
+
+window.deleteCustomQuestion = function(qId) {
+  let questions = getVendorCustomQuestions(1);
+  questions = questions.filter(q => q.id !== qId);
+  saveVendorCustomQuestions(1, questions);
+  renderVendorCustomQuestionsList(1);
+  if (typeof showToast === 'function') {
+    showToast('سوال اختصاصی از فرم استعلام حذف گردید.', 'info');
+  }
+};
