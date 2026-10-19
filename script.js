@@ -19541,6 +19541,7 @@ let bwCurrentStep = 1;
 
 
 
+
 let cbwMode = 'fast'; // 'fast' (14 steps) or 'detailed' (26 steps)
 let cbwCurrentStep = 1;
 let cbwLastFeedback = '';
@@ -19638,14 +19639,14 @@ window.setBwMode = function(mode) {
 
 window.changeBwGuests = function(delta) {
     cbwState.guests = Math.max(20, cbwState.guests + delta);
-    cbwLastFeedback = `تعداد مهمانان به ${cbwState.guests.toLocaleString('fa-IR')} نفر تغییر یافت و ثبت شد ✨`;
+    cbwLastFeedback = `تعداد مهمانان به ${cbwState.guests.toLocaleString('fa-IR')} نفر تغییر یافت و توسط سیستم محاسبه شد ✨`;
     window.renderBwWizard();
 };
 
 window.changeBwCakeKg = function(delta) {
     cbwState.cakeKg = Math.max(2, cbwState.cakeKg + delta);
     cbwState.cakePrice = cbwState.cakeKg * cbwState.cakePerKg;
-    cbwLastFeedback = `وزن کیک به ${cbwState.cakeKg} کیلوگرم (${cbwState.cakePrice.toLocaleString('fa-IR')} تومان) تغییر یافت ✨`;
+    cbwLastFeedback = `وزن کیک به ${cbwState.cakeKg} کیلوگرم (مبلغ اتوماتیک: ${cbwState.cakePrice.toLocaleString('fa-IR')} تومان) تغییر یافت ✨`;
     window.renderBwWizard();
 };
 
@@ -19655,7 +19656,7 @@ window.changeBwGrams = function(key, priceKey, nameKey, delta, pricePerGram, lab
     cbwState[priceKey] = cbwState[key] * rate;
     const matLabel = cbwState[matKey] === 'silver' ? 'نقره' : 'طلا';
     cbwState[nameKey] = `${label} ${matLabel} (${cbwState[key]} گرم)`;
-    cbwLastFeedback = `${label} ${matLabel} به ${cbwState[key]} گرم (${cbwState[priceKey].toLocaleString('fa-IR')} تومان) تغییر یافت ✨`;
+    cbwLastFeedback = `${label} ${matLabel} به ${cbwState[key]} گرم (برآورد اتوماتیک سیستم: ${cbwState[priceKey].toLocaleString('fa-IR')} تومان) تغییر یافت ✨`;
     window.renderBwWizard();
 };
 
@@ -19663,9 +19664,9 @@ window.setBwStateVal = function(key, val, nameVal) {
     cbwState[key] = val;
     if (nameVal) {
       cbwState[key + 'Name'] = nameVal;
-      cbwLastFeedback = `شما گزینه «${nameVal}» با کیفیت «${cbwState.tierName || 'متوسط'}» را انتخاب کردید و تایید شد ✨`;
+      cbwLastFeedback = `انتخاب شما: «${nameVal}» در سطح «${cbwState.tierName || 'متوسط'}» (هزینه به صورت هوشمند برآورد گردید) ✨`;
     } else {
-      cbwLastFeedback = `انتخاب شما ثبت و تایید شد ✨`;
+      cbwLastFeedback = `انتخاب شما ثبت و توسط سیستم محاسبه شد ✨`;
     }
     window.renderBwWizard();
 };
@@ -19749,11 +19750,11 @@ window.renderBwWizard = function() {
 
     let stepHtml = '';
 
-    // MANDATORY DUAL-CONTROL ROW 1: Quality Tier Selector
+    // Quality Tier Selector rendered ONLY for category question steps (NOT for guest count step 1 or location step 2)
     const qualitySelectorHtml = `
       <div class="bg-[#0E121C] border border-[#C5A059]/20 rounded-2xl p-3.5 space-y-2 mb-4">
         <div class="flex items-center justify-between text-[11px] font-black text-amber-300">
-          <span>کیفیت این بخش (Quality Tier Selector):</span>
+          <span>کیفیت این بخش (Quality Tier):</span>
           <span class="text-slate-400">سطح انتخاب‌شده: ${cbwState.tierName || 'متوسط'}</span>
         </div>
         <div class="grid grid-cols-3 gap-2 text-center">
@@ -19783,7 +19784,7 @@ window.renderBwWizard = function() {
             <h3 class="text-2xl sm:text-3xl font-black text-[#D4AF37]">
               ${(minTotal / 1000000).toFixed(0)} میلیون تا ${(maxTotal / 1000000).toFixed(0)} میلیون تومان
             </h3>
-            <p class="text-xs text-slate-300 font-medium">برآورد دقیق بر اساس ${cbwState.guests.toLocaleString('fa-IR')} نفر مهمان در ${cbwState.city === 'yazd' ? 'استان یزد' : 'شهر انتخابی'}</p>
+            <p class="text-xs text-slate-300 font-medium">برآورد دقیق اتوماتیک بر اساس ${cbwState.guests.toLocaleString('fa-IR')} نفر مهمان در ${cbwState.city === 'yazd' ? 'استان یزد' : 'شهر انتخابی'}</p>
           </div>
 
           <div class="bg-[#141A28] border border-[#C5A059]/30 rounded-3xl p-6 space-y-4 shadow-xl">
@@ -19827,16 +19828,48 @@ window.renderBwWizard = function() {
           </div>
         </div>`;
     } else {
-      // DUAL CONTROL STEP GENERATION FOR BOTH FAST & DETAILED MODES
+      // PURE OPTION CARDS & COUNTERS FOR EVERY STEP (NO MANUAL INPUT BOXES)
       if (currentStepObj.key === 'guests') {
         stepHtml = `
           <div class="space-y-4 text-right">
-            ${qualitySelectorHtml}
             <h4 class="text-sm font-black text-[#D4AF37]">${currentStepObj.prompt}</h4>
             <div class="flex items-center justify-center gap-4 bg-[#141A28] border border-[#C5A059]/30 rounded-2xl p-6 shadow-md">
               <button type="button" onclick="changeBwGuests(-10)" class="w-12 h-12 rounded-2xl bg-[#0E121C] border border-[#C5A059]/40 text-[#D4AF37] font-black text-xl hover:bg-[#D4AF37] hover:text-[#07090E] transition-all cursor-pointer">-</button>
               <span id="bw-guest-counter-val" class="text-2xl font-black text-white px-6">${cbwState.guests.toLocaleString('fa-IR')} نفر</span>
               <button type="button" onclick="changeBwGuests(10)" class="w-12 h-12 rounded-2xl bg-[#0E121C] border border-[#C5A059]/40 text-[#D4AF37] font-black text-xl hover:bg-[#D4AF37] hover:text-[#07090E] transition-all cursor-pointer">+</button>
+            </div>
+          </div>`;
+      } else if (currentStepObj.key === 'city') {
+        stepHtml = `
+          <div class="space-y-4 text-right">
+            <h4 class="text-sm font-black text-[#D4AF37]">${currentStepObj.prompt}</h4>
+            <div class="grid grid-cols-2 sm:grid-cols-3 gap-3">
+              <button type="button" onclick="setBwStateVal('city', 'yazd', 'استان یزد (مبدأ اصلی)')" class="p-4 rounded-2xl border text-xs font-black transition-all ${cbwState.city === 'yazd' ? 'bg-[#D4AF37] text-[#07090E] border-[#D4AF37]' : 'bg-[#141A28] text-white border-slate-700 hover:border-[#D4AF37]'}">🏛️ یزد (اصلی)</button>
+              <button type="button" onclick="setBwStateVal('city', 'kerman', 'کرمان')" class="p-4 rounded-2xl border text-xs font-black transition-all ${cbwState.city === 'kerman' ? 'bg-[#D4AF37] text-[#07090E] border-[#D4AF37]' : 'bg-[#141A28] text-white border-slate-700 hover:border-[#D4AF37]'}">🌴 کرمان</button>
+              <button type="button" onclick="setBwStateVal('city', 'isfahan', 'اصفهان')" class="p-4 rounded-2xl border text-xs font-black transition-all ${cbwState.city === 'isfahan' ? 'bg-[#D4AF37] text-[#07090E] border-[#D4AF37]' : 'bg-[#141A28] text-white border-slate-700 hover:border-[#D4AF37]'}">🕌 اصفهان</button>
+              <button type="button" onclick="setBwStateVal('city', 'shiraz', 'شیراز')" class="p-4 rounded-2xl border text-xs font-black transition-all ${cbwState.city === 'shiraz' ? 'bg-[#D4AF37] text-[#07090E] border-[#D4AF37]' : 'bg-[#141A28] text-white border-slate-700 hover:border-[#D4AF37]'}">🌸 شیراز</button>
+              <button type="button" onclick="setBwStateVal('city', 'khorasan_s', 'خراسان جنوبی')" class="p-4 rounded-2xl border text-xs font-black transition-all ${cbwState.city === 'khorasan_s' ? 'bg-[#D4AF37] text-[#07090E] border-[#D4AF37]' : 'bg-[#141A28] text-white border-slate-700 hover:border-[#D4AF37]'}">🏜️ خراسان جنوبی</button>
+              <button type="button" onclick="setBwStateVal('city', 'other', 'سایر شهرها')" class="p-4 rounded-2xl border text-xs font-black transition-all ${cbwState.city === 'other' ? 'bg-[#D4AF37] text-[#07090E] border-[#D4AF37]' : 'bg-[#141A28] text-white border-slate-700 hover:border-[#D4AF37]'}">📍 سایر شهرها</button>
+            </div>
+          </div>`;
+      } else if (currentStepObj.key === 'season') {
+        stepHtml = `
+          <div class="space-y-4 text-right">
+            ${qualitySelectorHtml}
+            <h4 class="text-sm font-black text-[#D4AF37]">${currentStepObj.prompt}</h4>
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+              <button type="button" onclick="setBwStateVal('season', 'midweek', 'روزهای عادی و وسط هفته')" class="p-4 rounded-2xl border text-xs font-black text-right transition-all ${cbwState.season === 'midweek' ? 'bg-[#D4AF37] text-[#07090E] border-[#D4AF37]' : 'bg-[#141A28] text-white border-slate-700'}">📅 روزهای عادی و وسط هفته<span class="block text-[10px] opacity-80 mt-1 font-normal">تخفیف تالارها و خدمات</span></button>
+              <button type="button" onclick="setBwStateVal('season', 'weekend', 'اعیاد و آخر هفته‌ها')" class="p-4 rounded-2xl border text-xs font-black text-right transition-all ${cbwState.season === 'weekend' ? 'bg-[#D4AF37] text-[#07090E] border-[#D4AF37]' : 'bg-[#141A28] text-white border-slate-700'}">🌟 اعیاد، مناسبت‌ها و آخر هفته‌ها<span class="block text-[10px] opacity-80 mt-1 font-normal">تعرفه پیک بازار</span></button>
+            </div>
+          </div>`;
+      } else if (currentStepObj.key === 'tier') {
+        stepHtml = `
+          <div class="space-y-4 text-right">
+            <h4 class="text-sm font-black text-[#D4AF37]">${currentStepObj.prompt}</h4>
+            <div class="grid grid-cols-1 sm:grid-cols-3 gap-3">
+              <button type="button" onclick="setBwStateVal('tier', 'eco', 'کیفیت اقتصادی')" class="p-4 rounded-2xl border text-xs font-black text-right transition-all ${cbwState.tier === 'eco' ? 'bg-[#D4AF37] text-[#07090E] border-[#D4AF37]' : 'bg-[#141A28] text-white border-slate-700'}"><span class="block text-sm">اقتصادی & صمیمی</span><span class="text-[10px] opacity-80 block font-normal mt-1">مدیریت دقیق هزینه‌ها</span></button>
+              <button type="button" onclick="setBwStateVal('tier', 'mid', 'کیفیت متوسط')" class="p-4 rounded-2xl border text-xs font-black text-right transition-all ${cbwState.tier === 'mid' ? 'bg-[#D4AF37] text-[#07090E] border-[#D4AF37]' : 'bg-[#141A28] text-white border-slate-700'}"><span class="block text-sm">متوسط & متوازن</span><span class="text-[10px] opacity-80 block font-normal mt-1">کیفیت عالی + قیمت استاندارد</span></button>
+              <button type="button" onclick="setBwStateVal('tier', 'lux', 'کیفیت لوکس VIP')" class="p-4 rounded-2xl border text-xs font-black text-right transition-all ${cbwState.tier === 'lux' ? 'bg-[#D4AF37] text-[#07090E] border-[#D4AF37]' : 'bg-[#141A28] text-white border-slate-700'}"><span class="block text-sm">لوکس & VIP</span><span class="text-[10px] opacity-80 block font-normal mt-1">تشریفات کامل و خاص</span></button>
             </div>
           </div>`;
       } else if (currentStepObj.key === 'venueType') {
@@ -20055,15 +20088,80 @@ window.renderBwWizard = function() {
               <button type="button" onclick="cbwState.music=0; setBwStateVal('musicType', 'none', 'عدم سفارش موسیقی');" class="p-3.5 rounded-2xl border text-xs font-black transition-all ${cbwState.musicType === 'none' ? 'bg-[#D4AF37] text-[#07090E] border-[#D4AF37]' : 'bg-[#141A28] text-white border-slate-700'}">❌ نمی‌خوام</button>
             </div>
           </div>`;
-      } else {
-        const currentItem = currentStepsList[cbwCurrentStep - 1];
+      } else if (currentStepObj.key === 'prefilmAtelier') {
         stepHtml = `
           <div class="space-y-4 text-right">
             ${qualitySelectorHtml}
-            <h4 class="text-sm font-black text-[#D4AF37]">${currentItem.prompt}</h4>
-            <div class="bg-[#141A28] border border-[#C5A059]/30 rounded-2xl p-5 space-y-3 shadow-md">
-              <label class="text-xs font-bold text-slate-300 block">مبلغ برآوردی یا انتخابی (تومان):</label>
-              <input type="number" value="${cbwState[currentItem.key] || 5000000}" onchange="cbwState['${currentItem.key}']=parseInt(this.value)||0; cbwLastFeedback='مبلغ این بخش به میزان ' + (parseInt(this.value)||0).toLocaleString('fa-IR') + ' تومان به‌روزرسانی و تایید شد ✨'; window.renderBwWizard();" class="w-full bg-[#0E121C] border border-[#C5A059]/30 rounded-xl px-4 py-3 text-sm text-white focus:outline-none focus:border-[#D4AF37]">
+            <h4 class="text-sm font-black text-[#D4AF37]">${currentStepObj.prompt}</h4>
+            <div class="grid grid-cols-1 sm:grid-cols-3 gap-3">
+              <button type="button" onclick="cbwState.prefilmAtelier=20000000; setBwStateVal('prefilmAtelierType', 'desert', 'فرمالیته کویر یزد / شمال');" class="p-4 rounded-2xl border text-xs font-black text-right transition-all ${cbwState.prefilmAtelierType === 'desert' ? 'bg-[#D4AF37] text-[#07090E] border-[#D4AF37]' : 'bg-[#141A28] text-white border-slate-700'}">🏜️ فرمالیته کویر یزد / شمال</button>
+              <button type="button" onclick="cbwState.prefilmAtelier=12000000; setBwStateVal('prefilmAtelierType', 'mansion', 'عمارت داخل شهر');" class="p-4 rounded-2xl border text-xs font-black text-right transition-all ${cbwState.prefilmAtelierType === 'mansion' ? 'bg-[#D4AF37] text-[#07090E] border-[#D4AF37]' : 'bg-[#141A28] text-white border-slate-700'}">🏰 عمارت داخل شهر</button>
+              <button type="button" onclick="cbwState.prefilmAtelier=0; setBwStateVal('prefilmAtelierType', 'none', 'عدم سفارش آتلیه فرمالیته');" class="p-4 rounded-2xl border text-xs font-black text-right transition-all ${cbwState.prefilmAtelierType === 'none' ? 'bg-[#D4AF37] text-[#07090E] border-[#D4AF37]' : 'bg-[#141A28] text-white border-slate-700'}">❌ نمی‌خوام</button>
+            </div>
+          </div>`;
+      } else if (currentStepObj.key === 'carDecor') {
+        stepHtml = `
+          <div class="space-y-4 text-right">
+            ${qualitySelectorHtml}
+            <h4 class="text-sm font-black text-[#D4AF37]">${currentStepObj.prompt}</h4>
+            <div class="grid grid-cols-1 sm:grid-cols-3 gap-3">
+              <button type="button" onclick="cbwState.carDecor=3500000; setBwStateVal('carDecorType', 'basic', 'گل‌آرایی پایه ماشین عروس');" class="p-4 rounded-2xl border text-xs font-black text-right transition-all ${cbwState.carDecorType === 'basic' ? 'bg-[#D4AF37] text-[#07090E] border-[#D4AF37]' : 'bg-[#141A28] text-white border-slate-700'}">🚗 گل‌آرایی پایه</button>
+              <button type="button" onclick="cbwState.carDecor=6500000; setBwStateVal('carDecorType', 'natural', 'گل‌آرایی طبیعی ویژه');" class="p-4 rounded-2xl border text-xs font-black text-right transition-all ${cbwState.carDecorType === 'natural' ? 'bg-[#D4AF37] text-[#07090E] border-[#D4AF37]' : 'bg-[#141A28] text-white border-slate-700'}">🌸 گل‌آرایی طبیعی ویژه</button>
+              <button type="button" onclick="cbwState.carDecor=0; setBwStateVal('carDecorType', 'none', 'عدم گل‌آرایی ماشین');" class="p-4 rounded-2xl border text-xs font-black text-right transition-all ${cbwState.carDecorType === 'none' ? 'bg-[#D4AF37] text-[#07090E] border-[#D4AF37]' : 'bg-[#141A28] text-white border-slate-700'}">❌ نمی‌خوام</button>
+            </div>
+          </div>`;
+      } else if (currentStepObj.key === 'lightEffects') {
+        stepHtml = `
+          <div class="space-y-4 text-right">
+            ${qualitySelectorHtml}
+            <h4 class="text-sm font-black text-[#D4AF37]">${currentStepObj.prompt}</h4>
+            <div class="grid grid-cols-1 sm:grid-cols-3 gap-3">
+              <button type="button" onclick="cbwState.lightEffects=5000000; setBwStateVal('lightEffectsType', 'basic', 'نورپردازی پایه سالن');" class="p-4 rounded-2xl border text-xs font-black text-right transition-all ${cbwState.lightEffectsType === 'basic' ? 'bg-[#D4AF37] text-[#07090E] border-[#D4AF37]' : 'bg-[#141A28] text-white border-slate-700'}">💡 نورپردازی پایه</button>
+              <button type="button" onclick="cbwState.lightEffects=9000000; setBwStateVal('lightEffectsType', 'stage_led', 'استیج LED + آتش‌بازی سرد');" class="p-4 rounded-2xl border text-xs font-black text-right transition-all ${cbwState.lightEffectsType === 'stage_led' ? 'bg-[#D4AF37] text-[#07090E] border-[#D4AF37]' : 'bg-[#141A28] text-white border-slate-700'}">✨ استیج LED + آتش‌بازی سرد</button>
+              <button type="button" onclick="cbwState.lightEffects=0; setBwStateVal('lightEffectsType', 'none', 'عدم سفارش نورپردازی');" class="p-4 rounded-2xl border text-xs font-black text-right transition-all ${cbwState.lightEffectsType === 'none' ? 'bg-[#D4AF37] text-[#07090E] border-[#D4AF37]' : 'bg-[#141A28] text-white border-slate-700'}">❌ نمی‌خوام</button>
+            </div>
+          </div>`;
+      } else if (currentStepObj.key === 'carRental') {
+        stepHtml = `
+          <div class="space-y-4 text-right">
+            ${qualitySelectorHtml}
+            <h4 class="text-sm font-black text-[#D4AF37]">${currentStepObj.prompt}</h4>
+            <div class="grid grid-cols-1 sm:grid-cols-3 gap-3">
+              <button type="button" onclick="cbwState.carRental=7000000; setBwStateVal('carRentalType', 'classic', 'خودرو کلاسیک تشریفاتی');" class="p-4 rounded-2xl border text-xs font-black text-right transition-all ${cbwState.carRentalType === 'classic' ? 'bg-[#D4AF37] text-[#07090E] border-[#D4AF37]' : 'bg-[#141A28] text-white border-slate-700'}">🏎️ خودرو کلاسیک / قدیمی</button>
+              <button type="button" onclick="cbwState.carRental=12000000; setBwStateVal('carRentalType', 'suv_lux', 'شاسی‌بلند لوکس');" class="p-4 rounded-2xl border text-xs font-black text-right transition-all ${cbwState.carRentalType === 'suv_lux' ? 'bg-[#D4AF37] text-[#07090E] border-[#D4AF37]' : 'bg-[#141A28] text-white border-slate-700'}">🚘 شاسی‌بلند / مدرن</button>
+              <button type="button" onclick="cbwState.carRental=0; setBwStateVal('carRentalType', 'none', 'استفاده از خودرو شخصی');" class="p-4 rounded-2xl border text-xs font-black text-right transition-all ${cbwState.carRentalType === 'none' ? 'bg-[#D4AF37] text-[#07090E] border-[#D4AF37]' : 'bg-[#141A28] text-white border-slate-700'}">❌ خودرو شخصی خودم</button>
+            </div>
+          </div>`;
+      } else if (currentStepObj.key === 'digitalInvitation') {
+        stepHtml = `
+          <div class="space-y-4 text-right">
+            ${qualitySelectorHtml}
+            <h4 class="text-sm font-black text-[#D4AF37]">${currentStepObj.prompt}</h4>
+            <div class="grid grid-cols-1 sm:grid-cols-3 gap-3">
+              <button type="button" onclick="cbwState.digitalInvitation=1500000; setBwStateVal('digitalInvitationType', 'digital_online', 'کارت آنلاین دیجیتال + چاپی');" class="p-4 rounded-2xl border text-xs font-black text-right transition-all ${cbwState.digitalInvitationType === 'digital_online' ? 'bg-[#D4AF37] text-[#07090E] border-[#D4AF37]' : 'bg-[#141A28] text-white border-slate-700'}">💌 کارت دیجیتال آنلاین + چاپی</button>
+              <button type="button" onclick="cbwState.digitalInvitation=800000; setBwStateVal('digitalInvitationType', 'digital_only', 'فقط کارت آنلاین دیجیتال');" class="p-4 rounded-2xl border text-xs font-black text-right transition-all ${cbwState.digitalInvitationType === 'digital_only' ? 'bg-[#D4AF37] text-[#07090E] border-[#D4AF37]' : 'bg-[#141A28] text-white border-slate-700'}">📱 فقط کارت دیجیتال آنلاین</button>
+              <button type="button" onclick="cbwState.digitalInvitation=0; setBwStateVal('digitalInvitationType', 'none', 'عدم سفارش کارت دعوت');" class="p-4 rounded-2xl border text-xs font-black text-right transition-all ${cbwState.digitalInvitationType === 'none' ? 'bg-[#D4AF37] text-[#07090E] border-[#D4AF37]' : 'bg-[#141A28] text-white border-slate-700'}">❌ نمی‌خوام</button>
+            </div>
+          </div>`;
+      } else if (currentStepObj.key === 'honeymoon') {
+        stepHtml = `
+          <div class="space-y-4 text-right">
+            ${qualitySelectorHtml}
+            <h4 class="text-sm font-black text-[#D4AF37]">${currentStepObj.prompt}</h4>
+            <div class="grid grid-cols-1 sm:grid-cols-3 gap-3">
+              <button type="button" onclick="cbwState.honeymoon=20000000; setBwStateVal('honeymoonType', 'domestic', 'تور داخلی (کیش/شمال)');" class="p-4 rounded-2xl border text-xs font-black text-right transition-all ${cbwState.honeymoonType === 'domestic' ? 'bg-[#D4AF37] text-[#07090E] border-[#D4AF37]' : 'bg-[#141A28] text-white border-slate-700'}">🏖️ تور داخلی (کیش/شمال)</button>
+              <button type="button" onclick="cbwState.honeymoon=60000000; setBwStateVal('honeymoonType', 'foreign', 'تور خارجی (ترکیه/دبی)');" class="p-4 rounded-2xl border text-xs font-black text-right transition-all ${cbwState.honeymoonType === 'foreign' ? 'bg-[#D4AF37] text-[#07090E] border-[#D4AF37]' : 'bg-[#141A28] text-white border-slate-700'}">✈️ تور خارجی (ترکیه/دبی)</button>
+              <button type="button" onclick="cbwState.honeymoon=0; setBwStateVal('honeymoonType', 'none', 'عدم برنامه سفر ماه عسل');" class="p-4 rounded-2xl border text-xs font-black text-right transition-all ${cbwState.honeymoonType === 'none' ? 'bg-[#D4AF37] text-[#07090E] border-[#D4AF37]' : 'bg-[#141A28] text-white border-slate-700'}">❌ فعلاً برنامه‌ای ندارم</button>
+            </div>
+          </div>`;
+      } else {
+        stepHtml = `
+          <div class="space-y-4 text-right">
+            ${qualitySelectorHtml}
+            <h4 class="text-sm font-black text-[#D4AF37]">${currentStepObj.prompt}</h4>
+            <div class="grid grid-cols-2 gap-3">
+              <button type="button" onclick="setBwStateVal('${currentStepObj.key}Status', 'active', 'تأیید پکیج استاندارد')" class="p-4 rounded-2xl border border-[#D4AF37] bg-[#D4AF37]/20 text-[#D4AF37] text-xs font-black transition-all">✨ پکیج استاندارد سیستم</button>
+              <button type="button" onclick="cbwState['${currentStepObj.key}']=0; setBwStateVal('${currentStepObj.key}Status', 'none', 'عدم نیاز');" class="p-4 rounded-2xl border border-slate-700 bg-[#141A28] text-white text-xs font-black transition-all">❌ نمی‌خوام</button>
             </div>
           </div>`;
       }
@@ -20081,8 +20179,8 @@ window.renderBwWizard = function() {
           <div class="flex items-start gap-3">
             <div class="w-10 h-10 rounded-2xl bg-[#D4AF37]/20 border border-[#D4AF37] flex items-center justify-center text-[#D4AF37] shrink-0 font-black">🌿</div>
             <div class="space-y-1">
-              <h3 class="text-sm font-black text-white">سلام! من دستیار گفت‌وگومحور برآورد بودجه عروسی یزد هستم.</h3>
-              <p class="text-xs text-slate-300 font-medium">پاسخ‌ها و انتخاب‌هایت بلافاصله تایید شده و گزارش آن در کادر زیر نمایش داده می‌شود.</p>
+              <h3 class="text-sm font-black text-white">سلام! من دستیار گفت‌وگومحور برآورد اتوماتیک بودجه عروسی یزد هستم.</h3>
+              <p class="text-xs text-slate-300 font-medium">تمامی هزینه‌ها بر اساس انتخابی‌های شما و سطح کیفیت به صورت هوشمند توسط سیستم برآورد می‌شوند.</p>
             </div>
           </div>
 
