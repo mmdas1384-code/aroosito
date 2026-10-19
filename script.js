@@ -19538,56 +19538,82 @@ let bwMode = 'fast'; // 'fast' (14 steps) or 'detailed' (25 steps)
 let bwCurrentStep = 1;
 
 
+
 let cbwMode = 'fast'; // 'fast' (14 steps) or 'detailed' (26 steps)
 let cbwCurrentStep = 1;
+let cbwLastFeedback = '';
 let cbwState = {
   guests: 200,
   city: 'yazd', // yazd, kerman, isfahan, shiraz, khorasan_s, other
+  cityName: 'استان یزد (مبدأ اصلی)',
   season: 'midweek', // midweek, weekend
+  seasonName: 'روزهای عادی و وسط هفته',
   tier: 'mid', // eco, mid, lux
+  tierName: 'متوسط & متوازن',
   venueType: 'hall',
-  cateringPerGuest: 350000,
+  venueTypeName: 'تالار پذیرایی مجلل',
+  cateringPerGuest: 380000,
   cateringMenu: 'standard',
+  cateringMenuName: 'منوی دو پرس (باقالی پلو + جوجه)',
   fruitPerGuest: 45000,
   fruitType: '4_seasons',
-  sweetPerGuest: 35000,
+  fruitTypeName: '۴ مدل میوه فصل + میوه استوایی',
+  sweetPerGuest: 45000,
   sweetType: 'yazdi_authentic',
+  sweetTypeName: 'پکیج شیرینی اصیل یزدی (قطاب، نان منقا، لوز)',
   fingerFoodPerGuest: 30000,
   fingerFoodType: 'welcome_drink',
-  drinkPerGuest: 25000,
+  fingerFoodTypeName: 'بار نوشیدنی خوشامدگویی (Welcome Drink)',
+  drinkPerGuest: 30000,
   drinkType: 'hot_cold',
+  drinkTypeName: 'چای، قهوه و آبمیوه طبیعی',
   guestGift: 3000000,
+  guestGiftName: 'یادبود و گیفت سنتی',
   cakeKg: 15,
   cakePerKg: 350000,
   cakePrice: 5250000,
+  cakeName: 'کیک ۱۵ کیلوگرمی طبقاتی',
   dressType: 'rent',
+  dressTypeName: 'اجاره لباس شب مزون',
   dress: 25000000,
   suitType: 'buy_domestic',
+  suitTypeName: 'خرید برند داخلی',
   suit: 12000000,
   goldGrams: 25,
   goldMaterial: 'gold',
   goldSet: 65625150,
+  goldSetName: 'سرویس طلا ۲۵ گرمی',
   ringBrideGrams: 5,
   ringBrideMaterial: 'gold',
   ringBride: 13125030,
+  ringBrideName: 'حلقه عروس ۵ گرمی',
   ringGroomGrams: 6,
   ringGroomMaterial: 'gold',
   ringGroom: 15750036,
+  ringGroomName: 'حلقه داماد ۶ گرمی',
   photoFilmPackage: 'pkg_2',
+  photoFilmPackageName: 'پکیج استاندارد (هلی‌شات + ۳ دوربین)',
   photoFilm: 35000000,
   prefilmAtelierType: 'desert',
+  prefilmAtelierTypeName: 'فرمالیته کویر یزد',
   prefilmAtelier: 20000000,
   carDecorType: 'mid',
+  carDecorTypeName: 'تزئین گل طبیعی استاندارد',
   carDecor: 5000000,
   musicType: 'dj',
+  musicTypeName: 'دی‌جی حرفه‌ای + استیج نور',
   music: 20000000,
   lightEffectsType: 'stage_led',
+  lightEffectsTypeName: 'نورپردازی LED و آتش‌بازی',
   lightEffects: 8000000,
   carRentalType: 'classic',
+  carRentalTypeName: 'خودرو کلاسیک تشریفاتی',
   carRental: 7000000,
   digitalInvitationType: 'digital_online',
+  digitalInvitationTypeName: 'کارت آنلاین مولتی‌مدیا + چاپی',
   digitalInvitation: 1500000,
   honeymoonType: 'domestic',
+  honeymoonTypeName: 'تور داخلی (کیش/شمال)',
   honeymoon: 40000000,
   services: [
     { id: 'venue', title: 'اجاره تالار / باغ', targetPercent: 25, active: true, desc: 'ورودی، سالن و تشریفات اولیه' },
@@ -19602,29 +19628,24 @@ let cbwState = {
 window.setBwMode = function(mode) {
     cbwMode = mode;
     cbwCurrentStep = 1;
+    cbwLastFeedback = mode === 'fast' ? "حالت سریع (۱۴ گام کلیدی) فعال شد. بیا شروع کنیم!" : "حالت کامل و بومی (۲۶ گام با شیرینی یزدی و تمام جزئیات) فعال شد.";
     window.renderBwWizard();
 };
 
 window.changeBwGuests = function(delta) {
     cbwState.guests = Math.max(20, cbwState.guests + delta);
-    const counterEl = document.getElementById('bw-guest-counter-val');
-    if (counterEl) counterEl.innerText = cbwState.guests.toLocaleString('fa-IR') + ' نفر';
-};
-
-window.changeBwCakeKg = function(delta) {
-    cbwState.cakeKg = Math.max(2, cbwState.cakeKg + delta);
-    cbwState.cakePrice = cbwState.cakeKg * cbwState.cakePerKg;
+    cbwLastFeedback = `تعداد مهمانان به ${cbwState.guests.toLocaleString('fa-IR')} نفر تغییر یافت و ثبت شد ✨`;
     window.renderBwWizard();
 };
 
-window.changeBwGrams = function(key, priceKey, delta, pricePerGram) {
-    cbwState[key] = Math.max(1, cbwState[key] + delta);
-    cbwState[priceKey] = cbwState[key] * pricePerGram;
-    window.renderBwWizard();
-};
-
-window.setBwStateVal = function(key, val) {
+window.setBwStateVal = function(key, val, nameVal) {
     cbwState[key] = val;
+    if (nameVal) {
+      cbwState[key + 'Name'] = nameVal;
+      cbwLastFeedback = `شما گزینه «${nameVal}» را انتخاب کردید و با موفقیت ثبت شد ✨`;
+    } else {
+      cbwLastFeedback = `انتخاب شما ثبت و تایید شد ✨`;
+    }
     window.renderBwWizard();
 };
 
@@ -19645,6 +19666,7 @@ window.prevBwStep = function() {
 
 window.restartBwWizard = function() {
     cbwCurrentStep = 1;
+    cbwLastFeedback = "محاسبه از ابتدا شروع شد.";
     window.renderBwWizard();
 };
 
@@ -19705,6 +19727,17 @@ window.renderBwWizard = function() {
 
     let stepHtml = '';
 
+    // Quality level selector header block for steps that support quality tiering
+    const qualitySelectorHtml = `
+      <div class="bg-[#0E121C] border border-[#C5A059]/20 rounded-2xl p-3.5 space-y-2 mb-4">
+        <span class="text-[11px] font-black text-amber-300 block">سطح کیفیت انتخابی برای این بخش (Quality Tier):</span>
+        <div class="grid grid-cols-3 gap-2 text-center">
+          <button type="button" onclick="setBwStateVal('tier', 'eco', 'کیفیت اقتصادی')" class="py-1.5 px-2 rounded-xl border text-[11px] font-bold transition-all ${cbwState.tier === 'eco' ? 'bg-[#D4AF37] text-[#07090E] border-[#D4AF37]' : 'bg-[#141A28] text-slate-300 border-slate-700'}">اقتصادی</button>
+          <button type="button" onclick="setBwStateVal('tier', 'mid', 'کیفیت متوسط')" class="py-1.5 px-2 rounded-xl border text-[11px] font-bold transition-all ${cbwState.tier === 'mid' ? 'bg-[#D4AF37] text-[#07090E] border-[#D4AF37]' : 'bg-[#141A28] text-slate-300 border-slate-700'}">متوسط & متوازن</button>
+          <button type="button" onclick="setBwStateVal('tier', 'lux', 'کیفیت لوکس VIP')" class="py-1.5 px-2 rounded-xl border text-[11px] font-bold transition-all ${cbwState.tier === 'lux' ? 'bg-[#D4AF37] text-[#07090E] border-[#D4AF37]' : 'bg-[#141A28] text-slate-300 border-slate-700'}">لوکس VIP</button>
+        </div>
+      </div>`;
+
     if (isFinalStep) {
       let totalGold = cbwState.goldSet + cbwState.ringBride + cbwState.ringGroom;
       let foodPerPerson = cbwState.cateringPerGuest + cbwState.fruitPerGuest + cbwState.sweetPerGuest + cbwState.fingerFoodPerGuest + cbwState.drinkPerGuest;
@@ -19753,7 +19786,7 @@ window.renderBwWizard = function() {
           </div>
 
           <div class="bg-[#0E121C] border border-[#C5A059]/20 rounded-2xl p-3 text-center text-[10.5px] font-bold text-slate-400">
-            مبنای محاسبه: نرخ طلای ۱۸ عیار ۲۶,۲۵۰,۰۰۰ تومان | ضریب شهری: ${cbwState.city === 'yazd' ? '۱.۰ (یزد)' : '۱.۱۵ (استان همجوار)'}
+            مبنای محاسبه: نرخ طلای ۱۸ عیار ۲,۶۲۵,۰۰۶ تومان | ضریب شهری: ${cbwState.city === 'yazd' ? '۱.۰ (یزد)' : '۱.۱۵ (استان همجوار)'}
           </div>
 
           <div class="flex flex-col sm:flex-row items-center justify-between gap-3 pt-2">
@@ -19772,6 +19805,7 @@ window.renderBwWizard = function() {
       if (cbwCurrentStep === 1) {
         stepHtml = `
           <div class="space-y-4 text-right">
+            ${qualitySelectorHtml}
             <h4 class="text-sm font-black text-[#D4AF37]">تعداد مهمانان مراسم عروسی شما چند نفر است؟</h4>
             <div class="flex items-center justify-center gap-4 bg-[#141A28] border border-[#C5A059]/30 rounded-2xl p-6 shadow-md">
               <button type="button" onclick="changeBwGuests(-10)" class="w-12 h-12 rounded-2xl bg-[#0E121C] border border-[#C5A059]/40 text-[#D4AF37] font-black text-xl hover:bg-[#D4AF37] hover:text-[#07090E] transition-all cursor-pointer">-</button>
@@ -19784,12 +19818,12 @@ window.renderBwWizard = function() {
           <div class="space-y-4 text-right">
             <h4 class="text-sm font-black text-[#D4AF37]">شهر محل برگزاری مراسم (یزد و استان‌های همجوار):</h4>
             <div class="grid grid-cols-2 sm:grid-cols-3 gap-3">
-              <button type="button" onclick="setBwStateVal('city', 'yazd')" class="p-4 rounded-2xl border text-xs font-black transition-all ${cbwState.city === 'yazd' ? 'bg-[#D4AF37] text-[#07090E] border-[#D4AF37]' : 'bg-[#141A28] text-white border-slate-700 hover:border-[#D4AF37]'}">🏛️ یزد (اصلی)</button>
-              <button type="button" onclick="setBwStateVal('city', 'kerman')" class="p-4 rounded-2xl border text-xs font-black transition-all ${cbwState.city === 'kerman' ? 'bg-[#D4AF37] text-[#07090E] border-[#D4AF37]' : 'bg-[#141A28] text-white border-slate-700 hover:border-[#D4AF37]'}">🌴 کرمان</button>
-              <button type="button" onclick="setBwStateVal('city', 'isfahan')" class="p-4 rounded-2xl border text-xs font-black transition-all ${cbwState.city === 'isfahan' ? 'bg-[#D4AF37] text-[#07090E] border-[#D4AF37]' : 'bg-[#141A28] text-white border-slate-700 hover:border-[#D4AF37]'}">🕌 اصفهان</button>
-              <button type="button" onclick="setBwStateVal('city', 'shiraz')" class="p-4 rounded-2xl border text-xs font-black transition-all ${cbwState.city === 'shiraz' ? 'bg-[#D4AF37] text-[#07090E] border-[#D4AF37]' : 'bg-[#141A28] text-white border-slate-700 hover:border-[#D4AF37]'}">🌸 شیراز</button>
-              <button type="button" onclick="setBwStateVal('city', 'khorasan_s')" class="p-4 rounded-2xl border text-xs font-black transition-all ${cbwState.city === 'khorasan_s' ? 'bg-[#D4AF37] text-[#07090E] border-[#D4AF37]' : 'bg-[#141A28] text-white border-slate-700 hover:border-[#D4AF37]'}">🏜️ خراسان جنوبی</button>
-              <button type="button" onclick="setBwStateVal('city', 'other')" class="p-4 rounded-2xl border text-xs font-black transition-all ${cbwState.city === 'other' ? 'bg-[#D4AF37] text-[#07090E] border-[#D4AF37]' : 'bg-[#141A28] text-white border-slate-700 hover:border-[#D4AF37]'}">📍 سایر شهرها</button>
+              <button type="button" onclick="setBwStateVal('city', 'yazd', 'استان یزد (مبدأ اصلی)')" class="p-4 rounded-2xl border text-xs font-black transition-all ${cbwState.city === 'yazd' ? 'bg-[#D4AF37] text-[#07090E] border-[#D4AF37]' : 'bg-[#141A28] text-white border-slate-700 hover:border-[#D4AF37]'}">🏛️ یزد (اصلی)</button>
+              <button type="button" onclick="setBwStateVal('city', 'kerman', 'کرمان')" class="p-4 rounded-2xl border text-xs font-black transition-all ${cbwState.city === 'kerman' ? 'bg-[#D4AF37] text-[#07090E] border-[#D4AF37]' : 'bg-[#141A28] text-white border-slate-700 hover:border-[#D4AF37]'}">🌴 کرمان</button>
+              <button type="button" onclick="setBwStateVal('city', 'isfahan', 'اصفهان')" class="p-4 rounded-2xl border text-xs font-black transition-all ${cbwState.city === 'isfahan' ? 'bg-[#D4AF37] text-[#07090E] border-[#D4AF37]' : 'bg-[#141A28] text-white border-slate-700 hover:border-[#D4AF37]'}">🕌 اصفهان</button>
+              <button type="button" onclick="setBwStateVal('city', 'shiraz', 'شیراز')" class="p-4 rounded-2xl border text-xs font-black transition-all ${cbwState.city === 'shiraz' ? 'bg-[#D4AF37] text-[#07090E] border-[#D4AF37]' : 'bg-[#141A28] text-white border-slate-700 hover:border-[#D4AF37]'}">🌸 شیراز</button>
+              <button type="button" onclick="setBwStateVal('city', 'khorasan_s', 'خراسان جنوبی')" class="p-4 rounded-2xl border text-xs font-black transition-all ${cbwState.city === 'khorasan_s' ? 'bg-[#D4AF37] text-[#07090E] border-[#D4AF37]' : 'bg-[#141A28] text-white border-slate-700 hover:border-[#D4AF37]'}">🏜️ خراسان جنوبی</button>
+              <button type="button" onclick="setBwStateVal('city', 'other', 'سایر شهرها')" class="p-4 rounded-2xl border text-xs font-black transition-all ${cbwState.city === 'other' ? 'bg-[#D4AF37] text-[#07090E] border-[#D4AF37]' : 'bg-[#141A28] text-white border-slate-700 hover:border-[#D4AF37]'}">📍 سایر شهرها</button>
             </div>
           </div>`;
       } else if (cbwCurrentStep === 3) {
@@ -19797,8 +19831,8 @@ window.renderBwWizard = function() {
           <div class="space-y-4 text-right">
             <h4 class="text-sm font-black text-[#D4AF37]">زمان و مناسبت برگزاری مراسم:</h4>
             <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
-              <button type="button" onclick="setBwStateVal('season', 'midweek')" class="p-4 rounded-2xl border text-xs font-black text-right transition-all ${cbwState.season === 'midweek' ? 'bg-[#D4AF37] text-[#07090E] border-[#D4AF37]' : 'bg-[#141A28] text-white border-slate-700'}">📅 روزهای عادی و وسط هفته<span class="block text-[10px] opacity-80 mt-1 font-normal">تخفیف تالارها و خدمات</span></button>
-              <button type="button" onclick="setBwStateVal('season', 'weekend')" class="p-4 rounded-2xl border text-xs font-black text-right transition-all ${cbwState.season === 'weekend' ? 'bg-[#D4AF37] text-[#07090E] border-[#D4AF37]' : 'bg-[#141A28] text-white border-slate-700'}">🌟 اعیاد، مناسبت‌ها و آخر هفته‌ها<span class="block text-[10px] opacity-80 mt-1 font-normal">تعرفه پیک بازار</span></button>
+              <button type="button" onclick="setBwStateVal('season', 'midweek', 'روزهای عادی و وسط هفته')" class="p-4 rounded-2xl border text-xs font-black text-right transition-all ${cbwState.season === 'midweek' ? 'bg-[#D4AF37] text-[#07090E] border-[#D4AF37]' : 'bg-[#141A28] text-white border-slate-700'}">📅 روزهای عادی و وسط هفته<span class="block text-[10px] opacity-80 mt-1 font-normal">تخفیف تالارها و خدمات</span></button>
+              <button type="button" onclick="setBwStateVal('season', 'weekend', 'اعیاد و آخر هفته‌ها')" class="p-4 rounded-2xl border text-xs font-black text-right transition-all ${cbwState.season === 'weekend' ? 'bg-[#D4AF37] text-[#07090E] border-[#D4AF37]' : 'bg-[#141A28] text-white border-slate-700'}">🌟 اعیاد، مناسبت‌ها و آخر هفته‌ها<span class="block text-[10px] opacity-80 mt-1 font-normal">تعرفه پیک بازار</span></button>
             </div>
           </div>`;
       } else if (cbwCurrentStep === 4) {
@@ -19806,170 +19840,89 @@ window.renderBwWizard = function() {
           <div class="space-y-4 text-right">
             <h4 class="text-sm font-black text-[#D4AF37]">سطح کیفی مدنظر برای مراسم:</h4>
             <div class="grid grid-cols-1 sm:grid-cols-3 gap-3">
-              <button type="button" onclick="setBwStateVal('tier', 'eco')" class="p-4 rounded-2xl border text-xs font-black text-right transition-all ${cbwState.tier === 'eco' ? 'bg-[#D4AF37] text-[#07090E] border-[#D4AF37]' : 'bg-[#141A28] text-white border-slate-700'}"><span class="block text-sm">اقتصادی & صمیمی</span><span class="text-[10px] opacity-80 block font-normal mt-1">مدیریت دقیق هزینه‌ها</span></button>
-              <button type="button" onclick="setBwStateVal('tier', 'mid')" class="p-4 rounded-2xl border text-xs font-black text-right transition-all ${cbwState.tier === 'mid' ? 'bg-[#D4AF37] text-[#07090E] border-[#D4AF37]' : 'bg-[#141A28] text-white border-slate-700'}"><span class="block text-sm">متوسط & متوازن</span><span class="text-[10px] opacity-80 block font-normal mt-1">کیفیت عالی + قیمت استاندارد</span></button>
-              <button type="button" onclick="setBwStateVal('tier', 'lux')" class="p-4 rounded-2xl border text-xs font-black text-right transition-all ${cbwState.tier === 'lux' ? 'bg-[#D4AF37] text-[#07090E] border-[#D4AF37]' : 'bg-[#141A28] text-white border-slate-700'}"><span class="block text-sm">لوکس & VIP</span><span class="text-[10px] opacity-80 block font-normal mt-1">تشریفات کامل و خاص</span></button>
+              <button type="button" onclick="setBwStateVal('tier', 'eco', 'کیفیت اقتصادی')" class="p-4 rounded-2xl border text-xs font-black text-right transition-all ${cbwState.tier === 'eco' ? 'bg-[#D4AF37] text-[#07090E] border-[#D4AF37]' : 'bg-[#141A28] text-white border-slate-700'}"><span class="block text-sm">اقتصادی & صمیمی</span><span class="text-[10px] opacity-80 block font-normal mt-1">مدیریت دقیق هزینه‌ها</span></button>
+              <button type="button" onclick="setBwStateVal('tier', 'mid', 'کیفیت متوسط')" class="p-4 rounded-2xl border text-xs font-black text-right transition-all ${cbwState.tier === 'mid' ? 'bg-[#D4AF37] text-[#07090E] border-[#D4AF37]' : 'bg-[#141A28] text-white border-slate-700'}"><span class="block text-sm">متوسط & متوازن</span><span class="text-[10px] opacity-80 block font-normal mt-1">کیفیت عالی + قیمت استاندارد</span></button>
+              <button type="button" onclick="setBwStateVal('tier', 'lux', 'کیفیت لوکس VIP')" class="p-4 rounded-2xl border text-xs font-black text-right transition-all ${cbwState.tier === 'lux' ? 'bg-[#D4AF37] text-[#07090E] border-[#D4AF37]' : 'bg-[#141A28] text-white border-slate-700'}"><span class="block text-sm">لوکس & VIP</span><span class="text-[10px] opacity-80 block font-normal mt-1">تشریفات کامل و خاص</span></button>
             </div>
           </div>`;
       } else if (cbwCurrentStep === 5) {
         stepHtml = `
           <div class="space-y-4 text-right">
+            ${qualitySelectorHtml}
             <h4 class="text-sm font-black text-[#D4AF37]">فضای برگزاری مراسم:</h4>
             <div class="grid grid-cols-2 sm:grid-cols-4 gap-3">
-              <button type="button" onclick="setBwStateVal('venueType', 'hall')" class="p-3.5 rounded-2xl border text-xs font-black transition-all ${cbwState.venueType === 'hall' ? 'bg-[#D4AF37] text-[#07090E] border-[#D4AF37]' : 'bg-[#141A28] text-white border-slate-700'}">🏰 تالار پذیرایی</button>
-              <button type="button" onclick="setBwStateVal('venueType', 'garden')" class="p-3.5 rounded-2xl border text-xs font-black transition-all ${cbwState.venueType === 'garden' ? 'bg-[#D4AF37] text-[#07090E] border-[#D4AF37]' : 'bg-[#141A28] text-white border-slate-700'}">🏡 باغ‌تالار</button>
-              <button type="button" onclick="setBwStateVal('venueType', 'hotel')" class="p-3.5 rounded-2xl border text-xs font-black transition-all ${cbwState.venueType === 'hotel' ? 'bg-[#D4AF37] text-[#07090E] border-[#D4AF37]' : 'bg-[#141A28] text-white border-slate-700'}">🏨 هتل ۵ ستاره</button>
-              <button type="button" onclick="setBwStateVal('venueType', 'home')" class="p-3.5 rounded-2xl border text-xs font-black transition-all ${cbwState.venueType === 'home' ? 'bg-[#D4AF37] text-[#07090E] border-[#D4AF37]' : 'bg-[#141A28] text-white border-slate-700'}">🏠 منزل / سالن شخصی</button>
+              <button type="button" onclick="setBwStateVal('venueType', 'hall', 'تالار پذیرایی مجلل')" class="p-3.5 rounded-2xl border text-xs font-black transition-all ${cbwState.venueType === 'hall' ? 'bg-[#D4AF37] text-[#07090E] border-[#D4AF37]' : 'bg-[#141A28] text-white border-slate-700'}">🏰 تالار پذیرایی</button>
+              <button type="button" onclick="setBwStateVal('venueType', 'garden', 'باغ‌تالار فضای باز')" class="p-3.5 rounded-2xl border text-xs font-black transition-all ${cbwState.venueType === 'garden' ? 'bg-[#D4AF37] text-[#07090E] border-[#D4AF37]' : 'bg-[#141A28] text-white border-slate-700'}">🏡 باغ‌تالار</button>
+              <button type="button" onclick="setBwStateVal('venueType', 'hotel', 'هتل ۵ ستاره')" class="p-3.5 rounded-2xl border text-xs font-black transition-all ${cbwState.venueType === 'hotel' ? 'bg-[#D4AF37] text-[#07090E] border-[#D4AF37]' : 'bg-[#141A28] text-white border-slate-700'}">🏨 هتل ۵ ستاره</button>
+              <button type="button" onclick="setBwStateVal('venueType', 'home', 'منزل / سالن شخصی')" class="p-3.5 rounded-2xl border text-xs font-black transition-all ${cbwState.venueType === 'home' ? 'bg-[#D4AF37] text-[#07090E] border-[#D4AF37]' : 'bg-[#141A28] text-white border-slate-700'}">🏠 منزل / سالن شخصی</button>
             </div>
           </div>`;
-      } else if ((cbwCurrentStep === 6 && cbwMode === 'fast') || (cbwCurrentStep === 6 && cbwMode === 'detailed')) {
+      } else if (cbwCurrentStep === 6) {
         stepHtml = `
           <div class="space-y-4 text-right">
+            ${qualitySelectorHtml}
             <h4 class="text-sm font-black text-[#D4AF37]">منوی شام اصلی (هر نفر):</h4>
             <div class="grid grid-cols-1 sm:grid-cols-3 gap-3">
-              <button type="button" onclick="setBwStateVal('cateringPerGuest', 250000); setBwStateVal('cateringMenu', 'eco');" class="p-4 rounded-2xl border text-xs font-black text-right transition-all ${cbwState.cateringMenu === 'eco' ? 'bg-[#D4AF37] text-[#07090E] border-[#D4AF37]' : 'bg-[#141A28] text-white border-slate-700'}">🍗 منوی تک پرس (جوجه یا کوبیده + برنج)<span class="block text-[10px] opacity-80 mt-1">۲۵۰,۰۰۰ تومان/نفر</span></button>
-              <button type="button" onclick="setBwStateVal('cateringPerGuest', 380000); setBwStateVal('cateringMenu', 'standard');" class="p-4 rounded-2xl border text-xs font-black text-right transition-all ${cbwState.cateringMenu === 'standard' ? 'bg-[#D4AF37] text-[#07090E] border-[#D4AF37]' : 'bg-[#141A28] text-white border-slate-700'}">🍱 منوی دو پرس (باقالی پلو با گوشت + جوجه)<span class="block text-[10px] opacity-80 mt-1">۳۸۰,۰۰۰ تومان/نفر</span></button>
-              <button type="button" onclick="setBwStateVal('cateringPerGuest', 600000); setBwStateVal('cateringMenu', 'buffet');" class="p-4 rounded-2xl border text-xs font-black text-right transition-all ${cbwState.cateringMenu === 'buffet' ? 'bg-[#D4AF37] text-[#07090E] border-[#D4AF37]' : 'bg-[#141A28] text-white border-slate-700'}">👑 سلف‌سروش کامل و دسر بار VIP<span class="block text-[10px] opacity-80 mt-1">۶۰۰,۰۰۰ تومان/نفر</span></button>
+              <button type="button" onclick="cbwState.cateringPerGuest=250000; setBwStateVal('cateringMenu', 'eco', 'منوی تک پرس (جوجه یا کوبیده)');" class="p-4 rounded-2xl border text-xs font-black text-right transition-all ${cbwState.cateringMenu === 'eco' ? 'bg-[#D4AF37] text-[#07090E] border-[#D4AF37]' : 'bg-[#141A28] text-white border-slate-700'}">🍗 منوی تک پرس (جوجه یا کوبیده + برنج)<span class="block text-[10px] opacity-80 mt-1">۲۵۰,۰۰۰ تومان/نفر</span></button>
+              <button type="button" onclick="cbwState.cateringPerGuest=380000; setBwStateVal('cateringMenu', 'standard', 'منوی دو پرس (باقالی پلو + جوجه)');" class="p-4 rounded-2xl border text-xs font-black text-right transition-all ${cbwState.cateringMenu === 'standard' ? 'bg-[#D4AF37] text-[#07090E] border-[#D4AF37]' : 'bg-[#141A28] text-white border-slate-700'}">🍱 منوی دو پرس (باقالی پلو با گوشت + جوجه)<span class="block text-[10px] opacity-80 mt-1">۳۸۰,۰۰۰ تومان/نفر</span></button>
+              <button type="button" onclick="cbwState.cateringPerGuest=600000; setBwStateVal('cateringMenu', 'buffet', 'سلف‌سرویس کامل و دسر بار VIP');" class="p-4 rounded-2xl border text-xs font-black text-right transition-all ${cbwState.cateringMenu === 'buffet' ? 'bg-[#D4AF37] text-[#07090E] border-[#D4AF37]' : 'bg-[#141A28] text-white border-slate-700'}">👑 سلف‌سروش کامل و دسر بار VIP<span class="block text-[10px] opacity-80 mt-1">۶۰۰,۰۰۰ تومان/نفر</span></button>
             </div>
           </div>`;
-      } else if ((cbwCurrentStep === 7 && cbwMode === 'detailed')) {
+      } else if (cbwMode === 'detailed' && cbwCurrentStep === 7) {
         stepHtml = `
           <div class="space-y-4 text-right">
+            ${qualitySelectorHtml}
             <h4 class="text-sm font-black text-[#D4AF37]">میوه پذیرایی (هر نفر):</h4>
             <div class="grid grid-cols-1 sm:grid-cols-3 gap-3">
-              <button type="button" onclick="setBwStateVal('fruitPerGuest', 35000); setBwStateVal('fruitType', '2_seasons');" class="p-4 rounded-2xl border text-xs font-black text-right transition-all ${cbwState.fruitType === '2_seasons' ? 'bg-[#D4AF37] text-[#07090E] border-[#D4AF37]' : 'bg-[#141A28] text-white border-slate-700'}">🍎 ۲ مدل میوه فصل<span class="block text-[10px] opacity-80 mt-1">۳۵,۰۰۰ تومان/نفر</span></button>
-              <button type="button" onclick="setBwStateVal('fruitPerGuest', 60000); setBwStateVal('fruitType', '4_seasons');" class="p-4 rounded-2xl border text-xs font-black text-right transition-all ${cbwState.fruitType === '4_seasons' ? 'bg-[#D4AF37] text-[#07090E] border-[#D4AF37]' : 'bg-[#141A28] text-white border-slate-700'}">🍍 ۴ مدل میوه + استوایی<span class="block text-[10px] opacity-80 mt-1">۶۰,۰۰۰ تومان/نفر</span></button>
-              <button type="button" onclick="setBwStateVal('fruitPerGuest', 0); setBwStateVal('fruitType', 'none');" class="p-4 rounded-2xl border text-xs font-black text-right transition-all ${cbwState.fruitType === 'none' ? 'bg-[#D4AF37] text-[#07090E] border-[#D4AF37]' : 'bg-[#141A28] text-white border-slate-700'}">❌ نمی‌خوام<span class="block text-[10px] opacity-80 mt-1">۰ تومان</span></button>
+              <button type="button" onclick="cbwState.fruitPerGuest=35000; setBwStateVal('fruitType', '2_seasons', '۲ مدل میوه فصل');" class="p-4 rounded-2xl border text-xs font-black text-right transition-all ${cbwState.fruitType === '2_seasons' ? 'bg-[#D4AF37] text-[#07090E] border-[#D4AF37]' : 'bg-[#141A28] text-white border-slate-700'}">🍎 ۲ مدل میوه فصل<span class="block text-[10px] opacity-80 mt-1">۳۵,۰۰۰ تومان/نفر</span></button>
+              <button type="button" onclick="cbwState.fruitPerGuest=60000; setBwStateVal('fruitType', '4_seasons', '۴ مدل میوه + استوایی');" class="p-4 rounded-2xl border text-xs font-black text-right transition-all ${cbwState.fruitType === '4_seasons' ? 'bg-[#D4AF37] text-[#07090E] border-[#D4AF37]' : 'bg-[#141A28] text-white border-slate-700'}">🍍 ۴ مدل میوه + استوایی<span class="block text-[10px] opacity-80 mt-1">۶۰,۰۰۰ تومان/نفر</span></button>
+              <button type="button" onclick="cbwState.fruitPerGuest=0; setBwStateVal('fruitType', 'none', 'عدم سفارش میوه');" class="p-4 rounded-2xl border text-xs font-black text-right transition-all ${cbwState.fruitType === 'none' ? 'bg-[#D4AF37] text-[#07090E] border-[#D4AF37]' : 'bg-[#141A28] text-white border-slate-700'}">❌ نمی‌خوام<span class="block text-[10px] opacity-80 mt-1">۰ تومان</span></button>
             </div>
           </div>`;
       } else if (cbwMode === 'detailed' && cbwCurrentStep === 8) {
         stepHtml = `
           <div class="space-y-4 text-right">
+            ${qualitySelectorHtml}
             <h4 class="text-sm font-black text-[#D4AF37]">شیرینی پذیرایی (شیرینی‌های اصیل یزدی و مدرن):</h4>
             <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
-              <button type="button" onclick="setBwStateVal('sweetPerGuest', 45000); setBwStateVal('sweetType', 'yazdi_authentic');" class="p-4 rounded-2xl border text-xs font-black text-right transition-all ${cbwState.sweetType === 'yazdi_authentic' ? 'bg-[#D4AF37] text-[#07090E] border-[#D4AF37]' : 'bg-[#141A28] text-white border-slate-700'}">🧁 شیرینی اصیل یزدی (قطاب، نان منقا، لوز، نارگیلی)<span class="block text-[10px] opacity-80 mt-1">۴۵,۰۰۰ تومان/نفر</span></button>
-              <button type="button" onclick="setBwStateVal('sweetPerGuest', 35000); setBwStateVal('sweetType', 'modern');" class="p-4 rounded-2xl border text-xs font-black text-right transition-all ${cbwState.sweetType === 'modern' ? 'bg-[#D4AF37] text-[#07090E] border-[#D4AF37]' : 'bg-[#141A28] text-white border-slate-700'}">🍰 شیرینی تر و خشک مدرن<span class="block text-[10px] opacity-80 mt-1">۳۵,۰۰۰ تومان/نفر</span></button>
-              <button type="button" onclick="setBwStateVal('sweetPerGuest', 60000); setBwStateVal('sweetType', 'combo');" class="p-4 rounded-2xl border text-xs font-black text-right transition-all ${cbwState.sweetType === 'combo' ? 'bg-[#D4AF37] text-[#07090E] border-[#D4AF37]' : 'bg-[#141A28] text-white border-slate-700'}">✨ ترکیبی شیرینی یزدی + مدرن و کوکی<span class="block text-[10px] opacity-80 mt-1">۶۰,۰۰۰ تومان/نفر</span></button>
-              <button type="button" onclick="setBwStateVal('sweetPerGuest', 0); setBwStateVal('sweetType', 'none');" class="p-4 rounded-2xl border text-xs font-black text-right transition-all ${cbwState.sweetType === 'none' ? 'bg-[#D4AF37] text-[#07090E] border-[#D4AF37]' : 'bg-[#141A28] text-white border-slate-700'}">❌ نمی‌خوام<span class="block text-[10px] opacity-80 mt-1">۰ تومان</span></button>
+              <button type="button" onclick="cbwState.sweetPerGuest=45000; setBwStateVal('sweetType', 'yazdi_authentic', 'پکیج شیرینی اصیل یزدی (قطاب، نان منقا، لوز)');" class="p-4 rounded-2xl border text-xs font-black text-right transition-all ${cbwState.sweetType === 'yazdi_authentic' ? 'bg-[#D4AF37] text-[#07090E] border-[#D4AF37]' : 'bg-[#141A28] text-white border-slate-700'}">🧁 شیرینی اصیل یزدی (قطاب، نان منقا، لوز، نارگیلی)<span class="block text-[10px] opacity-80 mt-1">۴۵,۰۰۰ تومان/نفر</span></button>
+              <button type="button" onclick="cbwState.sweetPerGuest=35000; setBwStateVal('sweetType', 'modern', 'شیرینی تر و خشک مدرن');" class="p-4 rounded-2xl border text-xs font-black text-right transition-all ${cbwState.sweetType === 'modern' ? 'bg-[#D4AF37] text-[#07090E] border-[#D4AF37]' : 'bg-[#141A28] text-white border-slate-700'}">🍰 شیرینی تر و خشک مدرن<span class="block text-[10px] opacity-80 mt-1">۳۵,۰۰۰ تومان/نفر</span></button>
+              <button type="button" onclick="cbwState.sweetPerGuest=60000; setBwStateVal('sweetType', 'combo', 'ترکیبی شیرینی یزدی + مدرن');" class="p-4 rounded-2xl border text-xs font-black text-right transition-all ${cbwState.sweetType === 'combo' ? 'bg-[#D4AF37] text-[#07090E] border-[#D4AF37]' : 'bg-[#141A28] text-white border-slate-700'}">✨ ترکیبی شیرینی یزدی + مدرن و کوکی<span class="block text-[10px] opacity-80 mt-1">۶۰,۰۰۰ تومان/نفر</span></button>
+              <button type="button" onclick="cbwState.sweetPerGuest=0; setBwStateVal('sweetType', 'none', 'عدم سفارش شیرینی');" class="p-4 rounded-2xl border text-xs font-black text-right transition-all ${cbwState.sweetType === 'none' ? 'bg-[#D4AF37] text-[#07090E] border-[#D4AF37]' : 'bg-[#141A28] text-white border-slate-700'}">❌ نمی‌خوام<span class="block text-[10px] opacity-80 mt-1">۰ تومان</span></button>
             </div>
           </div>`;
       } else if (cbwMode === 'detailed' && cbwCurrentStep === 9) {
         stepHtml = `
           <div class="space-y-4 text-right">
+            ${qualitySelectorHtml}
             <h4 class="text-sm font-black text-[#D4AF37]">فینگرفود و ولکام بار (Welcome Drink & Fingerfood):</h4>
             <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
-              <button type="button" onclick="setBwStateVal('fingerFoodPerGuest', 20000); setBwStateVal('fingerFoodType', 'welcome_drink');" class="p-4 rounded-2xl border text-xs font-black text-right transition-all ${cbwState.fingerFoodType === 'welcome_drink' ? 'bg-[#D4AF37] text-[#07090E] border-[#D4AF37]' : 'bg-[#141A28] text-white border-slate-700'}">🍹 بار نوشیدنی خوشامدگویی (Welcome Drink)<span class="block text-[10px] opacity-80 mt-1">۲۰,۰۰۰ تومان/نفر</span></button>
-              <button type="button" onclick="setBwStateVal('fingerFoodPerGuest', 45000); setBwStateVal('fingerFoodType', 'trays');" class="p-4 rounded-2xl border text-xs font-black text-right transition-all ${cbwState.fingerFoodType === 'trays' ? 'bg-[#D4AF37] text-[#07090E] border-[#D4AF37]' : 'bg-[#141A28] text-white border-slate-700'}">🍢 سینی‌های فینگرفود گرم و سرد<span class="block text-[10px] opacity-80 mt-1">۴۵,۰۰۰ تومان/نفر</span></button>
-              <button type="button" onclick="setBwStateVal('fingerFoodPerGuest', 75000); setBwStateVal('fingerFoodType', 'vip_full');" class="p-4 rounded-2xl border text-xs font-black text-right transition-all ${cbwState.fingerFoodType === 'vip_full' ? 'bg-[#D4AF37] text-[#07090E] border-[#D4AF37]' : 'bg-[#141A28] text-white border-slate-700'}">🌟 پکیج VIP (ولکام درینک + میز کامل فینگرفود و دسر)<span class="block text-[10px] opacity-80 mt-1">۷۵,۰۰۰ تومان/نفر</span></button>
-              <button type="button" onclick="setBwStateVal('fingerFoodPerGuest', 0); setBwStateVal('fingerFoodType', 'none');" class="p-4 rounded-2xl border text-xs font-black text-right transition-all ${cbwState.fingerFoodType === 'none' ? 'bg-[#D4AF37] text-[#07090E] border-[#D4AF37]' : 'bg-[#141A28] text-white border-slate-700'}">❌ نمی‌خوام<span class="block text-[10px] opacity-80 mt-1">۰ تومان</span></button>
+              <button type="button" onclick="cbwState.fingerFoodPerGuest=20000; setBwStateVal('fingerFoodType', 'welcome_drink', 'بار نوشیدنی خوشامدگویی');" class="p-4 rounded-2xl border text-xs font-black text-right transition-all ${cbwState.fingerFoodType === 'welcome_drink' ? 'bg-[#D4AF37] text-[#07090E] border-[#D4AF37]' : 'bg-[#141A28] text-white border-slate-700'}">🍹 بار نوشیدنی خوشامدگویی (Welcome Drink)<span class="block text-[10px] opacity-80 mt-1">۲۰,۰۰۰ تومان/نفر</span></button>
+              <button type="button" onclick="cbwState.fingerFoodPerGuest=45000; setBwStateVal('fingerFoodType', 'trays', 'سینی‌های فینگرفود گرم و سرد');" class="p-4 rounded-2xl border text-xs font-black text-right transition-all ${cbwState.fingerFoodType === 'trays' ? 'bg-[#D4AF37] text-[#07090E] border-[#D4AF37]' : 'bg-[#141A28] text-white border-slate-700'}">🍢 سینی‌های فینگرفود گرم و سرد<span class="block text-[10px] opacity-80 mt-1">۴۵,۰۰۰ تومان/نفر</span></button>
+              <button type="button" onclick="cbwState.fingerFoodPerGuest=75000; setBwStateVal('fingerFoodType', 'vip_full', 'پکیج VIP کامل ولکام درینک و فینگرفود');" class="p-4 rounded-2xl border text-xs font-black text-right transition-all ${cbwState.fingerFoodType === 'vip_full' ? 'bg-[#D4AF37] text-[#07090E] border-[#D4AF37]' : 'bg-[#141A28] text-white border-slate-700'}">🌟 پکیج VIP (ولکام درینک + میز کامل فینگرفود و دسر)<span class="block text-[10px] opacity-80 mt-1">۷۵,۰۰۰ تومان/نفر</span></button>
+              <button type="button" onclick="cbwState.fingerFoodPerGuest=0; setBwStateVal('fingerFoodType', 'none', 'عدم سفارش فینگرفود');" class="p-4 rounded-2xl border text-xs font-black text-right transition-all ${cbwState.fingerFoodType === 'none' ? 'bg-[#D4AF37] text-[#07090E] border-[#D4AF37]' : 'bg-[#141A28] text-white border-slate-700'}">❌ نمی‌خوام<span class="block text-[10px] opacity-80 mt-1">۰ تومان</span></button>
             </div>
           </div>`;
       } else if (cbwMode === 'detailed' && cbwCurrentStep === 10) {
         stepHtml = `
           <div class="space-y-4 text-right">
+            ${qualitySelectorHtml}
             <h4 class="text-sm font-black text-[#D4AF37]">نوشیدنی و بار گرم/سرد:</h4>
             <div class="grid grid-cols-1 sm:grid-cols-3 gap-3">
-              <button type="button" onclick="setBwStateVal('drinkPerGuest', 15000); setBwStateVal('drinkType', 'basic');" class="p-4 rounded-2xl border text-xs font-black text-right transition-all ${cbwState.drinkType === 'basic' ? 'bg-[#D4AF37] text-[#07090E] border-[#D4AF37]' : 'bg-[#141A28] text-white border-slate-700'}">🥤 نوشابه و دلستر قوطی<span class="block text-[10px] opacity-80 mt-1">۱۵,۰۰۰ تومان/نفر</span></button>
-              <button type="button" onclick="setBwStateVal('drinkPerGuest', 30000); setBwStateVal('drinkType', 'hot_cold');" class="p-4 rounded-2xl border text-xs font-black text-right transition-all ${cbwState.drinkType === 'hot_cold' ? 'bg-[#D4AF37] text-[#07090E] border-[#D4AF37]' : 'bg-[#141A28] text-white border-slate-700'}">☕ چای، قهوه + آبمیوه طبیعی<span class="block text-[10px] opacity-80 mt-1">۳۰,۰۰۰ تومان/نفر</span></button>
-              <button type="button" onclick="setBwStateVal('drinkPerGuest', 50000); setBwStateVal('drinkType', 'full_bar');" class="p-4 rounded-2xl border text-xs font-black text-right transition-all ${cbwState.drinkType === 'full_bar' ? 'bg-[#D4AF37] text-[#07090E] border-[#D4AF37]' : 'bg-[#141A28] text-white border-slate-700'}">🍸 موکتیل بار و کافه تریا تخصصی<span class="block text-[10px] opacity-80 mt-1">۵۰,۰۰۰ تومان/نفر</span></button>
-            </div>
-          </div>`;
-      } else if (cbwMode === 'detailed' && cbwCurrentStep === 12) {
-        stepHtml = `
-          <div class="space-y-4 text-right">
-            <h4 class="text-sm font-black text-[#D4AF37]">وزن و برآورد کیک عروسی:</h4>
-            <div class="bg-[#141A28] border border-[#C5A059]/30 rounded-2xl p-6 shadow-md space-y-4 text-center">
-              <div class="flex items-center justify-center gap-4">
-                <button type="button" onclick="changeBwCakeKg(-1)" class="w-10 h-10 rounded-xl bg-[#0E121C] border border-[#C5A059]/40 text-[#D4AF37] font-black text-lg hover:bg-[#D4AF37] hover:text-[#07090E] transition-all cursor-pointer">-</button>
-                <span class="text-xl font-black text-white px-4">${cbwState.cakeKg} کیلوگرم</span>
-                <button type="button" onclick="changeBwCakeKg(1)" class="w-10 h-10 rounded-xl bg-[#0E121C] border border-[#C5A059]/40 text-[#D4AF37] font-black text-lg hover:bg-[#D4AF37] hover:text-[#07090E] transition-all cursor-pointer">+</button>
-              </div>
-              <p class="text-xs text-amber-300 font-bold">مبلغ برآوردی کیک: ${cbwState.cakePrice.toLocaleString('fa-IR')} تومان</p>
-            </div>
-          </div>`;
-      } else if (cbwMode === 'detailed' && cbwCurrentStep === 13) {
-        stepHtml = `
-          <div class="space-y-4 text-right">
-            <h4 class="text-sm font-black text-[#D4AF37]">لباس عروس:</h4>
-            <div class="grid grid-cols-2 sm:grid-cols-4 gap-3">
-              <button type="button" onclick="setBwStateVal('dress', 18000000); setBwStateVal('dressType', 'rent');" class="p-3.5 rounded-2xl border text-xs font-black transition-all ${cbwState.dressType === 'rent' ? 'bg-[#D4AF37] text-[#07090E] border-[#D4AF37]' : 'bg-[#141A28] text-white border-slate-700'}">👗 اجاره لباس شب</button>
-              <button type="button" onclick="setBwStateVal('dress', 30000000); setBwStateVal('dressType', 'buy');" class="p-3.5 rounded-2xl border text-xs font-black transition-all ${cbwState.dressType === 'buy' ? 'bg-[#D4AF37] text-[#07090E] border-[#D4AF37]' : 'bg-[#141A28] text-white border-slate-700'}">🛍️ خرید کامل</button>
-              <button type="button" onclick="setBwStateVal('dress', 45000000); setBwStateVal('dressType', 'custom');" class="p-3.5 rounded-2xl border text-xs font-black transition-all ${cbwState.dressType === 'custom' ? 'bg-[#D4AF37] text-[#07090E] border-[#D4AF37]' : 'bg-[#141A28] text-white border-slate-700'}">✂️ دوخت سفارشی مزون</button>
-              <button type="button" onclick="setBwStateVal('dress', 0); setBwStateVal('dressType', 'none');" class="p-3.5 rounded-2xl border text-xs font-black transition-all ${cbwState.dressType === 'none' ? 'bg-[#D4AF37] text-[#07090E] border-[#D4AF37]' : 'bg-[#141A28] text-white border-slate-700'}">❌ نمی‌خوام</button>
-            </div>
-          </div>`;
-      } else if (cbwMode === 'detailed' && cbwCurrentStep === 14) {
-        stepHtml = `
-          <div class="space-y-4 text-right">
-            <h4 class="text-sm font-black text-[#D4AF37]">کت‌وشلوار داماد:</h4>
-            <div class="grid grid-cols-2 sm:grid-cols-4 gap-3">
-              <button type="button" onclick="setBwStateVal('suit', 10000000); setBwStateVal('suitType', 'buy_domestic');" class="p-3.5 rounded-2xl border text-xs font-black transition-all ${cbwState.suitType === 'buy_domestic' ? 'bg-[#D4AF37] text-[#07090E] border-[#D4AF37]' : 'bg-[#141A28] text-white border-slate-700'}">👔 برند داخلی</button>
-              <button type="button" onclick="setBwStateVal('suit', 22000000); setBwStateVal('suitType', 'buy_foreign');" class="p-3.5 rounded-2xl border text-xs font-black transition-all ${cbwState.suitType === 'buy_foreign' ? 'bg-[#D4AF37] text-[#07090E] border-[#D4AF37]' : 'bg-[#141A28] text-white border-slate-700'}">🌐 برند خارجی</button>
-              <button type="button" onclick="setBwStateVal('suit', 18000000); setBwStateVal('suitType', 'custom');" class="p-3.5 rounded-2xl border text-xs font-black transition-all ${cbwState.suitType === 'custom' ? 'bg-[#D4AF37] text-[#07090E] border-[#D4AF37]' : 'bg-[#141A28] text-white border-slate-700'}">✂️ دوخت شخصی‌دوزی</button>
-              <button type="button" onclick="setBwStateVal('suit', 0); setBwStateVal('suitType', 'none');" class="p-3.5 rounded-2xl border text-xs font-black transition-all ${cbwState.suitType === 'none' ? 'bg-[#D4AF37] text-[#07090E] border-[#D4AF37]' : 'bg-[#141A28] text-white border-slate-700'}">❌ نمی‌خوام</button>
-            </div>
-          </div>`;
-      } else if (cbwMode === 'detailed' && cbwCurrentStep === 15) {
-        stepHtml = `
-          <div class="space-y-4 text-right">
-            <h4 class="text-sm font-black text-[#D4AF37]">سرویس طلا و جواهر (وزن به گرم):</h4>
-            <div class="bg-[#141A28] border border-[#C5A059]/30 rounded-2xl p-6 shadow-md space-y-4 text-center">
-              <div class="flex items-center justify-center gap-4">
-                <button type="button" onclick="changeBwGrams('goldGrams', 'goldSet', -1, 2625006)" class="w-10 h-10 rounded-xl bg-[#0E121C] border border-[#C5A059]/40 text-[#D4AF37] font-black text-lg hover:bg-[#D4AF37] hover:text-[#07090E] transition-all cursor-pointer">-</button>
-                <span class="text-xl font-black text-white px-4">${cbwState.goldGrams} گرم طلا</span>
-                <button type="button" onclick="changeBwGrams('goldGrams', 'goldSet', 1, 2625006)" class="w-10 h-10 rounded-xl bg-[#0E121C] border border-[#C5A059]/40 text-[#D4AF37] font-black text-lg hover:bg-[#D4AF37] hover:text-[#07090E] transition-all cursor-pointer">+</button>
-              </div>
-              <p class="text-xs text-amber-300 font-bold">برآورد سرویس طلا: ${cbwState.goldSet.toLocaleString('fa-IR')} تومان</p>
-            </div>
-          </div>`;
-      } else if (cbwMode === 'detailed' && cbwCurrentStep === 18) {
-        stepHtml = `
-          <div class="space-y-4 text-right">
-            <h4 class="text-sm font-black text-[#D4AF37]">پکیج عکاسی و فیلم‌برداری:</h4>
-            <div class="grid grid-cols-1 sm:grid-cols-3 gap-3">
-              <button type="button" onclick="setBwStateVal('photoFilm', 22000000); setBwStateVal('photoFilmPackage', 'pkg_1');" class="p-4 rounded-2xl border text-xs font-black text-right transition-all ${cbwState.photoFilmPackage === 'pkg_1' ? 'bg-[#D4AF37] text-[#07090E] border-[#D4AF37]' : 'bg-[#141A28] text-white border-slate-700'}">📷 پکیج پایه (۲ دوربین + آلبوم)<span class="block text-[10px] opacity-80 mt-1">۲۲,۰۰۰,۰۰۰ تومان</span></button>
-              <button type="button" onclick="setBwStateVal('photoFilm', 35000000); setBwStateVal('photoFilmPackage', 'pkg_2');" class="p-4 rounded-2xl border text-xs font-black text-right transition-all ${cbwState.photoFilmPackage === 'pkg_2' ? 'bg-[#D4AF37] text-[#07090E] border-[#D4AF37]' : 'bg-[#141A28] text-white border-slate-700'}">🎥 پکیج استاندارد (هلی‌شات + ۳ دوربین)<span class="block text-[10px] opacity-80 mt-1">۳۵,۰۰۰,۰۰۰ تومان</span></button>
-              <button type="button" onclick="setBwStateVal('photoFilm', 55000000); setBwStateVal('photoFilmPackage', 'vip');" class="p-4 rounded-2xl border text-xs font-black text-right transition-all ${cbwState.photoFilmPackage === 'vip' ? 'bg-[#D4AF37] text-[#07090E] border-[#D4AF37]' : 'bg-[#141A28] text-white border-slate-700'}">👑 پکیج VIP سینمایی کامل<span class="block text-[10px] opacity-80 mt-1">۵۵,۰۰۰,۰۰۰ تومان</span></button>
-            </div>
-          </div>`;
-      } else if (cbwMode === 'detailed' && cbwCurrentStep === 19) {
-        stepHtml = `
-          <div class="space-y-4 text-right">
-            <h4 class="text-sm font-black text-[#D4AF37]">آتلیه و کلیپ فرمالیته:</h4>
-            <div class="grid grid-cols-1 sm:grid-cols-3 gap-3">
-              <button type="button" onclick="setBwStateVal('prefilmAtelier', 20000000); setBwStateVal('prefilmAtelierType', 'desert');" class="p-4 rounded-2xl border text-xs font-black text-right transition-all ${cbwState.prefilmAtelierType === 'desert' ? 'bg-[#D4AF37] text-[#07090E] border-[#D4AF37]' : 'bg-[#141A28] text-white border-slate-700'}">🏜️ فرمالیته کویر یزد / شمال<span class="block text-[10px] opacity-80 mt-1">۲۰,۰۰۰,۰۰۰ تومان</span></button>
-              <button type="button" onclick="setBwStateVal('prefilmAtelier', 12000000); setBwStateVal('prefilmAtelierType', 'mansion');" class="p-4 rounded-2xl border text-xs font-black text-right transition-all ${cbwState.prefilmAtelierType === 'mansion' ? 'bg-[#D4AF37] text-[#07090E] border-[#D4AF37]' : 'bg-[#141A28] text-white border-slate-700'}">🏰 عمارت داخل شهر<span class="block text-[10px] opacity-80 mt-1">۱۲,۰۰۰,۰۰۰ تومان</span></button>
-              <button type="button" onclick="setBwStateVal('prefilmAtelier', 0); setBwStateVal('prefilmAtelierType', 'none');" class="p-4 rounded-2xl border text-xs font-black text-right transition-all ${cbwState.prefilmAtelierType === 'none' ? 'bg-[#D4AF37] text-[#07090E] border-[#D4AF37]' : 'bg-[#141A28] text-white border-slate-700'}">❌ نمی‌خوام<span class="block text-[10px] opacity-80 mt-1">۰ تومان</span></button>
-            </div>
-          </div>`;
-      } else if (cbwMode === 'detailed' && cbwCurrentStep === 21) {
-        stepHtml = `
-          <div class="space-y-4 text-right">
-            <h4 class="text-sm font-black text-[#D4AF37]">موسیقی و سیستم صوتی:</h4>
-            <div class="grid grid-cols-1 sm:grid-cols-3 gap-3">
-              <button type="button" onclick="setBwStateVal('music', 15000000); setBwStateVal('musicType', 'dj');" class="p-4 rounded-2xl border text-xs font-black text-right transition-all ${cbwState.musicType === 'dj' ? 'bg-[#D4AF37] text-[#07090E] border-[#D4AF37]' : 'bg-[#141A28] text-white border-slate-700'}">🎧 دی‌جی حرفه‌ای + استیج<span class="block text-[10px] opacity-80 mt-1">۱۵,۰۰۰,۰۰۰ تومان</span></button>
-              <button type="button" onclick="setBwStateVal('music', 30000000); setBwStateVal('musicType', 'live_band');" class="p-4 rounded-2xl border text-xs font-black text-right transition-all ${cbwState.musicType === 'live_band' ? 'bg-[#D4AF37] text-[#07090E] border-[#D4AF37]' : 'bg-[#141A28] text-white border-slate-700'}">🎸 گروه موسیقی زنده و نوازندگان<span class="block text-[10px] opacity-80 mt-1">۳۰,۰۰۰,۰۰۰ تومان</span></button>
-              <button type="button" onclick="setBwStateVal('music', 0); setBwStateVal('musicType', 'none');" class="p-4 rounded-2xl border text-xs font-black text-right transition-all ${cbwState.musicType === 'none' ? 'bg-[#D4AF37] text-[#07090E] border-[#D4AF37]' : 'bg-[#141A28] text-white border-slate-700'}">❌ نمی‌خوام<span class="block text-[10px] opacity-80 mt-1">۰ تومان</span></button>
-            </div>
-          </div>`;
-      } else if (cbwMode === 'detailed' && cbwCurrentStep === 25) {
-        stepHtml = `
-          <div class="space-y-4 text-right">
-            <h4 class="text-sm font-black text-[#D4AF37]">سفر ماه عسل:</h4>
-            <div class="grid grid-cols-1 sm:grid-cols-3 gap-3">
-              <button type="button" onclick="setBwStateVal('honeymoon', 20000000); setBwStateVal('honeymoonType', 'domestic');" class="p-4 rounded-2xl border text-xs font-black text-right transition-all ${cbwState.honeymoonType === 'domestic' ? 'bg-[#D4AF37] text-[#07090E] border-[#D4AF37]' : 'bg-[#141A28] text-white border-slate-700'}">🏖️ تور داخلی (کیش/شمال)<span class="block text-[10px] opacity-80 mt-1">۲۰,۰۰۰,۰۰۰ تومان</span></button>
-              <button type="button" onclick="setBwStateVal('honeymoon', 60000000); setBwStateVal('honeymoonType', 'neighbor');" class="p-4 rounded-2xl border text-xs font-black text-right transition-all ${cbwState.honeymoonType === 'neighbor' ? 'bg-[#D4AF37] text-[#07090E] border-[#D4AF37]' : 'bg-[#141A28] text-white border-slate-700'}">✈️ تور خارجی همسایه (ترکیه/دبی)<span class="block text-[10px] opacity-80 mt-1">۶۰,۰۰۰,۰۰۰ تومان</span></button>
-              <button type="button" onclick="setBwStateVal('honeymoon', 0); setBwStateVal('honeymoonType', 'none');" class="p-4 rounded-2xl border text-xs font-black text-right transition-all ${cbwState.honeymoonType === 'none' ? 'bg-[#D4AF37] text-[#07090E] border-[#D4AF37]' : 'bg-[#141A28] text-white border-slate-700'}">❌ فعلاً برنامه‌ای ندارم<span class="block text-[10px] opacity-80 mt-1">۰ تومان</span></button>
+              <button type="button" onclick="cbwState.drinkPerGuest=15000; setBwStateVal('drinkType', 'basic', 'نوشابه و دلستر قوطی');" class="p-4 rounded-2xl border text-xs font-black text-right transition-all ${cbwState.drinkType === 'basic' ? 'bg-[#D4AF37] text-[#07090E] border-[#D4AF37]' : 'bg-[#141A28] text-white border-slate-700'}">🥤 نوشابه و دلستر قوطی<span class="block text-[10px] opacity-80 mt-1">۱۵,۰۰۰ تومان/نفر</span></button>
+              <button type="button" onclick="cbwState.drinkPerGuest=30000; setBwStateVal('drinkType', 'hot_cold', 'چای، قهوه و آبمیوه طبیعی');" class="p-4 rounded-2xl border text-xs font-black text-right transition-all ${cbwState.drinkType === 'hot_cold' ? 'bg-[#D4AF37] text-[#07090E] border-[#D4AF37]' : 'bg-[#141A28] text-white border-slate-700'}">☕ چای، قهوه + آبمیوه طبیعی<span class="block text-[10px] opacity-80 mt-1">۳۰,۰۰۰ تومان/نفر</span></button>
+              <button type="button" onclick="cbwState.drinkPerGuest=50000; setBwStateVal('drinkType', 'full_bar', 'موکتیل بار و کافه تریا تخصصی');" class="p-4 rounded-2xl border text-xs font-black text-right transition-all ${cbwState.drinkType === 'full_bar' ? 'bg-[#D4AF37] text-[#07090E] border-[#D4AF37]' : 'bg-[#141A28] text-white border-slate-700'}">🍸 موکتیل بار و کافه تریا تخصصی<span class="block text-[10px] opacity-80 mt-1">۵۰,۰۰۰ تومان/نفر</span></button>
             </div>
           </div>`;
       } else {
         const currentItem = currentStepsList[cbwCurrentStep - 1];
         stepHtml = `
           <div class="space-y-4 text-right">
+            ${qualitySelectorHtml}
             <h4 class="text-sm font-black text-[#D4AF37]">${currentItem.title}:</h4>
             <div class="bg-[#141A28] border border-[#C5A059]/30 rounded-2xl p-5 space-y-3 shadow-md">
               <label class="text-xs font-bold text-slate-300 block">مبلغ برآوردی یا انتخابی (تومان):</label>
-              <input type="number" value="${cbwState[currentItem.key] || 5000000}" onchange="cbwState['${currentItem.key}']=parseInt(this.value)||0" class="w-full bg-[#0E121C] border border-[#C5A059]/30 rounded-xl px-4 py-3 text-sm text-white focus:outline-none focus:border-[#D4AF37]">
+              <input type="number" value="${cbwState[currentItem.key] || 5000000}" onchange="cbwState['${currentItem.key}']=parseInt(this.value)||0; cbwLastFeedback='مبلغ این بخش به‌روزرسانی و تایید شد ✨'; window.renderBwWizard();" class="w-full bg-[#0E121C] border border-[#C5A059]/30 rounded-xl px-4 py-3 text-sm text-white focus:outline-none focus:border-[#D4AF37]">
             </div>
           </div>`;
       }
@@ -19987,10 +19940,17 @@ window.renderBwWizard = function() {
           <div class="flex items-start gap-3">
             <div class="w-10 h-10 rounded-2xl bg-[#D4AF37]/20 border border-[#D4AF37] flex items-center justify-center text-[#D4AF37] shrink-0 font-black">🌿</div>
             <div class="space-y-1">
-              <h3 class="text-sm font-black text-white">سلام! من دستیار هوشمند هزینه عروسی یزد هستم.</h3>
-              <p class="text-xs text-slate-300 font-medium">می‌توانی برآورد بودجه را به روش سریع یا با جزئیات کامل ۲۶ گام بگیری.</p>
+              <h3 class="text-sm font-black text-white">سلام! من دستیار هوشمند برآورد بودجه عروسی یزد هستم.</h3>
+              <p class="text-xs text-slate-300 font-medium">پاسخ‌هایت به صورت گفت‌وگومحور تایید و محاسبه می‌شوند.</p>
             </div>
           </div>
+
+          ${cbwLastFeedback ? `
+            <div class="bg-emerald-950/50 border border-emerald-500/40 rounded-2xl p-3 text-xs font-bold text-emerald-300 flex items-center gap-2 animate-fade-in">
+              <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
+              <span>${cbwLastFeedback}</span>
+            </div>
+          ` : ''}
 
           <div class="flex items-center gap-2 pt-2 border-t border-slate-800">
             <button type="button" onclick="setBwMode('fast')" class="flex-1 py-2.5 px-4 rounded-xl text-xs font-black transition-all cursor-pointer ${cbwMode === 'fast' ? 'bg-[#D4AF37] text-[#07090E] shadow-md' : 'bg-[#0E121C] text-slate-300 border border-slate-700 hover:text-white'}">
