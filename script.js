@@ -19543,6 +19543,7 @@ let bwCurrentStep = 1;
 
 
 
+
 let cbwMode = 'fast'; // 'fast' (14 steps) or 'detailed' (26 steps)
 let cbwCurrentStep = 1;
 let cbwLastFeedback = '';
@@ -19640,14 +19641,14 @@ window.setBwMode = function(mode) {
 
 window.changeBwGuests = function(delta) {
     cbwState.guests = Math.max(20, cbwState.guests + delta);
-    cbwLastFeedback = `تعداد مهمانان به ${cbwState.guests.toLocaleString('fa-IR')} نفر تغییر یافت و توسط سیستم محاسبه شد ✨`;
+    cbwLastFeedback = `تعداد مهمانان به ${cbwState.guests.toLocaleString('fa-IR')} نفر تغییر یافت و توسط سیستم محاسبه شد.`;
     window.renderBwWizard();
 };
 
 window.changeBwCakeKg = function(delta) {
     cbwState.cakeKg = Math.max(2, cbwState.cakeKg + delta);
     cbwState.cakePrice = cbwState.cakeKg * cbwState.cakePerKg;
-    cbwLastFeedback = `وزن کیک به ${cbwState.cakeKg} کیلوگرم (مبلغ اتوماتیک: ${cbwState.cakePrice.toLocaleString('fa-IR')} تومان) تغییر یافت ✨`;
+    cbwLastFeedback = `وزن کیک به ${cbwState.cakeKg} کیلوگرم (مبلغ اتوماتیک: ${cbwState.cakePrice.toLocaleString('fa-IR')} تومان) تغییر یافت.`;
     window.renderBwWizard();
 };
 
@@ -19657,7 +19658,7 @@ window.changeBwGrams = function(key, priceKey, nameKey, delta, pricePerGram, lab
     cbwState[priceKey] = cbwState[key] * rate;
     const matLabel = cbwState[matKey] === 'silver' ? 'نقره' : 'طلا';
     cbwState[nameKey] = `${label} ${matLabel} (${cbwState[key]} گرم)`;
-    cbwLastFeedback = `${label} ${matLabel} به ${cbwState[key]} گرم (برآورد اتوماتیک سیستم: ${cbwState[priceKey].toLocaleString('fa-IR')} تومان) تغییر یافت ✨`;
+    cbwLastFeedback = `${label} ${matLabel} به ${cbwState[key]} گرم (برآورد اتوماتیک سیستم: ${cbwState[priceKey].toLocaleString('fa-IR')} تومان) تغییر یافت.`;
     window.renderBwWizard();
 };
 
@@ -19665,9 +19666,9 @@ window.setBwStateVal = function(key, val, nameVal) {
     cbwState[key] = val;
     if (nameVal) {
       cbwState[key + 'Name'] = nameVal;
-      cbwLastFeedback = `انتخاب شما: «${nameVal}» در سطح «${cbwState.tierName || 'متوسط'}» (هزینه به صورت هوشمند برآورد گردید) ✨`;
+      cbwLastFeedback = `انتخاب شما: «${nameVal}» در سطح «${cbwState.tierName || 'متوسط'}» (هزینه به صورت هوشمند برآورد گردید).`;
     } else {
-      cbwLastFeedback = `انتخاب شما ثبت و توسط سیستم محاسبه شد ✨`;
+      cbwLastFeedback = `انتخاب شما ثبت و توسط سیستم محاسبه شد.`;
     }
     window.renderBwWizard();
 };
@@ -19753,15 +19754,15 @@ window.renderBwWizard = function() {
 
     // Quality Tier Selector
     const qualitySelectorHtml = `
-      <div class="bg-[#0E121C] border border-[#C5A059]/20 rounded-2xl p-3.5 space-y-2 mb-4 shrink-0">
-        <div class="flex items-center justify-between text-[11px] font-black text-amber-300">
-          <span>کیفیت این بخش (Quality Tier):</span>
-          <span class="text-slate-400">سطح انتخاب‌شده: ${cbwState.tierName || 'متوسط'}</span>
+      <div class="bg-[#0E121C] border border-[#C5A059]/30 rounded-2xl p-4 space-y-2.5 mb-4 shrink-0 shadow-md">
+        <div class="flex items-center justify-between text-xs font-black text-[#D4AF37]">
+          <span class="flex items-center gap-1.5"><i data-lucide="sliders" class="w-3.5 h-3.5 text-[#D4AF37]"></i> سطح کیفیت این بخش:</span>
+          <span class="text-slate-300 font-bold">${cbwState.tierName || 'متوسط'}</span>
         </div>
-        <div class="grid grid-cols-3 gap-2 text-center">
-          <button type="button" onclick="setBwStateVal('tier', 'eco', 'کیفیت اقتصادی')" class="py-2 px-3 rounded-xl border text-xs font-black transition-all ${cbwState.tier === 'eco' ? 'bg-[#D4AF37] text-[#07090E] border-[#D4AF37] shadow-md' : 'bg-[#141A28] text-slate-300 border-slate-700 hover:text-white'}">اقتصادی</button>
-          <button type="button" onclick="setBwStateVal('tier', 'mid', 'کیفیت متوسط')" class="py-2 px-3 rounded-xl border text-xs font-black transition-all ${cbwState.tier === 'mid' ? 'bg-[#D4AF37] text-[#07090E] border-[#D4AF37] shadow-md' : 'bg-[#141A28] text-slate-300 border-slate-700 hover:text-white'}">متوسط</button>
-          <button type="button" onclick="setBwStateVal('tier', 'lux', 'کیفیت لوکس VIP')" class="py-2 px-3 rounded-xl border text-xs font-black transition-all ${cbwState.tier === 'lux' ? 'bg-[#D4AF37] text-[#07090E] border-[#D4AF37] shadow-md' : 'bg-[#141A28] text-slate-300 border-slate-700 hover:text-white'}">لوکس</button>
+        <div class="grid grid-cols-3 gap-2.5 text-center">
+          <button type="button" onclick="setBwStateVal('tier', 'eco', 'کیفیت اقتصادی')" class="py-2.5 px-3 rounded-xl border text-xs font-black transition-all ${cbwState.tier === 'eco' ? 'bg-[#D4AF37] text-[#07090E] border-[#D4AF37] shadow-lg scale-[1.02]' : 'bg-[#141A28] text-slate-300 border-slate-700/80 hover:border-[#D4AF37] hover:text-white'}">اقتصادی</button>
+          <button type="button" onclick="setBwStateVal('tier', 'mid', 'کیفیت متوسط')" class="py-2.5 px-3 rounded-xl border text-xs font-black transition-all ${cbwState.tier === 'mid' ? 'bg-[#D4AF37] text-[#07090E] border-[#D4AF37] shadow-lg scale-[1.02]' : 'bg-[#141A28] text-slate-300 border-slate-700/80 hover:border-[#D4AF37] hover:text-white'}">متوسط</button>
+          <button type="button" onclick="setBwStateVal('tier', 'lux', 'کیفیت لوکس VIP')" class="py-2.5 px-3 rounded-xl border text-xs font-black transition-all ${cbwState.tier === 'lux' ? 'bg-[#D4AF37] text-[#07090E] border-[#D4AF37] shadow-lg scale-[1.02]' : 'bg-[#141A28] text-slate-300 border-slate-700/80 hover:border-[#D4AF37] hover:text-white'}">لوکس VIP</button>
         </div>
       </div>`;
 
@@ -19803,11 +19804,11 @@ window.renderBwWizard = function() {
                 </div>
               </div>
               <div class="space-y-1.5 text-xs font-bold">
-                <div class="flex justify-between items-center bg-[#0E121C] p-2 rounded-xl border border-slate-800"><span class="text-amber-200">💎 طلا و جواهر:</span><span class="text-white">${(totalGold / 1000000).toFixed(0)}M</span></div>
-                <div class="flex justify-between items-center bg-[#0E121C] p-2 rounded-xl border border-slate-800"><span class="text-emerald-400">🍽️ پذیرایی و شیرینی یزدی:</span><span class="text-white">${(totalFood / 1000000).toFixed(0)}M</span></div>
-                <div class="flex justify-between items-center bg-[#0E121C] p-2 rounded-xl border border-slate-800"><span class="text-blue-400">🏰 تالار و ورودی:</span><span class="text-white">${(totalVenue / 1000000).toFixed(0)}M</span></div>
-                <div class="flex justify-between items-center bg-[#0E121C] p-2 rounded-xl border border-slate-800"><span class="text-purple-400">📸 عکس و آتلیه:</span><span class="text-white">${(totalPhoto / 1000000).toFixed(0)}M</span></div>
-                <div class="flex justify-between items-center bg-[#0E121C] p-2 rounded-xl border border-slate-800"><span class="text-rose-400">👗 لباس و پوشاک:</span><span class="text-white">${(totalAttire / 1000000).toFixed(0)}M</span></div>
+                <div class="flex justify-between items-center bg-[#0E121C] p-2 rounded-xl border border-slate-800"><span class="text-amber-200">طلا و جواهر:</span><span class="text-white">${(totalGold / 1000000).toFixed(0)}M</span></div>
+                <div class="flex justify-between items-center bg-[#0E121C] p-2 rounded-xl border border-slate-800"><span class="text-emerald-400">پذیرایی و شیرینی یزدی:</span><span class="text-white">${(totalFood / 1000000).toFixed(0)}M</span></div>
+                <div class="flex justify-between items-center bg-[#0E121C] p-2 rounded-xl border border-slate-800"><span class="text-blue-400">تالار و ورودی:</span><span class="text-white">${(totalVenue / 1000000).toFixed(0)}M</span></div>
+                <div class="flex justify-between items-center bg-[#0E121C] p-2 rounded-xl border border-slate-800"><span class="text-purple-400">عکس و آتلیه:</span><span class="text-white">${(totalPhoto / 1000000).toFixed(0)}M</span></div>
+                <div class="flex justify-between items-center bg-[#0E121C] p-2 rounded-xl border border-slate-800"><span class="text-rose-400">لباس و پوشاک:</span><span class="text-white">${(totalAttire / 1000000).toFixed(0)}M</span></div>
               </div>
             </div>
           </div>
@@ -19818,13 +19819,13 @@ window.renderBwWizard = function() {
 
           <div class="flex flex-col sm:flex-row items-center justify-between gap-3 pt-2">
             <button type="button" onclick="cbwCurrentStep=1; renderBwWizard();" class="bg-[#141A28] hover:bg-[#1E293B] text-slate-200 border border-slate-700 px-4 py-2.5 rounded-2xl text-xs font-bold transition-all cursor-pointer">
-              ✏️ ویرایش پاسخ‌ها
+              ویرایش پاسخ‌ها
             </button>
             <button type="button" onclick="restartBwWizard()" class="bg-[#141A28] hover:bg-[#1E293B] text-slate-200 border border-slate-700 px-4 py-2.5 rounded-2xl text-xs font-bold transition-all cursor-pointer">
-              🔄 محاسبه مجدد
+              محاسبه مجدد
             </button>
             <button type="button" onclick="syncBwToDashboard(${grandTotal})" class="gold-shimmer-btn text-[#0F251A] font-black px-6 py-2.5 rounded-2xl text-xs transition-all shadow-lg cursor-pointer">
-              📥 ارسال به خلاصه بودجه / Dashboard ➔
+              ارسال به خلاصه بودجه / Dashboard ➔
             </button>
           </div>
         </div>`;
@@ -19844,12 +19845,12 @@ window.renderBwWizard = function() {
           <div class="space-y-4 text-right">
             <h4 class="text-sm font-black text-[#D4AF37]">${currentStepObj.prompt}</h4>
             <div class="grid grid-cols-2 sm:grid-cols-3 gap-3">
-              <button type="button" onclick="setBwStateVal('city', 'yazd', 'استان یزد (مبدأ اصلی)')" class="p-4 rounded-2xl border text-xs font-black transition-all ${cbwState.city === 'yazd' ? 'bg-[#D4AF37] text-[#07090E] border-[#D4AF37]' : 'bg-[#141A28] text-white border-slate-700 hover:border-[#D4AF37]'}">🏛️ یزد (اصلی)</button>
-              <button type="button" onclick="setBwStateVal('city', 'kerman', 'کرمان')" class="p-4 rounded-2xl border text-xs font-black transition-all ${cbwState.city === 'kerman' ? 'bg-[#D4AF37] text-[#07090E] border-[#D4AF37]' : 'bg-[#141A28] text-white border-slate-700 hover:border-[#D4AF37]'}">🌴 کرمان</button>
-              <button type="button" onclick="setBwStateVal('city', 'isfahan', 'اصفهان')" class="p-4 rounded-2xl border text-xs font-black transition-all ${cbwState.city === 'isfahan' ? 'bg-[#D4AF37] text-[#07090E] border-[#D4AF37]' : 'bg-[#141A28] text-white border-slate-700 hover:border-[#D4AF37]'}">🕌 اصفهان</button>
-              <button type="button" onclick="setBwStateVal('city', 'shiraz', 'شیراز')" class="p-4 rounded-2xl border text-xs font-black transition-all ${cbwState.city === 'shiraz' ? 'bg-[#D4AF37] text-[#07090E] border-[#D4AF37]' : 'bg-[#141A28] text-white border-slate-700 hover:border-[#D4AF37]'}">🌸 شیراز</button>
-              <button type="button" onclick="setBwStateVal('city', 'khorasan_s', 'خراسان جنوبی')" class="p-4 rounded-2xl border text-xs font-black transition-all ${cbwState.city === 'khorasan_s' ? 'bg-[#D4AF37] text-[#07090E] border-[#D4AF37]' : 'bg-[#141A28] text-white border-slate-700 hover:border-[#D4AF37]'}">🏜️ خراسان جنوبی</button>
-              <button type="button" onclick="setBwStateVal('city', 'other', 'سایر شهرها')" class="p-4 rounded-2xl border text-xs font-black transition-all ${cbwState.city === 'other' ? 'bg-[#D4AF37] text-[#07090E] border-[#D4AF37]' : 'bg-[#141A28] text-white border-slate-700 hover:border-[#D4AF37]'}">📍 سایر شهرها</button>
+              <button type="button" onclick="setBwStateVal('city', 'yazd', 'استان یزد (مبدأ اصلی)')" class="p-4 rounded-2xl border text-xs font-black transition-all ${cbwState.city === 'yazd' ? 'bg-[#D4AF37] text-[#07090E] border-[#D4AF37]' : 'bg-[#141A28] text-white border-slate-700 hover:border-[#D4AF37]'}">یزد (اصلی)</button>
+              <button type="button" onclick="setBwStateVal('city', 'kerman', 'کرمان')" class="p-4 rounded-2xl border text-xs font-black transition-all ${cbwState.city === 'kerman' ? 'bg-[#D4AF37] text-[#07090E] border-[#D4AF37]' : 'bg-[#141A28] text-white border-slate-700 hover:border-[#D4AF37]'}">کرمان</button>
+              <button type="button" onclick="setBwStateVal('city', 'isfahan', 'اصفهان')" class="p-4 rounded-2xl border text-xs font-black transition-all ${cbwState.city === 'isfahan' ? 'bg-[#D4AF37] text-[#07090E] border-[#D4AF37]' : 'bg-[#141A28] text-white border-slate-700 hover:border-[#D4AF37]'}">اصفهان</button>
+              <button type="button" onclick="setBwStateVal('city', 'shiraz', 'شیراز')" class="p-4 rounded-2xl border text-xs font-black transition-all ${cbwState.city === 'shiraz' ? 'bg-[#D4AF37] text-[#07090E] border-[#D4AF37]' : 'bg-[#141A28] text-white border-slate-700 hover:border-[#D4AF37]'}">شیراز</button>
+              <button type="button" onclick="setBwStateVal('city', 'khorasan_s', 'خراسان جنوبی')" class="p-4 rounded-2xl border text-xs font-black transition-all ${cbwState.city === 'khorasan_s' ? 'bg-[#D4AF37] text-[#07090E] border-[#D4AF37]' : 'bg-[#141A28] text-white border-slate-700 hover:border-[#D4AF37]'}">خراسان جنوبی</button>
+              <button type="button" onclick="setBwStateVal('city', 'other', 'سایر شهرها')" class="p-4 rounded-2xl border text-xs font-black transition-all ${cbwState.city === 'other' ? 'bg-[#D4AF37] text-[#07090E] border-[#D4AF37]' : 'bg-[#141A28] text-white border-slate-700 hover:border-[#D4AF37]'}">سایر شهرها</button>
             </div>
           </div>`;
       } else if (currentStepObj.key === 'season') {
@@ -19858,8 +19859,8 @@ window.renderBwWizard = function() {
             ${qualitySelectorHtml}
             <h4 class="text-sm font-black text-[#D4AF37]">${currentStepObj.prompt}</h4>
             <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
-              <button type="button" onclick="setBwStateVal('season', 'midweek', 'روزهای عادی و وسط هفته')" class="p-4 rounded-2xl border text-xs font-black text-right transition-all ${cbwState.season === 'midweek' ? 'bg-[#D4AF37] text-[#07090E] border-[#D4AF37]' : 'bg-[#141A28] text-white border-slate-700'}">📅 روزهای عادی و وسط هفته<span class="block text-[10px] opacity-80 mt-1 font-normal">تخفیف تالارها و خدمات</span></button>
-              <button type="button" onclick="setBwStateVal('season', 'weekend', 'اعیاد و آخر هفته‌ها')" class="p-4 rounded-2xl border text-xs font-black text-right transition-all ${cbwState.season === 'weekend' ? 'bg-[#D4AF37] text-[#07090E] border-[#D4AF37]' : 'bg-[#141A28] text-white border-slate-700'}">🌟 اعیاد، مناسبت‌ها و آخر هفته‌ها<span class="block text-[10px] opacity-80 mt-1 font-normal">تعرفه پیک بازار</span></button>
+              <button type="button" onclick="setBwStateVal('season', 'midweek', 'روزهای عادی و وسط هفته')" class="p-4 rounded-2xl border text-xs font-black text-right transition-all ${cbwState.season === 'midweek' ? 'bg-[#D4AF37] text-[#07090E] border-[#D4AF37]' : 'bg-[#141A28] text-white border-slate-700'}">روزهای عادی و وسط هفته<span class="block text-[10px] opacity-80 mt-1 font-normal">تخفیف تالارها و خدمات</span></button>
+              <button type="button" onclick="setBwStateVal('season', 'weekend', 'اعیاد و آخر هفته‌ها')" class="p-4 rounded-2xl border text-xs font-black text-right transition-all ${cbwState.season === 'weekend' ? 'bg-[#D4AF37] text-[#07090E] border-[#D4AF37]' : 'bg-[#141A28] text-white border-slate-700'}">اعیاد، مناسبت‌ها و آخر هفته‌ها<span class="block text-[10px] opacity-80 mt-1 font-normal">تعرفه پیک بازار</span></button>
             </div>
           </div>`;
       } else if (currentStepObj.key === 'tier') {
@@ -19878,10 +19879,10 @@ window.renderBwWizard = function() {
             ${qualitySelectorHtml}
             <h4 class="text-sm font-black text-[#D4AF37]">${currentStepObj.prompt}</h4>
             <div class="grid grid-cols-2 sm:grid-cols-4 gap-3">
-              <button type="button" onclick="setBwStateVal('venueType', 'hall', 'تالار')" class="p-3.5 rounded-2xl border text-xs font-black transition-all ${cbwState.venueType === 'hall' ? 'bg-[#D4AF37] text-[#07090E] border-[#D4AF37]' : 'bg-[#141A28] text-white border-slate-700'}">🏰 تالار</button>
-              <button type="button" onclick="setBwStateVal('venueType', 'garden', 'باغ‌تالار')" class="p-3.5 rounded-2xl border text-xs font-black transition-all ${cbwState.venueType === 'garden' ? 'bg-[#D4AF37] text-[#07090E] border-[#D4AF37]' : 'bg-[#141A28] text-white border-slate-700'}">🏡 باغ‌تالار</button>
-              <button type="button" onclick="setBwStateVal('venueType', 'hotel', 'هتل')" class="p-3.5 rounded-2xl border text-xs font-black transition-all ${cbwState.venueType === 'hotel' ? 'bg-[#D4AF37] text-[#07090E] border-[#D4AF37]' : 'bg-[#141A28] text-white border-slate-700'}">🏨 هتل</button>
-              <button type="button" onclick="setBwStateVal('venueType', 'home', 'منزل')" class="p-3.5 rounded-2xl border text-xs font-black transition-all ${cbwState.venueType === 'home' ? 'bg-[#D4AF37] text-[#07090E] border-[#D4AF37]' : 'bg-[#141A28] text-white border-slate-700'}">🏠 منزل</button>
+              <button type="button" onclick="setBwStateVal('venueType', 'hall', 'تالار')" class="p-3.5 rounded-2xl border text-xs font-black transition-all ${cbwState.venueType === 'hall' ? 'bg-[#D4AF37] text-[#07090E] border-[#D4AF37]' : 'bg-[#141A28] text-white border-slate-700'}">تالار</button>
+              <button type="button" onclick="setBwStateVal('venueType', 'garden', 'باغ‌تالار')" class="p-3.5 rounded-2xl border text-xs font-black transition-all ${cbwState.venueType === 'garden' ? 'bg-[#D4AF37] text-[#07090E] border-[#D4AF37]' : 'bg-[#141A28] text-white border-slate-700'}">باغ‌تالار</button>
+              <button type="button" onclick="setBwStateVal('venueType', 'hotel', 'هتل')" class="p-3.5 rounded-2xl border text-xs font-black transition-all ${cbwState.venueType === 'hotel' ? 'bg-[#D4AF37] text-[#07090E] border-[#D4AF37]' : 'bg-[#141A28] text-white border-slate-700'}">هتل</button>
+              <button type="button" onclick="setBwStateVal('venueType', 'home', 'منزل')" class="p-3.5 rounded-2xl border text-xs font-black transition-all ${cbwState.venueType === 'home' ? 'bg-[#D4AF37] text-[#07090E] border-[#D4AF37]' : 'bg-[#141A28] text-white border-slate-700'}">منزل</button>
             </div>
           </div>`;
       } else if (currentStepObj.key === 'cateringPerGuest') {
@@ -19890,13 +19891,13 @@ window.renderBwWizard = function() {
             ${qualitySelectorHtml}
             <h4 class="text-sm font-black text-[#D4AF37]">${currentStepObj.prompt}</h4>
             <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-2.5">
-              <button type="button" onclick="cbwState.cateringPerGuest=420000; setBwStateVal('cateringMenu', 'baghali_jooje', 'باقالی پلو با گوشت - جوجه کباب');" class="p-3 rounded-2xl border text-xs font-black text-right transition-all ${cbwState.cateringMenu === 'baghali_jooje' ? 'bg-[#D4AF37] text-[#07090E] border-[#D4AF37]' : 'bg-[#141A28] text-white border-slate-700'}">🍱 باقالی پلو با گوشت - جوجه کباب</button>
-              <button type="button" onclick="cbwState.cateringPerGuest=350000; setBwStateVal('cateringMenu', 'koobideh_zereshk', 'کباب کوبیده - زرشک پلو با مرغ');" class="p-3 rounded-2xl border text-xs font-black text-right transition-all ${cbwState.cateringMenu === 'koobideh_zereshk' ? 'bg-[#D4AF37] text-[#07090E] border-[#D4AF37]' : 'bg-[#141A28] text-white border-slate-700'}">🍗 کباب کوبیده - زرشک پلو با مرغ</button>
-              <button type="button" onclick="cbwState.cateringPerGuest=380000; setBwStateVal('cateringMenu', 'baghali_goosht', 'باقالی پلو با گوشت');" class="p-3 rounded-2xl border text-xs font-black text-right transition-all ${cbwState.cateringMenu === 'baghali_goosht' ? 'bg-[#D4AF37] text-[#07090E] border-[#D4AF37]' : 'bg-[#141A28] text-white border-slate-700'}">🥩 باقالی پلو با گوشت</button>
-              <button type="button" onclick="cbwState.cateringPerGuest=280000; setBwStateVal('cateringMenu', 'zereshk_morgh', 'زرشک پلو با مرغ');" class="p-3 rounded-2xl border text-xs font-black text-right transition-all ${cbwState.cateringMenu === 'zereshk_morgh' ? 'bg-[#D4AF37] text-[#07090E] border-[#D4AF37]' : 'bg-[#141A28] text-white border-slate-700'}">🍛 زرشک پلو با مرغ</button>
-              <button type="button" onclick="cbwState.cateringPerGuest=300000; setBwStateVal('cateringMenu', 'koobideh', 'کباب کوبیده');" class="p-3 rounded-2xl border text-xs font-black text-right transition-all ${cbwState.cateringMenu === 'koobideh' ? 'bg-[#D4AF37] text-[#07090E] border-[#D4AF37]' : 'bg-[#141A28] text-white border-slate-700'}">🍢 کباب کوبیده</button>
-              <button type="button" onclick="cbwState.cateringPerGuest=270000; setBwStateVal('cateringMenu', 'jooje', 'جوجه کباب');" class="p-3 rounded-2xl border text-xs font-black text-right transition-all ${cbwState.cateringMenu === 'jooje' ? 'bg-[#D4AF37] text-[#07090E] border-[#D4AF37]' : 'bg-[#141A28] text-white border-slate-700'}">🍡 جوجه کباب</button>
-              <button type="button" onclick="cbwState.cateringPerGuest=360000; setBwStateVal('cateringMenu', 'vaziri', 'کباب وزیری');" class="p-3 rounded-2xl border text-xs font-black text-right transition-all ${cbwState.cateringMenu === 'vaziri' ? 'bg-[#D4AF37] text-[#07090E] border-[#D4AF37]' : 'bg-[#141A28] text-white border-slate-700'}">👑 کباب وزیری</button>
+              <button type="button" onclick="cbwState.cateringPerGuest=420000; setBwStateVal('cateringMenu', 'baghali_jooje', 'باقالی پلو با گوشت - جوجه کباب');" class="p-3 rounded-2xl border text-xs font-black text-right transition-all ${cbwState.cateringMenu === 'baghali_jooje' ? 'bg-[#D4AF37] text-[#07090E] border-[#D4AF37]' : 'bg-[#141A28] text-white border-slate-700'}">باقالی پلو با گوشت - جوجه کباب</button>
+              <button type="button" onclick="cbwState.cateringPerGuest=350000; setBwStateVal('cateringMenu', 'koobideh_zereshk', 'کباب کوبیده - زرشک پلو با مرغ');" class="p-3 rounded-2xl border text-xs font-black text-right transition-all ${cbwState.cateringMenu === 'koobideh_zereshk' ? 'bg-[#D4AF37] text-[#07090E] border-[#D4AF37]' : 'bg-[#141A28] text-white border-slate-700'}">کباب کوبیده - زرشک پلو با مرغ</button>
+              <button type="button" onclick="cbwState.cateringPerGuest=380000; setBwStateVal('cateringMenu', 'baghali_goosht', 'باقالی پلو با گوشت');" class="p-3 rounded-2xl border text-xs font-black text-right transition-all ${cbwState.cateringMenu === 'baghali_goosht' ? 'bg-[#D4AF37] text-[#07090E] border-[#D4AF37]' : 'bg-[#141A28] text-white border-slate-700'}">باقالی پلو با گوشت</button>
+              <button type="button" onclick="cbwState.cateringPerGuest=280000; setBwStateVal('cateringMenu', 'zereshk_morgh', 'زرشک پلو با مرغ');" class="p-3 rounded-2xl border text-xs font-black text-right transition-all ${cbwState.cateringMenu === 'zereshk_morgh' ? 'bg-[#D4AF37] text-[#07090E] border-[#D4AF37]' : 'bg-[#141A28] text-white border-slate-700'}">زرشک پلو با مرغ</button>
+              <button type="button" onclick="cbwState.cateringPerGuest=300000; setBwStateVal('cateringMenu', 'koobideh', 'کباب کوبیده');" class="p-3 rounded-2xl border text-xs font-black text-right transition-all ${cbwState.cateringMenu === 'koobideh' ? 'bg-[#D4AF37] text-[#07090E] border-[#D4AF37]' : 'bg-[#141A28] text-white border-slate-700'}">کباب کوبیده</button>
+              <button type="button" onclick="cbwState.cateringPerGuest=270000; setBwStateVal('cateringMenu', 'jooje', 'جوجه کباب');" class="p-3 rounded-2xl border text-xs font-black text-right transition-all ${cbwState.cateringMenu === 'jooje' ? 'bg-[#D4AF37] text-[#07090E] border-[#D4AF37]' : 'bg-[#141A28] text-white border-slate-700'}">جوجه کباب</button>
+              <button type="button" onclick="cbwState.cateringPerGuest=360000; setBwStateVal('cateringMenu', 'vaziri', 'کباب وزیری');" class="p-3 rounded-2xl border text-xs font-black text-right transition-all ${cbwState.cateringMenu === 'vaziri' ? 'bg-[#D4AF37] text-[#07090E] border-[#D4AF37]' : 'bg-[#141A28] text-white border-slate-700'}">کباب وزیری</button>
             </div>
           </div>`;
       } else if (currentStepObj.key === 'fruitPerGuest') {
@@ -19905,9 +19906,9 @@ window.renderBwWizard = function() {
             ${qualitySelectorHtml}
             <h4 class="text-sm font-black text-[#D4AF37]">${currentStepObj.prompt}</h4>
             <div class="grid grid-cols-1 sm:grid-cols-3 gap-3">
-              <button type="button" onclick="cbwState.fruitPerGuest=35000; setBwStateVal('fruitType', '2_seasons', '۲ مدل میوه فصل');" class="p-4 rounded-2xl border text-xs font-black text-right transition-all ${cbwState.fruitType === '2_seasons' ? 'bg-[#D4AF37] text-[#07090E] border-[#D4AF37]' : 'bg-[#141A28] text-white border-slate-700'}">🍎 ۲ مدل میوه فصل</button>
-              <button type="button" onclick="cbwState.fruitPerGuest=60000; setBwStateVal('fruitType', '4_seasons', '۴ مدل میوه + میوه‌های استوایی');" class="p-4 rounded-2xl border text-xs font-black text-right transition-all ${cbwState.fruitType === '4_seasons' ? 'bg-[#D4AF37] text-[#07090E] border-[#D4AF37]' : 'bg-[#141A28] text-white border-slate-700'}">🍍 ۴ مدل میوه + میوه‌های استوایی</button>
-              <button type="button" onclick="cbwState.fruitPerGuest=0; setBwStateVal('fruitType', 'none', 'عدم سفارش میوه');" class="p-4 rounded-2xl border text-xs font-black text-right transition-all ${cbwState.fruitType === 'none' ? 'bg-[#D4AF37] text-[#07090E] border-[#D4AF37]' : 'bg-[#141A28] text-white border-slate-700'}">❌ نمی‌خوام</button>
+              <button type="button" onclick="cbwState.fruitPerGuest=35000; setBwStateVal('fruitType', '2_seasons', '۲ مدل میوه فصل');" class="p-4 rounded-2xl border text-xs font-black text-right transition-all ${cbwState.fruitType === '2_seasons' ? 'bg-[#D4AF37] text-[#07090E] border-[#D4AF37]' : 'bg-[#141A28] text-white border-slate-700'}">۲ مدل میوه فصل</button>
+              <button type="button" onclick="cbwState.fruitPerGuest=60000; setBwStateVal('fruitType', '4_seasons', '۴ مدل میوه + میوه‌های استوایی');" class="p-4 rounded-2xl border text-xs font-black text-right transition-all ${cbwState.fruitType === '4_seasons' ? 'bg-[#D4AF37] text-[#07090E] border-[#D4AF37]' : 'bg-[#141A28] text-white border-slate-700'}">۴ مدل میوه + میوه‌های استوایی</button>
+              <button type="button" onclick="cbwState.fruitPerGuest=0; setBwStateVal('fruitType', 'none', 'عدم سفارش میوه');" class="p-4 rounded-2xl border text-xs font-black text-right transition-all ${cbwState.fruitType === 'none' ? 'bg-[#D4AF37] text-[#07090E] border-[#D4AF37]' : 'bg-[#141A28] text-white border-slate-700'}">نمی‌خوام</button>
             </div>
           </div>`;
       } else if (currentStepObj.key === 'sweetPerGuest') {
@@ -19916,9 +19917,9 @@ window.renderBwWizard = function() {
             ${qualitySelectorHtml}
             <h4 class="text-sm font-black text-[#D4AF37]">${currentStepObj.prompt}</h4>
             <div class="grid grid-cols-1 sm:grid-cols-3 gap-3">
-              <button type="button" onclick="cbwState.sweetPerGuest=45000; setBwStateVal('sweetType', 'yazdi_authentic', 'پکیج شیرینی‌های اصیل یزدی (قطاب، نان منقا، لوز، نارگیلی)');" class="p-4 rounded-2xl border text-xs font-black text-right transition-all ${cbwState.sweetType === 'yazdi_authentic' ? 'bg-[#D4AF37] text-[#07090E] border-[#D4AF37]' : 'bg-[#141A28] text-white border-slate-700'}">🧁 پکیج شیرینی‌های اصیل یزدی (قطاب، نان منقا، لوز، نارگیلی)</button>
-              <button type="button" onclick="cbwState.sweetPerGuest=35000; setBwStateVal('sweetType', 'modern', 'شیرینی تر و خشک مدرن');" class="p-4 rounded-2xl border text-xs font-black text-right transition-all ${cbwState.sweetType === 'modern' ? 'bg-[#D4AF37] text-[#07090E] border-[#D4AF37]' : 'bg-[#141A28] text-white border-slate-700'}">🍰 شیرینی تر و خشک مدرن</button>
-              <button type="button" onclick="cbwState.sweetPerGuest=0; setBwStateVal('sweetType', 'none', 'عدم سفارش شیرینی');" class="p-4 rounded-2xl border text-xs font-black text-right transition-all ${cbwState.sweetType === 'none' ? 'bg-[#D4AF37] text-[#07090E] border-[#D4AF37]' : 'bg-[#141A28] text-white border-slate-700'}">❌ نمی‌خوام</button>
+              <button type="button" onclick="cbwState.sweetPerGuest=45000; setBwStateVal('sweetType', 'yazdi_authentic', 'پکیج شیرینی‌های اصیل یزدی (قطاب، نان منقا، لوز، نارگیلی)');" class="p-4 rounded-2xl border text-xs font-black text-right transition-all ${cbwState.sweetType === 'yazdi_authentic' ? 'bg-[#D4AF37] text-[#07090E] border-[#D4AF37]' : 'bg-[#141A28] text-white border-slate-700'}">پکیج شیرینی‌های اصیل یزدی (قطاب، نان منقا، لوز، نارگیلی)</button>
+              <button type="button" onclick="cbwState.sweetPerGuest=35000; setBwStateVal('sweetType', 'modern', 'شیرینی تر و خشک مدرن');" class="p-4 rounded-2xl border text-xs font-black text-right transition-all ${cbwState.sweetType === 'modern' ? 'bg-[#D4AF37] text-[#07090E] border-[#D4AF37]' : 'bg-[#141A28] text-white border-slate-700'}">شیرینی تر و خشک مدرن</button>
+              <button type="button" onclick="cbwState.sweetPerGuest=0; setBwStateVal('sweetType', 'none', 'عدم سفارش شیرینی');" class="p-4 rounded-2xl border text-xs font-black text-right transition-all ${cbwState.sweetType === 'none' ? 'bg-[#D4AF37] text-[#07090E] border-[#D4AF37]' : 'bg-[#141A28] text-white border-slate-700'}">نمی‌خوام</button>
             </div>
           </div>`;
       } else if (currentStepObj.key === 'drinkPerGuest') {
@@ -19927,11 +19928,11 @@ window.renderBwWizard = function() {
             ${qualitySelectorHtml}
             <h4 class="text-sm font-black text-[#D4AF37]">${currentStepObj.prompt}</h4>
             <div class="grid grid-cols-2 sm:grid-cols-3 gap-2.5">
-              <button type="button" onclick="cbwState.drinkPerGuest=15000; setBwStateVal('drinkType', 'sharbat', 'شربت');" class="p-3 rounded-2xl border text-xs font-black transition-all ${cbwState.drinkType === 'sharbat' ? 'bg-[#D4AF37] text-[#07090E] border-[#D4AF37]' : 'bg-[#141A28] text-white border-slate-700'}">🥤 شربت</button>
-              <button type="button" onclick="cbwState.drinkPerGuest=30000; setBwStateVal('drinkType', 'natural_3', 'سه نوع آبمیوه طبیعی');" class="p-3 rounded-2xl border text-xs font-black transition-all ${cbwState.drinkType === 'natural_3' ? 'bg-[#D4AF37] text-[#07090E] border-[#D4AF37]' : 'bg-[#141A28] text-white border-slate-700'}">🍹 سه نوع آبمیوه طبیعی</button>
-              <button type="button" onclick="cbwState.drinkPerGuest=50000; setBwStateVal('drinkType', 'mocktail_unlimited', 'آبمیوه طبیعی نامحدود و موکتل');" class="p-3 rounded-2xl border text-xs font-black transition-all ${cbwState.drinkType === 'mocktail_unlimited' ? 'bg-[#D4AF37] text-[#07090E] border-[#D4AF37]' : 'bg-[#141A28] text-white border-slate-700'}">🍸 آبمیوه طبیعی نامحدود و موکتل</button>
-              <button type="button" onclick="cbwState.drinkPerGuest=8000; setBwStateVal('drinkType', 'mineral_water', 'آب معدنی');" class="p-3 rounded-2xl border text-xs font-black transition-all ${cbwState.drinkType === 'mineral_water' ? 'bg-[#D4AF37] text-[#07090E] border-[#D4AF37]' : 'bg-[#141A28] text-white border-slate-700'}">💧 آب معدنی</button>
-              <button type="button" onclick="cbwState.drinkPerGuest=0; setBwStateVal('drinkType', 'none', 'عدم سفارش نوشیدنی');" class="p-3 rounded-2xl border text-xs font-black transition-all ${cbwState.drinkType === 'none' ? 'bg-[#D4AF37] text-[#07090E] border-[#D4AF37]' : 'bg-[#141A28] text-white border-slate-700'}">❌ نمی‌خوام</button>
+              <button type="button" onclick="cbwState.drinkPerGuest=15000; setBwStateVal('drinkType', 'sharbat', 'شربت');" class="p-3 rounded-2xl border text-xs font-black transition-all ${cbwState.drinkType === 'sharbat' ? 'bg-[#D4AF37] text-[#07090E] border-[#D4AF37]' : 'bg-[#141A28] text-white border-slate-700'}">شربت</button>
+              <button type="button" onclick="cbwState.drinkPerGuest=30000; setBwStateVal('drinkType', 'natural_3', 'سه نوع آبمیوه طبیعی');" class="p-3 rounded-2xl border text-xs font-black transition-all ${cbwState.drinkType === 'natural_3' ? 'bg-[#D4AF37] text-[#07090E] border-[#D4AF37]' : 'bg-[#141A28] text-white border-slate-700'}">سه نوع آبمیوه طبیعی</button>
+              <button type="button" onclick="cbwState.drinkPerGuest=50000; setBwStateVal('drinkType', 'mocktail_unlimited', 'آبمیوه طبیعی نامحدود و موکتل');" class="p-3 rounded-2xl border text-xs font-black transition-all ${cbwState.drinkType === 'mocktail_unlimited' ? 'bg-[#D4AF37] text-[#07090E] border-[#D4AF37]' : 'bg-[#141A28] text-white border-slate-700'}">آبمیوه طبیعی نامحدود و موکتل</button>
+              <button type="button" onclick="cbwState.drinkPerGuest=8000; setBwStateVal('drinkType', 'mineral_water', 'آب معدنی');" class="p-3 rounded-2xl border text-xs font-black transition-all ${cbwState.drinkType === 'mineral_water' ? 'bg-[#D4AF37] text-[#07090E] border-[#D4AF37]' : 'bg-[#141A28] text-white border-slate-700'}">آب معدنی</button>
+              <button type="button" onclick="cbwState.drinkPerGuest=0; setBwStateVal('drinkType', 'none', 'عدم سفارش نوشیدنی');" class="p-3 rounded-2xl border text-xs font-black transition-all ${cbwState.drinkType === 'none' ? 'bg-[#D4AF37] text-[#07090E] border-[#D4AF37]' : 'bg-[#141A28] text-white border-slate-700'}">نمی‌خوام</button>
             </div>
           </div>`;
       } else if (currentStepObj.key === 'fingerFoodPerGuest') {
@@ -19940,10 +19941,10 @@ window.renderBwWizard = function() {
             ${qualitySelectorHtml}
             <h4 class="text-sm font-black text-[#D4AF37]">${currentStepObj.prompt}</h4>
             <div class="grid grid-cols-2 sm:grid-cols-4 gap-3">
-              <button type="button" onclick="cbwState.fingerFoodPerGuest=20000; setBwStateVal('fingerFoodType', 'welcome_drink', 'بار نوشیدنی (Welcome Drink)');" class="p-3.5 rounded-2xl border text-xs font-black transition-all ${cbwState.fingerFoodType === 'welcome_drink' ? 'bg-[#D4AF37] text-[#07090E] border-[#D4AF37]' : 'bg-[#141A28] text-white border-slate-700'}">🍹 بار نوشیدنی (Welcome Drink)</button>
-              <button type="button" onclick="cbwState.fingerFoodPerGuest=45000; setBwStateVal('fingerFoodType', 'trays', 'سینی فینگرفود');" class="p-3.5 rounded-2xl border text-xs font-black transition-all ${cbwState.fingerFoodType === 'trays' ? 'bg-[#D4AF37] text-[#07090E] border-[#D4AF37]' : 'bg-[#141A28] text-white border-slate-700'}">🍢 سینی فینگرفود</button>
-              <button type="button" onclick="cbwState.fingerFoodPerGuest=75000; setBwStateVal('fingerFoodType', 'vip', 'پکیج VIP');" class="p-3.5 rounded-2xl border text-xs font-black transition-all ${cbwState.fingerFoodType === 'vip' ? 'bg-[#D4AF37] text-[#07090E] border-[#D4AF37]' : 'bg-[#141A28] text-white border-slate-700'}">🌟 پکیج VIP</button>
-              <button type="button" onclick="cbwState.fingerFoodPerGuest=0; setBwStateVal('fingerFoodType', 'none', 'عدم سفارش فینگرفود');" class="p-3.5 rounded-2xl border text-xs font-black transition-all ${cbwState.fingerFoodType === 'none' ? 'bg-[#D4AF37] text-[#07090E] border-[#D4AF37]' : 'bg-[#141A28] text-white border-slate-700'}">❌ نمی‌خوام</button>
+              <button type="button" onclick="cbwState.fingerFoodPerGuest=20000; setBwStateVal('fingerFoodType', 'welcome_drink', 'بار نوشیدنی (Welcome Drink)');" class="p-3.5 rounded-2xl border text-xs font-black transition-all ${cbwState.fingerFoodType === 'welcome_drink' ? 'bg-[#D4AF37] text-[#07090E] border-[#D4AF37]' : 'bg-[#141A28] text-white border-slate-700'}">بار نوشیدنی (Welcome Drink)</button>
+              <button type="button" onclick="cbwState.fingerFoodPerGuest=45000; setBwStateVal('fingerFoodType', 'trays', 'سینی فینگرفود');" class="p-3.5 rounded-2xl border text-xs font-black transition-all ${cbwState.fingerFoodType === 'trays' ? 'bg-[#D4AF37] text-[#07090E] border-[#D4AF37]' : 'bg-[#141A28] text-white border-slate-700'}">سینی فینگرفود</button>
+              <button type="button" onclick="cbwState.fingerFoodPerGuest=75000; setBwStateVal('fingerFoodType', 'vip', 'پکیج VIP');" class="p-3.5 rounded-2xl border text-xs font-black transition-all ${cbwState.fingerFoodType === 'vip' ? 'bg-[#D4AF37] text-[#07090E] border-[#D4AF37]' : 'bg-[#141A28] text-white border-slate-700'}">پکیج VIP</button>
+              <button type="button" onclick="cbwState.fingerFoodPerGuest=0; setBwStateVal('fingerFoodType', 'none', 'عدم سفارش فینگرفود');" class="p-3.5 rounded-2xl border text-xs font-black transition-all ${cbwState.fingerFoodType === 'none' ? 'bg-[#D4AF37] text-[#07090E] border-[#D4AF37]' : 'bg-[#141A28] text-white border-slate-700'}">نمی‌خوام</button>
             </div>
           </div>`;
       } else if (currentStepObj.key === 'guestGift') {
@@ -19952,8 +19953,8 @@ window.renderBwWizard = function() {
             ${qualitySelectorHtml}
             <h4 class="text-sm font-black text-[#D4AF37]">${currentStepObj.prompt}</h4>
             <div class="grid grid-cols-2 gap-3">
-              <button type="button" onclick="cbwState.guestGift=3000000; setBwStateVal('guestGiftType', 'yes', 'بله، اضافه کن (گیفت یادبود)');" class="p-4 rounded-2xl border text-xs font-black transition-all ${cbwState.guestGiftType === 'yes' ? 'bg-[#D4AF37] text-[#07090E] border-[#D4AF37]' : 'bg-[#141A28] text-white border-slate-700'}">🎁 بله، اضافه کن</button>
-              <button type="button" onclick="cbwState.guestGift=0; setBwStateVal('guestGiftType', 'none', 'عدم سفارش گیفت');" class="p-4 rounded-2xl border text-xs font-black transition-all ${cbwState.guestGiftType === 'none' ? 'bg-[#D4AF37] text-[#07090E] border-[#D4AF37]' : 'bg-[#141A28] text-white border-slate-700'}">❌ نمی‌خوام</button>
+              <button type="button" onclick="cbwState.guestGift=3000000; setBwStateVal('guestGiftType', 'yes', 'بله، اضافه کن (گیفت یادبود)');" class="p-4 rounded-2xl border text-xs font-black transition-all ${cbwState.guestGiftType === 'yes' ? 'bg-[#D4AF37] text-[#07090E] border-[#D4AF37]' : 'bg-[#141A28] text-white border-slate-700'}">بله، اضافه کن</button>
+              <button type="button" onclick="cbwState.guestGift=0; setBwStateVal('guestGiftType', 'none', 'عدم سفارش گیفت');" class="p-4 rounded-2xl border text-xs font-black transition-all ${cbwState.guestGiftType === 'none' ? 'bg-[#D4AF37] text-[#07090E] border-[#D4AF37]' : 'bg-[#141A28] text-white border-slate-700'}">نمی‌خوام</button>
             </div>
           </div>`;
       } else if (currentStepObj.key === 'cakePrice') {
@@ -19962,9 +19963,9 @@ window.renderBwWizard = function() {
             ${qualitySelectorHtml}
             <h4 class="text-sm font-black text-[#D4AF37]">${currentStepObj.prompt}</h4>
             <div class="grid grid-cols-3 gap-3 mb-3">
-              <button type="button" onclick="cbwState.cakePerKg=250000; cbwState.cakePrice=cbwState.cakeKg*250000; setBwStateVal('cakeStyle', 'simple', 'کیک ساده');" class="p-3 rounded-2xl border text-xs font-black transition-all ${cbwState.cakeStyle === 'simple' ? 'bg-[#D4AF37] text-[#07090E] border-[#D4AF37]' : 'bg-[#141A28] text-white border-slate-700'}">🎂 ساده</button>
-              <button type="button" onclick="cbwState.cakePerKg=350000; cbwState.cakePrice=cbwState.cakeKg*350000; setBwStateVal('cakeStyle', 'tiered', 'کیک طبقاتی');" class="p-3 rounded-2xl border text-xs font-black transition-all ${cbwState.cakeStyle === 'tiered' ? 'bg-[#D4AF37] text-[#07090E] border-[#D4AF37]' : 'bg-[#141A28] text-white border-slate-700'}">🏰 طبقاتی</button>
-              <button type="button" onclick="cbwState.cakePrice=0; setBwStateVal('cakeStyle', 'none', 'عدم سفارش کیک');" class="p-3 rounded-2xl border text-xs font-black transition-all ${cbwState.cakeStyle === 'none' ? 'bg-[#D4AF37] text-[#07090E] border-[#D4AF37]' : 'bg-[#141A28] text-white border-slate-700'}">❌ نمی‌خوام</button>
+              <button type="button" onclick="cbwState.cakePerKg=250000; cbwState.cakePrice=cbwState.cakeKg*250000; setBwStateVal('cakeStyle', 'simple', 'کیک ساده');" class="p-3 rounded-2xl border text-xs font-black transition-all ${cbwState.cakeStyle === 'simple' ? 'bg-[#D4AF37] text-[#07090E] border-[#D4AF37]' : 'bg-[#141A28] text-white border-slate-700'}">ساده</button>
+              <button type="button" onclick="cbwState.cakePerKg=350000; cbwState.cakePrice=cbwState.cakeKg*350000; setBwStateVal('cakeStyle', 'tiered', 'کیک طبقاتی');" class="p-3 rounded-2xl border text-xs font-black transition-all ${cbwState.cakeStyle === 'tiered' ? 'bg-[#D4AF37] text-[#07090E] border-[#D4AF37]' : 'bg-[#141A28] text-white border-slate-700'}">طبقاتی</button>
+              <button type="button" onclick="cbwState.cakePrice=0; setBwStateVal('cakeStyle', 'none', 'عدم سفارش کیک');" class="p-3 rounded-2xl border text-xs font-black transition-all ${cbwState.cakeStyle === 'none' ? 'bg-[#D4AF37] text-[#07090E] border-[#D4AF37]' : 'bg-[#141A28] text-white border-slate-700'}">نمی‌خوام</button>
             </div>
             ${cbwState.cakeStyle !== 'none' ? `
               <div class="flex items-center justify-center gap-4 bg-[#141A28] border border-[#C5A059]/30 rounded-2xl p-4 shadow-md">
@@ -19980,10 +19981,10 @@ window.renderBwWizard = function() {
             ${qualitySelectorHtml}
             <h4 class="text-sm font-black text-[#D4AF37]">${currentStepObj.prompt}</h4>
             <div class="grid grid-cols-2 sm:grid-cols-4 gap-3">
-              <button type="button" onclick="cbwState.dress=30000000; setBwStateVal('dressType', 'buy', 'خرید لباس عروس');" class="p-3.5 rounded-2xl border text-xs font-black transition-all ${cbwState.dressType === 'buy' ? 'bg-[#D4AF37] text-[#07090E] border-[#D4AF37]' : 'bg-[#141A28] text-white border-slate-700'}">🛍️ خرید</button>
-              <button type="button" onclick="cbwState.dress=18000000; setBwStateVal('dressType', 'rent', 'اجاره لباس عروس');" class="p-3.5 rounded-2xl border text-xs font-black transition-all ${cbwState.dressType === 'rent' ? 'bg-[#D4AF37] text-[#07090E] border-[#D4AF37]' : 'bg-[#141A28] text-white border-slate-700'}">👗 اجاره</button>
-              <button type="button" onclick="cbwState.dress=45000000; setBwStateVal('dressType', 'custom', 'دوخت سفارشی');" class="p-3.5 rounded-2xl border text-xs font-black transition-all ${cbwState.dressType === 'custom' ? 'bg-[#D4AF37] text-[#07090E] border-[#D4AF37]' : 'bg-[#141A28] text-white border-slate-700'}">✂️ دوخت سفارشی</button>
-              <button type="button" onclick="cbwState.dress=0; setBwStateVal('dressType', 'none', 'عدم تهیه لباس');" class="p-3.5 rounded-2xl border text-xs font-black transition-all ${cbwState.dressType === 'none' ? 'bg-[#D4AF37] text-[#07090E] border-[#D4AF37]' : 'bg-[#141A28] text-white border-slate-700'}">❌ نمی‌خوام</button>
+              <button type="button" onclick="cbwState.dress=30000000; setBwStateVal('dressType', 'buy', 'خرید لباس عروس');" class="p-3.5 rounded-2xl border text-xs font-black transition-all ${cbwState.dressType === 'buy' ? 'bg-[#D4AF37] text-[#07090E] border-[#D4AF37]' : 'bg-[#141A28] text-white border-slate-700'}">خرید</button>
+              <button type="button" onclick="cbwState.dress=18000000; setBwStateVal('dressType', 'rent', 'اجاره لباس عروس');" class="p-3.5 rounded-2xl border text-xs font-black transition-all ${cbwState.dressType === 'rent' ? 'bg-[#D4AF37] text-[#07090E] border-[#D4AF37]' : 'bg-[#141A28] text-white border-slate-700'}">اجاره</button>
+              <button type="button" onclick="cbwState.dress=45000000; setBwStateVal('dressType', 'custom', 'دوخت سفارشی');" class="p-3.5 rounded-2xl border text-xs font-black transition-all ${cbwState.dressType === 'custom' ? 'bg-[#D4AF37] text-[#07090E] border-[#D4AF37]' : 'bg-[#141A28] text-white border-slate-700'}">دوخت سفارشی</button>
+              <button type="button" onclick="cbwState.dress=0; setBwStateVal('dressType', 'none', 'عدم تهیه لباس');" class="p-3.5 rounded-2xl border text-xs font-black transition-all ${cbwState.dressType === 'none' ? 'bg-[#D4AF37] text-[#07090E] border-[#D4AF37]' : 'bg-[#141A28] text-white border-slate-700'}">نمی‌خوام</button>
             </div>
           </div>`;
       } else if (currentStepObj.key === 'suit') {
@@ -19992,10 +19993,10 @@ window.renderBwWizard = function() {
             ${qualitySelectorHtml}
             <h4 class="text-sm font-black text-[#D4AF37]">${currentStepObj.prompt}</h4>
             <div class="grid grid-cols-2 sm:grid-cols-4 gap-3">
-              <button type="button" onclick="cbwState.suit=12000000; setBwStateVal('suitType', 'buy', 'خرید کت‌وشلوار');" class="p-3.5 rounded-2xl border text-xs font-black transition-all ${cbwState.suitType === 'buy' ? 'bg-[#D4AF37] text-[#07090E] border-[#D4AF37]' : 'bg-[#141A28] text-white border-slate-700'}">🛍️ خرید</button>
-              <button type="button" onclick="cbwState.suit=6000000; setBwStateVal('suitType', 'rent', 'اجاره کت‌وشلوار');" class="p-3.5 rounded-2xl border text-xs font-black transition-all ${cbwState.suitType === 'rent' ? 'bg-[#D4AF37] text-[#07090E] border-[#D4AF37]' : 'bg-[#141A28] text-white border-slate-700'}">👔 اجاره</button>
-              <button type="button" onclick="cbwState.suit=18000000; setBwStateVal('suitType', 'custom', 'دوخت سفارشی');" class="p-3.5 rounded-2xl border text-xs font-black transition-all ${cbwState.suitType === 'custom' ? 'bg-[#D4AF37] text-[#07090E] border-[#D4AF37]' : 'bg-[#141A28] text-white border-slate-700'}">✂️ دوخت سفارشی</button>
-              <button type="button" onclick="cbwState.suit=0; setBwStateVal('suitType', 'none', 'عدم تهیه کت‌وشلوار');" class="p-3.5 rounded-2xl border text-xs font-black transition-all ${cbwState.suitType === 'none' ? 'bg-[#D4AF37] text-[#07090E] border-[#D4AF37]' : 'bg-[#141A28] text-white border-slate-700'}">❌ نمی‌خوام</button>
+              <button type="button" onclick="cbwState.suit=12000000; setBwStateVal('suitType', 'buy', 'خرید کت‌وشلوار');" class="p-3.5 rounded-2xl border text-xs font-black transition-all ${cbwState.suitType === 'buy' ? 'bg-[#D4AF37] text-[#07090E] border-[#D4AF37]' : 'bg-[#141A28] text-white border-slate-700'}">خرید</button>
+              <button type="button" onclick="cbwState.suit=6000000; setBwStateVal('suitType', 'rent', 'اجاره کت‌وشلوار');" class="p-3.5 rounded-2xl border text-xs font-black transition-all ${cbwState.suitType === 'rent' ? 'bg-[#D4AF37] text-[#07090E] border-[#D4AF37]' : 'bg-[#141A28] text-white border-slate-700'}">اجاره</button>
+              <button type="button" onclick="cbwState.suit=18000000; setBwStateVal('suitType', 'custom', 'دوخت سفارشی');" class="p-3.5 rounded-2xl border text-xs font-black transition-all ${cbwState.suitType === 'custom' ? 'bg-[#D4AF37] text-[#07090E] border-[#D4AF37]' : 'bg-[#141A28] text-white border-slate-700'}">دوخت سفارشی</button>
+              <button type="button" onclick="cbwState.suit=0; setBwStateVal('suitType', 'none', 'عدم تهیه کت‌وشلوار');" class="p-3.5 rounded-2xl border text-xs font-black transition-all ${cbwState.suitType === 'none' ? 'bg-[#D4AF37] text-[#07090E] border-[#D4AF37]' : 'bg-[#141A28] text-white border-slate-700'}">نمی‌خوام</button>
             </div>
           </div>`;
       } else if (currentStepObj.key === 'goldSet') {
@@ -20006,8 +20007,8 @@ window.renderBwWizard = function() {
             <div class="bg-[#141A28] border border-[#C5A059]/30 rounded-2xl p-5 shadow-md space-y-4 text-center">
               <div class="flex items-center justify-center gap-3">
                 <span class="text-xs font-bold text-slate-300">جنس:</span>
-                <button type="button" onclick="cbwState.goldMaterial='gold'; cbwState.goldSet=cbwState.goldGrams*2625006; setBwStateVal('goldSetType', 'gold', 'طلا');" class="py-1.5 px-4 rounded-xl border text-xs font-bold transition-all ${cbwState.goldMaterial === 'gold' ? 'bg-[#D4AF37] text-[#07090E] border-[#D4AF37]' : 'bg-[#0E121C] text-slate-300 border-slate-700'}">🟡 طلا</button>
-                <button type="button" onclick="cbwState.goldMaterial='silver'; cbwState.goldSet=cbwState.goldGrams*49830; setBwStateVal('goldSetType', 'silver', 'نقره');" class="py-1.5 px-4 rounded-xl border text-xs font-bold transition-all ${cbwState.goldMaterial === 'silver' ? 'bg-[#D4AF37] text-[#07090E] border-[#D4AF37]' : 'bg-[#0E121C] text-slate-300 border-slate-700'}">⚪ نقره</button>
+                <button type="button" onclick="cbwState.goldMaterial='gold'; cbwState.goldSet=cbwState.goldGrams*2625006; setBwStateVal('goldSetType', 'gold', 'طلا');" class="py-1.5 px-4 rounded-xl border text-xs font-bold transition-all ${cbwState.goldMaterial === 'gold' ? 'bg-[#D4AF37] text-[#07090E] border-[#D4AF37]' : 'bg-[#0E121C] text-slate-300 border-slate-700'}">طلا</button>
+                <button type="button" onclick="cbwState.goldMaterial='silver'; cbwState.goldSet=cbwState.goldGrams*49830; setBwStateVal('goldSetType', 'silver', 'نقره');" class="py-1.5 px-4 rounded-xl border text-xs font-bold transition-all ${cbwState.goldMaterial === 'silver' ? 'bg-[#D4AF37] text-[#07090E] border-[#D4AF37]' : 'bg-[#0E121C] text-slate-300 border-slate-700'}">نقره</button>
               </div>
               <div class="flex items-center justify-center gap-4">
                 <button type="button" onclick="changeBwGrams('goldGrams', 'goldSet', 'goldSetName', -1, 2625006, 'سرویس', 'goldMaterial')" class="w-10 h-10 rounded-xl bg-[#0E121C] border border-[#C5A059]/40 text-[#D4AF37] font-black text-lg hover:bg-[#D4AF37] hover:text-[#07090E] transition-all cursor-pointer">-</button>
@@ -20015,8 +20016,8 @@ window.renderBwWizard = function() {
                 <button type="button" onclick="changeBwGrams('goldGrams', 'goldSet', 'goldSetName', 1, 2625006, 'سرویس', 'goldMaterial')" class="w-10 h-10 rounded-xl bg-[#0E121C] border border-[#C5A059]/40 text-[#D4AF37] font-black text-lg hover:bg-[#D4AF37] hover:text-[#07090E] transition-all cursor-pointer">+</button>
               </div>
               <div class="flex items-center justify-center gap-3 pt-2">
-                <button type="button" onclick="setBwStateVal('goldSetConfirmed', true, 'تأیید سرویس طلا')" class="bg-emerald-600 hover:bg-emerald-500 text-white font-black text-xs px-5 py-2 rounded-xl cursor-pointer">✓ تأیید</button>
-                <button type="button" onclick="cbwState.goldSet=0; setBwStateVal('goldSetType', 'none', 'عدم خرید سرویس طلا');" class="bg-rose-950 text-rose-200 border border-rose-800 font-bold text-xs px-5 py-2 rounded-xl cursor-pointer">❌ نمی‌خوام</button>
+                <button type="button" onclick="setBwStateVal('goldSetConfirmed', true, 'تأیید سرویس طلا')" class="bg-emerald-600 hover:bg-emerald-500 text-white font-black text-xs px-5 py-2 rounded-xl cursor-pointer">تأیید</button>
+                <button type="button" onclick="cbwState.goldSet=0; setBwStateVal('goldSetType', 'none', 'عدم خرید سرویس طلا');" class="bg-rose-950 text-rose-200 border border-rose-800 font-bold text-xs px-5 py-2 rounded-xl cursor-pointer">نمی‌خوام</button>
               </div>
             </div>
           </div>`;
@@ -20028,8 +20029,8 @@ window.renderBwWizard = function() {
             <div class="bg-[#141A28] border border-[#C5A059]/30 rounded-2xl p-5 shadow-md space-y-4 text-center">
               <div class="flex items-center justify-center gap-3">
                 <span class="text-xs font-bold text-slate-300">جنس:</span>
-                <button type="button" onclick="cbwState.ringBrideMaterial='gold'; cbwState.ringBride=cbwState.ringBrideGrams*2625006; setBwStateVal('ringBrideType', 'gold', 'طلا');" class="py-1.5 px-4 rounded-xl border text-xs font-bold transition-all ${cbwState.ringBrideMaterial === 'gold' ? 'bg-[#D4AF37] text-[#07090E] border-[#D4AF37]' : 'bg-[#0E121C] text-slate-300 border-slate-700'}">🟡 طلا</button>
-                <button type="button" onclick="cbwState.ringBrideMaterial='silver'; cbwState.ringBride=cbwState.ringBrideGrams*49830; setBwStateVal('ringBrideType', 'silver', 'نقره');" class="py-1.5 px-4 rounded-xl border text-xs font-bold transition-all ${cbwState.ringBrideMaterial === 'silver' ? 'bg-[#D4AF37] text-[#07090E] border-[#D4AF37]' : 'bg-[#0E121C] text-slate-300 border-slate-700'}">⚪ نقره</button>
+                <button type="button" onclick="cbwState.ringBrideMaterial='gold'; cbwState.ringBride=cbwState.ringBrideGrams*2625006; setBwStateVal('ringBrideType', 'gold', 'طلا');" class="py-1.5 px-4 rounded-xl border text-xs font-bold transition-all ${cbwState.ringBrideMaterial === 'gold' ? 'bg-[#D4AF37] text-[#07090E] border-[#D4AF37]' : 'bg-[#0E121C] text-slate-300 border-slate-700'}">طلا</button>
+                <button type="button" onclick="cbwState.ringBrideMaterial='silver'; cbwState.ringBride=cbwState.ringBrideGrams*49830; setBwStateVal('ringBrideType', 'silver', 'نقره');" class="py-1.5 px-4 rounded-xl border text-xs font-bold transition-all ${cbwState.ringBrideMaterial === 'silver' ? 'bg-[#D4AF37] text-[#07090E] border-[#D4AF37]' : 'bg-[#0E121C] text-slate-300 border-slate-700'}">نقره</button>
               </div>
               <div class="flex items-center justify-center gap-4">
                 <button type="button" onclick="changeBwGrams('ringBrideGrams', 'ringBride', 'ringBrideName', -1, 2625006, 'حلقه عروس', 'ringBrideMaterial')" class="w-10 h-10 rounded-xl bg-[#0E121C] border border-[#C5A059]/40 text-[#D4AF37] font-black text-lg hover:bg-[#D4AF37] hover:text-[#07090E] transition-all cursor-pointer">-</button>
@@ -20037,8 +20038,8 @@ window.renderBwWizard = function() {
                 <button type="button" onclick="changeBwGrams('ringBrideGrams', 'ringBride', 'ringBrideName', 1, 2625006, 'حلقه عروس', 'ringBrideMaterial')" class="w-10 h-10 rounded-xl bg-[#0E121C] border border-[#C5A059]/40 text-[#D4AF37] font-black text-lg hover:bg-[#D4AF37] hover:text-[#07090E] transition-all cursor-pointer">+</button>
               </div>
               <div class="flex items-center justify-center gap-3 pt-2">
-                <button type="button" onclick="setBwStateVal('ringBrideConfirmed', true, 'تأیید حلقه عروس')" class="bg-emerald-600 hover:bg-emerald-500 text-white font-black text-xs px-5 py-2 rounded-xl cursor-pointer">✓ تأیید</button>
-                <button type="button" onclick="cbwState.ringBride=0; setBwStateVal('ringBrideType', 'none', 'عدم خرید حلقه عروس');" class="bg-rose-950 text-rose-200 border border-rose-800 font-bold text-xs px-5 py-2 rounded-xl cursor-pointer">❌ نمی‌خوام</button>
+                <button type="button" onclick="setBwStateVal('ringBrideConfirmed', true, 'تأیید حلقه عروس')" class="bg-emerald-600 hover:bg-emerald-500 text-white font-black text-xs px-5 py-2 rounded-xl cursor-pointer">تأیید</button>
+                <button type="button" onclick="cbwState.ringBride=0; setBwStateVal('ringBrideType', 'none', 'عدم خرید حلقه عروس');" class="bg-rose-950 text-rose-200 border border-rose-800 font-bold text-xs px-5 py-2 rounded-xl cursor-pointer">نمی‌خوام</button>
               </div>
             </div>
           </div>`;
@@ -20050,8 +20051,8 @@ window.renderBwWizard = function() {
             <div class="bg-[#141A28] border border-[#C5A059]/30 rounded-2xl p-5 shadow-md space-y-4 text-center">
               <div class="flex items-center justify-center gap-3">
                 <span class="text-xs font-bold text-slate-300">جنس:</span>
-                <button type="button" onclick="cbwState.ringGroomMaterial='gold'; cbwState.ringGroom=cbwState.ringGroomGrams*2625006; setBwStateVal('ringGroomType', 'gold', 'طلا');" class="py-1.5 px-4 rounded-xl border text-xs font-bold transition-all ${cbwState.ringGroomMaterial === 'gold' ? 'bg-[#D4AF37] text-[#07090E] border-[#D4AF37]' : 'bg-[#0E121C] text-slate-300 border-slate-700'}">🟡 طلا</button>
-                <button type="button" onclick="cbwState.ringGroomMaterial='silver'; cbwState.ringGroom=cbwState.ringGroomGrams*49830; setBwStateVal('ringGroomType', 'silver', 'نقره');" class="py-1.5 px-4 rounded-xl border text-xs font-bold transition-all ${cbwState.ringGroomMaterial === 'silver' ? 'bg-[#D4AF37] text-[#07090E] border-[#D4AF37]' : 'bg-[#0E121C] text-slate-300 border-slate-700'}">⚪ نقره</button>
+                <button type="button" onclick="cbwState.ringGroomMaterial='gold'; cbwState.ringGroom=cbwState.ringGroomGrams*2625006; setBwStateVal('ringGroomType', 'gold', 'طلا');" class="py-1.5 px-4 rounded-xl border text-xs font-bold transition-all ${cbwState.ringGroomMaterial === 'gold' ? 'bg-[#D4AF37] text-[#07090E] border-[#D4AF37]' : 'bg-[#0E121C] text-slate-300 border-slate-700'}">طلا</button>
+                <button type="button" onclick="cbwState.ringGroomMaterial='silver'; cbwState.ringGroom=cbwState.ringGroomGrams*49830; setBwStateVal('ringGroomType', 'silver', 'نقره');" class="py-1.5 px-4 rounded-xl border text-xs font-bold transition-all ${cbwState.ringGroomMaterial === 'silver' ? 'bg-[#D4AF37] text-[#07090E] border-[#D4AF37]' : 'bg-[#0E121C] text-slate-300 border-slate-700'}">نقره</button>
               </div>
               <div class="flex items-center justify-center gap-4">
                 <button type="button" onclick="changeBwGrams('ringGroomGrams', 'ringGroom', 'ringGroomName', -1, 2625006, 'حلقه داماد', 'ringGroomMaterial')" class="w-10 h-10 rounded-xl bg-[#0E121C] border border-[#C5A059]/40 text-[#D4AF37] font-black text-lg hover:bg-[#D4AF37] hover:text-[#07090E] transition-all cursor-pointer">-</button>
@@ -20059,8 +20060,8 @@ window.renderBwWizard = function() {
                 <button type="button" onclick="changeBwGrams('ringGroomGrams', 'ringGroom', 'ringGroomName', 1, 2625006, 'حلقه داماد', 'ringGroomMaterial')" class="w-10 h-10 rounded-xl bg-[#0E121C] border border-[#C5A059]/40 text-[#D4AF37] font-black text-lg hover:bg-[#D4AF37] hover:text-[#07090E] transition-all cursor-pointer">+</button>
               </div>
               <div class="flex items-center justify-center gap-3 pt-2">
-                <button type="button" onclick="setBwStateVal('ringGroomConfirmed', true, 'تأیید حلقه داماد')" class="bg-emerald-600 hover:bg-emerald-500 text-white font-black text-xs px-5 py-2 rounded-xl cursor-pointer">✓ تأیید</button>
-                <button type="button" onclick="cbwState.ringGroom=0; setBwStateVal('ringGroomType', 'none', 'عدم خرید حلقه داماد');" class="bg-rose-950 text-rose-200 border border-rose-800 font-bold text-xs px-5 py-2 rounded-xl cursor-pointer">❌ نمی‌خوام</button>
+                <button type="button" onclick="setBwStateVal('ringGroomConfirmed', true, 'تأیید حلقه داماد')" class="bg-emerald-600 hover:bg-emerald-500 text-white font-black text-xs px-5 py-2 rounded-xl cursor-pointer">تأیید</button>
+                <button type="button" onclick="cbwState.ringGroom=0; setBwStateVal('ringGroomType', 'none', 'عدم خرید حلقه داماد');" class="bg-rose-950 text-rose-200 border border-rose-800 font-bold text-xs px-5 py-2 rounded-xl cursor-pointer">نمی‌خوام</button>
               </div>
             </div>
           </div>`;
@@ -20070,10 +20071,10 @@ window.renderBwWizard = function() {
             ${qualitySelectorHtml}
             <h4 class="text-sm font-black text-[#D4AF37]">${currentStepObj.prompt}</h4>
             <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3">
-              <button type="button" onclick="cbwState.photoFilm=22000000; setBwStateVal('photoFilmPackage', 'pkg_1', 'پکیج ۱ (پایه)');" class="p-3.5 rounded-2xl border text-xs font-black text-right transition-all ${cbwState.photoFilmPackage === 'pkg_1' ? 'bg-[#D4AF37] text-[#07090E] border-[#D4AF37]' : 'bg-[#141A28] text-white border-slate-700'}">📷 پکیج ۱ (پایه)</button>
-              <button type="button" onclick="cbwState.photoFilm=35000000; setBwStateVal('photoFilmPackage', 'pkg_2', 'پکیج ۲ (استاندارد)');" class="p-3.5 rounded-2xl border text-xs font-black text-right transition-all ${cbwState.photoFilmPackage === 'pkg_2' ? 'bg-[#D4AF37] text-[#07090E] border-[#D4AF37]' : 'bg-[#141A28] text-white border-slate-700'}">🎥 پکیج ۲ (استاندارد)</button>
-              <button type="button" onclick="cbwState.photoFilm=55000000; setBwStateVal('photoFilmPackage', 'vip', 'پکیج VIP (سینمایی)');" class="p-3.5 rounded-2xl border text-xs font-black text-right transition-all ${cbwState.photoFilmPackage === 'vip' ? 'bg-[#D4AF37] text-[#07090E] border-[#D4AF37]' : 'bg-[#141A28] text-white border-slate-700'}">👑 پکیج VIP</button>
-              <button type="button" onclick="cbwState.photoFilm=0; setBwStateVal('photoFilmPackage', 'none', 'عدم سفارش عکس و فیلم');" class="p-3.5 rounded-2xl border text-xs font-black text-right transition-all ${cbwState.photoFilmPackage === 'none' ? 'bg-[#D4AF37] text-[#07090E] border-[#D4AF37]' : 'bg-[#141A28] text-white border-slate-700'}">❌ نمی‌خوام</button>
+              <button type="button" onclick="cbwState.photoFilm=22000000; setBwStateVal('photoFilmPackage', 'pkg_1', 'پکیج ۱ (پایه)');" class="p-3.5 rounded-2xl border text-xs font-black text-right transition-all ${cbwState.photoFilmPackage === 'pkg_1' ? 'bg-[#D4AF37] text-[#07090E] border-[#D4AF37]' : 'bg-[#141A28] text-white border-slate-700'}">پکیج ۱ (پایه)</button>
+              <button type="button" onclick="cbwState.photoFilm=35000000; setBwStateVal('photoFilmPackage', 'pkg_2', 'پکیج ۲ (استاندارد)');" class="p-3.5 rounded-2xl border text-xs font-black text-right transition-all ${cbwState.photoFilmPackage === 'pkg_2' ? 'bg-[#D4AF37] text-[#07090E] border-[#D4AF37]' : 'bg-[#141A28] text-white border-slate-700'}">پکیج ۲ (استاندارد)</button>
+              <button type="button" onclick="cbwState.photoFilm=55000000; setBwStateVal('photoFilmPackage', 'vip', 'پکیج VIP (سینمایی)');" class="p-3.5 rounded-2xl border text-xs font-black text-right transition-all ${cbwState.photoFilmPackage === 'vip' ? 'bg-[#D4AF37] text-[#07090E] border-[#D4AF37]' : 'bg-[#141A28] text-white border-slate-700'}">پکیج VIP</button>
+              <button type="button" onclick="cbwState.photoFilm=0; setBwStateVal('photoFilmPackage', 'none', 'عدم سفارش عکس و فیلم');" class="p-3.5 rounded-2xl border text-xs font-black text-right transition-all ${cbwState.photoFilmPackage === 'none' ? 'bg-[#D4AF37] text-[#07090E] border-[#D4AF37]' : 'bg-[#141A28] text-white border-slate-700'}">نمی‌خوام</button>
             </div>
           </div>`;
       } else if (currentStepObj.key === 'music') {
@@ -20082,10 +20083,10 @@ window.renderBwWizard = function() {
             ${qualitySelectorHtml}
             <h4 class="text-sm font-black text-[#D4AF37]">${currentStepObj.prompt}</h4>
             <div class="grid grid-cols-2 sm:grid-cols-4 gap-3">
-              <button type="button" onclick="cbwState.music=15000000; setBwStateVal('musicType', 'dj', 'دی‌جی');" class="p-3.5 rounded-2xl border text-xs font-black transition-all ${cbwState.musicType === 'dj' ? 'bg-[#D4AF37] text-[#07090E] border-[#D4AF37]' : 'bg-[#141A28] text-white border-slate-700'}">🎧 دی‌جی</button>
-              <button type="button" onclick="cbwState.music=30000000; setBwStateVal('musicType', 'live_band', 'گروه زنده');" class="p-3.5 rounded-2xl border text-xs font-black transition-all ${cbwState.musicType === 'live_band' ? 'bg-[#D4AF37] text-[#07090E] border-[#D4AF37]' : 'bg-[#141A28] text-white border-slate-700'}">🎸 گروه زنده</button>
-              <button type="button" onclick="cbwState.music=25000000; setBwStateVal('musicType', 'singer', 'خواننده');" class="p-3.5 rounded-2xl border text-xs font-black transition-all ${cbwState.musicType === 'singer' ? 'bg-[#D4AF37] text-[#07090E] border-[#D4AF37]' : 'bg-[#141A28] text-white border-slate-700'}">🎤 خواننده</button>
-              <button type="button" onclick="cbwState.music=0; setBwStateVal('musicType', 'none', 'عدم سفارش موسیقی');" class="p-3.5 rounded-2xl border text-xs font-black transition-all ${cbwState.musicType === 'none' ? 'bg-[#D4AF37] text-[#07090E] border-[#D4AF37]' : 'bg-[#141A28] text-white border-slate-700'}">❌ نمی‌خوام</button>
+              <button type="button" onclick="cbwState.music=15000000; setBwStateVal('musicType', 'dj', 'دی‌جی');" class="p-3.5 rounded-2xl border text-xs font-black transition-all ${cbwState.musicType === 'dj' ? 'bg-[#D4AF37] text-[#07090E] border-[#D4AF37]' : 'bg-[#141A28] text-white border-slate-700'}">دی‌جی</button>
+              <button type="button" onclick="cbwState.music=30000000; setBwStateVal('musicType', 'live_band', 'گروه زنده');" class="p-3.5 rounded-2xl border text-xs font-black transition-all ${cbwState.musicType === 'live_band' ? 'bg-[#D4AF37] text-[#07090E] border-[#D4AF37]' : 'bg-[#141A28] text-white border-slate-700'}">گروه زنده</button>
+              <button type="button" onclick="cbwState.music=25000000; setBwStateVal('musicType', 'singer', 'خواننده');" class="p-3.5 rounded-2xl border text-xs font-black transition-all ${cbwState.musicType === 'singer' ? 'bg-[#D4AF37] text-[#07090E] border-[#D4AF37]' : 'bg-[#141A28] text-white border-slate-700'}">خواننده</button>
+              <button type="button" onclick="cbwState.music=0; setBwStateVal('musicType', 'none', 'عدم سفارش موسیقی');" class="p-3.5 rounded-2xl border text-xs font-black transition-all ${cbwState.musicType === 'none' ? 'bg-[#D4AF37] text-[#07090E] border-[#D4AF37]' : 'bg-[#141A28] text-white border-slate-700'}">نمی‌خوام</button>
             </div>
           </div>`;
       } else if (currentStepObj.key === 'prefilmAtelier') {
@@ -20094,9 +20095,9 @@ window.renderBwWizard = function() {
             ${qualitySelectorHtml}
             <h4 class="text-sm font-black text-[#D4AF37]">${currentStepObj.prompt}</h4>
             <div class="grid grid-cols-1 sm:grid-cols-3 gap-3">
-              <button type="button" onclick="cbwState.prefilmAtelier=20000000; setBwStateVal('prefilmAtelierType', 'desert', 'فرمالیته کویر یزد / شمال');" class="p-4 rounded-2xl border text-xs font-black text-right transition-all ${cbwState.prefilmAtelierType === 'desert' ? 'bg-[#D4AF37] text-[#07090E] border-[#D4AF37]' : 'bg-[#141A28] text-white border-slate-700'}">🏜️ فرمالیته کویر یزد / شمال</button>
-              <button type="button" onclick="cbwState.prefilmAtelier=12000000; setBwStateVal('prefilmAtelierType', 'mansion', 'عمارت داخل شهر');" class="p-4 rounded-2xl border text-xs font-black text-right transition-all ${cbwState.prefilmAtelierType === 'mansion' ? 'bg-[#D4AF37] text-[#07090E] border-[#D4AF37]' : 'bg-[#141A28] text-white border-slate-700'}">🏰 عمارت داخل شهر</button>
-              <button type="button" onclick="cbwState.prefilmAtelier=0; setBwStateVal('prefilmAtelierType', 'none', 'عدم سفارش آتلیه فرمالیته');" class="p-4 rounded-2xl border text-xs font-black text-right transition-all ${cbwState.prefilmAtelierType === 'none' ? 'bg-[#D4AF37] text-[#07090E] border-[#D4AF37]' : 'bg-[#141A28] text-white border-slate-700'}">❌ نمی‌خوام</button>
+              <button type="button" onclick="cbwState.prefilmAtelier=20000000; setBwStateVal('prefilmAtelierType', 'desert', 'فرمالیته کویر یزد / شمال');" class="p-4 rounded-2xl border text-xs font-black text-right transition-all ${cbwState.prefilmAtelierType === 'desert' ? 'bg-[#D4AF37] text-[#07090E] border-[#D4AF37]' : 'bg-[#141A28] text-white border-slate-700'}">فرمالیته کویر یزد / شمال</button>
+              <button type="button" onclick="cbwState.prefilmAtelier=12000000; setBwStateVal('prefilmAtelierType', 'mansion', 'عمارت داخل شهر');" class="p-4 rounded-2xl border text-xs font-black text-right transition-all ${cbwState.prefilmAtelierType === 'mansion' ? 'bg-[#D4AF37] text-[#07090E] border-[#D4AF37]' : 'bg-[#141A28] text-white border-slate-700'}">عمارت داخل شهر</button>
+              <button type="button" onclick="cbwState.prefilmAtelier=0; setBwStateVal('prefilmAtelierType', 'none', 'عدم سفارش آتلیه فرمالیته');" class="p-4 rounded-2xl border text-xs font-black text-right transition-all ${cbwState.prefilmAtelierType === 'none' ? 'bg-[#D4AF37] text-[#07090E] border-[#D4AF37]' : 'bg-[#141A28] text-white border-slate-700'}">نمی‌خوام</button>
             </div>
           </div>`;
       } else if (currentStepObj.key === 'carDecor') {
@@ -20105,9 +20106,9 @@ window.renderBwWizard = function() {
             ${qualitySelectorHtml}
             <h4 class="text-sm font-black text-[#D4AF37]">${currentStepObj.prompt}</h4>
             <div class="grid grid-cols-1 sm:grid-cols-3 gap-3">
-              <button type="button" onclick="cbwState.carDecor=3500000; setBwStateVal('carDecorType', 'basic', 'گل‌آرایی پایه ماشین عروس');" class="p-4 rounded-2xl border text-xs font-black text-right transition-all ${cbwState.carDecorType === 'basic' ? 'bg-[#D4AF37] text-[#07090E] border-[#D4AF37]' : 'bg-[#141A28] text-white border-slate-700'}">🚗 گل‌آرایی پایه</button>
-              <button type="button" onclick="cbwState.carDecor=6500000; setBwStateVal('carDecorType', 'natural', 'گل‌آرایی طبیعی ویژه');" class="p-4 rounded-2xl border text-xs font-black text-right transition-all ${cbwState.carDecorType === 'natural' ? 'bg-[#D4AF37] text-[#07090E] border-[#D4AF37]' : 'bg-[#141A28] text-white border-slate-700'}">🌸 گل‌آرایی طبیعی ویژه</button>
-              <button type="button" onclick="cbwState.carDecor=0; setBwStateVal('carDecorType', 'none', 'عدم گل‌آرایی ماشین');" class="p-4 rounded-2xl border text-xs font-black text-right transition-all ${cbwState.carDecorType === 'none' ? 'bg-[#D4AF37] text-[#07090E] border-[#D4AF37]' : 'bg-[#141A28] text-white border-slate-700'}">❌ نمی‌خوام</button>
+              <button type="button" onclick="cbwState.carDecor=3500000; setBwStateVal('carDecorType', 'basic', 'گل‌آرایی پایه ماشین عروس');" class="p-4 rounded-2xl border text-xs font-black text-right transition-all ${cbwState.carDecorType === 'basic' ? 'bg-[#D4AF37] text-[#07090E] border-[#D4AF37]' : 'bg-[#141A28] text-white border-slate-700'}">گل‌آرایی پایه</button>
+              <button type="button" onclick="cbwState.carDecor=6500000; setBwStateVal('carDecorType', 'natural', 'گل‌آرایی طبیعی ویژه');" class="p-4 rounded-2xl border text-xs font-black text-right transition-all ${cbwState.carDecorType === 'natural' ? 'bg-[#D4AF37] text-[#07090E] border-[#D4AF37]' : 'bg-[#141A28] text-white border-slate-700'}">گل‌آرایی طبیعی ویژه</button>
+              <button type="button" onclick="cbwState.carDecor=0; setBwStateVal('carDecorType', 'none', 'عدم گل‌آرایی ماشین');" class="p-4 rounded-2xl border text-xs font-black text-right transition-all ${cbwState.carDecorType === 'none' ? 'bg-[#D4AF37] text-[#07090E] border-[#D4AF37]' : 'bg-[#141A28] text-white border-slate-700'}">نمی‌خوام</button>
             </div>
           </div>`;
       } else if (currentStepObj.key === 'lightEffects') {
@@ -20116,9 +20117,9 @@ window.renderBwWizard = function() {
             ${qualitySelectorHtml}
             <h4 class="text-sm font-black text-[#D4AF37]">${currentStepObj.prompt}</h4>
             <div class="grid grid-cols-1 sm:grid-cols-3 gap-3">
-              <button type="button" onclick="cbwState.lightEffects=5000000; setBwStateVal('lightEffectsType', 'basic', 'نورپردازی پایه سالن');" class="p-4 rounded-2xl border text-xs font-black text-right transition-all ${cbwState.lightEffectsType === 'basic' ? 'bg-[#D4AF37] text-[#07090E] border-[#D4AF37]' : 'bg-[#141A28] text-white border-slate-700'}">💡 نورپردازی پایه</button>
-              <button type="button" onclick="cbwState.lightEffects=9000000; setBwStateVal('lightEffectsType', 'stage_led', 'استیج LED + آتش‌بازی سرد');" class="p-4 rounded-2xl border text-xs font-black text-right transition-all ${cbwState.lightEffectsType === 'stage_led' ? 'bg-[#D4AF37] text-[#07090E] border-[#D4AF37]' : 'bg-[#141A28] text-white border-slate-700'}">✨ استیج LED + آتش‌بازی سرد</button>
-              <button type="button" onclick="cbwState.lightEffects=0; setBwStateVal('lightEffectsType', 'none', 'عدم سفارش نورپردازی');" class="p-4 rounded-2xl border text-xs font-black text-right transition-all ${cbwState.lightEffectsType === 'none' ? 'bg-[#D4AF37] text-[#07090E] border-[#D4AF37]' : 'bg-[#141A28] text-white border-slate-700'}">❌ نمی‌خوام</button>
+              <button type="button" onclick="cbwState.lightEffects=5000000; setBwStateVal('lightEffectsType', 'basic', 'نورپردازی پایه سالن');" class="p-4 rounded-2xl border text-xs font-black text-right transition-all ${cbwState.lightEffectsType === 'basic' ? 'bg-[#D4AF37] text-[#07090E] border-[#D4AF37]' : 'bg-[#141A28] text-white border-slate-700'}">نورپردازی پایه</button>
+              <button type="button" onclick="cbwState.lightEffects=9000000; setBwStateVal('lightEffectsType', 'stage_led', 'استیج LED + آتش‌بازی سرد');" class="p-4 rounded-2xl border text-xs font-black text-right transition-all ${cbwState.lightEffectsType === 'stage_led' ? 'bg-[#D4AF37] text-[#07090E] border-[#D4AF37]' : 'bg-[#141A28] text-white border-slate-700'}">استیج LED + آتش‌بازی سرد</button>
+              <button type="button" onclick="cbwState.lightEffects=0; setBwStateVal('lightEffectsType', 'none', 'عدم سفارش نورپردازی');" class="p-4 rounded-2xl border text-xs font-black text-right transition-all ${cbwState.lightEffectsType === 'none' ? 'bg-[#D4AF37] text-[#07090E] border-[#D4AF37]' : 'bg-[#141A28] text-white border-slate-700'}">نمی‌خوام</button>
             </div>
           </div>`;
       } else if (currentStepObj.key === 'carRental') {
@@ -20127,9 +20128,9 @@ window.renderBwWizard = function() {
             ${qualitySelectorHtml}
             <h4 class="text-sm font-black text-[#D4AF37]">${currentStepObj.prompt}</h4>
             <div class="grid grid-cols-1 sm:grid-cols-3 gap-3">
-              <button type="button" onclick="cbwState.carRental=7000000; setBwStateVal('carRentalType', 'classic', 'خودرو کلاسیک تشریفاتی');" class="p-4 rounded-2xl border text-xs font-black text-right transition-all ${cbwState.carRentalType === 'classic' ? 'bg-[#D4AF37] text-[#07090E] border-[#D4AF37]' : 'bg-[#141A28] text-white border-slate-700'}">🏎️ خودرو کلاسیک / قدیمی</button>
-              <button type="button" onclick="cbwState.carRental=12000000; setBwStateVal('carRentalType', 'suv_lux', 'شاسی‌بلند لوکس');" class="p-4 rounded-2xl border text-xs font-black text-right transition-all ${cbwState.carRentalType === 'suv_lux' ? 'bg-[#D4AF37] text-[#07090E] border-[#D4AF37]' : 'bg-[#141A28] text-white border-slate-700'}">🚘 شاسی‌بلند / مدرن</button>
-              <button type="button" onclick="cbwState.carRental=0; setBwStateVal('carRentalType', 'none', 'استفاده از خودرو شخصی');" class="p-4 rounded-2xl border text-xs font-black text-right transition-all ${cbwState.carRentalType === 'none' ? 'bg-[#D4AF37] text-[#07090E] border-[#D4AF37]' : 'bg-[#141A28] text-white border-slate-700'}">❌ خودرو شخصی خودم</button>
+              <button type="button" onclick="cbwState.carRental=7000000; setBwStateVal('carRentalType', 'classic', 'خودرو کلاسیک تشریفاتی');" class="p-4 rounded-2xl border text-xs font-black text-right transition-all ${cbwState.carRentalType === 'classic' ? 'bg-[#D4AF37] text-[#07090E] border-[#D4AF37]' : 'bg-[#141A28] text-white border-slate-700'}">خودرو کلاسیک / قدیمی</button>
+              <button type="button" onclick="cbwState.carRental=12000000; setBwStateVal('carRentalType', 'suv_lux', 'شاسی‌بلند لوکس');" class="p-4 rounded-2xl border text-xs font-black text-right transition-all ${cbwState.carRentalType === 'suv_lux' ? 'bg-[#D4AF37] text-[#07090E] border-[#D4AF37]' : 'bg-[#141A28] text-white border-slate-700'}">شاسی‌بلند / مدرن</button>
+              <button type="button" onclick="cbwState.carRental=0; setBwStateVal('carRentalType', 'none', 'استفاده از خودرو شخصی');" class="p-4 rounded-2xl border text-xs font-black text-right transition-all ${cbwState.carRentalType === 'none' ? 'bg-[#D4AF37] text-[#07090E] border-[#D4AF37]' : 'bg-[#141A28] text-white border-slate-700'}">خودرو شخصی خودم</button>
             </div>
           </div>`;
       } else if (currentStepObj.key === 'digitalInvitation') {
@@ -20138,9 +20139,9 @@ window.renderBwWizard = function() {
             ${qualitySelectorHtml}
             <h4 class="text-sm font-black text-[#D4AF37]">${currentStepObj.prompt}</h4>
             <div class="grid grid-cols-1 sm:grid-cols-3 gap-3">
-              <button type="button" onclick="cbwState.digitalInvitation=1500000; setBwStateVal('digitalInvitationType', 'digital_online', 'کارت آنلاین دیجیتال + چاپی');" class="p-4 rounded-2xl border text-xs font-black text-right transition-all ${cbwState.digitalInvitationType === 'digital_online' ? 'bg-[#D4AF37] text-[#07090E] border-[#D4AF37]' : 'bg-[#141A28] text-white border-slate-700'}">💌 کارت دیجیتال آنلاین + چاپی</button>
-              <button type="button" onclick="cbwState.digitalInvitation=800000; setBwStateVal('digitalInvitationType', 'digital_only', 'فقط کارت آنلاین دیجیتال');" class="p-4 rounded-2xl border text-xs font-black text-right transition-all ${cbwState.digitalInvitationType === 'digital_only' ? 'bg-[#D4AF37] text-[#07090E] border-[#D4AF37]' : 'bg-[#141A28] text-white border-slate-700'}">📱 فقط کارت دیجیتال آنلاین</button>
-              <button type="button" onclick="cbwState.digitalInvitation=0; setBwStateVal('digitalInvitationType', 'none', 'عدم سفارش کارت دعوت');" class="p-4 rounded-2xl border text-xs font-black text-right transition-all ${cbwState.digitalInvitationType === 'none' ? 'bg-[#D4AF37] text-[#07090E] border-[#D4AF37]' : 'bg-[#141A28] text-white border-slate-700'}">❌ نمی‌خوام</button>
+              <button type="button" onclick="cbwState.digitalInvitation=1500000; setBwStateVal('digitalInvitationType', 'digital_online', 'کارت آنلاین دیجیتال + چاپی');" class="p-4 rounded-2xl border text-xs font-black text-right transition-all ${cbwState.digitalInvitationType === 'digital_online' ? 'bg-[#D4AF37] text-[#07090E] border-[#D4AF37]' : 'bg-[#141A28] text-white border-slate-700'}">کارت دیجیتال آنلاین + چاپی</button>
+              <button type="button" onclick="cbwState.digitalInvitation=800000; setBwStateVal('digitalInvitationType', 'digital_only', 'فقط کارت آنلاین دیجیتال');" class="p-4 rounded-2xl border text-xs font-black text-right transition-all ${cbwState.digitalInvitationType === 'digital_only' ? 'bg-[#D4AF37] text-[#07090E] border-[#D4AF37]' : 'bg-[#141A28] text-white border-slate-700'}">فقط کارت دیجیتال آنلاین</button>
+              <button type="button" onclick="cbwState.digitalInvitation=0; setBwStateVal('digitalInvitationType', 'none', 'عدم سفارش کارت دعوت');" class="p-4 rounded-2xl border text-xs font-black text-right transition-all ${cbwState.digitalInvitationType === 'none' ? 'bg-[#D4AF37] text-[#07090E] border-[#D4AF37]' : 'bg-[#141A28] text-white border-slate-700'}">نمی‌خوام</button>
             </div>
           </div>`;
       } else if (currentStepObj.key === 'honeymoon') {
@@ -20149,9 +20150,9 @@ window.renderBwWizard = function() {
             ${qualitySelectorHtml}
             <h4 class="text-sm font-black text-[#D4AF37]">${currentStepObj.prompt}</h4>
             <div class="grid grid-cols-1 sm:grid-cols-3 gap-3">
-              <button type="button" onclick="cbwState.honeymoon=20000000; setBwStateVal('honeymoonType', 'domestic', 'تور داخلی (کیش/شمال)');" class="p-4 rounded-2xl border text-xs font-black text-right transition-all ${cbwState.honeymoonType === 'domestic' ? 'bg-[#D4AF37] text-[#07090E] border-[#D4AF37]' : 'bg-[#141A28] text-white border-slate-700'}">🏖️ تور داخلی (کیش/شمال)</button>
-              <button type="button" onclick="cbwState.honeymoon=60000000; setBwStateVal('honeymoonType', 'foreign', 'تور خارجی (ترکیه/دبی)');" class="p-4 rounded-2xl border text-xs font-black text-right transition-all ${cbwState.honeymoonType === 'foreign' ? 'bg-[#D4AF37] text-[#07090E] border-[#D4AF37]' : 'bg-[#141A28] text-white border-slate-700'}">✈️ تور خارجی (ترکیه/دبی)</button>
-              <button type="button" onclick="cbwState.honeymoon=0; setBwStateVal('honeymoonType', 'none', 'عدم برنامه سفر ماه عسل');" class="p-4 rounded-2xl border text-xs font-black text-right transition-all ${cbwState.honeymoonType === 'none' ? 'bg-[#D4AF37] text-[#07090E] border-[#D4AF37]' : 'bg-[#141A28] text-white border-slate-700'}">❌ فعلاً برنامه‌ای ندارم</button>
+              <button type="button" onclick="cbwState.honeymoon=20000000; setBwStateVal('honeymoonType', 'domestic', 'تور داخلی (کیش/شمال)');" class="p-4 rounded-2xl border text-xs font-black text-right transition-all ${cbwState.honeymoonType === 'domestic' ? 'bg-[#D4AF37] text-[#07090E] border-[#D4AF37]' : 'bg-[#141A28] text-white border-slate-700'}">تور داخلی (کیش/شمال)</button>
+              <button type="button" onclick="cbwState.honeymoon=60000000; setBwStateVal('honeymoonType', 'foreign', 'تور خارجی (ترکیه/دبی)');" class="p-4 rounded-2xl border text-xs font-black text-right transition-all ${cbwState.honeymoonType === 'foreign' ? 'bg-[#D4AF37] text-[#07090E] border-[#D4AF37]' : 'bg-[#141A28] text-white border-slate-700'}">تور خارجی (ترکیه/دبی)</button>
+              <button type="button" onclick="cbwState.honeymoon=0; setBwStateVal('honeymoonType', 'none', 'عدم برنامه سفر ماه عسل');" class="p-4 rounded-2xl border text-xs font-black text-right transition-all ${cbwState.honeymoonType === 'none' ? 'bg-[#D4AF37] text-[#07090E] border-[#D4AF37]' : 'bg-[#141A28] text-white border-slate-700'}">فعلاً برنامه‌ای ندارم</button>
             </div>
           </div>`;
       } else {
@@ -20160,8 +20161,8 @@ window.renderBwWizard = function() {
             ${qualitySelectorHtml}
             <h4 class="text-sm font-black text-[#D4AF37]">${currentStepObj.prompt}</h4>
             <div class="grid grid-cols-2 gap-3">
-              <button type="button" onclick="setBwStateVal('${currentStepObj.key}Status', 'active', 'تأیید پکیج استاندارد')" class="p-4 rounded-2xl border border-[#D4AF37] bg-[#D4AF37]/20 text-[#D4AF37] text-xs font-black transition-all">✨ پکیج استاندارد سیستم</button>
-              <button type="button" onclick="cbwState['${currentStepObj.key}']=0; setBwStateVal('${currentStepObj.key}Status', 'none', 'عدم نیاز');" class="p-4 rounded-2xl border border-slate-700 bg-[#141A28] text-white text-xs font-black transition-all">❌ نمی‌خوام</button>
+              <button type="button" onclick="setBwStateVal('${currentStepObj.key}Status', 'active', 'تأیید پکیج استاندارد')" class="p-4 rounded-2xl border border-[#D4AF37] bg-[#D4AF37]/20 text-[#D4AF37] text-xs font-black transition-all">پکیج استاندارد سیستم</button>
+              <button type="button" onclick="cbwState['${currentStepObj.key}']=0; setBwStateVal('${currentStepObj.key}Status', 'none', 'عدم نیاز');" class="p-4 rounded-2xl border border-slate-700 bg-[#141A28] text-white text-xs font-black transition-all">نمی‌خوام</button>
             </div>
           </div>`;
       }
@@ -20170,16 +20171,18 @@ window.renderBwWizard = function() {
     container.innerHTML = `
       <div class="space-y-6 text-right">
         <div class="bg-gradient-to-r from-[#141A28] via-[#1E293B] to-[#141A28] border border-[#C5A059]/40 rounded-2xl p-3 shadow-lg flex items-center justify-between flex-wrap gap-2 text-xs font-black text-white">
-          <div class="flex items-center gap-1.5"><span class="text-[#D4AF37]">🟡 طلای ۱۸ عیار:</span> <span>۲,۶۲۵,۰۰۶ تومان/گرم</span></div>
-          <div class="flex items-center gap-1.5"><span class="text-slate-300">⚪ نقره:</span> <span>۴۹,۸۳۰ تومان/گرم</span></div>
-          <div class="flex items-center gap-1.5"><span class="text-emerald-400">💵 دلار:</span> <span>۶۵,۵۰۰ تومان</span></div>
+          <div class="flex items-center gap-1.5"><span class="text-[#D4AF37]">طلای ۱۸ عیار:</span> <span>۲,۶۲۵,۰۰۶ تومان/گرم</span></div>
+          <div class="flex items-center gap-1.5"><span class="text-slate-300">نقره:</span> <span>۴۹,۸۳۰ تومان/گرم</span></div>
+          <div class="flex items-center gap-1.5"><span class="text-emerald-400">دلار:</span> <span>۶۵,۵۰۰ تومان</span></div>
         </div>
 
         <div class="bg-[#141A28] border border-[#C5A059]/30 rounded-3xl p-5 shadow-xl space-y-4">
           <div class="flex items-start gap-3">
-            <div class="w-10 h-10 rounded-2xl bg-[#D4AF37]/20 border border-[#D4AF37] flex items-center justify-center text-[#D4AF37] shrink-0 font-black">🌿</div>
+            <div class="w-10 h-10 rounded-2xl bg-[#D4AF37]/20 border border-[#D4AF37] flex items-center justify-center text-[#D4AF37] shrink-0 font-black">
+              <i data-lucide="bot" class="w-5 h-5 text-[#D4AF37]"></i>
+            </div>
             <div class="space-y-1">
-              <h3 class="text-sm font-black text-white">سلام! من دستیار گفت‌وگومحور برآورد اتوماتیک بودجه عروسی یزد هستم.</h3>
+              <h3 class="text-sm font-black text-white">دستیار گفت‌وگومحور برآورد اتوماتیک بودجه عروسی یزد</h3>
               <p class="text-xs text-slate-300 font-medium">تمامی هزینه‌ها بر اساس انتخابی‌های شما و سطح کیفیت به صورت هوشمند توسط سیستم برآورد می‌شوند.</p>
             </div>
           </div>
@@ -20193,10 +20196,10 @@ window.renderBwWizard = function() {
 
           <div class="flex items-center gap-2 pt-2 border-t border-slate-800">
             <button type="button" onclick="setBwMode('fast')" class="flex-1 py-2.5 px-4 rounded-xl text-xs font-black transition-all cursor-pointer ${cbwMode === 'fast' ? 'bg-[#D4AF37] text-[#07090E] shadow-md' : 'bg-[#0E121C] text-slate-300 border border-slate-700 hover:text-white'}">
-              ⚡ روش سریع‌تر (۱۴ گام)
+              روش سریع‌تر (۱۴ گام)
             </button>
             <button type="button" onclick="setBwMode('detailed')" class="flex-1 py-2.5 px-4 rounded-xl text-xs font-black transition-all cursor-pointer ${cbwMode === 'detailed' ? 'bg-[#D4AF37] text-[#07090E] shadow-md' : 'bg-[#0E121C] text-slate-300 border border-slate-700 hover:text-white'}">
-              🧮 روش کامل‌تر (۲۶ گام)
+              روش کامل‌تر (۲۶ گام)
             </button>
           </div>
         </div>
@@ -20242,6 +20245,8 @@ window.renderBwWizard = function() {
           </div>
         </div>
       </div>`;
+
+    if (typeof lucide !== 'undefined' && lucide.createIcons) lucide.createIcons();
 };
 
 window.syncBwToDashboard = function(totalCalculated) {
@@ -20249,11 +20254,10 @@ window.syncBwToDashboard = function(totalCalculated) {
     userBudget.totalBudget = totalCalculated;
     localStorage.setItem('userBudgetState', JSON.stringify(userBudget));
     if (typeof renderPlannerBudgetSummary === 'function') renderPlannerBudgetSummary();
-    showToast('برآورد جدید بودجه با موفقیت به داشبورد اصلی منتقل شد ✨', 'success');
+    showToast('برآورد جدید بودجه با موفقیت به داشبورد اصلی منتقل شد.', 'success');
 };
 
 
-// Super Admin Budget Wizard Questions CMS Handler
 window.renderAdminBudgetWizardCms = function() {
     const container = document.getElementById('admin-budget-questions-container');
     if (!container) return;
@@ -20261,7 +20265,7 @@ window.renderAdminBudgetWizardCms = function() {
     let cmsQuestions = JSON.parse(localStorage.getItem('aroosi_budget_wizard_config_db') || 'null');
     if (!cmsQuestions) {
         cmsQuestions = [
-            { id: 1, title: "۱. تعداد مهمانان", prompt: "تعداد تقریبی مهمانان مراسم چقدر است؟", key: "guests", options: "شمارنده عددی (نفرات)" },
+            { id: 1, title: "۱. تعداد مهمانان", prompt: "تعداد تقریبی مهمانان مراسم چقدر است؟", key: "guests", options: "شمارنده عددی" },
             { id: 2, title: "۲. شهر برگزاری", prompt: "شهر محل برگزاری مراسم را تعیین کنید:", key: "city", options: "یزد | کرمان | اصفهان | شیراز | خراسان جنوبی | سایر" },
             { id: 3, title: "۳. زمان و مناسبت برگزاری", prompt: "تاریخ برگزاری در چه بازه‌ای است؟", key: "season", options: "روزهای عادی | اعیاد و آخرهفته‌ها" },
             { id: 4, title: "۴. کیفیت کلی مراسم", prompt: "سطح کیفیت کلی تشریفات را مشخص فرمایید:", key: "tier", options: "اقتصادی | متوسط | لوکس VIP" },
@@ -20276,10 +20280,10 @@ window.renderAdminBudgetWizardCms = function() {
     }
 
     container.innerHTML = `
-        <div class="space-y-4">
-          <div class="bg-[#0E121C] p-3 rounded-2xl border border-slate-800 flex items-center justify-between text-xs font-bold text-slate-300">
-            <span>تعداد کل سوالات ثبت‌شده در داتابیس مدیریت: ${cmsQuestions.length} سوال</span>
-            <button type="button" onclick="addNewBudgetQuestionCms()" class="bg-[#D4AF37] text-[#07090E] font-black px-3 py-1.5 rounded-xl cursor-pointer">+ افزودن سوال جدید</button>
+        <div class="space-y-4 text-right">
+          <div class="bg-[#0E121C] p-3.5 rounded-2xl border border-slate-800 flex items-center justify-between text-xs font-bold text-slate-300 flex-wrap gap-2">
+            <span class="flex items-center gap-1.5"><i data-lucide="list" class="w-4 h-4 text-[#D4AF37]"></i> تعداد کل سوالات ثبت‌شده: ${cmsQuestions.length} سوال</span>
+            <button type="button" onclick="addNewBudgetQuestionCms()" class="bg-[#D4AF37] text-[#07090E] font-black px-3.5 py-1.5 rounded-xl cursor-pointer hover:bg-amber-300 transition-all">+ افزودن سوال جدید</button>
           </div>
 
           <div class="overflow-x-auto">
@@ -20299,8 +20303,8 @@ window.renderAdminBudgetWizardCms = function() {
                     <td class="p-3 text-amber-200">${q.prompt}</td>
                     <td class="p-3 text-slate-300">${q.options}</td>
                     <td class="p-3 text-center space-x-2 space-x-reverse">
-                      <button type="button" onclick="editBudgetQuestionCms(${q.id})" class="text-amber-300 hover:text-white font-bold bg-[#0E121C] border border-amber-500/30 px-2.5 py-1 rounded-lg cursor-pointer">✏️ ویرایش</button>
-                      <button type="button" onclick="deleteBudgetQuestionCms(${q.id})" class="text-rose-400 hover:text-rose-200 font-bold bg-[#0E121C] border border-rose-500/30 px-2.5 py-1 rounded-lg cursor-pointer">🗑️ حذف</button>
+                      <button type="button" onclick="editBudgetQuestionCms(${q.id})" class="text-amber-300 hover:text-white font-bold bg-[#0E121C] border border-amber-500/30 px-2.5 py-1 rounded-lg cursor-pointer">ویرایش</button>
+                      <button type="button" onclick="deleteBudgetQuestionCms(${q.id})" class="text-rose-400 hover:text-rose-200 font-bold bg-[#0E121C] border border-rose-500/30 px-2.5 py-1 rounded-lg cursor-pointer">حذف</button>
                     </td>
                   </tr>
                 `).join('')}
@@ -20308,6 +20312,7 @@ window.renderAdminBudgetWizardCms = function() {
             </table>
           </div>
         </div>`;
+    if (typeof lucide !== 'undefined' && lucide.createIcons) lucide.createIcons();
 };
 
 window.addNewBudgetQuestionCms = function() {
@@ -20328,7 +20333,7 @@ window.addNewBudgetQuestionCms = function() {
 
     localStorage.setItem('aroosi_budget_wizard_config_db', JSON.stringify(cmsQuestions));
     window.renderAdminBudgetWizardCms();
-    showToast("سوال جدید به دستیار بودجه‌ریز اضافه شد ✨", "success");
+    showToast("سوال جدید به دستیار بودجه‌ریز اضافه شد.", "success");
 };
 
 window.editBudgetQuestionCms = function(qId) {
@@ -20344,7 +20349,7 @@ window.editBudgetQuestionCms = function(qId) {
 
     localStorage.setItem('aroosi_budget_wizard_config_db', JSON.stringify(cmsQuestions));
     window.renderAdminBudgetWizardCms();
-    showToast("تغییرات سوال بودجه‌ریز ذخیره شد ✨", "success");
+    showToast("تغییرات سوال بودجه‌ریز ذخیره شد.", "success");
 };
 
 window.deleteBudgetQuestionCms = function(qId) {
