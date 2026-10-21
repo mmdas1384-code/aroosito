@@ -14467,106 +14467,6 @@ window.openNewForumThreadModal = function() {
 };
 
 
-window.openExpandModal = function(type) {
-    const overlay = document.getElementById('planner-expand-overlay');
-    const titleContainer = document.getElementById('planner-overlay-title');
-    const bodyContainer = document.getElementById('planner-overlay-body');
-    if (!overlay || !bodyContainer) return;
-
-    overlay.classList.remove('hidden');
-
-    if (type === 'checklist') {
-      titleContainer.innerHTML = `
-        <div class="space-y-1 text-right">
-          <span class="text-xs font-bold text-[#D4AF37] flex items-center gap-1.5">
-            <i data-lucide="check-square" class="w-4 h-4 text-[#D4AF37]"></i>
-            <span>مدیریت کامل چک‌لیست و کارهای عروسی</span>
-          </span>
-          <h2 class="text-xl font-black text-white">برنامه‌ریزی زمانی & وظایف ۲۴ گانه مراسم</h2>
-        </div>`;
-      bodyContainer.innerHTML = `
-        <div class="space-y-4 text-right">
-          <div class="flex items-center justify-between bg-[#141A28] border border-[#C5A059]/30 rounded-2xl p-4 shadow-md flex-wrap gap-2">
-            <span class="text-xs font-black text-[#D4AF37]">فیلتر بر اساس فاز زمانی:</span>
-            <div class="flex items-center gap-2 overflow-x-auto">
-              <button type="button" onclick="filterOverlayChecklist('all')" class="bg-[#D4AF37] text-[#07090E] px-3 py-1.5 rounded-xl text-xs font-black">همه فازها</button>
-              <button type="button" onclick="filterOverlayChecklist('12_months')" class="bg-[#0E121C] text-slate-300 border border-slate-700 px-3 py-1.5 rounded-xl text-xs font-bold">۱۲ تا ۹ ماه قبل</button>
-              <button type="button" onclick="filterOverlayChecklist('6_months')" class="bg-[#0E121C] text-slate-300 border border-slate-700 px-3 py-1.5 rounded-xl text-xs font-bold">۶ تا ۳ ماه قبل</button>
-              <button type="button" onclick="filterOverlayChecklist('final_week')" class="bg-[#0E121C] text-slate-300 border border-slate-700 px-3 py-1.5 rounded-xl text-xs font-bold">هفته نهایی</button>
-            </div>
-            <button type="button" onclick="openAddTaskModal()" class="gold-shimmer-btn text-[#0F251A] font-black px-4 py-2 rounded-xl text-xs">+ افزودن وظیفه جدید</button>
-          </div>
-          <div id="overlay-checklist-items" class="space-y-2">
-            <!-- Populated dynamically -->
-          </div>
-        </div>`;
-      setTimeout(() => { if (typeof window.renderOverlayChecklist === 'function') window.renderOverlayChecklist(); }, 50);
-    } else if (type === 'guests') {
-      titleContainer.innerHTML = `
-        <div class="space-y-1 text-right">
-          <span class="text-xs font-bold text-[#D4AF37] flex items-center gap-1.5">
-            <i data-lucide="users" class="w-4 h-4 text-[#D4AF37]"></i>
-            <span>مدیریت کامل مهمانان & کارت دعوت</span>
-          </span>
-          <h2 class="text-xl font-black text-white">فهرست مهمانان، وضعیت پاسخ‌ها و تخصیص میزها</h2>
-        </div>`;
-      bodyContainer.innerHTML = `
-        <div class="space-y-4 text-right">
-          <div class="flex items-center justify-between bg-[#141A28] border border-[#C5A059]/30 rounded-2xl p-4 shadow-md flex-wrap gap-2">
-            <span class="text-xs font-black text-[#D4AF37]">مجموع مهمانان: ۲۰۰ نفر (۱۴۰ نفر تاییدشده)</span>
-            <button type="button" onclick="exportGuestsExcel()" class="gold-shimmer-btn text-[#0F251A] font-black px-4 py-2 rounded-xl text-xs">خروجی اکسل مهمانان</button>
-          </div>
-          <div class="overflow-x-auto">
-            <table class="w-full text-right text-xs">
-              <thead class="bg-[#0E121C] text-amber-300 border-b border-[#C5A059]/30 font-bold">
-                <tr>
-                  <th class="p-3">نام مهمان</th>
-                  <th class="p-3">نسبت / گروه</th>
-                  <th class="p-3">تعداد همراهان</th>
-                  <th class="p-3">وضعیت RSVP</th>
-                  <th class="p-3">شماره میز</th>
-                </tr>
-              </thead>
-              <tbody id="overlay-guests-table-body" class="divide-y divide-slate-800 font-medium text-slate-200">
-                <!-- Dynamically populated -->
-              </tbody>
-            </table>
-          </div>
-        </div>`;
-      setTimeout(() => { if (typeof window.renderOverlayGuests === 'function') window.renderOverlayGuests(); }, 50);
-    } else if (type === 'budget') {
-      titleContainer.innerHTML = `
-        <div class="space-y-1 text-right">
-          <span class="text-xs font-bold text-[#D4AF37] flex items-center gap-1.5">
-            <i data-lucide="calculator" class="w-4 h-4 text-[#D4AF37]"></i>
-            <span>دستیار گام‌به‌گام و مدیریت بودجه</span>
-          </span>
-          <h2 class="text-xl font-black text-white">دستیار گفت‌وگومحور برآورد هزینه و مدیریت مالی مراسم</h2>
-        </div>`;
-      bodyContainer.innerHTML = `
-        <div id="bw-assistant-container" class="space-y-6 text-right">
-          <!-- Dynamically populated from window.renderBwWizard() -->
-        </div>`;
-      setTimeout(() => { if (typeof window.renderBwWizard === 'function') window.renderBwWizard(); }, 50);
-    } else if (type === 'inquiries') {
-      titleContainer.innerHTML = `
-        <div class="space-y-1 text-right">
-          <span class="text-xs font-bold text-[#D4AF37] flex items-center gap-1.5">
-            <i data-lucide="inbox" class="w-4 h-4 text-[#D4AF37]"></i>
-            <span>پیگیری استعلام‌ها & پیشنهادات قیمت</span>
-          </span>
-          <h2 class="text-xl font-black text-white">لیست درخواست‌های ارسال‌شده به تامین‌کنندگان یزد</h2>
-        </div>`;
-      bodyContainer.innerHTML = `
-        <div class="space-y-4 text-right">
-          <div class="bg-[#141A28] border border-[#C5A059]/30 rounded-2xl p-4 shadow-md text-xs font-bold text-slate-300">
-            شما ۴ استعلام فعال برای تالار، آتلیه، مزون و تشریفات یزد ارسال کرده‌اید.
-          </div>
-        </div>`;
-    }
-    if (typeof lucide !== 'undefined' && lucide.createIcons) lucide.createIcons();
-};
-
 window.closeExpandModal = function() {
     const overlay = document.getElementById('planner-expand-overlay');
     if (overlay) overlay.classList.add('hidden');
@@ -14574,9 +14474,14 @@ window.closeExpandModal = function() {
 
 
 // CONVERSATIONAL BUDGET WIZARD RENDERER
+
+
 window.renderBwWizard = function() {
     const container = document.getElementById('bw-assistant-container');
     if (!container) return;
+
+    if (typeof cbwMode === 'undefined') window.cbwMode = 'fast';
+    if (typeof cbwCurrentStep === 'undefined') window.cbwCurrentStep = 1;
 
     const maxSteps = cbwMode === 'fast' ? 14 : 26;
     const isFinalStep = cbwCurrentStep === maxSteps;
@@ -14628,7 +14533,7 @@ window.renderBwWizard = function() {
     ];
 
     const currentStepsList = cbwMode === 'fast' ? fastStepsList : detailedStepsList;
-    const currentStepObj = currentStepsList[cbwCurrentStep - 1];
+    const currentStepObj = currentStepsList[cbwCurrentStep - 1] || currentStepsList[0];
 
     let stepHtml = '';
 
@@ -14741,7 +14646,7 @@ window.renderBwWizard = function() {
             </div>
           </div>
 
-          ${cbwLastFeedback ? `
+          ${typeof cbwLastFeedback !== 'undefined' && cbwLastFeedback ? `
             <div class="bg-emerald-950/50 border border-emerald-500/40 rounded-2xl p-3 text-xs font-bold text-emerald-300 flex items-center gap-2 animate-fade-in">
               <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
               <span>${cbwLastFeedback}</span>
@@ -14798,3 +14703,291 @@ window.renderBwWizard = function() {
       </div>`;
     if (typeof lucide !== 'undefined' && lucide.createIcons) lucide.createIcons();
 };
+
+
+window.openExpandModal = function(type) {
+    const overlay = document.getElementById('planner-expand-overlay');
+    const titleContainer = document.getElementById('planner-overlay-title');
+    const bodyContainer = document.getElementById('planner-overlay-body');
+    if (!overlay || !bodyContainer) return;
+
+    overlay.classList.remove('hidden');
+
+    if (type === 'checklist') {
+      titleContainer.innerHTML = `
+        <div class="space-y-1 text-right">
+          <span class="text-xs font-bold text-[#D4AF37] flex items-center gap-1.5">
+            <i data-lucide="check-square" class="w-4 h-4 text-[#D4AF37]"></i>
+            <span>مدیریت کامل چک‌لیست و کارهای عروسی</span>
+          </span>
+          <h2 class="text-xl font-black text-white">برنامه‌ریزی زمانی & وظایف ۲۴ گانه مراسم</h2>
+        </div>`;
+      bodyContainer.innerHTML = `
+        <div class="space-y-4 text-right">
+          <div class="flex items-center justify-between bg-[#141A28] border border-[#C5A059]/30 rounded-2xl p-4 shadow-md flex-wrap gap-2">
+            <span class="text-xs font-black text-[#D4AF37]">فیلتر بر اساس فاز زمانی:</span>
+            <div class="flex items-center gap-2 overflow-x-auto">
+              <button type="button" onclick="filterOverlayChecklist('all')" class="bg-[#D4AF37] text-[#07090E] px-3 py-1.5 rounded-xl text-xs font-black">همه فازها</button>
+              <button type="button" onclick="filterOverlayChecklist('12_months')" class="bg-[#0E121C] text-slate-300 border border-slate-700 px-3 py-1.5 rounded-xl text-xs font-bold">۱۲ تا ۹ ماه قبل</button>
+              <button type="button" onclick="filterOverlayChecklist('6_months')" class="bg-[#0E121C] text-slate-300 border border-slate-700 px-3 py-1.5 rounded-xl text-xs font-bold">۶ تا ۳ ماه قبل</button>
+              <button type="button" onclick="filterOverlayChecklist('final_week')" class="bg-[#0E121C] text-slate-300 border border-slate-700 px-3 py-1.5 rounded-xl text-xs font-bold">هفته نهایی</button>
+            </div>
+            <button type="button" onclick="openAddTaskModal()" class="gold-shimmer-btn text-[#0F251A] font-black px-4 py-2 rounded-xl text-xs">+ افزودن وظیفه جدید</button>
+          </div>
+          <div id="overlay-checklist-items" class="space-y-2">
+            <!-- Populated dynamically -->
+          </div>
+        </div>`;
+      setTimeout(() => { if (typeof window.renderOverlayChecklist === 'function') window.renderOverlayChecklist(); }, 50);
+    } else if (type === 'guests') {
+      titleContainer.innerHTML = `
+        <div class="space-y-1 text-right">
+          <span class="text-xs font-bold text-[#D4AF37] flex items-center gap-1.5">
+            <i data-lucide="users" class="w-4 h-4 text-[#D4AF37]"></i>
+            <span>مدیریت کامل مهمانان & کارت دعوت</span>
+          </span>
+          <h2 class="text-xl font-black text-white">فهرست مهمانان، وضعیت پاسخ‌ها و تخصیص میزها</h2>
+        </div>`;
+      bodyContainer.innerHTML = `
+        <div class="space-y-4 text-right">
+          <div class="flex items-center justify-between bg-[#141A28] border border-[#C5A059]/30 rounded-2xl p-4 shadow-md flex-wrap gap-2">
+            <span class="text-xs font-black text-[#D4AF37]">مجموع مهمانان: ۲۰۰ نفر (۱۴۰ نفر تاییدشده)</span>
+            <button type="button" onclick="exportGuestsExcel()" class="gold-shimmer-btn text-[#0F251A] font-black px-4 py-2 rounded-xl text-xs">خروجی اکسل مهمانان</button>
+          </div>
+          <div class="overflow-x-auto">
+            <table class="w-full text-right text-xs">
+              <thead class="bg-[#0E121C] text-amber-300 border-b border-[#C5A059]/30 font-bold">
+                <tr>
+                  <th class="p-3">نام مهمان</th>
+                  <th class="p-3">نسبت / گروه</th>
+                  <th class="p-3">تعداد همراهان</th>
+                  <th class="p-3">وضعیت RSVP</th>
+                  <th class="p-3">شماره میز</th>
+                </tr>
+              </thead>
+              <tbody id="overlay-guests-table-body" class="divide-y divide-slate-800 font-medium text-slate-200">
+                <!-- Dynamically populated -->
+              </tbody>
+            </table>
+          </div>
+        </div>`;
+      setTimeout(() => { if (typeof window.renderOverlayGuests === 'function') window.renderOverlayGuests(); }, 50);
+    } else if (type === 'budget') {
+      titleContainer.innerHTML = `
+        <div class="space-y-1 text-right">
+          <span class="text-xs font-bold text-[#D4AF37] flex items-center gap-1.5">
+            <i data-lucide="calculator" class="w-4 h-4 text-[#D4AF37]"></i>
+            <span>دستیار گام‌به‌گام و مدیریت بودجه</span>
+          </span>
+          <h2 class="text-xl font-black text-white">دستیار گفت‌وگومحور برآورد هزینه و مدیریت مالی مراسم</h2>
+        </div>`;
+      bodyContainer.innerHTML = `
+        <div id="bw-assistant-container" class="space-y-6 text-right">
+          <!-- Dynamically populated from window.renderBwWizard() -->
+        </div>`;
+      setTimeout(() => { if (typeof window.renderBwWizard === 'function') window.renderBwWizard(); }, 50);
+    } else if (type === 'timeline') {
+      titleContainer.innerHTML = `
+        <div class="space-y-1 text-right">
+          <span class="text-xs font-bold text-[#D4AF37] flex items-center gap-1.5">
+            <i data-lucide="clock" class="w-4 h-4 text-[#D4AF37]"></i>
+            <span>زمان‌بندی کامل روز عروسی</span>
+          </span>
+          <h2 class="text-xl font-black text-white">جدول زمانی ساعتی از آرایشگاه تا پایان شام</h2>
+        </div>`;
+      bodyContainer.innerHTML = `
+        <div class="space-y-4 text-right">
+          <div class="bg-[#141A28] border border-[#C5A059]/30 rounded-2xl p-4 shadow-md space-y-3">
+            <span class="text-xs font-black text-[#D4AF37] block">برنامه زمانی روز مراسم:</span>
+            <div class="space-y-2 text-xs font-bold text-slate-200">
+              <div class="flex items-center justify-between bg-[#0E121C] p-3 rounded-xl border border-slate-800"><span>۰۸:۰۰ - تحویل لباس و حضور در آرایشگاه</span><span class="text-amber-300">عروس & داماد</span></div>
+              <div class="flex items-center justify-between bg-[#0E121C] p-3 rounded-xl border border-slate-800"><span>۱۳:۰۰ - عکاسی و ضبط کلیپ در عمارت</span><span class="text-amber-300">تیم تصویربرداری</span></div>
+              <div class="flex items-center justify-between bg-[#0E121C] p-3 rounded-xl border border-slate-800"><span>۱۸:۰۰ - ورود مهمانان به باغ‌تالار</span><span class="text-amber-300">تیم تشریفات سالن</span></div>
+              <div class="flex items-center justify-between bg-[#0E121C] p-3 rounded-xl border border-slate-800"><span>۲۱:۳۰ - سرو شام اصلی و برش کیک</span><span class="text-amber-300">کترینگ & موسیقی</span></div>
+            </div>
+          </div>
+        </div>`;
+    } else if (type === 'party') {
+      titleContainer.innerHTML = `
+        <div class="space-y-1 text-right">
+          <span class="text-xs font-bold text-[#D4AF37] flex items-center gap-1.5">
+            <i data-lucide="user-check" class="w-4 h-4 text-[#D4AF37]"></i>
+            <span>همراهان & ساقدوش‌ها</span>
+          </span>
+          <h2 class="text-xl font-black text-white">تخصیص مسؤلیت‌ها به ساقدوش‌ها و نزدیکان</h2>
+        </div>`;
+      bodyContainer.innerHTML = `
+        <div class="space-y-4 text-right">
+          <div class="bg-[#141A28] border border-[#C5A059]/30 rounded-2xl p-4 shadow-md space-y-3">
+            <span class="text-xs font-black text-[#D4AF37] block">لیست مسئولین و همراهان:</span>
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 text-xs font-bold">
+              <div class="bg-[#0E121C] p-3 rounded-xl border border-slate-800"><span>مریم (ساقدوش عروس)</span><span class="block text-[10px] text-slate-400 mt-1">مسئول هماهنگی آتلیه و تور سر</span></div>
+              <div class="bg-[#0E121C] p-3 rounded-xl border border-slate-800"><span>امیر (ساقدوش داماد)</span><span class="block text-[10px] text-slate-400 mt-1">مسئول تحویل ماشین و هماهنگی موسیقی</span></div>
+            </div>
+          </div>
+        </div>`;
+    } else if (type === 'inquiries' || type === 'vendors') {
+      titleContainer.innerHTML = `
+        <div class="space-y-1 text-right">
+          <span class="text-xs font-bold text-[#D4AF37] flex items-center gap-1.5">
+            <i data-lucide="inbox" class="w-4 h-4 text-[#D4AF37]"></i>
+            <span>پیگیری استعلام‌ها & تامین‌کنندگان</span>
+          </span>
+          <h2 class="text-xl font-black text-white">لیست درخواست‌های ارسال‌شده به تامین‌کنندگان یزد</h2>
+        </div>`;
+      bodyContainer.innerHTML = `
+        <div class="space-y-4 text-right">
+          <div class="bg-[#141A28] border border-[#C5A059]/30 rounded-2xl p-4 shadow-md text-xs font-bold text-slate-300">
+            شما ۴ استعلام فعال برای تالار، آتلیه، مزون و تشریفات یزد ارسال کرده‌اید. برای مشاهده جزئیات پاسخ‌ها می‌توانید به تب گفت‌وگوها مراجعه فرمایید.
+          </div>
+        </div>`;
+    }
+    if (typeof lucide !== 'undefined' && lucide.createIcons) lucide.createIcons();
+};
+
+window.renderOverlayChecklist = function() {
+    const el = document.getElementById('overlay-checklist-items');
+    if (!el) return;
+    let tasks = JSON.parse(localStorage.getItem('aroosi_checklist_db') || '[]');
+    if (!tasks || tasks.length === 0) {
+        tasks = [
+            { id: 1, text: "تعیین سقف بودجه کل و سهم‌بندی بخش‌ها", timeframe: "12_months", done: true },
+            { id: 2, text: "انتخاب و رزرو تالار یا باغ‌سرا در یزد", timeframe: "12_months", done: true },
+            { id: 3, text: "رزرو آتلیه عکاسی و فیلمبرداری کویر", timeframe: "6_months", done: false },
+            { id: 4, text: "انتخاب و سفارش لباس عروس از مزون", timeframe: "6_months", done: false },
+            { id: 5, text: "هماهنگی کارت دعوت آنلاین و چاپی", timeframe: "final_week", done: false }
+        ];
+        localStorage.setItem('aroosi_checklist_db', JSON.stringify(tasks));
+    }
+    el.innerHTML = tasks.map(t => `
+      <div class="flex items-center justify-between bg-[#141A28] p-3 rounded-xl border border-slate-800 text-xs font-bold text-white">
+        <div class="flex items-center gap-2">
+          <input type="checkbox" ${t.done ? 'checked' : ''} onchange="toggleChecklistTaskDone(${t.id})" class="accent-[#D4AF37] w-4 h-4 cursor-pointer">
+          <span class="${t.done ? 'line-through text-slate-500' : 'text-white'}">${t.text}</span>
+        </div>
+        <span class="text-[10px] text-[#D4AF37] bg-[#0E121C] px-2 py-1 rounded-lg border border-[#C5A059]/30">${t.timeframe === '12_months' ? '۱۲-۹ ماه قبل' : (t.timeframe === '6_months' ? '۶-۳ ماه قبل' : 'هفته نهایی')}</span>
+      </div>
+    `).join('');
+};
+
+window.renderOverlayGuests = function() {
+    const el = document.getElementById('overlay-guests-table-body');
+    if (!el) return;
+    let guests = JSON.parse(localStorage.getItem('aroosi_guest_db') || '[]');
+    if (!guests || guests.length === 0) {
+        guests = [
+            { id: 1, name: "فاطمه و خانواده", relation: "فامیل عروس", count: 4, status: "confirmed", table: 3 },
+            { id: 2, name: "حسین ابراهیمی", relation: "دوستان داماد", count: 2, status: "confirmed", table: 7 },
+            { id: 3, name: "مهندس رضایی", relation: "همکاران", count: 1, status: "pending", table: 10 }
+        ];
+        localStorage.setItem('aroosi_guest_db', JSON.stringify(guests));
+    }
+    el.innerHTML = guests.map(g => `
+      <tr class="hover:bg-[#1A2333]/50 transition-colors">
+        <td class="p-3 font-bold text-white">${g.name}</td>
+        <td class="p-3 text-slate-300">${g.relation}</td>
+        <td class="p-3 text-amber-200">${g.count} نفر</td>
+        <td class="p-3"><span class="px-2 py-1 rounded-lg text-[10px] font-black ${g.status === 'confirmed' ? 'bg-emerald-950 text-emerald-300 border border-emerald-500/30' : 'bg-amber-950 text-amber-300 border border-amber-500/30'}">${g.status === 'confirmed' ? 'تاییدشده' : 'در انتظار'}</span></td>
+        <td class="p-3 text-white">میز ${g.table}</td>
+      </tr>
+    `).join('');
+};
+
+
+// Global Conversational Budget Assistant State & Functions
+if (typeof cbwMode === 'undefined') window.cbwMode = 'fast';
+if (typeof cbwCurrentStep === 'undefined') window.cbwCurrentStep = 1;
+if (typeof cbwLastFeedback === 'undefined') window.cbwLastFeedback = '';
+
+window.setBwMode = function(mode) {
+    cbwMode = mode;
+    cbwCurrentStep = 1;
+    cbwLastFeedback = mode === 'fast' ? "روش سریع‌تر (۱۴ گام کلیدی) فعال شد." : "روش کامل‌تر (۲۶ گام دقیق با جزئیات یزدی) فعال شد.";
+    if (typeof window.renderBwWizard === 'function') window.renderBwWizard();
+};
+
+window.changeBwGuests = function(delta) {
+    if (typeof cbwState !== 'undefined') {
+        cbwState.guests = Math.max(20, (cbwState.guests || 200) + delta);
+        cbwLastFeedback = `تعداد مهمانان به ${cbwState.guests.toLocaleString('fa-IR')} نفر تغییر یافت.`;
+    }
+    if (typeof window.renderBwWizard === 'function') window.renderBwWizard();
+};
+
+window.setBwStateVal = function(key, val, nameVal) {
+    if (typeof cbwState !== 'undefined') {
+        cbwState[key] = val;
+        if (nameVal) {
+            cbwState[key + 'Name'] = nameVal;
+            cbwLastFeedback = `انتخاب شما: «${nameVal}» ثبت گردید.`;
+        }
+    }
+    if (typeof window.renderBwWizard === 'function') window.renderBwWizard();
+};
+
+window.nextBwStep = function() {
+    const maxSteps = cbwMode === 'fast' ? 14 : 26;
+    if (cbwCurrentStep < maxSteps) {
+        cbwCurrentStep++;
+        if (typeof window.renderBwWizard === 'function') window.renderBwWizard();
+    }
+};
+
+window.prevBwStep = function() {
+    if (cbwCurrentStep > 1) {
+        cbwCurrentStep--;
+        if (typeof window.renderBwWizard === 'function') window.renderBwWizard();
+    }
+};
+
+window.restartBwWizard = function() {
+    cbwCurrentStep = 1;
+    cbwLastFeedback = "محاسبه از ابتدا شروع شد.";
+    if (typeof window.renderBwWizard === 'function') window.renderBwWizard();
+};
+
+window.syncBwToDashboard = function(totalCalculated) {
+    let userBudget = JSON.parse(localStorage.getItem('userBudgetState') || '{"totalBudget": 350000000, "spent": 210000000, "lineItems": []}');
+    userBudget.totalBudget = totalCalculated || 350000000;
+    localStorage.setItem('userBudgetState', JSON.stringify(userBudget));
+    if (typeof renderPlannerBudgetSummary === 'function') renderPlannerBudgetSummary();
+    showToast('برآورد جدید بودجه با موفقیت به داشبورد اصلی منتقل شد.', 'success');
+};
+
+// Global Planning Checklist Modal Handlers
+window.openAddTaskModal = function() {
+    const text = prompt("عنوان وظیفه جدید برای چک‌لیست عروسی:");
+    if (!text) return;
+    let tasks = JSON.parse(localStorage.getItem('aroosi_checklist_db') || '[]');
+    tasks.unshift({
+        id: Date.now(),
+        text: text,
+        timeframe: '6_months',
+        done: false
+    });
+    localStorage.setItem('aroosi_checklist_db', JSON.stringify(tasks));
+    if (typeof window.renderOverlayChecklist === 'function') window.renderOverlayChecklist();
+    showToast("وظیفه جدید به چک‌لیست اضافه شد.", "success");
+};
+
+window.toggleChecklistTaskDone = function(taskId) {
+    let tasks = JSON.parse(localStorage.getItem('aroosi_checklist_db') || '[]');
+    const target = tasks.find(t => t.id === taskId);
+    if (target) {
+        target.done = !target.done;
+        localStorage.setItem('aroosi_checklist_db', JSON.stringify(tasks));
+        if (typeof window.renderOverlayChecklist === 'function') window.renderOverlayChecklist();
+    }
+};
+
+window.filterOverlayChecklist = function(tf) {
+    if (typeof window.renderOverlayChecklist === 'function') window.renderOverlayChecklist(tf);
+};
+
+// Admin Category Modal Stubs
+window.openAdminCategoryModal = function() {
+    showToast("مدیریت دسته‌بندی جدید در حال اجراست.", "info");
+};
+window.closeAdminCategoryModal = function() {};
+window.saveAdminCategory = function() { showToast("دسته‌بندی ذخیره شد.", "success"); };
+window.saveAdminBannerCMS = function() { showToast("بنر ذخیره شد.", "success"); };
