@@ -15110,3 +15110,101 @@ window.deleteBudgetQuestionCms = function(qId) {
     window.renderAdminBudgetWizardCms();
     showToast("سوال مربوطه حذف گردید.", "info");
 };
+
+
+// Global Admin Panel Tab Switcher
+window.switchAdminPanelTab = function(tabName) {
+  document.querySelectorAll('.apanel-pane').forEach(el => {
+    el.classList.add('hidden');
+  });
+
+  document.querySelectorAll('[id^="apanel-tab-btn-"], [id^="admin-subtab-"]').forEach(btn => {
+    btn.classList.remove('bg-[#D4AF37]', 'text-[#07090E]', 'shadow-md');
+    btn.classList.add('text-slate-300', 'hover:text-white', 'hover:bg-[#141A28]');
+  });
+
+  const targetPane = document.getElementById(`apanel-pane-${tabName}`);
+  if (targetPane) {
+    targetPane.classList.remove('hidden');
+  }
+
+  const targetBtn = document.getElementById(`apanel-tab-btn-${tabName}`) || document.getElementById(`admin-subtab-${tabName}`);
+  if (targetBtn) {
+    targetBtn.classList.add('bg-[#D4AF37]', 'text-[#07090E]', 'shadow-md');
+    targetBtn.classList.remove('text-slate-300', 'hover:text-white', 'hover:bg-[#141A28]');
+  }
+
+  if (tabName === 'settings' && typeof renderAdminCategories === 'function') renderAdminCategories();
+  if (tabName === 'budget-cms' && typeof renderAdminBudgetWizardCms === 'function') renderAdminBudgetWizardCms();
+  if (tabName === 'vendors' && typeof renderAdminPendingApps === 'function') renderAdminPendingApps();
+  if (typeof lucide !== 'undefined' && lucide.createIcons) lucide.createIcons();
+};
+
+// Global Vendor Panel Tab Switcher
+window.switchVendorPanelTab = function(tabName) {
+  document.querySelectorAll('.vpanel-pane').forEach(el => {
+    el.classList.add('hidden');
+  });
+
+  document.querySelectorAll('[id^="vpanel-tab-btn-"], [id^="vendor-subtab-"]').forEach(btn => {
+    btn.classList.remove('bg-[#D4AF37]', 'text-[#07090E]', 'shadow-md');
+    btn.classList.add('text-slate-300', 'hover:text-white');
+  });
+
+  const targetPane = document.getElementById(`vpanel-pane-${tabName}`);
+  if (targetPane) {
+    targetPane.classList.remove('hidden');
+  }
+
+  const targetBtn = document.getElementById(`vpanel-tab-btn-${tabName}`) || document.getElementById(`vendor-subtab-${tabName}`);
+  if (targetBtn) {
+    targetBtn.classList.add('bg-[#D4AF37]', 'text-[#07090E]', 'shadow-md');
+    targetBtn.classList.remove('text-slate-300', 'hover:text-white');
+  }
+
+  if (tabName === 'calendar' && typeof renderVendorDashCalendar === 'function') renderVendorDashCalendar();
+  if (tabName === 'inquiries' && typeof renderVendorInquiriesTable === 'function') renderVendorInquiriesTable();
+  if (typeof lucide !== 'undefined' && lucide.createIcons) lucide.createIcons();
+};
+
+
+window.renderAdminHomepageCategoriesCMS = function() {
+    const container = document.getElementById('admin-homepage-categories-grid');
+    if (!container) return;
+    let categories = JSON.parse(localStorage.getItem('aroosi_homepage_categories_db') || 'null');
+    if (!categories) {
+        categories = [
+            { id: 1, title: "تالار و باغ‌سراها", count: "۴۵ مجموعه فعال", key: "halls" },
+            { id: 2, title: "آتلیه و تصویربرداری", count: "۳۲ مجموعه فعال", key: "photography" },
+            { id: 3, title: "مزون و لباس عروس", count: "۲۸ مجموعه فعال", key: "bridal_dresses" },
+            { id: 4, title: "آرایشگاه و میکاپ", count: "۵۰ مجموعه فعال", key: "beauty" }
+        ];
+        localStorage.setItem('aroosi_homepage_categories_db', JSON.stringify(categories));
+    }
+    container.innerHTML = categories.map(c => `
+      <div class="bg-[#141A28] border border-[#C5A059]/30 p-4 rounded-2xl flex items-center justify-between text-xs font-bold text-white">
+        <div>
+          <span class="block text-sm font-black text-[#D4AF37]">${c.title}</span>
+          <span class="text-slate-400 block mt-1">${c.count}</span>
+        </div>
+        <button type="button" onclick="editHomepageCategoryCms(${c.id})" class="text-amber-300 border border-amber-500/30 px-3 py-1.5 rounded-xl">ویرایش</button>
+      </div>
+    `).join('');
+};
+
+window.renderAdminBannerCMS = function() {
+    const titleInput = document.getElementById('admin-banner-title');
+    if (titleInput) titleInput.value = "عروسی تو - سامانه هوشمند تشریفات و عقد یزد";
+};
+
+window.editHomepageCategoryCms = function(catId) {
+    let categories = JSON.parse(localStorage.getItem('aroosi_homepage_categories_db') || '[]');
+    const target = categories.find(c => c.id === catId);
+    if (target) {
+        const newTitle = prompt("عنوان جدید دسته‌بندی:", target.title);
+        if (newTitle) target.title = newTitle;
+        localStorage.setItem('aroosi_homepage_categories_db', JSON.stringify(categories));
+        window.renderAdminHomepageCategoriesCMS();
+        showToast("دسته‌بندی ذخیره گردید.", "success");
+    }
+};
