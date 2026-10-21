@@ -324,7 +324,28 @@
     </div>
 
     <!-- TAB 6: GENERAL SETTINGS -->
-    <div id="apanel-pane-settings" class="hidden space-y-6">
+    <div id="apanel-pane-budget-cms" class="apanel-pane hidden space-y-6 text-right">
+          <div class="bg-[#141A28] border border-[#C5A059]/40 rounded-3xl p-6 shadow-xl space-y-6">
+            <div class="flex items-center justify-between border-b border-[#C5A059]/20 pb-4 flex-wrap gap-2">
+              <div class="space-y-1">
+                <span class="text-xs font-bold text-[#D4AF37] flex items-center gap-1.5">
+                  <i data-lucide="sliders" class="w-4 h-4 text-[#D4AF37]"></i>
+                  <span>مدیریت سوالات & گزینه‌های دستیار بودجه‌ریز</span>
+                </span>
+                <h3 class="text-lg font-black text-white">مدیریت لایو سوالات، کیفیت‌ها و هزینه‌های پایه بودجه‌ریز</h3>
+              </div>
+              <button type="button" onclick="renderAdminBudgetWizardCms()" class="gold-shimmer-btn text-[#0F251A] font-black px-4 py-2 rounded-xl text-xs cursor-pointer">
+                🔄 بروزرسانی جدول
+              </button>
+            </div>
+
+            <div id="admin-budget-questions-container" class="space-y-4">
+              <!-- Dynamically populated via renderAdminBudgetWizardCms() -->
+            </div>
+          </div>
+        </div>
+
+        <div id="apanel-pane-settings" class="hidden space-y-6">
       <div class="bg-[#0E121C] border border-[#C5A059]/40 rounded-3xl p-6 shadow-xl space-y-4 text-right">
         <h3 class="text-base font-black text-[#D4AF37] flex items-center gap-2">
           <i data-lucide="settings" class="w-5 h-5 text-[#D4AF37]"></i>

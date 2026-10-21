@@ -15483,7 +15483,7 @@ window.saveAdminBannerCMS = function() {
 };
 
 window.switchAdminPanelTab = function(tabName) {
-  const tabs = ['analytics', 'vendors', 'cms', 'content', 'subscriptions', 'reviews', 'settings'];
+  const tabs = ['analytics', 'vendors', 'cms', 'content', 'subscriptions', 'reviews', 'settings', 'budget-cms'];
   tabs.forEach(t => {
     const pane = document.getElementById(`apanel-pane-${t}`);
     const btn = document.getElementById(`apanel-tab-btn-${t}`);
@@ -19542,6 +19542,7 @@ let bwCurrentStep = 1;
 
 
 
+
 let cbwMode = 'fast'; // 'fast' (14 steps) or 'detailed' (26 steps)
 let cbwCurrentStep = 1;
 let cbwLastFeedback = '';
@@ -19750,9 +19751,9 @@ window.renderBwWizard = function() {
 
     let stepHtml = '';
 
-    // Quality Tier Selector rendered ONLY for category question steps (NOT for guest count step 1 or location step 2)
+    // Quality Tier Selector
     const qualitySelectorHtml = `
-      <div class="bg-[#0E121C] border border-[#C5A059]/20 rounded-2xl p-3.5 space-y-2 mb-4">
+      <div class="bg-[#0E121C] border border-[#C5A059]/20 rounded-2xl p-3.5 space-y-2 mb-4 shrink-0">
         <div class="flex items-center justify-between text-[11px] font-black text-amber-300">
           <span>کیفیت این بخش (Quality Tier):</span>
           <span class="text-slate-400">سطح انتخاب‌شده: ${cbwState.tierName || 'متوسط'}</span>
@@ -19828,7 +19829,6 @@ window.renderBwWizard = function() {
           </div>
         </div>`;
     } else {
-      // PURE OPTION CARDS & COUNTERS FOR EVERY STEP (NO MANUAL INPUT BOXES)
       if (currentStepObj.key === 'guests') {
         stepHtml = `
           <div class="space-y-4 text-right">
@@ -20202,18 +20202,20 @@ window.renderBwWizard = function() {
         </div>
 
         <div class="grid grid-cols-1 lg:grid-cols-12 gap-6 items-start">
-          <div class="lg:col-span-8 bg-[#141A28] border border-[#C5A059]/30 rounded-3xl p-6 shadow-xl space-y-6">
-            <div class="flex items-center justify-between border-b border-slate-800 pb-3">
+          <div class="lg:col-span-8 bg-[#141A28] border border-[#C5A059]/30 rounded-3xl p-6 shadow-xl flex flex-col justify-between min-h-[460px] h-[460px]">
+            <div class="flex items-center justify-between border-b border-slate-800 pb-3 shrink-0">
               <span class="text-xs font-black text-[#D4AF37]">گام ${cbwCurrentStep} از ${maxSteps}: ${currentStepObj ? currentStepObj.title : ''}</span>
               <div class="w-32 bg-slate-800 h-2 rounded-full overflow-hidden">
                 <div class="bg-[#D4AF37] h-full transition-all duration-300" style="width: ${(cbwCurrentStep / maxSteps) * 100}%;"></div>
               </div>
             </div>
 
-            ${stepHtml}
+            <div class="flex-1 overflow-y-auto custom-scrollbar my-4 pr-1">
+              ${stepHtml}
+            </div>
 
             ${!isFinalStep ? `
-              <div class="flex items-center justify-between pt-4 border-t border-slate-800">
+              <div class="flex items-center justify-between pt-4 border-t border-slate-800 shrink-0">
                 <button type="button" onclick="prevBwStep()" ${cbwCurrentStep === 1 ? 'disabled class="opacity-40 cursor-not-allowed text-slate-500 text-xs font-bold px-4 py-2"' : 'class="bg-[#0E121C] hover:bg-slate-800 text-slate-200 border border-slate-700 px-4 py-2 rounded-xl text-xs font-bold cursor-pointer"'}>
                   ← گام قبلی
                 </button>
@@ -20224,15 +20226,18 @@ window.renderBwWizard = function() {
             ` : ''}
           </div>
 
-          <div class="lg:col-span-4 bg-[#141A28] border border-[#C5A059]/30 rounded-3xl p-5 shadow-xl space-y-3">
-            <span class="text-xs font-black text-[#D4AF37] block border-b border-slate-800 pb-2">فهرست گام‌ها (${cbwCurrentStep - 1}/${maxSteps})</span>
-            <div class="space-y-1.5 max-h-80 overflow-y-auto custom-scrollbar text-xs font-bold">
+          <div class="lg:col-span-4 bg-[#141A28] border border-[#C5A059]/30 rounded-3xl p-5 shadow-xl min-h-[460px] h-[460px] flex flex-col justify-between">
+            <span class="text-xs font-black text-[#D4AF37] block border-b border-slate-800 pb-2 shrink-0">فهرست گام‌ها (${cbwCurrentStep - 1}/${maxSteps})</span>
+            <div class="space-y-1.5 flex-1 overflow-y-auto custom-scrollbar my-2 text-xs font-bold pr-1">
               ${currentStepsList.map(s => `
                 <div onclick="cbwCurrentStep=${s.step}; renderBwWizard();" class="p-2 rounded-xl cursor-pointer transition-all flex items-center justify-between ${s.step === cbwCurrentStep ? 'bg-[#D4AF37]/20 border border-[#D4AF37] text-[#D4AF37]' : (s.step < cbwCurrentStep ? 'bg-[#0E121C] text-emerald-400' : 'bg-[#0E121C] text-slate-400 opacity-60')}">
                   <span>${s.title}</span>
                   <span>${s.step < cbwCurrentStep ? '✓' : (s.step === cbwCurrentStep ? '●' : '')}</span>
                 </div>
               `).join('')}
+            </div>
+            <div class="text-[10px] font-bold text-slate-400 text-center border-t border-slate-800 pt-2 shrink-0">
+              با انتخاب هر گزینه، پیش‌نمایش به صورت لایو بروز می‌شود.
             </div>
           </div>
         </div>
@@ -20245,4 +20250,108 @@ window.syncBwToDashboard = function(totalCalculated) {
     localStorage.setItem('userBudgetState', JSON.stringify(userBudget));
     if (typeof renderPlannerBudgetSummary === 'function') renderPlannerBudgetSummary();
     showToast('برآورد جدید بودجه با موفقیت به داشبورد اصلی منتقل شد ✨', 'success');
+};
+
+
+// Super Admin Budget Wizard Questions CMS Handler
+window.renderAdminBudgetWizardCms = function() {
+    const container = document.getElementById('admin-budget-questions-container');
+    if (!container) return;
+
+    let cmsQuestions = JSON.parse(localStorage.getItem('aroosi_budget_wizard_config_db') || 'null');
+    if (!cmsQuestions) {
+        cmsQuestions = [
+            { id: 1, title: "۱. تعداد مهمانان", prompt: "تعداد تقریبی مهمانان مراسم چقدر است؟", key: "guests", options: "شمارنده عددی (نفرات)" },
+            { id: 2, title: "۲. شهر برگزاری", prompt: "شهر محل برگزاری مراسم را تعیین کنید:", key: "city", options: "یزد | کرمان | اصفهان | شیراز | خراسان جنوبی | سایر" },
+            { id: 3, title: "۳. زمان و مناسبت برگزاری", prompt: "تاریخ برگزاری در چه بازه‌ای است؟", key: "season", options: "روزهای عادی | اعیاد و آخرهفته‌ها" },
+            { id: 4, title: "۴. کیفیت کلی مراسم", prompt: "سطح کیفیت کلی تشریفات را مشخص فرمایید:", key: "tier", options: "اقتصادی | متوسط | لوکس VIP" },
+            { id: 5, title: "۵. فضای برگزاری مراسم", prompt: "نوع فضای برگزاری مراسم:", key: "venueType", options: "تالار | باغ‌تالار | هتل | منزل" },
+            { id: 6, title: "۶. منوی شام اصلی", prompt: "نوع منوی شام پذیرایی:", key: "cateringMenu", options: "باقالی پلو با گوشت + جوجه | زرشک پلو | کباب کوبیده | وزیری" },
+            { id: 7, title: "۷. میوه پذیرایی", prompt: "پذیرایی میوه فصل:", key: "fruitType", options: "۲ مدل میوه فصل | ۴ مدل + استوایی | نمی‌خوام" },
+            { id: 8, title: "۸. شیرینی اصیل یزدی و مدرن", prompt: "پکیج شیرینی سنتی یزد یا مدرن:", key: "sweetType", options: "شیرینی اصیل یزدی (قطاب، لوز، نان منقا) | تر و خشک مدرن | نمی‌خوام" },
+            { id: 9, title: "۹. فینگرفود و ولکام بار", prompt: "بار نوشیدنی و فینگرفود خوشامدگویی:", key: "fingerFoodType", options: "Welcome Drink | سینی فینگرفود | پکیج VIP | نمی‌خوام" },
+            { id: 10, title: "۱۰. نوشیدنی و بار گرم/سرد", prompt: "سرو نوشیدنی‌های گرم و سرد:", key: "drinkType", options: "شربت | ۳ مدل آبمیوه طبیعی | موکتل نامحدود | آب معدنی | نمی‌خوام" }
+        ];
+        localStorage.setItem('aroosi_budget_wizard_config_db', JSON.stringify(cmsQuestions));
+    }
+
+    container.innerHTML = `
+        <div class="space-y-4">
+          <div class="bg-[#0E121C] p-3 rounded-2xl border border-slate-800 flex items-center justify-between text-xs font-bold text-slate-300">
+            <span>تعداد کل سوالات ثبت‌شده در داتابیس مدیریت: ${cmsQuestions.length} سوال</span>
+            <button type="button" onclick="addNewBudgetQuestionCms()" class="bg-[#D4AF37] text-[#07090E] font-black px-3 py-1.5 rounded-xl cursor-pointer">+ افزودن سوال جدید</button>
+          </div>
+
+          <div class="overflow-x-auto">
+            <table class="w-full text-right text-xs">
+              <thead class="bg-[#0E121C] text-amber-300 border-b border-[#C5A059]/30 font-bold">
+                <tr>
+                  <th class="p-3">عنوان سوال</th>
+                  <th class="p-3">متن پرامپت دستیار (Bot Prompt)</th>
+                  <th class="p-3">گزینه‌ها / متغیر کلید</th>
+                  <th class="p-3 text-center">عملیات مدیریت</th>
+                </tr>
+              </thead>
+              <tbody class="divide-y divide-slate-800 font-medium text-slate-200">
+                ${cmsQuestions.map((q, idx) => `
+                  <tr class="hover:bg-[#1A2333]/50 transition-colors">
+                    <td class="p-3 font-bold text-white">${q.title}</td>
+                    <td class="p-3 text-amber-200">${q.prompt}</td>
+                    <td class="p-3 text-slate-300">${q.options}</td>
+                    <td class="p-3 text-center space-x-2 space-x-reverse">
+                      <button type="button" onclick="editBudgetQuestionCms(${q.id})" class="text-amber-300 hover:text-white font-bold bg-[#0E121C] border border-amber-500/30 px-2.5 py-1 rounded-lg cursor-pointer">✏️ ویرایش</button>
+                      <button type="button" onclick="deleteBudgetQuestionCms(${q.id})" class="text-rose-400 hover:text-rose-200 font-bold bg-[#0E121C] border border-rose-500/30 px-2.5 py-1 rounded-lg cursor-pointer">🗑️ حذف</button>
+                    </td>
+                  </tr>
+                `).join('')}
+              </tbody>
+            </table>
+          </div>
+        </div>`;
+};
+
+window.addNewBudgetQuestionCms = function() {
+    let cmsQuestions = JSON.parse(localStorage.getItem('aroosi_budget_wizard_config_db') || '[]');
+    const title = prompt("عنوان سوال جدید (مثلا: ۲۷. گیفت اختصاصی):");
+    if (!title) return;
+    const promptTxt = prompt("متن پرامپت دستیار برای کاربر:");
+    if (!promptTxt) return;
+    const opts = prompt("گزینه‌های انتخابی (با | جدا کنید):");
+
+    cmsQuestions.push({
+        id: Date.now(),
+        title: title,
+        prompt: promptTxt,
+        key: 'custom_' + Date.now(),
+        options: opts || "پکیج ۱ | پکیج ۲ | نمی‌خوام"
+    });
+
+    localStorage.setItem('aroosi_budget_wizard_config_db', JSON.stringify(cmsQuestions));
+    window.renderAdminBudgetWizardCms();
+    showToast("سوال جدید به دستیار بودجه‌ریز اضافه شد ✨", "success");
+};
+
+window.editBudgetQuestionCms = function(qId) {
+    let cmsQuestions = JSON.parse(localStorage.getItem('aroosi_budget_wizard_config_db') || '[]');
+    const targetIdx = cmsQuestions.findIndex(q => q.id === qId);
+    if (targetIdx === -1) return;
+
+    const newPrompt = prompt("ویرایش متن پرامپت دستیار:", cmsQuestions[targetIdx].prompt);
+    if (newPrompt) cmsQuestions[targetIdx].prompt = newPrompt;
+
+    const newOpts = prompt("ویرایش گزینه‌های انتخابی:", cmsQuestions[targetIdx].options);
+    if (newOpts) cmsQuestions[targetIdx].options = newOpts;
+
+    localStorage.setItem('aroosi_budget_wizard_config_db', JSON.stringify(cmsQuestions));
+    window.renderAdminBudgetWizardCms();
+    showToast("تغییرات سوال بودجه‌ریز ذخیره شد ✨", "success");
+};
+
+window.deleteBudgetQuestionCms = function(qId) {
+    if (!confirm("آیا از حذف این سوال از ماژول بودجه‌ریز اطمینان دارید؟")) return;
+    let cmsQuestions = JSON.parse(localStorage.getItem('aroosi_budget_wizard_config_db') || '[]');
+    cmsQuestions = cmsQuestions.filter(q => q.id !== qId);
+    localStorage.setItem('aroosi_budget_wizard_config_db', JSON.stringify(cmsQuestions));
+    window.renderAdminBudgetWizardCms();
+    showToast("سوال مربوطه حذف گردید.", "info");
 };
