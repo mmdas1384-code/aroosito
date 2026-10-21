@@ -14845,7 +14845,7 @@ window.openExpandModal = function(type) {
     if (typeof lucide !== 'undefined' && lucide.createIcons) lucide.createIcons();
 };
 
-window.renderOverlayChecklist = function() {
+window.renderOverlayChecklist = function(tf = 'all') {
     const el = document.getElementById('overlay-checklist-items');
     if (!el) return;
     let tasks = JSON.parse(localStorage.getItem('aroosi_checklist_db') || '[]');
@@ -14991,3 +14991,122 @@ window.openAdminCategoryModal = function() {
 window.closeAdminCategoryModal = function() {};
 window.saveAdminCategory = function() { showToast("دسته‌بندی ذخیره شد.", "success"); };
 window.saveAdminBannerCMS = function() { showToast("بنر ذخیره شد.", "success"); };
+
+
+window.renderAdminBudgetWizardCms = function() {
+    const container = document.getElementById('admin-budget-questions-container');
+    if (!container) return;
+
+    let cmsQuestions = JSON.parse(localStorage.getItem('aroosi_budget_wizard_config_db') || 'null');
+    if (!cmsQuestions || cmsQuestions.length === 0) {
+        cmsQuestions = [
+            { id: 1, title: "۱. تعداد مهمانان", prompt: "تعداد تقریبی مهمانان مراسم چقدر است؟", key: "guests", options: "شمارنده عددی (نفرات)" },
+            { id: 2, title: "۲. شهر برگزاری", prompt: "شهر محل برگزاری مراسم را تعیین کنید:", key: "city", options: "یزد | کرمان | اصفهان | شیراز | خراسان جنوبی | سایر" },
+            { id: 3, title: "۳. زمان و مناسبت برگزاری", prompt: "تاریخ برگزاری در چه بازه‌ای است؟", key: "season", options: "روزهای عادی | اعیاد و آخرهفته‌ها" },
+            { id: 4, title: "۴. کیفیت کلی مراسم", prompt: "سطح کیفیت کلی تشریفات را مشخص فرمایید:", key: "tier", options: "اقتصادی | متوسط | لوکس VIP" },
+            { id: 5, title: "۵. فضای برگزاری مراسم", prompt: "نوع فضای برگزاری مراسم:", key: "venueType", options: "تالار | باغ‌تالار | هتل | منزل" },
+            { id: 6, title: "۶. منوی شام اصلی", prompt: "نوع منوی شام پذیرایی:", key: "cateringMenu", options: "باقالی پلو با گوشت + جوجه | زرشک پلو | کباب کوبیده | وزیری" },
+            { id: 7, title: "۷. میوه پذیرایی", prompt: "پذیرایی میوه فصل:", key: "fruitType", options: "۲ مدل میوه فصل | ۴ مدل + استوایی | نمی‌خوام" },
+            { id: 8, title: "۸. شیرینی اصیل یزدی و مدرن", prompt: "پکیج شیرینی سنتی یزد یا مدرن:", key: "sweetType", options: "شیرینی اصیل یزدی (قطاب، لوز، نان منقا) | تر و خشک مدرن | نمی‌خوام" },
+            { id: 9, title: "۹. فینگرفود و ولکام بار", prompt: "بار نوشیدنی و فینگرفود خوشامدگویی:", key: "fingerFoodType", options: "Welcome Drink | سینی فینگرفود | پکیج VIP | نمی‌خوام" },
+            { id: 10, title: "۱۰. نوشیدنی و بار گرم/سرد", prompt: "سرو نوشیدنی‌های گرم و سرد:", key: "drinkType", options: "شربت | ۳ مدل آبمیوه طبیعی | موکتل نامحدود | آب معدنی | نمی‌خوام" },
+            { id: 11, title: "۱۱. گیفت و یادبود مهمانان", prompt: "یادبود و گیفت تشکر از مهمانان:", key: "guestGift", options: "بله، اضافه کن | نمی‌خوام" },
+            { id: 12, title: "۱۲. کیک عروسی", prompt: "وزن و مدل کیک طبقاتی:", key: "cakeStyle", options: "ساده | طبقاتی | نمی‌خوام" },
+            { id: 13, title: "۱۳. لباس عروس", prompt: "نحوه تهیه لباس عروس:", key: "dressType", options: "خرید | اجاره | دوخت سفارشی | نمی‌خوام" },
+            { id: 14, title: "۱۴. کت‌وشلوار داماد", prompt: "نحوه تهیه کت‌وشلوار داماد:", key: "suitType", options: "خرید | اجاره | دوخت سفارشی | نمی‌خوام" },
+            { id: 15, title: "۱۵. سرویس طلا / جواهر", prompt: "جنس و وزن سرویس طلا:", key: "goldSet", options: "طلا | نقره + شمارنده گرم" },
+            { id: 16, title: "۱۶. حلقه عروس", prompt: "جنس و وزن حلقه عروس:", key: "ringBride", options: "طلا | نقره + شمارنده گرم" },
+            { id: 17, title: "۱۷. حلقه داماد", prompt: "جنس و وزن حلقه داماد:", key: "ringGroom", options: "طلا | نقره + شمارنده گرم" },
+            { id: 18, title: "۱۸. عکاسی و فیلم‌برداری", prompt: "پکیج فیلم‌برداری سینمایی:", key: "photoFilmPackage", options: "پکیج ۱ | پکیج ۲ | پکیج VIP | نمی‌خوام" },
+            { id: 19, title: "۱۹. آتلیه و فرمالیته", prompt: "فرمالیته کویر یا عمارت:", key: "prefilmAtelierType", options: "فرمالیته کویر یزد / شمال | عمارت | نمی‌خوام" },
+            { id: 20, title: "۲۰. تزئین ماشین عروس", prompt: "مدل و کیفیت گل‌آرایی ماشین:", key: "carDecorType", options: "پایه | طبیعی ویژه | نمی‌خوام" },
+            { id: 21, title: "۲۱. موسیقی و گروه زنده", prompt: "دی‌جی یا بند موسیقی زنده:", key: "musicType", options: "دی‌جی | گروه زنده | خواننده | نمی‌خوام" },
+            { id: 22, title: "۲۲. نورپردازی و افکت", prompt: "استیج LED و نورپردازی:", key: "lightEffectsType", options: "پایه | استیج LED + آتش‌بازی | نمی‌خوام" },
+            { id: 23, title: "۲۳. اجاره ماشین عروس", prompt: "خودرو تشریفاتی:", key: "carRentalType", options: "کلاسیک | شاسی‌بلند | خودرو شخصی" },
+            { id: 24, title: "۲۴. دعوت‌نامه دیجیتال و چاپی", prompt: "طراحی کارت دعوت آنلاین و چاپی:", key: "digitalInvitationType", options: "دیجیتال + چاپی | فقط دیجیتال | نمی‌خوام" },
+            { id: 25, title: "۲۵. سفر ماه عسل", prompt: "برنامه سفر ماه عسل:", key: "honeymoonType", options: "داخلی (کیش/شمال) | خارجی (ترکیه/دبی) | فعلاً برنامه‌ای ندارم" }
+        ];
+        localStorage.setItem('aroosi_budget_wizard_config_db', JSON.stringify(cmsQuestions));
+    }
+
+    container.innerHTML = `
+        <div class="space-y-4 text-right">
+          <div class="bg-[#0E121C] p-4 rounded-2xl border border-slate-800 flex items-center justify-between text-xs font-bold text-slate-300 flex-wrap gap-2">
+            <span class="flex items-center gap-1.5"><i data-lucide="list" class="w-4 h-4 text-[#D4AF37]"></i> تعداد کل سوالات فعال بودجه‌ریز: ${cmsQuestions.length} سوال</span>
+            <button type="button" onclick="addNewBudgetQuestionCms()" class="bg-[#D4AF37] text-[#07090E] font-black px-4 py-2 rounded-xl cursor-pointer hover:bg-amber-300 transition-all">+ افزودن سوال جدید به دستیار</button>
+          </div>
+
+          <div class="overflow-x-auto">
+            <table class="w-full text-right text-xs">
+              <thead class="bg-[#0E121C] text-amber-300 border-b border-[#C5A059]/30 font-bold">
+                <tr>
+                  <th class="p-3">عنوان گام / سوال</th>
+                  <th class="p-3">متن پرامپت دستیار (Bot Prompt)</th>
+                  <th class="p-3">گزینه‌ها & الگوی پاسخ‌ها</th>
+                  <th class="p-3 text-center">عملیات مدیریت</th>
+                </tr>
+              </thead>
+              <tbody class="divide-y divide-slate-800 font-medium text-slate-200">
+                ${cmsQuestions.map((q) => `
+                  <tr class="hover:bg-[#1A2333]/50 transition-colors">
+                    <td class="p-3 font-bold text-white">${q.title}</td>
+                    <td class="p-3 text-amber-200">${q.prompt}</td>
+                    <td class="p-3 text-slate-300">${q.options}</td>
+                    <td class="p-3 text-center space-x-2 space-x-reverse">
+                      <button type="button" onclick="editBudgetQuestionCms(${q.id})" class="text-amber-300 hover:text-white font-bold bg-[#0E121C] border border-amber-500/30 px-3 py-1.5 rounded-lg cursor-pointer">ویرایش</button>
+                      <button type="button" onclick="deleteBudgetQuestionCms(${q.id})" class="text-rose-400 hover:text-rose-200 font-bold bg-[#0E121C] border border-rose-500/30 px-3 py-1.5 rounded-lg cursor-pointer">حذف</button>
+                    </td>
+                  </tr>
+                `).join('')}
+              </tbody>
+            </table>
+          </div>
+        </div>`;
+    if (typeof lucide !== 'undefined' && lucide.createIcons) lucide.createIcons();
+};
+
+window.addNewBudgetQuestionCms = function() {
+    let cmsQuestions = JSON.parse(localStorage.getItem('aroosi_budget_wizard_config_db') || '[]');
+    const title = prompt("عنوان سوال جدید (مثلا: ۲۶. خدمات رزرو عکاس مذهبی):");
+    if (!title) return;
+    const promptTxt = prompt("متن پرامپت دستیار برای کاربر:");
+    if (!promptTxt) return;
+    const opts = prompt("گزینه‌های انتخابی (با | جدا کنید):");
+
+    cmsQuestions.push({
+        id: Date.now(),
+        title: title,
+        prompt: promptTxt,
+        key: 'custom_' + Date.now(),
+        options: opts || "پکیج ۱ | پکیج ۲ | نمی‌خوام"
+    });
+
+    localStorage.setItem('aroosi_budget_wizard_config_db', JSON.stringify(cmsQuestions));
+    window.renderAdminBudgetWizardCms();
+    showToast("سوال جدید به دستیار بودجه‌ریز اضافه شد.", "success");
+};
+
+window.editBudgetQuestionCms = function(qId) {
+    let cmsQuestions = JSON.parse(localStorage.getItem('aroosi_budget_wizard_config_db') || '[]');
+    const targetIdx = cmsQuestions.findIndex(q => q.id === qId);
+    if (targetIdx === -1) return;
+
+    const newPrompt = prompt("ویرایش متن پرامپت دستیار:", cmsQuestions[targetIdx].prompt);
+    if (newPrompt) cmsQuestions[targetIdx].prompt = newPrompt;
+
+    const newOpts = prompt("ویرایش گزینه‌های انتخابی (با | جدا کنید):", cmsQuestions[targetIdx].options);
+    if (newOpts) cmsQuestions[targetIdx].options = newOpts;
+
+    localStorage.setItem('aroosi_budget_wizard_config_db', JSON.stringify(cmsQuestions));
+    window.renderAdminBudgetWizardCms();
+    showToast("تغییرات سوال بودجه‌ریز ذخیره شد.", "success");
+};
+
+window.deleteBudgetQuestionCms = function(qId) {
+    if (!confirm("آیا از حذف این سوال از ماژول بودجه‌ریز اطمینان دارید؟")) return;
+    let cmsQuestions = JSON.parse(localStorage.getItem('aroosi_budget_wizard_config_db') || '[]');
+    cmsQuestions = cmsQuestions.filter(q => q.id !== qId);
+    localStorage.setItem('aroosi_budget_wizard_config_db', JSON.stringify(cmsQuestions));
+    window.renderAdminBudgetWizardCms();
+    showToast("سوال مربوطه حذف گردید.", "info");
+};
