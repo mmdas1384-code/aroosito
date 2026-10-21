@@ -1,0 +1,463 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl" data-theme="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>پنل مدیریت ارشد (Super Admin) - عروسی تو (یزد)</title>
+
+  <!-- Font Vazirmatn -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fontsource/vazirmatn@5.3.0/index.min.css">
+
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+
+  <!-- Lucide Icons -->
+  <script src="https://unpkg.com/lucide@latest"></script>
+
+  <!-- Stylesheets -->
+  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="directory.css">
+
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          colors: {
+            gold: {
+              300: '#F3E5AB',
+              400: '#E6CA65',
+              500: '#D4AF37',
+              600: '#C5A059',
+              700: '#966D09'
+            },
+            obsidian: {
+              900: '#07090E',
+              800: '#0E121C',
+              700: '#161C2B'
+            }
+          }
+        }
+      }
+    }
+  </script>
+</head>
+<body class="bg-[#07090E] text-white min-h-screen font-['Vazirmatn'] antialiased selection:bg-[#D4AF37] selection:text-[#07090E]">
+
+  <!-- TOP HEADER NAVBAR -->
+  <header class="sticky top-0 z-50 bg-[#0E121C]/90 backdrop-blur-2xl border-b border-[#C5A059]/30 px-4 sm:px-8 py-3.5 flex items-center justify-between gap-4">
+    <div class="flex items-center gap-3">
+      <a href="index.html" class="flex items-center gap-2 group">
+        <div class="w-10 h-10 rounded-2xl bg-gradient-to-br from-[#D4AF37] to-[#966D09] p-0.5 shadow-lg group-hover:scale-105 transition-transform">
+          <div class="w-full h-full bg-[#07090E] rounded-[14px] flex items-center justify-center">
+            <i data-lucide="shield-check" class="w-5 h-5 text-[#D4AF37]"></i>
+          </div>
+        </div>
+        <div class="text-right">
+          <h1 class="text-base font-black text-[#F7F5F0] group-hover:text-[#D4AF37] transition-colors">پنل مدیریت ارشد «عروسی تو»</h1>
+          <span class="text-[10px] text-[#D4AF37] font-bold block">Super Admin Operational Console</span>
+        </div>
+      </a>
+    </div>
+
+    <!-- Quick Stats & Actions -->
+    <div class="flex items-center gap-3">
+      <span class="hidden md:inline-flex items-center gap-1.5 bg-[#D4AF37]/15 text-[#D4AF37] border border-[#D4AF37]/40 px-3 py-1 rounded-full text-xs font-bold">
+        <i data-lucide="shield-alert" class="w-3.5 h-3.5"></i>
+        <span>سطح مدیر کل سیستم</span>
+      </span>
+
+      <button type="button" onclick="toggleThemeMode()" class="w-9 h-9 rounded-2xl bg-[#161C2B] border border-[#C5A059]/30 hover:border-[#D4AF37] flex items-center justify-center text-[#D4AF37] transition-all cursor-pointer" title="تغییر تم">
+        <i data-lucide="sun-moon" class="w-4 h-4"></i>
+      </button>
+
+      <a href="index.html" class="bg-[#D4AF37] hover:bg-[#C5A059] text-[#07090E] font-black px-4 py-2 rounded-2xl text-xs transition-all flex items-center gap-1.5 shadow-md">
+        <i data-lucide="globe" class="w-4 h-4"></i>
+        <span>مشاهده سایت</span>
+      </a>
+    </div>
+  </header>
+
+  <!-- MAIN ADMIN CONTAINER -->
+  <main class="max-w-7xl mx-auto px-4 sm:px-6 py-8 space-y-8">
+
+    <!-- TOP OPERATIONAL KPI CARDS -->
+    <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-4">
+      <div class="bg-[#0E121C] border border-[#C5A059]/30 rounded-3xl p-4 shadow-xl space-y-2 text-right">
+        <div class="flex items-center justify-between text-slate-400 text-xs font-medium">
+          <span>کل زوجین</span>
+          <i data-lucide="users" class="w-4 h-4 text-[#D4AF37]"></i>
+        </div>
+        <div class="text-xl font-black text-white" id="adm-kpi-couples">۱,۲۴۰</div>
+        <span class="text-[10px] text-emerald-400 font-bold block">↗ +۱۲٪ این ماه</span>
+      </div>
+
+      <div class="bg-[#0E121C] border border-[#C5A059]/30 rounded-3xl p-4 shadow-xl space-y-2 text-right">
+        <div class="flex items-center justify-between text-slate-400 text-xs font-medium">
+          <span>تامین‌کنندگان فعال</span>
+          <i data-lucide="building-2" class="w-4 h-4 text-[#D4AF37]"></i>
+        </div>
+        <div class="text-xl font-black text-white" id="adm-kpi-vendors">۱۸۵</div>
+        <span class="text-[10px] text-emerald-400 font-bold block">۹۸٪ تاییدشده</span>
+      </div>
+
+      <div class="bg-[#0E121C] border border-[#C5A059]/30 rounded-3xl p-4 shadow-xl space-y-2 text-right">
+        <div class="flex items-center justify-between text-slate-400 text-xs font-medium">
+          <span>صف انتظار تایید</span>
+          <i data-lucide="clock" class="w-4 h-4 text-[#D4AF37]"></i>
+        </div>
+        <div class="text-xl font-black text-amber-400" id="adm-kpi-pending">۴</div>
+        <span class="text-[10px] text-amber-300 font-bold block">نیازمند بررسی</span>
+      </div>
+
+      <div class="bg-[#0E121C] border border-[#C5A059]/30 rounded-3xl p-4 shadow-xl space-y-2 text-right">
+        <div class="flex items-center justify-between text-slate-400 text-xs font-medium">
+          <span>کل استعلام‌ها</span>
+          <i data-lucide="send" class="w-4 h-4 text-[#D4AF37]"></i>
+        </div>
+        <div class="text-xl font-black text-white" id="adm-kpi-inquiries">۳,۸۲۰</div>
+        <span class="text-[10px] text-emerald-400 font-bold block">↗ +۱۸٪ رشد ثبت</span>
+      </div>
+
+      <div class="bg-[#0E121C] border border-[#C5A059]/30 rounded-3xl p-4 shadow-xl space-y-2 text-right col-span-2 sm:col-span-1">
+        <div class="flex items-center justify-between text-slate-400 text-xs font-medium">
+          <span>گردش مالی (GMV)</span>
+          <i data-lucide="dollar-sign" class="w-4 h-4 text-[#D4AF37]"></i>
+        </div>
+        <div class="text-xl font-black text-[#D4AF37]" id="adm-kpi-gmv">۴.۲ میلیارد تومان</div>
+        <span class="text-[10px] text-emerald-400 font-bold block">تراکنش‌های تاییدشده</span>
+      </div>
+    </div>
+
+    <!-- SUB-TAB SWITCHER BAR -->
+    <div class="bg-[#0E121C] border border-[#C5A059]/40 rounded-3xl p-3 shadow-2xl flex flex-wrap items-center justify-between gap-3 text-right">
+      <div class="flex items-center gap-2 overflow-x-auto custom-scrollbar w-full pb-1 sm:pb-0">
+        <button type="button" id="apanel-tab-btn-analytics" onclick="switchAdminPanelTab('analytics')" class="px-4 py-2.5 rounded-2xl text-xs font-black transition-all bg-[#D4AF37] text-[#07090E] shadow-md cursor-pointer flex items-center gap-2">
+          <i data-lucide="bar-chart-2" class="w-4 h-4"></i>
+          <span>آمار کل پلتفرم</span>
+        </button>
+        <button type="button" id="apanel-tab-btn-vendors" onclick="switchAdminPanelTab('vendors')" class="px-4 py-2.5 rounded-2xl text-xs font-bold transition-all bg-[#161C2B] text-slate-300 hover:text-white border border-[#C5A059]/30 cursor-pointer flex items-center gap-2">
+          <i data-lucide="building-2" class="w-4 h-4 text-[#D4AF37]"></i>
+          <span>مدیریت تامین‌کنندگان</span>
+        </button>
+        <button type="button" id="apanel-tab-btn-cms" onclick="switchAdminPanelTab('cms')" class="px-4 py-2.5 rounded-2xl text-xs font-bold transition-all bg-[#161C2B] text-slate-300 hover:text-white border border-[#C5A059]/30 cursor-pointer flex items-center gap-2">
+          <i data-lucide="layout-grid" class="w-4 h-4 text-[#D4AF37]"></i>
+          <span>مدیریت صفحه اصلی & دسته‌بندی‌ها (CMS)</span>
+        </button>
+        <button type="button" id="apanel-tab-btn-content" onclick="switchAdminPanelTab('content')" class="px-4 py-2.5 rounded-2xl text-xs font-bold transition-all bg-[#161C2B] text-slate-300 hover:text-white border border-[#C5A059]/30 cursor-pointer flex items-center gap-2">
+          <i data-lucide="play-circle" class="w-4 h-4 text-[#D4AF37]"></i>
+          <span>تایید محتوا و استوری‌ها</span>
+        </button>
+        <button type="button" id="apanel-tab-btn-subscriptions" onclick="switchAdminPanelTab('subscriptions')" class="px-4 py-2.5 rounded-2xl text-xs font-bold transition-all bg-[#161C2B] text-slate-300 hover:text-white border border-[#C5A059]/30 cursor-pointer flex items-center gap-2">
+          <i data-lucide="receipt" class="w-4 h-4 text-[#D4AF37]"></i>
+          <span>پلن‌های اشتراک</span>
+        </button>
+        <button type="button" onclick="switchAdminPanelTab('budget-cms')" id="apanel-tab-btn-budget-cms" class="px-4 py-2 rounded-xl text-xs font-bold text-slate-300 hover:text-white hover:bg-[#141A28] transition-all flex items-center gap-1.5 cursor-pointer">
+              <i data-lucide="calculator" class="w-4 h-4 text-[#D4AF37]"></i>
+              <span>مدیریت سوالات بودجه‌ریز</span>
+            </button>
+            <button type="button" id="apanel-tab-btn-settings" onclick="switchAdminPanelTab('settings')" class="px-4 py-2.5 rounded-2xl text-xs font-bold transition-all bg-[#161C2B] text-slate-300 hover:text-white border border-[#C5A059]/30 cursor-pointer flex items-center gap-2">
+          <i data-lucide="settings" class="w-4 h-4 text-[#D4AF37]"></i>
+          <span>تنظیمات عمومی</span>
+        </button>
+      </div>
+    </div>
+
+    <!-- TAB 1: ANALYTICS -->
+    <div id="apanel-pane-analytics" class="space-y-6">
+      <div class="bg-[#0E121C] border border-[#C5A059]/40 rounded-3xl p-6 shadow-xl space-y-4 text-right">
+        <h3 class="text-base font-black text-[#D4AF37] flex items-center gap-2">
+          <i data-lucide="activity" class="w-5 h-5 text-[#D4AF37]"></i>
+          <span>گزارشات رشد و آمار ترافیک پلتفرم</span>
+        </h3>
+        <p class="text-xs text-slate-300">تحلیل ماهانه استعلام‌های ثبت‌شده، بازدیدهای یکتا و رزروهای نهایی در استان یزد</p>
+
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-4 pt-2">
+          <div class="bg-[#161C2B] border border-[#C5A059]/20 rounded-2xl p-4 space-y-1">
+            <span class="text-xs text-slate-400">بیشترین استعلام استان</span>
+            <div class="text-sm font-bold text-white">باغ‌تالارهای صفائیه یزد (۴۲٪)</div>
+          </div>
+          <div class="bg-[#161C2B] border border-[#C5A059]/20 rounded-2xl p-4 space-y-1">
+            <span class="text-xs text-slate-400">میانگین زمان پاسخگویی</span>
+            <div class="text-sm font-bold text-emerald-400">۲۴ دقیقه (فوق‌العاده ⚡)</div>
+          </div>
+          <div class="bg-[#161C2B] border border-[#C5A059]/20 rounded-2xl p-4 space-y-1">
+            <span class="text-xs text-slate-400">محبوب‌ترین ابزار برنامه‌ریزی</span>
+            <div class="text-sm font-bold text-[#D4AF37]">تخمین‌گر هوشمند بودجه AI</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- TAB 2: VENDORS APPROVAL QUEUE -->
+    <div id="apanel-pane-vendors" class="hidden space-y-6">
+      <div class="bg-[#0E121C] border border-[#C5A059]/40 rounded-3xl p-6 shadow-xl space-y-4 text-right">
+        <div class="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 border-b border-[#C5A059]/20 pb-4">
+          <div>
+            <h3 class="text-base font-black text-[#D4AF37] flex items-center gap-2">
+              <i data-lucide="building-2" class="w-5 h-5 text-[#D4AF37]"></i>
+              <span>صف درخواست‌های عضویت و احراز هویت تامین‌کنندگان</span>
+            </h3>
+            <p class="text-xs text-slate-300 mt-1">بررسی مدارک ثبتی، پروانه کسب و تصاویر محل فعالیت جهت اعطای نشان «تاییدشده 🛡️»</p>
+          </div>
+          <button type="button" onclick="renderAdminPendingApps()" class="bg-[#161C2B] hover:bg-[#07090E] text-[#D4AF37] border border-[#D4AF37]/40 px-3.5 py-1.5 rounded-xl text-xs font-bold transition-all flex items-center gap-1.5 cursor-pointer">
+            <i data-lucide="refresh-cw" class="w-3.5 h-3.5"></i>
+            <span>بروزرسانی لیست</span>
+          </button>
+        </div>
+
+        <div id="admin-pending-vendors-container" class="space-y-4">
+          <!-- Populated via JS -->
+        </div>
+      </div>
+    </div>
+
+    <!-- TAB 3: HOMEPAGE CMS & CATEGORIES MANAGEMENT (NEW MODULE) -->
+    <div id="apanel-pane-cms" class="space-y-6">
+
+      <!-- HERO & BANNER CONTENT MANAGEMENT CARD -->
+      <div class="bg-[#0E121C] border border-[#C5A059]/40 rounded-3xl p-6 shadow-2xl space-y-6 text-right">
+        <div class="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 border-b border-[#C5A059]/20 pb-4">
+          <div>
+            <span class="text-[10px] font-bold text-[#D4AF37] bg-[#D4AF37]/10 px-2.5 py-1 rounded-full border border-[#D4AF37]/30">
+              🖼️ مدیریت بنر و متن‌های صفحه اصلی (Hero CMS)
+            </span>
+            <h3 class="text-lg font-black text-white mt-1">ویرایش محتوای هدر و بنرهای تبلیغاتی صفحه اصلی</h3>
+            <p class="text-xs text-slate-300">تغییر عنوان اصلی، تیتر فرعی، عکس پس‌زمینه و بنرهای ویژه صفحه اول سایت</p>
+          </div>
+          <button type="button" onclick="saveAdminBannerCMS()" class="bg-[#D4AF37] hover:bg-[#C5A059] text-[#07090E] font-black px-5 py-2 rounded-2xl text-xs transition-all shadow-lg flex items-center gap-2 cursor-pointer">
+            <i data-lucide="save" class="w-4 h-4"></i>
+            <span>ذخیره تغییرات بنر اصلی</span>
+          </button>
+        </div>
+
+        <form id="form-admin-banner-cms" onsubmit="event.preventDefault(); saveAdminBannerCMS();" class="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <div class="space-y-1.5">
+            <label class="block text-xs font-bold text-slate-300">تیتر اصلی هدر (Hero Title):</label>
+            <input type="text" id="cms-hero-title" class="w-full bg-[#161C2B] border border-[#C5A059]/30 rounded-2xl px-4 py-2.5 text-xs text-white focus:outline-none focus:border-[#D4AF37]" placeholder="پلتفرم VIP خدمات و تشریفات عروسی یزد">
+          </div>
+
+          <div class="space-y-1.5">
+            <label class="block text-xs font-bold text-slate-300">توضیح فرعی هدر (Hero Subtitle):</label>
+            <input type="text" id="cms-hero-subtitle" class="w-full bg-[#161C2B] border border-[#C5A059]/30 rounded-2xl px-4 py-2.5 text-xs text-white focus:outline-none focus:border-[#D4AF37]" placeholder="رزرو مستقیم بهترین باغ‌تالارها، آتلیه‌ها و مزون‌ها با تضمین قیمت">
+          </div>
+
+          <div class="space-y-1.5">
+            <label class="block text-xs font-bold text-slate-300">لینک کاور/ویدئوی هدر (Background Media URL):</label>
+            <input type="text" id="cms-hero-bg" class="w-full bg-[#161C2B] border border-[#C5A059]/30 rounded-2xl px-4 py-2.5 text-xs text-white focus:outline-none focus:border-[#D4AF37]" placeholder="https://images.unsplash.com/photo-1519741497674-611481863552">
+          </div>
+
+          <div class="space-y-1.5">
+            <label class="block text-xs font-bold text-slate-300">متن نشان ویژه هدر (Announcement Badge):</label>
+            <input type="text" id="cms-hero-badge" class="w-full bg-[#161C2B] border border-[#C5A059]/30 rounded-2xl px-4 py-2.5 text-xs text-white focus:outline-none focus:border-[#D4AF37]" placeholder="👑 جامع‌ترین سامانه تشریفات و برنامه‌ریزی عروسی استان یزد">
+          </div>
+        </form>
+      </div>
+
+      <!-- MAIN HOMEPAGE CATEGORIES CMS GRID MANAGEMENT -->
+      <div class="bg-[#0E121C] border border-[#C5A059]/40 rounded-3xl p-6 shadow-2xl space-y-6 text-right">
+        <div class="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 border-b border-[#C5A059]/20 pb-4">
+          <div>
+            <span class="text-[10px] font-bold text-[#D4AF37] bg-[#D4AF37]/10 px-2.5 py-1 rounded-full border border-[#D4AF37]/30">
+              🏛️ گرید بنتو دسته‌بندی‌های صفحه اصلی
+            </span>
+            <h3 class="text-lg font-black text-white mt-1">مدیریت کارت‌ها و کاور دسته‌بندی‌های صفحه اصلی (Categories CRUD)</h3>
+            <p class="text-xs text-slate-300">ویرایش عناوین، تصویر کاور، تعداد مجموعه‌های فعال، ترتیب و زیرگروه‌های تخصصی</p>
+          </div>
+
+          <button type="button" onclick="openAdminCategoryModal()" class="bg-[#D4AF37] hover:bg-[#C5A059] text-[#07090E] font-black px-4 py-2 rounded-2xl text-xs transition-all shadow-lg flex items-center gap-1.5 cursor-pointer">
+            <i data-lucide="plus-circle" class="w-4 h-4"></i>
+            <span>افزودن دسته‌بندی جدید</span>
+          </button>
+        </div>
+
+        <!-- CATEGORIES LIST TABLE & BENTO CARDS PREVIEW -->
+        <div id="admin-homepage-categories-list" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+          <!-- Populated dynamically via script.js -->
+        </div>
+      </div>
+
+    </div>
+
+    <!-- TAB 4: CONTENT & STORIES APPROVAL -->
+    <div id="apanel-pane-content" class="hidden space-y-6">
+      <div class="bg-[#0E121C] border border-[#C5A059]/40 rounded-3xl p-6 shadow-xl space-y-4 text-right">
+        <div class="border-b border-slate-800 pb-3">
+          <h3 class="text-base font-black text-[#D4AF37] flex items-center gap-2">
+            <i data-lucide="play-circle" class="w-5 h-5 text-[#D4AF37]"></i>
+            <span>تایید استوری‌ها، نمونه‌کارها و مقالات ارسالی تامین‌کنندگان</span>
+          </h3>
+          <p class="text-xs text-slate-300 mt-1">بررسی و تایید نمونه‌کارهای ارسالی جهت انتشار در مجله و نوار استوری بالای دایرکتوری</p>
+        </div>
+
+        <div class="space-y-3">
+          <div class="p-4 bg-[#161C2B] border border-[#C5A059]/30 rounded-2xl flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3">
+            <div class="flex items-center gap-3">
+              <img src="https://images.unsplash.com/photo-1519741497674-611481863552?auto=format&fit=crop&w=200&q=80" alt="محتوا" class="w-12 h-12 rounded-xl object-cover border border-[#C5A059]/40 shrink-0">
+              <div class="space-y-0.5">
+                <h4 class="text-xs font-black text-white">راهنمای پکیج فرمالیته کویر یزد</h4>
+                <span class="text-[10px] text-slate-300 block">ارسال توسط: استودیو کویر • نوع: <strong class="text-[#D4AF37]">مقاله مجله</strong></span>
+              </div>
+            </div>
+            <div class="flex items-center gap-2">
+              <button type="button" onclick="showToast('محتوای مقاله با موفقیت تایید و در مجله منتشر شد.', 'success')" class="bg-[#D4AF37] text-[#07090E] font-black px-3.5 py-1.5 rounded-xl text-xs cursor-pointer shadow-sm">
+                تایید و انتشار
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- TAB 5: SUBSCRIPTION PLANS -->
+    <div id="apanel-pane-subscriptions" class="hidden space-y-6">
+      <div class="bg-[#0E121C] border border-[#C5A059]/40 rounded-3xl p-6 shadow-xl space-y-6 text-right">
+        <div class="flex flex-col sm:flex-row justify-between sm:items-center gap-4 border-b border-[#C5A059]/20 pb-4">
+          <div>
+            <h3 class="text-lg font-bold text-white flex items-center gap-2">
+              <i data-lucide="crown" class="w-5 h-5 text-[#D4AF37]"></i>
+              <span>مدیریت تعرفه و پلن‌های اشتراک تامین‌کنندگان</span>
+            </h3>
+            <p class="text-xs text-slate-300 mt-1">ویرایش قیمت، مدت اعتبار و امکانات پکیج‌های اشتراک برنز، نقره‌ای و طلایی VIP</p>
+          </div>
+        </div>
+        <div id="admin-subscription-plans-table-container">
+          <!-- Populated via script.js -->
+        </div>
+      </div>
+    </div>
+
+    <!-- TAB 6: GENERAL SETTINGS -->
+    <div id="apanel-pane-budget-cms" class="apanel-pane hidden space-y-6 text-right">
+          <div class="bg-[#141A28] border border-[#C5A059]/40 rounded-3xl p-6 shadow-xl space-y-6">
+            <div class="flex items-center justify-between border-b border-[#C5A059]/20 pb-4 flex-wrap gap-2">
+              <div class="space-y-1">
+                <span class="text-xs font-bold text-[#D4AF37] flex items-center gap-1.5">
+                  <i data-lucide="sliders" class="w-4 h-4 text-[#D4AF37]"></i>
+                  <span>مدیریت سوالات & گزینه‌های دستیار بودجه‌ریز</span>
+                </span>
+                <h3 class="text-lg font-black text-white">مدیریت لایو سوالات، کیفیت‌ها و هزینه‌های پایه بودجه‌ریز</h3>
+              </div>
+              <button type="button" onclick="renderAdminBudgetWizardCms()" class="gold-shimmer-btn text-[#0F251A] font-black px-4 py-2 rounded-xl text-xs cursor-pointer">
+                🔄 بروزرسانی جدول
+              </button>
+            </div>
+
+            <div id="admin-budget-questions-container" class="space-y-4">
+              <!-- Dynamically populated via renderAdminBudgetWizardCms() -->
+            </div>
+          </div>
+        </div>
+
+        <div id="apanel-pane-settings" class="hidden space-y-6">
+      <div class="bg-[#0E121C] border border-[#C5A059]/40 rounded-3xl p-6 shadow-xl space-y-4 text-right">
+        <h3 class="text-base font-black text-[#D4AF37] flex items-center gap-2">
+          <i data-lucide="settings" class="w-5 h-5 text-[#D4AF37]"></i>
+          <span>تنظیمات عمومی و پشتیبانی سامانه</span>
+        </h3>
+        <p class="text-xs text-slate-300">مدیریت پیام‌های پشتیبانی، راه‌های ارتباطی و تنظیمات استان یزد</p>
+      </div>
+    </div>
+
+  </main>
+
+  <!-- CATEGORY CRUD MODAL (#modal-admin-category-crud) -->
+  <div id="modal-admin-category-crud" class="fixed inset-0 z-[100000] hidden flex items-center justify-center p-4 bg-black/80 backdrop-blur-md">
+    <div class="bg-[#0E121C] border border-[#C5A059] rounded-3xl max-w-2xl w-full p-6 sm:p-8 space-y-6 text-right text-white shadow-2xl relative max-h-[90vh] overflow-y-auto custom-scrollbar">
+      <button type="button" onclick="closeAdminCategoryModal()" class="absolute top-5 left-5 text-slate-400 hover:text-white bg-[#161C2B] p-2 rounded-full border border-[#C5A059]/30 transition-all cursor-pointer">
+        <i data-lucide="x" class="w-5 h-5"></i>
+      </button>
+
+      <div class="border-b border-[#C5A059]/30 pb-4">
+        <span class="text-[10px] font-bold text-[#D4AF37] bg-[#D4AF37]/10 px-2.5 py-1 rounded-full border border-[#D4AF37]/30">
+          🏛️ سیستم مدیریت دسته‌بندی
+        </span>
+        <h3 id="modal-category-title-text" class="text-lg font-black text-white mt-2">افزودن / ویرایش دسته‌بندی اصلی</h3>
+        <p class="text-xs text-slate-300">مشخصات کارت گرید صفحه اصلی و زیرگروه‌های تخصصی آن را وارد نمایید.</p>
+      </div>
+
+      <form id="form-admin-category" onsubmit="event.preventDefault(); saveAdminCategory();" class="space-y-4">
+        <input type="hidden" id="cat-crud-id">
+
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+          <div class="space-y-1.5">
+            <label class="block text-xs font-bold text-slate-300">کلید یکتا (Key):</label>
+            <input type="text" id="cat-crud-key" required class="w-full bg-[#161C2B] border border-[#C5A059]/30 rounded-2xl px-4 py-2.5 text-xs text-white focus:outline-none focus:border-[#D4AF37]" placeholder="مثلا: venue_catering">
+          </div>
+
+          <div class="space-y-1.5">
+            <label class="block text-xs font-bold text-slate-300">عنوان دسته‌بندی:</label>
+            <input type="text" id="cat-crud-title" required class="w-full bg-[#161C2B] border border-[#C5A059]/30 rounded-2xl px-4 py-2.5 text-xs text-white focus:outline-none focus:border-[#D4AF37]" placeholder="مثلا: مکان، تشریفات و پذیرایی">
+          </div>
+        </div>
+
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+          <div class="space-y-1.5">
+            <label class="block text-xs font-bold text-slate-300">نشان تعداد مجموعه‌ها (Badge):</label>
+            <input type="text" id="cat-crud-badge" class="w-full bg-[#161C2B] border border-[#C5A059]/30 rounded-2xl px-4 py-2.5 text-xs text-white focus:outline-none focus:border-[#D4AF37]" placeholder="مثلا: ۴۵ مجموعه فعال">
+          </div>
+
+          <div class="space-y-1.5">
+            <label class="block text-xs font-bold text-slate-300">اندازه کارت در گرید (Grid Span):</label>
+            <select id="cat-crud-colspan" class="w-full bg-[#161C2B] border border-[#C5A059]/30 rounded-2xl px-4 py-2.5 text-xs text-white focus:outline-none focus:border-[#D4AF37]">
+              <option value="md:col-span-7">عریض برتر (۷ ستون)</option>
+              <option value="md:col-span-5">متوسط برتر (۵ ستون)</option>
+              <option value="md:col-span-4">استاندارد (۴ ستون)</option>
+              <option value="md:col-span-6">نیم‌صفحه (۶ ستون)</option>
+              <option value="md:col-span-12">کامل (۱۲ ستون)</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="space-y-1.5">
+          <label class="block text-xs font-bold text-slate-300">لینک تصویر کاور (Unsplash/Direct Image URL):</label>
+          <input type="text" id="cat-crud-image" required class="w-full bg-[#161C2B] border border-[#C5A059]/30 rounded-2xl px-4 py-2.5 text-xs text-white focus:outline-none focus:border-[#D4AF37]" placeholder="https://images.unsplash.com/photo-...">
+        </div>
+
+        <div class="space-y-1.5">
+          <label class="block text-xs font-bold text-slate-300">توضیحات کوتاه (Subtitle):</label>
+          <input type="text" id="cat-crud-desc" class="w-full bg-[#161C2B] border border-[#C5A059]/30 rounded-2xl px-4 py-2.5 text-xs text-white focus:outline-none focus:border-[#D4AF37]" placeholder="باغ‌تالار، تالار تشریفاتی، کترینگ و شام عروسی">
+        </div>
+
+        <div class="flex items-center justify-between bg-[#161C2B] p-3.5 rounded-2xl border border-[#C5A059]/20">
+          <div class="space-y-0.5">
+            <span class="text-xs font-bold text-white block">وضعیت نمایش در صفحه اصلی</span>
+            <span class="text-[10px] text-slate-400 block">در صورت غیرفعال بودن، کارت در گرید نمایش داده نخواهد شد.</span>
+          </div>
+          <label class="relative inline-flex items-center cursor-pointer">
+            <input type="checkbox" id="cat-crud-active" checked class="sr-only peer">
+            <div class="w-11 h-6 bg-slate-700 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:right-[2px] after:bg-white after:border-slate-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-[#D4AF37]"></div>
+          </label>
+        </div>
+
+        <div class="flex items-center justify-end gap-3 pt-4 border-t border-[#C5A059]/30">
+          <button type="button" onclick="closeAdminCategoryModal()" class="px-5 py-2.5 rounded-2xl text-xs font-bold bg-[#161C2B] text-slate-300 hover:text-white border border-slate-700 cursor-pointer">
+            انصراف
+          </button>
+          <button type="submit" class="px-6 py-2.5 rounded-2xl text-xs font-black bg-[#D4AF37] hover:bg-[#C5A059] text-[#07090E] shadow-lg transition-all cursor-pointer">
+            ذخیره دسته‌بندی
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- Footers Script -->
+  <script src="script.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      // Set current role as admin for dedicated admin dashboard
+      localStorage.setItem('currentUserRole', 'admin');
+      if (typeof window.switchAdminPanelTab === 'function') {
+        window.switchAdminPanelTab('cms');
+      }
+      if (typeof window.renderAdminHomepageCategoriesCMS === 'function') {
+        window.renderAdminHomepageCategoriesCMS();
+      }
+      if (typeof window.renderAdminBannerCMS === 'function') {
+        window.renderAdminBannerCMS();
+      }
+    });
+  </script>
+</body>
+</html>

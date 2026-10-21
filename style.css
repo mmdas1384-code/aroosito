@@ -22,22 +22,22 @@
   --accent-gold-hover: var(--accent-hover);
 }
 
-/* پالت تم روشن - اختصاصی عروسی تو */
+/* پالت تم روشن با اصالت یزد - کرم عاجی و طلایی شامپاینی */
 html[data-theme="light"] {
-  --bg-main: #F5EFEB !important;         /* پس‌زمینه اصلی (کرم روشن) */
-  --bg-card: #FBF9F5 !important;         /* پس‌زمینه کارت‌ها و باکس‌ها (سفید عاجی) */
-  --bg-hero: #1B3B2B !important;         /* پس‌زمینه بنر اصلی (سبز زمردی تیره) */
-  --text-primary: #111E16 !important;    /* رنگ متن‌های اصلی (مشکی-سبز تیره) */
-  --text-secondary: #1B3B2B !important;  /* رنگ متن‌های فرعی (سبز زمردی) */
-  --accent-gold: #D4AF37 !important;     /* رنگ حاشیه‌ها و دکمه‌ها (طلایی سلطنتی) */
-  --border-color: rgba(212, 175, 55, 0.35) !important; /* حاشیه طلایی درخشان */
-  --bg-input: #FFFFFF !important;
-  --card-shadow: 0 10px 30px rgba(27, 59, 43, 0.08) !important;
+  --bg-main: #F7F4EE !important;         /* پس‌زمینه اصلی (کرم عاجی فاخر) */
+  --bg-card: #FFFFFF !important;         /* پس‌زمینه کارت‌ها و باکس‌ها (سفید خالص) */
+  --bg-hero: #0F251A !important;         /* پس‌زمینه بنر اصلی (سبز زمردی اصیل یزد) */
+  --text-primary: #0F172A !important;    /* رنگ متن‌های اصلی (سرمه‌ای تیره پرکنتراست) */
+  --text-secondary: #1E293B !important;  /* رنگ متن‌های فرعی (کنتراست بالا و خوانا) */
+  --accent-gold: #B8860B !important;     /* رنگ طلایی گرم شامپاینی */
+  --border-color: rgba(184, 134, 11, 0.35) !important; /* حاشیه ظریف طلایی */
+  --bg-input: #F8FAFC !important;
+  --card-shadow: 0 12px 32px rgba(15, 23, 42, 0.08), 0 2px 8px rgba(184, 134, 11, 0.12) !important;
 
   /* Aliases */
   --accent-main: var(--accent-gold) !important;
   --accent-sub: #1B3B2B !important;
-  --accent-hover: #B89628 !important;
+  --accent-hover: #966D09 !important;
   --border-glow: var(--border-color) !important;
   --shadow-glow: var(--card-shadow) !important;
   --bg-primary: var(--bg-main) !important;
@@ -2379,6 +2379,36 @@ footer {
   backdrop-filter: blur(8px);
 }
 
+html[data-theme="dark"] .ivory-card {
+  background-color: rgba(14, 18, 28, 0.85) !important;
+  border-color: rgba(197, 160, 89, 0.35) !important;
+  color: #FFFFFF !important;
+}
+
+html[data-theme="dark"] .gold-badge-border {
+  border: 1px solid rgba(212, 175, 55, 0.5) !important;
+  background: linear-gradient(135deg, rgba(212, 175, 55, 0.2) 0%, rgba(14, 18, 28, 0.8) 100%) !important;
+  color: #D4AF37 !important;
+}
+
+html[data-theme="dark"] .health-badge-excellent {
+  background-color: rgba(6, 95, 70, 0.3) !important;
+  color: #34D399 !important;
+  border: 1px solid rgba(52, 211, 153, 0.4) !important;
+}
+
+html[data-theme="dark"] .health-badge-warning {
+  background-color: rgba(146, 64, 14, 0.3) !important;
+  color: #FBBF24 !important;
+  border: 1px solid rgba(251, 191, 36, 0.4) !important;
+}
+
+html[data-theme="dark"] .health-badge-critical {
+  background-color: rgba(153, 27, 27, 0.3) !important;
+  color: #F87171 !important;
+  border: 1px solid rgba(248, 113, 113, 0.4) !important;
+}
+
 .ivory-card-hover {
   transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 }
@@ -2898,4 +2928,59 @@ main.vendor-showroom-main {
 .cinematic-gallery-bento img:hover,
 .group:hover img {
   transform: scale(1.03) !important;
+}
+
+/* Luxury Micro-Interactions & Ambient Gold Glow */
+.vip-bento-card,
+.minimal-vendor-card,
+.vendor-card,
+.glass-card {
+  transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.3s ease, border-color 0.3s ease !important;
+}
+
+.vip-bento-card:hover,
+.minimal-vendor-card:hover,
+.vendor-card:hover,
+.glass-card:hover {
+  transform: translateY(-4px) !important;
+  box-shadow: 0 12px 35px rgba(197, 160, 89, 0.22), 0 0 15px rgba(212, 175, 55, 0.15) !important;
+  border-color: rgba(212, 175, 55, 0.6) !important;
+}
+
+/* Mobile Bottom Sheet Modal Overlay Styles */
+@media (max-width: 640px) {
+  #inquiry-modal,
+  #modal-vendor-comparison,
+  #modal-start-planning,
+  #modal-counselor-consultation,
+  #modal-vip-concierge {
+    align-items: flex-end !important;
+    padding: 0 !important;
+  }
+
+  #inquiry-modal > div,
+  #modal-vendor-comparison > div,
+  #modal-start-planning > div,
+  #modal-counselor-consultation > div,
+  #modal-vip-concierge > div {
+    border-bottom-left-radius: 0 !important;
+    border-bottom-right-radius: 0 !important;
+    border-top-left-radius: 1.75rem !important;
+    border-top-right-radius: 1.75rem !important;
+    max-height: 88vh !important;
+    width: 100% !important;
+    margin: 0 !important;
+    animation: slideUpBottomSheet 0.35s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  }
+}
+
+@keyframes slideUpBottomSheet {
+  from {
+    transform: translateY(100%);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
 }
