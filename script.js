@@ -12039,12 +12039,12 @@ window.goToInquiryChatThread = function(vendorId, threadId) {
         const vRating = vendor.rating || "۴.۹";
 
         // Wide Horizontal Rectangular Cinematic Card Styling (NO narrow vertical strips)
-        let baseClass = "vip-focal-card group relative shrink-0 transition-all duration-500 ease-out cursor-pointer rounded-2xl overflow-hidden flex flex-col justify-between text-right mx-auto ";
+        let baseClass = "showcase-card vip-focal-card group relative shrink-0 transition-all duration-500 ease-out cursor-pointer rounded-2xl overflow-hidden flex flex-col justify-between text-right mx-auto ";
 
         if (isCenter) {
-          baseClass += "w-[94%] sm:w-[96%] h-[160px] sm:h-[175px] bg-[#0E121C] border-2 border-[#D4AF37] shadow-[0_10px_25px_rgba(212,175,55,0.25)] scale-[1.03] z-20 opacity-100 p-3.5";
+          baseClass += "active vip-focal-card-active w-[90%] max-w-[360px] h-[160px] aspect-[16/9] bg-[#0E121C] border-2 border-[#D4AF37] shadow-[0_10px_25px_rgba(212,175,55,0.25)] scale-[1.05] z-20 opacity-100 p-3.5";
         } else {
-          baseClass += "w-[85%] sm:w-[88%] h-[68px] sm:h-[75px] bg-[#0E121C]/80 border border-[#C5A059]/30 scale-[0.88] z-10 opacity-50 blur-[1px] hover:opacity-85 hover:blur-0 p-2.5 transition-all";
+          baseClass += "preview vip-focal-card-preview w-[90%] max-w-[360px] h-[70px] bg-[#0E121C]/80 border border-[#C5A059]/30 scale-[0.88] z-10 opacity-50 blur-[1px] hover:opacity-85 hover:blur-0 p-2.5 transition-all";
         }
 
         card.className = baseClass;
