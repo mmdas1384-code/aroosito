@@ -22,30 +22,6 @@
   --accent-gold-hover: var(--accent-hover);
 }
 
-/* پالت تم روشن با اصالت یزد - کرم عاجی و طلایی شامپاینی */
-html[data-theme="light"] {
-  --bg-main: #F7F4EE !important;         /* پس‌زمینه اصلی (کرم عاجی فاخر) */
-  --bg-card: #FFFFFF !important;         /* پس‌زمینه کارت‌ها و باکس‌ها (سفید خالص) */
-  --bg-hero: #0F251A !important;         /* پس‌زمینه بنر اصلی (سبز زمردی اصیل یزد) */
-  --text-primary: #0F172A !important;    /* رنگ متن‌های اصلی (سرمه‌ای تیره پرکنتراست) */
-  --text-secondary: #1E293B !important;  /* رنگ متن‌های فرعی (کنتراست بالا و خوانا) */
-  --accent-gold: #B8860B !important;     /* رنگ طلایی گرم شامپاینی */
-  --border-color: rgba(184, 134, 11, 0.35) !important; /* حاشیه ظریف طلایی */
-  --bg-input: #F8FAFC !important;
-  --card-shadow: 0 12px 32px rgba(15, 23, 42, 0.08), 0 2px 8px rgba(184, 134, 11, 0.12) !important;
-
-  /* Aliases */
-  --accent-main: var(--accent-gold) !important;
-  --accent-sub: #1B3B2B !important;
-  --accent-hover: #966D09 !important;
-  --border-glow: var(--border-color) !important;
-  --shadow-glow: var(--card-shadow) !important;
-  --bg-primary: var(--bg-main) !important;
-  --bg-surface: var(--bg-card) !important;
-  --border-gold: var(--border-color) !important;
-  --accent-gold-hover: var(--accent-hover) !important;
-}
-
 * {
   font-family: 'Vazirmatn', Tahoma, sans-serif;
 }
@@ -63,111 +39,6 @@ body, .glass-card {
   background-color: var(--bg-main);
   color: var(--text-primary);
   transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease;
-}
-
-[data-theme="light"] body {
-  background-color: var(--bg-primary) !important;
-  color: var(--text-primary) !important;
-}
-
-[data-theme="light"] header,
-[data-theme="light"] nav,
-[data-theme="light"] .minimal-vendor-card,
-[data-theme="light"] .budget-tracker-card,
-[data-theme="light"] #directory-primary-filter-island,
-[data-theme="light"] #directory-advanced-filters-drawer {
-  background-color: var(--bg-card) !important;
-  color: var(--text-primary) !important;
-  border-color: var(--border-gold) !important;
-}
-
-[data-theme="light"] body {
-  background-color: var(--bg-main) !important;
-  color: var(--text-primary) !important;
-}
-
-[data-theme="light"] .glass-card:not(#hero):not(.hero-bg-container),
-[data-theme="light"] .bg-darkslate,
-[data-theme="light"] div[class*="bg-"]:not(#hero):not(#hero *),
-[data-theme="light"] section[class*="bg-"]:not(#hero):not(#hero *),
-[data-theme="light"] input,
-[data-theme="light"] select,
-[data-theme="light"] textarea {
-  background-color: var(--bg-card) !important;
-  color: var(--text-primary) !important;
-  border-color: var(--border-color) !important;
-}
-
-[data-theme="light"] .hero-bg-container,
-[data-theme="light"] #hero,
-[data-theme="light"] .hero-banner-teal {
-  background-color: var(--bg-hero) !important;
-  background: var(--bg-hero) !important;
-  border-color: var(--accent-gold) !important;
-  color: #FFFFFF !important;
-}
-
-[data-theme="light"] #hero h1,
-[data-theme="light"] #hero p,
-[data-theme="light"] #hero span:not(.gold-shimmer-btn *),
-[data-theme="light"] .hero-bg-container h1,
-[data-theme="light"] .hero-bg-container p,
-[data-theme="light"] .hero-bg-container span:not(.gold-shimmer-btn *) {
-  color: #FFFFFF !important;
-}
-
-[data-theme="light"] h1:not(#hero *),
-[data-theme="light"] h2:not(#hero *),
-[data-theme="light"] h3:not(#hero *),
-[data-theme="light"] h4:not(#hero *),
-[data-theme="light"] p:not(#hero *),
-[data-theme="light"] span:not(#hero *):not(.gold-shimmer-btn *),
-[data-theme="light"] a:not(#hero *),
-[data-theme="light"] label {
-  color: var(--text-primary) !important;
-}
-
-[data-theme="light"] header div,
-[data-theme="light"] header span,
-[data-theme="light"] nav span,
-[data-theme="light"] nav button {
-  color: #111E16 !important;
-}
-
-[data-theme="light"] input,
-[data-theme="light"] select,
-[data-theme="light"] textarea {
-  background-color: var(--bg-input) !important;
-  color: var(--text-primary) !important;
-  border-color: var(--border-glow) !important;
-}
-
-[data-theme="light"] select option {
-  background-color: #FFFFFF !important;
-  color: #0D131F !important;
-}
-
-[data-theme="light"] .text-white,
-[data-theme="light"] .text-slate-200,
-[data-theme="light"] .text-slate-300 {
-  color: var(--text-primary) !important;
-}
-
-[data-theme="light"] .text-slate-400,
-[data-theme="light"] .text-gray-400 {
-  color: var(--text-secondary) !important;
-}
-
-[data-theme="light"] .text-amber-200,
-[data-theme="light"] .text-amber-100,
-[data-theme="light"] .text-\[\#C5A059\],
-[data-theme="light"] .text-\[\#D4AF37\] {
-  color: var(--accent-main) !important;
-}
-
-[data-theme="light"] .border-\[\#C5A059\],
-[data-theme="light"] .border-\[\#D4AF37\] {
-  border-color: var(--border-glow) !important;
 }
 
 /* Global Layout Rules & Zero-Gap Below Header */
@@ -2481,29 +2352,6 @@ html[data-theme="dark"] .health-badge-critical {
   }
 }
 
-/* ==========================================================================
-   PEARL WHITE & CHAMPAGNE THEME STYLES
-   ========================================================================== */
-body.theme-pearl-white {
-  background-color: #F8FAFC !important;
-  color: #0F172A !important;
-}
-
-body.theme-pearl-white .bg-\[\#0F172A\],
-body.theme-pearl-white .bg-\[\#1E293B\] {
-  background-color: #FFFFFF !important;
-  color: #0F172A !important;
-  border-color: rgba(212, 175, 55, 0.4) !important;
-}
-
-body.theme-pearl-white .text-white {
-  color: #0F172A !important;
-}
-
-body.theme-pearl-white .text-slate-300,
-body.theme-pearl-white .text-slate-400 {
-  color: #475569 !important;
-}
 
 /* ==========================================================================
    STRICT ROOT PANEL ISOLATION (ADMIN vs VENDOR DASHBOARD)

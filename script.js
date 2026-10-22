@@ -918,16 +918,7 @@ async function loadViewTemplates() {
   }
 
   if (directoryView && directoryView.children.length === 0) {
-    try {
-      const res = await fetch("directory-view.html");
-      if (res.ok) {
-        directoryView.innerHTML = await res.text();
-      } else {
-        directoryView.innerHTML = DIRECTORY_VIEW_HTML;
-      }
-    } catch (e) {
-      directoryView.innerHTML = DIRECTORY_VIEW_HTML;
-    }
+    directoryView.innerHTML = DIRECTORY_VIEW_HTML;
   }
 
   if (window.lucide && typeof lucide.createIcons === "function") {
