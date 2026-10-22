@@ -494,28 +494,32 @@
           </div>
 
           <!-- LEFT / CENTER FOCUSED VENDOR SHOWCASE CARDS (5 cols) -->
-          <div id="hero-vendor-showcase-panel" class="lg:col-span-5 bg-[#0e121c]/90 backdrop-blur-xl border border-[#C5A059]/40 rounded-3xl p-4 sm:p-5 flex flex-col justify-between space-y-4 shadow-2xl relative overflow-hidden">
+          <div id="hero-vendor-showcase-panel" class="lg:col-span-5 bg-[#0e121c]/90 backdrop-blur-xl border border-[#C5A059]/40 rounded-3xl p-4 sm:p-5 flex flex-col justify-between space-y-3 shadow-2xl relative overflow-hidden">
             <div class="flex items-center justify-between border-b border-[#C5A059]/20 pb-2.5">
               <div class="flex items-center gap-2">
                 <span class="w-2.5 h-2.5 rounded-full bg-[#D4AF37] animate-pulse"></span>
                 <span class="text-xs font-black text-[#D4AF37]">ویترین تامین‌کنندگان برتر یزد</span>
               </div>
               <div class="flex items-center gap-1">
-                <button type="button" onclick="slideVipFocalCarousel('prev')" class="w-7 h-7 rounded-full bg-[#141A28] border border-[#C5A059]/30 text-[#D4AF37] flex items-center justify-center hover:bg-[#1E293B] cursor-pointer transition-all">‹</button>
-                <button type="button" onclick="slideVipFocalCarousel('next')" class="w-7 h-7 rounded-full bg-[#141A28] border border-[#C5A059]/30 text-[#D4AF37] flex items-center justify-center hover:bg-[#1E293B] cursor-pointer transition-all">›</button>
+                <button type="button" onclick="slideVipFocalCarousel('prev')" class="w-7 h-7 rounded-full bg-[#141A28] border border-[#C5A059]/30 text-[#D4AF37] flex items-center justify-center hover:bg-[#1E293B] cursor-pointer transition-all shadow-sm" title="قبلی">
+                  <i data-lucide="chevron-up" class="w-4 h-4 text-[#D4AF37]"></i>
+                </button>
+                <button type="button" onclick="slideVipFocalCarousel('next')" class="w-7 h-7 rounded-full bg-[#141A28] border border-[#C5A059]/30 text-[#D4AF37] flex items-center justify-center hover:bg-[#1E293B] cursor-pointer transition-all shadow-sm" title="بعدی">
+                  <i data-lucide="chevron-down" class="w-4 h-4 text-[#D4AF37]"></i>
+                </button>
               </div>
             </div>
 
-            <!-- Asymmetric Focal Carousel Container (Touch Swipe Supported) -->
-            <div id="vip-focal-stage" class="relative min-h-[260px] sm:min-h-[290px] flex items-center justify-center touch-pan-y" onmouseenter="pauseVipFocalAutoScroll()" onmouseleave="resumeVipFocalAutoScroll()">
-              <div id="vip-showcase-container" class="w-full flex items-center justify-center transition-all duration-500 gap-2 sm:gap-3">
+            <!-- Vertical Film-Strip Stage Container with Side Pagination Dots -->
+            <div id="vip-focal-stage" class="relative min-h-[300px] sm:min-h-[320px] flex items-center justify-between gap-2 touch-pan-y overflow-hidden" onmouseenter="pauseVipFocalAutoScroll()" onmouseleave="resumeVipFocalAutoScroll()">
+              <div id="vip-showcase-container" class="w-full flex flex-col items-center justify-center transition-all duration-500 gap-2 relative z-10 py-1">
                 <!-- Dynamically populated via renderVipFocalShowcase() -->
               </div>
-            </div>
 
-            <!-- Carousel Pagination Dots -->
-            <div id="vip-carousel-dots" class="flex items-center justify-center gap-1.5 pt-1">
-              <!-- Dynamically populated -->
+              <!-- Vertical Carousel Pagination Dots (Right Side) -->
+              <div id="vip-carousel-dots" class="flex flex-col items-center justify-center gap-1.5 z-20 shrink-0">
+                <!-- Dynamically populated -->
+              </div>
             </div>
           </div>
 
