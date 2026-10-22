@@ -1336,8 +1336,8 @@ main#directory-view {
 }
 
 .category-card {
-    background-color: #F5EFEB !important;
-    border: 1px solid #E0D8C8 !important;
+    background-color: #141A28 !important;
+    border: 1px solid rgba(197, 160, 89, 0.3) !important;
     border-radius: 20px !important;
     padding: 16px !important;
     display: flex !important;
@@ -1352,8 +1352,8 @@ main#directory-view {
 .category-card:hover {
     border-color: #D4AF37 !important;
     transform: translateY(-4px) !important;
-    box-shadow: 0 10px 25px rgba(212, 175, 55, 0.15) !important;
-    background-color: #FFFFFF !important;
+    box-shadow: 0 10px 25px rgba(212, 175, 55, 0.2) !important;
+    background-color: #1E293B !important;
 }
 
 .category-badge {
@@ -1381,13 +1381,13 @@ main#directory-view {
 .category-title {
     font-size: 14px !important;
     font-weight: 800 !important;
-    color: #111E16 !important;
+    color: #FFFFFF !important;
     margin: 0 0 4px 0 !important;
 }
 
 .category-desc {
     font-size: 11px !important;
-    color: #607268 !important;
+    color: #CBD5E1 !important;
     margin: 0 0 12px 0 !important;
 }
 
@@ -1395,7 +1395,7 @@ main#directory-view {
     display: flex !important;
     align-items: center !important;
     justify-content: space-between !important;
-    border-top: 1px solid rgba(224, 216, 200, 0.6) !important;
+    border-top: 1px solid rgba(197, 160, 89, 0.3) !important;
     padding-top: 10px !important;
     margin-top: auto !important;
 }
@@ -1403,7 +1403,7 @@ main#directory-view {
 .vendor-count {
     font-size: 11px !important;
     font-weight: 700 !important;
-    color: #1B3B2B !important;
+    color: #D4AF37 !important;
 }
 
 .subgroups-link {
@@ -1432,13 +1432,14 @@ main#directory-view {
 }
 
 .subgroups-modal-box, .subgroup-modal-card, .subgroups-card {
-    background: #FBF9F5 !important;
+    background: #0E121C !important;
+    color: #FFFFFF !important;
     border: 1.5px solid #D4AF37 !important;
     border-radius: 28px !important;
     padding: 28px !important;
     width: 92% !important;
     max-width: 650px !important;
-    box-shadow: 0 30px 70px rgba(0, 0, 0, 0.4) !important;
+    box-shadow: 0 30px 70px rgba(0, 0, 0, 0.8) !important;
     direction: rtl !important;
     animation: modalFadeIn 0.3s ease-out !important;
     display: flex !important;
@@ -1469,7 +1470,7 @@ main#directory-view {
 
 .modal-header-text h3 {
     margin: 0 0 4px 0 !important;
-    color: #1B3B2B !important;
+    color: #D4AF37 !important;
     font-size: 20px !important;
     font-weight: 900 !important;
 }
@@ -1487,7 +1488,7 @@ main#directory-view {
 
 .modal-subtext {
     font-size: 12px !important;
-    color: #607268 !important;
+    color: #CBD5E1 !important;
     margin: 0 !important;
 }
 
@@ -1544,8 +1545,8 @@ main#directory-view {
     display: flex !important;
     justify-content: space-between !important;
     align-items: center !important;
-    background: #FFFFFF !important;
-    border: 1px solid #E0D8C8 !important;
+    background: #161C2B !important;
+    border: 1px solid rgba(197, 160, 89, 0.3) !important;
     border-radius: 16px !important;
     padding: 12px 16px !important;
     transition: all 0.25s ease !important;
@@ -1554,13 +1555,13 @@ main#directory-view {
 .subgroup-item-card:hover, .subgroup-item:hover {
     border-color: #D4AF37 !important;
     transform: translateX(-4px) !important;
-    box-shadow: 0 6px 16px rgba(212, 175, 55, 0.15) !important;
+    box-shadow: 0 6px 16px rgba(212, 175, 55, 0.25) !important;
 }
 
 .subgroup-name {
     font-size: 13px !important;
     font-weight: 700 !important;
-    color: #111E16 !important;
+    color: #FFFFFF !important;
 }
 
 .btn-subgroup-view, .btn-sub-view {
@@ -1591,9 +1592,9 @@ main#directory-view {
 }
 
 .btn-footer-close {
-    background-color: #F5EFEB !important;
-    color: #111E16 !important;
-    border: 1px solid #E0D8C8 !important;
+    background-color: #161C2B !important;
+    color: #FFFFFF !important;
+    border: 1px solid rgba(197, 160, 89, 0.3) !important;
     padding: 8px 20px !important;
     border-radius: 12px !important;
     font-size: 12px !important;
@@ -1603,12 +1604,12 @@ main#directory-view {
 }
 
 .btn-footer-close:hover {
-    background-color: #E0D8C8 !important;
+    background-color: #1E293B !important;
 }
 
 .guarantee-text {
     font-size: 11px !important;
-    color: #1B3B2B !important;
+    color: #D4AF37 !important;
     font-weight: 700 !important;
 }
 
@@ -1622,14 +1623,14 @@ main#directory-view {
 }
 
 .shortcut-card {
-    background: #FFFFFF !important;
+    background: #141A28 !important;
     border: 1px solid rgba(212, 175, 55, 0.3) !important;
     border-radius: 14px !important;
     padding: 20px !important;
     text-align: center !important;
     cursor: pointer !important;
     transition: all 0.3s ease !important;
-    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.03) !important;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3) !important;
 }
 
 .shortcut-card:hover {
@@ -1641,7 +1642,8 @@ main#directory-view {
 /* RESTORED SECTIONS STYLING */
 .why-choose-us-section {
     padding: 60px 20px !important;
-    background: #FAF9F6 !important;
+    background: rgba(14, 18, 28, 0.90) !important;
+    color: #FFFFFF !important;
     text-align: center !important;
     direction: rtl !important;
     border-radius: 24px !important;
@@ -1650,7 +1652,8 @@ main#directory-view {
 
 .real-weddings-section {
     padding: 60px 20px !important;
-    background: #FFFFFF !important;
+    background: rgba(14, 18, 28, 0.90) !important;
+    color: #FFFFFF !important;
     direction: rtl !important;
     border-radius: 24px !important;
     margin-top: 24px !important;
@@ -1702,7 +1705,7 @@ footer {
 .quick-tools-section h2 {
   font-size: 1.5rem;
   font-weight: 800;
-  color: #111E16;
+  color: #FFFFFF;
   margin-bottom: 2rem;
 }
 
@@ -1713,8 +1716,8 @@ footer {
 }
 
 .tool-card {
-  background: #FBF9F5;
-  border: 1px solid #E0D8C8;
+  background: #141A28;
+  border: 1px solid rgba(197, 160, 89, 0.3);
   border-radius: 1rem;
   padding: 1.5rem;
   text-align: right;
@@ -1736,13 +1739,13 @@ footer {
 .tool-card h3 {
   font-size: 1rem;
   font-weight: 700;
-  color: #111E16;
+  color: #FFFFFF;
   margin-bottom: 0.5rem;
 }
 
 .tool-card p {
   font-size: 0.75rem;
-  color: #607268;
+  color: #CBD5E1;
   line-height: 1.6;
   margin: 0;
 }
@@ -1935,13 +1938,13 @@ footer {
 .why-us-section h2 {
   font-size: 1.5rem;
   font-weight: 800;
-  color: #111E16;
+  color: #FFFFFF;
   margin-bottom: 0.5rem;
 }
 
 .section-subtext {
   font-size: 0.85rem;
-  color: #607268;
+  color: #CBD5E1;
   margin-bottom: 2rem;
 }
 
@@ -1952,17 +1955,17 @@ footer {
 }
 
 .why-card {
-  background: #FFFFFF;
-  border: 1px solid #E0D8C8;
+  background: #141A28;
+  border: 1px solid rgba(197, 160, 89, 0.3);
   border-radius: 1rem;
   padding: 1.5rem;
-  box-shadow: 0 4px 15px rgba(0,0,0,0.03);
+  box-shadow: 0 4px 15px rgba(0,0,0,0.3);
   transition: all 0.25s;
 }
 
 .why-card:hover {
   transform: translateY(-3px);
-  box-shadow: 0 8px 20px rgba(0,0,0,0.06);
+  box-shadow: 0 8px 20px rgba(0,0,0,0.5);
 }
 
 .why-icon {
@@ -1981,21 +1984,21 @@ footer {
 .why-card h3 {
   font-size: 0.95rem;
   font-weight: 700;
-  color: #111E16;
+  color: #FFFFFF;
   margin-bottom: 0.5rem;
 }
 
 .why-card p {
   font-size: 0.75rem;
-  color: #607268;
+  color: #CBD5E1;
   line-height: 1.6;
   margin: 0;
 }
 
 /* Real Weddings Gallery Section (Section 8) */
 .weddings-gallery-section {
-  background: #FFFFFF;
-  border: 1px solid #E0D8C8;
+  background: rgba(14, 18, 28, 0.90) !important;
+  border: 1px solid rgba(197, 160, 89, 0.3);
   border-radius: 1.5rem;
   padding: 2.5rem 1.5rem;
   margin-top: 2rem;
@@ -2006,7 +2009,7 @@ footer {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  border-bottom: 1px solid #E0D8C8;
+  border-bottom: 1px solid rgba(197, 160, 89, 0.3);
   padding-bottom: 1rem;
   margin-bottom: 1.5rem;
   flex-wrap: wrap;
@@ -2026,7 +2029,7 @@ footer {
 .gallery-titles h2 {
   font-size: 1.35rem;
   font-weight: 800;
-  color: #111E16;
+  color: #FFFFFF;
   margin: 0.25rem 0 0 0;
 }
 
@@ -2037,22 +2040,22 @@ footer {
 }
 
 .wedding-card {
-  border: 1px solid #E0D8C8;
+  border: 1px solid rgba(197, 160, 89, 0.3);
   border-radius: 1rem;
   overflow: hidden;
-  background: #FFFFFF;
+  background: #141A28;
   transition: all 0.25s;
 }
 
 .wedding-card:hover {
   transform: translateY(-3px);
-  box-shadow: 0 8px 20px rgba(0,0,0,0.06);
+  box-shadow: 0 8px 20px rgba(0,0,0,0.5);
 }
 
 .wedding-card .img-box {
   position: relative;
   height: 200px;
-  background: #CBD5E1;
+  background: #1E293B;
 }
 
 .wedding-card .img-box img {
@@ -2081,13 +2084,13 @@ footer {
 .wedding-card .card-info h3 {
   font-size: 0.95rem;
   font-weight: 700;
-  color: #111E16;
+  color: #FFFFFF;
   margin: 0 0 0.5rem 0;
 }
 
 .wedding-card .card-info p {
   font-size: 0.75rem;
-  color: #607268;
+  color: #CBD5E1;
   margin: 0;
   line-height: 1.5;
 }
