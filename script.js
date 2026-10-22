@@ -166,8 +166,8 @@ const HOME_VIEW_HTML = `<main id="home-view" class="flex-1 max-w-7xl w-full mx-a
             </div>
 
             <!-- Vertical Film-Strip Stage Container with Side Pagination Dots -->
-            <div id="vip-focal-stage" class="relative min-h-[300px] sm:min-h-[320px] flex items-center justify-between gap-2 touch-pan-y overflow-hidden" onmouseenter="pauseVipFocalAutoScroll()" onmouseleave="resumeVipFocalAutoScroll()">
-              <div id="vip-showcase-container" class="w-full flex flex-col items-center justify-center transition-all duration-500 gap-2 relative z-10 py-1">
+            <div id="vip-focal-stage" class="relative min-h-[350px] sm:min-h-[370px] flex items-center justify-between gap-2 touch-pan-y overflow-hidden py-1" onmouseenter="pauseVipFocalAutoScroll()" onmouseleave="resumeVipFocalAutoScroll()">
+              <div id="vip-showcase-container" class="w-full flex flex-col items-center justify-center transition-all duration-500 gap-2 relative z-10 py-1 h-full">
                 <!-- Dynamically populated via renderVipFocalShowcase() -->
               </div>
 
@@ -12038,13 +12038,13 @@ window.goToInquiryChatThread = function(vendorId, threadId) {
         const vPrice = vendor.price || vendor.priceFormatted || "تماس بگیرید";
         const vRating = vendor.rating || "۴.۹";
 
-        // Rectangular 16:9 / 16:10 Horizontal Cinematic Card Styles
-        let baseClass = "vip-focal-card group relative shrink-0 transition-all duration-500 ease-out cursor-pointer rounded-2xl overflow-hidden flex flex-col justify-between text-right aspect-[16/9] sm:aspect-[16/10] w-full max-w-[310px] sm:max-w-[350px] ";
+        // Wide Horizontal Rectangular Cinematic Card Styling (NO narrow vertical strips)
+        let baseClass = "vip-focal-card group relative shrink-0 transition-all duration-500 ease-out cursor-pointer rounded-2xl overflow-hidden flex flex-col justify-between text-right mx-auto ";
 
         if (isCenter) {
-          baseClass += "h-[145px] sm:h-[165px] bg-[#0E121C] border-2 border-[#D4AF37] shadow-[0_10px_25px_rgba(212,175,55,0.25)] scale-[1.05] z-20 opacity-100 p-3.5";
+          baseClass += "w-[94%] sm:w-[96%] h-[160px] sm:h-[175px] bg-[#0E121C] border-2 border-[#D4AF37] shadow-[0_10px_25px_rgba(212,175,55,0.25)] scale-[1.03] z-20 opacity-100 p-3.5";
         } else {
-          baseClass += "h-[90px] sm:h-[105px] bg-[#0E121C]/80 border border-[#C5A059]/30 scale-[0.85] z-10 opacity-50 blur-[1px] hover:opacity-85 hover:blur-0 p-2.5 transition-all";
+          baseClass += "w-[85%] sm:w-[88%] h-[68px] sm:h-[75px] bg-[#0E121C]/80 border border-[#C5A059]/30 scale-[0.88] z-10 opacity-50 blur-[1px] hover:opacity-85 hover:blur-0 p-2.5 transition-all";
         }
 
         card.className = baseClass;
@@ -12061,50 +12061,53 @@ window.goToInquiryChatThread = function(vendorId, threadId) {
             <!-- Full-Bleed Background Image with Dark Gradient Overlay -->
             <div class="absolute inset-0 z-0 overflow-hidden">
               <img src="${vImg}" alt="${vTitle}" class="w-full h-full object-cover group-hover:scale-108 transition-transform duration-700">
-              <div class="absolute inset-0 bg-gradient-to-t from-black/95 via-black/50 to-black/20"></div>
+              <div class="absolute inset-0 bg-gradient-to-t from-black/95 via-black/55 to-black/25"></div>
             </div>
 
             <!-- Top Bar inside Card: Rating Badge & VIP Badge -->
             <div class="relative z-10 flex items-center justify-between">
-              <span class="text-[9px] sm:text-[9.5px] font-black text-[#07090E] bg-gradient-to-r from-[#D4AF37] to-[#F3E5AB] px-2.5 py-0.5 rounded-full border border-[#D4AF37] shadow-md flex items-center gap-1">
+              <span class="text-[9px] sm:text-[10px] font-black text-[#07090E] bg-gradient-to-r from-[#D4AF37] to-[#F3E5AB] px-2.5 py-0.5 rounded-full border border-[#D4AF37] shadow-md flex items-center gap-1">
                 VIP 👑
               </span>
-              <span class="text-[10px] sm:text-[10.5px] font-black text-amber-300 bg-black/60 px-2 py-0.5 rounded-full border border-[#D4AF37]/30 backdrop-blur-md flex items-center gap-1">
+              <span class="text-[10px] sm:text-[11px] font-black text-amber-300 bg-black/70 px-2.5 py-0.5 rounded-full border border-[#D4AF37]/30 backdrop-blur-md flex items-center gap-1">
                 ⭐️ ${vRating}
               </span>
             </div>
 
             <!-- Bottom Overlay Details -->
             <div class="relative z-10 space-y-1 pt-2">
-              <span class="text-[9.5px] sm:text-[10px] font-extrabold text-[#D4AF37] block truncate">${vCat}</span>
-              <h4 class="text-xs sm:text-sm font-black text-white truncate drop-shadow-md leading-tight">${vTitle}</h4>
+              <span class="text-[10px] sm:text-[11px] font-extrabold text-[#D4AF37] block truncate">${vCat}</span>
+              <h4 class="text-xs sm:text-sm font-black text-white truncate drop-shadow-md leading-snug">${vTitle}</h4>
 
               <div class="flex items-center justify-between pt-1 border-t border-[#C5A059]/30 gap-1">
-                <span class="text-[9.5px] sm:text-[10.5px] font-bold text-amber-200/90 truncate flex items-center gap-1">
+                <span class="text-[10px] sm:text-[11px] font-bold text-amber-200/95 truncate flex items-center gap-1.5">
                   <span>📍 ${vLoc}</span>
                   <span class="text-[#D4AF37]">|</span>
                   <span>شروع: ${vPrice}</span>
                 </span>
-                <button type="button" onclick="event.stopPropagation(); openVendorDetailModal('${vendor.id}')" class="bg-[#D4AF37] hover:bg-[#C5A059] text-[#07090E] font-black text-[10px] px-2.5 py-1 rounded-lg transition-all shadow-md flex items-center gap-1 cursor-pointer shrink-0">
+                <button type="button" onclick="event.stopPropagation(); openVendorDetailModal('${vendor.id}')" class="bg-[#D4AF37] hover:bg-[#C5A059] text-[#07090E] font-black text-[10.5px] px-3 py-1 rounded-lg transition-all shadow-md flex items-center gap-1 cursor-pointer shrink-0">
                   <span>رزرو / مشاهده</span>
                 </button>
               </div>
             </div>
           `;
         } else {
-          // Compact top/bottom preview card layout
+          // Wide horizontal preview card layout (Top & Bottom)
           card.innerHTML = `
             <div class="absolute inset-0 z-0 overflow-hidden">
               <img src="${vImg}" alt="${vTitle}" class="w-full h-full object-cover">
               <div class="absolute inset-0 bg-gradient-to-t from-black/90 via-black/50 to-black/30"></div>
             </div>
-            <div class="relative z-10 flex items-center justify-between">
-              <span class="text-[8.5px] font-extrabold text-[#D4AF37] truncate">${vCat}</span>
-              <span class="text-[9px] font-black text-amber-300 bg-black/60 px-1.5 py-0.2 rounded-full border border-[#D4AF37]/30">⭐️ ${vRating}</span>
+            <div class="relative z-10 flex items-center justify-between w-full">
+              <div class="flex items-center gap-2 truncate">
+                <span class="text-[9px] font-black text-[#D4AF37] truncate">${vCat}</span>
+                <span class="text-xs font-black text-white truncate">${vTitle}</span>
+              </div>
+              <span class="text-[9px] font-black text-amber-300 bg-black/60 px-1.5 py-0.5 rounded-full border border-[#D4AF37]/30 shrink-0">⭐️ ${vRating}</span>
             </div>
-            <div class="relative z-10 space-y-0.5">
-              <h4 class="text-xs font-black text-white truncate">${vTitle}</h4>
-              <p class="text-[9px] text-slate-300 font-medium truncate">📍 ${vLoc}</p>
+            <div class="relative z-10 flex items-center justify-between text-[9px] text-slate-300 font-medium truncate pt-0.5">
+              <span>📍 ${vLoc}</span>
+              <span class="text-amber-200/90 font-bold">شروع: ${vPrice}</span>
             </div>
           `;
         }
