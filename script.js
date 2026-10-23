@@ -492,35 +492,35 @@ const HOME_VIEW_HTML = `<main id="home-view" class="flex-1 max-w-7xl w-full mx-a
               <h2 class="text-base sm:text-lg font-black text-[#F7F5F0]">چرا زوج‌ها عروسی تو را انتخاب می‌کنند؟</h2>
             </div>
 
-            <!-- 4-Card Bento Grid -->
+            <!-- 4-Card Bento Grid (DISPLAY-ONLY) -->
             <div class="grid grid-cols-2 gap-3">
-              <div class="bg-[#141A28] border border-[#C5A059]/20 rounded-2xl p-3.5 text-right space-y-1">
+              <div class="bg-[#141A28] border border-[#C5A059]/20 rounded-2xl p-3.5 text-right space-y-1 cursor-default transition-all duration-300 hover:-translate-y-1 hover:border-amber-500/40 hover:shadow-[0_8px_20px_rgba(212,175,55,0.15)] group">
                 <span class="text-xs sm:text-sm font-black text-[#D4AF37] flex items-center gap-1 block">
-                  <i data-lucide="shield" class="w-3.5 h-3.5 text-[#D4AF37]"></i>
+                  <i data-lucide="shield" class="w-3.5 h-3.5 text-[#D4AF37] group-hover:drop-shadow-[0_0_8px_rgba(212,175,55,0.6)] transition-all"></i>
                   <span>تضمین قیمت & اصالت</span>
                 </span>
                 <p class="text-[10px] text-slate-300 font-medium leading-normal">تضمین عدم وجود هزینه پنهان و مطابقت کامل با استعلام رسمی</p>
               </div>
 
-              <div class="bg-[#141A28] border border-[#C5A059]/20 rounded-2xl p-3.5 text-right space-y-1">
+              <div class="bg-[#141A28] border border-[#C5A059]/20 rounded-2xl p-3.5 text-right space-y-1 cursor-default transition-all duration-300 hover:-translate-y-1 hover:border-amber-500/40 hover:shadow-[0_8px_20px_rgba(212,175,55,0.15)] group">
                 <span class="text-xs sm:text-sm font-black text-[#D4AF37] flex items-center gap-1 block">
-                  <i data-lucide="message-square" class="w-3.5 h-3.5 text-[#D4AF37]"></i>
+                  <i data-lucide="message-square" class="w-3.5 h-3.5 text-[#D4AF37] group-hover:drop-shadow-[0_0_8px_rgba(212,175,55,0.6)] transition-all"></i>
                   <span>پاسخگویی مستقیم VIP</span>
                 </span>
                 <p class="text-[10px] text-slate-300 font-medium leading-normal">ارتباط مستقیم با مدیریت برندها و دریافت سریع پیش‌فاکتور</p>
               </div>
 
-              <div class="bg-[#141A28] border border-[#C5A059]/20 rounded-2xl p-3.5 text-right space-y-1">
+              <div class="bg-[#141A28] border border-[#C5A059]/20 rounded-2xl p-3.5 text-right space-y-1 cursor-default transition-all duration-300 hover:-translate-y-1 hover:border-amber-500/40 hover:shadow-[0_8px_20px_rgba(212,175,55,0.15)] group">
                 <span class="text-xs sm:text-sm font-black text-[#D4AF37] flex items-center gap-1 block">
-                  <i data-lucide="qr-code" class="w-3.5 h-3.5 text-[#D4AF37]"></i>
+                  <i data-lucide="qr-code" class="w-3.5 h-3.5 text-[#D4AF37] group-hover:drop-shadow-[0_0_8px_rgba(212,175,55,0.6)] transition-all"></i>
                   <span>کارت دعوت آنلاین</span>
                 </span>
                 <p class="text-[10px] text-slate-300 font-medium leading-normal">ارسال لینک اختصاصی هوشمند و مدیریت کادوها و صندلی‌ها</p>
               </div>
 
-              <div class="bg-[#141A28] border border-[#C5A059]/20 rounded-2xl p-3.5 text-right space-y-1">
+              <div class="bg-[#141A28] border border-[#C5A059]/20 rounded-2xl p-3.5 text-right space-y-1 cursor-default transition-all duration-300 hover:-translate-y-1 hover:border-amber-500/40 hover:shadow-[0_8px_20px_rgba(212,175,55,0.15)] group">
                 <span class="text-xs sm:text-sm font-black text-[#D4AF37] flex items-center gap-1 block">
-                  <i data-lucide="bot" class="w-3.5 h-3.5 text-[#D4AF37]"></i>
+                  <i data-lucide="bot" class="w-3.5 h-3.5 text-[#D4AF37] group-hover:drop-shadow-[0_0_8px_rgba(212,175,55,0.6)] transition-all"></i>
                   <span>هوش مصنوعی بودجه‌ریز</span>
                 </span>
                 <p class="text-[10px] text-slate-300 font-medium leading-normal">برآورد هوشمند هزینه‌ها بر اساس سناریوهای اقتصادی و لاکچری</p>
@@ -15265,3 +15265,181 @@ window.editHomepageCategoryCms = function(catId) {
         showToast("دسته‌بندی ذخیره گردید.", "success");
     }
 };
+
+
+// ==================================================
+// COUPLE TESTIMONIALS CAROUSEL & MODAL LOGIC
+// ==================================================
+const TESTIMONIALS_DATA = [
+  {
+    id: 1,
+    names: "مریم & علی",
+    avatar: "https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=100",
+    date: "۱۴۰۲/۰۸/۱۵",
+    vendorTag: "رزرو تالار مشیرالممالک",
+    rating: 5,
+    shortQuote: "استعلام قیمت مستقیم و چت با مدیر تالار فوق‌العاده سریع بود. همه هزینه‌ها دقیقا مطابق با فاکتور نهایی شد.",
+    fullReview: "ما از طریق عروسی تو تالار باغ مشیرالممالک یزد را پیدا کردیم. امکان استعلام آنلاین قیمت و گفتگو با مدیریت مجموعه باعث شد بتوانیم بدون نیاز به مراجعه‌های حضوری متعدد، برنامه زمانی و بودجه را دقیق هماهنگ کنیم. پشتیبانی عالی و شفافیت کامل در هزینه‌ها تجربه بی‌نظیری برای ما رقم زد."
+  },
+  {
+    id: 2,
+    names: "رضا & سارا",
+    avatar: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=100",
+    date: "۱۴۰۲/۰۹/۲۰",
+    vendorTag: "رزرو آتلیه کویر",
+    rating: 5,
+    shortQuote: "کارت دعوت دیجیتال با تم زمرد بسیار شیک بود و همه مهمانان ما فرم RSVP آنلاین را به راحتی پر کردند.",
+    fullReview: "از سیستم کارت دعوت آنلاین عروسی تو استفاده کردیم. قالب زمردی و موزیک زمینه عالی بود و مهمانان ما فرم حضور و غیاب را تکمیل کردند. لیست مهمانان و هدایا به صورت منظم در پنل مدیریت ما ذخیره شد که کار ما را بسیار آسان کرد."
+  },
+  {
+    id: 3,
+    names: "حسین & نیلوفر",
+    avatar: "https://images.unsplash.com/photo-1517841905240-472988babdf9?w=100",
+    date: "۱۴۰۲/۱۰/۱۲",
+    vendorTag: "خدمات تشریفات VIP یزد",
+    rating: 5,
+    shortQuote: "هوش مصنوعی بودجه‌ریز تمام هزینه‌های پنهان عروسی مثل ورودی و انعام را دقیق برآورد کرد و مانع کسر بودجه شد.",
+    fullReview: "دستیار بودجه‌ریز هوشمند عروسی تو به ما کمک کرد تمام هزینه‌های ریز و درشت تشریفات، گل‌آرایی و کترینگ را کنترل کنیم. پیشنهادهای تطبیق قیمت با تامین‌کنندگان معتبر یزد عالی بود و در زمان و هزینه ما صرفه‌جویی چشمگیری شد."
+  },
+  {
+    id: 4,
+    names: "امیر & مهسا",
+    avatar: "https://images.unsplash.com/photo-1522075469751-3a6694fb2f61?w=100",
+    date: "۱۴۰۲/۱۱/۰۵",
+    vendorTag: "مزون عروس سلطنتی",
+    rating: 5,
+    shortQuote: "تست آنلاین سبک عروسی و پرو مجازی لباس عروس فوق‌العاده کاربردی بود و دقیقا همان رویای ما برآورده شد.",
+    fullReview: "از طریق بخش تست‌های روانشناسی و پرو مجازی لباس عروس توانستیم بهترین مزون‌های یزد را مقایسه کنیم. مدیریت صبور مزون و تخفیف ویژه پلتفرم عروسی تو تجربه خریدی لوکس و بدون دغدغه برای ما ساخت."
+  }
+];
+
+function renderTestimonialsCarousel() {
+  const container = document.getElementById('testimonials-carousel-container');
+  if (!container) return;
+
+  container.innerHTML = TESTIMONIALS_DATA.map(item => `
+    <div onclick="openTestimonialDetailModal(${item.id})" class="bg-[#141A28] border border-[#C5A059]/30 hover:border-amber-500/60 rounded-2xl p-4 shrink-0 w-[260px] sm:w-[290px] space-y-2 shadow-lg transition-all duration-300 hover:scale-[1.02] cursor-pointer group">
+      <div class="flex items-center justify-between pointer-events-none">
+        <div class="flex items-center gap-2">
+          <img src="${item.avatar}" class="w-8 h-8 rounded-full object-cover border border-[#D4AF37]">
+          <div>
+            <span class="text-xs font-black text-white block group-hover:text-[#D4AF37] transition-colors">${item.names}</span>
+            <span class="text-[9.5px] text-slate-400 font-medium block">${item.vendorTag}</span>
+          </div>
+        </div>
+        <span class="text-amber-400 text-xs font-black flex items-center gap-0.5">
+          <i data-lucide="star" class="w-3 h-3 fill-amber-400 text-amber-400"></i>
+          <i data-lucide="star" class="w-3 h-3 fill-amber-400 text-amber-400"></i>
+          <i data-lucide="star" class="w-3 h-3 fill-amber-400 text-amber-400"></i>
+          <i data-lucide="star" class="w-3 h-3 fill-amber-400 text-amber-400"></i>
+          <i data-lucide="star" class="w-3 h-3 fill-amber-400 text-amber-400"></i>
+        </span>
+      </div>
+      <p class="text-[11px] text-slate-300 font-medium leading-relaxed line-clamp-3 pointer-events-none">"${item.shortQuote}"</p>
+    </div>
+  `).join('');
+
+  if (typeof lucide !== 'undefined' && lucide.createIcons) {
+    lucide.createIcons();
+  }
+}
+
+let testimonialsTimer = null;
+let isTestimonialsHovered = false;
+
+function initTestimonialsAutoScroll() {
+  renderTestimonialsCarousel();
+  const container = document.getElementById('testimonials-carousel-container');
+  if (!container) return;
+
+  if (testimonialsTimer) clearInterval(testimonialsTimer);
+
+  let isDown = false;
+  let startX, scrollLeft;
+
+  container.onmouseenter = () => { isTestimonialsHovered = true; };
+  container.onmouseleave = () => { isTestimonialsHovered = false; isDown = false; };
+
+  container.onmousedown = (e) => {
+    isDown = true;
+    startX = e.pageX - container.offsetLeft;
+    scrollLeft = container.scrollLeft;
+  };
+  container.onmouseup = () => { isDown = false; };
+  container.onmousemove = (e) => {
+    if (!isDown) return;
+    e.preventDefault();
+    const x = e.pageX - container.offsetLeft;
+    const walk = (x - startX) * 1.5;
+    container.scrollLeft = scrollLeft - walk;
+  };
+
+  let touchStartX = 0;
+  let touchScrollLeft = 0;
+  container.ontouchstart = (e) => {
+    isTestimonialsHovered = true;
+    touchStartX = e.touches[0].pageX - container.offsetLeft;
+    touchScrollLeft = container.scrollLeft;
+  };
+  container.ontouchend = () => {
+    setTimeout(() => { isTestimonialsHovered = false; }, 2000);
+  };
+  container.ontouchmove = (e) => {
+    const x = e.touches[0].pageX - container.offsetLeft;
+    const walk = (x - touchStartX) * 1.5;
+    container.scrollLeft = touchScrollLeft - walk;
+  };
+
+  testimonialsTimer = setInterval(() => {
+    if (isTestimonialsHovered) return;
+    const cardWidth = 280;
+    const maxScroll = container.scrollWidth - container.clientWidth;
+    if (container.scrollLeft >= maxScroll - 10 || container.scrollLeft <= -maxScroll + 10) {
+      container.scrollTo({ left: 0, behavior: 'smooth' });
+    } else {
+      container.scrollBy({ left: cardWidth, behavior: 'smooth' });
+    }
+  }, 5000);
+}
+
+function openTestimonialDetailModal(id) {
+  const item = TESTIMONIALS_DATA.find(t => t.id === id);
+  if (!item) return;
+
+  const modal = document.getElementById('modal-testimonial-detail');
+  if (!modal) return;
+
+  const avatar = document.getElementById('tm-avatar');
+  const names = document.getElementById('tm-names');
+  const date = document.getElementById('tm-date');
+  const stars = document.getElementById('tm-stars');
+  const vendorTag = document.getElementById('tm-vendor-tag');
+  const fullReview = document.getElementById('tm-full-review');
+
+  if (avatar) avatar.src = item.avatar;
+  if (names) names.textContent = item.names;
+  if (date) date.textContent = `تاریخ ثبت: ${item.date}`;
+  if (vendorTag) vendorTag.textContent = item.vendorTag;
+  if (fullReview) fullReview.textContent = item.fullReview;
+
+  if (stars) {
+    stars.innerHTML = Array(item.rating).fill('<i data-lucide="star" class="w-4 h-4 fill-amber-400 text-amber-400"></i>').join('');
+    if (typeof lucide !== 'undefined' && lucide.createIcons) lucide.createIcons();
+  }
+
+  modal.classList.remove('hidden');
+  modal.classList.add('flex');
+}
+
+function closeTestimonialDetailModal() {
+  const modal = document.getElementById('modal-testimonial-detail');
+  if (modal) {
+    modal.classList.add('hidden');
+    modal.classList.remove('flex');
+  }
+}
+
+window.renderTestimonialsCarousel = renderTestimonialsCarousel;
+window.initTestimonialsAutoScroll = initTestimonialsAutoScroll;
+window.openTestimonialDetailModal = openTestimonialDetailModal;
+window.closeTestimonialDetailModal = closeTestimonialDetailModal;

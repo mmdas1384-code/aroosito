@@ -885,35 +885,35 @@
               <h2 class="text-base sm:text-lg font-black text-[#F7F5F0]">چرا زوج‌ها عروسی تو را انتخاب می‌کنند؟</h2>
             </div>
 
-            <!-- 4-Card Bento Grid -->
+            <!-- 4-Card Bento Grid (DISPLAY-ONLY) -->
             <div class="grid grid-cols-2 gap-3">
-              <div class="bg-[#141A28] border border-[#C5A059]/20 rounded-2xl p-3.5 text-right space-y-1">
+              <div class="bg-[#141A28] border border-[#C5A059]/20 rounded-2xl p-3.5 text-right space-y-1 cursor-default transition-all duration-300 hover:-translate-y-1 hover:border-amber-500/40 hover:shadow-[0_8px_20px_rgba(212,175,55,0.15)] group">
                 <span class="text-xs sm:text-sm font-black text-[#D4AF37] flex items-center gap-1 block">
-                  <i data-lucide="shield" class="w-3.5 h-3.5 text-[#D4AF37]"></i>
+                  <i data-lucide="shield" class="w-3.5 h-3.5 text-[#D4AF37] group-hover:drop-shadow-[0_0_8px_rgba(212,175,55,0.6)] transition-all"></i>
                   <span>تضمین قیمت & اصالت</span>
                 </span>
                 <p class="text-[10px] text-slate-300 font-medium leading-normal">تضمین عدم وجود هزینه پنهان و مطابقت کامل با استعلام رسمی</p>
               </div>
 
-              <div class="bg-[#141A28] border border-[#C5A059]/20 rounded-2xl p-3.5 text-right space-y-1">
+              <div class="bg-[#141A28] border border-[#C5A059]/20 rounded-2xl p-3.5 text-right space-y-1 cursor-default transition-all duration-300 hover:-translate-y-1 hover:border-amber-500/40 hover:shadow-[0_8px_20px_rgba(212,175,55,0.15)] group">
                 <span class="text-xs sm:text-sm font-black text-[#D4AF37] flex items-center gap-1 block">
-                  <i data-lucide="message-square" class="w-3.5 h-3.5 text-[#D4AF37]"></i>
+                  <i data-lucide="message-square" class="w-3.5 h-3.5 text-[#D4AF37] group-hover:drop-shadow-[0_0_8px_rgba(212,175,55,0.6)] transition-all"></i>
                   <span>پاسخگویی مستقیم VIP</span>
                 </span>
                 <p class="text-[10px] text-slate-300 font-medium leading-normal">ارتباط مستقیم با مدیریت برندها و دریافت سریع پیش‌فاکتور</p>
               </div>
 
-              <div class="bg-[#141A28] border border-[#C5A059]/20 rounded-2xl p-3.5 text-right space-y-1">
+              <div class="bg-[#141A28] border border-[#C5A059]/20 rounded-2xl p-3.5 text-right space-y-1 cursor-default transition-all duration-300 hover:-translate-y-1 hover:border-amber-500/40 hover:shadow-[0_8px_20px_rgba(212,175,55,0.15)] group">
                 <span class="text-xs sm:text-sm font-black text-[#D4AF37] flex items-center gap-1 block">
-                  <i data-lucide="qr-code" class="w-3.5 h-3.5 text-[#D4AF37]"></i>
+                  <i data-lucide="qr-code" class="w-3.5 h-3.5 text-[#D4AF37] group-hover:drop-shadow-[0_0_8px_rgba(212,175,55,0.6)] transition-all"></i>
                   <span>کارت دعوت آنلاین</span>
                 </span>
                 <p class="text-[10px] text-slate-300 font-medium leading-normal">ارسال لینک اختصاصی هوشمند و مدیریت کادوها و صندلی‌ها</p>
               </div>
 
-              <div class="bg-[#141A28] border border-[#C5A059]/20 rounded-2xl p-3.5 text-right space-y-1">
+              <div class="bg-[#141A28] border border-[#C5A059]/20 rounded-2xl p-3.5 text-right space-y-1 cursor-default transition-all duration-300 hover:-translate-y-1 hover:border-amber-500/40 hover:shadow-[0_8px_20px_rgba(212,175,55,0.15)] group">
                 <span class="text-xs sm:text-sm font-black text-[#D4AF37] flex items-center gap-1 block">
-                  <i data-lucide="bot" class="w-3.5 h-3.5 text-[#D4AF37]"></i>
+                  <i data-lucide="bot" class="w-3.5 h-3.5 text-[#D4AF37] group-hover:drop-shadow-[0_0_8px_rgba(212,175,55,0.6)] transition-all"></i>
                   <span>هوش مصنوعی بودجه‌ریز</span>
                 </span>
                 <p class="text-[10px] text-slate-300 font-medium leading-normal">برآورد هوشمند هزینه‌ها بر اساس سناریوهای اقتصادی و لاکچری</p>
@@ -8233,6 +8233,41 @@
           <input id="companion-invite-link-input" type="text" readonly value="https://aroosi.app/planning?invite=couple_yazd_84" class="w-full bg-transparent text-xs text-amber-200 focus:outline-none">
           <button type="button" onclick="copyCompanionInviteLink()" class="gold-shimmer-btn text-[#0F251A] font-black px-3 py-1.5 rounded-xl text-xs shrink-0 cursor-pointer">کپی</button>
         </div>
+      </div>
+    </div>
+  </div>
+
+
+  <!-- TESTIMONIAL DETAIL MODAL -->
+  <div id="modal-testimonial-detail" class="fixed inset-0 z-[99999] hidden flex items-center justify-center p-4 bg-black/80 backdrop-blur-md transition-all duration-300">
+    <div class="relative w-full max-w-lg bg-[#0E121C] border border-[#C5A059]/50 rounded-3xl p-6 sm:p-8 text-white shadow-2xl space-y-5" id="testimonial-modal-card">
+      <button type="button" onclick="closeTestimonialDetailModal()" class="absolute top-4 left-4 w-9 h-9 rounded-full bg-white/5 border border-white/10 hover:bg-white/15 flex items-center justify-center text-slate-300 hover:text-white transition-all cursor-pointer">
+        <i data-lucide="x" class="w-5 h-5"></i>
+      </button>
+
+      <div class="flex items-center gap-3 border-b border-[#C5A059]/20 pb-4 text-right">
+        <img id="tm-avatar" src="" class="w-14 h-14 rounded-full object-cover border-2 border-[#D4AF37] shadow-md">
+        <div class="space-y-1">
+          <h3 id="tm-names" class="text-lg font-black text-white"></h3>
+          <span id="tm-date" class="text-xs text-slate-400 font-medium block"></span>
+          <div id="tm-stars" class="flex items-center gap-1 text-amber-400"></div>
+        </div>
+      </div>
+
+      <div class="space-y-3 text-right">
+        <div class="inline-flex items-center gap-1.5 bg-[#D4AF37]/15 border border-[#D4AF37]/30 text-[#D4AF37] px-3 py-1 rounded-full text-xs font-bold">
+          <i data-lucide="check-circle-2" class="w-3.5 h-3.5 text-emerald-400"></i>
+          <span id="tm-vendor-tag"></span>
+        </div>
+
+        <p id="tm-full-review" class="text-xs sm:text-sm text-slate-200 leading-relaxed font-medium bg-[#141A28] border border-[#C5A059]/20 rounded-2xl p-4 shadow-inner">
+        </p>
+      </div>
+
+      <div class="flex items-center justify-between pt-2">
+        <button type="button" onclick="closeTestimonialDetailModal()" class="w-full bg-[#D4AF37] hover:bg-[#F3C96A] text-[#07090E] font-black py-3 rounded-2xl text-xs sm:text-sm transition-all cursor-pointer shadow-lg text-center">
+          بستن پنجره
+        </button>
       </div>
     </div>
   </div>
