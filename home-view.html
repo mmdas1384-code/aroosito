@@ -240,7 +240,7 @@
             <!-- 4 Filled Rich Visual Interactive Cards -->
             <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 flex-1">
               <!-- Shortcut Card 1: Digital Invitation -->
-              <div onclick="switchTab('invitation')" class="bg-[#141A28] hover:bg-[#1E293B] border border-[#C5A059]/35 hover:border-[#D4AF37] p-4 rounded-2xl transition-all cursor-pointer flex flex-col justify-between space-y-3 group shadow-lg">
+              <div onclick="window.location.href='invitation.html';" class="bg-[#141A28] hover:bg-[#1E293B] border border-[#C5A059]/35 hover:border-[#D4AF37] p-4 rounded-2xl transition-all cursor-pointer flex flex-col justify-between space-y-3 group shadow-lg">
                 <div class="flex items-center justify-between">
                   <span class="w-9 h-9 rounded-xl bg-[#D4AF37]/20 text-[#D4AF37] flex items-center justify-center border border-[#D4AF37]/40 group-hover:bg-[#D4AF37] group-hover:text-[#07090E] transition-all">
                     <i data-lucide="mail" class="w-4 h-4"></i>
@@ -254,7 +254,7 @@
               </div>
 
               <!-- Shortcut Card 2: Budget Calculator -->
-              <div onclick="switchTab('tools')" class="bg-[#141A28] hover:bg-[#1E293B] border border-[#C5A059]/35 hover:border-[#D4AF37] p-4 rounded-2xl transition-all cursor-pointer flex flex-col justify-between space-y-3 group shadow-lg">
+              <div onclick="window.location.href='planning.html';" class="bg-[#141A28] hover:bg-[#1E293B] border border-[#C5A059]/35 hover:border-[#D4AF37] p-4 rounded-2xl transition-all cursor-pointer flex flex-col justify-between space-y-3 group shadow-lg">
                 <div class="flex items-center justify-between">
                   <span class="w-9 h-9 rounded-xl bg-[#D4AF37]/20 text-[#D4AF37] flex items-center justify-center border border-[#D4AF37]/40 group-hover:bg-[#D4AF37] group-hover:text-[#07090E] transition-all">
                     <i data-lucide="calculator" class="w-4 h-4"></i>
@@ -268,7 +268,7 @@
               </div>
 
               <!-- Shortcut Card 3: Psychology Quizzes -->
-              <div onclick="switchTab('quizzes')" class="bg-[#141A28] hover:bg-[#1E293B] border border-[#C5A059]/35 hover:border-[#D4AF37] p-4 rounded-2xl transition-all cursor-pointer flex flex-col justify-between space-y-3 group shadow-lg">
+              <div onclick="window.location.href='style-quiz.html';" class="bg-[#141A28] hover:bg-[#1E293B] border border-[#C5A059]/35 hover:border-[#D4AF37] p-4 rounded-2xl transition-all cursor-pointer flex flex-col justify-between space-y-3 group shadow-lg">
                 <div class="flex items-center justify-between">
                   <span class="w-9 h-9 rounded-xl bg-[#D4AF37]/20 text-[#D4AF37] flex items-center justify-center border border-[#D4AF37]/40 group-hover:bg-[#D4AF37] group-hover:text-[#07090E] transition-all">
                     <i data-lucide="brain" class="w-4 h-4"></i>
@@ -282,7 +282,7 @@
               </div>
 
               <!-- Shortcut Card 4: Full Planning Hub -->
-              <div onclick="switchTab('planner')" class="bg-[#141A28] hover:bg-[#1E293B] border border-[#C5A059]/35 hover:border-[#D4AF37] p-4 rounded-2xl transition-all cursor-pointer flex flex-col justify-between space-y-3 group shadow-lg">
+              <div onclick="if(window.isLoggedIn){ window.location.href='dashboard.html'; } else { openAuthModal('couple'); }" class="bg-[#141A28] hover:bg-[#1E293B] border border-[#C5A059]/35 hover:border-[#D4AF37] p-4 rounded-2xl transition-all cursor-pointer flex flex-col justify-between space-y-3 group shadow-lg">
                 <div class="flex items-center justify-between">
                   <span class="w-9 h-9 rounded-xl bg-[#D4AF37]/20 text-[#D4AF37] flex items-center justify-center border border-[#D4AF37]/40 group-hover:bg-[#D4AF37] group-hover:text-[#07090E] transition-all">
                     <i data-lucide="clipboard-list" class="w-4 h-4"></i>
@@ -309,14 +309,14 @@
               </span>
               <h2 class="text-base sm:text-lg font-black text-[#F7F5F0]">آخرین مقالات، ترندها و آلبوم‌های فرمالیته یزد</h2>
             </div>
-            <button type="button" onclick="switchTab('inspiration')" class="text-xs font-bold text-[#D4AF37] hover:text-amber-300 transition-colors flex items-center gap-1 cursor-pointer">
+            <a href="blog.html" onclick="event.preventDefault(); window.location.href='blog.html';" class="text-xs font-bold text-[#D4AF37] hover:text-amber-300 transition-colors flex items-center gap-1 cursor-pointer">
               <span>ورود به مجله کامل ➔</span>
-            </button>
+            </a>
           </div>
 
           <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
             <!-- Article Card 1 -->
-            <div onclick="switchTab('inspiration')" class="group bg-[#141A28]/80 border border-[#C5A059]/30 hover:border-[#D4AF37] rounded-2xl overflow-hidden transition-all cursor-pointer shadow-lg flex flex-col justify-between">
+            <div onclick="if(typeof openArticleReaderModal === 'function'){ openArticleReaderModal(1); } else { window.location.href='blog-single.html?id=1'; }" class="group bg-[#141A28]/80 border border-[#C5A059]/30 hover:border-[#D4AF37] rounded-2xl overflow-hidden transition-all cursor-pointer shadow-lg flex flex-col justify-between">
               <div class="relative h-40 overflow-hidden">
                 <img src="https://images.unsplash.com/photo-1519741497674-611481863552?auto=format&fit=crop&w=600&q=80" alt="راهنمای عقد" class="w-full h-full object-cover group-hover:scale-108 transition-transform duration-700">
                 <span class="absolute top-2.5 right-2.5 bg-black/70 backdrop-blur-md text-[#D4AF37] border border-[#D4AF37]/40 text-[9.5px] font-bold px-2.5 py-0.5 rounded-full flex items-center gap-1">
@@ -332,7 +332,7 @@
             </div>
 
             <!-- Article Card 2 -->
-            <div onclick="switchTab('inspiration')" class="group bg-[#141A28]/80 border border-[#C5A059]/30 hover:border-[#D4AF37] rounded-2xl overflow-hidden transition-all cursor-pointer shadow-lg flex flex-col justify-between">
+            <div onclick="if(typeof openArticleReaderModal === 'function'){ openArticleReaderModal(2); } else { window.location.href='blog-single.html?id=2'; }" class="group bg-[#141A28]/80 border border-[#C5A059]/30 hover:border-[#D4AF37] rounded-2xl overflow-hidden transition-all cursor-pointer shadow-lg flex flex-col justify-between">
               <div class="relative h-40 overflow-hidden">
                 <img src="https://images.unsplash.com/photo-1511285560929-80b456fea0bc?auto=format&fit=crop&w=600&q=80" alt="ترند میکاپ" class="w-full h-full object-cover group-hover:scale-108 transition-transform duration-700">
                 <span class="absolute top-2.5 right-2.5 bg-black/70 backdrop-blur-md text-[#D4AF37] border border-[#D4AF37]/40 text-[9.5px] font-bold px-2.5 py-0.5 rounded-full flex items-center gap-1">
@@ -348,7 +348,7 @@
             </div>
 
             <!-- Article Card 3 -->
-            <div onclick="switchTab('inspiration')" class="group bg-[#141A28]/80 border border-[#C5A059]/30 hover:border-[#D4AF37] rounded-2xl overflow-hidden transition-all cursor-pointer shadow-lg flex flex-col justify-between sm:col-span-2 lg:col-span-1">
+            <div onclick="if(typeof openArticleReaderModal === 'function'){ openArticleReaderModal(3); } else { window.location.href='blog-single.html?id=3'; }" class="group bg-[#141A28]/80 border border-[#C5A059]/30 hover:border-[#D4AF37] rounded-2xl overflow-hidden transition-all cursor-pointer shadow-lg flex flex-col justify-between sm:col-span-2 lg:col-span-1">
               <div class="relative h-40 overflow-hidden">
                 <img src="https://images.unsplash.com/photo-1537633552985-df8429e8048b?auto=format&fit=crop&w=600&q=80" alt="فرمالیته کویر" class="w-full h-full object-cover group-hover:scale-108 transition-transform duration-700">
                 <span class="absolute top-2.5 right-2.5 bg-black/70 backdrop-blur-md text-[#D4AF37] border border-[#D4AF37]/40 text-[9.5px] font-bold px-2.5 py-0.5 rounded-full flex items-center gap-1">

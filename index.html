@@ -685,7 +685,7 @@
             <!-- 4 Filled Rich Visual Interactive Cards -->
             <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 flex-1">
               <!-- Shortcut Card 1: Digital Invitation -->
-              <div onclick="switchTab('invitation')" class="bg-[#141A28] hover:bg-[#1E293B] border border-[#C5A059]/35 hover:border-[#D4AF37] p-4 rounded-2xl transition-all cursor-pointer flex flex-col justify-between space-y-3 group shadow-lg">
+              <div onclick="window.location.href='invitation.html';" class="bg-[#141A28] hover:bg-[#1E293B] border border-[#C5A059]/35 hover:border-[#D4AF37] p-4 rounded-2xl transition-all cursor-pointer flex flex-col justify-between space-y-3 group shadow-lg">
                 <div class="flex items-center justify-between">
                   <span class="w-9 h-9 rounded-xl bg-[#D4AF37]/20 text-[#D4AF37] flex items-center justify-center border border-[#D4AF37]/40 group-hover:bg-[#D4AF37] group-hover:text-[#07090E] transition-all">
                     <i data-lucide="mail" class="w-4 h-4"></i>
@@ -699,7 +699,7 @@
               </div>
 
               <!-- Shortcut Card 2: Budget Calculator -->
-              <div onclick="switchTab('tools')" class="bg-[#141A28] hover:bg-[#1E293B] border border-[#C5A059]/35 hover:border-[#D4AF37] p-4 rounded-2xl transition-all cursor-pointer flex flex-col justify-between space-y-3 group shadow-lg">
+              <div onclick="window.location.href='planning.html';" class="bg-[#141A28] hover:bg-[#1E293B] border border-[#C5A059]/35 hover:border-[#D4AF37] p-4 rounded-2xl transition-all cursor-pointer flex flex-col justify-between space-y-3 group shadow-lg">
                 <div class="flex items-center justify-between">
                   <span class="w-9 h-9 rounded-xl bg-[#D4AF37]/20 text-[#D4AF37] flex items-center justify-center border border-[#D4AF37]/40 group-hover:bg-[#D4AF37] group-hover:text-[#07090E] transition-all">
                     <i data-lucide="calculator" class="w-4 h-4"></i>
@@ -713,7 +713,7 @@
               </div>
 
               <!-- Shortcut Card 3: Psychology Quizzes -->
-              <div onclick="switchTab('quizzes')" class="bg-[#141A28] hover:bg-[#1E293B] border border-[#C5A059]/35 hover:border-[#D4AF37] p-4 rounded-2xl transition-all cursor-pointer flex flex-col justify-between space-y-3 group shadow-lg">
+              <div onclick="window.location.href='style-quiz.html';" class="bg-[#141A28] hover:bg-[#1E293B] border border-[#C5A059]/35 hover:border-[#D4AF37] p-4 rounded-2xl transition-all cursor-pointer flex flex-col justify-between space-y-3 group shadow-lg">
                 <div class="flex items-center justify-between">
                   <span class="w-9 h-9 rounded-xl bg-[#D4AF37]/20 text-[#D4AF37] flex items-center justify-center border border-[#D4AF37]/40 group-hover:bg-[#D4AF37] group-hover:text-[#07090E] transition-all">
                     <i data-lucide="brain" class="w-4 h-4"></i>
@@ -727,7 +727,7 @@
               </div>
 
               <!-- Shortcut Card 4: Full Planning Hub -->
-              <div onclick="switchTab('planner')" class="bg-[#141A28] hover:bg-[#1E293B] border border-[#C5A059]/35 hover:border-[#D4AF37] p-4 rounded-2xl transition-all cursor-pointer flex flex-col justify-between space-y-3 group shadow-lg">
+              <div onclick="if(window.isLoggedIn){ window.location.href='dashboard.html'; } else { openAuthModal('couple'); }" class="bg-[#141A28] hover:bg-[#1E293B] border border-[#C5A059]/35 hover:border-[#D4AF37] p-4 rounded-2xl transition-all cursor-pointer flex flex-col justify-between space-y-3 group shadow-lg">
                 <div class="flex items-center justify-between">
                   <span class="w-9 h-9 rounded-xl bg-[#D4AF37]/20 text-[#D4AF37] flex items-center justify-center border border-[#D4AF37]/40 group-hover:bg-[#D4AF37] group-hover:text-[#07090E] transition-all">
                     <i data-lucide="clipboard-list" class="w-4 h-4"></i>
@@ -754,14 +754,14 @@
               </span>
               <h2 class="text-base sm:text-lg font-black text-[#F7F5F0]">آخرین مقالات، ترندها و آلبوم‌های فرمالیته یزد</h2>
             </div>
-            <button type="button" onclick="switchTab('inspiration')" class="text-xs font-bold text-[#D4AF37] hover:text-amber-300 transition-colors flex items-center gap-1 cursor-pointer">
+            <a href="blog.html" onclick="event.preventDefault(); window.location.href='blog.html';" class="text-xs font-bold text-[#D4AF37] hover:text-amber-300 transition-colors flex items-center gap-1 cursor-pointer">
               <span>ورود به مجله کامل ➔</span>
-            </button>
+            </a>
           </div>
 
           <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
             <!-- Article Card 1 -->
-            <div onclick="switchTab('inspiration')" class="group bg-[#141A28]/80 border border-[#C5A059]/30 hover:border-[#D4AF37] rounded-2xl overflow-hidden transition-all cursor-pointer shadow-lg flex flex-col justify-between">
+            <div onclick="if(typeof openArticleReaderModal === 'function'){ openArticleReaderModal(1); } else { window.location.href='blog-single.html?id=1'; }" class="group bg-[#141A28]/80 border border-[#C5A059]/30 hover:border-[#D4AF37] rounded-2xl overflow-hidden transition-all cursor-pointer shadow-lg flex flex-col justify-between">
               <div class="relative h-40 overflow-hidden">
                 <img src="https://images.unsplash.com/photo-1519741497674-611481863552?auto=format&fit=crop&w=600&q=80" alt="راهنمای عقد" class="w-full h-full object-cover group-hover:scale-108 transition-transform duration-700">
                 <span class="absolute top-2.5 right-2.5 bg-black/70 backdrop-blur-md text-[#D4AF37] border border-[#D4AF37]/40 text-[9.5px] font-bold px-2.5 py-0.5 rounded-full flex items-center gap-1">
@@ -777,7 +777,7 @@
             </div>
 
             <!-- Article Card 2 -->
-            <div onclick="switchTab('inspiration')" class="group bg-[#141A28]/80 border border-[#C5A059]/30 hover:border-[#D4AF37] rounded-2xl overflow-hidden transition-all cursor-pointer shadow-lg flex flex-col justify-between">
+            <div onclick="if(typeof openArticleReaderModal === 'function'){ openArticleReaderModal(2); } else { window.location.href='blog-single.html?id=2'; }" class="group bg-[#141A28]/80 border border-[#C5A059]/30 hover:border-[#D4AF37] rounded-2xl overflow-hidden transition-all cursor-pointer shadow-lg flex flex-col justify-between">
               <div class="relative h-40 overflow-hidden">
                 <img src="https://images.unsplash.com/photo-1511285560929-80b456fea0bc?auto=format&fit=crop&w=600&q=80" alt="ترند میکاپ" class="w-full h-full object-cover group-hover:scale-108 transition-transform duration-700">
                 <span class="absolute top-2.5 right-2.5 bg-black/70 backdrop-blur-md text-[#D4AF37] border border-[#D4AF37]/40 text-[9.5px] font-bold px-2.5 py-0.5 rounded-full flex items-center gap-1">
@@ -793,7 +793,7 @@
             </div>
 
             <!-- Article Card 3 -->
-            <div onclick="switchTab('inspiration')" class="group bg-[#141A28]/80 border border-[#C5A059]/30 hover:border-[#D4AF37] rounded-2xl overflow-hidden transition-all cursor-pointer shadow-lg flex flex-col justify-between sm:col-span-2 lg:col-span-1">
+            <div onclick="if(typeof openArticleReaderModal === 'function'){ openArticleReaderModal(3); } else { window.location.href='blog-single.html?id=3'; }" class="group bg-[#141A28]/80 border border-[#C5A059]/30 hover:border-[#D4AF37] rounded-2xl overflow-hidden transition-all cursor-pointer shadow-lg flex flex-col justify-between sm:col-span-2 lg:col-span-1">
               <div class="relative h-40 overflow-hidden">
                 <img src="https://images.unsplash.com/photo-1537633552985-df8429e8048b?auto=format&fit=crop&w=600&q=80" alt="فرمالیته کویر" class="w-full h-full object-cover group-hover:scale-108 transition-transform duration-700">
                 <span class="absolute top-2.5 right-2.5 bg-black/70 backdrop-blur-md text-[#D4AF37] border border-[#D4AF37]/40 text-[9.5px] font-bold px-2.5 py-0.5 rounded-full flex items-center gap-1">
@@ -5547,56 +5547,51 @@
     </div>
   </div>
 
-  <div id="subgroups-modal" class="subgroups-overlay hidden">
-    <div class="subgroups-card relative">
-      <button onclick="document.getElementById('subgroups-modal').classList.add('hidden')" class="close-btn absolute top-3 left-3 w-8 h-8 rounded-full bg-slate-200 hover:bg-slate-300 text-graphite font-bold flex items-center justify-center cursor-pointer transition-colors">✕</button>
-      <h3 id="subgroups-title" class="text-base font-bold text-[#1B3B2B] border-b border-accent pb-3 mb-3"></h3>
-      <div id="subgroups-list" class="subgroups-grid space-y-2"></div>
-    </div>
-  </div>
+  <div id="subgroups-modal" class="hidden"></div>
 
-  <!-- FLOATING SUB-CATEGORY DRAWER / MODAL -->
-  <div id="sub-category-drawer-modal" class="hidden fixed inset-0 bg-black/60 backdrop-blur-xs z-50 items-center justify-center p-4 transition-all animate-fadeIn">
-    <div class="bg-white rounded-3xl shadow-2xl max-w-2xl w-full overflow-hidden border border-[#D4AF37]/40 flex flex-col max-h-[85vh] animate-scaleUp">
+  <!-- FLOATING SUB-CATEGORY DRAWER / MODAL (#sub-category-drawer-modal / #subcategoryModal) -->
+  <div id="subcategoryModal" class="hidden fixed inset-0 bg-black/80 backdrop-blur-md z-[999999] items-center justify-center p-4 transition-all animate-fadeIn">
+    <div class="bg-[#0D1117]/95 text-white rounded-3xl shadow-2xl max-w-2xl w-full overflow-hidden border border-amber-500/20 flex flex-col max-h-[85vh] animate-scaleUp">
 
-      <!-- Drawer Header (Emerald Forest #1B3B2B & Rich Gold #D4AF37) -->
-      <div class="bg-[#1B3B2B] text-white p-5 sm:p-6 flex items-center justify-between border-b border-[#D4AF37]/30 shrink-0">
+      <!-- Drawer Header -->
+      <div class="bg-[#161B22] p-5 sm:p-6 flex items-center justify-between border-b border-amber-500/20 shrink-0">
         <div class="flex items-center gap-3">
-          <div id="drawer-header-icon" class="w-12 h-12 rounded-2xl bg-[#D4AF37] text-[#1B3B2B] flex items-center justify-center shadow-md">
+          <div id="drawer-header-icon" class="w-12 h-12 rounded-2xl bg-amber-500/10 border border-amber-500/30 text-amber-400 flex items-center justify-center shadow-md">
             <i data-lucide="layers" class="w-6 h-6"></i>
           </div>
           <div>
             <div class="flex items-center gap-2">
-              <h3 id="drawer-header-title" class="text-lg sm:text-xl font-black text-[#D4AF37]">عنوان رسته اصلی</h3>
-              <span id="drawer-header-badge" class="bg-white/10 text-amber-200 text-[10px] font-extrabold px-2.5 py-0.5 rounded-full border border-[#D4AF37]/30">زیرگروه‌ها</span>
+              <h3 id="drawer-header-title" class="text-lg sm:text-xl font-black text-amber-400">عنوان رسته اصلی</h3>
+              <span id="drawer-header-badge" class="bg-amber-500/10 text-amber-400 border border-amber-500/20 text-[10px] font-extrabold px-2.5 py-0.5 rounded-full">زیرگروه‌ها</span>
             </div>
-            <p id="drawer-header-desc" class="text-xs text-slate-200 mt-0.5 font-medium">جهت مشاهده و فیلتر سریع تأمین‌کنندگان، زیرگروه موردنظر را انتخاب کنید.</p>
+            <p id="drawer-header-desc" class="text-xs text-slate-300 mt-0.5 font-medium">جهت مشاهده و فیلتر سریع تأمین‌کنندگان، زیرگروه موردنظر را انتخاب کنید.</p>
           </div>
         </div>
 
-        <button onclick="closeSubCategoryDrawer()" class="w-10 h-10 rounded-xl bg-white/10 hover:bg-white/20 text-white flex items-center justify-center transition-colors cursor-pointer shrink-0">
+        <button onclick="closeSubCategoryDrawer()" class="w-10 h-10 rounded-xl bg-white/5 hover:bg-white/10 text-slate-300 hover:text-white flex items-center justify-center transition-colors cursor-pointer shrink-0 border border-gray-800">
           <i data-lucide="x" class="w-5 h-5"></i>
         </button>
       </div>
 
       <!-- Drawer Body: Grid of Sub-Category Cards -->
-      <div id="drawer-subcategories-grid" class="p-5 sm:p-6 overflow-y-auto grid grid-cols-1 sm:grid-cols-2 gap-3.5 max-h-[60vh] bg-slate-50/50">
+      <div id="drawer-subcategories-grid" class="p-5 sm:p-6 overflow-y-auto grid grid-cols-1 sm:grid-cols-2 gap-3.5 max-h-[60vh] bg-[#0D1117]">
         <!-- Dynamically populated via openSubCategoryDrawer() -->
       </div>
 
       <!-- Drawer Footer -->
-      <div class="p-4 bg-white border-t border-accent/60 flex items-center justify-between text-xs text-secondary shrink-0">
+      <div class="p-4 bg-[#161B22] border-t border-amber-500/20 flex items-center justify-between text-xs text-slate-300 shrink-0">
         <div class="flex items-center gap-1.5 font-medium">
-          <i data-lucide="shield-check" class="w-4 h-4 text-[#1B3B2B]"></i>
+          <i data-lucide="shield-check" class="w-4 h-4 text-amber-400"></i>
           <span>تضمین قیمت و تایید صلاحیت کسب‌وکارها در استان یزد</span>
         </div>
-        <button onclick="closeSubCategoryDrawer()" class="px-4 py-2 bg-slate-100 hover:bg-slate-200 text-graphite rounded-xl font-bold transition-colors">
-          بستن
-        </button>
+        <a href="directory.html" onclick="event.preventDefault(); closeSubCategoryDrawer(); window.location.href='directory.html';" class="text-amber-400 hover:text-amber-300 font-bold transition-colors">
+          مشاهده دایرکتوری کامل ➔
+        </a>
       </div>
 
     </div>
   </div>
+  <div id="sub-category-drawer-modal" class="hidden"></div>
 
   <!-- AUTHENTICATION MODAL (#auth-modal) -->
   <div id="auth-modal" class="hidden fixed inset-0 bg-black/60 backdrop-blur-xs z-[999999] flex items-center justify-center p-4 transition-all animate-fadeIn">

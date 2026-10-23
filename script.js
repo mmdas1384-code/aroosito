@@ -292,7 +292,7 @@ const HOME_VIEW_HTML = `<main id="home-view" class="flex-1 max-w-7xl w-full mx-a
             <!-- 4 Filled Rich Visual Interactive Cards -->
             <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 flex-1">
               <!-- Shortcut Card 1: Digital Invitation -->
-              <div onclick="switchTab('invitation')" class="bg-[#141A28] hover:bg-[#1E293B] border border-[#C5A059]/35 hover:border-[#D4AF37] p-4 rounded-2xl transition-all cursor-pointer flex flex-col justify-between space-y-3 group shadow-lg">
+              <div onclick="window.location.href='invitation.html';" class="bg-[#141A28] hover:bg-[#1E293B] border border-[#C5A059]/35 hover:border-[#D4AF37] p-4 rounded-2xl transition-all cursor-pointer flex flex-col justify-between space-y-3 group shadow-lg">
                 <div class="flex items-center justify-between">
                   <span class="w-9 h-9 rounded-xl bg-[#D4AF37]/20 text-[#D4AF37] flex items-center justify-center border border-[#D4AF37]/40 group-hover:bg-[#D4AF37] group-hover:text-[#07090E] transition-all">
                     <i data-lucide="mail" class="w-4 h-4"></i>
@@ -306,7 +306,7 @@ const HOME_VIEW_HTML = `<main id="home-view" class="flex-1 max-w-7xl w-full mx-a
               </div>
 
               <!-- Shortcut Card 2: Budget Calculator -->
-              <div onclick="switchTab('tools')" class="bg-[#141A28] hover:bg-[#1E293B] border border-[#C5A059]/35 hover:border-[#D4AF37] p-4 rounded-2xl transition-all cursor-pointer flex flex-col justify-between space-y-3 group shadow-lg">
+              <div onclick="window.location.href='planning.html';" class="bg-[#141A28] hover:bg-[#1E293B] border border-[#C5A059]/35 hover:border-[#D4AF37] p-4 rounded-2xl transition-all cursor-pointer flex flex-col justify-between space-y-3 group shadow-lg">
                 <div class="flex items-center justify-between">
                   <span class="w-9 h-9 rounded-xl bg-[#D4AF37]/20 text-[#D4AF37] flex items-center justify-center border border-[#D4AF37]/40 group-hover:bg-[#D4AF37] group-hover:text-[#07090E] transition-all">
                     <i data-lucide="calculator" class="w-4 h-4"></i>
@@ -320,7 +320,7 @@ const HOME_VIEW_HTML = `<main id="home-view" class="flex-1 max-w-7xl w-full mx-a
               </div>
 
               <!-- Shortcut Card 3: Psychology Quizzes -->
-              <div onclick="switchTab('quizzes')" class="bg-[#141A28] hover:bg-[#1E293B] border border-[#C5A059]/35 hover:border-[#D4AF37] p-4 rounded-2xl transition-all cursor-pointer flex flex-col justify-between space-y-3 group shadow-lg">
+              <div onclick="window.location.href='style-quiz.html';" class="bg-[#141A28] hover:bg-[#1E293B] border border-[#C5A059]/35 hover:border-[#D4AF37] p-4 rounded-2xl transition-all cursor-pointer flex flex-col justify-between space-y-3 group shadow-lg">
                 <div class="flex items-center justify-between">
                   <span class="w-9 h-9 rounded-xl bg-[#D4AF37]/20 text-[#D4AF37] flex items-center justify-center border border-[#D4AF37]/40 group-hover:bg-[#D4AF37] group-hover:text-[#07090E] transition-all">
                     <i data-lucide="brain" class="w-4 h-4"></i>
@@ -334,7 +334,7 @@ const HOME_VIEW_HTML = `<main id="home-view" class="flex-1 max-w-7xl w-full mx-a
               </div>
 
               <!-- Shortcut Card 4: Full Planning Hub -->
-              <div onclick="switchTab('planner')" class="bg-[#141A28] hover:bg-[#1E293B] border border-[#C5A059]/35 hover:border-[#D4AF37] p-4 rounded-2xl transition-all cursor-pointer flex flex-col justify-between space-y-3 group shadow-lg">
+              <div onclick="if(window.isLoggedIn){ window.location.href='dashboard.html'; } else { openAuthModal('couple'); }" class="bg-[#141A28] hover:bg-[#1E293B] border border-[#C5A059]/35 hover:border-[#D4AF37] p-4 rounded-2xl transition-all cursor-pointer flex flex-col justify-between space-y-3 group shadow-lg">
                 <div class="flex items-center justify-between">
                   <span class="w-9 h-9 rounded-xl bg-[#D4AF37]/20 text-[#D4AF37] flex items-center justify-center border border-[#D4AF37]/40 group-hover:bg-[#D4AF37] group-hover:text-[#07090E] transition-all">
                     <i data-lucide="clipboard-list" class="w-4 h-4"></i>
@@ -361,14 +361,14 @@ const HOME_VIEW_HTML = `<main id="home-view" class="flex-1 max-w-7xl w-full mx-a
               </span>
               <h2 class="text-base sm:text-lg font-black text-[#F7F5F0]">آخرین مقالات، ترندها و آلبوم‌های فرمالیته یزد</h2>
             </div>
-            <button type="button" onclick="switchTab('inspiration')" class="text-xs font-bold text-[#D4AF37] hover:text-amber-300 transition-colors flex items-center gap-1 cursor-pointer">
+            <a href="blog.html" onclick="event.preventDefault(); window.location.href='blog.html';" class="text-xs font-bold text-[#D4AF37] hover:text-amber-300 transition-colors flex items-center gap-1 cursor-pointer">
               <span>ورود به مجله کامل ➔</span>
-            </button>
+            </a>
           </div>
 
           <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
             <!-- Article Card 1 -->
-            <div onclick="switchTab('inspiration')" class="group bg-[#141A28]/80 border border-[#C5A059]/30 hover:border-[#D4AF37] rounded-2xl overflow-hidden transition-all cursor-pointer shadow-lg flex flex-col justify-between">
+            <div onclick="if(typeof openArticleReaderModal === 'function'){ openArticleReaderModal(1); } else { window.location.href='blog-single.html?id=1'; }" class="group bg-[#141A28]/80 border border-[#C5A059]/30 hover:border-[#D4AF37] rounded-2xl overflow-hidden transition-all cursor-pointer shadow-lg flex flex-col justify-between">
               <div class="relative h-40 overflow-hidden">
                 <img src="https://images.unsplash.com/photo-1519741497674-611481863552?auto=format&fit=crop&w=600&q=80" alt="راهنمای عقد" class="w-full h-full object-cover group-hover:scale-108 transition-transform duration-700">
                 <span class="absolute top-2.5 right-2.5 bg-black/70 backdrop-blur-md text-[#D4AF37] border border-[#D4AF37]/40 text-[9.5px] font-bold px-2.5 py-0.5 rounded-full flex items-center gap-1">
@@ -384,7 +384,7 @@ const HOME_VIEW_HTML = `<main id="home-view" class="flex-1 max-w-7xl w-full mx-a
             </div>
 
             <!-- Article Card 2 -->
-            <div onclick="switchTab('inspiration')" class="group bg-[#141A28]/80 border border-[#C5A059]/30 hover:border-[#D4AF37] rounded-2xl overflow-hidden transition-all cursor-pointer shadow-lg flex flex-col justify-between">
+            <div onclick="if(typeof openArticleReaderModal === 'function'){ openArticleReaderModal(2); } else { window.location.href='blog-single.html?id=2'; }" class="group bg-[#141A28]/80 border border-[#C5A059]/30 hover:border-[#D4AF37] rounded-2xl overflow-hidden transition-all cursor-pointer shadow-lg flex flex-col justify-between">
               <div class="relative h-40 overflow-hidden">
                 <img src="https://images.unsplash.com/photo-1511285560929-80b456fea0bc?auto=format&fit=crop&w=600&q=80" alt="ترند میکاپ" class="w-full h-full object-cover group-hover:scale-108 transition-transform duration-700">
                 <span class="absolute top-2.5 right-2.5 bg-black/70 backdrop-blur-md text-[#D4AF37] border border-[#D4AF37]/40 text-[9.5px] font-bold px-2.5 py-0.5 rounded-full flex items-center gap-1">
@@ -400,7 +400,7 @@ const HOME_VIEW_HTML = `<main id="home-view" class="flex-1 max-w-7xl w-full mx-a
             </div>
 
             <!-- Article Card 3 -->
-            <div onclick="switchTab('inspiration')" class="group bg-[#141A28]/80 border border-[#C5A059]/30 hover:border-[#D4AF37] rounded-2xl overflow-hidden transition-all cursor-pointer shadow-lg flex flex-col justify-between sm:col-span-2 lg:col-span-1">
+            <div onclick="if(typeof openArticleReaderModal === 'function'){ openArticleReaderModal(3); } else { window.location.href='blog-single.html?id=3'; }" class="group bg-[#141A28]/80 border border-[#C5A059]/30 hover:border-[#D4AF37] rounded-2xl overflow-hidden transition-all cursor-pointer shadow-lg flex flex-col justify-between sm:col-span-2 lg:col-span-1">
               <div class="relative h-40 overflow-hidden">
                 <img src="https://images.unsplash.com/photo-1537633552985-df8429e8048b?auto=format&fit=crop&w=600&q=80" alt="فرمالیته کویر" class="w-full h-full object-cover group-hover:scale-108 transition-transform duration-700">
                 <span class="absolute top-2.5 right-2.5 bg-black/70 backdrop-blur-md text-[#D4AF37] border border-[#D4AF37]/40 text-[9.5px] font-bold px-2.5 py-0.5 rounded-full flex items-center gap-1">
@@ -13142,9 +13142,11 @@ const subgroupData = {
 };
 
 function closeAllSubgroupModals() {
+  const modalSub = document.getElementById('subcategoryModal');
   const modalDrawer = document.getElementById('sub-category-drawer-modal');
   const modalSimple = document.getElementById('subgroups-modal');
   const modalGrid = document.getElementById('subgroupModal');
+  if (modalSub) { modalSub.classList.add('hidden'); modalSub.classList.remove('flex'); modalSub.style.display = 'none'; }
   if (modalDrawer) { modalDrawer.classList.add('hidden'); modalDrawer.classList.remove('flex'); }
   if (modalSimple) { modalSimple.classList.add('hidden'); modalSimple.style.display = 'none'; }
   if (modalGrid) { modalGrid.classList.add('hidden'); modalGrid.style.display = 'none'; }
@@ -13154,8 +13156,8 @@ function closeAllSubgroupModals() {
 function openCategorySubgroupsModal(catKey) {
   const data = CATEGORY_SUBGROUPS_MAP[catKey] || CATEGORY_SUBGROUPS_MAP.venue_catering;
 
-  // 1. Populate Floating Sub-Category Drawer (#sub-category-drawer-modal)
-  const drawerModal = document.getElementById('sub-category-drawer-modal');
+  // 1. Populate Floating Sub-Category Drawer (#subcategoryModal / #sub-category-drawer-modal)
+  const drawerModal = document.getElementById('subcategoryModal') || document.getElementById('sub-category-drawer-modal');
   const drawerTitle = document.getElementById('drawer-header-title');
   const drawerBadge = document.getElementById('drawer-header-badge');
   const drawerIcon = document.getElementById('drawer-header-icon');
@@ -13163,50 +13165,32 @@ function openCategorySubgroupsModal(catKey) {
 
   if (drawerTitle) drawerTitle.innerText = data.title;
   if (drawerBadge) drawerBadge.innerText = data.badge;
-  if (drawerIcon) drawerIcon.innerHTML = `<i data-lucide="${data.icon || 'layers'}" class="w-6 h-6 text-[#1B3B2B]"></i>`;
+  if (drawerIcon) drawerIcon.innerHTML = `<i data-lucide="${data.icon || 'layers'}" class="w-6 h-6 text-amber-400"></i>`;
 
   if (drawerGrid) {
     drawerGrid.innerHTML = data.subgroups.map(sub => {
       const subTitle = typeof sub === 'string' ? sub : sub.title;
       const subCount = typeof sub === 'string' ? '+۵ کسب‌وکار' : (sub.count || '+۵ کسب‌وکار');
       const subDesc = typeof sub === 'string' ? 'مشاهده و استعلام قیمت کسب‌وکارهای تاییدشده یزد' : (sub.desc || 'مشاهده و استعلام قیمت کسب‌وکارهای تاییدشده یزد');
+      const subSlug = encodeURIComponent(subTitle);
+      const catSlug = catKey;
 
       return `
-        <div onclick="switchTab('directory'); filterVendorsByCategoryTitle('${subTitle}'); closeAllSubgroupModals();" class="bg-[#FCFCFA] border border-[#D4AF37]/50 hover:border-[#D4AF37] rounded-2xl p-4 transition-all duration-300 shadow-2xs hover:shadow-md hover:-translate-y-0.5 cursor-pointer flex flex-col justify-between group">
+        <div onclick="closeAllSubgroupModals(); window.location.href='directory.html?category=${catSlug}&sub=${subSlug}';" class="bg-[#161B22] hover:bg-[#1F2633] border border-gray-800 hover:border-amber-500/50 rounded-2xl p-4 transition-all duration-300 shadow-md hover:-translate-y-0.5 cursor-pointer flex flex-col justify-between group">
           <div class="space-y-1.5">
             <div class="flex items-center justify-between gap-2">
-              <span class="font-black text-xs text-[#1B3B2B] group-hover:text-[#D4AF37] transition-colors flex items-center gap-1.5">
-                <i data-lucide="tag" class="w-3.5 h-3.5 text-[#D4AF37]"></i>
+              <span class="font-black text-xs text-white group-hover:text-amber-400 transition-colors flex items-center gap-1.5">
+                <i data-lucide="tag" class="w-3.5 h-3.5 text-amber-400"></i>
                 ${subTitle}
               </span>
-              <span class="bg-[#1B3B2B]/10 text-[#1B3B2B] text-[10px] font-bold px-2 py-0.5 rounded-full">${subCount}</span>
+              <span class="bg-amber-500/10 text-amber-400 border border-amber-500/20 text-[10px] font-bold px-2.5 py-0.5 rounded-full">${subCount}</span>
             </div>
-            <p class="text-[11px] text-secondary leading-relaxed font-medium line-clamp-2">${subDesc}</p>
+            <p class="text-[11px] text-slate-300 leading-relaxed font-medium line-clamp-2">${subDesc}</p>
           </div>
-          <div class="pt-3 border-t border-accent/50 mt-3 flex items-center justify-between text-[11px] text-[#D4AF37] font-bold">
+          <div class="pt-3 border-t border-gray-800/80 mt-3 flex items-center justify-between text-[11px] text-amber-400 font-bold">
             <span>مشاهده و فیلتر لیست</span>
             <span class="group-hover:translate-x-[-3px] transition-transform">←</span>
           </div>
-        </div>
-      `;
-    }).join('');
-  }
-
-  // 2. Populate Simple Subgroups Modal (#subgroups-modal)
-  const simpleModal = document.getElementById('subgroups-modal');
-  const simpleTitle = document.getElementById('subgroups-title');
-  const simpleList = document.getElementById('subgroups-list');
-
-  if (simpleTitle) simpleTitle.innerText = data.title + ' (' + data.badge + ')';
-  if (simpleList) {
-    simpleList.innerHTML = data.subgroups.map(sub => {
-      const subTitle = typeof sub === 'string' ? sub : sub.title;
-      return `
-        <div class="flex items-center justify-between bg-[#FCFCFA] border border-[#D4AF37]/40 rounded-xl p-3 shadow-2xs">
-          <span class="text-xs font-bold text-[#1B3B2B]">📍 ${subTitle}</span>
-          <button onclick="switchTab('directory'); filterVendorsByCategoryTitle('${subTitle}'); closeAllSubgroupModals();" class="bg-[#1B3B2B] hover:bg-emerald-900 text-white font-bold px-3 py-1.5 rounded-lg text-xs transition-colors">
-            مشاهده لیست ←
-          </button>
         </div>
       `;
     }).join('');
@@ -13216,9 +13200,7 @@ function openCategorySubgroupsModal(catKey) {
   if (drawerModal) {
     drawerModal.classList.remove('hidden');
     drawerModal.classList.add('flex');
-  } else if (simpleModal) {
-    simpleModal.classList.remove('hidden');
-    simpleModal.style.display = 'flex';
+    drawerModal.style.display = 'flex';
   }
 
   document.body.style.overflow = 'hidden';
