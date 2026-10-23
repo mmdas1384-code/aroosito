@@ -3,7 +3,7 @@
     <div id="tab-home" class="tab-content space-y-12">
 
       <!-- 2. ULTRA-SLIM & COMPACT EDITORIAL HERO SECTION WITH TOP BREATHING GAP -->
-      <section id="hero" class="relative mt-6 sm:mt-8 bg-[#0b0f19] border border-[#D4AF37]/40 rounded-3xl p-5 sm:p-6 lg:p-8 shadow-2xl overflow-visible text-white space-y-6">
+      <section id="hero" class="relative mt-6 sm:mt-8 text-white space-y-6 overflow-visible">
         <!-- Ambient Gold Radial Illumination -->
         <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[500px] h-[500px] bg-[#D4AF37]/10 rounded-full blur-3xl pointer-events-none"></div>
 
@@ -22,7 +22,7 @@
               </div>
 
               <h1 class="text-2xl sm:text-3xl lg:text-4xl font-black text-white leading-snug">
-                آفرینش <span class="bg-gradient-to-r from-amber-200 via-[#D4AF37] to-amber-500 bg-clip-text text-transparent underline decoration-[#D4AF37]/40 decoration-wavy">خاطره‌انگیزترین لحظات لوکس</span>
+                آفرینش <span class="bg-gradient-to-r from-amber-200 via-[#D4AF37] to-amber-500 bg-clip-text text-transparent">خاطره‌انگیزترین لحظات لوکس</span>
               </h1>
 
               <p class="text-xs sm:text-sm text-slate-300 font-medium leading-relaxed">
@@ -57,10 +57,10 @@
                 <span>شروع برنامه‌ریزی</span>
               </button>
 
-              <!-- "دستیار استعلام" button triggers quick quote modal (#inquiry-modal) -->
-              <button type="button" onclick="if(typeof openInquiryModal === 'function'){ openInquiryModal(1, 'تالار و باغ پذیرایی لوکس یزد', 'استعلام قیمت سریع'); } else { openVipConciergeModal(); }" class="bg-[#141A28] hover:bg-[#1E293B] text-[#D4AF37] border border-[#C5A059]/40 font-bold py-2.5 px-3 rounded-2xl text-xs transition-all cursor-pointer flex items-center justify-center gap-1.5 shadow-md">
+              <!-- "دستیار اختصاصی" button triggers dedicated assistant modal (#dedicatedAssistantModal) -->
+              <button type="button" onclick="openDedicatedAssistantModal()" class="bg-[#141A28] hover:bg-[#1E293B] text-[#D4AF37] border border-[#C5A059]/40 font-bold py-2.5 px-3 rounded-2xl text-xs transition-all cursor-pointer flex items-center justify-center gap-1.5 shadow-md">
                 <i data-lucide="crown" class="w-4 h-4 text-[#D4AF37]"></i>
-                <span>دستیار استعلام</span>
+                <span>دستیار اختصاصی</span>
               </button>
 
               <!-- "توصیه هوشمند AI" button triggers 3-step recommendation wizard (#modal-smart-wizard) -->
