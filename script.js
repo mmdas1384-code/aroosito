@@ -15443,3 +15443,55 @@ window.renderTestimonialsCarousel = renderTestimonialsCarousel;
 window.initTestimonialsAutoScroll = initTestimonialsAutoScroll;
 window.openTestimonialDetailModal = openTestimonialDetailModal;
 window.closeTestimonialDetailModal = closeTestimonialDetailModal;
+
+
+// ==================================================
+// FOOTER MODALS & E-NAMAD TRUST SEAL HANDLERS
+// ==================================================
+function openEnamadModal() {
+  const modal = document.getElementById('modal-enamad');
+  if (modal) {
+    modal.classList.remove('hidden');
+    modal.classList.add('flex');
+  }
+}
+
+function closeEnamadModal() {
+  const modal = document.getElementById('modal-enamad');
+  if (modal) {
+    modal.classList.add('hidden');
+    modal.classList.remove('flex');
+  }
+}
+
+window.openEnamadModal = openEnamadModal;
+window.closeEnamadModal = closeEnamadModal;
+
+// Category Query Parameter URL Mapping on Load
+(function initCategoryUrlParameterMapping() {
+  const CATEGORY_PARAM_MAP = {
+    'hall': 'تالار و باغ تالار عروسی',
+    'studio': 'آتلیه عکاسی و فیلمبرداری',
+    'beauty': 'سالن زیبایی و آرایشگاه عروس',
+    'mezon': 'مزون لباس عروس',
+    'jewelry': 'طلافروشی و جواهرفروشی',
+    'halls': 'تالار و باغ تالار عروسی',
+    'photography': 'آتلیه عکاسی و فیلمبرداری',
+    'bridal_dresses': 'مزون لباس عروس'
+  };
+
+  if (typeof window !== 'undefined' && window.location) {
+    const params = new URLSearchParams(window.location.search);
+    const catParam = params.get('category');
+    if (catParam && CATEGORY_PARAM_MAP[catParam.toLowerCase()]) {
+      const mappedTitle = CATEGORY_PARAM_MAP[catParam.toLowerCase()];
+      window.addEventListener('DOMContentLoaded', () => {
+        setTimeout(() => {
+          if (typeof filterVendorsByCategoryTitle === 'function') {
+            filterVendorsByCategoryTitle(mappedTitle);
+          }
+        }, 200);
+      });
+    }
+  }
+})();
