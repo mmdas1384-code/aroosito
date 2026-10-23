@@ -264,6 +264,7 @@
                 <div class="space-y-1 text-right">
                   <h3 class="text-xs sm:text-sm font-black text-white group-hover:text-[#D4AF37] transition-colors">مدیریت بودجه‌ریز</h3>
                   <p class="text-[10px] text-slate-300 font-medium leading-relaxed">برآورد هوشمند هزینه‌ها ➔</p>
+                  <span class="inline-block mt-1 text-[9px] sm:text-[9.5px] font-bold text-amber-300 bg-amber-500/10 border border-amber-500/25 px-2 py-0.5 rounded-md">تنها با ۳ کلیک بودجه عروسی‌ات را شفاف کن ✨</span>
                 </div>
               </div>
 
@@ -292,6 +293,7 @@
                 <div class="space-y-1 text-right">
                   <h3 class="text-xs sm:text-sm font-black text-white group-hover:text-[#D4AF37] transition-colors">ورود به پنل برنامه‌ریزی</h3>
                   <p class="text-[10px] text-slate-300 font-medium leading-relaxed">مدیریت مهمانان & زمان‌بندی ➔</p>
+                  <span class="inline-block mt-1 text-[9px] sm:text-[9.5px] font-bold text-amber-300 bg-amber-500/10 border border-amber-500/25 px-2 py-0.5 rounded-md">شروع برنامه‌ریزی هوشمند در کمتر از ۲ دقیقه 🚀</span>
                 </div>
               </div>
             </div>
@@ -370,18 +372,29 @@
 
           <!-- RIGHT BOX (50% width ratio - 6 cols): Testimonials & Couple Reviews -->
           <div id="verified-testimonials-section" class="lg:col-span-6 bg-[#0e121c]/95 backdrop-blur-xl border border-[#C5A059]/40 rounded-3xl p-5 sm:p-6 flex flex-col justify-between space-y-4 shadow-2xl">
-            <div class="flex items-center justify-between border-b border-[#C5A059]/20 pb-3">
-              <div class="space-y-0.5 text-right">
-                <span class="text-[11px] font-black text-[#D4AF37] flex items-center gap-1.5 block">
-                  <i data-lucide="message-square" class="w-3.5 h-3.5 text-[#D4AF37]"></i>
-                  <span>تجربیات واقعی زوجین</span>
+            <div class="flex flex-col space-y-2 border-b border-[#C5A059]/20 pb-3">
+              <div class="flex items-center justify-between">
+                <div class="space-y-0.5 text-right">
+                  <span class="text-[11px] font-black text-[#D4AF37] flex items-center gap-1.5 block">
+                    <i data-lucide="message-square" class="w-3.5 h-3.5 text-[#D4AF37]"></i>
+                    <span>تجربیات واقعی زوجین</span>
+                  </span>
+                  <h2 class="text-base sm:text-lg font-black text-[#F7F5F0]">نظرات & حس زوج‌های عروسی تو</h2>
+                </div>
+                <span class="text-[10.5px] text-emerald-400 font-bold bg-emerald-950/60 border border-emerald-500/30 px-2.5 py-0.5 rounded-full flex items-center gap-1">
+                  <i data-lucide="star" class="w-3 h-3 text-amber-400"></i>
+                  <span>۴.۹/۵ رضایت کل</span>
                 </span>
-                <h2 class="text-base sm:text-lg font-black text-[#F7F5F0]">نظرات & حس زوج‌های عروسی تو</h2>
               </div>
-              <span class="text-[10.5px] text-emerald-400 font-bold bg-emerald-950/60 border border-emerald-500/30 px-2.5 py-0.5 rounded-full flex items-center gap-1">
-                <i data-lucide="star" class="w-3 h-3 text-amber-400"></i>
-                <span>۴.۹/۵ رضایت کل</span>
-              </span>
+
+              <!-- Testimonials Filter Tabs -->
+              <div id="testimonial-filter-pills" class="flex items-center gap-1.5 overflow-x-auto no-scrollbar pt-1 text-xs font-bold">
+                <button type="button" onclick="filterTestimonialsByCategory('all')" class="testimonial-pill active bg-[#D4AF37] text-[#07090E] px-3 py-1 rounded-xl transition-all cursor-pointer shrink-0" data-cat="all">همه نظرات</button>
+                <button type="button" onclick="filterTestimonialsByCategory('hall')" class="testimonial-pill bg-white/5 border border-amber-500/20 text-slate-300 hover:text-amber-400 active:bg-amber-500/20 px-3 py-1 rounded-xl transition-all cursor-pointer shrink-0" data-cat="hall">تالار & باغ</button>
+                <button type="button" onclick="filterTestimonialsByCategory('studio')" class="testimonial-pill bg-white/5 border border-amber-500/20 text-slate-300 hover:text-amber-400 active:bg-amber-500/20 px-3 py-1 rounded-xl transition-all cursor-pointer shrink-0" data-cat="studio">آتلیه & عکاسی</button>
+                <button type="button" onclick="filterTestimonialsByCategory('mezon')" class="testimonial-pill bg-white/5 border border-amber-500/20 text-slate-300 hover:text-amber-400 active:bg-amber-500/20 px-3 py-1 rounded-xl transition-all cursor-pointer shrink-0" data-cat="mezon">مزون & میکاپ</button>
+                <button type="button" onclick="filterTestimonialsByCategory('catering')" class="testimonial-pill bg-white/5 border border-amber-500/20 text-slate-300 hover:text-amber-400 active:bg-amber-500/20 px-3 py-1 rounded-xl transition-all cursor-pointer shrink-0" data-cat="catering">تشریفات</button>
+              </div>
             </div>
 
             <!-- Testimonials Multi-Item Scroller Container -->
@@ -491,6 +504,11 @@
             <p class="text-xs sm:text-sm text-slate-300 font-medium leading-relaxed">
               با عضویت در پلتفرم، ویترین اختصاصی برند خود را بسازید، استعلام‌های مستقیم زوجین را دریافت کرده و تقویم رزروها را مدیریت کنید.
             </p>
+            <div class="pt-1">
+              <span class="bg-amber-500/10 text-amber-300 border border-amber-500/30 px-3 py-1.5 rounded-full text-xs font-bold inline-flex items-center gap-1.5 shadow-sm">
+                🔥 پیوستن به بیش از ۲۰۰+ تامین‌کننده برتر استان یزد | دسترسی روزانه به صدها زوج در شرف ازدواج
+              </span>
+            </div>
           </div>
 
           <div class="flex items-center gap-3 shrink-0 relative z-10">

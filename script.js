@@ -316,6 +316,7 @@ const HOME_VIEW_HTML = `<main id="home-view" class="flex-1 max-w-7xl w-full mx-a
                 <div class="space-y-1 text-right">
                   <h3 class="text-xs sm:text-sm font-black text-white group-hover:text-[#D4AF37] transition-colors">مدیریت بودجه‌ریز</h3>
                   <p class="text-[10px] text-slate-300 font-medium leading-relaxed">برآورد هوشمند هزینه‌ها ➔</p>
+                  <span class="inline-block mt-1 text-[9px] sm:text-[9.5px] font-bold text-amber-300 bg-amber-500/10 border border-amber-500/25 px-2 py-0.5 rounded-md">تنها با ۳ کلیک بودجه عروسی‌ات را شفاف کن ✨</span>
                 </div>
               </div>
 
@@ -344,6 +345,7 @@ const HOME_VIEW_HTML = `<main id="home-view" class="flex-1 max-w-7xl w-full mx-a
                 <div class="space-y-1 text-right">
                   <h3 class="text-xs sm:text-sm font-black text-white group-hover:text-[#D4AF37] transition-colors">ورود به پنل برنامه‌ریزی</h3>
                   <p class="text-[10px] text-slate-300 font-medium leading-relaxed">مدیریت مهمانان & زمان‌بندی ➔</p>
+                  <span class="inline-block mt-1 text-[9px] sm:text-[9.5px] font-bold text-amber-300 bg-amber-500/10 border border-amber-500/25 px-2 py-0.5 rounded-md">شروع برنامه‌ریزی هوشمند در کمتر از ۲ دقیقه 🚀</span>
                 </div>
               </div>
             </div>
@@ -422,18 +424,29 @@ const HOME_VIEW_HTML = `<main id="home-view" class="flex-1 max-w-7xl w-full mx-a
 
           <!-- RIGHT BOX (50% width ratio - 6 cols): Testimonials & Couple Reviews -->
           <div id="verified-testimonials-section" class="lg:col-span-6 bg-[#0e121c]/95 backdrop-blur-xl border border-[#C5A059]/40 rounded-3xl p-5 sm:p-6 flex flex-col justify-between space-y-4 shadow-2xl">
-            <div class="flex items-center justify-between border-b border-[#C5A059]/20 pb-3">
-              <div class="space-y-0.5 text-right">
-                <span class="text-[11px] font-black text-[#D4AF37] flex items-center gap-1.5 block">
-                  <i data-lucide="message-square" class="w-3.5 h-3.5 text-[#D4AF37]"></i>
-                  <span>تجربیات واقعی زوجین</span>
+            <div class="flex flex-col space-y-2 border-b border-[#C5A059]/20 pb-3">
+              <div class="flex items-center justify-between">
+                <div class="space-y-0.5 text-right">
+                  <span class="text-[11px] font-black text-[#D4AF37] flex items-center gap-1.5 block">
+                    <i data-lucide="message-square" class="w-3.5 h-3.5 text-[#D4AF37]"></i>
+                    <span>تجربیات واقعی زوجین</span>
+                  </span>
+                  <h2 class="text-base sm:text-lg font-black text-[#F7F5F0]">نظرات & حس زوج‌های عروسی تو</h2>
+                </div>
+                <span class="text-[10.5px] text-emerald-400 font-bold bg-emerald-950/60 border border-emerald-500/30 px-2.5 py-0.5 rounded-full flex items-center gap-1">
+                  <i data-lucide="star" class="w-3 h-3 text-amber-400"></i>
+                  <span>۴.۹/۵ رضایت کل</span>
                 </span>
-                <h2 class="text-base sm:text-lg font-black text-[#F7F5F0]">نظرات & حس زوج‌های عروسی تو</h2>
               </div>
-              <span class="text-[10.5px] text-emerald-400 font-bold bg-emerald-950/60 border border-emerald-500/30 px-2.5 py-0.5 rounded-full flex items-center gap-1">
-                <i data-lucide="star" class="w-3 h-3 text-amber-400"></i>
-                <span>۴.۹/۵ رضایت کل</span>
-              </span>
+
+              <!-- Testimonials Filter Tabs -->
+              <div id="testimonial-filter-pills" class="flex items-center gap-1.5 overflow-x-auto no-scrollbar pt-1 text-xs font-bold">
+                <button type="button" onclick="filterTestimonialsByCategory('all')" class="testimonial-pill active bg-[#D4AF37] text-[#07090E] px-3 py-1 rounded-xl transition-all cursor-pointer shrink-0" data-cat="all">همه نظرات</button>
+                <button type="button" onclick="filterTestimonialsByCategory('hall')" class="testimonial-pill bg-white/5 border border-amber-500/20 text-slate-300 hover:text-amber-400 active:bg-amber-500/20 px-3 py-1 rounded-xl transition-all cursor-pointer shrink-0" data-cat="hall">تالار & باغ</button>
+                <button type="button" onclick="filterTestimonialsByCategory('studio')" class="testimonial-pill bg-white/5 border border-amber-500/20 text-slate-300 hover:text-amber-400 active:bg-amber-500/20 px-3 py-1 rounded-xl transition-all cursor-pointer shrink-0" data-cat="studio">آتلیه & عکاسی</button>
+                <button type="button" onclick="filterTestimonialsByCategory('mezon')" class="testimonial-pill bg-white/5 border border-amber-500/20 text-slate-300 hover:text-amber-400 active:bg-amber-500/20 px-3 py-1 rounded-xl transition-all cursor-pointer shrink-0" data-cat="mezon">مزون & میکاپ</button>
+                <button type="button" onclick="filterTestimonialsByCategory('catering')" class="testimonial-pill bg-white/5 border border-amber-500/20 text-slate-300 hover:text-amber-400 active:bg-amber-500/20 px-3 py-1 rounded-xl transition-all cursor-pointer shrink-0" data-cat="catering">تشریفات</button>
+              </div>
             </div>
 
             <!-- Testimonials Multi-Item Scroller Container -->
@@ -543,6 +556,11 @@ const HOME_VIEW_HTML = `<main id="home-view" class="flex-1 max-w-7xl w-full mx-a
             <p class="text-xs sm:text-sm text-slate-300 font-medium leading-relaxed">
               با عضویت در پلتفرم، ویترین اختصاصی برند خود را بسازید، استعلام‌های مستقیم زوجین را دریافت کرده و تقویم رزروها را مدیریت کنید.
             </p>
+            <div class="pt-1">
+              <span class="bg-amber-500/10 text-amber-300 border border-amber-500/30 px-3 py-1.5 rounded-full text-xs font-bold inline-flex items-center gap-1.5 shadow-sm">
+                🔥 پیوستن به بیش از ۲۰۰+ تامین‌کننده برتر استان یزد | دسترسی روزانه به صدها زوج در شرف ازدواج
+              </span>
+            </div>
           </div>
 
           <div class="flex items-center gap-3 shrink-0 relative z-10">
@@ -15277,6 +15295,7 @@ const TESTIMONIALS_DATA = [
     avatar: "https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=100",
     date: "۱۴۰۲/۰۸/۱۵",
     vendorTag: "رزرو تالار مشیرالممالک",
+    category: "hall",
     rating: 5,
     shortQuote: "استعلام قیمت مستقیم و چت با مدیر تالار فوق‌العاده سریع بود. همه هزینه‌ها دقیقا مطابق با فاکتور نهایی شد.",
     fullReview: "ما از طریق عروسی تو تالار باغ مشیرالممالک یزد را پیدا کردیم. امکان استعلام آنلاین قیمت و گفتگو با مدیریت مجموعه باعث شد بتوانیم بدون نیاز به مراجعه‌های حضوری متعدد، برنامه زمانی و بودجه را دقیق هماهنگ کنیم. پشتیبانی عالی و شفافیت کامل در هزینه‌ها تجربه بی‌نظیری برای ما رقم زد."
@@ -15287,6 +15306,7 @@ const TESTIMONIALS_DATA = [
     avatar: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=100",
     date: "۱۴۰۲/۰۹/۲۰",
     vendorTag: "رزرو آتلیه کویر",
+    category: "studio",
     rating: 5,
     shortQuote: "کارت دعوت دیجیتال با تم زمرد بسیار شیک بود و همه مهمانان ما فرم RSVP آنلاین را به راحتی پر کردند.",
     fullReview: "از سیستم کارت دعوت آنلاین عروسی تو استفاده کردیم. قالب زمردی و موزیک زمینه عالی بود و مهمانان ما فرم حضور و غیاب را تکمیل کردند. لیست مهمانان و هدایا به صورت منظم در پنل مدیریت ما ذخیره شد که کار ما را بسیار آسان کرد."
@@ -15297,6 +15317,7 @@ const TESTIMONIALS_DATA = [
     avatar: "https://images.unsplash.com/photo-1517841905240-472988babdf9?w=100",
     date: "۱۴۰۲/۱۰/۱۲",
     vendorTag: "خدمات تشریفات VIP یزد",
+    category: "catering",
     rating: 5,
     shortQuote: "هوش مصنوعی بودجه‌ریز تمام هزینه‌های پنهان عروسی مثل ورودی و انعام را دقیق برآورد کرد و مانع کسر بودجه شد.",
     fullReview: "دستیار بودجه‌ریز هوشمند عروسی تو به ما کمک کرد تمام هزینه‌های ریز و درشت تشریفات، گل‌آرایی و کترینگ را کنترل کنیم. پیشنهادهای تطبیق قیمت با تامین‌کنندگان معتبر یزد عالی بود و در زمان و هزینه ما صرفه‌جویی چشمگیری شد."
@@ -15307,17 +15328,43 @@ const TESTIMONIALS_DATA = [
     avatar: "https://images.unsplash.com/photo-1522075469751-3a6694fb2f61?w=100",
     date: "۱۴۰۲/۱۱/۰۵",
     vendorTag: "مزون عروس سلطنتی",
+    category: "mezon",
     rating: 5,
     shortQuote: "تست آنلاین سبک عروسی و پرو مجازی لباس عروس فوق‌العاده کاربردی بود و دقیقا همان رویای ما برآورده شد.",
     fullReview: "از طریق بخش تست‌های روانشناسی و پرو مجازی لباس عروس توانستیم بهترین مزون‌های یزد را مقایسه کنیم. مدیریت صبور مزون و تخفیف ویژه پلتفرم عروسی تو تجربه خریدی لوکس و بدون دغدغه برای ما ساخت."
   }
 ];
 
-function renderTestimonialsCarousel() {
+let currentTestimonialCategory = 'all';
+
+function filterTestimonialsByCategory(category) {
+  currentTestimonialCategory = category;
+
+  document.querySelectorAll('#testimonial-filter-pills .testimonial-pill').forEach(btn => {
+    if (btn.getAttribute('data-cat') === category) {
+      btn.className = 'testimonial-pill active bg-[#D4AF37] text-[#07090E] px-3 py-1 rounded-xl transition-all cursor-pointer shrink-0';
+    } else {
+      btn.className = 'testimonial-pill bg-white/5 border border-amber-500/20 text-slate-300 hover:text-amber-400 active:bg-amber-500/20 px-3 py-1 rounded-xl transition-all cursor-pointer shrink-0';
+    }
+  });
+
+  renderTestimonialsCarousel(category);
+}
+
+function renderTestimonialsCarousel(filterCategory = currentTestimonialCategory) {
   const container = document.getElementById('testimonials-carousel-container');
   if (!container) return;
 
-  container.innerHTML = TESTIMONIALS_DATA.map(item => `
+  const filteredData = filterCategory === 'all'
+    ? TESTIMONIALS_DATA
+    : TESTIMONIALS_DATA.filter(t => t.category === filterCategory || (filterCategory === 'mezon' && (t.category === 'mezon' || t.category === 'beauty')));
+
+  if (filteredData.length === 0) {
+    container.innerHTML = `<div class="text-xs text-slate-400 py-4 text-center w-full">نظری در این دسته‌بندی یافت نشد.</div>`;
+    return;
+  }
+
+  container.innerHTML = filteredData.map(item => `
     <div onclick="openTestimonialDetailModal(${item.id})" class="bg-[#141A28] border border-[#C5A059]/30 hover:border-amber-500/60 rounded-2xl p-4 shrink-0 w-[260px] sm:w-[290px] space-y-2 shadow-lg transition-all duration-300 hover:scale-[1.02] cursor-pointer group">
       <div class="flex items-center justify-between pointer-events-none">
         <div class="flex items-center gap-2">
@@ -15343,6 +15390,8 @@ function renderTestimonialsCarousel() {
     lucide.createIcons();
   }
 }
+
+window.filterTestimonialsByCategory = filterTestimonialsByCategory;
 
 let testimonialsTimer = null;
 let isTestimonialsHovered = false;
