@@ -314,7 +314,7 @@ const HOME_VIEW_HTML = `<main id="home-view" class="flex-1 max-w-7xl w-full mx-a
                   <span class="text-[9.5px] font-bold text-amber-200 bg-[#D4AF37]/15 px-2.5 py-0.5 rounded-full border border-[#D4AF37]/30">هوش مصنوعی</span>
                 </div>
                 <div class="space-y-1 text-right">
-                  <h3 class="text-xs sm:text-sm font-black text-white group-hover:text-[#D4AF37] transition-colors">مدیریت بودجه‌ریز</h3>
+                  <h3 class="text-xs sm:text-sm font-black text-white group-hover:text-[#D4AF37] transition-colors">تخمین بودجه</h3>
                   <p class="text-[10px] text-slate-300 font-medium leading-relaxed">برآورد هوشمند هزینه‌ها ➔</p>
                   <span class="inline-block mt-1 text-[9px] sm:text-[9.5px] font-bold text-amber-300 bg-amber-500/10 border border-amber-500/25 px-2 py-0.5 rounded-md">تنها با ۳ کلیک بودجه عروسی‌ات را شفاف کن ✨</span>
                 </div>
@@ -335,7 +335,7 @@ const HOME_VIEW_HTML = `<main id="home-view" class="flex-1 max-w-7xl w-full mx-a
               </div>
 
               <!-- Shortcut Card 4: Full Planning Hub -->
-              <div onclick="if(window.isLoggedIn){ window.location.href='dashboard.html'; } else { openAuthModal('couple'); }" class="bg-[#141A28] hover:bg-[#1E293B] border border-[#C5A059]/35 hover:border-[#D4AF37] p-4 rounded-2xl transition-all cursor-pointer flex flex-col justify-between space-y-3 group shadow-lg">
+              <div onclick="window.location.href='planning.html';" class="bg-[#141A28] hover:bg-[#1E293B] border border-[#C5A059]/35 hover:border-[#D4AF37] p-4 rounded-2xl transition-all cursor-pointer flex flex-col justify-between space-y-3 group shadow-lg">
                 <div class="flex items-center justify-between">
                   <span class="w-9 h-9 rounded-xl bg-[#D4AF37]/20 text-[#D4AF37] flex items-center justify-center border border-[#D4AF37]/40 group-hover:bg-[#D4AF37] group-hover:text-[#07090E] transition-all">
                     <i data-lucide="clipboard-list" class="w-4 h-4"></i>
@@ -950,6 +950,9 @@ async function loadViewTemplates() {
 
   if (window.lucide && typeof lucide.createIcons === "function") {
     lucide.createIcons();
+  }
+  if (typeof initTestimonialsAutoScroll === "function") {
+    initTestimonialsAutoScroll();
   }
 }
 
@@ -15526,21 +15529,42 @@ window.closeEnamadModal = closeEnamadModal;
     'jewelry': 'طلافروشی و جواهرفروشی',
     'halls': 'تالار و باغ تالار عروسی',
     'photography': 'آتلیه عکاسی و فیلمبرداری',
-    'bridal_dresses': 'مزون لباس عروس'
+    'bridal_dresses': 'مزون لباس عروس',
+    'venue_catering': 'تالار و باغ تالار عروسی',
+    'photo_music': 'آتلیه عکاسی و فیلمبرداری',
+    'beauty_style': 'سالن زیبایی و آرایشگاه عروس',
+    'boutique': 'مزون لباس عروس',
+    'catering': 'کترینگ و تشریفات پذیرایی'
   };
 
   if (typeof window !== 'undefined' && window.location) {
     const params = new URLSearchParams(window.location.search);
     const catParam = params.get('category');
-    if (catParam && CATEGORY_PARAM_MAP[catParam.toLowerCase()]) {
-      const mappedTitle = CATEGORY_PARAM_MAP[catParam.toLowerCase()];
-      window.addEventListener('DOMContentLoaded', () => {
-        setTimeout(() => {
-          if (typeof filterVendorsByCategoryTitle === 'function') {
-            filterVendorsByCategoryTitle(mappedTitle);
-          }
-        }, 200);
-      });
+    const subParam = params.get('sub');
+
+    const executeFilters = () => {
+      if (catParam && CATEGORY_PARAM_MAP[catParam.toLowerCase()]) {
+        const mappedTitle = CATEGORY_PARAM_MAP[catParam.toLowerCase()];
+        if (typeof filterVendorsByCategoryTitle === 'function') {
+          filterVendorsByCategoryTitle(mappedTitle);
+        }
+      }
+      if (subParam) {
+        const decodedSub = decodeURIComponent(subParam);
+        const searchInput = document.getElementById('directory-search-input');
+        if (searchInput) {
+          searchInput.value = decodedSub;
+        }
+        if (typeof filterVendors === 'function') {
+          filterVendors();
+        }
+      }
+    };
+
+    if (document.readyState === 'loading') {
+      window.addEventListener('DOMContentLoaded', () => setTimeout(executeFilters, 200));
+    } else {
+      setTimeout(executeFilters, 200);
     }
   }
 })();
@@ -15601,3 +15625,84 @@ window.handleDedicatedAssistantSubmit = handleDedicatedAssistantSubmit;
 window.openQuickInquiryModal = openQuickInquiryModal;
 window.closeQuickInquiryModal = closeQuickInquiryModal;
 window.handleQuickInquirySubmit = handleQuickInquirySubmit;
+
+
+// ==================================================
+// FOOTER INFORMATIONAL FLOATING MODALS
+// ==================================================
+function openAboutModal() {
+  const modal = document.getElementById('modal-about') || document.getElementById('aboutModal');
+  if (modal) {
+    modal.classList.remove('hidden');
+    modal.classList.add('flex');
+    if (typeof lucide !== 'undefined' && lucide.createIcons) lucide.createIcons();
+  }
+}
+
+function closeAboutModal() {
+  const modal = document.getElementById('modal-about') || document.getElementById('aboutModal');
+  if (modal) {
+    modal.classList.add('hidden');
+    modal.classList.remove('flex');
+  }
+}
+
+function openFaqModal() {
+  const modal = document.getElementById('modal-faq') || document.getElementById('faqModal');
+  if (modal) {
+    modal.classList.remove('hidden');
+    modal.classList.add('flex');
+    if (typeof lucide !== 'undefined' && lucide.createIcons) lucide.createIcons();
+  }
+}
+
+function closeFaqModal() {
+  const modal = document.getElementById('modal-faq') || document.getElementById('faqModal');
+  if (modal) {
+    modal.classList.add('hidden');
+    modal.classList.remove('flex');
+  }
+}
+
+function openTermsModal() {
+  const modal = document.getElementById('modal-terms') || document.getElementById('termsModal');
+  if (modal) {
+    modal.classList.remove('hidden');
+    modal.classList.add('flex');
+    if (typeof lucide !== 'undefined' && lucide.createIcons) lucide.createIcons();
+  }
+}
+
+function closeTermsModal() {
+  const modal = document.getElementById('modal-terms') || document.getElementById('termsModal');
+  if (modal) {
+    modal.classList.add('hidden');
+    modal.classList.remove('flex');
+  }
+}
+
+function openSupportModal() {
+  const modal = document.getElementById('modal-support') || document.getElementById('supportModal');
+  if (modal) {
+    modal.classList.remove('hidden');
+    modal.classList.add('flex');
+    if (typeof lucide !== 'undefined' && lucide.createIcons) lucide.createIcons();
+  }
+}
+
+function closeSupportModal() {
+  const modal = document.getElementById('modal-support') || document.getElementById('supportModal');
+  if (modal) {
+    modal.classList.add('hidden');
+    modal.classList.remove('flex');
+  }
+}
+
+window.openAboutModal = openAboutModal;
+window.closeAboutModal = closeAboutModal;
+window.openFaqModal = openFaqModal;
+window.closeFaqModal = closeFaqModal;
+window.openTermsModal = openTermsModal;
+window.closeTermsModal = closeTermsModal;
+window.openSupportModal = openSupportModal;
+window.closeSupportModal = closeSupportModal;
