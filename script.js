@@ -4068,24 +4068,24 @@ if (document.readyState === "loading") {
           <video src="${v.videoTeaser || 'https://assets.mixkit.co/videos/preview/mixkit-wedding-couple-walking-in-a-park-41315-large.mp4'}" muted loop playsinline preload="none" class="card-teaser-video absolute inset-0 w-full h-full object-cover opacity-0 transition-opacity duration-500 pointer-events-none"></video>
           <div class="absolute inset-0 bg-gradient-to-t from-[#0F172A] via-transparent to-black/40"></div>
 
-          <!-- Top Badges with Glassmorphic Discount Badge -->
+          <!-- Top Badges Clean Positioning (Top-Right Category/Discount, Top-Left Actions Row) -->
           <div class="absolute top-3 right-3 flex items-center gap-1.5 z-10">
-            <span class="bg-black/70 backdrop-blur-md text-amber-200 border border-[#D4AF37]/40 text-[10px] font-bold px-2.5 py-0.5 rounded-full shadow-sm flex items-center gap-1">
+            <span class="bg-black/80 backdrop-blur-md text-amber-200 border border-[#D4AF37]/50 text-[10px] font-bold px-2.5 py-1 rounded-full shadow-md flex items-center gap-1">
               <span>${badgeIcon}</span>
               <span>${cat}</span>
             </span>
-            <span class="bg-gradient-to-r from-rose-600 to-amber-500 text-white border border-rose-400/40 text-[9.5px] font-black px-2 py-0.5 rounded-full shadow-md flex items-center gap-1">
+            <span class="bg-gradient-to-r from-rose-600 to-amber-500 text-white border border-rose-400/50 text-[9.5px] font-black px-2 py-0.5 rounded-full shadow-md flex items-center gap-1">
               <i data-lucide="percent" class="w-3 h-3 text-white"></i>
               <span>٪۱۵ تخفیف</span>
             </span>
           </div>
 
-          <div class="absolute top-3 left-3 flex items-center gap-1.5 z-10" onclick="event.stopPropagation()">
-            <button type="button" onclick="toggleVendorComparison(${v.id}, event)" class="w-7 h-7 rounded-full bg-black/60 hover:bg-[#D4AF37] hover:text-[#0F251A] text-white border border-[#D4AF37]/40 backdrop-blur-md flex items-center justify-center transition-all cursor-pointer shadow-sm" title="مقایسه">
-              <i data-lucide="scale" class="w-3.5 h-3.5"></i>
+          <div class="absolute top-3 left-3 flex items-center gap-2 z-10" onclick="event.stopPropagation()">
+            <button type="button" onclick="toggleVendorComparison(${v.id}, event)" class="w-8 h-8 rounded-full bg-black/70 hover:bg-[#D4AF37] hover:text-[#0F251A] text-white border border-[#D4AF37]/50 backdrop-blur-md flex items-center justify-center transition-all cursor-pointer shadow-md" title="مقایسه">
+              <i data-lucide="scale" class="w-4 h-4"></i>
             </button>
-            <button type="button" onclick="toggleFavoriteVendor(${v.id}, event)" class="w-7 h-7 rounded-full bg-black/60 hover:bg-rose-600 text-white border border-[#D4AF37]/40 backdrop-blur-md flex items-center justify-center transition-all cursor-pointer shadow-sm" title="نشان‌شده">
-              <i data-lucide="heart" class="w-3.5 h-3.5 ${isFav ? 'fill-rose-500 text-rose-500' : ''}"></i>
+            <button type="button" onclick="toggleFavoriteVendor(${v.id}, event)" class="w-8 h-8 rounded-full bg-black/70 hover:bg-rose-600 text-white border border-[#D4AF37]/50 backdrop-blur-md flex items-center justify-center transition-all cursor-pointer shadow-md" title="نشان‌شده">
+              <i data-lucide="heart" class="w-4 h-4 ${isFav ? 'fill-rose-500 text-rose-500' : ''}"></i>
             </button>
           </div>
 
@@ -4668,23 +4668,23 @@ if (document.readyState === "loading") {
         const activeSubInGroupCount = group.subcategories.filter(sub => activeCategoryFilters.has(sub.title)).length;
 
         return `
-          <div class="border border-[#1B3B2B]/20 rounded-2xl overflow-hidden mb-2 bg-[#FCFCFA] shadow-2xs transition-all">
+          <div class="border border-[#C5A059]/30 rounded-2xl overflow-hidden mb-2 bg-[#141A28] shadow-md transition-all">
             <!-- Accordion Group Header -->
-            <button type="button" onclick="toggleCategoryAccordion('${group.id}')" class="w-full p-2.5 flex items-center justify-between bg-[#F5EFEB]/80 hover:bg-[#F5EFEB] text-right transition-colors cursor-pointer">
+            <button type="button" onclick="toggleCategoryAccordion('${group.id}')" class="w-full p-2.5 flex items-center justify-between bg-[#1E293B]/80 hover:bg-[#1E293B] text-right transition-colors cursor-pointer">
               <div class="flex items-center gap-2">
-                <div class="w-7 h-7 rounded-lg bg-[#1B3B2B] text-[#D4AF37] flex items-center justify-center shrink-0 shadow-xs">
+                <div class="w-7 h-7 rounded-lg bg-[#D4AF37]/20 border border-[#D4AF37]/40 text-[#D4AF37] flex items-center justify-center shrink-0 shadow-xs">
                   <i data-lucide="${group.icon || 'grid'}" class="w-3.5 h-3.5"></i>
                 </div>
-                <span class="text-xs font-extrabold text-[#1B3B2B]">${group.title}</span>
+                <span class="text-xs font-extrabold text-white">${group.title}</span>
               </div>
               <div class="flex items-center gap-1.5">
-                ${activeSubInGroupCount > 0 ? `<span class="text-[10px] font-bold bg-[#D4AF37] text-[#1B3B2B] px-1.5 py-0.5 rounded-full">${activeSubInGroupCount}</span>` : ''}
-                <i data-lucide="chevron-down" class="w-4 h-4 text-[#1B3B2B] transition-transform duration-200 ${isGroupExpanded ? 'rotate-180' : ''}"></i>
+                ${activeSubInGroupCount > 0 ? `<span class="text-[10px] font-bold bg-[#D4AF37] text-[#07090E] px-1.5 py-0.5 rounded-full">${activeSubInGroupCount}</span>` : ''}
+                <i data-lucide="chevron-down" class="w-4 h-4 text-[#D4AF37] transition-transform duration-200 ${isGroupExpanded ? 'rotate-180' : ''}"></i>
               </div>
             </button>
 
             <!-- Sub-Categories Expandable Container -->
-            <div class="${isGroupExpanded ? 'block' : 'hidden'} p-2 space-y-1.5 bg-[#FCFCFA] border-t border-[#1B3B2B]/10">
+            <div class="${isGroupExpanded ? 'block' : 'hidden'} p-2 space-y-1.5 bg-[#141A28] border-t border-[#C5A059]/20">
               <div class="flex flex-wrap gap-1.5 pt-1">
                 ${group.subcategories.map(sub => {
                   const isChecked = activeCategoryFilters.has(sub.title);
