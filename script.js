@@ -4068,26 +4068,32 @@ if (document.readyState === "loading") {
           <video src="${v.videoTeaser || 'https://assets.mixkit.co/videos/preview/mixkit-wedding-couple-walking-in-a-park-41315-large.mp4'}" muted loop playsinline preload="none" class="card-teaser-video absolute inset-0 w-full h-full object-cover opacity-0 transition-opacity duration-500 pointer-events-none"></video>
           <div class="absolute inset-0 bg-gradient-to-t from-[#0F172A] via-transparent to-black/40"></div>
 
-          <!-- Top Right Badges Flex Container -->
-          <div class="card-header-tags-right">
-            <span class="bg-black/80 backdrop-blur-md text-amber-200 border border-[#D4AF37]/50 text-[10px] font-bold px-2.5 py-1 rounded-full shadow-md flex items-center gap-1 shrink-0">
-              <span>${badgeIcon}</span>
-              <span>${cat}</span>
-            </span>
-            <span class="bg-gradient-to-r from-rose-600 to-amber-500 text-white border border-rose-400/50 text-[9.5px] font-black px-2 py-0.5 rounded-full shadow-md flex items-center gap-1 shrink-0">
-              <i data-lucide="percent" class="w-3 h-3 text-white"></i>
-              <span>٪۱۵ تخفیف</span>
-            </span>
-          </div>
+          <!-- Card Badge Layer Container (Left & Right) -->
+          <div class="card-badge-layer" onclick="event.stopPropagation()">
+            <!-- RIGHT SIDE: Category & Discount -->
+            <div class="badges-right">
+              <span class="badge-tag bg-black/80 backdrop-blur-md text-amber-200 border border-[#D4AF37]/50 text-[10px] font-bold px-2.5 py-1 rounded-full shadow-md flex items-center gap-1">
+                <span>${badgeIcon}</span>
+                <span>${cat}</span>
+              </span>
+              <span class="badge-tag bg-gradient-to-r from-rose-600 to-amber-500 text-white border border-rose-400/50 text-[9.5px] font-black px-2 py-0.5 rounded-full shadow-md flex items-center gap-1">
+                <i data-lucide="percent" class="w-3 h-3 text-white"></i>
+                <span>٪۱۵ تخفیف</span>
+              </span>
+            </div>
 
-          <!-- Top Left Actions Flex Container -->
-          <div class="card-header-actions-left" onclick="event.stopPropagation()">
-            <button type="button" onclick="toggleVendorComparison(${v.id}, event)" class="w-8 h-8 rounded-full bg-black/75 hover:bg-[#D4AF37] hover:text-[#0F251A] text-white border border-[#D4AF37]/50 backdrop-blur-md flex items-center justify-center transition-all cursor-pointer shadow-md shrink-0" title="مقایسه">
-              <i data-lucide="scale" class="w-4 h-4"></i>
-            </button>
-            <button type="button" onclick="toggleFavoriteVendor(${v.id}, event)" class="w-8 h-8 rounded-full bg-black/75 hover:bg-rose-600 text-white border border-[#D4AF37]/50 backdrop-blur-md flex items-center justify-center transition-all cursor-pointer shadow-md shrink-0" title="نشان‌شده">
-              <i data-lucide="heart" class="w-4 h-4 ${isFav ? 'fill-rose-500 text-rose-500' : ''}"></i>
-            </button>
+            <!-- LEFT SIDE: Actions & Quick View -->
+            <div class="badges-left">
+              <button type="button" onclick="toggleFavoriteVendor(${v.id}, event)" class="btn-card-icon favorite-btn" title="علاقه‌مندی">
+                <i data-lucide="heart" class="w-4 h-4 ${isFav ? 'fill-rose-500 text-rose-500' : ''}"></i>
+              </button>
+              <button type="button" onclick="toggleVendorComparison(${v.id}, event)" class="btn-card-icon compare-btn" title="مقایسه">
+                <i data-lucide="scale" class="w-4 h-4"></i>
+              </button>
+              <button type="button" onclick="openQuickViewModal(${v.id}, event)" class="btn-card-icon quickview-btn" title="مشاهده سریع">
+                <i data-lucide="eye" class="w-4 h-4"></i>
+              </button>
+            </div>
           </div>
 
           <!-- Rating Badge -->
@@ -13931,6 +13937,16 @@ window.handleVipConciergeSubmit = function(e) {
 };
 
 /* QUICK VIEW MODAL / DRAWER CONTROLLERS */
+window.openQuickViewModal = function(vendorId, event) {
+  if (event) event.stopPropagation();
+
+  let vId = vendorId;
+  if (typeof vendorId === 'string' && !isNaN(parseInt(vendorId))) {
+    vId = parseInt(vendorId);
+  }
+  return window.openQuickViewDrawer(vId, event);
+};
+
 window.openQuickViewDrawer = function(vendorId, event) {
   if (event) event.stopPropagation();
 

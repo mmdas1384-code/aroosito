@@ -60,35 +60,54 @@
   transform: translateY(-4px) !important;
 }
 
-/* TOP BADGES FLEXBOX CONTAINERS - STRICT SEPARATION */
-.card-header-tags-right {
-  position: absolute !important;
-  top: 10px !important;
-  right: 10px !important;
-  display: flex !important;
-  align-items: center !important;
-  gap: 6px !important;
-  z-index: 10 !important;
+/* CARD BADGE LAYER - EXACT SPEC */
+.card-badge-layer {
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  right: 10px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  z-index: 10;
+  pointer-events: none;
 }
 
-.card-header-actions-left {
-  position: absolute !important;
-  top: 10px !important;
-  left: 10px !important;
-  display: flex !important;
-  align-items: center !important;
-  gap: 6px !important;
-  z-index: 10 !important;
+.badges-right, .badges-left {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  pointer-events: auto;
 }
 
-/* Ensure inner badges within header containers do NOT use absolute positioning */
-.card-header-tags-right > *,
-.card-header-actions-left > * {
-  position: relative !important;
+/* IMPORTANT: Strip individual position absolute from child elements */
+.card-badge-layer .badge-tag,
+.card-badge-layer .btn-card-icon {
+  position: static !important;
   top: auto !important;
   left: auto !important;
   right: auto !important;
-  bottom: auto !important;
+  margin: 0 !important;
+}
+
+.btn-card-icon {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  background: rgba(15, 23, 42, 0.75);
+  backdrop-filter: blur(4px);
+  border: 1px solid rgba(212, 175, 55, 0.3);
+  color: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.btn-card-icon:hover {
+  background: #d4af37;
+  color: #0f172a;
 }
 
 /* Cinematic Hover Video Teasers */
