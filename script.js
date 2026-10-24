@@ -55,7 +55,7 @@ const HOME_VIEW_HTML = `<main id="home-view" class="flex-1 max-w-7xl w-full mx-a
     <div id="tab-home" class="tab-content space-y-12">
 
       <!-- 2. ULTRA-SLIM & COMPACT EDITORIAL HERO SECTION WITH TOP BREATHING GAP -->
-      <section id="hero" class="relative mt-6 sm:mt-8 bg-[#0b0f19] border border-[#D4AF37]/40 rounded-3xl p-5 sm:p-6 lg:p-8 shadow-2xl overflow-visible text-white space-y-6">
+      <section id="hero" class="relative mt-6 sm:mt-8 text-white space-y-6 overflow-visible">
         <!-- Ambient Gold Radial Illumination -->
         <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[500px] h-[500px] bg-[#D4AF37]/10 rounded-full blur-3xl pointer-events-none"></div>
 
@@ -63,15 +63,18 @@ const HOME_VIEW_HTML = `<main id="home-view" class="flex-1 max-w-7xl w-full mx-a
         <div class="grid grid-cols-1 lg:grid-cols-12 gap-6 items-stretch relative z-10">
 
           <!-- RIGHT / MAIN ACTION PANEL (7 cols) -->
-          <div class="lg:col-span-7 bg-[#0e121c]/90 backdrop-blur-xl border border-[#C5A059]/40 rounded-3xl p-5 sm:p-6 flex flex-col justify-between space-y-4 text-right shadow-2xl">
-            <div class="space-y-3">
+          <div class="lg:col-span-7 bg-[#0e121c]/90 backdrop-blur-2xl rounded-3xl p-5 sm:p-6 flex flex-col justify-between space-y-4 text-right shadow-2xl relative overflow-hidden border border-[#D4AF37]/30">
+            <!-- Soft Ambient Gold Radial Background Glow -->
+            <div class="absolute inset-0 bg-[radial-gradient(circle_at_top_right,rgba(212,175,55,0.15),transparent_65%)] pointer-events-none"></div>
+
+            <div class="space-y-3 relative z-10">
               <div class="inline-flex items-center gap-2 bg-[#D4AF37]/15 text-[#D4AF37] border border-[#D4AF37]/40 px-3.5 py-1.5 rounded-full text-xs font-black">
                 <i data-lucide="crown" class="w-4 h-4 text-[#D4AF37]"></i>
                 <span>Aroosi No — پلتفرم جامع و هوشمند عروسی‌های مجلل استان یزد</span>
               </div>
 
               <h1 class="text-2xl sm:text-3xl lg:text-4xl font-black text-white leading-snug">
-                آفرینش <span class="text-[#D4AF37] underline decoration-[#D4AF37]/60 underline-offset-8">خاطره‌انگیزترین لحظات لوکس</span>
+                آفرینش <span class="bg-gradient-to-r from-amber-200 via-[#D4AF37] to-amber-500 bg-clip-text text-transparent">خاطره‌انگیزترین لحظات لوکس</span>
               </h1>
 
               <p class="text-xs sm:text-sm text-slate-300 font-medium leading-relaxed">
@@ -80,7 +83,7 @@ const HOME_VIEW_HTML = `<main id="home-view" class="flex-1 max-w-7xl w-full mx-a
             </div>
 
             <!-- SMART SEARCH BAR ("جستجوی سریع") -->
-            <div class="relative w-full">
+            <div class="relative w-full z-10">
               <div class="flex items-center gap-2 bg-[#0F172A]/90 backdrop-blur-md border border-[#D4AF37]/60 rounded-full p-2 shadow-[0_8px_25px_rgba(212,175,55,0.15)] focus-within:border-[#D4AF37] focus-within:ring-2 focus-within:ring-[#D4AF37]/50 transition-all">
                 <div class="relative flex-1 flex items-center pr-3">
                   <i data-lucide="search" class="w-4 h-4 text-[#D4AF37] shrink-0"></i>
@@ -100,18 +103,20 @@ const HOME_VIEW_HTML = `<main id="home-view" class="flex-1 max-w-7xl w-full mx-a
             </div>
 
             <!-- QUICK ACCESS ACTION CHIPS (شروع برنامه‌ریزی, دستیار استعلام, توصیه هوشمند AI) -->
-            <div class="grid grid-cols-1 sm:grid-cols-3 gap-2.5 pt-1">
+            <div class="grid grid-cols-1 sm:grid-cols-3 gap-2.5 pt-1 relative z-10">
               <button type="button" onclick="openStartPlanningModal()" class="gold-shimmer-btn text-[#0F251A] font-black py-2.5 px-3 rounded-2xl text-xs transition-all transform hover:scale-[1.02] active:scale-[0.98] cursor-pointer flex items-center justify-center gap-1.5 shadow-md border border-[#D4AF37]">
                 <i data-lucide="sparkles" class="w-4 h-4 text-[#0F251A]"></i>
                 <span>شروع برنامه‌ریزی</span>
               </button>
 
-              <button type="button" onclick="openVipConciergeModal()" class="bg-[#141A28] hover:bg-[#1E293B] text-[#D4AF37] border border-[#C5A059]/40 font-bold py-2.5 px-3 rounded-2xl text-xs transition-all cursor-pointer flex items-center justify-center gap-1.5 shadow-md">
+              <!-- "دستیار اختصاصی" button triggers dedicated assistant modal (#dedicatedAssistantModal) -->
+              <button type="button" onclick="openDedicatedAssistantModal()" class="bg-[#141A28] hover:bg-[#1E293B] text-[#D4AF37] border border-[#C5A059]/40 font-bold py-2.5 px-3 rounded-2xl text-xs transition-all cursor-pointer flex items-center justify-center gap-1.5 shadow-md">
                 <i data-lucide="crown" class="w-4 h-4 text-[#D4AF37]"></i>
-                <span>دستیار استعلام</span>
+                <span>دستیار اختصاصی</span>
               </button>
 
-              <button type="button" onclick="openSmartWizardModal()" class="bg-[#141A28] hover:bg-[#1E293B] text-amber-200 border border-[#C5A059]/40 font-bold py-2.5 px-3 rounded-2xl text-xs transition-all cursor-pointer flex items-center justify-center gap-1.5 shadow-md">
+              <!-- "توصیه هوشمند AI" button triggers 3-step recommendation wizard (#modal-smart-wizard) -->
+              <button type="button" onclick="openQuickInquiryModal()" class="bg-[#141A28] hover:bg-[#1E293B] text-amber-200 border border-[#C5A059]/40 font-bold py-2.5 px-3 rounded-2xl text-xs transition-all cursor-pointer flex items-center justify-center gap-1.5 shadow-md">
                 <i data-lucide="wand-2" class="w-4 h-4 text-[#D4AF37]"></i>
                 <span>توصیه هوشمند AI</span>
               </button>
@@ -149,28 +154,32 @@ const HOME_VIEW_HTML = `<main id="home-view" class="flex-1 max-w-7xl w-full mx-a
           </div>
 
           <!-- LEFT / CENTER FOCUSED VENDOR SHOWCASE CARDS (5 cols) -->
-          <div id="hero-vendor-showcase-panel" class="lg:col-span-5 bg-[#0e121c]/90 backdrop-blur-xl border border-[#C5A059]/40 rounded-3xl p-4 sm:p-5 flex flex-col justify-between space-y-4 shadow-2xl relative overflow-hidden">
+          <div id="hero-vendor-showcase-panel" class="lg:col-span-5 bg-[#0e121c]/90 backdrop-blur-xl border border-[#C5A059]/40 rounded-3xl p-4 sm:p-5 flex flex-col justify-between space-y-3 shadow-2xl relative overflow-hidden">
             <div class="flex items-center justify-between border-b border-[#C5A059]/20 pb-2.5">
               <div class="flex items-center gap-2">
                 <span class="w-2.5 h-2.5 rounded-full bg-[#D4AF37] animate-pulse"></span>
                 <span class="text-xs font-black text-[#D4AF37]">ویترین تامین‌کنندگان برتر یزد</span>
               </div>
               <div class="flex items-center gap-1">
-                <button type="button" onclick="slideVipFocalCarousel('prev')" class="w-7 h-7 rounded-full bg-[#141A28] border border-[#C5A059]/30 text-[#D4AF37] flex items-center justify-center hover:bg-[#1E293B] cursor-pointer transition-all">‹</button>
-                <button type="button" onclick="slideVipFocalCarousel('next')" class="w-7 h-7 rounded-full bg-[#141A28] border border-[#C5A059]/30 text-[#D4AF37] flex items-center justify-center hover:bg-[#1E293B] cursor-pointer transition-all">›</button>
+                <button type="button" onclick="slideVipFocalCarousel('prev')" class="w-7 h-7 rounded-full bg-[#141A28] border border-[#C5A059]/30 text-[#D4AF37] flex items-center justify-center hover:bg-[#1E293B] cursor-pointer transition-all shadow-sm" title="قبلی">
+                  <i data-lucide="chevron-up" class="w-4 h-4 text-[#D4AF37]"></i>
+                </button>
+                <button type="button" onclick="slideVipFocalCarousel('next')" class="w-7 h-7 rounded-full bg-[#141A28] border border-[#C5A059]/30 text-[#D4AF37] flex items-center justify-center hover:bg-[#1E293B] cursor-pointer transition-all shadow-sm" title="بعدی">
+                  <i data-lucide="chevron-down" class="w-4 h-4 text-[#D4AF37]"></i>
+                </button>
               </div>
             </div>
 
-            <!-- Asymmetric Focal Carousel Container (Touch Swipe Supported) -->
-            <div id="vip-focal-stage" class="relative min-h-[260px] sm:min-h-[290px] flex items-center justify-center touch-pan-y" onmouseenter="pauseVipFocalAutoScroll()" onmouseleave="resumeVipFocalAutoScroll()">
-              <div id="vip-showcase-container" class="w-full flex items-center justify-center transition-all duration-500 gap-2 sm:gap-3">
+            <!-- Vertical Film-Strip Stage Container with Side Pagination Dots -->
+            <div id="vip-focal-stage" class="relative min-h-[350px] sm:min-h-[370px] flex items-center justify-between gap-2 touch-pan-y overflow-hidden py-1" onmouseenter="pauseVipFocalAutoScroll()" onmouseleave="resumeVipFocalAutoScroll()">
+              <div id="vip-showcase-container" class="w-full flex flex-col items-center justify-center transition-all duration-500 gap-2 relative z-10 py-1 h-full">
                 <!-- Dynamically populated via renderVipFocalShowcase() -->
               </div>
-            </div>
 
-            <!-- Carousel Pagination Dots -->
-            <div id="vip-carousel-dots" class="flex items-center justify-center gap-1.5 pt-1">
-              <!-- Dynamically populated -->
+              <!-- Vertical Carousel Pagination Dots (Right Side) -->
+              <div id="vip-carousel-dots" class="flex flex-col items-center justify-center gap-1.5 z-20 shrink-0">
+                <!-- Dynamically populated -->
+              </div>
             </div>
           </div>
 
@@ -191,9 +200,9 @@ const HOME_VIEW_HTML = `<main id="home-view" class="flex-1 max-w-7xl w-full mx-a
                 </span>
                 <h2 class="text-base sm:text-lg font-black text-[#F7F5F0]">دسته‌بندی‌های هوشمند خدمات عروسی یزد</h2>
               </div>
-              <button type="button" onclick="switchTab('directory')" class="text-xs font-bold text-[#D4AF37] hover:text-amber-300 transition-colors flex items-center gap-1 cursor-pointer">
+              <a href="directory.html" class="text-xs font-bold text-[#D4AF37] hover:text-amber-300 transition-colors flex items-center gap-1 cursor-pointer">
                 <span>مشاهده دایرکتوری کامل ➔</span>
-              </button>
+              </a>
             </div>
 
             <!-- Asymmetric Bento Grid for Categories -->
@@ -283,7 +292,7 @@ const HOME_VIEW_HTML = `<main id="home-view" class="flex-1 max-w-7xl w-full mx-a
             <!-- 4 Filled Rich Visual Interactive Cards -->
             <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 flex-1">
               <!-- Shortcut Card 1: Digital Invitation -->
-              <div onclick="switchTab('invitation')" class="bg-[#141A28] hover:bg-[#1E293B] border border-[#C5A059]/35 hover:border-[#D4AF37] p-4 rounded-2xl transition-all cursor-pointer flex flex-col justify-between space-y-3 group shadow-lg">
+              <div onclick="window.location.href='invitation.html';" class="bg-[#141A28] hover:bg-[#1E293B] border border-[#C5A059]/35 hover:border-[#D4AF37] p-4 rounded-2xl transition-all cursor-pointer flex flex-col justify-between space-y-3 group shadow-lg">
                 <div class="flex items-center justify-between">
                   <span class="w-9 h-9 rounded-xl bg-[#D4AF37]/20 text-[#D4AF37] flex items-center justify-center border border-[#D4AF37]/40 group-hover:bg-[#D4AF37] group-hover:text-[#07090E] transition-all">
                     <i data-lucide="mail" class="w-4 h-4"></i>
@@ -297,7 +306,7 @@ const HOME_VIEW_HTML = `<main id="home-view" class="flex-1 max-w-7xl w-full mx-a
               </div>
 
               <!-- Shortcut Card 2: Budget Calculator -->
-              <div onclick="switchTab('tools')" class="bg-[#141A28] hover:bg-[#1E293B] border border-[#C5A059]/35 hover:border-[#D4AF37] p-4 rounded-2xl transition-all cursor-pointer flex flex-col justify-between space-y-3 group shadow-lg">
+              <div onclick="window.location.href='planning.html#budget';" class="bg-[#141A28] hover:bg-[#1E293B] border border-[#C5A059]/35 hover:border-[#D4AF37] p-4 rounded-2xl transition-all cursor-pointer flex flex-col justify-between space-y-3 group shadow-lg">
                 <div class="flex items-center justify-between">
                   <span class="w-9 h-9 rounded-xl bg-[#D4AF37]/20 text-[#D4AF37] flex items-center justify-center border border-[#D4AF37]/40 group-hover:bg-[#D4AF37] group-hover:text-[#07090E] transition-all">
                     <i data-lucide="calculator" class="w-4 h-4"></i>
@@ -305,13 +314,14 @@ const HOME_VIEW_HTML = `<main id="home-view" class="flex-1 max-w-7xl w-full mx-a
                   <span class="text-[9.5px] font-bold text-amber-200 bg-[#D4AF37]/15 px-2.5 py-0.5 rounded-full border border-[#D4AF37]/30">هوش مصنوعی</span>
                 </div>
                 <div class="space-y-1 text-right">
-                  <h3 class="text-xs sm:text-sm font-black text-white group-hover:text-[#D4AF37] transition-colors">مدیریت بودجه‌ریز</h3>
+                  <h3 class="text-xs sm:text-sm font-black text-white group-hover:text-[#D4AF37] transition-colors">تخمین بودجه</h3>
                   <p class="text-[10px] text-slate-300 font-medium leading-relaxed">برآورد هوشمند هزینه‌ها ➔</p>
+                  <span class="inline-block mt-1 text-[9px] sm:text-[9.5px] font-bold text-amber-300 bg-amber-500/10 border border-amber-500/25 px-2 py-0.5 rounded-md">تنها با ۳ کلیک بودجه عروسی‌ات را شفاف کن ✨</span>
                 </div>
               </div>
 
               <!-- Shortcut Card 3: Psychology Quizzes -->
-              <div onclick="switchTab('quizzes')" class="bg-[#141A28] hover:bg-[#1E293B] border border-[#C5A059]/35 hover:border-[#D4AF37] p-4 rounded-2xl transition-all cursor-pointer flex flex-col justify-between space-y-3 group shadow-lg">
+              <div onclick="window.location.href='style-quiz.html';" class="bg-[#141A28] hover:bg-[#1E293B] border border-[#C5A059]/35 hover:border-[#D4AF37] p-4 rounded-2xl transition-all cursor-pointer flex flex-col justify-between space-y-3 group shadow-lg">
                 <div class="flex items-center justify-between">
                   <span class="w-9 h-9 rounded-xl bg-[#D4AF37]/20 text-[#D4AF37] flex items-center justify-center border border-[#D4AF37]/40 group-hover:bg-[#D4AF37] group-hover:text-[#07090E] transition-all">
                     <i data-lucide="brain" class="w-4 h-4"></i>
@@ -325,7 +335,7 @@ const HOME_VIEW_HTML = `<main id="home-view" class="flex-1 max-w-7xl w-full mx-a
               </div>
 
               <!-- Shortcut Card 4: Full Planning Hub -->
-              <div onclick="switchTab('planner')" class="bg-[#141A28] hover:bg-[#1E293B] border border-[#C5A059]/35 hover:border-[#D4AF37] p-4 rounded-2xl transition-all cursor-pointer flex flex-col justify-between space-y-3 group shadow-lg">
+              <div onclick="window.location.href='planning.html';" class="bg-[#141A28] hover:bg-[#1E293B] border border-[#C5A059]/35 hover:border-[#D4AF37] p-4 rounded-2xl transition-all cursor-pointer flex flex-col justify-between space-y-3 group shadow-lg">
                 <div class="flex items-center justify-between">
                   <span class="w-9 h-9 rounded-xl bg-[#D4AF37]/20 text-[#D4AF37] flex items-center justify-center border border-[#D4AF37]/40 group-hover:bg-[#D4AF37] group-hover:text-[#07090E] transition-all">
                     <i data-lucide="clipboard-list" class="w-4 h-4"></i>
@@ -335,6 +345,7 @@ const HOME_VIEW_HTML = `<main id="home-view" class="flex-1 max-w-7xl w-full mx-a
                 <div class="space-y-1 text-right">
                   <h3 class="text-xs sm:text-sm font-black text-white group-hover:text-[#D4AF37] transition-colors">ورود به پنل برنامه‌ریزی</h3>
                   <p class="text-[10px] text-slate-300 font-medium leading-relaxed">مدیریت مهمانان & زمان‌بندی ➔</p>
+                  <span class="inline-block mt-1 text-[9px] sm:text-[9.5px] font-bold text-amber-300 bg-amber-500/10 border border-amber-500/25 px-2 py-0.5 rounded-md">شروع برنامه‌ریزی هوشمند در کمتر از ۲ دقیقه 🚀</span>
                 </div>
               </div>
             </div>
@@ -352,14 +363,14 @@ const HOME_VIEW_HTML = `<main id="home-view" class="flex-1 max-w-7xl w-full mx-a
               </span>
               <h2 class="text-base sm:text-lg font-black text-[#F7F5F0]">آخرین مقالات، ترندها و آلبوم‌های فرمالیته یزد</h2>
             </div>
-            <button type="button" onclick="switchTab('inspiration')" class="text-xs font-bold text-[#D4AF37] hover:text-amber-300 transition-colors flex items-center gap-1 cursor-pointer">
+            <a href="blog.html" onclick="event.preventDefault(); window.location.href='blog.html';" class="text-xs font-bold text-[#D4AF37] hover:text-amber-300 transition-colors flex items-center gap-1 cursor-pointer">
               <span>ورود به مجله کامل ➔</span>
-            </button>
+            </a>
           </div>
 
           <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
             <!-- Article Card 1 -->
-            <div onclick="switchTab('inspiration')" class="group bg-[#141A28]/80 border border-[#C5A059]/30 hover:border-[#D4AF37] rounded-2xl overflow-hidden transition-all cursor-pointer shadow-lg flex flex-col justify-between">
+            <div onclick="if(typeof openArticleReaderModal === 'function'){ openArticleReaderModal(1); } else { window.location.href='blog-single.html?id=1'; }" class="group bg-[#141A28]/80 border border-[#C5A059]/30 hover:border-[#D4AF37] rounded-2xl overflow-hidden transition-all cursor-pointer shadow-lg flex flex-col justify-between">
               <div class="relative h-40 overflow-hidden">
                 <img src="https://images.unsplash.com/photo-1519741497674-611481863552?auto=format&fit=crop&w=600&q=80" alt="راهنمای عقد" class="w-full h-full object-cover group-hover:scale-108 transition-transform duration-700">
                 <span class="absolute top-2.5 right-2.5 bg-black/70 backdrop-blur-md text-[#D4AF37] border border-[#D4AF37]/40 text-[9.5px] font-bold px-2.5 py-0.5 rounded-full flex items-center gap-1">
@@ -375,7 +386,7 @@ const HOME_VIEW_HTML = `<main id="home-view" class="flex-1 max-w-7xl w-full mx-a
             </div>
 
             <!-- Article Card 2 -->
-            <div onclick="switchTab('inspiration')" class="group bg-[#141A28]/80 border border-[#C5A059]/30 hover:border-[#D4AF37] rounded-2xl overflow-hidden transition-all cursor-pointer shadow-lg flex flex-col justify-between">
+            <div onclick="if(typeof openArticleReaderModal === 'function'){ openArticleReaderModal(2); } else { window.location.href='blog-single.html?id=2'; }" class="group bg-[#141A28]/80 border border-[#C5A059]/30 hover:border-[#D4AF37] rounded-2xl overflow-hidden transition-all cursor-pointer shadow-lg flex flex-col justify-between">
               <div class="relative h-40 overflow-hidden">
                 <img src="https://images.unsplash.com/photo-1511285560929-80b456fea0bc?auto=format&fit=crop&w=600&q=80" alt="ترند میکاپ" class="w-full h-full object-cover group-hover:scale-108 transition-transform duration-700">
                 <span class="absolute top-2.5 right-2.5 bg-black/70 backdrop-blur-md text-[#D4AF37] border border-[#D4AF37]/40 text-[9.5px] font-bold px-2.5 py-0.5 rounded-full flex items-center gap-1">
@@ -391,7 +402,7 @@ const HOME_VIEW_HTML = `<main id="home-view" class="flex-1 max-w-7xl w-full mx-a
             </div>
 
             <!-- Article Card 3 -->
-            <div onclick="switchTab('inspiration')" class="group bg-[#141A28]/80 border border-[#C5A059]/30 hover:border-[#D4AF37] rounded-2xl overflow-hidden transition-all cursor-pointer shadow-lg flex flex-col justify-between sm:col-span-2 lg:col-span-1">
+            <div onclick="if(typeof openArticleReaderModal === 'function'){ openArticleReaderModal(3); } else { window.location.href='blog-single.html?id=3'; }" class="group bg-[#141A28]/80 border border-[#C5A059]/30 hover:border-[#D4AF37] rounded-2xl overflow-hidden transition-all cursor-pointer shadow-lg flex flex-col justify-between sm:col-span-2 lg:col-span-1">
               <div class="relative h-40 overflow-hidden">
                 <img src="https://images.unsplash.com/photo-1537633552985-df8429e8048b?auto=format&fit=crop&w=600&q=80" alt="فرمالیته کویر" class="w-full h-full object-cover group-hover:scale-108 transition-transform duration-700">
                 <span class="absolute top-2.5 right-2.5 bg-black/70 backdrop-blur-md text-[#D4AF37] border border-[#D4AF37]/40 text-[9.5px] font-bold px-2.5 py-0.5 rounded-full flex items-center gap-1">
@@ -413,18 +424,29 @@ const HOME_VIEW_HTML = `<main id="home-view" class="flex-1 max-w-7xl w-full mx-a
 
           <!-- RIGHT BOX (50% width ratio - 6 cols): Testimonials & Couple Reviews -->
           <div id="verified-testimonials-section" class="lg:col-span-6 bg-[#0e121c]/95 backdrop-blur-xl border border-[#C5A059]/40 rounded-3xl p-5 sm:p-6 flex flex-col justify-between space-y-4 shadow-2xl">
-            <div class="flex items-center justify-between border-b border-[#C5A059]/20 pb-3">
-              <div class="space-y-0.5 text-right">
-                <span class="text-[11px] font-black text-[#D4AF37] flex items-center gap-1.5 block">
-                  <i data-lucide="message-square" class="w-3.5 h-3.5 text-[#D4AF37]"></i>
-                  <span>تجربیات واقعی زوجین</span>
+            <div class="flex flex-col space-y-2 border-b border-[#C5A059]/20 pb-3">
+              <div class="flex items-center justify-between">
+                <div class="space-y-0.5 text-right">
+                  <span class="text-[11px] font-black text-[#D4AF37] flex items-center gap-1.5 block">
+                    <i data-lucide="message-square" class="w-3.5 h-3.5 text-[#D4AF37]"></i>
+                    <span>تجربیات واقعی زوجین</span>
+                  </span>
+                  <h2 class="text-base sm:text-lg font-black text-[#F7F5F0]">نظرات & حس زوج‌های عروسی تو</h2>
+                </div>
+                <span class="text-[10.5px] text-emerald-400 font-bold bg-emerald-950/60 border border-emerald-500/30 px-2.5 py-0.5 rounded-full flex items-center gap-1">
+                  <i data-lucide="star" class="w-3 h-3 text-amber-400"></i>
+                  <span>۴.۹/۵ رضایت کل</span>
                 </span>
-                <h2 class="text-base sm:text-lg font-black text-[#F7F5F0]">نظرات & حس زوج‌های عروسی تو</h2>
               </div>
-              <span class="text-[10.5px] text-emerald-400 font-bold bg-emerald-950/60 border border-emerald-500/30 px-2.5 py-0.5 rounded-full flex items-center gap-1">
-                <i data-lucide="star" class="w-3 h-3 text-amber-400"></i>
-                <span>۴.۹/۵ رضایت کل</span>
-              </span>
+
+              <!-- Testimonials Filter Tabs -->
+              <div id="testimonial-filter-pills" class="flex items-center gap-1.5 overflow-x-auto no-scrollbar pt-1 text-xs font-bold">
+                <button type="button" onclick="filterTestimonialsByCategory('all')" class="testimonial-pill active bg-[#D4AF37] text-[#07090E] px-3 py-1 rounded-xl transition-all cursor-pointer shrink-0" data-cat="all">همه نظرات</button>
+                <button type="button" onclick="filterTestimonialsByCategory('hall')" class="testimonial-pill bg-white/5 border border-amber-500/20 text-slate-300 hover:text-amber-400 active:bg-amber-500/20 px-3 py-1 rounded-xl transition-all cursor-pointer shrink-0" data-cat="hall">تالار & باغ</button>
+                <button type="button" onclick="filterTestimonialsByCategory('studio')" class="testimonial-pill bg-white/5 border border-amber-500/20 text-slate-300 hover:text-amber-400 active:bg-amber-500/20 px-3 py-1 rounded-xl transition-all cursor-pointer shrink-0" data-cat="studio">آتلیه & عکاسی</button>
+                <button type="button" onclick="filterTestimonialsByCategory('mezon')" class="testimonial-pill bg-white/5 border border-amber-500/20 text-slate-300 hover:text-amber-400 active:bg-amber-500/20 px-3 py-1 rounded-xl transition-all cursor-pointer shrink-0" data-cat="mezon">مزون & میکاپ</button>
+                <button type="button" onclick="filterTestimonialsByCategory('catering')" class="testimonial-pill bg-white/5 border border-amber-500/20 text-slate-300 hover:text-amber-400 active:bg-amber-500/20 px-3 py-1 rounded-xl transition-all cursor-pointer shrink-0" data-cat="catering">تشریفات</button>
+              </div>
             </div>
 
             <!-- Testimonials Multi-Item Scroller Container -->
@@ -483,35 +505,35 @@ const HOME_VIEW_HTML = `<main id="home-view" class="flex-1 max-w-7xl w-full mx-a
               <h2 class="text-base sm:text-lg font-black text-[#F7F5F0]">چرا زوج‌ها عروسی تو را انتخاب می‌کنند؟</h2>
             </div>
 
-            <!-- 4-Card Bento Grid -->
+            <!-- 4-Card Bento Grid (DISPLAY-ONLY) -->
             <div class="grid grid-cols-2 gap-3">
-              <div class="bg-[#141A28] border border-[#C5A059]/20 rounded-2xl p-3.5 text-right space-y-1">
+              <div class="bg-[#141A28] border border-[#C5A059]/20 rounded-2xl p-3.5 text-right space-y-1 cursor-default transition-all duration-300 hover:-translate-y-1 hover:border-amber-500/40 hover:shadow-[0_8px_20px_rgba(212,175,55,0.15)] group">
                 <span class="text-xs sm:text-sm font-black text-[#D4AF37] flex items-center gap-1 block">
-                  <i data-lucide="shield" class="w-3.5 h-3.5 text-[#D4AF37]"></i>
+                  <i data-lucide="shield" class="w-3.5 h-3.5 text-[#D4AF37] group-hover:drop-shadow-[0_0_8px_rgba(212,175,55,0.6)] transition-all"></i>
                   <span>تضمین قیمت & اصالت</span>
                 </span>
                 <p class="text-[10px] text-slate-300 font-medium leading-normal">تضمین عدم وجود هزینه پنهان و مطابقت کامل با استعلام رسمی</p>
               </div>
 
-              <div class="bg-[#141A28] border border-[#C5A059]/20 rounded-2xl p-3.5 text-right space-y-1">
+              <div class="bg-[#141A28] border border-[#C5A059]/20 rounded-2xl p-3.5 text-right space-y-1 cursor-default transition-all duration-300 hover:-translate-y-1 hover:border-amber-500/40 hover:shadow-[0_8px_20px_rgba(212,175,55,0.15)] group">
                 <span class="text-xs sm:text-sm font-black text-[#D4AF37] flex items-center gap-1 block">
-                  <i data-lucide="message-square" class="w-3.5 h-3.5 text-[#D4AF37]"></i>
+                  <i data-lucide="message-square" class="w-3.5 h-3.5 text-[#D4AF37] group-hover:drop-shadow-[0_0_8px_rgba(212,175,55,0.6)] transition-all"></i>
                   <span>پاسخگویی مستقیم VIP</span>
                 </span>
                 <p class="text-[10px] text-slate-300 font-medium leading-normal">ارتباط مستقیم با مدیریت برندها و دریافت سریع پیش‌فاکتور</p>
               </div>
 
-              <div class="bg-[#141A28] border border-[#C5A059]/20 rounded-2xl p-3.5 text-right space-y-1">
+              <div class="bg-[#141A28] border border-[#C5A059]/20 rounded-2xl p-3.5 text-right space-y-1 cursor-default transition-all duration-300 hover:-translate-y-1 hover:border-amber-500/40 hover:shadow-[0_8px_20px_rgba(212,175,55,0.15)] group">
                 <span class="text-xs sm:text-sm font-black text-[#D4AF37] flex items-center gap-1 block">
-                  <i data-lucide="qr-code" class="w-3.5 h-3.5 text-[#D4AF37]"></i>
+                  <i data-lucide="qr-code" class="w-3.5 h-3.5 text-[#D4AF37] group-hover:drop-shadow-[0_0_8px_rgba(212,175,55,0.6)] transition-all"></i>
                   <span>کارت دعوت آنلاین</span>
                 </span>
                 <p class="text-[10px] text-slate-300 font-medium leading-normal">ارسال لینک اختصاصی هوشمند و مدیریت کادوها و صندلی‌ها</p>
               </div>
 
-              <div class="bg-[#141A28] border border-[#C5A059]/20 rounded-2xl p-3.5 text-right space-y-1">
+              <div class="bg-[#141A28] border border-[#C5A059]/20 rounded-2xl p-3.5 text-right space-y-1 cursor-default transition-all duration-300 hover:-translate-y-1 hover:border-amber-500/40 hover:shadow-[0_8px_20px_rgba(212,175,55,0.15)] group">
                 <span class="text-xs sm:text-sm font-black text-[#D4AF37] flex items-center gap-1 block">
-                  <i data-lucide="bot" class="w-3.5 h-3.5 text-[#D4AF37]"></i>
+                  <i data-lucide="bot" class="w-3.5 h-3.5 text-[#D4AF37] group-hover:drop-shadow-[0_0_8px_rgba(212,175,55,0.6)] transition-all"></i>
                   <span>هوش مصنوعی بودجه‌ریز</span>
                 </span>
                 <p class="text-[10px] text-slate-300 font-medium leading-normal">برآورد هوشمند هزینه‌ها بر اساس سناریوهای اقتصادی و لاکچری</p>
@@ -534,6 +556,11 @@ const HOME_VIEW_HTML = `<main id="home-view" class="flex-1 max-w-7xl w-full mx-a
             <p class="text-xs sm:text-sm text-slate-300 font-medium leading-relaxed">
               با عضویت در پلتفرم، ویترین اختصاصی برند خود را بسازید، استعلام‌های مستقیم زوجین را دریافت کرده و تقویم رزروها را مدیریت کنید.
             </p>
+            <div class="pt-1">
+              <span class="bg-amber-500/10 text-amber-300 border border-amber-500/30 px-3 py-1.5 rounded-full text-xs font-bold inline-flex items-center gap-1.5 shadow-sm">
+                🔥 پیوستن به بیش از ۲۰۰+ تامین‌کننده برتر استان یزد | دسترسی روزانه به صدها زوج در شرف ازدواج
+              </span>
+            </div>
           </div>
 
           <div class="flex items-center gap-3 shrink-0 relative z-10">
@@ -923,6 +950,9 @@ async function loadViewTemplates() {
 
   if (window.lucide && typeof lucide.createIcons === "function") {
     lucide.createIcons();
+  }
+  if (typeof initTestimonialsAutoScroll === "function") {
+    initTestimonialsAutoScroll();
   }
 }
 
@@ -3148,7 +3178,9 @@ if (document.readyState === "loading") {
 
         const subCard = document.createElement('div');
         subCard.onclick = () => {
-          filterVendorsByCategoryTitle(sub.title);
+          const catSlug = group.key || 'hall';
+          const subSlug = encodeURIComponent(sub.title);
+          window.location.href = `directory.html?category=${catSlug}&sub=${subSlug}`;
           closeSubCategoryDrawer();
         };
         subCard.className = "bg-[#F5EFEB] border border-[#1B3B2B]/20 hover:border-[#D4AF37] hover:bg-white p-4 rounded-2xl cursor-pointer transition-all flex items-center justify-between gap-3 shadow-2xs group hover:shadow-md";
@@ -3249,8 +3281,20 @@ if (document.readyState === "loading") {
     }
 
     function filterVendorsFromMega(title) {
-      switchTab('directory');
-      filterVendorsByCategoryTitle(title);
+      const CATEGORY_SLUG_MAP = {
+        'باغ و تالار پذیرایی': 'hall',
+        'تالار و باغ تالار عروسی': 'hall',
+        'آتلیه عکاسی و فیلمبرداری': 'studio',
+        'سالن زیبایی و آرایشگاه عروس': 'beauty',
+        'سالن زیبایی عروس': 'beauty',
+        'مزون لباس عروس': 'mezon',
+        'طلافروشی و جواهرفروشی': 'jewelry',
+        'طلا و جواهر عقد': 'jewelry',
+        'کترینگ و تشریفات پذیرایی': 'catering'
+      };
+
+      const catSlug = CATEGORY_SLUG_MAP[title] || 'hall';
+      window.location.href = `directory.html?category=${catSlug}`;
     }
 
     // SUPER ADMIN CATEGORY & SUB-CATEGORY CRUD ENGINE
@@ -4085,6 +4129,13 @@ if (document.readyState === "loading") {
       if (!grid) return;
       grid.innerHTML = '';
 
+      // Update results count indicator
+      const countEl = document.getElementById('directory-results-count');
+      if (countEl) {
+        const vendorList = list || window.lastFilteredVendors || vendors;
+        countEl.textContent = `نمایش ${vendorList.length} مجموعه و تامین‌کننده فعال در استان یزد`;
+      }
+
       const currentTab = window.activeDirectoryCategoryTab || 'all';
 
       if (currentTab === 'all' && directoryViewMode === 'grid') {
@@ -4326,11 +4377,16 @@ if (document.readyState === "loading") {
       if (dropdown) dropdown.classList.add('hidden');
 
       const q = input ? input.value.trim() : '';
-      switchTab('directory');
-      if (q) {
+      if (window.location.pathname.includes('directory.html')) {
         const directSearch = document.getElementById('directory-instant-search');
         if (directSearch) directSearch.value = q;
         if (typeof filterVendors === 'function') filterVendors();
+      } else {
+        if (q) {
+          window.location.href = `directory.html?q=${encodeURIComponent(q)}`;
+        } else {
+          switchTab('directory');
+        }
       }
     }
 
@@ -11995,6 +12051,9 @@ window.goToInquiryChatThread = function(vendorId, threadId) {
       return vipList.length > 0 ? vipList : vendors.slice(0, 5);
     };
 
+    let vipWheelDebounceTimer = null;
+    let vipTouchStartY = 0;
+
     window.renderVipFocalShowcase = function() {
       const container = document.getElementById('vip-showcase-container');
       const dotsContainer = document.getElementById('vip-carousel-dots');
@@ -12008,15 +12067,20 @@ window.goToInquiryChatThread = function(vendorId, threadId) {
 
       container.innerHTML = '';
 
-      vipVendors.forEach((vendor, index) => {
-        const isCenter = index === currentVipFocalIndex;
-        const isPrev = index === (currentVipFocalIndex - 1 + vipVendors.length) % vipVendors.length;
-        const isNext = index === (currentVipFocalIndex + 1) % vipVendors.length;
+      // Determine order: Previous (Top), Center (Active), Next (Bottom)
+      const visibleIndices = [
+        { idx: (currentVipFocalIndex - 1 + vipVendors.length) % vipVendors.length, pos: 'top' },
+        { idx: currentVipFocalIndex, pos: 'center' },
+        { idx: (currentVipFocalIndex + 1) % vipVendors.length, pos: 'bottom' }
+      ];
 
-        if (!isCenter && !isPrev && !isNext) return;
+      visibleIndices.forEach(({ idx, pos }) => {
+        const vendor = vipVendors[idx];
+        if (!vendor) return;
 
+        const isCenter = pos === 'center';
         const card = document.createElement('div');
-        card.setAttribute('data-vip-index', index);
+        card.setAttribute('data-vip-index', idx);
 
         // Safe fallback properties to avoid "undefined"
         const vTitle = vendor.name || vendor.title || "مجموعه تشریفاتی یزد";
@@ -12026,12 +12090,13 @@ window.goToInquiryChatThread = function(vendorId, threadId) {
         const vPrice = vendor.price || vendor.priceFormatted || "تماس بگیرید";
         const vRating = vendor.rating || "۴.۹";
 
-        let baseClass = "vip-focal-card group relative shrink-0 transition-all duration-500 ease-out cursor-pointer rounded-3xl overflow-hidden flex flex-col justify-between p-4 text-right shadow-2xl ";
+        // Wide Horizontal Rectangular Cinematic Card Styling (NO narrow vertical strips)
+        let baseClass = "showcase-card vip-focal-card group relative shrink-0 transition-all duration-500 ease-out cursor-pointer rounded-2xl overflow-hidden flex flex-col justify-between text-right mx-auto ";
 
         if (isCenter) {
-          baseClass += "w-[240px] sm:w-[280px] min-h-[250px] sm:min-h-[280px] bg-gradient-to-b from-[#0E121C] to-[#07090E] border-2 border-[#D4AF37] shadow-[0_0_35px_rgba(212,175,55,0.4)] scale-105 z-20 opacity-100";
+          baseClass += "active vip-focal-card-active w-[90%] max-w-[360px] h-[160px] aspect-[16/9] bg-[#0E121C] border-2 border-[#D4AF37] shadow-[0_10px_25px_rgba(212,175,55,0.25)] scale-[1.05] z-20 opacity-100 p-3.5";
         } else {
-          baseClass += "w-[170px] sm:w-[200px] min-h-[220px] sm:min-h-[240px] bg-[#0E121C]/80 border border-[#C5A059]/30 scale-90 z-10 opacity-65 hover:opacity-90 hidden sm:flex";
+          baseClass += "preview vip-focal-card-preview w-[90%] max-w-[360px] h-[70px] bg-[#0E121C]/80 border border-[#C5A059]/30 scale-[0.88] z-10 opacity-50 blur-[1px] hover:opacity-85 hover:blur-0 p-2.5 transition-all";
         }
 
         card.className = baseClass;
@@ -12039,50 +12104,72 @@ window.goToInquiryChatThread = function(vendorId, threadId) {
           if (isCenter) {
             openVendorDetailModal(vendor.id);
           } else {
-            window.goToVipCarouselSlide(index);
+            window.goToVipCarouselSlide(idx);
           }
         };
 
-        card.innerHTML = `
-          <!-- Cover Image Background -->
-          <div class="absolute inset-0 z-0">
-            <img src="${vImg}" alt="${vTitle}" class="w-full h-full object-cover group-hover:scale-108 transition-transform duration-700">
-            <div class="absolute inset-0 bg-gradient-to-t from-[#07090E] via-[#07090E]/60 to-black/30"></div>
-          </div>
-
-          <!-- Top Badges -->
-          <div class="relative z-10 flex items-center justify-between">
-            <span class="text-[9.5px] font-black text-[#07090E] bg-gradient-to-r from-[#D4AF37] to-[#F3E5AB] px-2.5 py-0.5 rounded-full border border-[#D4AF37] shadow-md flex items-center gap-1">
-              👑 VIP
-            </span>
-            <span class="text-[10.5px] font-black text-amber-300 bg-black/60 px-2 py-0.5 rounded-full border border-[#D4AF37]/30 backdrop-blur-md">
-              ⭐️ ${vRating}
-            </span>
-          </div>
-
-          <!-- Bottom Details -->
-          <div class="relative z-10 space-y-1.5 pt-12">
-            <div class="space-y-0.5">
-              <span class="text-[10px] font-bold text-[#D4AF37] block truncate">${vCat}</span>
-              <h4 class="text-xs sm:text-sm font-black text-white truncate drop-shadow-md">${vTitle}</h4>
-              <p class="text-[10px] text-slate-300 font-medium truncate">📍 ${vLoc}</p>
+        if (isCenter) {
+          card.innerHTML = `
+            <!-- Full-Bleed Background Image with Dark Gradient Overlay -->
+            <div class="absolute inset-0 z-0 overflow-hidden">
+              <img src="${vImg}" alt="${vTitle}" class="w-full h-full object-cover group-hover:scale-108 transition-transform duration-700">
+              <div class="absolute inset-0 bg-gradient-to-t from-black/95 via-black/55 to-black/25"></div>
             </div>
 
-            <div class="flex items-center justify-between pt-1.5 border-t border-[#C5A059]/30">
-              <span class="text-[10px] sm:text-xs font-bold text-amber-200 truncate">شروع: ${vPrice}</span>
-              <button type="button" onclick="event.stopPropagation(); openVendorDetailModal('${vendor.id}')" class="bg-[#D4AF37] hover:bg-[#C5A059] text-[#07090E] font-black text-[10.5px] px-2.5 py-1 rounded-lg transition-all shadow-md flex items-center gap-1 cursor-pointer shrink-0">
-                <span>رزرو</span>
-              </button>
+            <!-- Top Bar inside Card: Rating Badge & VIP Badge -->
+            <div class="relative z-10 flex items-center justify-between">
+              <span class="text-[9px] sm:text-[10px] font-black text-[#07090E] bg-gradient-to-r from-[#D4AF37] to-[#F3E5AB] px-2.5 py-0.5 rounded-full border border-[#D4AF37] shadow-md flex items-center gap-1">
+                VIP 👑
+              </span>
+              <span class="text-[10px] sm:text-[11px] font-black text-amber-300 bg-black/70 px-2.5 py-0.5 rounded-full border border-[#D4AF37]/30 backdrop-blur-md flex items-center gap-1">
+                ⭐️ ${vRating}
+              </span>
             </div>
-          </div>
-        `;
+
+            <!-- Bottom Overlay Details -->
+            <div class="relative z-10 space-y-1 pt-2">
+              <span class="text-[10px] sm:text-[11px] font-extrabold text-[#D4AF37] block truncate">${vCat}</span>
+              <h4 class="text-xs sm:text-sm font-black text-white truncate drop-shadow-md leading-snug">${vTitle}</h4>
+
+              <div class="flex items-center justify-between pt-1 border-t border-[#C5A059]/30 gap-1">
+                <span class="text-[10px] sm:text-[11px] font-bold text-amber-200/95 truncate flex items-center gap-1.5">
+                  <span>📍 ${vLoc}</span>
+                  <span class="text-[#D4AF37]">|</span>
+                  <span>شروع: ${vPrice}</span>
+                </span>
+                <button type="button" onclick="event.stopPropagation(); openVendorDetailModal('${vendor.id}')" class="bg-[#D4AF37] hover:bg-[#C5A059] text-[#07090E] font-black text-[10.5px] px-3 py-1 rounded-lg transition-all shadow-md flex items-center gap-1 cursor-pointer shrink-0">
+                  <span>رزرو / مشاهده</span>
+                </button>
+              </div>
+            </div>
+          `;
+        } else {
+          // Wide horizontal preview card layout (Top & Bottom)
+          card.innerHTML = `
+            <div class="absolute inset-0 z-0 overflow-hidden">
+              <img src="${vImg}" alt="${vTitle}" class="w-full h-full object-cover">
+              <div class="absolute inset-0 bg-gradient-to-t from-black/90 via-black/50 to-black/30"></div>
+            </div>
+            <div class="relative z-10 flex items-center justify-between w-full">
+              <div class="flex items-center gap-2 truncate">
+                <span class="text-[9px] font-black text-[#D4AF37] truncate">${vCat}</span>
+                <span class="text-xs font-black text-white truncate">${vTitle}</span>
+              </div>
+              <span class="text-[9px] font-black text-amber-300 bg-black/60 px-1.5 py-0.5 rounded-full border border-[#D4AF37]/30 shrink-0">⭐️ ${vRating}</span>
+            </div>
+            <div class="relative z-10 flex items-center justify-between text-[9px] text-slate-300 font-medium truncate pt-0.5">
+              <span>📍 ${vLoc}</span>
+              <span class="text-amber-200/90 font-bold">شروع: ${vPrice}</span>
+            </div>
+          `;
+        }
 
         container.appendChild(card);
       });
 
       if (dotsContainer) {
         dotsContainer.innerHTML = vipVendors.map((_, idx) => `
-          <button type="button" onclick="goToVipCarouselSlide(${idx})" class="h-2 rounded-full transition-all duration-300 cursor-pointer ${idx === currentVipFocalIndex ? 'bg-[#D4AF37] w-6' : 'bg-[#C5A059]/30 hover:bg-[#C5A059]/60 w-2'}" title="اسلاید ${idx + 1}"></button>
+          <button type="button" onclick="goToVipCarouselSlide(${idx})" class="transition-all duration-300 cursor-pointer ${idx === currentVipFocalIndex ? 'bg-[#D4AF37] h-5 w-2 rounded-full shadow-[0_0_8px_rgba(212,175,55,0.6)]' : 'bg-[#C5A059]/30 hover:bg-[#C5A059]/60 w-2 h-2 rounded-full'}" title="اسلاید ${idx + 1}"></button>
         `).join('');
       }
 
@@ -12119,6 +12206,45 @@ window.goToInquiryChatThread = function(vendorId, threadId) {
       if (vipFocalAutoTimer) clearInterval(vipFocalAutoTimer);
 
       window.renderVipFocalShowcase();
+
+      // Attach Vertical Wheel Handler
+      const stage = document.getElementById('vip-focal-stage');
+      if (stage && !stage.dataset.wheelAttached) {
+        stage.dataset.wheelAttached = 'true';
+        stage.addEventListener('wheel', (e) => {
+          e.preventDefault();
+          if (vipWheelDebounceTimer) return;
+          if (e.deltaY > 0) {
+            window.slideVipFocalCarousel('next');
+          } else if (e.deltaY < 0) {
+            window.slideVipFocalCarousel('prev');
+          }
+          vipWheelDebounceTimer = setTimeout(() => {
+            vipWheelDebounceTimer = null;
+          }, 300);
+        }, { passive: false });
+
+        // Touch Swipe vertical handlers
+        stage.addEventListener('touchstart', (e) => {
+          if (e.touches && e.touches.length > 0) {
+            vipTouchStartY = e.touches[0].clientY;
+          }
+        }, { passive: true });
+
+        stage.addEventListener('touchend', (e) => {
+          if (e.changedTouches && e.changedTouches.length > 0) {
+            const touchEndY = e.changedTouches[0].clientY;
+            const diffY = vipTouchStartY - touchEndY;
+            if (Math.abs(diffY) > 30) {
+              if (diffY > 0) {
+                window.slideVipFocalCarousel('next');
+              } else {
+                window.slideVipFocalCarousel('prev');
+              }
+            }
+          }
+        }, { passive: true });
+      }
 
       vipFocalAutoTimer = setInterval(() => {
         if (!isVipAutoPaused) {
@@ -13058,9 +13184,11 @@ const subgroupData = {
 };
 
 function closeAllSubgroupModals() {
+  const modalSub = document.getElementById('subcategoryModal');
   const modalDrawer = document.getElementById('sub-category-drawer-modal');
   const modalSimple = document.getElementById('subgroups-modal');
   const modalGrid = document.getElementById('subgroupModal');
+  if (modalSub) { modalSub.classList.add('hidden'); modalSub.classList.remove('flex'); modalSub.style.display = 'none'; }
   if (modalDrawer) { modalDrawer.classList.add('hidden'); modalDrawer.classList.remove('flex'); }
   if (modalSimple) { modalSimple.classList.add('hidden'); modalSimple.style.display = 'none'; }
   if (modalGrid) { modalGrid.classList.add('hidden'); modalGrid.style.display = 'none'; }
@@ -13070,8 +13198,8 @@ function closeAllSubgroupModals() {
 function openCategorySubgroupsModal(catKey) {
   const data = CATEGORY_SUBGROUPS_MAP[catKey] || CATEGORY_SUBGROUPS_MAP.venue_catering;
 
-  // 1. Populate Floating Sub-Category Drawer (#sub-category-drawer-modal)
-  const drawerModal = document.getElementById('sub-category-drawer-modal');
+  // 1. Populate Floating Sub-Category Drawer (#subcategoryModal / #sub-category-drawer-modal)
+  const drawerModal = document.getElementById('subcategoryModal') || document.getElementById('sub-category-drawer-modal');
   const drawerTitle = document.getElementById('drawer-header-title');
   const drawerBadge = document.getElementById('drawer-header-badge');
   const drawerIcon = document.getElementById('drawer-header-icon');
@@ -13079,50 +13207,32 @@ function openCategorySubgroupsModal(catKey) {
 
   if (drawerTitle) drawerTitle.innerText = data.title;
   if (drawerBadge) drawerBadge.innerText = data.badge;
-  if (drawerIcon) drawerIcon.innerHTML = `<i data-lucide="${data.icon || 'layers'}" class="w-6 h-6 text-[#1B3B2B]"></i>`;
+  if (drawerIcon) drawerIcon.innerHTML = `<i data-lucide="${data.icon || 'layers'}" class="w-6 h-6 text-amber-400"></i>`;
 
   if (drawerGrid) {
     drawerGrid.innerHTML = data.subgroups.map(sub => {
       const subTitle = typeof sub === 'string' ? sub : sub.title;
       const subCount = typeof sub === 'string' ? '+۵ کسب‌وکار' : (sub.count || '+۵ کسب‌وکار');
       const subDesc = typeof sub === 'string' ? 'مشاهده و استعلام قیمت کسب‌وکارهای تاییدشده یزد' : (sub.desc || 'مشاهده و استعلام قیمت کسب‌وکارهای تاییدشده یزد');
+      const subSlug = encodeURIComponent(subTitle);
+      const catSlug = catKey;
 
       return `
-        <div onclick="switchTab('directory'); filterVendorsByCategoryTitle('${subTitle}'); closeAllSubgroupModals();" class="bg-[#FCFCFA] border border-[#D4AF37]/50 hover:border-[#D4AF37] rounded-2xl p-4 transition-all duration-300 shadow-2xs hover:shadow-md hover:-translate-y-0.5 cursor-pointer flex flex-col justify-between group">
+        <div onclick="closeAllSubgroupModals(); window.location.href='directory.html?category=${catSlug}&sub=${subSlug}';" class="bg-[#161B22] hover:bg-[#1F2633] border border-gray-800 hover:border-amber-500/50 rounded-2xl p-4 transition-all duration-300 shadow-md hover:-translate-y-0.5 cursor-pointer flex flex-col justify-between group">
           <div class="space-y-1.5">
             <div class="flex items-center justify-between gap-2">
-              <span class="font-black text-xs text-[#1B3B2B] group-hover:text-[#D4AF37] transition-colors flex items-center gap-1.5">
-                <i data-lucide="tag" class="w-3.5 h-3.5 text-[#D4AF37]"></i>
+              <span class="font-black text-xs text-white group-hover:text-amber-400 transition-colors flex items-center gap-1.5">
+                <i data-lucide="tag" class="w-3.5 h-3.5 text-amber-400"></i>
                 ${subTitle}
               </span>
-              <span class="bg-[#1B3B2B]/10 text-[#1B3B2B] text-[10px] font-bold px-2 py-0.5 rounded-full">${subCount}</span>
+              <span class="bg-amber-500/10 text-amber-400 border border-amber-500/20 text-[10px] font-bold px-2.5 py-0.5 rounded-full">${subCount}</span>
             </div>
-            <p class="text-[11px] text-secondary leading-relaxed font-medium line-clamp-2">${subDesc}</p>
+            <p class="text-[11px] text-slate-300 leading-relaxed font-medium line-clamp-2">${subDesc}</p>
           </div>
-          <div class="pt-3 border-t border-accent/50 mt-3 flex items-center justify-between text-[11px] text-[#D4AF37] font-bold">
+          <div class="pt-3 border-t border-gray-800/80 mt-3 flex items-center justify-between text-[11px] text-amber-400 font-bold">
             <span>مشاهده و فیلتر لیست</span>
             <span class="group-hover:translate-x-[-3px] transition-transform">←</span>
           </div>
-        </div>
-      `;
-    }).join('');
-  }
-
-  // 2. Populate Simple Subgroups Modal (#subgroups-modal)
-  const simpleModal = document.getElementById('subgroups-modal');
-  const simpleTitle = document.getElementById('subgroups-title');
-  const simpleList = document.getElementById('subgroups-list');
-
-  if (simpleTitle) simpleTitle.innerText = data.title + ' (' + data.badge + ')';
-  if (simpleList) {
-    simpleList.innerHTML = data.subgroups.map(sub => {
-      const subTitle = typeof sub === 'string' ? sub : sub.title;
-      return `
-        <div class="flex items-center justify-between bg-[#FCFCFA] border border-[#D4AF37]/40 rounded-xl p-3 shadow-2xs">
-          <span class="text-xs font-bold text-[#1B3B2B]">📍 ${subTitle}</span>
-          <button onclick="switchTab('directory'); filterVendorsByCategoryTitle('${subTitle}'); closeAllSubgroupModals();" class="bg-[#1B3B2B] hover:bg-emerald-900 text-white font-bold px-3 py-1.5 rounded-lg text-xs transition-colors">
-            مشاهده لیست ←
-          </button>
         </div>
       `;
     }).join('');
@@ -13132,9 +13242,7 @@ function openCategorySubgroupsModal(catKey) {
   if (drawerModal) {
     drawerModal.classList.remove('hidden');
     drawerModal.classList.add('flex');
-  } else if (simpleModal) {
-    simpleModal.classList.remove('hidden');
-    simpleModal.style.display = 'flex';
+    drawerModal.style.display = 'flex';
   }
 
   document.body.style.overflow = 'hidden';
@@ -15199,3 +15307,489 @@ window.editHomepageCategoryCms = function(catId) {
         showToast("دسته‌بندی ذخیره گردید.", "success");
     }
 };
+
+
+// ==================================================
+// COUPLE TESTIMONIALS CAROUSEL & MODAL LOGIC
+// ==================================================
+const TESTIMONIALS_DATA = [
+  {
+    id: 1,
+    names: "مریم & علی",
+    avatar: "https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=100",
+    date: "۱۴۰۲/۰۸/۱۵",
+    vendorTag: "رزرو تالار مشیرالممالک",
+    category: "hall",
+    rating: 5,
+    shortQuote: "استعلام قیمت مستقیم و چت با مدیر تالار فوق‌العاده سریع بود. همه هزینه‌ها دقیقا مطابق با فاکتور نهایی شد.",
+    fullReview: "ما از طریق عروسی تو تالار باغ مشیرالممالک یزد را پیدا کردیم. امکان استعلام آنلاین قیمت و گفتگو با مدیریت مجموعه باعث شد بتوانیم بدون نیاز به مراجعه‌های حضوری متعدد، برنامه زمانی و بودجه را دقیق هماهنگ کنیم. پشتیبانی عالی و شفافیت کامل در هزینه‌ها تجربه بی‌نظیری برای ما رقم زد."
+  },
+  {
+    id: 2,
+    names: "رضا & سارا",
+    avatar: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=100",
+    date: "۱۴۰۲/۰۹/۲۰",
+    vendorTag: "رزرو آتلیه کویر",
+    category: "studio",
+    rating: 5,
+    shortQuote: "کارت دعوت دیجیتال با تم زمرد بسیار شیک بود و همه مهمانان ما فرم RSVP آنلاین را به راحتی پر کردند.",
+    fullReview: "از سیستم کارت دعوت آنلاین عروسی تو استفاده کردیم. قالب زمردی و موزیک زمینه عالی بود و مهمانان ما فرم حضور و غیاب را تکمیل کردند. لیست مهمانان و هدایا به صورت منظم در پنل مدیریت ما ذخیره شد که کار ما را بسیار آسان کرد."
+  },
+  {
+    id: 3,
+    names: "حسین & نیلوفر",
+    avatar: "https://images.unsplash.com/photo-1517841905240-472988babdf9?w=100",
+    date: "۱۴۰۲/۱۰/۱۲",
+    vendorTag: "خدمات تشریفات VIP یزد",
+    category: "catering",
+    rating: 5,
+    shortQuote: "هوش مصنوعی بودجه‌ریز تمام هزینه‌های پنهان عروسی مثل ورودی و انعام را دقیق برآورد کرد و مانع کسر بودجه شد.",
+    fullReview: "دستیار بودجه‌ریز هوشمند عروسی تو به ما کمک کرد تمام هزینه‌های ریز و درشت تشریفات، گل‌آرایی و کترینگ را کنترل کنیم. پیشنهادهای تطبیق قیمت با تامین‌کنندگان معتبر یزد عالی بود و در زمان و هزینه ما صرفه‌جویی چشمگیری شد."
+  },
+  {
+    id: 4,
+    names: "امیر & مهسا",
+    avatar: "https://images.unsplash.com/photo-1522075469751-3a6694fb2f61?w=100",
+    date: "۱۴۰۲/۱۱/۰۵",
+    vendorTag: "مزون عروس سلطنتی",
+    category: "mezon",
+    rating: 5,
+    shortQuote: "تست آنلاین سبک عروسی و پرو مجازی لباس عروس فوق‌العاده کاربردی بود و دقیقا همان رویای ما برآورده شد.",
+    fullReview: "از طریق بخش تست‌های روانشناسی و پرو مجازی لباس عروس توانستیم بهترین مزون‌های یزد را مقایسه کنیم. مدیریت صبور مزون و تخفیف ویژه پلتفرم عروسی تو تجربه خریدی لوکس و بدون دغدغه برای ما ساخت."
+  }
+];
+
+let currentTestimonialCategory = 'all';
+
+function filterTestimonialsByCategory(category) {
+  currentTestimonialCategory = category;
+
+  document.querySelectorAll('#testimonial-filter-pills .testimonial-pill').forEach(btn => {
+    if (btn.getAttribute('data-cat') === category) {
+      btn.className = 'testimonial-pill active bg-[#D4AF37] text-[#07090E] px-3 py-1 rounded-xl transition-all cursor-pointer shrink-0';
+    } else {
+      btn.className = 'testimonial-pill bg-white/5 border border-amber-500/20 text-slate-300 hover:text-amber-400 active:bg-amber-500/20 px-3 py-1 rounded-xl transition-all cursor-pointer shrink-0';
+    }
+  });
+
+  renderTestimonialsCarousel(category);
+}
+
+function renderTestimonialsCarousel(filterCategory = currentTestimonialCategory) {
+  const container = document.getElementById('testimonials-carousel-container');
+  if (!container) return;
+
+  const filteredData = filterCategory === 'all'
+    ? TESTIMONIALS_DATA
+    : TESTIMONIALS_DATA.filter(t => t.category === filterCategory || (filterCategory === 'mezon' && (t.category === 'mezon' || t.category === 'beauty')));
+
+  if (filteredData.length === 0) {
+    container.innerHTML = `<div class="text-xs text-slate-400 py-4 text-center w-full">نظری در این دسته‌بندی یافت نشد.</div>`;
+    return;
+  }
+
+  container.innerHTML = filteredData.map(item => `
+    <div onclick="openTestimonialDetailModal(${item.id})" class="bg-[#141A28] border border-[#C5A059]/30 hover:border-amber-500/60 rounded-2xl p-4 shrink-0 w-[260px] sm:w-[290px] space-y-2 shadow-lg transition-all duration-300 hover:scale-[1.02] cursor-pointer group">
+      <div class="flex items-center justify-between pointer-events-none">
+        <div class="flex items-center gap-2">
+          <img src="${item.avatar}" class="w-8 h-8 rounded-full object-cover border border-[#D4AF37]">
+          <div>
+            <span class="text-xs font-black text-white block group-hover:text-[#D4AF37] transition-colors">${item.names}</span>
+            <span class="text-[9.5px] text-slate-400 font-medium block">${item.vendorTag}</span>
+          </div>
+        </div>
+        <span class="text-amber-400 text-xs font-black flex items-center gap-0.5">
+          <i data-lucide="star" class="w-3 h-3 fill-amber-400 text-amber-400"></i>
+          <i data-lucide="star" class="w-3 h-3 fill-amber-400 text-amber-400"></i>
+          <i data-lucide="star" class="w-3 h-3 fill-amber-400 text-amber-400"></i>
+          <i data-lucide="star" class="w-3 h-3 fill-amber-400 text-amber-400"></i>
+          <i data-lucide="star" class="w-3 h-3 fill-amber-400 text-amber-400"></i>
+        </span>
+      </div>
+      <p class="text-[11px] text-slate-300 font-medium leading-relaxed line-clamp-3 pointer-events-none">"${item.shortQuote}"</p>
+    </div>
+  `).join('');
+
+  if (typeof lucide !== 'undefined' && lucide.createIcons) {
+    lucide.createIcons();
+  }
+}
+
+window.filterTestimonialsByCategory = filterTestimonialsByCategory;
+
+let testimonialsTimer = null;
+let isTestimonialsHovered = false;
+
+function initTestimonialsAutoScroll() {
+  renderTestimonialsCarousel();
+  const container = document.getElementById('testimonials-carousel-container');
+  if (!container) return;
+
+  if (testimonialsTimer) clearInterval(testimonialsTimer);
+
+  let isDown = false;
+  let startX, scrollLeft;
+
+  container.onmouseenter = () => { isTestimonialsHovered = true; };
+  container.onmouseleave = () => { isTestimonialsHovered = false; isDown = false; };
+
+  container.onmousedown = (e) => {
+    isDown = true;
+    startX = e.pageX - container.offsetLeft;
+    scrollLeft = container.scrollLeft;
+  };
+  container.onmouseup = () => { isDown = false; };
+  container.onmousemove = (e) => {
+    if (!isDown) return;
+    e.preventDefault();
+    const x = e.pageX - container.offsetLeft;
+    const walk = (x - startX) * 1.5;
+    container.scrollLeft = scrollLeft - walk;
+  };
+
+  let touchStartX = 0;
+  let touchScrollLeft = 0;
+  container.ontouchstart = (e) => {
+    isTestimonialsHovered = true;
+    touchStartX = e.touches[0].pageX - container.offsetLeft;
+    touchScrollLeft = container.scrollLeft;
+  };
+  container.ontouchend = () => {
+    setTimeout(() => { isTestimonialsHovered = false; }, 2000);
+  };
+  container.ontouchmove = (e) => {
+    const x = e.touches[0].pageX - container.offsetLeft;
+    const walk = (x - touchStartX) * 1.5;
+    container.scrollLeft = touchScrollLeft - walk;
+  };
+
+  testimonialsTimer = setInterval(() => {
+    if (isTestimonialsHovered) return;
+    const cardWidth = 280;
+    const maxScroll = container.scrollWidth - container.clientWidth;
+    if (container.scrollLeft >= maxScroll - 10 || container.scrollLeft <= -maxScroll + 10) {
+      container.scrollTo({ left: 0, behavior: 'smooth' });
+    } else {
+      container.scrollBy({ left: cardWidth, behavior: 'smooth' });
+    }
+  }, 5000);
+}
+
+function openTestimonialDetailModal(id) {
+  const item = TESTIMONIALS_DATA.find(t => t.id === id);
+  if (!item) return;
+
+  const modal = document.getElementById('modal-testimonial-detail');
+  if (!modal) return;
+
+  const avatar = document.getElementById('tm-avatar');
+  const names = document.getElementById('tm-names');
+  const date = document.getElementById('tm-date');
+  const stars = document.getElementById('tm-stars');
+  const vendorTag = document.getElementById('tm-vendor-tag');
+  const fullReview = document.getElementById('tm-full-review');
+
+  if (avatar) avatar.src = item.avatar;
+  if (names) names.textContent = item.names;
+  if (date) date.textContent = `تاریخ ثبت: ${item.date}`;
+  if (vendorTag) vendorTag.textContent = item.vendorTag;
+  if (fullReview) fullReview.textContent = item.fullReview;
+
+  if (stars) {
+    stars.innerHTML = Array(item.rating).fill('<i data-lucide="star" class="w-4 h-4 fill-amber-400 text-amber-400"></i>').join('');
+    if (typeof lucide !== 'undefined' && lucide.createIcons) lucide.createIcons();
+  }
+
+  modal.classList.remove('hidden');
+  modal.classList.add('flex');
+}
+
+function closeTestimonialDetailModal() {
+  const modal = document.getElementById('modal-testimonial-detail');
+  if (modal) {
+    modal.classList.add('hidden');
+    modal.classList.remove('flex');
+  }
+}
+
+window.renderTestimonialsCarousel = renderTestimonialsCarousel;
+window.initTestimonialsAutoScroll = initTestimonialsAutoScroll;
+window.openTestimonialDetailModal = openTestimonialDetailModal;
+window.closeTestimonialDetailModal = closeTestimonialDetailModal;
+
+
+// ==================================================
+// FOOTER MODALS & E-NAMAD TRUST SEAL HANDLERS
+// ==================================================
+function openEnamadModal() {
+  const modal = document.getElementById('modal-enamad');
+  if (modal) {
+    modal.classList.remove('hidden');
+    modal.classList.add('flex');
+  }
+}
+
+function closeEnamadModal() {
+  const modal = document.getElementById('modal-enamad');
+  if (modal) {
+    modal.classList.add('hidden');
+    modal.classList.remove('flex');
+  }
+}
+
+window.openEnamadModal = openEnamadModal;
+window.closeEnamadModal = closeEnamadModal;
+
+// Category Query Parameter URL Mapping on Load
+(function initCategoryUrlParameterMapping() {
+  const CATEGORY_PARAM_MAP = {
+    'hall': 'تالار و باغ تالار عروسی',
+    'studio': 'آتلیه عکاسی و فیلمبرداری',
+    'beauty': 'سالن زیبایی و آرایشگاه عروس',
+    'mezon': 'مزون لباس عروس',
+    'jewelry': 'طلافروشی و جواهرفروشی',
+    'halls': 'تالار و باغ تالار عروسی',
+    'photography': 'آتلیه عکاسی و فیلمبرداری',
+    'bridal_dresses': 'مزون لباس عروس',
+    'venue_catering': 'تالار و باغ تالار عروسی',
+    'photo_music': 'آتلیه عکاسی و فیلمبرداری',
+    'beauty_style': 'سالن زیبایی و آرایشگاه عروس',
+    'boutique': 'مزون لباس عروس',
+    'catering': 'کترینگ و تشریفات پذیرایی'
+  };
+
+  if (typeof window !== 'undefined' && window.location) {
+    const params = new URLSearchParams(window.location.search);
+    const catParam = params.get('category');
+    const subParam = params.get('sub');
+
+    const executeFilters = () => {
+      if (catParam && CATEGORY_PARAM_MAP[catParam.toLowerCase()]) {
+        const mappedTitle = CATEGORY_PARAM_MAP[catParam.toLowerCase()];
+        if (typeof filterVendorsByCategoryTitle === 'function') {
+          filterVendorsByCategoryTitle(mappedTitle);
+        }
+      }
+      if (subParam) {
+        const decodedSub = decodeURIComponent(subParam);
+        const searchInput = document.getElementById('directory-search-input');
+        if (searchInput) {
+          searchInput.value = decodedSub;
+        }
+        if (typeof filterVendors === 'function') {
+          filterVendors();
+        }
+      }
+    };
+
+    if (document.readyState === 'loading') {
+      window.addEventListener('DOMContentLoaded', () => setTimeout(executeFilters, 200));
+    } else {
+      setTimeout(executeFilters, 200);
+    }
+  }
+})();
+
+
+// ==================================================
+// DEDICATED ASSISTANT & QUICK INQUIRY MODAL HANDLERS
+// ==================================================
+function openDedicatedAssistantModal() {
+  const modal = document.getElementById('dedicatedAssistantModal') || document.getElementById('modal-dedicated-assistant');
+  if (modal) {
+    modal.classList.remove('hidden');
+    modal.classList.add('flex');
+    if (typeof lucide !== 'undefined' && lucide.createIcons) lucide.createIcons();
+  }
+}
+
+function closeDedicatedAssistantModal() {
+  const modal = document.getElementById('dedicatedAssistantModal') || document.getElementById('modal-dedicated-assistant');
+  if (modal) {
+    modal.classList.add('hidden');
+    modal.classList.remove('flex');
+  }
+}
+
+function handleDedicatedAssistantSubmit(e) {
+  e.preventDefault();
+  closeDedicatedAssistantModal();
+  showToast("درخواست دستیار اختصاصی شما ثبت گردید. کارشناسان ما به زودی با شما تماس می‌گیرند.", "success");
+}
+
+function openQuickInquiryModal() {
+  const modal = document.getElementById('quickInquiryModal') || document.getElementById('inquiry-modal');
+  if (modal) {
+    modal.classList.remove('hidden');
+    modal.classList.add('flex');
+    if (typeof lucide !== 'undefined' && lucide.createIcons) lucide.createIcons();
+  }
+}
+
+function closeQuickInquiryModal() {
+  const modal = document.getElementById('quickInquiryModal') || document.getElementById('inquiry-modal');
+  if (modal) {
+    modal.classList.add('hidden');
+    modal.classList.remove('flex');
+  }
+}
+
+function handleQuickInquirySubmit(e) {
+  e.preventDefault();
+  closeQuickInquiryModal();
+  showToast("درخواست استعلام هوشمند شما ارسال شد. پیش‌فاکتور به پیام‌رسان شما ارسال می‌گردد.", "success");
+}
+
+window.openDedicatedAssistantModal = openDedicatedAssistantModal;
+window.closeDedicatedAssistantModal = closeDedicatedAssistantModal;
+window.handleDedicatedAssistantSubmit = handleDedicatedAssistantSubmit;
+window.openQuickInquiryModal = openQuickInquiryModal;
+window.closeQuickInquiryModal = closeQuickInquiryModal;
+window.handleQuickInquirySubmit = handleQuickInquirySubmit;
+
+
+// ==================================================
+// FOOTER INFORMATIONAL FLOATING MODALS
+// ==================================================
+function openAboutModal() {
+  const modal = document.getElementById('modal-about') || document.getElementById('aboutModal');
+  if (modal) {
+    modal.classList.remove('hidden');
+    modal.classList.add('flex');
+    if (typeof lucide !== 'undefined' && lucide.createIcons) lucide.createIcons();
+  }
+}
+
+function closeAboutModal() {
+  const modal = document.getElementById('modal-about') || document.getElementById('aboutModal');
+  if (modal) {
+    modal.classList.add('hidden');
+    modal.classList.remove('flex');
+  }
+}
+
+function openFaqModal() {
+  const modal = document.getElementById('modal-faq') || document.getElementById('faqModal');
+  if (modal) {
+    modal.classList.remove('hidden');
+    modal.classList.add('flex');
+    if (typeof lucide !== 'undefined' && lucide.createIcons) lucide.createIcons();
+  }
+}
+
+function closeFaqModal() {
+  const modal = document.getElementById('modal-faq') || document.getElementById('faqModal');
+  if (modal) {
+    modal.classList.add('hidden');
+    modal.classList.remove('flex');
+  }
+}
+
+function openTermsModal() {
+  const modal = document.getElementById('modal-terms') || document.getElementById('termsModal');
+  if (modal) {
+    modal.classList.remove('hidden');
+    modal.classList.add('flex');
+    if (typeof lucide !== 'undefined' && lucide.createIcons) lucide.createIcons();
+  }
+}
+
+function closeTermsModal() {
+  const modal = document.getElementById('modal-terms') || document.getElementById('termsModal');
+  if (modal) {
+    modal.classList.add('hidden');
+    modal.classList.remove('flex');
+  }
+}
+
+function openSupportModal() {
+  const modal = document.getElementById('modal-support') || document.getElementById('supportModal');
+  if (modal) {
+    modal.classList.remove('hidden');
+    modal.classList.add('flex');
+    if (typeof lucide !== 'undefined' && lucide.createIcons) lucide.createIcons();
+  }
+}
+
+function closeSupportModal() {
+  const modal = document.getElementById('modal-support') || document.getElementById('supportModal');
+  if (modal) {
+    modal.classList.add('hidden');
+    modal.classList.remove('flex');
+  }
+}
+
+window.openAboutModal = openAboutModal;
+window.closeAboutModal = closeAboutModal;
+window.openFaqModal = openFaqModal;
+window.closeFaqModal = closeFaqModal;
+window.openTermsModal = openTermsModal;
+window.closeTermsModal = closeTermsModal;
+window.openSupportModal = openSupportModal;
+window.closeSupportModal = closeSupportModal;
+
+function openAiRecommendationModal() {
+  if (typeof openSmartWizardModal === 'function') {
+    openSmartWizardModal();
+  } else {
+    const modal = document.getElementById('aiRecommendationModal') || document.getElementById('modal-smart-wizard');
+    if (modal) {
+      modal.classList.remove('hidden');
+      modal.classList.add('flex');
+    }
+  }
+}
+
+function closeAiRecommendationModal() {
+  if (typeof closeSmartWizardModal === 'function') {
+    closeSmartWizardModal();
+  } else {
+    const modal = document.getElementById('aiRecommendationModal') || document.getElementById('modal-smart-wizard');
+    if (modal) {
+      modal.classList.add('hidden');
+      modal.classList.remove('flex');
+    }
+  }
+}
+
+window.openAiRecommendationModal = openAiRecommendationModal;
+window.closeAiRecommendationModal = closeAiRecommendationModal;
+
+function openStoryLightbox(imgUrl, vendorName, category = 'نمونه‌کار لوکس یزد', caption = '', vendorId = 1) {
+  const modal = document.getElementById('modal-story-lightbox');
+  if (!modal) return;
+
+  const imgEl = document.getElementById('story-lightbox-img');
+  const avatarEl = document.getElementById('story-lightbox-avatar');
+  const nameEl = document.getElementById('story-lightbox-vendor-name');
+  const catEl = document.getElementById('story-lightbox-category');
+  const capEl = document.getElementById('story-lightbox-caption');
+  const btnEl = document.getElementById('story-lightbox-profile-btn');
+
+  if (imgEl) imgEl.src = imgUrl || 'https://images.unsplash.com/photo-1519167758481-83f550bb49b3?w=800';
+  if (avatarEl) avatarEl.src = imgUrl || 'https://images.unsplash.com/photo-1519167758481-83f550bb49b3?w=150';
+  if (nameEl) nameEl.textContent = vendorName || 'تامین‌کننده برتر یزد';
+  if (catEl) catEl.textContent = category || 'نمونه‌کار لوکس یزد';
+  if (capEl) capEl.textContent = caption || `${vendorName || 'تامین‌کننده'} — جدیدترین استوری و نمونه‌کار لوکس ثبت‌شده در استان یزد.`;
+  if (btnEl) {
+    btnEl.onclick = function() {
+      closeStoryLightbox();
+      openVendorDetailModal(vendorId || 1);
+    };
+  }
+
+  modal.classList.remove('hidden');
+  modal.classList.add('flex');
+  if (typeof lucide !== 'undefined' && lucide.createIcons) lucide.createIcons();
+}
+
+function closeStoryLightbox() {
+  const modal = document.getElementById('modal-story-lightbox');
+  if (modal) {
+    modal.classList.add('hidden');
+    modal.classList.remove('flex');
+  }
+}
+
+window.openStoryLightbox = openStoryLightbox;
+window.closeStoryLightbox = closeStoryLightbox;
