@@ -1,65 +1,47 @@
-/* Directory Filters & Layout Scoped Styles */
-#tab-directory,
-#directory-view {
-  background-color: var(--bg-primary, #07090E);
-  color: var(--text-primary, #F7F5F0);
-  width: 100% !important;
+/* ==========================================================================
+   DIRECTORY SCOPED STYLES & LUXURY SPLIT-SCREEN LAYOUT
+   ========================================================================== */
+
+/* Dark Theme Palette Container Base */
+.directory-hero-card {
+  background: rgba(14, 18, 28, 0.90) !important;
+  border: 1px solid rgba(212, 175, 55, 0.35) !important;
+  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.8) !important;
 }
 
-/* Glassmorphism Directory Filter Island */
-#directory-primary-filter-island {
-  background: rgba(14, 18, 28, 0.90);
-  border: 1px solid rgba(197, 160, 89, 0.4);
-  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.8);
+/* Sticky Advanced Filters Sidebar */
+.directory-sidebar {
+  position: sticky !important;
+  top: 90px !important;
+  z-index: 20 !important;
 }
 
-#directory-primary-filter-island input:focus,
-#directory-primary-filter-island select:focus {
-  border-color: #D4AF37 !important;
-  box-shadow: 0 0 12px rgba(212, 175, 55, 0.3) !important;
+/* Sticky Header Offset adjustment on desktop */
+@media (max-width: 1023px) {
+  .directory-sidebar {
+    position: static !important;
+  }
 }
 
-/* Category Carousel Bar Scrollbar */
-#directory-category-carousel::-webkit-scrollbar {
-  display: none;
-}
-#directory-category-carousel {
-  -ms-overflow-style: none;
-  scrollbar-width: none;
-}
-
-/* Full-Width Bento Grid Container & Cards */
+/* Scoped Vendor Card Styling */
 #vendor-grid {
   width: 100% !important;
 }
 
 .minimal-vendor-card {
-  background: rgba(14, 18, 28, 0.88);
-  border: 1px solid rgba(197, 160, 89, 0.25);
-  box-shadow: 0 15px 35px rgba(0, 0, 0, 0.5);
-  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+  background: rgba(14, 18, 28, 0.88) !important;
+  border: 1px solid rgba(197, 160, 89, 0.3) !important;
+  border-radius: 20px !important;
+  box-shadow: 0 15px 35px rgba(0, 0, 0, 0.5) !important;
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1) !important;
+  overflow: hidden !important;
 }
 
 .minimal-vendor-card:hover {
-  border-color: #D4AF37;
-  box-shadow: 0 20px 45px rgba(212, 175, 55, 0.2);
-  transform: translateY(-4px);
+  border-color: #D4AF37 !important;
+  box-shadow: 0 20px 45px rgba(212, 175, 55, 0.25) !important;
+  transform: translateY(-4px) !important;
 }
-
-/* Slide-Over Filter Drawer Styling */
-#directory-advanced-filters-drawer {
-  transition: opacity 0.3s ease, visibility 0.3s ease;
-}
-
-#directory-advanced-filters-drawer > div {
-  animation: slideInRight 0.35s cubic-bezier(0.16, 1, 0.3, 1);
-}
-
-@keyframes slideInRight {
-  from { transform: translateX(100%); }
-  to { transform: translateX(0); }
-}
-
 
 /* Cinematic Hover Video Teasers */
 .card-teaser-video {
@@ -77,34 +59,22 @@
   opacity: 1 !important;
 }
 
+/* Custom Scrollbar Utilities */
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+.no-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
 
-/* Advanced Filters Slide-Over Drawer - Force Top Z-Index Overlay */
+/* Slide-Over Drawer High Z-Index Overlay */
 #directory-advanced-filters-drawer {
   position: fixed !important;
   top: 0 !important;
   right: 0 !important;
   width: 100% !important;
   max-width: 420px !important;
-  height: 100vh !important;
-  z-index: 999999 !important;
-  background: #07090E !important;
-  box-shadow: -10px 0 30px rgba(0, 0, 0, 0.9) !important;
-  border-left: 1px solid rgba(197, 160, 89, 0.4) !important;
-  overflow-y: auto !important;
-}
-
-#directory-advanced-filters-drawer.hidden {
-  display: none !important;
-}
-
-
-/* Direct Body-Level Maximum Z-Index Advanced Filter Drawer Overlay */
-#directory-advanced-filters-drawer {
-  position: fixed !important;
-  top: 0 !important;
-  right: 0 !important;
-  width: 100% !important;
-  max-width: 450px !important;
   height: 100vh !important;
   z-index: 2147483647 !important;
   background: #07090E !important;

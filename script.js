@@ -4129,6 +4129,13 @@ if (document.readyState === "loading") {
       if (!grid) return;
       grid.innerHTML = '';
 
+      // Update results count indicator
+      const countEl = document.getElementById('directory-results-count');
+      if (countEl) {
+        const vendorList = list || window.lastFilteredVendors || vendors;
+        countEl.textContent = `نمایش ${vendorList.length} مجموعه و تامین‌کننده فعال در استان یزد`;
+      }
+
       const currentTab = window.activeDirectoryCategoryTab || 'all';
 
       if (currentTab === 'all' && directoryViewMode === 'grid') {
