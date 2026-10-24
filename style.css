@@ -2532,6 +2532,14 @@ html[data-theme="dark"] .health-badge-critical {
   transform: scale(1.02);
 }
 
+/* HERO CINEMATIC VIDEO BACKGROUND */
+.hero-cinematic-video {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: opacity 0.5s ease-in-out;
+}
+
 /* ==========================================================================
    CINEMATIC DARK SPLIT HERO STYLES
    ========================================================================== */

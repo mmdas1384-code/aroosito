@@ -300,9 +300,18 @@
     <div id="tab-home" class="tab-content space-y-12">
 
       <!-- 2. ULTRA-SLIM & COMPACT EDITORIAL HERO SECTION WITH TOP BREATHING GAP -->
-      <section id="hero" class="relative mt-6 sm:mt-8 text-white space-y-6 overflow-visible">
+      <section id="hero" class="relative mt-6 sm:mt-8 text-white space-y-6 overflow-hidden rounded-3xl border border-[#D4AF37]/30 p-4 sm:p-6 lg:p-8 shadow-2xl">
+        <!-- Cinematic Background Video & Dark Gradient Overlay -->
+        <div class="absolute inset-0 w-full h-full overflow-hidden pointer-events-none z-0">
+          <video autoplay muted loop playsinline class="hero-cinematic-video absolute inset-0 w-full h-full object-cover scale-105 filter blur-[1px]">
+            <source src="assets/videos/yazd-wedding-hero.mp4" type="video/mp4">
+            <source src="https://assets.mixkit.co/videos/preview/mixkit-wedding-couple-walking-in-a-park-41315-large.mp4" type="video/mp4">
+          </video>
+          <div class="absolute inset-0 bg-[#07090E]/80 backdrop-blur-[2px] bg-gradient-to-t from-[#07090E] via-[#07090E]/75 to-[#07090E]/60"></div>
+        </div>
+
         <!-- Ambient Gold Radial Illumination -->
-        <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[500px] h-[500px] bg-[#D4AF37]/10 rounded-full blur-3xl pointer-events-none"></div>
+        <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[500px] h-[500px] bg-[#D4AF37]/15 rounded-full blur-3xl pointer-events-none z-0"></div>
 
         <!-- Main Hero Content Dual-Column Layout -->
         <div class="grid grid-cols-1 lg:grid-cols-12 gap-6 items-stretch relative z-10">
@@ -360,9 +369,9 @@
                 <span>دستیار اختصاصی</span>
               </button>
 
-              <!-- "توصیه هوشمند AI" button triggers 3-step recommendation wizard (#modal-smart-wizard) -->
-              <button type="button" onclick="openQuickInquiryModal()" class="bg-[#141A28] hover:bg-[#1E293B] text-amber-200 border border-[#C5A059]/40 font-bold py-2.5 px-3 rounded-2xl text-xs transition-all cursor-pointer flex items-center justify-center gap-1.5 shadow-md">
-                <i data-lucide="wand-2" class="w-4 h-4 text-[#D4AF37]"></i>
+              <!-- "توصیه هوشمند AI" button triggers AI Personality & Vendor Wizard (#ai-assistant-modal) -->
+              <button type="button" onclick="openAiAssistantModal()" class="bg-[#141A28] hover:bg-[#1E293B] text-amber-200 border border-[#C5A059]/40 font-bold py-2.5 px-3 rounded-2xl text-xs transition-all cursor-pointer flex items-center justify-center gap-1.5 shadow-md">
+                <i data-lucide="sparkles" class="w-4 h-4 text-[#D4AF37]"></i>
                 <span>توصیه هوشمند AI</span>
               </button>
             </div>
@@ -8404,6 +8413,104 @@
           <span>ثبت درخواست دستیار اختصاصی ↗</span>
         </button>
       </form>
+    </div>
+  </div>
+
+  <!-- AI PERSONALITY & VENDOR WIZARD MODAL (#ai-assistant-modal) -->
+  <div id="ai-assistant-modal" class="fixed inset-0 z-[999999] hidden flex items-center justify-center p-4 bg-black/80 backdrop-blur-md transition-all duration-300" onclick="if(event.target===this) closeAiAssistantModal()">
+    <div class="bg-[#0E121C] text-white rounded-3xl shadow-2xl max-w-lg w-full overflow-hidden border border-[#D4AF37]/60 flex flex-col animate-scaleUp relative p-6 space-y-6">
+
+      <!-- Header -->
+      <div class="flex items-center justify-between border-b border-[#D4AF37]/30 pb-4">
+        <div class="flex items-center gap-3">
+          <div class="w-10 h-10 rounded-2xl bg-[#1E293B] border border-[#D4AF37]/50 flex items-center justify-center text-[#D4AF37] shadow-[0_0_15px_rgba(212,175,55,0.2)]">
+            <i data-lucide="sparkles" class="w-5 h-5"></i>
+          </div>
+          <div class="text-right">
+            <h3 class="text-base font-black text-[#D4AF37]">دستیار هوشمند پیشنهاد تامین‌کننده</h3>
+            <p class="text-xs text-slate-300">تست ۳ مرحله‌ای شخصیت‌شناسی و پیشنهاد هوشمند</p>
+          </div>
+        </div>
+        <button type="button" onclick="closeAiAssistantModal()" class="w-8 h-8 rounded-xl bg-white/10 hover:bg-white/20 text-white flex items-center justify-center transition-colors cursor-pointer">
+          <i data-lucide="x" class="w-5 h-5"></i>
+        </button>
+      </div>
+
+      <!-- Step Progress Bar -->
+      <div id="ai-wizard-progress-bar" class="w-full bg-[#1E293B] rounded-full h-2 overflow-hidden border border-[#D4AF37]/30">
+        <div id="ai-wizard-progress-fill" class="bg-gradient-to-r from-[#D4AF37] to-amber-200 h-full w-1/3 transition-all duration-500"></div>
+      </div>
+
+      <!-- Step 1: Wedding Style -->
+      <div id="ai-wizard-step-1" class="ai-wizard-step space-y-4 text-right">
+        <h4 class="text-sm font-bold text-amber-200">مرحله ۱: سبُک و فضای موردعلاقه مراسم شما چیست؟</h4>
+        <div class="grid grid-cols-2 gap-3">
+          <button type="button" onclick="selectAiStyle('سنتی یزد')" class="ai-style-opt bg-[#1E293B] hover:bg-[#2A384E] border border-[#D4AF37]/30 hover:border-[#D4AF37] p-3.5 rounded-2xl text-xs font-bold text-slate-200 hover:text-white transition-all text-center">
+            🏛️ اصیل & سنتی یزد
+          </button>
+          <button type="button" onclick="selectAiStyle('مدرن')" class="ai-style-opt bg-[#1E293B] hover:bg-[#2A384E] border border-[#D4AF37]/30 hover:border-[#D4AF37] p-3.5 rounded-2xl text-xs font-bold text-slate-200 hover:text-white transition-all text-center">
+            ✨ مدرن & مینیمال
+          </button>
+          <button type="button" onclick="selectAiStyle('باغ و فضای باز')" class="ai-style-opt bg-[#1E293B] hover:bg-[#2A384E] border border-[#D4AF37]/30 hover:border-[#D4AF37] p-3.5 rounded-2xl text-xs font-bold text-slate-200 hover:text-white transition-all text-center">
+            🌿 باغ & فضای باز
+          </button>
+          <button type="button" onclick="selectAiStyle('لوکس VIP')" class="ai-style-opt bg-[#1E293B] hover:bg-[#2A384E] border border-[#D4AF37]/30 hover:border-[#D4AF37] p-3.5 rounded-2xl text-xs font-bold text-slate-200 hover:text-white transition-all text-center">
+            👑 لوکس & VIP
+          </button>
+        </div>
+      </div>
+
+      <!-- Step 2: Budget Tier -->
+      <div id="ai-wizard-step-2" class="ai-wizard-step hidden space-y-4 text-right">
+        <h4 class="text-sm font-bold text-amber-200">مرحله ۲: سطح بودجه مدنظر شما چقدر است؟</h4>
+        <div class="grid grid-cols-3 gap-3">
+          <button type="button" onclick="selectAiBudget('اقتصادی')" class="ai-budget-opt bg-[#1E293B] hover:bg-[#2A384E] border border-[#D4AF37]/30 hover:border-[#D4AF37] p-3.5 rounded-2xl text-xs font-bold text-slate-200 hover:text-white transition-all text-center">
+            💚 اقتصادی
+          </button>
+          <button type="button" onclick="selectAiBudget('متوسط')" class="ai-budget-opt bg-[#1E293B] hover:bg-[#2A384E] border border-[#D4AF37]/30 hover:border-[#D4AF37] p-3.5 rounded-2xl text-xs font-bold text-slate-200 hover:text-white transition-all text-center">
+            ⭐ متناسب
+          </button>
+          <button type="button" onclick="selectAiBudget('VIP')" class="ai-budget-opt bg-[#1E293B] hover:bg-[#2A384E] border border-[#D4AF37]/30 hover:border-[#D4AF37] p-3.5 rounded-2xl text-xs font-bold text-slate-200 hover:text-white transition-all text-center">
+            👑 لوکس VIP
+          </button>
+        </div>
+      </div>
+
+      <!-- Step 3: Venue Preference -->
+      <div id="ai-wizard-step-3" class="ai-wizard-step hidden space-y-4 text-right">
+        <h4 class="text-sm font-bold text-amber-200">مرحله ۳: ترجیح مکان برگزاری مراسم شما؟</h4>
+        <div class="grid grid-cols-3 gap-3">
+          <button type="button" onclick="selectAiVenue('عمارت تاریخی')" class="ai-venue-opt bg-[#1E293B] hover:bg-[#2A384E] border border-[#D4AF37]/30 hover:border-[#D4AF37] p-3.5 rounded-2xl text-xs font-bold text-slate-200 hover:text-white transition-all text-center">
+            🏰 عمارت تاریخی
+          </button>
+          <button type="button" onclick="selectAiVenue('تالار سرپوشیده')" class="ai-venue-opt bg-[#1E293B] hover:bg-[#2A384E] border border-[#D4AF37]/30 hover:border-[#D4AF37] p-3.5 rounded-2xl text-xs font-bold text-slate-200 hover:text-white transition-all text-center">
+            🏛️ تالار مجلل
+          </button>
+          <button type="button" onclick="selectAiVenue('باغ تالار')" class="ai-venue-opt bg-[#1E293B] hover:bg-[#2A384E] border border-[#D4AF37]/30 hover:border-[#D4AF37] p-3.5 rounded-2xl text-xs font-bold text-slate-200 hover:text-white transition-all text-center">
+            🌳 باغ تالار
+          </button>
+        </div>
+      </div>
+
+      <!-- Result View -->
+      <div id="ai-wizard-results" class="ai-wizard-step hidden space-y-4 text-right">
+        <div class="p-3 bg-[#0F251A] border border-[#D4AF37]/50 rounded-2xl text-xs font-bold text-amber-200 text-center flex items-center justify-center gap-2">
+          <i data-lucide="sparkles" class="w-4 h-4 text-[#D4AF37]"></i>
+          <span>پیشنهاد اختصاصی هوش مصنوعی عروسی نو بر اساس انتخاب شما:</span>
+        </div>
+        <div id="ai-recommended-vendors-list" class="space-y-2.5 max-h-[220px] overflow-y-auto custom-scrollbar">
+          <!-- Dynamically populated via JS -->
+        </div>
+        <div class="pt-2 flex gap-2">
+          <button type="button" onclick="resetAiAssistantModal()" class="flex-1 bg-[#1E293B] hover:bg-[#2A384E] text-amber-200 border border-[#D4AF37]/40 font-bold py-2.5 rounded-xl text-xs transition-all cursor-pointer">
+            شروع مجدد 🔄
+          </button>
+          <a href="directory.html" class="flex-1 gold-shimmer-btn text-[#0F251A] font-black py-2.5 rounded-xl text-xs text-center shadow-md">
+            مشاهده در دایرکتوری ➔
+          </a>
+        </div>
+      </div>
+
     </div>
   </div>
 

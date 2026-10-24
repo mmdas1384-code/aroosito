@@ -14100,6 +14100,102 @@ window.handleVipConciergeSubmit = function(e) {
   if (typeof showToast === 'function') showToast('درخواست مشاوره کنسیرژ VIP با موفقیت ثبت شد. مشاور تشریفات عروسی نو به زودی تماس می‌گیرد.', 'success');
 };
 
+/* AI PERSONALITY & VENDOR WIZARD MODAL LOGIC */
+let aiWizardSelections = { style: null, budget: null, venue: null };
+
+window.openAiAssistantModal = function() {
+  const modal = document.getElementById('ai-assistant-modal');
+  if (modal) {
+    resetAiAssistantModal();
+    modal.classList.remove('hidden');
+    modal.classList.add('flex');
+    if (window.lucide) lucide.createIcons();
+  }
+};
+
+window.closeAiAssistantModal = function() {
+  const modal = document.getElementById('ai-assistant-modal');
+  if (modal) {
+    modal.classList.add('hidden');
+    modal.classList.remove('flex');
+  }
+};
+
+window.resetAiAssistantModal = function() {
+  aiWizardSelections = { style: null, budget: null, venue: null };
+  const fill = document.getElementById('ai-wizard-progress-fill');
+  if (fill) fill.style.width = '33%';
+
+  const step1 = document.getElementById('ai-wizard-step-1');
+  const step2 = document.getElementById('ai-wizard-step-2');
+  const step3 = document.getElementById('ai-wizard-step-3');
+  const results = document.getElementById('ai-wizard-results');
+
+  if (step1) step1.classList.remove('hidden');
+  if (step2) step2.classList.add('hidden');
+  if (step3) step3.classList.add('hidden');
+  if (results) results.classList.add('hidden');
+};
+
+window.selectAiStyle = function(style) {
+  aiWizardSelections.style = style;
+  const fill = document.getElementById('ai-wizard-progress-fill');
+  if (fill) fill.style.width = '66%';
+
+  document.getElementById('ai-wizard-step-1')?.classList.add('hidden');
+  document.getElementById('ai-wizard-step-2')?.classList.remove('hidden');
+};
+
+window.selectAiBudget = function(budget) {
+  aiWizardSelections.budget = budget;
+  const fill = document.getElementById('ai-wizard-progress-fill');
+  if (fill) fill.style.width = '100%';
+
+  document.getElementById('ai-wizard-step-2')?.classList.add('hidden');
+  document.getElementById('ai-wizard-step-3')?.classList.remove('hidden');
+};
+
+window.selectAiVenue = function(venue) {
+  aiWizardSelections.venue = venue;
+  document.getElementById('ai-wizard-step-3')?.classList.add('hidden');
+
+  const resultsView = document.getElementById('ai-wizard-results');
+  if (resultsView) resultsView.classList.remove('hidden');
+
+  renderAiRecommendedVendors();
+};
+
+window.renderAiRecommendedVendors = function() {
+  const listContainer = document.getElementById('ai-recommended-vendors-list');
+  if (!listContainer) return;
+
+  const vendorList = (typeof vendors !== 'undefined' && Array.isArray(vendors)) ? vendors : [];
+
+  // Dynamic matching based on wizard selections
+  let matches = vendorList.slice(0, 3);
+  if (aiWizardSelections.venue && aiWizardSelections.venue.includes('عمارت')) {
+    const historical = vendorList.filter(v => (v.name + v.category).includes('مشیرالممالک') || (v.name + v.category).includes('صفائیه'));
+    if (historical.length > 0) matches = historical;
+  }
+
+  listContainer.innerHTML = matches.map(v => `
+    <div class="bg-[#1E293B] border border-[#D4AF37]/30 rounded-2xl p-3 flex items-center justify-between hover:border-[#D4AF37] transition-all">
+      <div class="flex items-center gap-3 text-right">
+        <img src="${v.image}" alt="${v.name}" class="w-11 h-11 rounded-xl object-cover border border-[#D4AF37]">
+        <div>
+          <h5 class="text-xs font-black text-[#D4AF37]">${v.name}</h5>
+          <span class="text-[10px] text-slate-300 block">${v.category || 'تامین‌کننده برتر'} • ${v.district || 'یزد'}</span>
+        </div>
+      </div>
+      <button type="button" onclick="closeAiAssistantModal(); openVendorDetailModal(${v.id})" class="gold-shimmer-btn text-[#0F251A] font-black px-3 py-1.5 rounded-xl text-[10px] shadow-sm cursor-pointer">
+        پروفایل ➔
+      </button>
+    </div>
+  `).join('');
+
+  if (window.lucide) lucide.createIcons();
+};
+
 /* MULTI-QUOTE REQUEST SYSTEM LOGIC */
 let selectedMultiQuoteVendorIds = [];
 
