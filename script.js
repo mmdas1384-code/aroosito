@@ -4107,7 +4107,7 @@ if (document.readyState === "loading") {
 
           <!-- Card Badge Layer Container (Left & Right) -->
           <div class="card-badge-layer" onclick="event.stopPropagation()">
-            <!-- RIGHT SIDE: Category & Discount -->
+            <!-- RIGHT SIDE: Category, Discount & 360/Video Badges -->
             <div class="badges-right">
               <span class="badge-tag bg-black/80 backdrop-blur-md text-amber-200 border border-[#D4AF37]/50 text-[10px] font-bold px-2.5 py-1 rounded-full shadow-md flex items-center gap-1">
                 <span>${badgeIcon}</span>
@@ -4117,6 +4117,15 @@ if (document.readyState === "loading") {
                 <i data-lucide="percent" class="w-3 h-3 text-white"></i>
                 <span>٪۱۵ تخفیف</span>
               </span>
+              ${v.has360Tour ? `
+              <span class="badge-tag badge-tour-360 bg-[#0F251A] text-[#D4AF37] border border-[#D4AF37] text-[9px] font-black px-2 py-0.5 rounded-full shadow-md flex items-center gap-1" title="تور مجازی ۳۶۰ درجه">
+                <i data-lucide="360" class="w-3 h-3 text-[#D4AF37]"></i>
+                <span>تور ۳۶۰°</span>
+              </span>` : `
+              <span class="badge-tag badge-video bg-[#1E293B] text-amber-200 border border-[#D4AF37]/40 text-[9px] font-bold px-2 py-0.5 rounded-full shadow-md flex items-center gap-1" title="تیزر ویدیو">
+                <i data-lucide="play" class="w-3 h-3 fill-amber-300 text-amber-300"></i>
+                <span>تیزر ویدیو</span>
+              </span>`}
             </div>
 
             <!-- LEFT SIDE: Actions & Quick View -->
@@ -4129,6 +4138,12 @@ if (document.readyState === "loading") {
               </button>
               <button type="button" onclick="openQuickViewModal(${v.id}, event)" class="btn-card-icon quickview-btn" title="مشاهده سریع">
                 <i data-lucide="eye" class="w-4 h-4"></i>
+              </button>
+              <button type="button" onclick="openQuickShareModal(${v.id}, event)" class="btn-card-icon share-btn" title="اشتراک‌گذاری">
+                <i data-lucide="share-2" class="w-4 h-4"></i>
+              </button>
+              <button type="button" onclick="toggleMultiQuoteVendor(${v.id}, event)" class="btn-card-icon multiquote-btn ${selectedMultiQuoteVendorIds.includes(v.id) ? 'bg-[#D4AF37] text-black font-black' : ''}" title="افزودن به استعلام گروهی">
+                <i data-lucide="${selectedMultiQuoteVendorIds.includes(v.id) ? 'check-square' : 'square'}" class="w-4 h-4"></i>
               </button>
             </div>
           </div>
@@ -4167,6 +4182,26 @@ if (document.readyState === "loading") {
       `;
       return card;
     }
+
+    window.renderSkeletonCards = function() {
+      const grid = document.getElementById('vendor-grid');
+      if (!grid) return;
+      grid.className = "grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 w-full";
+      grid.innerHTML = Array(8).fill(0).map(() => `
+        <div class="bg-[#0e121c] border border-[#C5A059]/20 rounded-3xl overflow-hidden p-4 space-y-4 shadow-xl">
+          <div class="w-full h-44 rounded-2xl skeleton-box"></div>
+          <div class="space-y-2">
+            <div class="w-3/4 h-4 rounded-lg skeleton-box"></div>
+            <div class="w-1/2 h-3 rounded-lg skeleton-box"></div>
+          </div>
+          <div class="w-full h-8 rounded-xl skeleton-box"></div>
+          <div class="flex justify-between items-center pt-2">
+            <div class="w-1/3 h-4 rounded-lg skeleton-box"></div>
+            <div class="w-1/4 h-7 rounded-xl skeleton-box"></div>
+          </div>
+        </div>
+      `).join('');
+    };
 
     function renderVendors(list) {
       const grid = document.getElementById('vendor-grid');
@@ -14063,6 +14098,155 @@ window.handleVipConciergeSubmit = function(e) {
   if (e) e.preventDefault();
   closeVipConciergeModal();
   if (typeof showToast === 'function') showToast('درخواست مشاوره کنسیرژ VIP با موفقیت ثبت شد. مشاور تشریفات عروسی نو به زودی تماس می‌گیرد.', 'success');
+};
+
+/* MULTI-QUOTE REQUEST SYSTEM LOGIC */
+let selectedMultiQuoteVendorIds = [];
+
+window.toggleMultiQuoteVendor = function(vendorId, event) {
+  if (event) event.stopPropagation();
+  const vId = parseInt(vendorId, 10);
+  const index = selectedMultiQuoteVendorIds.indexOf(vId);
+
+  if (index > -1) {
+    selectedMultiQuoteVendorIds.splice(index, 1);
+  } else {
+    selectedMultiQuoteVendorIds.push(vId);
+  }
+
+  renderMultiQuoteBar();
+  if (typeof renderVendors === 'function' && typeof lastFilteredVendors !== 'undefined') {
+    renderVendors(lastFilteredVendors);
+  }
+};
+
+window.clearMultiQuoteSelection = function() {
+  selectedMultiQuoteVendorIds = [];
+  renderMultiQuoteBar();
+  if (typeof renderVendors === 'function' && typeof lastFilteredVendors !== 'undefined') {
+    renderVendors(lastFilteredVendors);
+  }
+};
+
+window.renderMultiQuoteBar = function() {
+  const bar = document.getElementById('floating-multiquote-bar');
+  const countTag = document.getElementById('multiquote-count-tag');
+  const btnLabel = document.getElementById('multiquote-btn-label');
+
+  if (!bar) return;
+
+  if (selectedMultiQuoteVendorIds.length === 0) {
+    bar.classList.add('hidden');
+    return;
+  }
+
+  bar.classList.remove('hidden');
+  if (countTag) countTag.textContent = `انتخاب ${selectedMultiQuoteVendorIds.length} مجموعه`;
+  if (btnLabel) btnLabel.textContent = `ارسال استعلام برای (${selectedMultiQuoteVendorIds.length}) مجموعه`;
+  if (window.lucide) lucide.createIcons();
+};
+
+window.openMultiQuoteModal = function() {
+  if (selectedMultiQuoteVendorIds.length === 0) return;
+  const modal = document.getElementById('modal-multiquote-inquiry');
+  const pillsContainer = document.getElementById('mq-selected-vendors-pills');
+  const subtext = document.getElementById('mq-modal-subtext');
+
+  if (subtext) subtext.textContent = `ارسال مستقیم استعلام به ${selectedMultiQuoteVendorIds.length} تامین‌کننده انتخابی شما`;
+
+  if (pillsContainer) {
+    const vendorList = (typeof vendors !== 'undefined' && Array.isArray(vendors)) ? vendors : [];
+    const selectedVendors = vendorList.filter(v => selectedMultiQuoteVendorIds.includes(v.id));
+
+    pillsContainer.innerHTML = selectedVendors.map(v => `
+      <span class="bg-[#1E293B] border border-[#D4AF37]/50 text-amber-200 text-xs font-bold px-2.5 py-1 rounded-lg flex items-center gap-1.5">
+        <img src="${v.image}" class="w-4 h-4 rounded-full object-cover">
+        <span>${v.name}</span>
+      </span>
+    `).join('');
+  }
+
+  if (modal) {
+    modal.classList.remove('hidden');
+    modal.classList.add('flex');
+  }
+  if (window.lucide) lucide.createIcons();
+};
+
+window.closeMultiQuoteModal = function() {
+  const modal = document.getElementById('modal-multiquote-inquiry');
+  if (modal) {
+    modal.classList.add('hidden');
+    modal.classList.remove('flex');
+  }
+};
+
+window.handleMultiQuoteSubmit = function(event) {
+  if (event) event.preventDefault();
+  const date = document.getElementById('mq-event-date')?.value;
+  const guests = document.getElementById('mq-guest-count')?.value;
+  const phone = document.getElementById('mq-phone')?.value;
+
+  showToast(`استعلام قیمت گروهی با موفقیت برای ${selectedMultiQuoteVendorIds.length} مجموعه ارسال گردید!`, 'success');
+  clearMultiQuoteSelection();
+  closeMultiQuoteModal();
+};
+
+/* QUICK SHARE MODAL LOGIC */
+let currentShareVendor = null;
+
+window.openQuickShareModal = function(vendorId, event) {
+  if (event) event.stopPropagation();
+  const vId = parseInt(vendorId, 10);
+  const vendorList = (typeof vendors !== 'undefined' && Array.isArray(vendors)) ? vendors : [];
+  const vendor = vendorList.find(v => v.id === vId) || vendorList[0];
+  if (!vendor) return;
+
+  currentShareVendor = vendor;
+  const modal = document.getElementById('modal-quick-share');
+  const nameEl = document.getElementById('qs-vendor-name');
+
+  if (nameEl) nameEl.textContent = `اشتراک‌گذاری ${vendor.name}`;
+  if (modal) {
+    modal.classList.remove('hidden');
+    modal.classList.add('flex');
+  }
+  if (window.lucide) lucide.createIcons();
+};
+
+window.closeQuickShareModal = function() {
+  const modal = document.getElementById('modal-quick-share');
+  if (modal) {
+    modal.classList.add('hidden');
+    modal.classList.remove('flex');
+  }
+};
+
+window.copyVendorShareLink = function() {
+  if (!currentShareVendor) return;
+  const url = `${window.location.origin}/vendor-detail.html?id=${currentShareVendor.id}`;
+  navigator.clipboard.writeText(url).then(() => {
+    showToast('لینک اختصاصی تامین‌کننده در حافظه کپی شد.', 'success');
+  }).catch(() => {
+    showToast('خطا در کپی لینک.', 'warning');
+  });
+  closeQuickShareModal();
+};
+
+window.shareVendorWhatsApp = function() {
+  if (!currentShareVendor) return;
+  const url = `${window.location.origin}/vendor-detail.html?id=${currentShareVendor.id}`;
+  const text = encodeURIComponent(`سلام! اطلاعات پکیج ${currentShareVendor.name} در سامانه عروسی‌تو یزد را مشاهده کنید:\n${url}`);
+  window.open(`https://wa.me/?text=${text}`, '_blank');
+  closeQuickShareModal();
+};
+
+window.shareVendorTelegram = function() {
+  if (!currentShareVendor) return;
+  const url = `${window.location.origin}/vendor-detail.html?id=${currentShareVendor.id}`;
+  const text = encodeURIComponent(`اطلاعات پکیج ${currentShareVendor.name} در عروسی‌تو یزد`);
+  window.open(`https://t.me/share/url?url=${encodeURIComponent(url)}&text=${text}`, '_blank');
+  closeQuickShareModal();
 };
 
 /* QUICK VIEW MODAL / DRAWER CONTROLLERS */
