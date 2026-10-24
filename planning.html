@@ -721,6 +721,12 @@
       if (window.lucide && typeof window.lucide.createIcons === 'function') {
         window.lucide.createIcons();
       }
+      const hash = window.location.hash ? window.location.hash.replace('#', '') : '';
+      if (hash === 'budget' && typeof openExpandModal === 'function') {
+        openExpandModal('budget');
+      } else if (hash === 'checklist' && typeof openExpandModal === 'function') {
+        openExpandModal('checklist');
+      }
     });
   </script>
 </body>
