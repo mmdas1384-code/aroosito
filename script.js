@@ -15793,3 +15793,46 @@ function closeStoryLightbox() {
 
 window.openStoryLightbox = openStoryLightbox;
 window.closeStoryLightbox = closeStoryLightbox;
+
+/* Directory Sidebar Toggle & Expanded 4-Column Grid Mode */
+function toggleDirectorySidebar() {
+  const sidebar = document.getElementById('directory-sidebar-panel');
+  const mainPanel = document.getElementById('directory-main-panel');
+  const grid = document.getElementById('vendor-grid');
+
+  if (!sidebar || !mainPanel) return;
+
+  if (sidebar.classList.contains('collapsed')) {
+    // Expand Sidebar
+    sidebar.classList.remove('collapsed');
+    mainPanel.classList.remove('lg:col-span-12');
+    mainPanel.classList.add('lg:col-span-9');
+    if (grid && !grid.className.includes('flex')) {
+      grid.className = "grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5 w-full";
+    }
+  } else {
+    // Collapse Sidebar (Expand Main Grid to 4 Columns)
+    sidebar.classList.add('collapsed');
+    mainPanel.classList.remove('lg:col-span-9');
+    mainPanel.classList.add('lg:col-span-12');
+    if (grid && !grid.className.includes('flex')) {
+      grid.className = "grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-5 w-full";
+    }
+  }
+}
+
+/* Directory Interactive Map View Toggle */
+function toggleDirectoryMapView() {
+  if (typeof toggleDirectoryMainView === 'function') {
+    const isMapActive = directoryViewMode === 'map';
+    toggleDirectoryMainView(isMapActive ? 'grid' : 'map');
+
+    const label = document.getElementById('map-toggle-btn-label');
+    if (label) {
+      label.textContent = isMapActive ? 'نمایش روی نقشه' : 'نمای شبکه‌ای';
+    }
+  }
+}
+
+window.toggleDirectorySidebar = toggleDirectorySidebar;
+window.toggleDirectoryMapView = toggleDirectoryMapView;

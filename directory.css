@@ -14,9 +14,15 @@
   position: sticky !important;
   top: 90px !important;
   z-index: 20 !important;
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1) !important;
 }
 
-/* Sticky Header Offset adjustment on desktop */
+/* Collapsible Sidebar States */
+.directory-sidebar.collapsed {
+  display: none !important;
+}
+
+/* Mobile responsive drawer toggle fallback */
 @media (max-width: 1023px) {
   .directory-sidebar {
     position: static !important;
@@ -26,6 +32,7 @@
 /* Scoped Vendor Card Styling */
 #vendor-grid {
   width: 100% !important;
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1) !important;
 }
 
 .minimal-vendor-card {
@@ -68,21 +75,16 @@
   scrollbar-width: none;
 }
 
-/* Slide-Over Drawer High Z-Index Overlay */
-#directory-advanced-filters-drawer {
-  position: fixed !important;
-  top: 0 !important;
-  right: 0 !important;
-  width: 100% !important;
-  max-width: 420px !important;
-  height: 100vh !important;
-  z-index: 2147483647 !important;
-  background: #07090E !important;
-  box-shadow: -10px 0 30px rgba(0, 0, 0, 0.9) !important;
-  border-left: 1px solid rgba(197, 160, 89, 0.4) !important;
-  overflow-y: auto !important;
-}
-
-#directory-advanced-filters-drawer.hidden {
-  display: none !important;
+/* Active Filter Tag Pills */
+.active-filter-pill {
+  background: rgba(212, 175, 55, 0.15) !important;
+  border: 1px solid rgba(212, 175, 55, 0.4) !important;
+  color: #D4AF37 !important;
+  padding: 4px 10px !important;
+  border-radius: 9999px !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  gap: 6px !important;
+  font-size: 11px !important;
+  font-weight: 700 !important;
 }
