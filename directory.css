@@ -2,6 +2,17 @@
    DIRECTORY SCOPED STYLES, OFF-CANVAS DRAWER & FULL-WIDTH GRID
    ========================================================================== */
 
+/* UNIFIED DIRECTORY CONTAINER & HERO SCOPED STYLES */
+.directory-container {
+  max-width: 1320px !important;
+  margin-left: auto !important;
+  margin-right: auto !important;
+  padding-left: 24px !important;
+  padding-right: 24px !important;
+  box-sizing: border-box !important;
+  width: 100% !important;
+}
+
 /* Dark Theme Hero Base Card */
 .directory-hero-card {
   background: rgba(14, 18, 28, 0.90) !important;

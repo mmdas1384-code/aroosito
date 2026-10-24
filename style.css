@@ -41,6 +41,30 @@ body, .glass-card {
   transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease;
 }
 
+/* ==========================================================================
+   GLOBAL CONTAINER & LAYOUT STANDARDIZATION (1320px UNIFIED LUXURY CONTAINER)
+   ========================================================================== */
+.container,
+.page-wrapper,
+.max-w-7xl {
+  max-width: 1320px !important;
+  margin-left: auto !important;
+  margin-right: auto !important;
+  padding-left: 24px !important;
+  padding-right: 24px !important;
+  box-sizing: border-box !important;
+  width: 100% !important;
+}
+
+@media (max-width: 640px) {
+  .container,
+  .page-wrapper,
+  .max-w-7xl {
+    padding-left: 16px !important;
+    padding-right: 16px !important;
+  }
+}
+
 /* Global Layout Rules & Zero-Gap Below Header */
 header {
   margin-bottom: 0 !important;
@@ -2605,9 +2629,25 @@ body.mood-night {
   scrollbar-width: none;
 }
 
-/* Ensure proper header spacing clearance across all pages */
-main, #home-view, #directory-view {
-  padding-top: 2.5rem !important;
+/* Ensure proper header spacing clearance and vertical rhythm across all pages */
+main, #home-view, #directory-view, .main-content-wrapper {
+  padding-top: 1.5rem !important;
+  padding-bottom: 2.5rem !important;
+}
+
+section.max-w-7xl,
+.section-card-wrapper,
+.why-choose-us-section,
+.real-weddings-section,
+.main-categories-section,
+.quick-tools-section,
+.budget-calculator-section,
+.why-us-section,
+.weddings-gallery-section,
+.vendor-banner-dark {
+  border-radius: 1.5rem !important;
+  margin-top: 1.5rem !important;
+  margin-bottom: 1.5rem !important;
 }
 
 #directory-primary-filter-island {
