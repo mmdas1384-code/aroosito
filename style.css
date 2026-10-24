@@ -42,12 +42,13 @@ body, .glass-card {
 }
 
 /* ==========================================================================
-   GLOBAL CONTAINER & LAYOUT STANDARDIZATION (1320px UNIFIED LUXURY CONTAINER)
+   GLOBAL CONTAINER & LAYOUT STANDARDIZATION (1400px UNIFIED LUXURY CONTAINER)
    ========================================================================== */
 .container,
 .page-wrapper,
-.max-w-7xl {
-  max-width: 1320px !important;
+.max-w-7xl,
+.max-w-7xl-unified {
+  max-width: 1400px !important;
   margin-left: auto !important;
   margin-right: auto !important;
   padding-left: 24px !important;
@@ -59,7 +60,8 @@ body, .glass-card {
 @media (max-width: 640px) {
   .container,
   .page-wrapper,
-  .max-w-7xl {
+  .max-w-7xl,
+  .max-w-7xl-unified {
     padding-left: 16px !important;
     padding-right: 16px !important;
   }
