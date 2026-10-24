@@ -4068,8 +4068,8 @@ if (document.readyState === "loading") {
           <video src="${v.videoTeaser || 'https://assets.mixkit.co/videos/preview/mixkit-wedding-couple-walking-in-a-park-41315-large.mp4'}" muted loop playsinline preload="none" class="card-teaser-video absolute inset-0 w-full h-full object-cover opacity-0 transition-opacity duration-500 pointer-events-none"></video>
           <div class="absolute inset-0 bg-gradient-to-t from-[#0F172A] via-transparent to-black/40"></div>
 
-          <!-- Top Badges Clean Positioning (Top-Right Category/Discount, Top-Left Actions Row) -->
-          <div class="absolute top-3 right-3 flex items-center gap-1.5 z-10">
+          <!-- Top Right Badges Group Container -->
+          <div class="badge-group-right absolute top-2.5 right-2.5 flex items-center gap-1.5 z-10">
             <span class="bg-black/80 backdrop-blur-md text-amber-200 border border-[#D4AF37]/50 text-[10px] font-bold px-2.5 py-1 rounded-full shadow-md flex items-center gap-1">
               <span>${badgeIcon}</span>
               <span>${cat}</span>
@@ -4080,17 +4080,18 @@ if (document.readyState === "loading") {
             </span>
           </div>
 
-          <div class="absolute top-3 left-3 flex items-center gap-2 z-10" onclick="event.stopPropagation()">
-            <button type="button" onclick="toggleVendorComparison(${v.id}, event)" class="w-8 h-8 rounded-full bg-black/70 hover:bg-[#D4AF37] hover:text-[#0F251A] text-white border border-[#D4AF37]/50 backdrop-blur-md flex items-center justify-center transition-all cursor-pointer shadow-md" title="مقایسه">
+          <!-- Top Left Actions Group Container -->
+          <div class="badge-group-left absolute top-2.5 left-2.5 flex items-center gap-1.5 z-10" onclick="event.stopPropagation()">
+            <button type="button" onclick="toggleVendorComparison(${v.id}, event)" class="w-8 h-8 rounded-full bg-black/75 hover:bg-[#D4AF37] hover:text-[#0F251A] text-white border border-[#D4AF37]/50 backdrop-blur-md flex items-center justify-center transition-all cursor-pointer shadow-md" title="مقایسه">
               <i data-lucide="scale" class="w-4 h-4"></i>
             </button>
-            <button type="button" onclick="toggleFavoriteVendor(${v.id}, event)" class="w-8 h-8 rounded-full bg-black/70 hover:bg-rose-600 text-white border border-[#D4AF37]/50 backdrop-blur-md flex items-center justify-center transition-all cursor-pointer shadow-md" title="نشان‌شده">
+            <button type="button" onclick="toggleFavoriteVendor(${v.id}, event)" class="w-8 h-8 rounded-full bg-black/75 hover:bg-rose-600 text-white border border-[#D4AF37]/50 backdrop-blur-md flex items-center justify-center transition-all cursor-pointer shadow-md" title="نشان‌شده">
               <i data-lucide="heart" class="w-4 h-4 ${isFav ? 'fill-rose-500 text-rose-500' : ''}"></i>
             </button>
           </div>
 
           <!-- Rating Badge -->
-          <div class="absolute bottom-2.5 right-3 bg-black/70 backdrop-blur-md text-[#D4AF37] border border-[#D4AF37]/40 text-[10px] font-black px-2.5 py-0.5 rounded-full flex items-center gap-1">
+          <div class="absolute bottom-2.5 right-3 bg-black/80 backdrop-blur-md text-[#D4AF37] border border-[#D4AF37]/40 text-[10px] font-black px-2.5 py-0.5 rounded-full flex items-center gap-1">
             <i data-lucide="star" class="w-3 h-3 fill-amber-400 text-amber-400"></i>
             <span>${ratingVal}</span>
           </div>

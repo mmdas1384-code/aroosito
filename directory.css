@@ -37,7 +37,7 @@
   pointer-events: auto !important;
 }
 
-/* 100% Full Width Vendor Cards Grid */
+/* 100% Full Width Vendor Cards Grid Container */
 #vendor-grid {
   width: 100% !important;
   transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1) !important;
@@ -51,6 +51,7 @@
   box-shadow: 0 15px 35px rgba(0, 0, 0, 0.5) !important;
   transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1) !important;
   overflow: hidden !important;
+  position: relative !important;
 }
 
 .minimal-vendor-card:hover {
@@ -59,22 +60,25 @@
   transform: translateY(-4px) !important;
 }
 
-/* Card Header Badges Positioning - Prevent Absolute Collisions */
-.card-category-badge {
+/* TOP BADGES FLEXBOX CONTAINERS - STRICT SEPARATION */
+.badge-group-right {
   position: absolute !important;
   top: 10px !important;
   right: 10px !important;
+  display: flex !important;
+  align-items: center !important;
+  gap: 6px !important;
   z-index: 10 !important;
 }
 
-.card-actions-top-left {
+.badge-group-left {
   position: absolute !important;
   top: 10px !important;
   left: 10px !important;
-  z-index: 10 !important;
   display: flex !important;
   align-items: center !important;
-  gap: 8px !important;
+  gap: 6px !important;
+  z-index: 10 !important;
 }
 
 /* Cinematic Hover Video Teasers */
