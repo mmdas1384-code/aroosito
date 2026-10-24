@@ -61,7 +61,7 @@
 }
 
 /* TOP BADGES FLEXBOX CONTAINERS - STRICT SEPARATION */
-.badge-group-right {
+.card-header-tags-right {
   position: absolute !important;
   top: 10px !important;
   right: 10px !important;
@@ -71,7 +71,7 @@
   z-index: 10 !important;
 }
 
-.badge-group-left {
+.card-header-actions-left {
   position: absolute !important;
   top: 10px !important;
   left: 10px !important;
@@ -79,6 +79,16 @@
   align-items: center !important;
   gap: 6px !important;
   z-index: 10 !important;
+}
+
+/* Ensure inner badges within header containers do NOT use absolute positioning */
+.card-header-tags-right > *,
+.card-header-actions-left > * {
+  position: relative !important;
+  top: auto !important;
+  left: auto !important;
+  right: auto !important;
+  bottom: auto !important;
 }
 
 /* Cinematic Hover Video Teasers */
