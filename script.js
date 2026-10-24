@@ -116,7 +116,7 @@ const HOME_VIEW_HTML = `<main id="home-view" class="flex-1 max-w-7xl w-full mx-a
               </button>
 
               <!-- "توصیه هوشمند AI" button triggers 3-step recommendation wizard (#modal-smart-wizard) -->
-              <button type="button" onclick="openSmartWizardModal()" class="bg-[#141A28] hover:bg-[#1E293B] text-amber-200 border border-[#C5A059]/40 font-bold py-2.5 px-3 rounded-2xl text-xs transition-all cursor-pointer flex items-center justify-center gap-1.5 shadow-md">
+              <button type="button" onclick="openAiRecommendationModal()" class="bg-[#141A28] hover:bg-[#1E293B] text-amber-200 border border-[#C5A059]/40 font-bold py-2.5 px-3 rounded-2xl text-xs transition-all cursor-pointer flex items-center justify-center gap-1.5 shadow-md">
                 <i data-lucide="wand-2" class="w-4 h-4 text-[#D4AF37]"></i>
                 <span>توصیه هوشمند AI</span>
               </button>
@@ -3279,8 +3279,20 @@ if (document.readyState === "loading") {
     }
 
     function filterVendorsFromMega(title) {
-      switchTab('directory');
-      filterVendorsByCategoryTitle(title);
+      const CATEGORY_SLUG_MAP = {
+        'باغ و تالار پذیرایی': 'hall',
+        'تالار و باغ تالار عروسی': 'hall',
+        'آتلیه عکاسی و فیلمبرداری': 'studio',
+        'سالن زیبایی و آرایشگاه عروس': 'beauty',
+        'سالن زیبایی عروس': 'beauty',
+        'مزون لباس عروس': 'mezon',
+        'طلافروشی و جواهرفروشی': 'jewelry',
+        'طلا و جواهر عقد': 'jewelry',
+        'کترینگ و تشریفات پذیرایی': 'catering'
+      };
+
+      const catSlug = CATEGORY_SLUG_MAP[title] || 'hall';
+      window.location.href = `directory.html?category=${catSlug}`;
     }
 
     // SUPER ADMIN CATEGORY & SUB-CATEGORY CRUD ENGINE
@@ -15706,3 +15718,30 @@ window.openTermsModal = openTermsModal;
 window.closeTermsModal = closeTermsModal;
 window.openSupportModal = openSupportModal;
 window.closeSupportModal = closeSupportModal;
+
+function openAiRecommendationModal() {
+  if (typeof openSmartWizardModal === 'function') {
+    openSmartWizardModal();
+  } else {
+    const modal = document.getElementById('aiRecommendationModal') || document.getElementById('modal-smart-wizard');
+    if (modal) {
+      modal.classList.remove('hidden');
+      modal.classList.add('flex');
+    }
+  }
+}
+
+function closeAiRecommendationModal() {
+  if (typeof closeSmartWizardModal === 'function') {
+    closeSmartWizardModal();
+  } else {
+    const modal = document.getElementById('aiRecommendationModal') || document.getElementById('modal-smart-wizard');
+    if (modal) {
+      modal.classList.add('hidden');
+      modal.classList.remove('flex');
+    }
+  }
+}
+
+window.openAiRecommendationModal = openAiRecommendationModal;
+window.closeAiRecommendationModal = closeAiRecommendationModal;
