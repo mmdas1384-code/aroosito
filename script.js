@@ -202,7 +202,7 @@ const HOME_VIEW_HTML = `<main id="home-view" class="flex-1 max-w-7xl w-full mx-a
               </div>
               <a href="directory.html" class="text-xs font-bold text-[#D4AF37] hover:text-amber-300 transition-colors flex items-center gap-1 cursor-pointer">
                 <span>مشاهده دایرکتوری کامل ➔</span>
-              </button>
+              </a>
             </div>
 
             <!-- Asymmetric Bento Grid for Categories -->
