@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Aroosi No — هاب استکشافی و دایرکتوری لوکس تامین‌کنندگان یزد</title>
+  <title>عروسی تو — هاب استکشافی و دایرکتوری لوکس تامین‌کنندگان یزد</title>
 
   <!-- Vazirmatn Persian Font -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -24,482 +24,320 @@
 
   <!-- TOP HEADER WITH FLOATING GLASS PILL BAR -->
   <header class="sticky top-0 z-50 bg-[#0b0f19]/90 backdrop-blur-xl border-b border-[#D4AF37]/35 shadow-2xl">
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-3.5 flex items-center justify-between">
-      <!-- Right: Brand Logo & Back to Home -->
-      <div class="flex items-center gap-3">
-        <a href="index.html" class="flex items-center gap-2">
-          <div class="w-9 h-9 rounded-2xl bg-gradient-to-br from-[#D4AF37] to-[#8C6D23] flex items-center justify-center text-[#0F251A] font-black shadow-lg">
-            👑
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-2">
+      <!-- TOP TIER: Brand Logo, Golden Magnifying Glass & User Action Controls -->
+      <div class="flex items-center justify-between h-20 gap-4">
+
+        <!-- RIGHT SIDE: Brand Logo & Golden Magnifying Glass Icon -->
+        <div class="flex items-center gap-3.5 shrink-0">
+          <a href="index.html" class="flex items-center gap-3 group">
+            <div class="w-11 h-11 rounded-xl bg-[#D4AF37] flex items-center justify-center text-[#1B3B2B] shadow-md transition-transform group-hover:scale-105">
+              <i data-lucide="heart" class="w-6 h-6 fill-[#1B3B2B] stroke-[#D4AF37]"></i>
+            </div>
+            <div class="flex flex-col">
+              <span class="text-2xl font-black text-[#D4AF37] tracking-tight">عروسی تو</span>
+              <span class="text-[9px] text-amber-200/90 font-medium tracking-wide flex items-center gap-1 border-t border-[#D4AF37]/30 pt-0.5 mt-0.5">
+                <span>The Definitive Luxury Wedding Directory</span>
+              </span>
+            </div>
+          </a>
+
+          <!-- ELEGANT GOLDEN QUICK SEARCH CTA BUTTON -->
+          <button type="button" onclick="openQuickSearchOverlay()" class="w-10 h-10 rounded-2xl bg-[#0F172A] hover:bg-[#1E293B] text-[#D4AF37] border border-[#D4AF37]/50 shadow-lg flex items-center justify-center transition-all hover:scale-105 active:scale-95 cursor-pointer shrink-0 mr-1" title="جستجوی سریع هوشمند">
+            <i data-lucide="search" class="w-5 h-5 text-[#D4AF37]"></i>
+          </button>
+        </div>
+
+        <!-- LEFT SIDE: Vendor Signup (Subtle Outline) & Account Button (Solid Gold) -->
+        <div class="flex items-center gap-2.5 shrink-0">
+
+          <!-- Vendor Registration Subtle Outline Button -->
+          <button onclick="toggleVendorModalStatic(true)" class="bg-transparent hover:bg-[#D4AF37]/10 text-amber-200 hover:text-[#D4AF37] border border-[#D4AF37]/60 hover:border-[#D4AF37] px-3.5 py-2 rounded-2xl text-xs sm:text-sm font-bold transition-all flex items-center gap-1.5 cursor-pointer">
+            <span>ثبت‌نام کسب‌وکارها</span>
+          </button>
+
+          <!-- User Account Solid Gold Button -->
+          <div class="user-account-dropdown nav-item relative has-dropdown">
+              <button onclick="openAuthModal('couple')" class="bg-gradient-to-r from-amber-400 via-amber-500 to-amber-600 hover:brightness-110 text-[#07090E] px-4 py-2 rounded-2xl text-xs sm:text-sm font-black transition-all flex items-center gap-1.5 shadow-md hover:shadow-lg cursor-pointer" aria-label="حساب کاربری">
+                  <span>حساب کاربری</span>
+              </button>
+              <div id="account-dropdown-menu" class="dropdown-menu account-menu bg-[#0e121c] border border-[#D4AF37] rounded-2xl p-2 shadow-2xl space-y-1 text-xs font-semibold text-white">
+                  <button onclick="openAuthModal('couple')" class="dropdown-item w-full text-right block px-3 py-2 rounded-xl hover:bg-white/10 hover:text-[#D4AF37] transition-colors cursor-pointer">ورود / ثبت‌نام زوج‌ها</button>
+                  <button onclick="openAuthModal('vendor')" class="dropdown-item w-full text-right block px-3 py-2 rounded-xl hover:bg-white/10 hover:text-[#D4AF37] transition-colors cursor-pointer">ورود تامین‌کنندگان (کسب‌وکارها)</button>
+                  <button onclick="openAuthModal('admin')" class="dropdown-item w-full text-right px-3 py-2 rounded-xl hover:bg-white/10 hover:text-[#D4AF37] transition-colors cursor-pointer text-amber-300 font-bold flex items-center justify-between"><span>ورود مدیریت ارشد (Admin)</span><i data-lucide="shield-check" class="w-3.5 h-3.5 text-[#D4AF37]"></i></button>
+                  <div class="dropdown-divider border-t border-[#D4AF37]/30 my-1"></div>
+                  <a href="planning.html" class="dropdown-item w-full text-right block px-3 py-2 rounded-xl hover:bg-white/10 hover:text-[#D4AF37] transition-colors cursor-pointer">تامین‌کنندگان ذخیره‌شده ❤️</a>
+              </div>
           </div>
-          <div class="text-right">
-            <span class="text-sm font-black text-white block">عروسی نو</span>
-            <span class="text-[9px] text-[#D4AF37] font-bold block">Aroosi No Exploration Hub</span>
-          </div>
-        </a>
+        </div>
+
       </div>
 
-      <!-- Center / Left: View Mode Controls & Home Link -->
-      <div class="flex items-center gap-3">
-        <a href="index.html" class="text-xs font-bold text-slate-300 hover:text-[#D4AF37] transition-colors">بازگشت به صفحه اصلی ➔</a>
+      <!-- LOWER TIER: Restructured Header Navigation Bar (No Tab Icons) -->
+      <div class="border-t border-[#D4AF37]/25 py-2 flex items-center justify-between text-xs sm:text-sm font-semibold text-slate-200">
+
+        <nav class="flex items-center gap-1.5 xl:gap-3 overflow-x-auto no-scrollbar py-0.5 w-full">
+          <!-- 1. صفحه اصلی -->
+          <a href="index.html" class="px-2.5 py-1.5 rounded-xl transition-colors hover:text-[#D4AF37] hover:bg-white/10 shrink-0 cursor-pointer block">
+            <span>صفحه اصلی</span>
+          </a>
+
+          <!-- 2. دسته‌بندی‌ها (Mega Dropdown) -->
+          <div class="relative group shrink-0">
+            <button id="nav-mega-cat-btn" class="px-2.5 py-1.5 rounded-xl transition-colors hover:text-[#D4AF37] hover:bg-white/10 flex items-center gap-1 cursor-pointer">
+              <span>دسته‌بندی‌ها</span>
+              <i data-lucide="chevron-down" class="w-3 h-3 text-amber-200/70 group-hover:rotate-180 transition-transform"></i>
+            </button>
+
+            <!-- Mega Column Dropdown Menu -->
+            <div id="mega-category-menu" class="absolute right-0 mt-2 w-[720px] bg-white text-graphite border border-accent rounded-3xl shadow-2xl opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 z-50 p-6">
+              <div class="flex justify-between items-center border-b border-accent pb-3 mb-4">
+                <div class="flex items-center gap-2 text-primary font-bold text-sm">
+                  <i data-lucide="layers" class="w-4 h-4"></i>
+                  <span>دسته‌بندی کامل خدمات و تشریفات مجالس</span>
+                </div>
+                <span class="text-[11px] text-secondary font-medium">انتخاب سریع زیرگروه جهت فیلتر دایرکتوری</span>
+              </div>
+
+              <div class="grid grid-cols-3 gap-6 text-right">
+                <div class="space-y-3">
+                  <div class="font-black text-xs text-graphite flex items-center gap-1.5 border-b border-accent/60 pb-1.5 text-emeraldHeader">
+                    <span>۱. مکان و تشریفات</span>
+                  </div>
+                  <div class="flex flex-col gap-1.5">
+                    <button onclick="filterVendorsFromMega('تالار و باغ تالار عروسی')" class="text-right text-xs font-medium text-graphite hover:text-primary hover:bg-slate-50 p-1.5 rounded-lg transition-colors flex items-center gap-1.5">
+                      <span class="w-1.5 h-1.5 rounded-full bg-primary inline-block"></span>
+                      <span>باغ و تالار پذیرایی</span>
+                    </button>
+                    <button onclick="filterVendorsFromMega('کترینگ و تشریفات پذیرایی')" class="text-right text-xs font-medium text-graphite hover:text-primary hover:bg-slate-50 p-1.5 rounded-lg transition-colors flex items-center gap-1.5">
+                      <span class="w-1.5 h-1.5 rounded-full bg-primary inline-block"></span>
+                      <span>کترینگ و غذای عروسی</span>
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- 3. دایرکتوری جامع -->
+          <a href="directory.html" class="px-2.5 py-1.5 rounded-xl transition-colors hover:text-[#D4AF37] hover:bg-white/10 text-[#D4AF37] bg-white/10 shrink-0 cursor-pointer block font-bold">
+            <span>دایرکتوری جامع</span>
+          </a>
+
+          <!-- 4. برنامه‌ریزی و چک‌لیست -->
+          <a href="planning.html" class="px-2.5 py-1.5 rounded-xl transition-colors hover:text-[#D4AF37] hover:bg-white/10 shrink-0 cursor-pointer block">
+            <span>برنامه‌ریزی و چک‌لیست</span>
+          </a>
+
+          <!-- 5. بودجه‌ریز -->
+          <a href="planning.html#budget" class="px-2.5 py-1.5 rounded-xl transition-colors hover:text-[#D4AF37] hover:bg-white/10 shrink-0 cursor-pointer block">
+            <span>بودجه‌ریز</span>
+          </a>
+
+          <!-- 6. کارت دعوت دیجیتال -->
+          <a href="invitation.html" class="px-2.5 py-1.5 rounded-xl transition-colors hover:text-[#D4AF37] hover:bg-white/10 shrink-0 cursor-pointer block">
+            <span>کارت دعوت دیجیتال</span>
+          </a>
+
+          <!-- 7. خدمات و ایده‌ها (Floating Dropdown) -->
+          <div class="relative group shrink-0">
+            <button class="px-2.5 py-1.5 rounded-xl transition-colors hover:text-[#D4AF37] hover:bg-white/10 flex items-center gap-1 cursor-pointer">
+              <span>خدمات و ایده‌ها</span>
+              <i data-lucide="chevron-down" class="w-3 h-3 text-amber-200/70 group-hover:rotate-180 transition-transform"></i>
+            </button>
+            <div class="absolute right-0 mt-2 w-64 bg-[#0e121c] border border-[#D4AF37] rounded-2xl shadow-2xl opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 z-50 p-2 space-y-1 text-xs font-semibold text-white text-right">
+              <a href="blog.html" class="w-full text-right px-3 py-2 rounded-xl hover:bg-white/10 hover:text-[#D4AF37] transition-colors flex items-center gap-2 cursor-pointer block">
+                <i data-lucide="sparkles" class="w-4 h-4 text-[#D4AF37]"></i>
+                <span>خدمات و ایده‌ها (مجله آنلاین)</span>
+              </a>
+              <a href="style-quiz.html" class="w-full text-right px-3 py-2 rounded-xl hover:bg-white/10 hover:text-[#D4AF37] transition-colors flex items-center gap-2 cursor-pointer block">
+                <i data-lucide="brain" class="w-4 h-4 text-[#D4AF37]"></i>
+                <span>تست‌های روانشناسی و استایل</span>
+              </a>
+              <button onclick="openCounselorModal()" class="w-full text-right px-3 py-2 rounded-xl hover:bg-white/10 hover:text-[#D4AF37] transition-colors flex items-center gap-2 cursor-pointer">
+                <i data-lucide="headphones" class="w-4 h-4 text-[#D4AF37]"></i>
+                <span>مشاوره تخصصی ازدواج</span>
+              </button>
+            </div>
+          </div>
+
+          <!-- 8. تالار گفت‌وگو -->
+          <a href="index.html?tab=forum" class="px-2.5 py-1.5 rounded-xl transition-colors hover:text-[#D4AF37] hover:bg-white/10 shrink-0 cursor-pointer block">
+            <span>تالار گفت‌وگو</span>
+          </a>
+        </nav>
+
       </div>
     </div>
   </header>
 
-  <!-- MAIN EXPLORATION HUB CONTAINER WITH CLEAR TOP BREATHING PADDING -->
-  <main class="flex-1 max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 pt-10 pb-16 space-y-8">
-<!-- ISOLATED VENDOR DIRECTORY CONTENT MODULE (directory-view.html) -->
-<div id="tab-directory" class="tab-content space-y-8 relative">
+  <!-- MAIN EXPLORATION HUB CONTAINER -->
+  <main class="flex-1 max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-8 space-y-8 text-right">
 
-  <!-- STICKY GLASSMORPHIC QUICK FILTER BAR -->
-  <div id="directory-sticky-filter-bar" class="fixed top-0 left-0 right-0 z-[9990] bg-[#07090E]/95 backdrop-blur-2xl border-b border-[#C5A059]/40 shadow-2xl px-4 py-2.5 transition-all duration-300 opacity-0 pointer-events-none -translate-y-full">
-    <div class="max-w-7xl mx-auto flex items-center justify-between gap-3">
-      <!-- Brand Logo / Title Mini Badge -->
-      <div class="hidden sm:flex items-center gap-2 shrink-0">
-        <div class="w-8 h-8 rounded-xl bg-gradient-to-br from-[#D4AF37] to-[#966D09] p-0.5 shadow-md">
-          <div class="w-full h-full bg-[#07090E] rounded-[10px] flex items-center justify-center">
-            <span class="text-xs font-black text-[#D4AF37]">عروسی</span>
-          </div>
-        </div>
-        <span class="text-xs font-black text-white hidden md:inline">فیلتر سریع خدمات</span>
+    <!-- MAIN DIRECTORY HUB BANNER HEADER -->
+    <div class="bg-[#0E121C] border border-[#C5A059]/40 rounded-3xl p-6 sm:p-8 shadow-2xl relative overflow-hidden flex flex-col md:flex-row items-center justify-between gap-6">
+      <div class="space-y-2 relative z-10 max-w-2xl">
+        <span class="text-xs font-black text-[#D4AF37] bg-[#D4AF37]/15 border border-[#D4AF37]/30 px-3.5 py-1 rounded-full inline-flex items-center gap-1.5">
+          <i data-lucide="crown" class="w-4 h-4 text-[#D4AF37]"></i>
+          <span>Aroosi No Luxury Exploration Hub</span>
+        </span>
+        <h1 class="text-xl sm:text-3xl font-black text-white leading-snug">
+          هاب استکشافی و رزرو تامین‌کنندگان لوکس عروسی یزد
+        </h1>
+        <p class="text-xs sm:text-sm text-slate-300 font-medium leading-relaxed">
+          جستجو، مقایسه قیمت، استعلام مستقیم و رزرو برترین تالارها، آتلیه‌ها، مزون‌ها و سالن‌های زیبایی با ضمانت اصالت.
+        </p>
       </div>
 
-      <!-- Category Switcher Chips (Horizontal Scroller) -->
-      <div class="flex items-center gap-1.5 overflow-x-auto no-scrollbar text-xs font-bold text-amber-200 py-1 w-full sm:w-auto">
-        <button type="button" onclick="filterVendorsByCategoryTitle('all')" class="bg-[#D4AF37] text-[#07090E] font-black px-3 py-1 rounded-xl shrink-0 transition-all cursor-pointer shadow-sm">
-          همه
+      <div class="flex items-center gap-3 shrink-0 relative z-10">
+        <button type="button" onclick="openQuickInquiryModal()" class="gold-shimmer-btn bg-[#D4AF37] text-[#07090E] font-black px-6 py-3 rounded-2xl text-xs sm:text-sm shadow-xl hover:scale-105 transition-all cursor-pointer flex items-center gap-2">
+          <i data-lucide="calculator" class="w-4 h-4"></i>
+          <span>استعلام سریع قیمت ↗</span>
         </button>
-        <button type="button" onclick="filterVendorsByCategoryTitle('تالار و باغ تالار عروسی')" class="bg-[#141A28] hover:bg-[#1E293B] text-amber-200 border border-[#C5A059]/30 px-3 py-1 rounded-xl shrink-0 transition-all cursor-pointer">
-          🏰 تالار و باغ
-        </button>
-        <button type="button" onclick="filterVendorsByCategoryTitle('آتلیه عکاسی و فیلمبرداری')" class="bg-[#141A28] hover:bg-[#1E293B] text-amber-200 border border-[#C5A059]/30 px-3 py-1 rounded-xl shrink-0 transition-all cursor-pointer">
-          📸 آتلیه
-        </button>
-        <button type="button" onclick="filterVendorsByCategoryTitle('مزون لباس عروس')" class="bg-[#141A28] hover:bg-[#1E293B] text-amber-200 border border-[#C5A059]/30 px-3 py-1 rounded-xl shrink-0 transition-all cursor-pointer">
-          👗 مزون
-        </button>
-        <button type="button" onclick="filterVendorsByCategoryTitle('تشریفات و خدمات مجالس')" class="bg-[#141A28] hover:bg-[#1E293B] text-amber-200 border border-[#C5A059]/30 px-3 py-1 rounded-xl shrink-0 transition-all cursor-pointer">
-          ✨ تشریفات
-        </button>
-        <button type="button" onclick="filterVendorsByCategoryTitle('گروه موسیقی و دی‌جی')" class="bg-[#141A28] hover:bg-[#1E293B] text-amber-200 border border-[#C5A059]/30 px-3 py-1 rounded-xl shrink-0 transition-all cursor-pointer">
-          🎵 موزیک
-        </button>
-        <button type="button" onclick="filterVendorsByCategoryTitle('گالری طلا و جواهر')" class="bg-[#141A28] hover:bg-[#1E293B] text-amber-200 border border-[#C5A059]/30 px-3 py-1 rounded-xl shrink-0 transition-all cursor-pointer">
-          💎 طلا و جواهر
-        </button>
-      </div>
-
-      <!-- Filter Drawer Trigger Button -->
-      <button type="button" onclick="toggleAdvancedFiltersDrawer()" class="bg-gradient-to-r from-[#D4AF37] to-[#C5A059] text-[#07090E] font-black px-3.5 py-1.5 rounded-xl text-xs shrink-0 flex items-center gap-1.5 shadow-lg hover:scale-105 transition-all cursor-pointer">
-        <i data-lucide="sliders-horizontal" class="w-3.5 h-3.5"></i>
-        <span>فیلترها</span>
-      </button>
-    </div>
-  </div>
-
-  <!-- 1. VENDOR STORIES & SHOWCASE HIGHLIGHTS CIRCLE BAR -->
-  <div class="space-y-2">
-    <div class="flex items-center justify-between">
-      <span class="text-xs font-black text-[#D4AF37] flex items-center gap-1">
-        <i data-lucide="play-circle" class="w-4 h-4 text-[#D4AF37]"></i>
-        <span>استوری‌ها و تیزرهای تصویری تامین‌کنندگان برتر یزد</span>
-      </span>
-      <span class="text-[10px] text-slate-400 font-bold">برای مشاهده تیزر روی دایره کلیک کنید</span>
-    </div>
-
-    <div id="story-highlights-bar" class="flex items-center gap-4 overflow-x-auto no-scrollbar py-2 px-1">
-      <div onclick="openStoryLightbox('https://images.unsplash.com/photo-1519167758481-83f550bb49b3?w=800', 'هتل باغ مشیرالممالک')" class="flex flex-col items-center gap-1.5 cursor-pointer group shrink-0">
-        <div class="w-16 h-16 rounded-full p-0.5 bg-gradient-to-tr from-[#D4AF37] via-[#F3E5AB] to-[#8C6D23] shadow-lg group-hover:scale-108 transition-transform">
-          <img src="https://images.unsplash.com/photo-1519167758481-83f550bb49b3?w=150" class="w-full h-full rounded-full object-cover border-2 border-[#07090E]">
-        </div>
-        <span class="text-[10px] font-bold text-slate-200 group-hover:text-[#D4AF37]">مشیرالممالک</span>
-      </div>
-
-      <div onclick="openStoryLightbox('https://images.unsplash.com/photo-1537633552985-df8429e8048b?w=800', 'استودیو کویر')" class="flex flex-col items-center gap-1.5 cursor-pointer group shrink-0">
-        <div class="w-16 h-16 rounded-full p-0.5 bg-gradient-to-tr from-[#D4AF37] via-[#F3E5AB] to-[#8C6D23] shadow-lg group-hover:scale-108 transition-transform">
-          <img src="https://images.unsplash.com/photo-1537633552985-df8429e8048b?w=150" class="w-full h-full rounded-full object-cover border-2 border-[#07090E]">
-        </div>
-        <span class="text-[10px] font-bold text-slate-200 group-hover:text-[#D4AF37]">استودیو کویر</span>
-      </div>
-
-      <div onclick="openStoryLightbox('https://images.unsplash.com/photo-1511285560929-80b456fea0bc?w=800', 'سالن زیبایی رویال')" class="flex flex-col items-center gap-1.5 cursor-pointer group shrink-0">
-        <div class="w-16 h-16 rounded-full p-0.5 bg-gradient-to-tr from-[#D4AF37] via-[#F3E5AB] to-[#8C6D23] shadow-lg group-hover:scale-108 transition-transform">
-          <img src="https://images.unsplash.com/photo-1511285560929-80b456fea0bc?w=150" class="w-full h-full rounded-full object-cover border-2 border-[#07090E]">
-        </div>
-        <span class="text-[10px] font-bold text-slate-200 group-hover:text-[#D4AF37]">زیبایی رویال</span>
-      </div>
-
-      <div onclick="openStoryLightbox('https://images.unsplash.com/photo-1583939003579-730e3918a45a?w=800', 'مزون لورنت')" class="flex flex-col items-center gap-1.5 cursor-pointer group shrink-0">
-        <div class="w-16 h-16 rounded-full p-0.5 bg-gradient-to-tr from-[#D4AF37] via-[#F3E5AB] to-[#8C6D23] shadow-lg group-hover:scale-108 transition-transform">
-          <img src="https://images.unsplash.com/photo-1583939003579-730e3918a45a?w=150" class="w-full h-full rounded-full object-cover border-2 border-[#07090E]">
-        </div>
-        <span class="text-[10px] font-bold text-slate-200 group-hover:text-[#D4AF37]">مزون لورنت</span>
-      </div>
-
-      <div onclick="openStoryLightbox('https://images.unsplash.com/photo-1522673607200-164d1b6ce486?w=800', 'تشریفات یاس')" class="flex flex-col items-center gap-1.5 cursor-pointer group shrink-0">
-        <div class="w-16 h-16 rounded-full p-0.5 bg-gradient-to-tr from-[#D4AF37] via-[#F3E5AB] to-[#8C6D23] shadow-lg group-hover:scale-108 transition-transform">
-          <img src="https://images.unsplash.com/photo-1522673607200-164d1b6ce486?w=150" class="w-full h-full rounded-full object-cover border-2 border-[#07090E]">
-        </div>
-        <span class="text-[10px] font-bold text-slate-200 group-hover:text-[#D4AF37]">تشریفات یاس</span>
-      </div>
-    </div>
-  </div>
-
-  <!-- 2. STICKY TOP GLASS FILTER ISLAND & VIEW MODE SWITCHER -->
-  <div id="directory-primary-filter-island" class="bg-[#0e121c]/90 backdrop-blur-xl border border-[#C5A059]/40 rounded-3xl p-4 sm:p-5 shadow-2xl text-white space-y-4">
-
-    <!-- Header Row with Dual View Switcher -->
-    <div class="flex flex-col md:flex-row items-center justify-between gap-4 border-b border-[#C5A059]/20 pb-4">
-      <div class="space-y-1 text-right w-full md:w-auto">
-        <span class="text-[11px] font-black text-[#D4AF37] block">💎 دایرکتوری برندهای تاییدشده یزد</span>
-        <h1 class="text-lg sm:text-xl font-black text-[#F7F5F0]">هاب استکشافی و رزرو تامین‌کنندگان لوکس</h1>
-      </div>
-
-      <!-- DUAL VIEW SWITCHER: MAGAZINE GRID vs. OBSIDIAN MAP -->
-      <div class="flex items-center gap-2 bg-[#141A28] border border-[#C5A059]/40 p-1.5 rounded-2xl shrink-0 shadow-lg">
-        <button type="button" id="dir-btn-view-grid" onclick="toggleDirectoryMainView('grid')" class="px-4 py-2 rounded-xl text-xs font-black bg-[#D4AF37] text-[#0F251A] shadow-md transition-all cursor-pointer flex items-center gap-1.5">
-          <span>📸 گرید مجله‌ای</span>
-        </button>
-        <button type="button" id="dir-btn-view-map" onclick="toggleDirectoryMainView('map')" class="px-4 py-2 rounded-xl text-xs font-black text-slate-300 hover:text-white transition-all cursor-pointer flex items-center gap-1.5">
-          <span>🗺️ نقشه تعاملی یزد</span>
+        <button type="button" onclick="openDedicatedAssistantModal()" class="bg-[#141A28] hover:bg-[#1E293B] text-[#D4AF37] border border-[#C5A059]/40 font-bold px-5 py-3 rounded-2xl text-xs sm:text-sm transition-all cursor-pointer flex items-center gap-2">
+          <i data-lucide="user-check" class="w-4 h-4"></i>
+          <span>دستیار اختصاصی</span>
         </button>
       </div>
     </div>
 
-    <!-- SEARCH INPUT & VIBE/MOOD FILTERS -->
-    <div class="space-y-3">
-      <div class="flex flex-col md:flex-row items-center justify-between gap-3">
-        <!-- Search Input -->
-        <div class="relative w-full md:w-80">
-          <input id="directory-instant-search" type="text" oninput="filterVendors()" placeholder="جستجوی نام تالار، آتلیه، مزون..." class="w-full bg-[#141A28] border border-[#C5A059]/30 rounded-2xl pr-9 pl-4 py-2 text-xs text-white placeholder-slate-400 focus:outline-none focus:border-[#D4AF37]">
-          <i data-lucide="search" class="w-4 h-4 text-[#D4AF37] absolute right-3 top-2.5"></i>
-        </div>
-
-        <!-- Mood & Vibe Pills -->
-        <div class="flex items-center gap-2 overflow-x-auto no-scrollbar text-xs font-bold w-full md:w-auto">
-          <span class="text-[10.5px] text-amber-300 font-extrabold shrink-0">سبک و استایل:</span>
-          <button type="button" onclick="filterVendorsByCategoryTitle('all')" class="bg-[#141A28] hover:bg-[#1E293B] text-amber-200 border border-[#C5A059]/30 px-3 py-1.5 rounded-xl shrink-0 cursor-pointer">🏛️ سنتی یزد</button>
-          <button type="button" onclick="filterVendorsByCategoryTitle('all')" class="bg-[#141A28] hover:bg-[#1E293B] text-amber-200 border border-[#C5A059]/30 px-3 py-1.5 rounded-xl shrink-0 cursor-pointer">✨ مدرن & لوکس</button>
-          <button type="button" onclick="filterVendorsByCategoryTitle('all')" class="bg-[#141A28] hover:bg-[#1E293B] text-amber-200 border border-[#C5A059]/30 px-3 py-1.5 rounded-xl shrink-0 cursor-pointer">🌿 فضای باز</button>
-          <button type="button" onclick="filterVendorsByCategoryTitle('all')" class="bg-[#141A28] hover:bg-[#1E293B] text-amber-300 border border-[#D4AF37]/50 px-3 py-1.5 rounded-xl shrink-0 cursor-pointer font-black">👑 VIP ویژه</button>
-        </div>
-      </div>
-
-      <!-- CATEGORY PILLS BAR & SLIDE-OVER DRAWER TRIGGER -->
-      <div id="directory-category-carousel" class="flex items-center gap-2 overflow-x-auto no-scrollbar text-xs font-black pt-2 border-t border-[#C5A059]/20">
-        <button type="button" onclick="toggleAdvancedFiltersDrawer()" class="bg-[#141A28] hover:bg-[#1E293B] text-amber-300 border border-[#D4AF37]/50 px-3.5 py-1.5 rounded-xl shrink-0 cursor-pointer font-black flex items-center gap-1 shadow-md hover:scale-105 transition-transform">
-          <span>⚙️ فیلترهای پیشرفته</span>
-        </button>
-        <button type="button" onclick="filterVendorsByCategoryTitle('all')" class="bg-[#D4AF37] text-[#0F251A] px-3.5 py-1.5 rounded-xl shrink-0 cursor-pointer shadow-md font-bold">
-          همه خدمات
-        </button>
-        <button type="button" onclick="filterVendorsByCategoryTitle('تالار و باغ تالار عروسی')" class="bg-[#141A28] hover:bg-[#1E293B] text-amber-200 border border-[#C5A059]/30 px-3.5 py-1.5 rounded-xl shrink-0 cursor-pointer transition-all">
-          🏛️ تالار و باغ تالار
-        </button>
-        <button type="button" onclick="filterVendorsByCategoryTitle('آتلیه عکاسی و فیلمبرداری')" class="bg-[#141A28] hover:bg-[#1E293B] text-amber-200 border border-[#C5A059]/30 px-3.5 py-1.5 rounded-xl shrink-0 cursor-pointer transition-all">
-          📸 آتلیه عکاسی
-        </button>
-        <button type="button" onclick="filterVendorsByCategoryTitle('مزون لباس عروس و داماد')" class="bg-[#141A28] hover:bg-[#1E293B] text-amber-200 border border-[#C5A059]/30 px-3.5 py-1.5 rounded-xl shrink-0 cursor-pointer transition-all">
-          👗 مزون عروس
-        </button>
-        <button type="button" onclick="filterVendorsByCategoryTitle('سالن زیبایی و میکاپ عروس')" class="bg-[#141A28] hover:bg-[#1E293B] text-amber-200 border border-[#C5A059]/30 px-3.5 py-1.5 rounded-xl shrink-0 cursor-pointer transition-all">
-          💄 سالن زیبایی
-        </button>
-        <button type="button" onclick="filterVendorsByCategoryTitle('تشریفات و خدمات مجالس')" class="bg-[#141A28] hover:bg-[#1E293B] text-amber-200 border border-[#C5A059]/30 px-3.5 py-1.5 rounded-xl shrink-0 cursor-pointer transition-all">
-          🌸 گل‌آرایی & تشریفات
-        </button>
-        <button type="button" onclick="filterVendorsByCategoryTitle('کیک و شیرینی عروسی')" class="bg-[#141A28] hover:bg-[#1E293B] text-amber-200 border border-[#C5A059]/30 px-3.5 py-1.5 rounded-xl shrink-0 cursor-pointer transition-all">
-          🎂 کیک & شیرینی
-        </button>
-      </div>
-    </div>
-
-  </div>
-
-  <!-- 3. FULL-WIDTH MAGAZINE BENTO GRID VIEW CONTAINER -->
-  <div id="directory-magazine-grid-view" class="w-full space-y-6">
-    <div id="vendor-grid" class="w-full grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
-      <!-- Populated dynamically via JS renderVendors() -->
-    </div>
-  </div>
-
-  <!-- 4. OBSIDIAN INTERACTIVE YAZD MAP VIEW CONTAINER -->
-  <div id="directory-interactive-map-view" class="hidden bg-[#0e121c]/90 backdrop-blur-xl border border-[#C5A059]/40 rounded-3xl p-6 shadow-2xl text-right space-y-4">
-    <div class="flex items-center justify-between border-b border-[#C5A059]/20 pb-3">
-      <span class="text-xs font-black text-[#D4AF37]">🗺️ نقشه تعاملی تامین‌کنندگان استان یزد</span>
-      <span class="text-[10.5px] text-slate-400 font-bold">روی پین‌های طلایی جهت مشاهده مشخصات کلیک کنید</span>
-    </div>
-
-    <div class="relative w-full h-[450px] rounded-2xl overflow-hidden border border-[#C5A059]/30 bg-[#07090E] flex items-center justify-center p-4">
-      <div class="absolute inset-0 opacity-40 bg-[radial-gradient(#D4AF37_1px,transparent_1px)] [background-size:16px_16px]"></div>
-
-      <div class="relative z-10 w-full h-full flex flex-col justify-between p-6 text-xs">
-        <div class="flex justify-between items-start">
-          <div onclick="openVendorDetailModal(1)" class="bg-[#141A28] border-2 border-[#D4AF37] p-2.5 rounded-2xl shadow-2xl cursor-pointer hover:scale-110 transition-transform flex items-center gap-2">
-            <span class="w-3 h-3 rounded-full bg-[#D4AF37] animate-ping"></span>
-            <div>
-              <p class="font-black text-white text-[11px]">هتل باغ مشیرالممالک</p>
-              <span class="text-[9.5px] text-amber-300 block">صفائیه یزد • ⭐ ۴.۹</span>
-            </div>
-          </div>
-
-          <div onclick="openVendorDetailModal(2)" class="bg-[#141A28] border-2 border-[#D4AF37] p-2.5 rounded-2xl shadow-2xl cursor-pointer hover:scale-110 transition-transform flex items-center gap-2">
-            <span class="w-3 h-3 rounded-full bg-[#D4AF37] animate-ping"></span>
-            <div>
-              <p class="font-black text-white text-[11px]">استودیو کویر یزد</p>
-              <span class="text-[9.5px] text-amber-300 block">بلوار جمهوری • ⭐ ۴.۸</span>
-            </div>
-          </div>
-        </div>
-
-        <div class="flex justify-around items-end">
-          <div onclick="openVendorDetailModal(3)" class="bg-[#141A28] border-2 border-[#D4AF37] p-2.5 rounded-2xl shadow-2xl cursor-pointer hover:scale-110 transition-transform flex items-center gap-2">
-            <span class="w-3 h-3 rounded-full bg-[#D4AF37] animate-ping"></span>
-            <div>
-              <p class="font-black text-white text-[11px]">مزون رویال لورنت</p>
-              <span class="text-[9.5px] text-amber-300 block">خیابان ملاصدرا • ⭐ ۵.۰</span>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <!-- ADVANCED SLIDE-OVER GLASS FILTER DRAWER -->
-  <div id="directory-advanced-filters-drawer" class="fixed top-0 right-0 w-full max-w-[450px] h-screen z-[2147483647] bg-[#07090E] border-l border-[#C5A059]/40 p-6 space-y-6 overflow-y-auto text-right shadow-2xl text-white hidden">
-    <div class="flex items-center justify-between border-b border-[#C5A059]/30 pb-4">
-      <h3 class="text-base font-black text-[#D4AF37] flex items-center gap-2">
-        <i data-lucide="sliders-horizontal" class="w-4 h-4 text-[#D4AF37]"></i>
-        <span>⚙️ فیلترهای پیشرفته جستجو</span>
-      </h3>
-      <button type="button" onclick="toggleAdvancedFiltersDrawer()" class="w-8 h-8 rounded-full bg-[#141A28] text-slate-300 hover:text-white flex items-center justify-center border border-slate-700 cursor-pointer">
-        <i data-lucide="x" class="w-4 h-4"></i>
-      </button>
-    </div>
-
-    <!-- DISCOUNTED VENDORS ONLY TOGGLE -->
-    <div class="bg-[#141A28] border border-[#C5A059]/30 rounded-2xl p-3 flex items-center justify-between">
-      <label for="adv-discount-toggle" class="text-xs font-black text-amber-300 flex items-center gap-1.5 cursor-pointer">
-        <i data-lucide="tag" class="w-4 h-4 text-[#D4AF37]"></i>
-        <span>فقط تامین‌کنندگان دارای تخفیف ویژه</span>
-      </label>
-      <input type="checkbox" id="adv-discount-toggle" onchange="filterVendors()" class="accent-[#D4AF37] w-4 h-4 rounded cursor-pointer">
-    </div>
-
-    <!-- GUEST CAPACITY SLIDER (INSIDE DRAWER) -->
-    <div class="space-y-2 pb-2 border-b border-slate-800">
-      <div class="flex items-center justify-between text-xs font-black text-amber-300">
-        <label class="flex items-center gap-1.5">
-          <i data-lucide="users" class="w-3.5 h-3.5 text-[#D4AF37]"></i>
-          <span>حداکثر ظرفیت مهمانان:</span>
-        </label>
-        <span id="drawer-guest-val" class="text-white font-bold">۵۰۰ نفر</span>
-      </div>
-      <input type="range" id="directory-guest-price-slider" min="50" max="1000" step="50" value="500" oninput="updateDirectoryGuestPriceEstimator(this.value)" class="w-full accent-[#D4AF37]">
-    </div>
-
-    <!-- STYLE & THEME OPTIONS (INSIDE DRAWER) -->
-    <div class="space-y-2 pb-2 border-b border-slate-800">
-      <label class="text-xs font-black text-amber-300 flex items-center gap-1.5">
-        <i data-lucide="sparkles" class="w-3.5 h-3.5 text-[#D4AF37]"></i>
-        <span>سبک و استایل برگزاری:</span>
-      </label>
-      <div class="grid grid-cols-2 gap-2 text-xs font-bold">
-        <button type="button" onclick="switchDirectoryCategoryTab('all')" class="bg-[#141A28] hover:bg-[#1E293B] text-amber-200 border border-[#C5A059]/30 py-2 rounded-xl text-center cursor-pointer">سنتی یزد</button>
-        <button type="button" onclick="switchDirectoryCategoryTab('all')" class="bg-[#141A28] hover:bg-[#1E293B] text-amber-200 border border-[#C5A059]/30 py-2 rounded-xl text-center cursor-pointer">مدرن & لوکس</button>
-        <button type="button" onclick="switchDirectoryCategoryTab('all')" class="bg-[#141A28] hover:bg-[#1E293B] text-amber-200 border border-[#C5A059]/30 py-2 rounded-xl text-center cursor-pointer">فضای باز</button>
-        <button type="button" onclick="switchDirectoryCategoryTab('all')" class="bg-[#141A28] hover:bg-[#1E293B] text-amber-300 border border-[#D4AF37]/50 py-2 rounded-xl text-center cursor-pointer font-black">VIP ویژه</button>
-      </div>
-    </div>
-
-    <!-- 0. SORTING SELECTION DROPDOWN -->
-    <div class="space-y-2 pb-2 border-b border-slate-800">
-      <label class="text-xs font-black text-amber-300 flex items-center gap-1.5">
-        <i data-lucide="arrow-up-down" class="w-3.5 h-3.5 text-[#D4AF37]"></i>
-        <span>مرتب‌سازی نتایج بر اساس:</span>
-      </label>
-      <select id="adv-sort-select" onchange="filterVendors()" class="w-full bg-[#141A28] border border-[#C5A059]/40 rounded-2xl px-3 py-2.5 text-xs font-bold text-amber-200 focus:outline-none focus:border-[#D4AF37]">
-        <option value="rating-desc">⭐️ محبوب‌ترین و بالاترین امتیاز</option>
-        <option value="price-asc">🏷️ کمترین قیمت پایه (ارزان‌ترین)</option>
-        <option value="price-desc">💎 بالاترین قیمت پایه (لوکس‌ترین)</option>
-        <option value="newest">✨ جدیدترین مجموعه‌های ثبت‌شده</option>
-      </select>
-    </div>
-
-    <!-- 1. Category Filter Buttons (Accordion Multi-Select) -->
-    <div class="space-y-3">
+    <!-- 1. VENDOR STORIES & SHOWCASE HIGHLIGHTS CIRCLE BAR -->
+    <div class="space-y-2">
       <div class="flex items-center justify-between">
-        <label class="text-xs font-bold text-slate-300">دسته‌بندی‌ها و خدمات (چند انتخابی):</label>
-        <button type="button" onclick="clearDrawerCategoryCheckboxes()" class="text-[10px] text-amber-300 hover:text-white font-bold cursor-pointer">پاکسازی انتخاب‌ها</button>
+        <span class="text-xs font-black text-[#D4AF37] flex items-center gap-1">
+          <i data-lucide="play-circle" class="w-4 h-4 text-[#D4AF37]"></i>
+          <span>استوری‌ها و تیزرهای تصویری تامین‌کنندگان برتر یزد</span>
+        </span>
+        <span class="text-[10px] text-slate-400 font-bold">برای مشاهده تیزر روی دایره کلیک کنید</span>
       </div>
 
-      <div class="space-y-2 text-xs font-bold">
-        <!-- Group 1: 🏰 مکان‌ها و تشریفات -->
-        <details open class="bg-[#141A28] border border-[#C5A059]/30 rounded-2xl p-3 space-y-2 group/acc">
-          <summary class="flex items-center justify-between cursor-pointer text-amber-300 font-black">
-            <span>🏰 مکان‌ها و تشریفات</span>
-            <i data-lucide="chevron-down" class="w-4 h-4 text-[#D4AF37] group-open/acc:rotate-180 transition-transform"></i>
-          </summary>
-          <div class="grid grid-cols-1 gap-1.5 pt-2 border-t border-slate-800 font-medium text-slate-200">
-            <label class="flex items-center gap-2 cursor-pointer hover:text-amber-200">
-              <input type="checkbox" value="تالار و باغ تالار عروسی" onchange="filterVendors()" class="adv-cat-checkbox accent-[#D4AF37] w-4 h-4 rounded">
-              <span>باغ‌تالار & تالار پذیرایی</span>
-            </label>
-            <label class="flex items-center gap-2 cursor-pointer hover:text-amber-200">
-              <input type="checkbox" value="سالن عقد و سفره عقد" onchange="filterVendors()" class="adv-cat-checkbox accent-[#D4AF37] w-4 h-4 rounded">
-              <span>سالن عقد & سفره عقد</span>
-            </label>
-            <label class="flex items-center gap-2 cursor-pointer hover:text-amber-200">
-              <input type="checkbox" value="تشریفات و خدمات مجالس" onchange="filterVendors()" class="adv-cat-checkbox accent-[#D4AF37] w-4 h-4 rounded">
-              <span>تشریفات & خدمات مجالس</span>
-            </label>
+      <div id="story-highlights-bar" class="flex items-center gap-4 overflow-x-auto no-scrollbar py-2 px-1">
+        <div onclick="openStoryLightbox('https://images.unsplash.com/photo-1519167758481-83f550bb49b3?w=800', 'هتل باغ مشیرالممالک')" class="flex flex-col items-center gap-1.5 cursor-pointer group shrink-0">
+          <div class="w-16 h-16 rounded-full p-0.5 bg-gradient-to-tr from-[#D4AF37] via-[#F3E5AB] to-[#8C6D23] shadow-lg group-hover:scale-108 transition-transform">
+            <img src="https://images.unsplash.com/photo-1519167758481-83f550bb49b3?w=150" class="w-full h-full rounded-full object-cover border-2 border-[#07090E]">
           </div>
-        </details>
+          <span class="text-[10px] font-bold text-slate-200 group-hover:text-[#D4AF37]">مشیرالممالک</span>
+        </div>
 
-        <!-- Group 2: 📸 عکاسی و فیلمبرداری -->
-        <details open class="bg-[#141A28] border border-[#C5A059]/30 rounded-2xl p-3 space-y-2 group/acc">
-          <summary class="flex items-center justify-between cursor-pointer text-amber-300 font-black">
-            <span>📸 عکاسی و فیلمبرداری</span>
-            <i data-lucide="chevron-down" class="w-4 h-4 text-[#D4AF37] group-open/acc:rotate-180 transition-transform"></i>
-          </summary>
-          <div class="grid grid-cols-1 gap-1.5 pt-2 border-t border-slate-800 font-medium text-slate-200">
-            <label class="flex items-center gap-2 cursor-pointer hover:text-amber-200">
-              <input type="checkbox" value="آتلیه عکاسی و فیلمبرداری" onchange="filterVendors()" class="adv-cat-checkbox accent-[#D4AF37] w-4 h-4 rounded">
-              <span>آتلیه تخصصی عروس & استودیو</span>
-            </label>
-            <label class="flex items-center gap-2 cursor-pointer hover:text-amber-200">
-              <input type="checkbox" value="فرمالیته و ساخت تیزر" onchange="filterVendors()" class="adv-cat-checkbox accent-[#D4AF37] w-4 h-4 rounded">
-              <span>ساخت تیزر & کلیپ فرمالیته</span>
-            </label>
+        <div onclick="openStoryLightbox('https://images.unsplash.com/photo-1537633552985-df8429e8048b?w=800', 'استودیو کویر')" class="flex flex-col items-center gap-1.5 cursor-pointer group shrink-0">
+          <div class="w-16 h-16 rounded-full p-0.5 bg-gradient-to-tr from-[#D4AF37] via-[#F3E5AB] to-[#8C6D23] shadow-lg group-hover:scale-108 transition-transform">
+            <img src="https://images.unsplash.com/photo-1537633552985-df8429e8048b?w=150" class="w-full h-full rounded-full object-cover border-2 border-[#07090E]">
           </div>
-        </details>
+          <span class="text-[10px] font-bold text-slate-200 group-hover:text-[#D4AF37]">استودیو کویر</span>
+        </div>
 
-        <!-- Group 3: 💄 زیبایی و استایل -->
-        <details open class="bg-[#141A28] border border-[#C5A059]/30 rounded-2xl p-3 space-y-2 group/acc">
-          <summary class="flex items-center justify-between cursor-pointer text-amber-300 font-black">
-            <span>💄 زیبایی و استایل</span>
-            <i data-lucide="chevron-down" class="w-4 h-4 text-[#D4AF37] group-open/acc:rotate-180 transition-transform"></i>
-          </summary>
-          <div class="grid grid-cols-1 gap-1.5 pt-2 border-t border-slate-800 font-medium text-slate-200">
-            <label class="flex items-center gap-2 cursor-pointer hover:text-amber-200">
-              <input type="checkbox" value="سالن زیبایی و میکاپ عروس" onchange="filterVendors()" class="adv-cat-checkbox accent-[#D4AF37] w-4 h-4 rounded">
-              <span>سالن زیبایی & میکاپ عروس</span>
-            </label>
-            <label class="flex items-center gap-2 cursor-pointer hover:text-amber-200">
-              <input type="checkbox" value="مزون لباس عروس و داماد" onchange="filterVendors()" class="adv-cat-checkbox accent-[#D4AF37] w-4 h-4 rounded">
-              <span>مزون لباس عروس & کت داماد</span>
-            </label>
+        <div onclick="openStoryLightbox('https://images.unsplash.com/photo-1511285560929-80b456fea0bc?w=800', 'سالن زیبایی رویال')" class="flex flex-col items-center gap-1.5 cursor-pointer group shrink-0">
+          <div class="w-16 h-16 rounded-full p-0.5 bg-gradient-to-tr from-[#D4AF37] via-[#F3E5AB] to-[#8C6D23] shadow-lg group-hover:scale-108 transition-transform">
+            <img src="https://images.unsplash.com/photo-1511285560929-80b456fea0bc?w=150" class="w-full h-full rounded-full object-cover border-2 border-[#07090E]">
           </div>
-        </details>
+          <span class="text-[10px] font-bold text-slate-200 group-hover:text-[#D4AF37]">زیبایی رویال</span>
+        </div>
 
-        <!-- Group 4: 💐 خدمات مکمل و تزئینات -->
-        <details class="bg-[#141A28] border border-[#C5A059]/30 rounded-2xl p-3 space-y-2 group/acc">
-          <summary class="flex items-center justify-between cursor-pointer text-amber-300 font-black">
-            <span>💐 خدمات مکمل و تزئینات</span>
-            <i data-lucide="chevron-down" class="w-4 h-4 text-[#D4AF37] group-open/acc:rotate-180 transition-transform"></i>
-          </summary>
-          <div class="grid grid-cols-1 gap-1.5 pt-2 border-t border-slate-800 font-medium text-slate-200">
-            <label class="flex items-center gap-2 cursor-pointer hover:text-amber-200">
-              <input type="checkbox" value="گل‌آرایی و ماشین عروس" onchange="filterVendors()" class="adv-cat-checkbox accent-[#D4AF37] w-4 h-4 rounded">
-              <span>گل‌آرایی & ماشین عروس</span>
-            </label>
-            <label class="flex items-center gap-2 cursor-pointer hover:text-amber-200">
-              <input type="checkbox" value="کیک و شیرینی عروسی" onchange="filterVendors()" class="adv-cat-checkbox accent-[#D4AF37] w-4 h-4 rounded">
-              <span>کیک & شیرینی عروسی</span>
-            </label>
+        <div onclick="openStoryLightbox('https://images.unsplash.com/photo-1583939003579-730e3918a45a?w=800', 'مزون لباس عروس سلطنتی')" class="flex flex-col items-center gap-1.5 cursor-pointer group shrink-0">
+          <div class="w-16 h-16 rounded-full p-0.5 bg-gradient-to-tr from-[#D4AF37] via-[#F3E5AB] to-[#8C6D23] shadow-lg group-hover:scale-108 transition-transform">
+            <img src="https://images.unsplash.com/photo-1583939003579-730e3918a45a?w=150" class="w-full h-full rounded-full object-cover border-2 border-[#07090E]">
           </div>
-        </details>
-
-        <!-- Group 5: 🎵 موسیقی و سرگرمی -->
-        <details class="bg-[#141A28] border border-[#C5A059]/30 rounded-2xl p-3 space-y-2 group/acc">
-          <summary class="flex items-center justify-between cursor-pointer text-amber-300 font-black">
-            <span>🎵 موسیقی و سرگرمی</span>
-            <i data-lucide="chevron-down" class="w-4 h-4 text-[#D4AF37] group-open/acc:rotate-180 transition-transform"></i>
-          </summary>
-          <div class="grid grid-cols-1 gap-1.5 pt-2 border-t border-slate-800 font-medium text-slate-200">
-            <label class="flex items-center gap-2 cursor-pointer hover:text-amber-200">
-              <input type="checkbox" value="دی‌جی و موسیقی زنده" onchange="filterVendors()" class="adv-cat-checkbox accent-[#D4AF37] w-4 h-4 rounded">
-              <span>دی‌جی & گروه موسیقی زنده</span>
-            </label>
-            <label class="flex items-center gap-2 cursor-pointer hover:text-amber-200">
-              <input type="checkbox" value="نورپردازی و آتش‌بازی" onchange="filterVendors()" class="adv-cat-checkbox accent-[#D4AF37] w-4 h-4 rounded">
-              <span>نورپردازی & آتش‌بازی سرد</span>
-            </label>
-          </div>
-        </details>
+          <span class="text-[10px] font-bold text-slate-200 group-hover:text-[#D4AF37]">مزون سلطنتی</span>
+        </div>
       </div>
     </div>
 
-    <!-- 2. Capacity Filter Slider -->
-    <div class="space-y-2 pt-2 border-t border-slate-800">
-      <label class="text-xs font-bold text-slate-300 block">ظرفیت مهمانان:</label>
-      <input type="range" min="50" max="1500" step="50" value="500" oninput="document.getElementById('adv-cap-val').textContent = this.value + ' نفر'; filterVendors();" class="w-full accent-[#D4AF37]">
-      <div class="flex justify-between text-[11px] text-amber-300 font-bold">
-        <span>۵۰ نفر</span>
-        <span id="adv-cap-val">۵۰۰ نفر</span>
-        <span>۱۵۰۰+ نفر</span>
+    <!-- 2. PRIMARY EXPLORATION & SEARCH FILTER ISLAND -->
+    <div id="directory-primary-filter-island" class="bg-[#0E121C]/90 backdrop-blur-2xl border border-[#C5A059]/40 rounded-3xl p-5 shadow-2xl space-y-4">
+
+      <!-- Top Row: Search Input & Filter Drawer Triggers -->
+      <div class="flex flex-col md:flex-row items-center justify-between gap-3">
+        <div class="relative w-full md:w-1/2">
+          <i data-lucide="search" class="w-4 h-4 text-[#D4AF37] absolute right-4 top-1/2 -translate-y-1/2 pointer-events-none"></i>
+          <input id="directory-search-input" type="text" oninput="filterVendors()" placeholder="جستجوی نام تالار، آتلیه، مزون، سالن زیبایی..." class="w-full bg-[#141A28] border border-[#C5A059]/30 rounded-2xl py-3 pr-11 pl-4 text-xs font-bold text-white placeholder-slate-400 focus:outline-none focus:border-[#D4AF37]">
+        </div>
+
+        <div class="flex items-center gap-2.5 w-full md:w-auto justify-between md:justify-end">
+          <button type="button" onclick="toggleAdvancedFiltersDrawer()" class="bg-[#141A28] hover:bg-[#1E293B] text-amber-200 border border-[#C5A059]/40 font-bold px-4 py-2.5 rounded-2xl text-xs flex items-center gap-1.5 transition-all cursor-pointer">
+            <i data-lucide="sliders-horizontal" class="w-4 h-4 text-[#D4AF37]"></i>
+            <span>فیلترهای پیشرفته</span>
+          </button>
+
+          <div class="flex items-center bg-[#141A28] border border-[#C5A059]/30 rounded-2xl p-1 gap-1 text-xs font-bold text-slate-300">
+            <button type="button" onclick="setDirectoryViewMode('grid')" id="dir-mode-grid" class="px-3 py-1.5 rounded-xl bg-[#D4AF37] text-[#07090E] font-black transition-all cursor-pointer">
+              گرید مجله‌ای
+            </button>
+            <button type="button" onclick="setDirectoryViewMode('map')" id="dir-mode-map" class="px-3 py-1.5 rounded-xl hover:text-white transition-all cursor-pointer">
+              نقشه تعاملی یزد
+            </button>
+          </div>
+        </div>
       </div>
-    </div>
 
-    <!-- 3. Price Tier Radios -->
-    <div class="space-y-2 pt-2 border-t border-slate-800">
-      <label class="text-xs font-bold text-slate-300 block">رنج قیمتی خدمات:</label>
-      <div class="grid grid-cols-3 gap-2 text-xs font-bold">
-        <button type="button" onclick="setPriceFilter('economic')" class="bg-[#141A28] border border-[#C5A059]/30 hover:border-[#D4AF37] text-amber-200 py-2 rounded-xl">اقتصادی</button>
-        <button type="button" onclick="setPriceFilter('mid')" class="bg-[#141A28] border border-[#C5A059]/30 hover:border-[#D4AF37] text-amber-200 py-2 rounded-xl">متوسط</button>
-        <button type="button" onclick="setPriceFilter('luxury')" class="bg-[#141A28] border border-[#C5A059]/30 hover:border-[#D4AF37] text-amber-300 py-2 rounded-xl font-black">VIP لوکس</button>
+      <!-- Fast Filter Style Pills -->
+      <div class="flex items-center gap-2 overflow-x-auto no-scrollbar text-xs font-bold text-amber-200 pt-1">
+        <span class="text-[11px] text-slate-400 shrink-0 font-medium ml-1">سبک انتخاب:</span>
+        <button type="button" onclick="filterVendorsByCategoryTitle('all')" class="bg-[#141A28] hover:bg-[#1E293B] text-amber-200 border border-[#C5A059]/30 px-3 py-1.5 rounded-xl shrink-0 cursor-pointer">سنتی یزد</button>
+        <button type="button" onclick="filterVendorsByCategoryTitle('all')" class="bg-[#141A28] hover:bg-[#1E293B] text-amber-200 border border-[#C5A059]/30 px-3 py-1.5 rounded-xl shrink-0 cursor-pointer">مدرن & لوکس</button>
+        <button type="button" onclick="filterVendorsByCategoryTitle('all')" class="bg-[#141A28] hover:bg-[#1E293B] text-amber-200 border border-[#C5A059]/30 px-3 py-1.5 rounded-xl shrink-0 cursor-pointer">فضای باز</button>
+        <button type="button" onclick="filterVendorsByCategoryTitle('all')" class="bg-[#141A28] hover:bg-[#1E293B] text-amber-300 border border-[#D4AF37]/50 px-3 py-1.5 rounded-xl shrink-0 cursor-pointer font-black">VIP ویژه</button>
       </div>
-    </div>
 
-    <!-- 4. Location Selector -->
-    <div class="space-y-2 pt-2 border-t border-slate-800">
-      <label class="text-xs font-bold text-slate-300 block">منطقه و موقعیت (یزد):</label>
-      <select onchange="filterVendors()" class="w-full bg-[#141A28] border border-[#C5A059]/30 rounded-2xl px-3 py-2 text-xs text-amber-200 focus:outline-none focus:border-[#D4AF37]">
-        <option value="all">همه مناطق استان یزد</option>
-        <option value="صفائیه">📍 صفائیه یزد</option>
-        <option value="بلوار جمهوری">📍 بلوار جمهوری</option>
-        <option value="تفت">📍 تفت و ییلاقات</option>
-        <option value="بافت تاریخی">📍 بافت تاریخی و ملاصدرا</option>
-      </select>
-    </div>
-
-    <!-- 5. Key Amenities Checkboxes -->
-    <div class="space-y-2 pt-2 border-t border-slate-800">
-      <label class="text-xs font-bold text-slate-300 block">امکانات و ویژگی‌های خاص:</label>
-      <div class="space-y-1.5 text-xs text-slate-300 font-medium">
-        <label class="flex items-center gap-2 cursor-pointer">
-          <input type="checkbox" onchange="filterVendors()" checked class="accent-[#D4AF37]">
-          <span>پارکینگ اختصاصی مهمانان</span>
-        </label>
-        <label class="flex items-center gap-2 cursor-pointer">
-          <input type="checkbox" onchange="filterVendors()" checked class="accent-[#D4AF37]">
-          <span>سیستم صوتی و نورپردازی حرفه‌ای</span>
-        </label>
-        <label class="flex items-center gap-2 cursor-pointer">
-          <input type="checkbox" onchange="filterVendors()" checked class="accent-[#D4AF37]">
-          <span>فضای باز & باغ سرسبز</span>
-        </label>
-        <label class="flex items-center gap-2 cursor-pointer">
-          <input type="checkbox" onchange="filterVendors()" checked class="accent-[#D4AF37]">
-          <span>تور مجازی ۳۶۰ درجه</span>
-        </label>
+      <!-- Category Filter Pills Bar -->
+      <div id="multi-category-pills" class="flex items-center gap-2 overflow-x-auto no-scrollbar border-t border-[#C5A059]/20 pt-3">
+        <button type="button" onclick="filterVendorsByCategoryTitle('all')" class="bg-[#D4AF37] text-[#0F251A] px-3.5 py-1.5 rounded-xl shrink-0 cursor-pointer shadow-md font-bold text-xs">
+          همه خدمات (۵۰۰+)
+        </button>
+        <button type="button" onclick="filterVendorsByCategoryTitle('تالار و باغ تالار عروسی')" class="bg-[#141A28] hover:bg-[#1E293B] text-amber-200 border border-[#C5A059]/30 px-3.5 py-1.5 rounded-xl shrink-0 cursor-pointer transition-all text-xs font-bold">
+          تالار و باغ
+        </button>
+        <button type="button" onclick="filterVendorsByCategoryTitle('آتلیه عکاسی و فیلمبرداری')" class="bg-[#141A28] hover:bg-[#1E293B] text-amber-200 border border-[#C5A059]/30 px-3.5 py-1.5 rounded-xl shrink-0 cursor-pointer transition-all text-xs font-bold">
+          آتلیه
+        </button>
+        <button type="button" onclick="filterVendorsByCategoryTitle('مزون لباس عروس')" class="bg-[#141A28] hover:bg-[#1E293B] text-amber-200 border border-[#C5A059]/30 px-3.5 py-1.5 rounded-xl shrink-0 cursor-pointer transition-all text-xs font-bold">
+          مزون
+        </button>
+        <button type="button" onclick="filterVendorsByCategoryTitle('سالن زیبایی و آرایشگاه عروس')" class="bg-[#141A28] hover:bg-[#1E293B] text-amber-200 border border-[#C5A059]/30 px-3.5 py-1.5 rounded-xl shrink-0 cursor-pointer transition-all text-xs font-bold">
+          سالن زیبایی
+        </button>
+        <button type="button" onclick="filterVendorsByCategoryTitle('کترینگ و تشریفات پذیرایی')" class="bg-[#141A28] hover:bg-[#1E293B] text-amber-200 border border-[#C5A059]/30 px-3.5 py-1.5 rounded-xl shrink-0 cursor-pointer transition-all text-xs font-bold">
+          تشریفات & کترینگ
+        </button>
       </div>
+
     </div>
 
-    <div class="pt-4 border-t border-slate-800">
-      <button type="button" onclick="toggleAdvancedFiltersDrawer(); filterVendors();" class="w-full gold-shimmer-btn text-[#0F251A] font-black py-3 rounded-2xl text-xs shadow-xl cursor-pointer">
-        اعمال فیلترها & به‌روزرسانی
-      </button>
-    </div>
-  </div>
+    <!-- MAIN DIRECTORY GRID & SIDEBAR SECTION -->
+    <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
 
-</div>
+      <!-- SIDEBAR CATEGORIES ACCORDION (4 cols on LG) -->
+      <div class="lg:col-span-3 space-y-4">
+        <div class="bg-[#0E121C]/90 backdrop-blur-xl border border-[#C5A059]/40 rounded-3xl p-5 shadow-xl space-y-3">
+          <div class="flex items-center justify-between border-b border-[#C5A059]/20 pb-3">
+            <span class="text-xs font-black text-[#D4AF37] flex items-center gap-1.5">
+              <i data-lucide="filter" class="w-4 h-4 text-[#D4AF37]"></i>
+              <span>فیلتر دسته‌بندی‌ها</span>
+            </span>
+            <button type="button" onclick="clearDrawerCategoryCheckboxes()" class="text-[10px] text-amber-300 font-bold hover:underline cursor-pointer">پاکسازی</button>
+          </div>
+
+          <div id="sidebar-category-checkboxes" class="space-y-2 text-xs font-bold">
+            <!-- Dynamically populated via script.js -->
+          </div>
+        </div>
+      </div>
+
+      <!-- MAIN VENDOR SHOWCASE GRID (9 cols on LG) -->
+      <div class="lg:col-span-9 space-y-6">
+        <div id="vendor-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+          <!-- Dynamically populated via script.js renderVendors() -->
+        </div>
+      </div>
+
+    </div>
+
   </main>
 
   <!-- FLOATING COMPARISON BAR (#floating-comparison-bar) -->
   <div id="floating-comparison-bar" class="fixed bottom-6 left-1/2 -translate-x-1/2 z-[99990] hidden transition-all duration-300 w-[92%] max-w-2xl">
     <div class="bg-[#0F172A]/95 backdrop-blur-md border-2 border-[#D4AF37]/80 rounded-2xl p-3 sm:p-4 shadow-[0_10px_40px_rgba(0,0,0,0.5)] flex flex-col sm:flex-row items-center justify-between gap-3 text-right">
       <div class="flex items-center gap-3 overflow-x-auto custom-scrollbar w-full sm:w-auto pb-1 sm:pb-0" id="comparison-bar-items">
-        <!-- Selected vendor thumbnails & names rendered via JS -->
+        <!-- Selected vendor thumbnails rendered via JS -->
       </div>
 
       <div class="flex items-center gap-2 shrink-0 w-full sm:w-auto justify-end border-t sm:border-t-0 border-slate-700/60 pt-2 sm:pt-0">
@@ -514,47 +352,38 @@
     </div>
   </div>
 
-  <!-- VENDOR COMPARISON MODAL (#modal-vendor-comparison) -->
-  <div id="modal-vendor-comparison" class="comparison-modal hidden fixed inset-0 bg-black/80 backdrop-blur-md z-[999999] flex items-center justify-center p-3 sm:p-5 transition-all animate-fadeIn" onclick="if(event.target === this) closeVendorComparisonModal()">
-    <div class="bg-[#0F172A] text-white rounded-3xl shadow-2xl max-w-6xl w-full overflow-hidden border border-[#D4AF37]/60 flex flex-col animate-scaleUp relative max-h-[92vh]">
-      <!-- Header -->
-      <div class="bg-[#1E293B] px-6 py-4 flex items-center justify-between border-b border-[#D4AF37]/30 shrink-0">
-        <div class="flex items-center gap-3">
-          <div class="w-10 h-10 rounded-2xl bg-gradient-to-tr from-[#D4AF37] to-[#F3E5AB] text-[#0F251A] flex items-center justify-center font-black shadow-md">
-            <i data-lucide="columns-3" class="w-5 h-5"></i>
-          </div>
-          <div>
-            <h3 class="text-base font-black text-[#D4AF37]">ماتریس مقایسه هوشمند تامین‌کنندگان (Side-by-Side Matrix)</h3>
-            <span class="text-[11px] text-amber-200/80 font-medium block">مقایسه ویژگی‌ها، قیمت، ظرفیت و امکانات همزمان تا ۴ تامین‌کننده</span>
-          </div>
-        </div>
-
-        <div class="flex items-center gap-3">
-          <button type="button" onclick="clearComparisonQueue(); closeVendorComparisonModal();" class="px-3 py-1.5 rounded-xl bg-rose-500/20 hover:bg-rose-500/30 text-rose-300 border border-rose-500/30 text-xs font-bold transition-all flex items-center gap-1.5 cursor-pointer">
-            <i data-lucide="trash-2" class="w-3.5 h-3.5"></i>
-            <span>پاکسازی کامل</span>
-          </button>
-          <button type="button" onclick="closeVendorComparisonModal()" class="w-9 h-9 rounded-xl bg-white/10 hover:bg-white/20 text-white flex items-center justify-center transition-colors cursor-pointer" title="بستن">
-            <i data-lucide="x" class="w-5 h-5"></i>
-          </button>
-        </div>
-      </div>
-
-      <!-- Comparison Matrix Table Body -->
-      <div id="compare-modal-body" class="p-4 sm:p-6 overflow-y-auto space-y-4 text-xs font-bold custom-scrollbar">
-        <!-- Rendered dynamically via openVendorComparisonModal() -->
-      </div>
-    </div>
-  </div>
-
   <!-- FOOTER -->
-  <footer class="bg-[#08140E] border-t border-[#D4AF37]/30 text-slate-300 py-8 text-xs font-bold text-center">
-    <div class="max-w-7xl mx-auto px-4">
-      <p>© ۱۴۰۳ پلتفرم تشریفات و دایرکتوری لوکس عروسی استان یزد (Aroosi No)</p>
+  <footer class="bg-[#0B0F19] border-t border-[#D4AF37]/35 py-8 text-center text-xs text-slate-400 mt-auto">
+    <div class="max-w-7xl mx-auto px-4 flex flex-col sm:flex-row items-center justify-between gap-4">
+      <div class="flex items-center gap-2">
+        <span class="font-black text-[#D4AF37]">عروسی‌تو یزد</span>
+        <span>© تمامی حقوق محفوظ است.</span>
+      </div>
+      <div class="flex items-center gap-4 text-slate-300">
+        <a href="index.html" class="hover:text-[#D4AF37]">صفحه اصلی</a>
+        <a href="directory.html" class="hover:text-[#D4AF37]">دایرکتوری</a>
+        <a href="planning.html" class="hover:text-[#D4AF37]">برنامه‌ریزی</a>
+      </div>
     </div>
   </footer>
 
-  <!-- App Script -->
+  <!-- SCRIPT INITIALIZATION ENGINE -->
   <script src="script.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      if (typeof lucide !== 'undefined' && lucide.createIcons) {
+        lucide.createIcons();
+      }
+      if (typeof renderVendors === 'function') {
+        renderVendors();
+      }
+      if (typeof renderSidebarCategoryCheckboxes === 'function') {
+        renderSidebarCategoryCheckboxes();
+      }
+      if (typeof renderMultiCategoryPills === 'function') {
+        renderMultiCategoryPills();
+      }
+    });
+  </script>
 </body>
 </html>
