@@ -116,7 +116,7 @@ const HOME_VIEW_HTML = `<main id="home-view" class="flex-1 max-w-7xl w-full mx-a
               </button>
 
               <!-- "توصیه هوشمند AI" button triggers 3-step recommendation wizard (#modal-smart-wizard) -->
-              <button type="button" onclick="openAiRecommendationModal()" class="bg-[#141A28] hover:bg-[#1E293B] text-amber-200 border border-[#C5A059]/40 font-bold py-2.5 px-3 rounded-2xl text-xs transition-all cursor-pointer flex items-center justify-center gap-1.5 shadow-md">
+              <button type="button" onclick="openQuickInquiryModal()" class="bg-[#141A28] hover:bg-[#1E293B] text-amber-200 border border-[#C5A059]/40 font-bold py-2.5 px-3 rounded-2xl text-xs transition-all cursor-pointer flex items-center justify-center gap-1.5 shadow-md">
                 <i data-lucide="wand-2" class="w-4 h-4 text-[#D4AF37]"></i>
                 <span>توصیه هوشمند AI</span>
               </button>
@@ -200,7 +200,7 @@ const HOME_VIEW_HTML = `<main id="home-view" class="flex-1 max-w-7xl w-full mx-a
                 </span>
                 <h2 class="text-base sm:text-lg font-black text-[#F7F5F0]">دسته‌بندی‌های هوشمند خدمات عروسی یزد</h2>
               </div>
-              <button type="button" onclick="switchTab('directory')" class="text-xs font-bold text-[#D4AF37] hover:text-amber-300 transition-colors flex items-center gap-1 cursor-pointer">
+              <a href="directory.html" class="text-xs font-bold text-[#D4AF37] hover:text-amber-300 transition-colors flex items-center gap-1 cursor-pointer">
                 <span>مشاهده دایرکتوری کامل ➔</span>
               </button>
             </div>
