@@ -15747,3 +15747,42 @@ function closeAiRecommendationModal() {
 
 window.openAiRecommendationModal = openAiRecommendationModal;
 window.closeAiRecommendationModal = closeAiRecommendationModal;
+
+function openStoryLightbox(imgUrl, vendorName, category = 'نمونه‌کار لوکس یزد', caption = '', vendorId = 1) {
+  const modal = document.getElementById('modal-story-lightbox');
+  if (!modal) return;
+
+  const imgEl = document.getElementById('story-lightbox-img');
+  const avatarEl = document.getElementById('story-lightbox-avatar');
+  const nameEl = document.getElementById('story-lightbox-vendor-name');
+  const catEl = document.getElementById('story-lightbox-category');
+  const capEl = document.getElementById('story-lightbox-caption');
+  const btnEl = document.getElementById('story-lightbox-profile-btn');
+
+  if (imgEl) imgEl.src = imgUrl || 'https://images.unsplash.com/photo-1519167758481-83f550bb49b3?w=800';
+  if (avatarEl) avatarEl.src = imgUrl || 'https://images.unsplash.com/photo-1519167758481-83f550bb49b3?w=150';
+  if (nameEl) nameEl.textContent = vendorName || 'تامین‌کننده برتر یزد';
+  if (catEl) catEl.textContent = category || 'نمونه‌کار لوکس یزد';
+  if (capEl) capEl.textContent = caption || `${vendorName || 'تامین‌کننده'} — جدیدترین استوری و نمونه‌کار لوکس ثبت‌شده در استان یزد.`;
+  if (btnEl) {
+    btnEl.onclick = function() {
+      closeStoryLightbox();
+      openVendorDetailModal(vendorId || 1);
+    };
+  }
+
+  modal.classList.remove('hidden');
+  modal.classList.add('flex');
+  if (typeof lucide !== 'undefined' && lucide.createIcons) lucide.createIcons();
+}
+
+function closeStoryLightbox() {
+  const modal = document.getElementById('modal-story-lightbox');
+  if (modal) {
+    modal.classList.add('hidden');
+    modal.classList.remove('flex');
+  }
+}
+
+window.openStoryLightbox = openStoryLightbox;
+window.closeStoryLightbox = closeStoryLightbox;
