@@ -3178,7 +3178,9 @@ if (document.readyState === "loading") {
 
         const subCard = document.createElement('div');
         subCard.onclick = () => {
-          filterVendorsByCategoryTitle(sub.title);
+          const catSlug = group.key || 'hall';
+          const subSlug = encodeURIComponent(sub.title);
+          window.location.href = `directory.html?category=${catSlug}&sub=${subSlug}`;
           closeSubCategoryDrawer();
         };
         subCard.className = "bg-[#F5EFEB] border border-[#1B3B2B]/20 hover:border-[#D4AF37] hover:bg-white p-4 rounded-2xl cursor-pointer transition-all flex items-center justify-between gap-3 shadow-2xs group hover:shadow-md";
