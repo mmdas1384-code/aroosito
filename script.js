@@ -15794,31 +15794,23 @@ function closeStoryLightbox() {
 window.openStoryLightbox = openStoryLightbox;
 window.closeStoryLightbox = closeStoryLightbox;
 
+/* Off-Canvas Slide-Over Advanced Filters Drawer Toggle */
+function toggleAdvancedFiltersDrawer() {
+  const drawer = document.getElementById('directory-advanced-filters-drawer');
+  if (!drawer) return;
+
+  if (drawer.classList.contains('hidden')) {
+    drawer.classList.remove('hidden');
+    drawer.classList.add('open');
+  } else {
+    drawer.classList.add('hidden');
+    drawer.classList.remove('open');
+  }
+}
+
 /* Directory Sidebar Toggle & Expanded 4-Column Grid Mode */
 function toggleDirectorySidebar() {
-  const sidebar = document.getElementById('directory-sidebar-panel');
-  const mainPanel = document.getElementById('directory-main-panel');
-  const grid = document.getElementById('vendor-grid');
-
-  if (!sidebar || !mainPanel) return;
-
-  if (sidebar.classList.contains('collapsed')) {
-    // Expand Sidebar
-    sidebar.classList.remove('collapsed');
-    mainPanel.classList.remove('lg:col-span-12');
-    mainPanel.classList.add('lg:col-span-9');
-    if (grid && !grid.className.includes('flex')) {
-      grid.className = "grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5 w-full";
-    }
-  } else {
-    // Collapse Sidebar (Expand Main Grid to 4 Columns)
-    sidebar.classList.add('collapsed');
-    mainPanel.classList.remove('lg:col-span-9');
-    mainPanel.classList.add('lg:col-span-12');
-    if (grid && !grid.className.includes('flex')) {
-      grid.className = "grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-5 w-full";
-    }
-  }
+  toggleAdvancedFiltersDrawer();
 }
 
 /* Directory Interactive Map View Toggle */
@@ -15834,5 +15826,6 @@ function toggleDirectoryMapView() {
   }
 }
 
+window.toggleAdvancedFiltersDrawer = toggleAdvancedFiltersDrawer;
 window.toggleDirectorySidebar = toggleDirectorySidebar;
 window.toggleDirectoryMapView = toggleDirectoryMapView;

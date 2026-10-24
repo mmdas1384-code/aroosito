@@ -1,40 +1,49 @@
 /* ==========================================================================
-   DIRECTORY SCOPED STYLES & LUXURY SPLIT-SCREEN LAYOUT
+   DIRECTORY SCOPED STYLES, OFF-CANVAS DRAWER & FULL-WIDTH GRID
    ========================================================================== */
 
-/* Dark Theme Palette Container Base */
+/* Dark Theme Hero Base Card */
 .directory-hero-card {
   background: rgba(14, 18, 28, 0.90) !important;
   border: 1px solid rgba(212, 175, 55, 0.35) !important;
   box-shadow: 0 20px 50px rgba(0, 0, 0, 0.8) !important;
 }
 
-/* Sticky Advanced Filters Sidebar */
-.directory-sidebar {
-  position: sticky !important;
-  top: 90px !important;
-  z-index: 20 !important;
-  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1) !important;
+/* OFF-CANVAS SLIDE-OVER FILTER DRAWER PANEL */
+#directory-advanced-filters-drawer {
+  position: fixed !important;
+  top: 0 !important;
+  right: 0 !important;
+  width: 420px !important;
+  max-width: 90vw !important;
+  height: 100vh !important;
+  z-index: 2147483647 !important;
+  background: #07090E !important;
+  box-shadow: -15px 0 40px rgba(0, 0, 0, 0.9) !important;
+  border-left: 1px solid rgba(197, 160, 89, 0.4) !important;
+  overflow-y: auto !important;
+  transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1) !important;
 }
 
-/* Collapsible Sidebar States */
-.directory-sidebar.collapsed {
-  display: none !important;
+#directory-advanced-filters-drawer.hidden {
+  display: block !important;
+  transform: translateX(100%) !important;
+  pointer-events: none !important;
 }
 
-/* Mobile responsive drawer toggle fallback */
-@media (max-width: 1023px) {
-  .directory-sidebar {
-    position: static !important;
-  }
+#directory-advanced-filters-drawer.open,
+#directory-advanced-filters-drawer:not(.hidden) {
+  transform: translateX(0) !important;
+  pointer-events: auto !important;
 }
 
-/* Scoped Vendor Card Styling */
+/* 100% Full Width Vendor Cards Grid */
 #vendor-grid {
   width: 100% !important;
   transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1) !important;
 }
 
+/* Scoped Vendor Card Styling */
 .minimal-vendor-card {
   background: rgba(14, 18, 28, 0.88) !important;
   border: 1px solid rgba(197, 160, 89, 0.3) !important;
@@ -48,6 +57,24 @@
   border-color: #D4AF37 !important;
   box-shadow: 0 20px 45px rgba(212, 175, 55, 0.25) !important;
   transform: translateY(-4px) !important;
+}
+
+/* Card Header Badges Positioning - Prevent Absolute Collisions */
+.card-category-badge {
+  position: absolute !important;
+  top: 10px !important;
+  right: 10px !important;
+  z-index: 10 !important;
+}
+
+.card-actions-top-left {
+  position: absolute !important;
+  top: 10px !important;
+  left: 10px !important;
+  z-index: 10 !important;
+  display: flex !important;
+  align-items: center !important;
+  gap: 8px !important;
 }
 
 /* Cinematic Hover Video Teasers */
