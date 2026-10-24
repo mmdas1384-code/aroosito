@@ -721,10 +721,14 @@
       if (window.lucide && typeof window.lucide.createIcons === 'function') {
         window.lucide.createIcons();
       }
+
+      const params = new URLSearchParams(window.location.search);
       const hash = window.location.hash ? window.location.hash.replace('#', '') : '';
-      if (hash === 'budget' && typeof openExpandModal === 'function') {
+      const viewParam = params.get('view');
+
+      if ((hash === 'budget' || viewParam === 'budget') && typeof openExpandModal === 'function') {
         openExpandModal('budget');
-      } else if (hash === 'checklist' && typeof openExpandModal === 'function') {
+      } else if ((hash === 'checklist' || viewParam === 'checklist') && typeof openExpandModal === 'function') {
         openExpandModal('checklist');
       }
     });
