@@ -3683,13 +3683,50 @@ if (document.readyState === "loading") {
 
     window.clearComparisonQueue = function() {
       selectedComparisonVendorIds = [];
-      if (typeof renderVendors === 'function' && typeof filteredVendors !== 'undefined') {
-        renderVendors(filteredVendors);
+      if (typeof renderVendors === 'function' && typeof lastFilteredVendors !== 'undefined') {
+        renderVendors(lastFilteredVendors);
       }
       if (typeof window.renderFloatingComparisonBar === 'function') {
         window.renderFloatingComparisonBar();
       }
       showToast('لیست مقایسه خالی شد.', 'info');
+    };
+
+    window.renderFloatingComparisonBar = function() {
+      const bar = document.getElementById('floating-comparison-bar');
+      const itemsContainer = document.getElementById('comparison-bar-items');
+      const btnText = document.getElementById('comparison-bar-btn-text');
+
+      if (!bar || !itemsContainer) return;
+
+      if (selectedComparisonVendorIds.length === 0) {
+        bar.classList.add('hidden');
+        return;
+      }
+
+      bar.classList.remove('hidden');
+
+      if (btnText) {
+        btnText.textContent = `مقایسه رو‌به‌رو (${selectedComparisonVendorIds.length})`;
+      }
+
+      const vendorList = (typeof vendors !== 'undefined' && Array.isArray(vendors)) ? vendors : [];
+      const selectedVendors = vendorList.filter(v => selectedComparisonVendorIds.includes(v.id));
+
+      itemsContainer.innerHTML = selectedVendors.map(v => `
+        <div class="flex items-center gap-2 bg-[#1E293B] border border-[#D4AF37]/40 rounded-xl p-1.5 pr-2.5 shrink-0 shadow-md">
+          <img src="${v.image}" alt="${v.name}" class="w-8 h-8 rounded-lg object-cover border border-[#D4AF37]">
+          <div class="text-right">
+            <span class="text-xs font-bold text-white block max-w-[110px] truncate">${v.name}</span>
+            <span class="text-[9.5px] text-amber-200/80 block">${v.price || 'تماس بگیرید'}</span>
+          </div>
+          <button type="button" onclick="toggleVendorComparison(${v.id}, event)" class="w-5 h-5 rounded-full bg-rose-950/60 text-rose-300 hover:bg-rose-600 hover:text-white flex items-center justify-center text-[10px] transition-colors cursor-pointer mr-1" title="حذف">
+            ✕
+          </button>
+        </div>
+      `).join('');
+
+      if (window.lucide) lucide.createIcons();
     };
 
     function loadFavoritesFromStorage() {
@@ -4136,11 +4173,42 @@ if (document.readyState === "loading") {
       if (!grid) return;
       grid.innerHTML = '';
 
+      const vendorList = list || window.lastFilteredVendors || vendors;
+
       // Update results count indicator
       const countEl = document.getElementById('directory-results-count');
       if (countEl) {
-        const vendorList = list || window.lastFilteredVendors || vendors;
         countEl.textContent = `نمایش ${vendorList.length} مجموعه و تامین‌کننده فعال در استان یزد`;
+      }
+
+      // LUXURY EMPTY STATE COMPONENT
+      if (!vendorList || vendorList.length === 0) {
+        grid.className = "w-full col-span-full";
+        grid.innerHTML = `
+          <div class="col-span-full w-full bg-[#0e121c]/90 backdrop-blur-2xl border border-[#D4AF37]/50 rounded-3xl p-8 sm:p-12 text-center space-y-5 shadow-2xl my-6">
+            <div class="w-20 h-20 mx-auto rounded-full bg-[#1E293B] border-2 border-[#D4AF37]/60 flex items-center justify-center text-[#D4AF37] shadow-[0_0_30px_rgba(212,175,55,0.2)]">
+              <i data-lucide="search-x" class="w-10 h-10"></i>
+            </div>
+            <div class="space-y-2 max-w-md mx-auto">
+              <h3 class="text-lg sm:text-xl font-black text-[#D4AF37]">موردی با این مشخصات یافت نشد</h3>
+              <p class="text-xs sm:text-sm text-slate-300 font-medium leading-relaxed">
+                متأسفانه هیچ تامین‌کننده‌ای با فیلترهای انتخابی شما تطابق ندارد. پیشنهاد می‌کنیم فیلترها را پاکسازی کنید یا درخواست مشاوره ثبت نمایید.
+              </p>
+            </div>
+            <div class="flex flex-col sm:flex-row items-center justify-center gap-3 pt-3">
+              <button type="button" onclick="clearDrawerCategoryCheckboxes(); filterVendors();" class="gold-shimmer-btn text-[#0F251A] font-black px-6 py-3 rounded-2xl text-xs sm:text-sm shadow-xl transition-all cursor-pointer flex items-center gap-2">
+                <i data-lucide="rotate-ccw" class="w-4 h-4 text-[#0F251A]"></i>
+                <span>پاکسازی همه فیلترها</span>
+              </button>
+              <button type="button" onclick="openDedicatedAssistantModal()" class="bg-[#1E293B] hover:bg-[#2A384E] text-amber-200 border border-[#D4AF37]/50 font-bold px-6 py-3 rounded-2xl text-xs sm:text-sm transition-all cursor-pointer flex items-center gap-2">
+                <i data-lucide="sparkles" class="w-4 h-4 text-[#D4AF37]"></i>
+                <span>درخواست مشاوره اختصاصی</span>
+              </button>
+            </div>
+          </div>
+        `;
+        if (window.lucide) lucide.createIcons();
+        return;
       }
 
       const currentTab = window.activeDirectoryCategoryTab || 'all';
@@ -6861,11 +6929,72 @@ if (document.readyState === "loading") {
 
     let currentModalVendor = null;
 
+window.trackRecentlyViewedVendor = function(vendorId) {
+  let vId = parseInt(vendorId, 10);
+  if (isNaN(vId)) return;
+
+  try {
+    let recent = [];
+    const stored = sessionStorage.getItem('aroosi_recently_viewed_db');
+    if (stored) recent = JSON.parse(stored);
+    recent = recent.filter(id => id !== vId);
+    recent.unshift(vId);
+    recent = recent.slice(0, 10);
+    sessionStorage.setItem('aroosi_recently_viewed_db', JSON.stringify(recent));
+    if (typeof renderRecentlyViewedVendors === 'function') renderRecentlyViewedVendors();
+  } catch (err) {
+    console.error('Failed tracking recently viewed vendor:', err);
+  }
+};
+
+window.clearRecentlyViewedVendors = function() {
+  try {
+    sessionStorage.removeItem('aroosi_recently_viewed_db');
+    renderRecentlyViewedVendors();
+  } catch (err) {}
+};
+
+window.renderRecentlyViewedVendors = function() {
+  const section = document.getElementById('recently-viewed-section');
+  const container = document.getElementById('recently-viewed-container');
+  if (!section || !container) return;
+
+  try {
+    const stored = sessionStorage.getItem('aroosi_recently_viewed_db');
+    const recentIds = stored ? JSON.parse(stored) : [];
+
+    if (!recentIds || recentIds.length === 0) {
+      section.classList.add('hidden');
+      return;
+    }
+
+    section.classList.remove('hidden');
+    const vendorList = (typeof vendors !== 'undefined' && Array.isArray(vendors)) ? vendors : [];
+    const recentVendors = recentIds.map(id => vendorList.find(v => v.id === id)).filter(Boolean);
+
+    container.innerHTML = recentVendors.map(v => `
+      <div onclick="openVendorDetailModal(${v.id})" class="bg-[#141A28] border border-[#C5A059]/30 hover:border-[#D4AF37] rounded-2xl p-2.5 flex items-center gap-3 shrink-0 cursor-pointer hover:scale-102 transition-all shadow-md w-60">
+        <img src="${v.image}" alt="${v.name}" class="w-12 h-12 rounded-xl object-cover border border-[#D4AF37]">
+        <div class="text-right overflow-hidden">
+          <h4 class="text-xs font-black text-white truncate">${v.name}</h4>
+          <span class="text-[10px] text-amber-200/80 block truncate">${v.category} • ${v.district || 'یزد'}</span>
+          <span class="text-[10px] text-[#D4AF37] font-bold block">${v.price || 'تماس بگیرید'}</span>
+        </div>
+      </div>
+    `).join('');
+
+    if (window.lucide) lucide.createIcons();
+  } catch (err) {
+    console.error('Error rendering recently viewed vendors:', err);
+  }
+};
+
     window.openVendorDetailModal = function openVendorDetailModal(vendorId) {
       let vId = vendorId || 1;
       if (typeof vendorId === 'string' && !isNaN(parseInt(vendorId))) {
         vId = parseInt(vendorId);
       }
+  trackRecentlyViewedVendor(vId);
 
       // Save complete directory state & scroll position before navigating
       try {
