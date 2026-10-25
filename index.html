@@ -5421,20 +5421,24 @@
 
         <!-- ACTIONS FOOTER -->
         <div class="space-y-2">
-          <div class="grid grid-cols-2 gap-2">
-            <button type="button" onclick="downloadReceiptPdf()" class="bg-[#1B3B2B] hover:bg-emerald-900 text-[#D4AF37] border border-[#D4AF37]/40 py-2.5 px-3 rounded-xl text-xs font-bold transition-all flex items-center justify-center gap-1.5 shadow-md cursor-pointer">
-              <i data-lucide="printer" class="w-4 h-4 text-[#D4AF37]"></i>
-              <span>دانلود / چاپ پیش‌فاکتور</span>
+          <div class="grid grid-cols-3 gap-2">
+            <button type="button" onclick="editInquiryFormState()" class="bg-[#1E293B] hover:bg-slate-700 text-amber-200 border border-[#D4AF37]/40 py-2.5 px-2 rounded-xl text-[11px] font-bold transition-all flex items-center justify-center gap-1 shadow-md cursor-pointer">
+              <i data-lucide="edit-3" class="w-3.5 h-3.5 text-[#D4AF37]"></i>
+              <span>ویرایش اطلاعات</span>
             </button>
-            <button type="button" onclick="shareReceiptWhatsApp()" class="bg-emerald-600 hover:bg-emerald-700 text-white font-bold py-2.5 px-3 rounded-xl text-xs transition-all flex items-center justify-center gap-1.5 shadow-md cursor-pointer">
-              <i data-lucide="message-circle" class="w-4 h-4"></i>
-              <span>ارسال در واتس‌اپ</span>
+            <button type="button" onclick="downloadReceiptPdf()" class="bg-[#1B3B2B] hover:bg-emerald-900 text-[#D4AF37] border border-[#D4AF37]/40 py-2.5 px-2 rounded-xl text-[11px] font-bold transition-all flex items-center justify-center gap-1 shadow-md cursor-pointer">
+              <i data-lucide="printer" class="w-3.5 h-3.5 text-[#D4AF37]"></i>
+              <span>چاپ پیش‌فاکتور</span>
+            </button>
+            <button type="button" onclick="shareReceiptWhatsApp()" class="bg-emerald-600 hover:bg-emerald-700 text-white font-bold py-2.5 px-2 rounded-xl text-[11px] transition-all flex items-center justify-center gap-1 shadow-md cursor-pointer">
+              <i data-lucide="message-circle" class="w-3.5 h-3.5"></i>
+              <span>ارسال واتس‌اپ</span>
             </button>
           </div>
 
           <button type="button" onclick="goToInquiryChatThread()" class="w-full bg-gradient-to-r from-[#D4AF37] to-[#F3E5AB] text-[#0F251A] font-black py-2.5 rounded-xl text-xs shadow-md transition-all hover:scale-[1.01] cursor-pointer flex items-center justify-center gap-2">
             <i data-lucide="message-square" class="w-4 h-4"></i>
-            <span>ورود به مرکز گفت‌وگو و پیگیری مستقیم</span>
+            <span>ورود به گفت‌وگو و پیگیری مستقیم</span>
           </button>
         </div>
       </div>

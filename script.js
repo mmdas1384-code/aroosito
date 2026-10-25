@@ -7555,7 +7555,7 @@ window.renderRecentlyViewedVendors = function() {
       const packageTypeContainer = document.getElementById('inquiry-package-type-container');
       const dateLabel = document.getElementById('inquiry-date-label');
 
-      const isVenueCategory = cat.includes("تالار") || cat.includes("باغ") || cat.includes("تشریفات") || cat.includes("کترینگ") || cat.includes("پذیرایی") || cat.includes("عمارت") || cat.includes("سالن پذیرایی");
+      const isVenueCategory = cat.includes("تالار") || cat.includes("باغ") || cat.includes("تشریفات") || cat.includes("کترینگ") || cat.includes("پذیرایی") || cat.includes("عمارت") || cat.includes("سالن پذیرایی") || cat.includes("محضر") || cat.includes("هتل");
 
       if (isVenueCategory) {
         if (guestsContainer) guestsContainer.classList.remove('hidden');
@@ -14134,6 +14134,18 @@ window.handleVipConciergeSubmit = function(e) {
   if (e) e.preventDefault();
   closeVipConciergeModal();
   if (typeof showToast === 'function') showToast('درخواست مشاوره کنسیرژ VIP با موفقیت ثبت شد. مشاور تشریفات عروسی نو به زودی تماس می‌گیرد.', 'success');
+};
+
+/* EDIT INQUIRY FORM STATE HANDLER */
+window.editInquiryFormState = function() {
+  const formEl = document.getElementById('inquiry-form');
+  const stepIndicators = document.getElementById('inquiry-step-indicators');
+  const receiptContainer = document.getElementById('inquiry-receipt-container');
+
+  if (receiptContainer) receiptContainer.classList.add('hidden');
+  if (formEl) formEl.classList.remove('hidden');
+  if (stepIndicators) stepIndicators.classList.remove('hidden');
+  if (typeof switchInquiryStep === 'function') switchInquiryStep(1);
 };
 
 /* PACKAGE MATRIX INQUIRY WITH ADD-ONS LOGIC */
