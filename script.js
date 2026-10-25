@@ -7507,6 +7507,19 @@ window.renderRecentlyViewedVendors = function() {
       document.getElementById('inquiry-vendor-id').value = vendor ? vendor.id : 1;
       document.getElementById('modal-vendor-name').innerText = targetName;
 
+      // Handle date pre-filling if passed as parameter
+      const inquiryDateInput = document.getElementById('inquiry-date');
+      if (inquiryDateInput) {
+        if (typeof vendorId === 'string' && (vendorId.includes('1404') || vendorId.includes('1403'))) {
+          inquiryDateInput.value = vendorId;
+        } else if (typeof itemTitle === 'string' && (itemTitle.includes('1404') || itemTitle.includes('1403'))) {
+          inquiryDateInput.value = itemTitle;
+        }
+        if (typeof checkInquiryDateAvailability === 'function') {
+          checkInquiryDateAvailability();
+        }
+      }
+
       // Update Context Banner Card
       const contextBanner = document.getElementById('inquiry-context-banner');
       const contextTypeText = document.getElementById('inquiry-context-type-text');
@@ -14121,6 +14134,23 @@ window.handleVipConciergeSubmit = function(e) {
   if (e) e.preventDefault();
   closeVipConciergeModal();
   if (typeof showToast === 'function') showToast('درخواست مشاوره کنسیرژ VIP با موفقیت ثبت شد. مشاور تشریفات عروسی نو به زودی تماس می‌گیرد.', 'success');
+};
+
+/* PACKAGE MATRIX INQUIRY WITH ADD-ONS LOGIC */
+window.openInquiryForPackage = function(packageName, addonSelector) {
+  let selectedAddons = [];
+  if (addonSelector) {
+    document.querySelectorAll(addonSelector + ':checked').forEach(cb => {
+      if (cb.value) selectedAddons.push(cb.value);
+    });
+  }
+
+  const addonText = selectedAddons.length > 0 ? ` [افزودنی‌ها: ${selectedAddons.join('، ')}]` : '';
+  const fullPkgSubject = `${packageName}${addonText}`;
+
+  if (typeof openInquiryModal === 'function') {
+    openInquiryModal(null, null, fullPkgSubject);
+  }
 };
 
 /* MULTI-SELECT CATEGORY TABS & SUB-CATEGORY CHIPS LOGIC */
