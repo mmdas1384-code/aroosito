@@ -96,11 +96,29 @@
 
 .badges-left {
   display: flex !important;
-  flex-direction: row !important;
+  flex-direction: column !important;
   align-items: center !important;
-  gap: 4px !important;
+  gap: 6px !important;
   pointer-events: auto !important;
-  shrink: 0 !important;
+  position: relative !important;
+}
+
+.card-more-menu {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  margin-top: 6px;
+  min-width: 170px;
+  background: rgba(15, 23, 42, 0.95);
+  backdrop-filter: blur(12px);
+  border: 1px solid rgba(212, 175, 55, 0.5);
+  border-radius: 14px;
+  padding: 6px;
+  box-shadow: 0 15px 30px rgba(0,0,0,0.5);
+  z-index: 50;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
 }
 
 /* IMPORTANT: Strip individual position absolute from child elements */

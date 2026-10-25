@@ -3696,6 +3696,11 @@ if (document.readyState === "loading") {
       const bar = document.getElementById('floating-comparison-bar');
       const itemsContainer = document.getElementById('comparison-bar-items');
       const btnText = document.getElementById('comparison-bar-btn-text');
+      const toolbarBadge = document.getElementById('toolbar-compare-badge');
+
+      if (toolbarBadge) {
+        toolbarBadge.textContent = selectedComparisonVendorIds.length;
+      }
 
       if (!bar || !itemsContainer) return;
 
@@ -4128,23 +4133,33 @@ if (document.readyState === "loading") {
               </span>`}
             </div>
 
-            <!-- LEFT SIDE: Actions & Quick View -->
-            <div class="badges-left">
-              <button type="button" onclick="toggleFavoriteVendor(${v.id}, event)" class="btn-card-icon favorite-btn" title="علاقه‌مندی">
-                <i data-lucide="heart" class="w-4 h-4 ${isFav ? 'fill-rose-500 text-rose-500' : ''}"></i>
-              </button>
-              <button type="button" onclick="toggleVendorComparison(${v.id}, event)" class="btn-card-icon compare-btn" title="مقایسه">
-                <i data-lucide="scale" class="w-4 h-4"></i>
-              </button>
+            <!-- LEFT SIDE: 3 Vertical Action Icons & Dropdown -->
+            <div class="badges-left relative">
               <button type="button" onclick="openQuickViewModal(${v.id}, event)" class="btn-card-icon quickview-btn" title="مشاهده سریع">
                 <i data-lucide="eye" class="w-4 h-4"></i>
               </button>
-              <button type="button" onclick="openQuickShareModal(${v.id}, event)" class="btn-card-icon share-btn" title="اشتراک‌گذاری">
-                <i data-lucide="share-2" class="w-4 h-4"></i>
+              <button type="button" onclick="toggleFavoriteVendor(${v.id}, event)" class="btn-card-icon favorite-btn" title="علاقه‌مندی">
+                <i data-lucide="heart" class="w-4 h-4 ${isFav ? 'fill-rose-500 text-rose-500' : ''}"></i>
               </button>
-              <button type="button" onclick="toggleMultiQuoteVendor(${v.id}, event)" class="btn-card-icon multiquote-btn ${selectedMultiQuoteVendorIds.includes(v.id) ? 'bg-[#D4AF37] text-black font-black' : ''}" title="افزودن به استعلام گروهی">
-                <i data-lucide="${selectedMultiQuoteVendorIds.includes(v.id) ? 'check-square' : 'square'}" class="w-4 h-4"></i>
+              <button type="button" onclick="toggleCardMoreMenu(${v.id}, event)" class="btn-card-icon card-more-btn" title="گزینه‌های بیشتر">
+                <i data-lucide="more-vertical" class="w-4 h-4 text-[#D4AF37]"></i>
               </button>
+
+              <!-- 3-Dot More Options Dropdown Popup -->
+              <div id="card-more-menu-${v.id}" class="card-more-menu hidden text-right" onclick="event.stopPropagation()">
+                <button type="button" onclick="toggleVendorComparison(${v.id}, event); toggleCardMoreMenu(${v.id}, event);" class="w-full text-right px-3 py-2 text-xs font-bold text-slate-200 hover:text-white hover:bg-[#1E293B] rounded-xl flex items-center justify-between transition-all">
+                  <span>افزودن به مقایسه</span>
+                  <i data-lucide="scale" class="w-3.5 h-3.5 text-[#D4AF37]"></i>
+                </button>
+                <button type="button" onclick="toggleMultiQuoteVendor(${v.id}, event); toggleCardMoreMenu(${v.id}, event);" class="w-full text-right px-3 py-2 text-xs font-bold text-slate-200 hover:text-white hover:bg-[#1E293B] rounded-xl flex items-center justify-between transition-all">
+                  <span>${selectedMultiQuoteVendorIds.includes(v.id) ? 'حذف از استعلام گروهی' : 'افزودن به استعلام گروهی'}</span>
+                  <i data-lucide="check-square" class="w-3.5 h-3.5 text-[#D4AF37]"></i>
+                </button>
+                <button type="button" onclick="openQuickShareModal(${v.id}, event); toggleCardMoreMenu(${v.id}, event);" class="w-full text-right px-3 py-2 text-xs font-bold text-slate-200 hover:text-white hover:bg-[#1E293B] rounded-xl flex items-center justify-between transition-all">
+                  <span>اشتراک‌گذاری</span>
+                  <i data-lucide="share-2" class="w-3.5 h-3.5 text-[#D4AF37]"></i>
+                </button>
+              </div>
             </div>
           </div>
 
@@ -14100,6 +14115,31 @@ window.handleVipConciergeSubmit = function(e) {
   if (typeof showToast === 'function') showToast('درخواست مشاوره کنسیرژ VIP با موفقیت ثبت شد. مشاور تشریفات عروسی نو به زودی تماس می‌گیرد.', 'success');
 };
 
+/* CARD 3-DOT MORE DROPDOWN MENU LOGIC */
+window.toggleCardMoreMenu = function(vendorId, event) {
+  if (event) event.stopPropagation();
+
+  // Close all other open card dropdown menus first
+  document.querySelectorAll('.card-more-menu').forEach(menu => {
+    if (menu.id !== `card-more-menu-${vendorId}`) {
+      menu.classList.add('hidden');
+    }
+  });
+
+  const menu = document.getElementById(`card-more-menu-${vendorId}`);
+  if (menu) {
+    menu.classList.toggle('hidden');
+    if (window.lucide) lucide.createIcons();
+  }
+};
+
+// Global click outside to close card 3-dot dropdowns
+document.addEventListener('click', function(e) {
+  if (!e.target.closest('.card-more-btn') && !e.target.closest('.card-more-menu')) {
+    document.querySelectorAll('.card-more-menu').forEach(menu => menu.classList.add('hidden'));
+  }
+});
+
 /* AI PERSONALITY & VENDOR WIZARD MODAL LOGIC */
 let aiWizardSelections = { style: null, budget: null, venue: null };
 
@@ -14228,6 +14268,11 @@ window.renderMultiQuoteBar = function() {
   const bar = document.getElementById('floating-multiquote-bar');
   const countTag = document.getElementById('multiquote-count-tag');
   const btnLabel = document.getElementById('multiquote-btn-label');
+  const toolbarBadge = document.getElementById('toolbar-multiquote-badge');
+
+  if (toolbarBadge) {
+    toolbarBadge.textContent = selectedMultiQuoteVendorIds.length;
+  }
 
   if (!bar) return;
 
