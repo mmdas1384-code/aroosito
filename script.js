@@ -7118,7 +7118,7 @@ window.renderRecentlyViewedVendors = function() {
     window.closeVendorDetailModal = function closeVendorDetailModal() {};
 
     function initStandaloneVendorShowroom() {
-      if (!window.location.pathname.includes('vendor-detail.html')) return;
+      if (!window.location.pathname.includes('vendor-detail.html') && !window.location.pathname.includes('vendor-profile.html')) return;
       const params = new URLSearchParams(window.location.search);
       const vendorId = parseInt(params.get('id')) || 1;
       const currentVendors = typeof window.getCentralizedVendors === 'function' ? window.getCentralizedVendors() : vendors;
