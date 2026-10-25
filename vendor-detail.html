@@ -23,28 +23,28 @@
 </head>
 <body class="bg-[#07090E] text-[#F7F5F0] font-['Vazirmatn'] antialiased min-h-screen flex flex-col pb-24">
 
-  <!-- TOP UNIFIED PLATFORM HEADER -->
-  <header class="sticky top-0 z-50 bg-[#0b0f19]/95 backdrop-blur-xl border-b border-[#D4AF37]/35 shadow-2xl">
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-3 flex items-center justify-between">
-      <!-- Right Side: Logo & Main Navigation Link -->
-      <div class="flex items-center gap-4">
-        <a href="index.html?tab=home" class="flex items-center gap-2 text-[#D4AF37] font-black text-lg sm:text-xl">
-          <div class="w-9 h-9 rounded-xl bg-[#D4AF37]/20 border border-[#D4AF37]/60 flex items-center justify-center text-[#D4AF37] shadow-md">
-            👑
-          </div>
-          <span>عروسی تو</span>
-        </a>
-        <a href="directory.html" class="hidden sm:inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-[#141A28] border border-[#C5A059]/40 text-amber-200 text-xs font-bold hover:bg-[#1E293B] transition-all">
-          <i data-lucide="grid" class="w-3.5 h-3.5 text-[#D4AF37]"></i>
-          <span>دایرکتوری تامین‌کنندگان</span>
+  <!-- TOP UNIFIED PLATFORM HEADER OVERHAUL -->
+  <header class="sticky top-0 z-50 bg-[#0b0f19]/95 backdrop-blur-2xl border-b border-[#D4AF37]/25 shadow-2xl">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-3.5 flex items-center justify-between">
+      <!-- Right Side (RTL Start): Return Button -->
+      <div class="flex items-center">
+        <a href="directory.html" class="bg-[#141A28] hover:bg-[#D4AF37] text-amber-200 hover:text-[#07090E] border border-[#D4AF37]/50 font-black text-xs px-4 py-2.5 rounded-2xl shadow-lg transition-all transform hover:scale-105 cursor-pointer flex items-center gap-2 group">
+          <i data-lucide="arrow-right" class="w-4 h-4 text-[#D4AF37] group-hover:text-[#07090E] transition-colors"></i>
+          <span>بازگشت به دایرکتوری</span>
         </a>
       </div>
 
-      <!-- Left Side: Direct Return Button -->
-      <div class="flex items-center gap-2.5">
-        <a href="directory.html" class="bg-gradient-to-r from-[#D4AF37] to-[#F3E5AB] text-[#0F251A] font-black text-xs px-4 py-2 rounded-xl shadow-md transition-all hover:scale-105 cursor-pointer flex items-center gap-1.5">
-          <i data-lucide="arrow-right" class="w-4 h-4"></i>
-          <span>بازگشت به دایرکتوری</span>
+      <!-- Left Side (RTL End): Brand Logo & Subtitle Badge -->
+      <div class="flex items-center gap-3">
+        <div class="hidden sm:flex flex-col text-left">
+          <span class="text-[10px] font-bold text-slate-400 block">پلتفرم جامع خدمات تشریفات</span>
+          <span class="text-[11px] font-black text-[#D4AF37] bg-[#D4AF37]/10 px-2.5 py-0.5 rounded-full border border-[#D4AF37]/30">دایرکتوری تامین‌کنندگان</span>
+        </div>
+        <a href="index.html" class="flex items-center gap-2 text-[#D4AF37] font-black text-lg sm:text-xl group">
+          <div class="w-10 h-10 rounded-2xl bg-gradient-to-br from-[#D4AF37]/30 to-[#8C6D23]/20 border border-[#D4AF37]/60 flex items-center justify-center text-[#D4AF37] shadow-lg group-hover:scale-105 transition-transform">
+            👑
+          </div>
+          <span class="tracking-tight text-white group-hover:text-[#D4AF37] transition-colors">عروسی تو</span>
         </a>
       </div>
     </div>
@@ -486,23 +486,37 @@
     </div>
   </div>
 
-  <!-- FIXED BOTTOM LUXURY ACTION BAR -->
-  <div class="fixed bottom-0 left-0 right-0 z-50 bg-[#0e121c]/95 backdrop-blur-2xl border-t border-[#D4AF37]/40 p-4 shadow-2xl">
-    <div class="max-w-7xl mx-auto flex items-center justify-between gap-4">
-      <div class="hidden sm:block text-right">
-        <span class="text-[10px] text-slate-400 block font-bold">تامین‌کننده تاییدشده VIP</span>
-        <strong class="text-xs text-[#D4AF37] font-black">آماده پذیرش سفارش فصل عروسی</strong>
+  <!-- FIXED BOTTOM FLOATING ACTION & STATUS BAR OVERHAUL -->
+  <div class="fixed bottom-0 left-0 right-0 z-50 bg-[#0b0f19]/95 backdrop-blur-2xl border-t border-[#D4AF37]/35 p-3.5 sm:p-4 shadow-[0_-10px_35px_rgba(0,0,0,0.85)]">
+    <div class="max-w-7xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-3 text-right">
+
+      <!-- Right Side (RTL Start): Vendor VIP Status Indicator -->
+      <div class="flex items-center gap-2.5 w-full sm:w-auto justify-between sm:justify-start">
+        <div class="w-9 h-9 rounded-2xl bg-[#D4AF37]/20 border border-[#D4AF37]/50 flex items-center justify-center text-[#D4AF37] shrink-0">
+          👑
+        </div>
+        <div>
+          <div class="flex items-center gap-1.5">
+            <span class="text-xs font-black text-[#D4AF37]">تامین‌کننده تاییدشده VIP</span>
+            <span class="inline-block w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
+          </div>
+          <span class="text-[10.5px] text-slate-300 font-bold block">🟢 آماده پذیرش سفارش فصل عروسی ۱۴۰۴</span>
+        </div>
       </div>
-      <div class="flex items-center gap-3 w-full sm:w-auto">
-        <button type="button" onclick="openInquiryModal()" class="flex-1 sm:flex-none gold-shimmer-btn text-[#0F251A] font-black px-6 py-2.5 rounded-xl text-xs shadow-lg cursor-pointer flex items-center justify-center gap-2">
+
+      <!-- Left Side (RTL End): Primary Action Cluster -->
+      <div class="flex items-center gap-2.5 w-full sm:w-auto">
+        <button type="button" onclick="openInquiryModal()" class="flex-1 sm:flex-none gold-shimmer-btn text-[#0F251A] font-black px-6 py-3 rounded-2xl text-xs sm:text-sm shadow-[0_0_20px_rgba(212,175,55,0.3)] transition-all transform hover:scale-102 cursor-pointer flex items-center justify-center gap-2">
           <i data-lucide="sparkles" class="w-4 h-4 text-[#0F251A]"></i>
           <span>استعلام قیمت & رزرو مستقیم</span>
         </button>
-        <a href="https://wa.me/989123456789" target="_blank" rel="noopener" class="bg-[#141A28] hover:bg-[#1E293B] text-emerald-400 border border-emerald-500/50 font-bold px-4 py-2.5 rounded-xl text-xs transition-all cursor-pointer flex items-center justify-center gap-1.5">
+        <a href="https://wa.me/989123456789" target="_blank" rel="noopener" class="bg-[#0F251A] hover:bg-[#1B3B2B] text-emerald-400 border border-emerald-500/60 font-bold px-4 py-3 rounded-2xl text-xs transition-all cursor-pointer flex items-center justify-center gap-1.5 shadow-md shrink-0">
           <i data-lucide="message-circle" class="w-4 h-4 text-emerald-400"></i>
+          <span class="hidden xs:inline">ارتباط در</span>
           <span>واتس‌اپ</span>
         </a>
       </div>
+
     </div>
   </div>
 
