@@ -154,3 +154,12 @@
 .vendor-calendar-day:hover:not(.status-booked) {
   transform: scale(1.05);
 }
+
+/* SECTION SCROLL MARGIN FOR STICKY NAV OFFSET */
+#sec-about,
+#sec-packages,
+#sec-calendar,
+#sec-reviews,
+#sec-faq {
+  scroll-margin-top: 130px;
+}

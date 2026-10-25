@@ -50,23 +50,74 @@
     </div>
   </header>
 
-  <!-- 1. BENTO GRID GALLERY HERO COVER & OVERLAY CARD -->
-  <section class="relative w-full bg-slate-950 pt-4 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto">
+  <!-- 1. MAIN VENDOR INFO HEADER CARD (TOP MOST) -->
+  <section class="w-full pt-6 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto">
+    <div class="bg-[#0e121c]/95 backdrop-blur-2xl border border-[#C5A059]/40 p-6 sm:p-8 rounded-3xl shadow-2xl space-y-4 text-right">
+      <div class="flex items-start justify-between flex-wrap gap-4">
+        <div>
+          <div class="flex items-center gap-2 mb-1">
+            <span class="text-xs font-black text-amber-200 bg-[#D4AF37]/20 px-3 py-1 rounded-full border border-[#D4AF37]/40 flex items-center gap-1">
+              <i data-lucide="crown" class="w-3.5 h-3.5 text-[#D4AF37]"></i>
+              <span>مجموعه منتخب VIP</span>
+            </span>
+            <span class="text-xs font-bold text-emerald-400 bg-emerald-950/60 px-2.5 py-1 rounded-full border border-emerald-500/40 flex items-center gap-1">
+              <i data-lucide="check-circle" class="w-3.5 h-3.5"></i>
+              <span>تاییدشده عروسی تو</span>
+            </span>
+          </div>
+
+          <h1 id="vdm-title-page" class="text-2xl sm:text-4xl font-black text-[#C5A059] leading-tight">هتل باغ و تشریفات مشیرالممالک یزد</h1>
+          <p id="vdm-subtitle-page" class="text-xs sm:text-sm text-slate-300 font-bold mt-1">تالار و باغ تالار عروسی • صفائیه یزد</p>
+        </div>
+
+        <!-- Social & Contact Quick Links -->
+        <div class="flex items-center gap-2 bg-[#141A28] border border-[#C5A059]/30 rounded-2xl p-2">
+          <span class="text-xs font-bold text-[#D4AF37] px-2">ارتباط مستقیم:</span>
+          <a href="https://instagram.com" target="_blank" rel="noopener" class="w-9 h-9 rounded-xl bg-[#1E293B] border border-[#C5A059]/40 hover:bg-[#D4AF37] hover:text-[#07090E] text-[#D4AF37] flex items-center justify-center transition-all cursor-pointer shadow-sm" title="اینستاگرام">
+            <i data-lucide="instagram" class="w-4 h-4"></i>
+          </a>
+          <a href="https://wa.me/989123456789" target="_blank" rel="noopener" class="w-9 h-9 rounded-xl bg-[#1E293B] border border-[#C5A059]/40 hover:bg-[#D4AF37] hover:text-[#07090E] text-[#D4AF37] flex items-center justify-center transition-all cursor-pointer shadow-sm" title="واتس‌اپ">
+            <i data-lucide="message-circle" class="w-4 h-4"></i>
+          </a>
+          <a href="tel:09123456789" class="w-9 h-9 rounded-xl bg-[#1E293B] border border-[#C5A059]/40 hover:bg-[#D4AF37] hover:text-[#07090E] text-[#D4AF37] flex items-center justify-center transition-all cursor-pointer shadow-sm" title="تماس مستقیم">
+            <i data-lucide="phone" class="w-4 h-4"></i>
+          </a>
+        </div>
+      </div>
+
+      <!-- Address Banner -->
+      <div class="p-3 bg-[#141A28] border border-[#C5A059]/30 rounded-2xl text-xs sm:text-sm text-slate-200 font-medium flex items-center gap-2 shadow-inner">
+        <i data-lucide="map-pin" class="w-4 h-4 text-[#D4AF37] shrink-0"></i>
+        <span id="vdm-full-address-explicit" class="text-slate-100 font-bold">یزد، صفائیه، خیابان تیمسار فلاحی، هتل باغ مشیرالممالک</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- 2. BENTO GRID GALLERY SHOWCASE (AFTER HEADER) -->
+  <section class="w-full pt-6 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto space-y-4">
+    <div class="flex items-center justify-between flex-wrap gap-2">
+      <h3 class="text-base sm:text-lg font-black text-[#D4AF37] flex items-center gap-2">
+        <i data-lucide="film" class="w-5 h-5 text-[#D4AF37]"></i>
+        <span>گالری سینمایی، تیزرها و تصاویر شو روم</span>
+      </h3>
+      <div class="flex items-center gap-2">
+        <button type="button" onclick="open360TourModal(1)" class="px-4 py-2 rounded-xl text-xs font-bold bg-[#141A28] hover:bg-[#1E293B] text-amber-200 border border-[#C5A059]/40 hover:border-[#D4AF37] transition-all cursor-pointer flex items-center gap-1.5 shadow-md">
+          <i data-lucide="compass" class="w-4 h-4 text-[#D4AF37]"></i>
+          <span>تور ۳۶۰° VR</span>
+        </button>
+        <button type="button" onclick="openStoryLightbox(1)" class="px-4 py-2 rounded-xl text-xs font-bold bg-[#141A28] hover:bg-[#1E293B] text-amber-200 border border-[#C5A059]/40 hover:border-[#D4AF37] transition-all cursor-pointer flex items-center gap-1.5 shadow-md">
+          <i data-lucide="play-circle" class="w-4 h-4 text-[#D4AF37]"></i>
+          <span>تیزر ویدیویی</span>
+        </button>
+      </div>
+    </div>
+
+    <!-- Bento Grid Photo Gallery Layout -->
     <div class="bento-hero-grid max-w-7xl mx-auto shadow-2xl">
       <!-- Main Bento Photo -->
       <div class="bento-item-main group cursor-pointer" onclick="open360TourModal(1)">
         <img id="vdm-cover-hero" src="https://images.unsplash.com/photo-1519167758481-83f550bb49b3?w=1600" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" alt="Cover Banner">
         <div class="absolute inset-0 bg-gradient-to-t from-[#07090E] via-transparent to-black/30"></div>
-        <div class="absolute top-4 left-4 flex gap-2">
-          <button type="button" onclick="event.stopPropagation(); open360TourModal(1)" class="bg-black/80 backdrop-blur-md text-amber-200 border border-[#D4AF37]/50 text-xs font-bold px-3 py-1.5 rounded-xl shadow-lg flex items-center gap-1.5 hover:bg-[#D4AF37] hover:text-black transition-all">
-            <i data-lucide="compass" class="w-4 h-4 text-[#D4AF37]"></i>
-            <span>تور ۳۶۰° VR</span>
-          </button>
-          <button type="button" onclick="event.stopPropagation(); openStoryLightbox(1)" class="bg-black/80 backdrop-blur-md text-amber-200 border border-[#D4AF37]/50 text-xs font-bold px-3 py-1.5 rounded-xl shadow-lg flex items-center gap-1.5 hover:bg-[#D4AF37] hover:text-black transition-all">
-            <i data-lucide="play-circle" class="w-4 h-4 text-[#D4AF37]"></i>
-            <span>تیزر ویدیو</span>
-          </button>
-        </div>
       </div>
 
       <!-- Sub Bento Photos -->
@@ -81,52 +132,9 @@
         </div>
       </div>
     </div>
-
-    <!-- Floating Metadata Overlay Card -->
-    <div class="mt-4 max-w-7xl mx-auto">
-      <div class="bg-[#0e121c]/95 backdrop-blur-2xl border border-[#C5A059]/40 p-6 sm:p-8 rounded-3xl shadow-2xl space-y-4 text-right">
-        <div class="flex items-start justify-between flex-wrap gap-4">
-          <div>
-            <div class="flex items-center gap-2 mb-1">
-              <span class="text-xs font-black text-amber-200 bg-[#D4AF37]/20 px-3 py-1 rounded-full border border-[#D4AF37]/40 flex items-center gap-1">
-                <i data-lucide="crown" class="w-3.5 h-3.5 text-[#D4AF37]"></i>
-                <span>مجموعه منتخب VIP</span>
-              </span>
-              <span class="text-xs font-bold text-emerald-400 bg-emerald-950/60 px-2.5 py-1 rounded-full border border-emerald-500/40 flex items-center gap-1">
-                <i data-lucide="check-circle" class="w-3.5 h-3.5"></i>
-                <span>تاییدشده عروسی نو</span>
-              </span>
-            </div>
-
-            <h1 id="vdm-title-page" class="text-2xl sm:text-4xl font-black text-[#C5A059] leading-tight">هتل باغ و تشریفات مشیرالممالک یزد</h1>
-            <p id="vdm-subtitle-page" class="text-xs sm:text-sm text-slate-300 font-bold mt-1">تالار و باغ تالار عروسی • صفائیه یزد</p>
-          </div>
-
-          <!-- Social Quick Links -->
-          <div class="flex items-center gap-2 bg-[#141A28] border border-[#C5A059]/30 rounded-2xl p-2">
-            <span class="text-xs font-bold text-[#D4AF37] px-2">ارتباط مستقیم:</span>
-            <a href="https://instagram.com" target="_blank" rel="noopener" class="w-9 h-9 rounded-xl bg-[#1E293B] border border-[#C5A059]/40 hover:bg-[#D4AF37] hover:text-[#07090E] text-[#D4AF37] flex items-center justify-center transition-all cursor-pointer shadow-sm" title="اینستاگرام">
-              <i data-lucide="instagram" class="w-4 h-4"></i>
-            </a>
-            <a href="https://wa.me/989123456789" target="_blank" rel="noopener" class="w-9 h-9 rounded-xl bg-[#1E293B] border border-[#C5A059]/40 hover:bg-[#D4AF37] hover:text-[#07090E] text-[#D4AF37] flex items-center justify-center transition-all cursor-pointer shadow-sm" title="واتس‌اپ">
-              <i data-lucide="message-circle" class="w-4 h-4"></i>
-            </a>
-            <a href="tel:09123456789" class="w-9 h-9 rounded-xl bg-[#1E293B] border border-[#C5A059]/40 hover:bg-[#D4AF37] hover:text-[#07090E] text-[#D4AF37] flex items-center justify-center transition-all cursor-pointer shadow-sm" title="تماس مستقیم">
-              <i data-lucide="phone" class="w-4 h-4"></i>
-            </a>
-          </div>
-        </div>
-
-        <!-- Address Banner -->
-        <div class="p-3 bg-[#141A28] border border-[#C5A059]/30 rounded-2xl text-xs sm:text-sm text-slate-200 font-medium flex items-center gap-2 shadow-inner">
-          <i data-lucide="map-pin" class="w-4 h-4 text-[#D4AF37] shrink-0"></i>
-          <span id="vdm-full-address-explicit" class="text-slate-100 font-bold">یزد، صفائیه، خیابان تیمسار فلاحی، هتل باغ مشیرالممالک</span>
-        </div>
-      </div>
-    </div>
   </section>
 
-  <!-- 2. STICKY SUB-NAVIGATION BAR -->
+  <!-- 3. STICKY SUB-NAVIGATION BAR (BELOW GALLERY) -->
   <nav id="vendor-sticky-subnav" class="vendor-sticky-subnav my-6">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex items-center justify-start gap-1 overflow-x-auto no-scrollbar">
       <a href="#sec-about" class="vendor-subnav-link active-subnav">
