@@ -7485,6 +7485,11 @@ window.renderRecentlyViewedVendors = function() {
     };
 
     function openInquiryModal(vendorId, vendorName, itemTitle, itemPrice, itemType, itemId, itemThumb) {
+      const modalEl = document.getElementById('inquiryModal') || document.getElementById('inquiry-modal');
+      if (modalEl) {
+        modalEl.classList.remove('hidden');
+        modalEl.classList.add('active');
+      }
       if (typeof switchInquiryStep === 'function') switchInquiryStep(1);
       let vId = vendorId;
       if (typeof vendorId === 'string' && !isNaN(parseInt(vendorId))) {
@@ -7717,7 +7722,11 @@ window.renderRecentlyViewedVendors = function() {
     };
 
     function closeInquiryModal() {
-      document.getElementById('inquiry-modal').classList.add('hidden');
+      const modalEl = document.getElementById('inquiryModal') || document.getElementById('inquiry-modal');
+      if (modalEl) {
+        modalEl.classList.add('hidden');
+        modalEl.classList.remove('active');
+      }
       const formEl = document.getElementById('inquiry-form');
       const stepIndicators = document.getElementById('inquiry-step-indicators');
       const receiptContainer = document.getElementById('inquiry-receipt-container');
@@ -14135,6 +14144,35 @@ window.handleVipConciergeSubmit = function(e) {
   closeVipConciergeModal();
   if (typeof showToast === 'function') showToast('درخواست مشاوره کنسیرژ VIP با موفقیت ثبت شد. مشاور تشریفات عروسی نو به زودی تماس می‌گیرد.', 'success');
 };
+
+/* INQUIRY MODAL EVENT LISTENERS & DOMContentLoaded BINDING */
+document.addEventListener('DOMContentLoaded', function() {
+  const openBtn = document.getElementById('openInquiryBtn');
+  const modalEl = document.getElementById('inquiryModal') || document.getElementById('inquiry-modal');
+
+  if (openBtn) {
+    openBtn.addEventListener('click', function(e) {
+      if (e) e.preventDefault();
+      if (typeof openInquiryModal === 'function') openInquiryModal();
+    });
+  }
+
+  if (modalEl) {
+    modalEl.addEventListener('click', function(e) {
+      if (e.target === modalEl) {
+        if (typeof closeInquiryModal === 'function') closeInquiryModal();
+      }
+    });
+
+    const closeBtns = modalEl.querySelectorAll('.close-inquiry-modal');
+    closeBtns.forEach(btn => {
+      btn.addEventListener('click', function(e) {
+        if (e) e.preventDefault();
+        if (typeof closeInquiryModal === 'function') closeInquiryModal();
+      });
+    });
+  }
+});
 
 /* EDIT INQUIRY FORM STATE HANDLER */
 window.editInquiryFormState = function() {

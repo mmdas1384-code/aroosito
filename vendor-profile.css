@@ -171,6 +171,19 @@
   box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5) !important;
 }
 
+/* INQUIRY MODAL OVERLAY VISIBILITY RULES */
+.inquiry-modal-overlay {
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.3s ease;
+}
+
+.inquiry-modal-overlay.active {
+  opacity: 1 !important;
+  pointer-events: auto !important;
+  display: flex !important;
+}
+
 /* SECTION SCROLL MARGIN FOR STICKY NAV OFFSET */
 #sec-about,
 #sec-packages,
