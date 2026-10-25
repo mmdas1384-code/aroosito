@@ -4101,12 +4101,12 @@ if (document.readyState === "loading") {
       }
 
       const card = document.createElement('div');
-      card.className = `minimal-vendor-card bg-[#0F172A]/90 backdrop-blur-md ${borderClasses} rounded-3xl overflow-hidden shadow-xl transition-all duration-300 flex flex-col justify-between group cursor-pointer relative ${isHeroVendor ? 'col-span-1 sm:col-span-2 border-[#D4AF37]/60' : ''}`;
+      card.className = `minimal-vendor-card bg-[#0F172A]/90 backdrop-blur-md ${borderClasses} rounded-3xl shadow-xl transition-all duration-300 flex flex-col justify-between group cursor-pointer relative z-1 hover:z-20 ${isHeroVendor ? 'col-span-1 sm:col-span-2 border-[#D4AF37]/60' : ''}`;
       card.setAttribute('onclick', `openVendorDetailModal(${v.id})`);
 
       card.innerHTML = `
-        <div class="relative w-full h-48 overflow-hidden bg-slate-900" onmouseenter="playCardVideoTeaser(this)" onmouseleave="stopCardVideoTeaser(this)">
-          <img src="${v.image}" alt="${v.name}" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-108">
+        <div class="relative w-full h-48 bg-slate-900 rounded-t-3xl" onmouseenter="playCardVideoTeaser(this)" onmouseleave="stopCardVideoTeaser(this)">
+          <img src="${v.image}" alt="${v.name}" class="w-full h-full object-cover rounded-t-3xl transition-transform duration-500 group-hover:scale-108">
           <video src="${v.videoTeaser || 'https://assets.mixkit.co/videos/preview/mixkit-wedding-couple-walking-in-a-park-41315-large.mp4'}" muted loop playsinline preload="none" class="card-teaser-video absolute inset-0 w-full h-full object-cover opacity-0 transition-opacity duration-500 pointer-events-none"></video>
           <div class="absolute inset-0 bg-gradient-to-t from-[#0F172A] via-transparent to-black/40"></div>
 
@@ -14127,12 +14127,28 @@ window.handleVipConciergeSubmit = function(e) {
 let activeDirectoryPrimaryTab = 'all';
 let selectedDirectorySubCategories = [];
 
-const DIRECTORY_SUB_CATEGORIES_MAP = {
-  all: [],
-  venues: ["تالار پذیرایی", "باغ تالار", "عمارت تاریخی", "رستوران تشریفاتی", "کترینگ & غذای تشریفات"],
-  media: ["آتلیه عکاسی & فیلمبرداری", "دی‌جی & گروه موسیقی", "نورپردازی & سیستم صوت", "تولید تیزر & فرمالیته"],
-  beauty: ["سالن زیبایی & میکاپ عروس", "آرایشگاه داماد", "مزون لباس عروس", "کت و شلوار دامادی"],
-  jewelry: ["طلا & جواهرات عروسی", "گلفروشی & ماشین عروس", "کارت دعوت & گیفت", "سفره عقد & گل‌آرایی"]
+// Centralized Dynamic Directory Category Structure (Supports CMS/API Extensions)
+window.DIRECTORY_CATEGORIES_DATA = {
+  all: {
+    title: "همه خدمات",
+    subCategories: []
+  },
+  venues: {
+    title: "مكان، تشریفات و پذیرایی",
+    subCategories: ["تالار پذیرایی", "باغ تالار", "عمارت تاریخی", "رستوران تشریفاتی", "کترینگ & غذای تشریفات"]
+  },
+  media: {
+    title: "ثبت لحظات و موسیقی",
+    subCategories: ["آتلیه عکاسی & فیلمبرداری", "دی‌جی & گروه موسیقی", "نورپردازی & سیستم صوت", "تولید تیزر & فرمالیته"]
+  },
+  beauty: {
+    title: "زیبایی و استایل زوجین",
+    subCategories: ["سالن زیبایی & میکاپ عروس", "آرایشگاه داماد", "مزون لباس عروس", "کت و شلوار دامادی"]
+  },
+  jewelry: {
+    title: "طلا، خرید و خدمات جانبی",
+    subCategories: ["طلا & جواهرات عروسی", "گلفروشی & ماشین عروس", "کارت دعوت & گیفت", "سفره عقد & گل‌آرایی"]
+  }
 };
 
 window.selectDirectoryPrimaryTab = function(tabKey) {
@@ -14158,7 +14174,8 @@ window.renderDirectorySubCategoryChips = function() {
   const tray = document.getElementById('directory-subcat-chips-tray');
   if (!tray) return;
 
-  const chipsList = DIRECTORY_SUB_CATEGORIES_MAP[activeDirectoryPrimaryTab] || [];
+  const catData = window.DIRECTORY_CATEGORIES_DATA[activeDirectoryPrimaryTab];
+  const chipsList = catData ? catData.subCategories : [];
 
   if (chipsList.length === 0) {
     tray.classList.add('hidden');
