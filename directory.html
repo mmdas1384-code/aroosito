@@ -117,7 +117,7 @@
       <div class="absolute -top-24 -right-24 w-64 h-64 bg-[#D4AF37]/10 rounded-full blur-3xl pointer-events-none"></div>
 
       <!-- SLEEK COMPACT PROMINENT SEARCH BAR WITH LIVE AUTOCOMPLETE -->
-      <div class="max-w-3xl mx-auto relative z-20">
+      <div class="max-w-3xl mx-auto relative z-20 space-y-3">
         <div class="relative flex items-center bg-[#0F172A]/90 backdrop-blur-md border border-[#D4AF37]/60 rounded-full p-1.5 shadow-[0_8px_25px_rgba(212,175,55,0.15)] focus-within:border-[#D4AF37] focus-within:ring-2 focus-within:ring-[#D4AF37]/50 transition-all">
           <div class="relative flex-1 flex items-center pr-3">
             <i data-lucide="search" class="w-4 h-4 text-[#D4AF37] shrink-0"></i>
@@ -129,6 +129,35 @@
           <button type="button" onclick="filterVendors()" class="gold-shimmer-btn text-[#0F251A] font-black px-5 py-2 rounded-full text-xs sm:text-sm transition-all shrink-0 cursor-pointer flex items-center gap-1 shadow-md">
             <span>جستجو ↗</span>
           </button>
+        </div>
+
+        <!-- HORIZONTAL CATEGORY TABS UNDER SEARCH BAR -->
+        <div id="directory-category-tabs-container" class="flex items-center justify-center gap-2 overflow-x-auto no-scrollbar py-1 text-xs">
+          <button type="button" onclick="selectDirectoryPrimaryTab('all')" class="dir-cat-tab active-tab bg-[#0b0f19] text-[#D4AF37] border border-[#D4AF37] px-3.5 py-1.5 rounded-2xl font-bold transition-all shrink-0 flex items-center gap-1.5 shadow-md" data-tab="all">
+            <i data-lucide="grid" class="w-3.5 h-3.5"></i>
+            <span>همه خدمات</span>
+          </button>
+          <button type="button" onclick="selectDirectoryPrimaryTab('venues')" class="dir-cat-tab bg-[#0b0f19] text-slate-300 hover:text-white border border-[#D4AF37]/30 hover:border-[#D4AF37] px-3.5 py-1.5 rounded-2xl font-bold transition-all shrink-0 flex items-center gap-1.5" data-tab="venues">
+            <i data-lucide="building-2" class="w-3.5 h-3.5 text-[#D4AF37]"></i>
+            <span>مكان، تشریفات و پذیرایی</span>
+          </button>
+          <button type="button" onclick="selectDirectoryPrimaryTab('media')" class="dir-cat-tab bg-[#0b0f19] text-slate-300 hover:text-white border border-[#D4AF37]/30 hover:border-[#D4AF37] px-3.5 py-1.5 rounded-2xl font-bold transition-all shrink-0 flex items-center gap-1.5" data-tab="media">
+            <i data-lucide="camera" class="w-3.5 h-3.5 text-[#D4AF37]"></i>
+            <span>ثبت لحظات و موسیقی</span>
+          </button>
+          <button type="button" onclick="selectDirectoryPrimaryTab('beauty')" class="dir-cat-tab bg-[#0b0f19] text-slate-300 hover:text-white border border-[#D4AF37]/30 hover:border-[#D4AF37] px-3.5 py-1.5 rounded-2xl font-bold transition-all shrink-0 flex items-center gap-1.5" data-tab="beauty">
+            <i data-lucide="scissors" class="w-3.5 h-3.5 text-[#D4AF37]"></i>
+            <span>زیبایی و استایل زوجین</span>
+          </button>
+          <button type="button" onclick="selectDirectoryPrimaryTab('jewelry')" class="dir-cat-tab bg-[#0b0f19] text-slate-300 hover:text-white border border-[#D4AF37]/30 hover:border-[#D4AF37] px-3.5 py-1.5 rounded-2xl font-bold transition-all shrink-0 flex items-center gap-1.5" data-tab="jewelry">
+            <i data-lucide="gem" class="w-3.5 h-3.5 text-[#D4AF37]"></i>
+            <span>طلا، خرید و خدمات جانبی</span>
+          </button>
+        </div>
+
+        <!-- MULTI-SELECT SUB-CATEGORY CHIPS ACCORDION TRAY -->
+        <div id="directory-subcat-chips-tray" class="bg-[#0b0f19]/90 border border-[#D4AF37]/40 rounded-2xl p-3 flex flex-wrap items-center justify-center gap-2 text-xs transition-all duration-300 shadow-xl">
+          <!-- Dynamically populated via script.js selectDirectoryPrimaryTab() -->
         </div>
       </div>
 

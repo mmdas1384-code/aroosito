@@ -210,3 +210,37 @@
     background-position: -200% 0;
   }
 }
+
+/* HORIZONTAL CATEGORY TABS & MULTI-SELECT CHIPS */
+.dir-cat-tab.active-tab {
+  background-color: #0b0f19 !important;
+  color: #D4AF37 !important;
+  border-color: #D4AF37 !important;
+  box-shadow: 0 0 15px rgba(212, 175, 55, 0.3) !important;
+}
+
+.subcat-chip {
+  background: rgba(15, 23, 42, 0.8);
+  color: #cbd5e1;
+  border: 1px solid rgba(212, 175, 55, 0.25);
+  padding: 6px 14px;
+  border-radius: 12px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.2s ease-in-out;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.subcat-chip:hover {
+  border-color: #D4AF37;
+  color: #ffffff;
+}
+
+.subcat-chip.active-chip {
+  background: rgba(212, 175, 55, 0.2) !important;
+  color: #D4AF37 !important;
+  border-color: #D4AF37 !important;
+  box-shadow: 0 0 12px rgba(212, 175, 55, 0.3) !important;
+}

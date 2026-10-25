@@ -4990,18 +4990,26 @@ if (document.readyState === "loading") {
                               (v.city && v.city.toLowerCase().includes(search));
 
         let matchesCat = true;
-        const advChecked = Array.from(document.querySelectorAll('.adv-cat-checkbox:checked')).map(cb => cb.value.toLowerCase());
-        if (advChecked.length > 0) {
-          matchesCat = advChecked.some(cat =>
-            v.category.toLowerCase().includes(cat) ||
-            (v.tags && v.tags.some(t => t.toLowerCase().includes(cat))) ||
-            (v.name && v.name.toLowerCase().includes(cat))
+        if (selectedDirectorySubCategories && selectedDirectorySubCategories.length > 0) {
+          matchesCat = selectedDirectorySubCategories.some(sub =>
+            v.category.toLowerCase().includes(sub.toLowerCase()) ||
+            (v.tags && v.tags.some(t => t.toLowerCase().includes(sub.toLowerCase()))) ||
+            (v.name && v.name.toLowerCase().includes(sub.toLowerCase()))
           );
-        } else if (activeCategoryFilters.size > 0) {
-          matchesCat = Array.from(activeCategoryFilters).some(cat =>
-            v.category.toLowerCase().includes(cat.toLowerCase()) ||
-            (v.tags && v.tags.some(t => t.toLowerCase().includes(cat.toLowerCase())))
-          );
+        } else {
+          const advChecked = Array.from(document.querySelectorAll('.adv-cat-checkbox:checked')).map(cb => cb.value.toLowerCase());
+          if (advChecked.length > 0) {
+            matchesCat = advChecked.some(cat =>
+              v.category.toLowerCase().includes(cat) ||
+              (v.tags && v.tags.some(t => t.toLowerCase().includes(cat))) ||
+              (v.name && v.name.toLowerCase().includes(cat))
+            );
+          } else if (activeCategoryFilters.size > 0) {
+            matchesCat = Array.from(activeCategoryFilters).some(cat =>
+              v.category.toLowerCase().includes(cat.toLowerCase()) ||
+              (v.tags && v.tags.some(t => t.toLowerCase().includes(cat.toLowerCase())))
+            );
+          }
         }
 
         const matchesVerified = !verifiedOnly || v.verified;
@@ -14113,6 +14121,75 @@ window.handleVipConciergeSubmit = function(e) {
   if (e) e.preventDefault();
   closeVipConciergeModal();
   if (typeof showToast === 'function') showToast('درخواست مشاوره کنسیرژ VIP با موفقیت ثبت شد. مشاور تشریفات عروسی نو به زودی تماس می‌گیرد.', 'success');
+};
+
+/* MULTI-SELECT CATEGORY TABS & SUB-CATEGORY CHIPS LOGIC */
+let activeDirectoryPrimaryTab = 'all';
+let selectedDirectorySubCategories = [];
+
+const DIRECTORY_SUB_CATEGORIES_MAP = {
+  all: [],
+  venues: ["تالار پذیرایی", "باغ تالار", "عمارت تاریخی", "رستوران تشریفاتی", "کترینگ & غذای تشریفات"],
+  media: ["آتلیه عکاسی & فیلمبرداری", "دی‌جی & گروه موسیقی", "نورپردازی & سیستم صوت", "تولید تیزر & فرمالیته"],
+  beauty: ["سالن زیبایی & میکاپ عروس", "آرایشگاه داماد", "مزون لباس عروس", "کت و شلوار دامادی"],
+  jewelry: ["طلا & جواهرات عروسی", "گلفروشی & ماشین عروس", "کارت دعوت & گیفت", "سفره عقد & گل‌آرایی"]
+};
+
+window.selectDirectoryPrimaryTab = function(tabKey) {
+  activeDirectoryPrimaryTab = tabKey;
+  selectedDirectorySubCategories = []; // Reset sub-category selection on tab switch
+
+  // Update tab UI styling
+  document.querySelectorAll('.dir-cat-tab').forEach(btn => {
+    if (btn.dataset.tab === tabKey) {
+      btn.classList.add('active-tab', 'text-[#D4AF37]', 'border-[#D4AF37]');
+      btn.classList.remove('text-slate-300');
+    } else {
+      btn.classList.remove('active-tab', 'text-[#D4AF37]', 'border-[#D4AF37]');
+      btn.classList.add('text-slate-300');
+    }
+  });
+
+  renderDirectorySubCategoryChips();
+  if (typeof filterVendors === 'function') filterVendors();
+};
+
+window.renderDirectorySubCategoryChips = function() {
+  const tray = document.getElementById('directory-subcat-chips-tray');
+  if (!tray) return;
+
+  const chipsList = DIRECTORY_SUB_CATEGORIES_MAP[activeDirectoryPrimaryTab] || [];
+
+  if (chipsList.length === 0) {
+    tray.classList.add('hidden');
+    tray.innerHTML = '';
+    return;
+  }
+
+  tray.classList.remove('hidden');
+  tray.innerHTML = chipsList.map(chipLabel => {
+    const isSelected = selectedDirectorySubCategories.includes(chipLabel);
+    return `
+      <button type="button" onclick="toggleDirectorySubCategoryChip('${chipLabel}')" class="subcat-chip ${isSelected ? 'active-chip' : ''}">
+        <i data-lucide="${isSelected ? 'check-circle-2' : 'circle'}" class="w-3.5 h-3.5 text-[#D4AF37]"></i>
+        <span>${chipLabel}</span>
+      </button>
+    `;
+  }).join('');
+
+  if (window.lucide) lucide.createIcons();
+};
+
+window.toggleDirectorySubCategoryChip = function(subLabel) {
+  const idx = selectedDirectorySubCategories.indexOf(subLabel);
+  if (idx > -1) {
+    selectedDirectorySubCategories.splice(idx, 1);
+  } else {
+    selectedDirectorySubCategories.push(subLabel);
+  }
+
+  renderDirectorySubCategoryChips();
+  if (typeof filterVendors === 'function') filterVendors();
 };
 
 /* CARD 3-DOT MORE DROPDOWN MENU LOGIC */
