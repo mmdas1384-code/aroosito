@@ -7484,7 +7484,7 @@ window.renderRecentlyViewedVendors = function() {
       if (typeof showToast === 'function') showToast('در حال انتقال به واتس‌اپ...', 'info');
     };
 
-    function openInquiryModal(vendorId, vendorName, itemTitle, itemPrice, itemType, itemId, itemThumb) {
+    window.openInquiryModal = function openInquiryModal(vendorId, vendorName, itemTitle, itemPrice, itemType, itemId, itemThumb) {
       const modalEl = document.getElementById('inquiryModal') || document.getElementById('inquiry-modal');
       if (modalEl) {
         modalEl.classList.remove('hidden');
@@ -7732,7 +7732,7 @@ window.renderRecentlyViewedVendors = function() {
       }
     };
 
-    function closeInquiryModal() {
+    window.closeInquiryModal = function closeInquiryModal() {
       const modalEl = document.getElementById('inquiryModal') || document.getElementById('inquiry-modal');
       if (modalEl) {
         modalEl.classList.add('hidden');
