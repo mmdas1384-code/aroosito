@@ -7489,7 +7489,15 @@ window.renderRecentlyViewedVendors = function() {
       if (modalEl) {
         modalEl.classList.remove('hidden');
         modalEl.classList.add('active');
+        modalEl.style.display = 'flex';
       }
+      const formEl = document.getElementById('inquiry-form');
+      const stepIndicators = document.getElementById('inquiry-step-indicators');
+      const receiptContainer = document.getElementById('inquiry-receipt-container');
+      if (formEl) formEl.classList.remove('hidden');
+      if (stepIndicators) stepIndicators.classList.remove('hidden');
+      if (receiptContainer) receiptContainer.classList.add('hidden');
+
       if (typeof switchInquiryStep === 'function') switchInquiryStep(1);
       let vId = vendorId;
       if (typeof vendorId === 'string' && !isNaN(parseInt(vendorId))) {
@@ -7509,8 +7517,11 @@ window.renderRecentlyViewedVendors = function() {
       if (idInput) idInput.value = idVal;
       if (titleInput) titleInput.value = titleVal;
 
-      document.getElementById('inquiry-vendor-id').value = vendor ? vendor.id : 1;
-      document.getElementById('modal-vendor-name').innerText = targetName;
+      const vendorIdEl = document.getElementById('inquiry-vendor-id');
+      if (vendorIdEl) vendorIdEl.value = vendor ? vendor.id : 1;
+
+      const modalVendorNameEl = document.getElementById('modal-vendor-name');
+      if (modalVendorNameEl) modalVendorNameEl.innerText = targetName;
 
       // Handle date pre-filling if passed as parameter
       const inquiryDateInput = document.getElementById('inquiry-date');
@@ -7726,6 +7737,7 @@ window.renderRecentlyViewedVendors = function() {
       if (modalEl) {
         modalEl.classList.add('hidden');
         modalEl.classList.remove('active');
+        modalEl.style.display = 'none';
       }
       const formEl = document.getElementById('inquiry-form');
       const stepIndicators = document.getElementById('inquiry-step-indicators');
