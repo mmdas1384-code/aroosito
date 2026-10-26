@@ -1,0 +1,369 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl" class="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>عروسی‌تو — محاسبه‌گر و تخمین‌گر هوشمند بودجه عروسی یزد</title>
+
+  <!-- Vazirmatn Persian Font -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@100..900&display=swap" rel="stylesheet">
+
+  <!-- Tailwind CSS v4 CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+
+  <!-- Lucide Icons CDN -->
+  <script src="https://unpkg.com/lucide@latest"></script>
+
+  <!-- Scoped Styles -->
+  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="directory.css">
+</head>
+<body class="bg-[#07090E] text-[#F7F5F0] font-['Vazirmatn'] antialiased min-h-screen flex flex-col">
+
+  <!-- TOP HEADER WITH FLOATING GLASS PILL BAR -->
+  <header class="sticky top-0 z-50 bg-[#0b0f19]/90 backdrop-blur-xl border-b border-[#D4AF37]/35 shadow-2xl">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-2">
+      <!-- TOP TIER: Brand Logo, Golden Magnifying Glass & User Action Controls -->
+      <div class="flex items-center justify-between h-20 gap-4">
+
+        <!-- RIGHT SIDE: Brand Logo & Golden Magnifying Glass Icon -->
+        <div class="flex items-center gap-3.5 shrink-0">
+          <a href="index.html" class="flex items-center gap-3 group">
+            <div class="w-11 h-11 rounded-xl bg-[#D4AF37] flex items-center justify-center text-[#1B3B2B] shadow-md transition-transform group-hover:scale-105">
+              <i data-lucide="heart" class="w-6 h-6 fill-[#1B3B2B] stroke-[#D4AF37]"></i>
+            </div>
+            <div class="flex flex-col">
+              <span class="text-2xl font-black text-[#D4AF37] tracking-tight">عروسی تو</span>
+              <span class="text-[9px] text-amber-200/90 font-medium tracking-wide flex items-center gap-1 border-t border-[#D4AF37]/30 pt-0.5 mt-0.5">
+                <span>The Definitive Luxury Wedding Directory</span>
+              </span>
+            </div>
+          </a>
+
+          <button type="button" onclick="openQuickSearchOverlay()" class="w-10 h-10 rounded-2xl bg-[#0F172A] hover:bg-[#1E293B] text-[#D4AF37] border border-[#D4AF37]/50 shadow-lg flex items-center justify-center transition-all hover:scale-105 active:scale-95 cursor-pointer shrink-0 mr-1" title="جستجوی سریع هوشمند">
+            <i data-lucide="search" class="w-5 h-5 text-[#D4AF37]"></i>
+          </button>
+        </div>
+
+        <!-- LEFT SIDE: Vendor Signup & Account Button -->
+        <div class="flex items-center gap-2.5 shrink-0">
+          <button onclick="toggleVendorModalStatic(true)" class="bg-transparent hover:bg-[#D4AF37]/10 text-amber-200 hover:text-[#D4AF37] border border-[#D4AF37]/60 hover:border-[#D4AF37] px-3.5 py-2 rounded-2xl text-xs sm:text-sm font-bold transition-all flex items-center gap-1.5 cursor-pointer">
+            <span>ثبت‌نام کسب‌وکارها</span>
+          </button>
+
+          <button onclick="openAuthModal('couple')" class="bg-gradient-to-r from-amber-400 via-amber-500 to-amber-600 hover:brightness-110 text-[#07090E] px-4 py-2 rounded-2xl text-xs sm:text-sm font-black transition-all flex items-center gap-1.5 shadow-md hover:shadow-lg cursor-pointer">
+            <span>حساب کاربری</span>
+          </button>
+        </div>
+
+      </div>
+
+      <!-- LOWER TIER: Header Navigation Bar -->
+      <div class="border-t border-[#D4AF37]/25 py-2 flex items-center justify-between text-xs sm:text-sm font-semibold text-slate-200">
+        <nav class="flex items-center gap-1.5 xl:gap-3 overflow-x-auto no-scrollbar py-0.5 w-full">
+          <a href="index.html" class="px-2.5 py-1.5 rounded-xl transition-colors hover:text-[#D4AF37] hover:bg-white/10 shrink-0 cursor-pointer block"><span>صفحه اصلی</span></a>
+          <a href="directory.html" class="px-2.5 py-1.5 rounded-xl transition-colors hover:text-[#D4AF37] hover:bg-white/10 shrink-0 cursor-pointer block"><span>دایرکتوری جامع</span></a>
+          <a href="planning.html" class="px-2.5 py-1.5 rounded-xl transition-colors hover:text-[#D4AF37] hover:bg-white/10 shrink-0 cursor-pointer block"><span>برنامه‌ریزی و چک‌لیست</span></a>
+          <a href="budget.html" class="px-2.5 py-1.5 rounded-xl transition-colors hover:text-[#D4AF37] hover:bg-white/10 text-[#D4AF37] bg-white/10 shrink-0 cursor-pointer block font-bold"><span>تخمین بودجه</span></a>
+          <a href="invitation.html" class="px-2.5 py-1.5 rounded-xl transition-colors hover:text-[#D4AF37] hover:bg-white/10 shrink-0 cursor-pointer block"><span>کارت دعوت دیجیتال</span></a>
+          <a href="blog.html" class="px-2.5 py-1.5 rounded-xl transition-colors hover:text-[#D4AF37] hover:bg-white/10 shrink-0 cursor-pointer block"><span>خدمات و ایده‌ها</span></a>
+          <a href="style-quiz.html" class="px-2.5 py-1.5 rounded-xl transition-colors hover:text-[#D4AF37] hover:bg-white/10 shrink-0 cursor-pointer block"><span>تست‌های روانشناسی</span></a>
+        </nav>
+      </div>
+    </div>
+  </header>
+
+  <!-- MAIN BUDGET ESTIMATOR HUB -->
+  <main class="flex-1 max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-8 space-y-8 text-right">
+
+    <!-- HERO HEADER -->
+    <div class="bg-[#0E121C] border border-[#C5A059]/40 rounded-3xl p-6 sm:p-8 shadow-2xl relative overflow-hidden flex flex-col md:flex-row items-center justify-between gap-6">
+      <div class="space-y-2 relative z-10 max-w-2xl">
+        <span class="text-xs font-black text-[#D4AF37] bg-[#D4AF37]/15 border border-[#D4AF37]/30 px-3.5 py-1 rounded-full inline-flex items-center gap-1.5">
+          <i data-lucide="calculator" class="w-4 h-4 text-[#D4AF37]"></i>
+          <span>محاسبه‌گر آنلاین & هوش مصنوعی بودجه عروسی یزد</span>
+        </span>
+        <h1 class="text-xl sm:text-3xl font-black text-white leading-snug">
+          تخمین هوشمند هزینه‌ها و بودجه‌ریزی شفاف عروسی
+        </h1>
+        <p class="text-xs sm:text-sm text-slate-300 font-medium leading-relaxed">
+          تنها با ۳ کلیک و انتخاب تعداد مهمانان، بودجه کل را بر اساس تورم و تعرفه‌های رسمی تالارها، آتلیه‌ها و مزون‌های یزد محاسبه کنید.
+        </p>
+      </div>
+
+      <div class="flex items-center gap-3 shrink-0 relative z-10">
+        <button type="button" onclick="exportBudgetCsv()" class="bg-[#141A28] hover:bg-[#1E293B] text-[#D4AF37] border border-[#C5A059]/40 font-bold px-5 py-3 rounded-2xl text-xs sm:text-sm transition-all cursor-pointer flex items-center gap-2">
+          <i data-lucide="download" class="w-4 h-4"></i>
+          <span>دانلود خروجی CSV ➔</span>
+        </button>
+      </div>
+    </div>
+
+    <!-- PRESET SCENARIO BUTTONS -->
+    <div class="space-y-3">
+      <div class="flex items-center justify-between">
+        <h2 class="text-sm font-black text-white flex items-center gap-1.5">
+          <i data-lucide="wand-2" class="w-4 h-4 text-[#D4AF37]"></i>
+          <span>سناریوهای پیشنهادی سریع (تخمینی)</span>
+        </h2>
+        <span class="text-[11px] text-slate-400">یک کلیک جهت اعمال فرمول‌های آماده</span>
+      </div>
+
+      <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
+        <!-- Preset 1 -->
+        <button type="button" onclick="applyPreset(150000000)" class="bg-[#0E121C] hover:bg-[#141A28] border border-[#C5A059]/30 hover:border-[#D4AF37] rounded-2xl p-4 text-right transition-all cursor-pointer space-y-1 shadow-lg group">
+          <div class="flex items-center justify-between">
+            <span class="text-xs font-black text-[#D4AF37]">سناریو اقتصادی</span>
+            <span class="text-[10px] text-amber-200 bg-amber-950/80 px-2 py-0.5 rounded-full border border-amber-500/30">۱۵۰ میلیون تومان</span>
+          </div>
+          <p class="text-[11px] text-slate-300 font-medium">مناسب برای ۱۵۰ مهمان با خدمات ضروری تالار و عکاسی</p>
+        </button>
+
+        <!-- Preset 2 -->
+        <button type="button" onclick="applyPreset(300000000)" class="bg-[#0E121C] hover:bg-[#141A28] border border-[#C5A059]/30 hover:border-[#D4AF37] rounded-2xl p-4 text-right transition-all cursor-pointer space-y-1 shadow-lg group">
+          <div class="flex items-center justify-between">
+            <span class="text-xs font-black text-[#D4AF37]">سناریو متوازن (پیشنهادی)</span>
+            <span class="text-[10px] text-amber-200 bg-amber-950/80 px-2 py-0.5 rounded-full border border-amber-500/30">۳۰۰ میلیون تومان</span>
+          </div>
+          <p class="text-[11px] text-slate-300 font-medium">پوشش کامل تالار، آتلیه 4K، مزون و خدمات میکاپ VIP</p>
+        </button>
+
+        <!-- Preset 3 -->
+        <button type="button" onclick="applyPreset(600000000)" class="bg-[#0E121C] hover:bg-[#141A28] border border-[#C5A059]/30 hover:border-[#D4AF37] rounded-2xl p-4 text-right transition-all cursor-pointer space-y-1 shadow-lg group">
+          <div class="flex items-center justify-between">
+            <span class="text-xs font-black text-[#D4AF37]">سناریو لوکس VIP</span>
+            <span class="text-[10px] text-amber-200 bg-amber-950/80 px-2 py-0.5 rounded-full border border-amber-500/30">۶۰۰ میلیون تومان</span>
+          </div>
+          <p class="text-[11px] text-slate-300 font-medium">تشریفات سلطنتی کامل، فرمالیته کویر، هلی‌شات و آتش‌بازی</p>
+        </button>
+      </div>
+    </div>
+
+    <!-- CALCULATOR CONSOLE & BREAKDOWN GRID -->
+    <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
+
+      <!-- LEFT CONTROLS (5 COLS) -->
+      <div class="lg:col-span-5 bg-[#0E121C] border border-[#C5A059]/40 rounded-3xl p-6 shadow-2xl space-y-6">
+        <h3 class="text-sm font-black text-[#D4AF37] border-b border-[#C5A059]/20 pb-3 flex items-center gap-2">
+          <i data-lucide="sliders" class="w-4 h-4 text-[#D4AF37]"></i>
+          تنظیمات متغیرهای اصلی بودجه
+        </h3>
+
+        <!-- GUEST COUNT SLIDER -->
+        <div class="space-y-3">
+          <div class="flex items-center justify-between">
+            <span class="text-xs text-slate-300 font-bold">تعداد مهمانان:</span>
+            <span id="guestCountVal" class="text-sm font-black text-[#D4AF37]">۲۵۰ نفر</span>
+          </div>
+          <input type="range" id="guestSlider" min="50" max="1000" step="10" value="250" oninput="updateBudgetCalc()" class="w-full accent-[#D4AF37] cursor-pointer">
+        </div>
+
+        <!-- TOTAL BUDGET INPUT -->
+        <div class="space-y-2">
+          <label class="block text-xs text-slate-300 font-bold">مبلغ کل بودجه مد نظر (تومان)</label>
+          <input type="text" id="totalBudgetInput" value="300000000" oninput="formatBudgetInput(this)" class="w-full bg-[#141A28] border border-[#C5A059]/30 rounded-2xl px-4 py-3 text-sm font-black text-white text-right focus:outline-none focus:border-[#D4AF37]">
+        </div>
+
+        <!-- SERVICE CHECKLIST TOGGLES -->
+        <div class="space-y-2 pt-2 border-t border-[#C5A059]/20">
+          <span class="text-xs text-slate-300 font-bold block mb-2">انتخاب خدمات مورد نیاز:</span>
+
+          <label class="flex items-center justify-between bg-[#141A28] p-3 rounded-2xl border border-[#C5A059]/20 cursor-pointer">
+            <span class="text-xs font-bold text-white">🏰 باغ & تالار پذیرایی (۴۵٪)</span>
+            <input type="checkbox" checked id="chk-hall" onchange="updateBudgetCalc()" class="accent-[#D4AF37] w-4 h-4 rounded">
+          </label>
+
+          <label class="flex items-center justify-between bg-[#141A28] p-3 rounded-2xl border border-[#C5A059]/20 cursor-pointer">
+            <span class="text-xs font-bold text-white">📸 آتلیه & تصویربرداری 4K (۲۰٪)</span>
+            <input type="checkbox" checked id="chk-studio" onchange="updateBudgetCalc()" class="accent-[#D4AF37] w-4 h-4 rounded">
+          </label>
+
+          <label class="flex items-center justify-between bg-[#141A28] p-3 rounded-2xl border border-[#C5A059]/20 cursor-pointer">
+            <span class="text-xs font-bold text-white">👗 مزون & لباس عروس (۱۵٪)</span>
+            <input type="checkbox" checked id="chk-mezon" onchange="updateBudgetCalc()" class="accent-[#D4AF37] w-4 h-4 rounded">
+          </label>
+
+          <label class="flex items-center justify-between bg-[#141A28] p-3 rounded-2xl border border-[#C5A059]/20 cursor-pointer">
+            <span class="text-xs font-bold text-white">💄 میکاپ & سالن زیبایی (۱۰٪)</span>
+            <input type="checkbox" checked id="chk-beauty" onchange="updateBudgetCalc()" class="accent-[#D4AF37] w-4 h-4 rounded">
+          </label>
+
+          <label class="flex items-center justify-between bg-[#141A28] p-3 rounded-2xl border border-[#C5A059]/20 cursor-pointer">
+            <span class="text-xs font-bold text-white">💐 گل‌آرایی & ماشین عروس (۱۰٪)</span>
+            <input type="checkbox" checked id="chk-flower" onchange="updateBudgetCalc()" class="accent-[#D4AF37] w-4 h-4 rounded">
+          </label>
+        </div>
+      </div>
+
+      <!-- RIGHT BREAKDOWN TABLE (7 COLS) -->
+      <div class="lg:col-span-7 space-y-6">
+
+        <!-- SUMMARY BADGES CARD -->
+        <div class="bg-[#0E121C] border border-[#C5A059]/40 rounded-3xl p-6 shadow-2xl space-y-4">
+          <div class="flex items-center justify-between border-b border-[#C5A059]/20 pb-3">
+            <h3 class="text-sm font-black text-white">جدول تفکیکی تخصیص بودجه</h3>
+            <span id="perGuestBadge" class="text-xs font-black text-[#D4AF37] bg-[#D4AF37]/15 border border-[#D4AF37]/30 px-3 py-1 rounded-full">
+              هزینه هر مهمان: ۱,۲۰۰,۰۰۰ تومان
+            </span>
+          </div>
+
+          <!-- ITEMIZED ALLOCATION TABLE -->
+          <div class="overflow-x-auto">
+            <table class="w-full text-right text-xs font-bold">
+              <thead>
+                <tr class="text-slate-400 border-b border-[#C5A059]/20">
+                  <th class="pb-3">عنوان خدمت</th>
+                  <th class="pb-3 text-center">سهم (%)</th>
+                  <th class="pb-3 text-left">مبلغ تخصیصی (تومان)</th>
+                </tr>
+              </thead>
+              <tbody id="allocationTableBody" class="divide-y divide-[#C5A059]/10">
+                <!-- Dynamically populated via updateBudgetCalc() -->
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <!-- SMART AI WARNINGS CARD -->
+        <div class="bg-[#0E121C] border border-amber-500/40 rounded-3xl p-6 shadow-2xl space-y-3">
+          <h4 class="text-xs font-black text-amber-300 flex items-center gap-2">
+            <i data-lucide="alert-triangle" class="w-4 h-4 text-amber-400"></i>
+            هشدار هوشمند هزینه‌های پنهان عروسی در یزد
+          </h4>
+          <p class="text-[11px] text-slate-300 leading-relaxed font-medium">
+            همواره ۱۰٪ تا ۱۵٪ از بودجه کل را برای هزینه‌های جانبی مانند انعام کادر پذیرایی، مالیات ارزش افزوده، ذخیره رزرو اضطراری و شیرینی‌جات سنتی (قطاب و باقلوا) مجزا نگاه دارید.
+          </p>
+        </div>
+
+        <!-- MATCHED DIRECTORY VENDORS -->
+        <div class="bg-[#0E121C] border border-[#C5A059]/40 rounded-3xl p-6 shadow-2xl space-y-4">
+          <div class="flex items-center justify-between border-b border-[#C5A059]/20 pb-3">
+            <h4 class="text-xs font-black text-white">تامین‌کنندگان پیشنهادی هماهنگ با این بودجه</h4>
+            <a href="directory.html" class="text-[11px] font-bold text-[#D4AF37] hover:underline">مشاهده همه ➔</a>
+          </div>
+
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+            <a href="vendor-detail.html?id=1" class="bg-[#141A28] border border-[#C5A059]/20 hover:border-[#D4AF37] p-3 rounded-2xl flex items-center gap-3 transition-all">
+              <img src="https://images.unsplash.com/photo-1519167758481-83f550bb49b3?w=100" class="w-12 h-12 rounded-xl object-cover border border-[#D4AF37]">
+              <div>
+                <span class="text-xs font-black text-white block">هتل باغ مشیرالممالک</span>
+                <span class="text-[10px] text-amber-300 block mt-0.5">صفائیه • شروع از ۴۵ میلیون</span>
+              </div>
+            </a>
+
+            <a href="vendor-detail.html?id=2" class="bg-[#141A28] border border-[#C5A059]/20 hover:border-[#D4AF37] p-3 rounded-2xl flex items-center gap-3 transition-all">
+              <img src="https://images.unsplash.com/photo-1537633552985-df8429e8048b?w=100" class="w-12 h-12 rounded-xl object-cover border border-[#D4AF37]">
+              <div>
+                <span class="text-xs font-black text-white block">استودیو تصویربرداری کویر</span>
+                <span class="text-[10px] text-amber-300 block mt-0.5">بافت تاریخی • پکیج 4K VIP</span>
+              </div>
+            </a>
+          </div>
+        </div>
+
+      </div>
+
+    </div>
+
+  </main>
+
+  <!-- FOOTER -->
+  <footer class="bg-[#0B0F19] border-t border-[#D4AF37]/35 py-8 text-center text-xs text-slate-400 mt-auto">
+    <div class="max-w-7xl mx-auto px-4 flex flex-col sm:flex-row items-center justify-between gap-4">
+      <div class="flex items-center gap-2">
+        <span class="font-black text-[#D4AF37]">عروسی‌تو یزد</span>
+        <span>© تمامی حقوق محفوظ است.</span>
+      </div>
+      <div class="flex items-center gap-4 text-slate-300">
+        <a href="index.html" class="hover:text-[#D4AF37]">صفحه اصلی</a>
+        <a href="directory.html" class="hover:text-[#D4AF37]">دایرکتوری</a>
+        <a href="planning.html" class="hover:text-[#D4AF37]">برنامه‌ریزی</a>
+      </div>
+    </div>
+  </footer>
+
+  <script src="script.js"></script>
+  <script>
+    function parseNum(v) {
+      return parseInt(v.toString().replace(/[^\d]/g, ''), 10) || 0;
+    }
+
+    function formatBudgetInput(el) {
+      const val = parseNum(el.value);
+      el.value = val.toLocaleString('fa-IR');
+      updateBudgetCalc();
+    }
+
+    function applyPreset(val) {
+      const input = document.getElementById('totalBudgetInput');
+      if (input) {
+        input.value = val.toLocaleString('fa-IR');
+        updateBudgetCalc();
+      }
+    }
+
+    function updateBudgetCalc() {
+      const budgetVal = parseNum(document.getElementById('totalBudgetInput').value);
+      const guestVal = parseInt(document.getElementById('guestSlider').value, 10);
+      document.getElementById('guestCountVal').innerText = `${guestVal} نفر`;
+
+      const perGuest = Math.round(budgetVal / guestVal);
+      document.getElementById('perGuestBadge').innerText = `هزینه هر مهمان: ${perGuest.toLocaleString('fa-IR')} تومان`;
+
+      const services = [
+        { id: 'chk-hall', name: '🏰 باغ & تالار پذیرایی', pct: 45 },
+        { id: 'chk-studio', name: '📸 آتلیه & تصویربرداری 4K', pct: 20 },
+        { id: 'chk-mezon', name: '👗 مزون & لباس عروس', pct: 15 },
+        { id: 'chk-beauty', name: '💄 میکاپ & سالن زیبایی', pct: 10 },
+        { id: 'chk-flower', name: '💐 گل‌آرایی & ماشین عروس', pct: 10 }
+      ];
+
+      const activeServices = services.filter(s => {
+        const el = document.getElementById(s.id);
+        return el ? el.checked : true;
+      });
+
+      const totalPct = activeServices.reduce((acc, s) => acc + s.pct, 0);
+
+      const tableBody = document.getElementById('allocationTableBody');
+      if (!tableBody) return;
+
+      tableBody.innerHTML = activeServices.map(s => {
+        const allocated = Math.round((budgetVal * s.pct) / (totalPct || 1));
+        return `
+          <tr>
+            <td class="py-3 text-white">${s.name}</td>
+            <td class="py-3 text-center text-[#D4AF37]">${s.pct}%</td>
+            <td class="py-3 text-left font-black text-amber-200">${allocated.toLocaleString('fa-IR')} تومان</td>
+          </tr>
+        `;
+      }).join('');
+    }
+
+    function exportBudgetCsv() {
+      const budgetVal = parseNum(document.getElementById('totalBudgetInput').value);
+      let csv = "عنوان خدمت,درصد,مبلغ (تومان)\n";
+      csv += `"تالار و باغ پذیرایی","45%","${(budgetVal * 0.45).toLocaleString('fa-IR')}"\n`;
+      csv += `"آتلیه و تصویربرداری","20%","${(budgetVal * 0.20).toLocaleString('fa-IR')}"\n`;
+      csv += `"مزون و لباس عروس","15%","${(budgetVal * 0.15).toLocaleString('fa-IR')}"\n`;
+      csv += `"سالن زیبایی و میکاپ","10%","${(budgetVal * 0.10).toLocaleString('fa-IR')}"\n`;
+      csv += `"گل‌آرایی و ماشین","10%","${(budgetVal * 0.10).toLocaleString('fa-IR')}"\n`;
+
+      const blob = new Blob([csv], { type: 'text/csv;charset=utf-8;' });
+      const link = document.createElement('a');
+      link.href = URL.createObjectURL(blob);
+      link.download = 'برآورد_بودجه_عروسی_تو.csv';
+      link.click();
+    }
+
+    document.addEventListener('DOMContentLoaded', () => {
+      if (typeof lucide !== 'undefined' && lucide.createIcons) {
+        lucide.createIcons();
+      }
+      updateBudgetCalc();
+    });
+  </script>
+</body>
+</html>

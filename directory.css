@@ -1,65 +1,164 @@
-/* Directory Filters & Layout Scoped Styles */
-#tab-directory,
-#directory-view {
-  background-color: var(--bg-primary, #07090E);
-  color: var(--text-primary, #F7F5F0);
+/* ==========================================================================
+   DIRECTORY SCOPED STYLES, OFF-CANVAS DRAWER & FULL-WIDTH GRID
+   ========================================================================== */
+
+/* UNIFIED DIRECTORY CONTAINER & HERO SCOPED STYLES */
+.directory-container {
+  max-width: 1400px !important;
+  margin-left: auto !important;
+  margin-right: auto !important;
+  padding-left: 24px !important;
+  padding-right: 24px !important;
+  box-sizing: border-box !important;
   width: 100% !important;
 }
 
-/* Glassmorphism Directory Filter Island */
-#directory-primary-filter-island {
-  background: rgba(14, 18, 28, 0.90);
-  border: 1px solid rgba(197, 160, 89, 0.4);
-  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.8);
+/* Dark Theme Hero Base Card */
+.directory-hero-card {
+  background: rgba(14, 18, 28, 0.90) !important;
+  border: 1px solid rgba(212, 175, 55, 0.35) !important;
+  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.8) !important;
 }
 
-#directory-primary-filter-island input:focus,
-#directory-primary-filter-island select:focus {
-  border-color: #D4AF37 !important;
-  box-shadow: 0 0 12px rgba(212, 175, 55, 0.3) !important;
+/* OFF-CANVAS SLIDE-OVER FILTER DRAWER PANEL */
+#directory-advanced-filters-drawer {
+  position: fixed !important;
+  top: 0 !important;
+  right: 0 !important;
+  width: 420px !important;
+  max-width: 90vw !important;
+  height: 100vh !important;
+  z-index: 2147483647 !important;
+  background: #07090E !important;
+  box-shadow: -15px 0 40px rgba(0, 0, 0, 0.9) !important;
+  border-left: 1px solid rgba(197, 160, 89, 0.4) !important;
+  overflow-y: auto !important;
+  padding: 20px 24px 20px 12px !important;
+  transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1) !important;
 }
 
-/* Category Carousel Bar Scrollbar */
-#directory-category-carousel::-webkit-scrollbar {
-  display: none;
-}
-#directory-category-carousel {
-  -ms-overflow-style: none;
-  scrollbar-width: none;
+#directory-advanced-filters-drawer.hidden {
+  display: block !important;
+  transform: translateX(100%) !important;
+  pointer-events: none !important;
 }
 
-/* Full-Width Bento Grid Container & Cards */
+#directory-advanced-filters-drawer.open,
+#directory-advanced-filters-drawer:not(.hidden) {
+  transform: translateX(0) !important;
+  pointer-events: auto !important;
+}
+
+/* 100% Full Width Vendor Cards Grid Container */
 #vendor-grid {
   width: 100% !important;
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1) !important;
 }
 
+/* Scoped Vendor Card Styling */
 .minimal-vendor-card {
-  background: rgba(14, 18, 28, 0.88);
-  border: 1px solid rgba(197, 160, 89, 0.25);
-  box-shadow: 0 15px 35px rgba(0, 0, 0, 0.5);
-  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+  background: rgba(14, 18, 28, 0.88) !important;
+  border: 1px solid rgba(197, 160, 89, 0.3) !important;
+  border-radius: 20px !important;
+  box-shadow: 0 15px 35px rgba(0, 0, 0, 0.5) !important;
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1) !important;
+  overflow: hidden !important;
+  position: relative !important;
 }
 
 .minimal-vendor-card:hover {
-  border-color: #D4AF37;
-  box-shadow: 0 20px 45px rgba(212, 175, 55, 0.2);
-  transform: translateY(-4px);
+  border-color: #D4AF37 !important;
+  box-shadow: 0 20px 45px rgba(212, 175, 55, 0.25) !important;
+  transform: translateY(-4px) !important;
 }
 
-/* Slide-Over Filter Drawer Styling */
-#directory-advanced-filters-drawer {
-  transition: opacity 0.3s ease, visibility 0.3s ease;
+/* CARD BADGE LAYER - EXACT SPEC & ZERO OVERLAP FIT */
+.card-badge-layer {
+  position: absolute !important;
+  top: 8px !important;
+  left: 8px !important;
+  right: 8px !important;
+  display: flex !important;
+  justify-content: space-between !important;
+  align-items: flex-start !important;
+  z-index: 20 !important;
+  pointer-events: none !important;
 }
 
-#directory-advanced-filters-drawer > div {
-  animation: slideInRight 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+.badges-right {
+  display: flex !important;
+  flex-direction: column !important;
+  align-items: flex-start !important;
+  gap: 4px !important;
+  pointer-events: auto !important;
+  max-width: 55% !important;
 }
 
-@keyframes slideInRight {
-  from { transform: translateX(100%); }
-  to { transform: translateX(0); }
+.badges-left {
+  display: flex !important;
+  flex-direction: column !important;
+  align-items: center !important;
+  gap: 6px !important;
+  pointer-events: auto !important;
+  position: relative !important;
 }
 
+.card-more-menu {
+  position: absolute !important;
+  top: 100% !important;
+  left: 0 !important;
+  margin-top: 6px !important;
+  min-width: 175px !important;
+  background: rgba(15, 23, 42, 0.98) !important;
+  backdrop-filter: blur(16px) !important;
+  border: 1px solid rgba(212, 175, 55, 0.6) !important;
+  border-radius: 16px !important;
+  padding: 6px !important;
+  box-shadow: 0 20px 40px rgba(0,0,0,0.8), 0 0 20px rgba(212,175,55,0.2) !important;
+  z-index: 9999 !important;
+  display: flex !important;
+  flex-direction: column !important;
+  gap: 4px !important;
+}
+
+.card-more-menu.hidden {
+  display: none !important;
+}
+
+/* IMPORTANT: Strip individual position absolute from child elements */
+.card-badge-layer .badge-tag,
+.card-badge-layer .btn-card-icon {
+  position: static !important;
+  top: auto !important;
+  left: auto !important;
+  right: auto !important;
+  margin: 0 !important;
+  white-space: nowrap !important;
+  overflow: hidden !important;
+  text-overflow: ellipsis !important;
+  max-width: 100% !important;
+}
+
+.btn-card-icon {
+  width: 30px !important;
+  height: 30px !important;
+  border-radius: 50% !important;
+  background: rgba(15, 23, 42, 0.85) !important;
+  backdrop-filter: blur(6px) !important;
+  border: 1px solid rgba(212, 175, 55, 0.4) !important;
+  color: #fff !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  cursor: pointer !important;
+  transition: all 0.2s ease !important;
+  shrink: 0 !important;
+}
+
+.btn-card-icon:hover {
+  background: #d4af37 !important;
+  color: #0f172a !important;
+}
 
 /* Cinematic Hover Video Teasers */
 .card-teaser-video {
@@ -77,42 +176,75 @@
   opacity: 1 !important;
 }
 
-
-/* Advanced Filters Slide-Over Drawer - Force Top Z-Index Overlay */
-#directory-advanced-filters-drawer {
-  position: fixed !important;
-  top: 0 !important;
-  right: 0 !important;
-  width: 100% !important;
-  max-width: 420px !important;
-  height: 100vh !important;
-  z-index: 999999 !important;
-  background: #07090E !important;
-  box-shadow: -10px 0 30px rgba(0, 0, 0, 0.9) !important;
-  border-left: 1px solid rgba(197, 160, 89, 0.4) !important;
-  overflow-y: auto !important;
+/* Custom Scrollbar Utilities */
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+.no-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
 }
 
-#directory-advanced-filters-drawer.hidden {
-  display: none !important;
+/* Active Filter Tag Pills */
+.active-filter-pill {
+  background: rgba(212, 175, 55, 0.15) !important;
+  border: 1px solid rgba(212, 175, 55, 0.4) !important;
+  color: #D4AF37 !important;
+  padding: 4px 10px !important;
+  border-radius: 9999px !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  gap: 6px !important;
+  font-size: 11px !important;
+  font-weight: 700 !important;
 }
 
-
-/* Direct Body-Level Maximum Z-Index Advanced Filter Drawer Overlay */
-#directory-advanced-filters-drawer {
-  position: fixed !important;
-  top: 0 !important;
-  right: 0 !important;
-  width: 100% !important;
-  max-width: 450px !important;
-  height: 100vh !important;
-  z-index: 2147483647 !important;
-  background: #07090E !important;
-  box-shadow: -10px 0 30px rgba(0, 0, 0, 0.9) !important;
-  border-left: 1px solid rgba(197, 160, 89, 0.4) !important;
-  overflow-y: auto !important;
+/* LUXURY DARK/GOLD SKELETON SHIMMER ANIMATION */
+.skeleton-box {
+  background: linear-gradient(90deg, #0f172a 25%, #1e293b 50%, #0f172a 75%);
+  background-size: 200% 100%;
+  animation: skeletonShimmer 1.5s infinite linear;
 }
 
-#directory-advanced-filters-drawer.hidden {
-  display: none !important;
+@keyframes skeletonShimmer {
+  0% {
+    background-position: 200% 0;
+  }
+  100% {
+    background-position: -200% 0;
+  }
+}
+
+/* HORIZONTAL CATEGORY TABS & MULTI-SELECT CHIPS */
+.dir-cat-tab.active-tab {
+  background-color: #0b0f19 !important;
+  color: #D4AF37 !important;
+  border-color: #D4AF37 !important;
+  box-shadow: 0 0 15px rgba(212, 175, 55, 0.3) !important;
+}
+
+.subcat-chip {
+  background: rgba(15, 23, 42, 0.8);
+  color: #cbd5e1;
+  border: 1px solid rgba(212, 175, 55, 0.25);
+  padding: 6px 14px;
+  border-radius: 12px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.2s ease-in-out;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.subcat-chip:hover {
+  border-color: #D4AF37;
+  color: #ffffff;
+}
+
+.subcat-chip.active-chip {
+  background: rgba(212, 175, 55, 0.2) !important;
+  color: #D4AF37 !important;
+  border-color: #D4AF37 !important;
+  box-shadow: 0 0 12px rgba(212, 175, 55, 0.3) !important;
 }

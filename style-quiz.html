@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl" class="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>عروسی‌تو — تست آنلاین روانشناسی و تحلیل استایل عروسی</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://unpkg.com/lucide@latest"></script>
+  <link href="https://cdn.jsdelivr.net/gh/rastikerdar/vazirmatn@v33.003/Vazirmatn-font-face.css" rel="stylesheet" type="text/css" />
+  <style>
+    body {
+      font-family: Vazirmatn, sans-serif;
+      background-color: #07090E;
+      color: #FFFFFF;
+    }
+  </style>
+</head>
+<body class="bg-[#07090E] text-white min-h-screen flex flex-col">
+
+  <!-- TOP GLASS NAVIGATION HEADER -->
+  <header class="sticky top-0 z-50 bg-[#0B0F19]/90 backdrop-blur-xl border-b border-[#D4AF37]/35 py-3.5 px-4 sm:px-8">
+    <div class="max-w-7xl mx-auto flex items-center justify-between">
+      <a href="index.html" class="flex items-center gap-3">
+        <div class="w-10 h-10 rounded-xl bg-[#D4AF37] flex items-center justify-center text-[#1B3B2B] shadow-md">
+          <i data-lucide="brain" class="w-5 h-5 stroke-[#1B3B2B]"></i>
+        </div>
+        <div class="flex flex-col text-right">
+          <span class="text-xl font-black text-[#D4AF37]">عروسی تو</span>
+          <span class="text-[9px] text-amber-200/80">سامانه سنجش هوشمند استایل & سبک عروسی</span>
+        </div>
+      </a>
+
+      <div class="flex items-center gap-3">
+        <a href="index.html" class="text-xs font-bold text-slate-300 hover:text-[#D4AF37] transition-colors flex items-center gap-1.5">
+          <i data-lucide="arrow-right" class="w-4 h-4"></i>
+          <span>بازگشت به صفحه اصلی</span>
+        </a>
+        <a href="directory.html" class="gold-shimmer-btn bg-[#D4AF37] text-[#07090E] font-black px-4 py-2 rounded-xl text-xs shadow-md hover:scale-105 transition-all">
+          دایرکتوری تامین‌کنندگان ↗
+        </a>
+      </div>
+    </div>
+  </header>
+
+  <!-- MAIN CONTAINER -->
+  <main class="flex-1 max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-10 space-y-10 text-right">
+
+    <!-- HERO BANNER -->
+    <section class="bg-[#0E121C] border border-[#C5A059]/40 rounded-3xl p-6 sm:p-10 shadow-2xl relative overflow-hidden space-y-4">
+      <div class="absolute -left-10 -bottom-10 w-60 h-60 bg-[#D4AF37]/10 rounded-full blur-3xl pointer-events-none"></div>
+
+      <div class="inline-flex items-center gap-2 bg-[#D4AF37]/15 border border-[#D4AF37]/30 text-[#D4AF37] px-3.5 py-1 rounded-full text-xs font-bold">
+        <i data-lucide="sparkles" class="w-3.5 h-3.5"></i>
+        <span>تست هوشمند روانشناسی & تشخیص استایل</span>
+      </div>
+
+      <h1 class="text-2xl sm:text-3xl font-black text-white leading-snug">
+        شناخت دقیق سبک عروسی ایده‌آل و هماهنگی تم با رویای شما
+      </h1>
+
+      <p class="text-xs sm:text-sm text-slate-300 font-medium leading-relaxed max-w-3xl">
+        پاسخ به چند سوال ساده برای دریافت کارنامه جامع تشخیص سبک (کلاسیک، روستیک، لوکس بوهو، مدرن) و انطباق هوشمند با تامین‌کنندگان معتبر یزد.
+      </p>
+    </section>
+
+    <!-- QUIZ CATALOG GRID -->
+    <section class="space-y-6">
+      <div class="flex items-center justify-between border-b border-[#C5A059]/20 pb-4">
+        <h2 class="text-lg font-black text-[#D4AF37]">کاتالوگ تست‌های آنلاین</h2>
+        <span class="text-xs text-slate-400">۳ تست فعال تشخیص هوشمند</span>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+
+        <!-- Quiz Card 1 -->
+        <div class="bg-[#0E121C] border border-[#C5A059]/30 hover:border-amber-500/60 rounded-3xl p-6 space-y-4 shadow-xl transition-all duration-300 hover:-translate-y-1 flex flex-col justify-between">
+          <div class="space-y-3">
+            <div class="w-12 h-12 rounded-2xl bg-[#D4AF37]/15 border border-[#D4AF37]/30 flex items-center justify-center text-[#D4AF37]">
+              <i data-lucide="crown" class="w-6 h-6"></i>
+            </div>
+            <h3 class="text-base font-black text-white">تست روانشناسی تم و سبک عروسی</h3>
+            <p class="text-xs text-slate-300 leading-relaxed">
+              تشخیص تناسب روحیات شما با تم‌های ملو، کلاسیک یزدی، بوهو کویری و لوکس سلطنتی.
+            </p>
+          </div>
+          <button onclick="startQuiz('theme')" class="w-full bg-[#D4AF37] hover:bg-[#F3C96A] text-[#07090E] font-black py-3 rounded-2xl text-xs transition-all cursor-pointer shadow-md flex items-center justify-center gap-1.5">
+            <span>شروع تست تم عروسی</span>
+            <i data-lucide="arrow-left" class="w-4 h-4"></i>
+          </button>
+        </div>
+
+        <!-- Quiz Card 2 -->
+        <div class="bg-[#0E121C] border border-[#C5A059]/30 hover:border-amber-500/60 rounded-3xl p-6 space-y-4 shadow-xl transition-all duration-300 hover:-translate-y-1 flex flex-col justify-between">
+          <div class="space-y-3">
+            <div class="w-12 h-12 rounded-2xl bg-[#D4AF37]/15 border border-[#D4AF37]/30 flex items-center justify-center text-[#D4AF37]">
+              <i data-lucide="shirt" class="w-6 h-6"></i>
+            </div>
+            <h3 class="text-base font-black text-white">تست انتخاب استایل و فرم لباس عروس</h3>
+            <p class="text-xs text-slate-300 leading-relaxed">
+              تحلیل فرم بدنی و انتخاب هماهنگ‌ترین یقه، تور و دنباله لباس عروس از مزون‌های VIP.
+            </p>
+          </div>
+          <button onclick="startQuiz('dress')" class="w-full bg-[#D4AF37] hover:bg-[#F3C96A] text-[#07090E] font-black py-3 rounded-2xl text-xs transition-all cursor-pointer shadow-md flex items-center justify-center gap-1.5">
+            <span>شروع تست استایل لباس</span>
+            <i data-lucide="arrow-left" class="w-4 h-4"></i>
+          </button>
+        </div>
+
+        <!-- Quiz Card 3 -->
+        <div class="bg-[#0E121C] border border-[#C5A059]/30 hover:border-amber-500/60 rounded-3xl p-6 space-y-4 shadow-xl transition-all duration-300 hover:-translate-y-1 flex flex-col justify-between">
+          <div class="space-y-3">
+            <div class="w-12 h-12 rounded-2xl bg-[#D4AF37]/15 border border-[#D4AF37]/30 flex items-center justify-center text-[#D4AF37]">
+              <i data-lucide="camera" class="w-6 h-6"></i>
+            </div>
+            <h3 class="text-base font-black text-white">تست سبک تصویربرداری و عکاسی</h3>
+            <p class="text-xs text-slate-300 leading-relaxed">
+              سنجش تمایل شما به عکاسی مستند داستانی، کلاسیک آتلیه‌ای یا تیزر فرمالیته کویر.
+            </p>
+          </div>
+          <button onclick="startQuiz('photo')" class="w-full bg-[#D4AF37] hover:bg-[#F3C96A] text-[#07090E] font-black py-3 rounded-2xl text-xs transition-all cursor-pointer shadow-md flex items-center justify-center gap-1.5">
+            <span>شروع تست سبک عکاسی</span>
+            <i data-lucide="arrow-left" class="w-4 h-4"></i>
+          </button>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- QUIZ RUNNER INTERACTIVE MODAL -->
+    <div id="quizRunnerModal" class="fixed inset-0 z-[99999] hidden flex items-center justify-center p-4 bg-black/80 backdrop-blur-md">
+      <div class="relative w-full max-w-xl bg-[#0E121C] border border-[#C5A059]/50 rounded-3xl p-6 sm:p-8 text-white shadow-2xl space-y-6">
+        <button onclick="closeQuizRunnerModal()" class="absolute top-4 left-4 w-9 h-9 rounded-full bg-white/5 border border-white/10 hover:bg-white/15 flex items-center justify-center text-slate-300 hover:text-white transition-all cursor-pointer">
+          <i data-lucide="x" class="w-5 h-5"></i>
+        </button>
+
+        <div class="space-y-2 border-b border-[#C5A059]/20 pb-4">
+          <span id="quizBadge" class="bg-[#D4AF37]/15 text-[#D4AF37] border border-[#D4AF37]/30 px-3 py-1 rounded-full text-xs font-bold inline-block"></span>
+          <h3 id="quizTitle" class="text-lg font-black text-white"></h3>
+        </div>
+
+        <div id="quizContent" class="space-y-4">
+          <h4 id="questionText" class="text-sm sm:text-base font-bold text-amber-200"></h4>
+          <div id="optionsContainer" class="space-y-2.5"></div>
+        </div>
+
+        <div id="quizResult" class="hidden space-y-4 text-center">
+          <div class="w-16 h-16 rounded-full bg-emerald-950 border border-emerald-500/40 flex items-center justify-center mx-auto text-emerald-400">
+            <i data-lucide="check-circle-2" class="w-8 h-8"></i>
+          </div>
+          <h4 id="resultTitle" class="text-lg font-black text-[#D4AF37]"></h4>
+          <p id="resultDesc" class="text-xs sm:text-sm text-slate-300 leading-relaxed font-medium bg-[#141A28] border border-[#C5A059]/20 rounded-2xl p-4"></p>
+          <a id="resultCta" href="directory.html" class="block w-full bg-[#D4AF37] hover:bg-[#F3C96A] text-[#07090E] font-black py-3 rounded-2xl text-xs sm:text-sm transition-all shadow-lg text-center">
+            مشاهده تامین‌کنندگان هماهنگ با این سبک ↗
+          </a>
+        </div>
+      </div>
+    </div>
+
+  </main>
+
+  <!-- FOOTER -->
+  <footer class="bg-[#0B0F19] border-t border-[#D4AF37]/35 py-8 text-center text-xs text-slate-400 mt-auto">
+    <div class="max-w-7xl mx-auto px-4 flex flex-col sm:flex-row items-center justify-between gap-4">
+      <div class="flex items-center gap-2">
+        <span class="font-black text-[#D4AF37]">عروسی‌تو یزد</span>
+        <span>© تمامی حقوق محفوظ است.</span>
+      </div>
+      <div class="flex items-center gap-4 text-slate-300">
+        <a href="index.html" class="hover:text-[#D4AF37]">صفحه اصلی</a>
+        <a href="directory.html" class="hover:text-[#D4AF37]">دایرکتوری</a>
+        <a href="planning.html" class="hover:text-[#D4AF37]">برنامه‌ریزی</a>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    const QUIZZES = {
+      theme: {
+        badge: "تست تم عروسی",
+        title: "تست روانشناسی تم و سبک عروسی",
+        question: "بهترین فضای برگزاری مراسم عروسی از نظر شما کدام است؟",
+        options: [
+          { text: "باغ‌تالار سرسبز با نورپردازی گرم و فضای باز", resultTitle: "سبک بوهو و رومانتیک سرسبز", cat: "hall" },
+          { text: "عمارت و سالن پذیرایی مجلل با کریستال و دکور لوکس", resultTitle: "سبک کلاسیک VIP سلطنتی", cat: "hall" },
+          { text: "اقامتگاه سنتی بافت تاریخی با دکور اصیل یزدی", resultTitle: "سبک سنتی فاخر یزد", cat: "hall" }
+        ]
+      },
+      dress: {
+        badge: "تست لباس عروس",
+        title: "تست انتخاب استایل و فرم لباس عروس",
+        question: "کدام فرم یقه و مدل پارچه را بیشتر می‌پسندید؟",
+        options: [
+          { text: "لباس پرنسسی اسکارلت با دانتل فرانسوی و تور بلند", resultTitle: "استایل پرنسسی کلاسیک", cat: "mezon" },
+          { text: "مدل ماهی اندامی با ساتن آمریکایی ساده و شیک", resultTitle: "استایل مینی‌مال مدرن VIP", cat: "mezon" },
+          { text: "لباس بوهو آستین‌دار با گیپور دست‌دوز و پارچه سبک", resultTitle: "استایل بوهو رومانتیک", cat: "mezon" }
+        ]
+      },
+      photo: {
+        badge: "تست عکاسی",
+        title: "تست سبک تصویربرداری و عکاسی",
+        question: "ترجیح می‌دهید آلبوم عروسی شما چه حس و حالی داشته باشد؟",
+        options: [
+          { text: "عکس‌های مستند رئال بدون ژست‌های ساختگی و مصنوعی", resultTitle: "سبک مستند داستانی (Journalistic)", cat: "studio" },
+          { text: "تیزر هالیوودی با هلی‌شات کویر و ژست‌های سینمایی", resultTitle: "سبک سینمایی کویری 4K", cat: "studio" },
+          { text: "عکس‌های کلاسیک آتلیه‌ای با نورپردازی پرتره فاخر", resultTitle: "سبک کلاسیک آتلیه‌ای", cat: "studio" }
+        ]
+      }
+    };
+
+    function startQuiz(key) {
+      const q = QUIZZES[key];
+      if (!q) return;
+
+      document.getElementById('quizBadge').innerText = q.badge;
+      document.getElementById('quizTitle').innerText = q.title;
+      document.getElementById('questionText').innerText = q.question;
+
+      const optsDiv = document.getElementById('optionsContainer');
+      optsDiv.innerHTML = q.options.map(opt => `
+        <button onclick="selectOption('${opt.resultTitle}', '${opt.cat}')" class="w-full bg-[#141A28] border border-[#C5A059]/30 hover:border-[#D4AF37] hover:bg-[#1E293B] p-4 rounded-2xl text-right text-xs font-bold text-white transition-all cursor-pointer flex items-center justify-between group">
+          <span>${opt.text}</span>
+          <i data-lucide="chevron-left" class="w-4 h-4 text-[#D4AF37] group-hover:-translate-x-1 transition-transform"></i>
+        </button>
+      `).join('');
+
+      document.getElementById('quizContent').classList.remove('hidden');
+      document.getElementById('quizResult').classList.add('hidden');
+
+      const modal = document.getElementById('quizRunnerModal');
+      modal.classList.remove('hidden');
+      modal.classList.add('flex');
+
+      if (typeof lucide !== 'undefined' && lucide.createIcons) lucide.createIcons();
+    }
+
+    function selectOption(resTitle, cat) {
+      document.getElementById('quizContent').classList.add('hidden');
+      document.getElementById('resultTitle').innerText = `نتیجه کارنامه: ${resTitle}`;
+      document.getElementById('resultDesc').innerText = `بر اساس تحلیل پاسخ‌های شما، سبک برگزاری هماهنگ با سلیقه شما «${resTitle}» تشخیص داده شد. پیشنهاد می‌کنیم مجموعه تامین‌کنندگان برتر یزد در این دسته‌بندی را بررسی نمایید.`;
+      document.getElementById('resultCta').href = `directory.html?category=${cat}`;
+
+      document.getElementById('quizResult').classList.remove('hidden');
+      if (typeof lucide !== 'undefined' && lucide.createIcons) lucide.createIcons();
+    }
+
+    function closeQuizRunnerModal() {
+      const modal = document.getElementById('quizRunnerModal');
+      modal.classList.add('hidden');
+      modal.classList.remove('flex');
+    }
+
+    if (typeof lucide !== 'undefined' && lucide.createIcons) {
+      lucide.createIcons();
+    }
+  </script>
+</body>
+</html>

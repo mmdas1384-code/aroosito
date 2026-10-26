@@ -41,6 +41,32 @@ body, .glass-card {
   transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease;
 }
 
+/* ==========================================================================
+   GLOBAL CONTAINER & LAYOUT STANDARDIZATION (1400px UNIFIED LUXURY CONTAINER)
+   ========================================================================== */
+.container,
+.page-wrapper,
+.max-w-7xl,
+.max-w-7xl-unified {
+  max-width: 1400px !important;
+  margin-left: auto !important;
+  margin-right: auto !important;
+  padding-left: 24px !important;
+  padding-right: 24px !important;
+  box-sizing: border-box !important;
+  width: 100% !important;
+}
+
+@media (max-width: 640px) {
+  .container,
+  .page-wrapper,
+  .max-w-7xl,
+  .max-w-7xl-unified {
+    padding-left: 16px !important;
+    padding-right: 16px !important;
+  }
+}
+
 /* Global Layout Rules & Zero-Gap Below Header */
 header {
   margin-bottom: 0 !important;
@@ -569,17 +595,19 @@ main#directory-view {
    ========================================================================== */
 #hero-search-dropdown {
   position: absolute !important;
-  top: 100% !important;
+  top: calc(100% + 8px) !important;
   right: 0 !important;
   left: 0 !important;
-  margin-top: 8px !important;
+  margin-top: 0 !important;
   z-index: 9999 !important;
-  background: rgba(7, 9, 14, 0.96) !important;
-  backdrop-filter: blur(25px) !important;
-  -webkit-backdrop-filter: blur(25px) !important;
-  border: 1px solid var(--accent-gold, #C5A059) !important;
+  background: rgba(15, 23, 42, 0.95) !important;
+  backdrop-filter: blur(16px) !important;
+  -webkit-backdrop-filter: blur(16px) !important;
+  border: 1px solid rgba(212, 175, 55, 0.35) !important;
   border-radius: 16px !important;
-  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.85) !important;
+  box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.6), 0 8px 10px -6px rgba(0, 0, 0, 0.5) !important;
+  max-height: 380px !important;
+  overflow-y: auto !important;
 }
 
 #hero-search-dropdown .custom-scrollbar {
@@ -591,7 +619,7 @@ main#directory-view {
   width: 5px;
 }
 #hero-search-dropdown .custom-scrollbar::-webkit-scrollbar-thumb {
-  background: rgba(197, 160, 89, 0.5);
+  background: rgba(212, 175, 55, 0.5);
   border-radius: 9999px;
 }
 
@@ -978,29 +1006,48 @@ main#directory-view {
   transform: scale(1.08);
 }
 
-#vip-showcase-container:not(.bento-carousel-container),
-.vip-showcase-container:not(.bento-carousel-container) {
-  display: grid !important;
-  grid-template-columns: repeat(4, minmax(0, 1fr)) !important;
-  gap: 10px !important;
-  height: 380px !important;
+/* Showcase Card Container Layout Rules */
+.showcase-slider-wrapper,
+#vip-showcase-container {
+  display: flex !important;
+  flex-direction: column !important; /* Stack cards vertically: Top, Center, Bottom */
+  align-items: center !important;
+  justify-content: center !important;
+  gap: 12px !important;
+  width: 100% !important;
+  height: 100% !important;
+}
+
+/* Individual Card - WIDE HORIZONTAL RECTANGLE */
+.showcase-card,
+.vip-focal-card {
+  width: 90% !important;         /* Wide across the box */
+  max-width: 360px !important;
+  height: 160px !important;      /* Fixed short height to make it horizontal */
+  aspect-ratio: 16 / 9 !important;/* Horizontal Landscape Ratio */
+  border-radius: 16px !important;
   overflow: hidden !important;
   position: relative !important;
-  perspective: 1000px !important;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1) !important;
 }
 
-@media (max-width: 1024px) {
-  #vip-showcase-container:not(.bento-carousel-container),
-  .vip-showcase-container:not(.bento-carousel-container) {
-    grid-template-columns: repeat(3, minmax(0, 1fr)) !important;
-  }
+/* Active Center Card */
+.showcase-card.active,
+.vip-focal-card-active {
+  transform: scale(1.05) !important;
+  opacity: 1 !important;
+  z-index: 2 !important;
+  box-shadow: 0 10px 25px rgba(212, 175, 55, 0.25) !important;
 }
 
-@media (max-width: 640px) {
-  #vip-showcase-container:not(.bento-carousel-container),
-  .vip-showcase-container:not(.bento-carousel-container) {
-    grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
-  }
+/* Top & Bottom Preview Cards */
+.showcase-card.preview,
+.vip-focal-card-preview {
+  transform: scale(0.88) !important;
+  opacity: 0.5 !important;
+  filter: blur(1px) !important;
+  z-index: 1 !important;
+  height: 70px !important; /* Shorter preview height for clean vertical stack */
 }
 
 .vip-col-wrapper {
@@ -2485,6 +2532,14 @@ html[data-theme="dark"] .health-badge-critical {
   transform: scale(1.02);
 }
 
+/* HERO CINEMATIC VIDEO BACKGROUND */
+.hero-cinematic-video {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: opacity 0.5s ease-in-out;
+}
+
 /* ==========================================================================
    CINEMATIC DARK SPLIT HERO STYLES
    ========================================================================== */
@@ -2584,9 +2639,25 @@ body.mood-night {
   scrollbar-width: none;
 }
 
-/* Ensure proper header spacing clearance across all pages */
-main, #home-view, #directory-view {
-  padding-top: 2.5rem !important;
+/* Ensure proper header spacing clearance and vertical rhythm across all pages */
+main, #home-view, #directory-view, .main-content-wrapper {
+  padding-top: 1.5rem !important;
+  padding-bottom: 2.5rem !important;
+}
+
+section.max-w-7xl,
+.section-card-wrapper,
+.why-choose-us-section,
+.real-weddings-section,
+.main-categories-section,
+.quick-tools-section,
+.budget-calculator-section,
+.why-us-section,
+.weddings-gallery-section,
+.vendor-banner-dark {
+  border-radius: 1.5rem !important;
+  margin-top: 1.5rem !important;
+  margin-bottom: 1.5rem !important;
 }
 
 #directory-primary-filter-island {
@@ -2834,4 +2905,17 @@ main.vendor-showroom-main {
     transform: translateY(0);
     opacity: 1;
   }
+}
+
+/* INQUIRY MODAL OVERLAY VISIBILITY RULES */
+.inquiry-modal-overlay {
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.3s ease;
+}
+
+.inquiry-modal-overlay.active {
+  opacity: 1 !important;
+  pointer-events: auto !important;
+  display: flex !important;
 }
